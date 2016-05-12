@@ -9,6 +9,7 @@ import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.co2Device.CO2Device;
+import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
@@ -17,6 +18,7 @@ import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletAmbientLightV2;
 import com.tinkerforge.BrickletBarometer;
@@ -70,6 +72,9 @@ public class TinkerforgeDeviceMapper {
         }
         if(TinkerforgeDeviceClass.CO2==TinkerforgeDeviceClass.getDevice(device)){
             return new CO2Device(address,(BrickletCO2)device);
+        }
+        if(TinkerforgeDeviceClass.DC==TinkerforgeDeviceClass.getDevice(device)){
+            return new DCDevice(address,(BrickDC)device);
         }
         return new TinkerforgeDevice(address, device);
     }

@@ -9,6 +9,7 @@ import ch.quantasy.gateway.service.device.ambientLight.AmbientLightService;
 import ch.quantasy.gateway.service.device.ambientLightV2.AmbientLightV2Service;
 import ch.quantasy.gateway.service.device.barometer.BarometerService;
 import ch.quantasy.gateway.service.device.co2.CO2Service;
+import ch.quantasy.gateway.service.device.dc.DCService;
 import ch.quantasy.gateway.service.device.dualRelay.DualRelayService;
 import ch.quantasy.gateway.service.device.humidity.HumidityService;
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripService;
@@ -23,6 +24,7 @@ import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.co2Device.CO2Device;
+import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
@@ -164,6 +166,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof CO2Device) {
                 CO2Service service=new CO2Service((CO2Device) tinkerforgeDevice);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof DCDevice) {
+                DCService service=new DCService((DCDevice) tinkerforgeDevice);
                 System.out.println(service);
             }
         } catch (MqttException ex) {
