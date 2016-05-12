@@ -22,10 +22,16 @@ public class DeviceAveraging {
     }
 
     public DeviceAveraging(BrickletBarometer.Averaging averaging) {
-        this.averagingPressure = averaging.averagePressure;
-        this.averagingTemperature = averaging.averageTemperature;
-        this.movingAveragePressure = averaging.movingAveragePressure;
+        this(averaging.averagePressure,averaging.averageTemperature,averaging.movingAveragePressure);
     }
+
+    public DeviceAveraging(short averagingPressure, short averagingTemperature, short movingAveragePressure) {
+        this.averagingPressure = averagingPressure;
+        this.averagingTemperature = averagingTemperature;
+        this.movingAveragePressure = movingAveragePressure;
+    }
+    
+    
 
     public short getAveragingPressure() {
         return averagingPressure;

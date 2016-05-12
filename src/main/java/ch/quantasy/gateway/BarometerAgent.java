@@ -11,6 +11,7 @@ import ch.quantasy.gateway.service.device.barometer.BarometerServiceContract;
 import ch.quantasy.mqtt.communication.MQTTCommunication;
 import ch.quantasy.mqtt.communication.MQTTCommunicationCallback;
 import ch.quantasy.mqtt.communication.MQTTParameters;
+import ch.quantasy.tinkerforge.device.barometer.DeviceAveraging;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -39,7 +40,7 @@ public class BarometerAgent implements MQTTCommunicationCallback {
         communication = new MQTTCommunication();
         MQTTParameters parameters = new MQTTParameters();
         parameters.setClientID("BarometerAgent");
-        parameters.setIsCleanSession(false);
+        parameters.setIsCleanSession(true);
         parameters.setIsLastWillRetained(true);
         parameters.setLastWillMessage(serviceContract.OFFLINE.getBytes());
         parameters.setLastWillQoS(1);
@@ -56,10 +57,10 @@ public class BarometerAgent implements MQTTCommunicationCallback {
     public void connectionLost(Throwable thrwbl) {
         System.out.println("Uuups, connection lost");
     }
-
+int count;
     @Override
     public void messageArrived(String string, MqttMessage mm) throws Exception {
-        System.out.printf("Topic: %s (%s)\n", string, new String(mm.getPayload()));
+        System.out.printf("%d Topic: %s (%s)\n", count++, string, new String(mm.getPayload()));
         
     }
 
@@ -88,8 +89,8 @@ public class BarometerAgent implements MQTTCommunicationCallback {
     }
 
     public void averaging() throws JsonProcessingException {
-        MqttMessage message = new MqttMessage(mapper.writeValueAsBytes("averagingPressure: 0\naveragingTemperature: 0\n movingAveragePressure: 0"));
-        String topic = serviceContract.INTENT_TOPIC_AIR_PRESSURE;
+        MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(new DeviceAveraging((short)0,(short)0,(short)0)));
+        String topic = serviceContract.INTENT_TOPIC_AVERAGING;
         messageMap.put(topic, message);
         communication.readyToPublish(this, topic);
     }
