@@ -13,6 +13,8 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.net.URI;
 import java.util.HashMap;
@@ -81,7 +83,7 @@ public class RemoteSwitchAgent implements MQTTCommunicationCallback {
 
     public void config(SwitchSocketCParameters.SwitchTo switchTo) throws JsonProcessingException {
         //SwitchSocketCParameters config = new SwitchSocketCParameters('c', (short) 3, switchTo);
-        SwitchSocketCParameters config = new SwitchSocketCParameters('c', (short) 3, switchTo);
+        SwitchSocketCParameters config = new SwitchSocketCParameters('C', (short) 2, switchTo);
 
         MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(config));
         String topic = serviceContract.INTENT_TOPIC_SWITCH_SOCKET_C;

@@ -8,12 +8,9 @@ package ch.quantasy.tinkerforge.device.dualButton;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickletDualButton;
-import com.tinkerforge.BrickletDualRelay;
 
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
