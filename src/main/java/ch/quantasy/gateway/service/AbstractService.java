@@ -96,7 +96,7 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
             eventMap.put(topic, new LinkedList<>());
             try {
                 message = new MqttMessage(mapper.writeValueAsBytes(eventList));
-                message.setQos(0);
+                message.setQos(1);
                 message.setRetained(true);
                 return message;
             } catch (JsonProcessingException ex) {

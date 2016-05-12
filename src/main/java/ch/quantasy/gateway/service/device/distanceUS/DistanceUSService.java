@@ -94,10 +94,9 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
         addStatus(getServiceContract().STATUS_TOPIC_MOVING_AVERAGE, movingAverage);
     }
     
-
     @Override
     public void distance(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_DISTANCE, new DisntanceEvent(i));
+        addEvent(getServiceContract().EVENT_TOPIC_DISTANCE, new DisntanceEvent(i));  
     }
 
     @Override
