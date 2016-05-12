@@ -31,7 +31,7 @@ public class DCServiceContract extends DeviceServiceContract {
     public final String STATUS_TOPIC_VELOCITY;
     public final String EVENT_TOPIC_VELOCITY;
     
-    public final String PERIOD;
+    public final String CALLBACK_PERIOD;
     public final String INTENT_TOPIC_VELOCITY_PERIOD;
     public final String STATUS_TOPIC_VELOCITY_PERIOD;
             
@@ -70,10 +70,10 @@ public class DCServiceContract extends DeviceServiceContract {
         INTENT_TOPIC_VELOCITY=INTENT_TOPIC+"/"+VELOCITY;
         EVENT_TOPIC_VELOCITY=EVENT_TOPIC+"/"+VELOCITY;
         
-        PERIOD="period";
+        CALLBACK_PERIOD="callback_period";
         
-        STATUS_TOPIC_VELOCITY_PERIOD=STATUS_TOPIC_VELOCITY+"/"+PERIOD;
-        INTENT_TOPIC_VELOCITY_PERIOD=INTENT_TOPIC_VELOCITY+"/"+PERIOD;
+        STATUS_TOPIC_VELOCITY_PERIOD=STATUS_TOPIC_VELOCITY+"/"+CALLBACK_PERIOD;
+        INTENT_TOPIC_VELOCITY_PERIOD=INTENT_TOPIC_VELOCITY+"/"+CALLBACK_PERIOD;
         
         FULL_BRAKE = "fullBrake";
         EVENT_TOPIC_FULL_BRAKE = EVENT_TOPIC + "/" + FULL_BRAKE;
