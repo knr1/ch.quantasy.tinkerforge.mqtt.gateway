@@ -38,12 +38,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
             Boolean enabled = getMapper().readValue(payload, Boolean.class);
             getDevice().setEnabled(enabled);
         }
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_EMERGENCY_SHUTDOWN)) {
-            Boolean shutdown = getMapper().readValue(payload, Boolean.class);
-            if (shutdown == true) {
-                getDevice().emergencyShutdown();
-            }
-        }
+        
         if (string.startsWith(getServiceContract().INTENT_TOPIC_ACCELERATION)) {
             Integer acceleration = getMapper().readValue(payload, Integer.class);
             getDevice().setAcceleration(acceleration);

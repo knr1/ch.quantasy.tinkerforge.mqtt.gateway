@@ -53,7 +53,6 @@ public class DCServiceContract extends DeviceServiceContract {
     
     public final String EMERGENCY_SHUTDOWN;
     public final String STATUS_TOPIC_EMERGENCY_SHUTDOWN;
-    public final String INTENT_TOPIC_EMERGENCY_SHUTDOWN;
 
     public DCServiceContract(DCDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -90,13 +89,12 @@ public class DCServiceContract extends DeviceServiceContract {
         UNDERVOLTAGE="undervoltage";
         EVENT_TOPIC_UNDERVOLTAGE=EVENT_TOPIC+"/"+UNDERVOLTAGE;
 
-        DRIVER_MODE = "dirverMode";
+        DRIVER_MODE = "driverMode";
         INTENT_TOPIC_DRIVER_MODE = INTENT_TOPIC + "/" + DRIVER_MODE;
         STATUS_TOPIC_DRIVER_MODE=STATUS_TOPIC+"/"+DRIVER_MODE;
 
         EMERGENCY_SHUTDOWN="emergencyShutdown";
         STATUS_TOPIC_EMERGENCY_SHUTDOWN=STATUS_TOPIC+"/"+EMERGENCY_SHUTDOWN;
-        INTENT_TOPIC_EMERGENCY_SHUTDOWN=INTENT_TOPIC+"/"+EMERGENCY_SHUTDOWN;
         
         PWM_FREQUENCY="pwmFrequency";
         STATUS_TOPIC_PWM_FREQUENCY=STATUS_TOPIC+"/"+PWM_FREQUENCY;
