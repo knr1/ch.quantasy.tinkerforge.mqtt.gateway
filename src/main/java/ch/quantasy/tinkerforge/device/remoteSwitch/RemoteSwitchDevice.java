@@ -17,9 +17,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, RemoteSwitchDeviceCallback> {
+public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, RemoteSwitchDeviceCallback> implements BrickletRemoteSwitch.SwitchingDoneListener {
 
     private Short repeats;
+    private boolean isSwitching;
 
     public RemoteSwitchDevice(TinkerforgeStackAddress address, BrickletRemoteSwitch device) throws NotConnectedException, TimeoutException {
         super(address, device);
@@ -28,6 +29,7 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
     @Override
     protected void addDeviceListeners() {
         getDevice().addSwitchingDoneListener(super.getCallback());
+        getDevice().addSwitchingDoneListener(this);
         if (repeats != null) {
             setRepeats(repeats);
         }
@@ -37,6 +39,8 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
     @Override
     protected void removeDeviceListeners() {
         getDevice().removeSwitchingDoneListener(super.getCallback());
+        getDevice().removeSwitchingDoneListener(this);
+
     }
 
     public void setRepeats(short repeats) {
@@ -51,7 +55,15 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
         }
     }
 
-    public void dimSocketB(DimSocketBParameters parameters) {
+    public synchronized void dimSocketB(DimSocketBParameters parameters) {
+        while(isSwitching){
+            try {
+                wait(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        isSwitching=true;
         try {
             getDevice().dimSocketB(parameters.address, parameters.unit, parameters.dimValue);
         } catch (TimeoutException | NotConnectedException ex) {
@@ -59,7 +71,15 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
         }
     }
 
-    public void switchSocketB(SwitchSocketBParameters parameters) {
+    public synchronized void switchSocketB(SwitchSocketBParameters parameters) {
+        while(isSwitching){
+            try {
+                wait(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        isSwitching=true;
         try {
             getDevice().switchSocketB(parameters.getAddress(), parameters.getUnit(), parameters.getSwitchingValue().getValue());
         } catch (TimeoutException | NotConnectedException ex) {
@@ -67,7 +87,15 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
         }
     }
 
-    public void switchSocketA(SwitchSocketAParameters parameters) {
+    public synchronized void switchSocketA(SwitchSocketAParameters parameters) {
+        while(isSwitching){
+            try {
+                wait(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        isSwitching=true;
         try {
             getDevice().switchSocketA(parameters.getHouseCode(), parameters.getReceiverCode(), parameters.getSwitchingValue().getValue());
         } catch (TimeoutException | NotConnectedException ex) {
@@ -75,12 +103,26 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
         }
     }
 
-    public void switchSocketC(SwitchSocketCParameters parameters) {
+    public synchronized void switchSocketC(SwitchSocketCParameters parameters) {
+        while(isSwitching){
+            try {
+                wait(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        isSwitching=true;
         try {
             getDevice().switchSocketC(parameters.getSystemCode(), parameters.getDeviceCode(), parameters.getSwitchingValue().getValue());
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public synchronized void switchingDone() {
+        isSwitching = false;
+        notifyAll();
     }
 
 }

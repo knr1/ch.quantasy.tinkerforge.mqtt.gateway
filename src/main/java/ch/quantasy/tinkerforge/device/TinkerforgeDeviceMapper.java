@@ -10,6 +10,7 @@ import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.co2Device.CO2Device;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
+import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
@@ -19,12 +20,14 @@ import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
+import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletAmbientLightV2;
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletCO2;
+import com.tinkerforge.BrickletDistanceIR;
 import com.tinkerforge.BrickletDistanceUS;
 import com.tinkerforge.BrickletDualButton;
 import com.tinkerforge.BrickletDualRelay;
@@ -34,6 +37,7 @@ import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletRemoteSwitch;
 import com.tinkerforge.BrickletTemperatureIR;
+import com.tinkerforge.BrickletUVLight;
 import com.tinkerforge.Device;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -85,6 +89,12 @@ public class TinkerforgeDeviceMapper {
         }
         if(TinkerforgeDeviceClass.TemperatureIR==TinkerforgeDeviceClass.getDevice(device)){
             return new TemperatureIRDevice(address,(BrickletTemperatureIR)device);
+        }
+        if(TinkerforgeDeviceClass.UVLight==TinkerforgeDeviceClass.getDevice(device)){
+            return new UVLightDevice(address,(BrickletUVLight)device);
+        }
+        if(TinkerforgeDeviceClass.DistanceIR==TinkerforgeDeviceClass.getDevice(device)){
+            return new DistanceIRDevice(address,(BrickletDistanceIR)device);
         }
         return new TinkerforgeDevice(address, device);
     }

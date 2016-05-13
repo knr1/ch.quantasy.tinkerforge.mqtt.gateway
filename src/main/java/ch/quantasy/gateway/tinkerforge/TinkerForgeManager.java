@@ -10,6 +10,7 @@ import ch.quantasy.gateway.service.device.ambientLightV2.AmbientLightV2Service;
 import ch.quantasy.gateway.service.device.barometer.BarometerService;
 import ch.quantasy.gateway.service.device.co2.CO2Service;
 import ch.quantasy.gateway.service.device.dc.DCService;
+import ch.quantasy.gateway.service.device.distanceIR.DistanceIRService;
 import ch.quantasy.gateway.service.device.distanceUS.DistanceUSService;
 import ch.quantasy.gateway.service.device.dualRelay.DualRelayService;
 import ch.quantasy.gateway.service.device.humidity.HumidityService;
@@ -19,6 +20,7 @@ import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorService;
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchService;
 import ch.quantasy.gateway.service.device.dualButton.DualButtonService;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
+import ch.quantasy.gateway.service.device.uvLight.UVLightService;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
@@ -27,6 +29,7 @@ import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.co2Device.CO2Device;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
+import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
@@ -35,6 +38,7 @@ import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
+import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.factory.TinkerforgeStackFactory;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
@@ -182,6 +186,14 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof TemperatureIRDevice) {
                 TemperatureIRService service=new TemperatureIRService((TemperatureIRDevice) tinkerforgeDevice);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof UVLightDevice) {
+                UVLightService service=new UVLightService((UVLightDevice) tinkerforgeDevice);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof DistanceIRDevice) {
+                DistanceIRService service=new DistanceIRService((DistanceIRDevice) tinkerforgeDevice);
                 System.out.println(service);
             }
         } catch (MqttException ex) {
