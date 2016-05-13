@@ -109,14 +109,14 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
     class IlluminanceEvent {
 
         protected long timestamp;
-        protected long illuminance;
+        protected long value;
 
         public IlluminanceEvent(long value) {
             this(value, System.currentTimeMillis());
         }
 
         public IlluminanceEvent(long value, long timeStamp) {
-            this.illuminance = value;
+            this.value = value;
             this.timestamp = timeStamp;
         }
 
@@ -124,8 +124,8 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
             return timestamp;
         }
 
-        public long getIlluminance() {
-            return illuminance;
+        public long getValue() {
+            return value;
         }
 
     }
