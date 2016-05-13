@@ -22,7 +22,7 @@ public interface AmbientLightDeviceCallback extends DeviceCallback, BrickletAmbi
 
     public void debouncePeriodChanged(long period);
 
-    public void analogValueCallbackThresholdChanged(AnalogValueCallbackThreshold threshold);
+    public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold);
 
-    public void illuminanceCallbackThresholdChanged(IlluminanceCallbackThreshold threshold);
+    public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold);
 }

@@ -18,6 +18,7 @@ import ch.quantasy.gateway.service.device.moisture.MoistureService;
 import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorService;
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchService;
 import ch.quantasy.gateway.service.device.dualButton.DualButtonService;
+import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
@@ -33,6 +34,7 @@ import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
+import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.factory.TinkerforgeStackFactory;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
@@ -176,6 +178,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof DistanceUSDevice) {
                 DistanceUSService service=new DistanceUSService((DistanceUSDevice) tinkerforgeDevice);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof TemperatureIRDevice) {
+                TemperatureIRService service=new TemperatureIRService((TemperatureIRDevice) tinkerforgeDevice);
                 System.out.println(service);
             }
         } catch (MqttException ex) {

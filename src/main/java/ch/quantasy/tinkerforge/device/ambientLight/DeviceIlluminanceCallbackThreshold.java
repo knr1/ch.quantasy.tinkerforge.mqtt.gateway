@@ -13,16 +13,34 @@ import com.tinkerforge.BrickletAmbientLight;
  */
 public class DeviceIlluminanceCallbackThreshold {
     
-    public char option;
-    public int min;
-    public int max;
+    private char option;
+    private int min;
+    private int max;
 
     public DeviceIlluminanceCallbackThreshold() {
     }
 
-    public DeviceIlluminanceCallbackThreshold(BrickletAmbientLight.IlluminanceCallbackThreshold threshold) {
-        this.option = threshold.option;
-        this.min = threshold.min;
-        this.max = threshold.max;
+    public DeviceIlluminanceCallbackThreshold(char option, int min, int max) {
+        this.option = option;
+        this.min = min;
+        this.max = max;
     }
+    
+
+    public DeviceIlluminanceCallbackThreshold(BrickletAmbientLight.IlluminanceCallbackThreshold threshold) {
+        this(threshold.option,threshold.min,threshold.max);
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public char getOption() {
+        return option;
+    }
+    
 }

@@ -13,28 +13,15 @@
 package ch.quantasy.gateway.service.device.moisture;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.service.device.DeviceServiceContract;
-import ch.quantasy.mqtt.communication.MQTTCommunication;
-import ch.quantasy.mqtt.communication.MQTTCommunicationCallback;
-import ch.quantasy.mqtt.communication.MQTTParameters;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.IOException;
-import java.net.URI;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDeviceCallback;
-import ch.quantasy.tinkerforge.device.moisture.DeviceMoistureThreshold;
+import ch.quantasy.tinkerforge.device.moisture.DeviceMoistureCallbackThreshold;
 import com.tinkerforge.BrickletMoisture;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Timer;
 
 /**
  *
@@ -66,7 +53,7 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
             }
 
             if (string.startsWith(getServiceContract().INTENT_TOPIC_MOISTURE_THRESHOLD)) {
-                DeviceMoistureThreshold threshold = getMapper().readValue(payload, DeviceMoistureThreshold.class );
+                DeviceMoistureCallbackThreshold threshold = getMapper().readValue(payload, DeviceMoistureCallbackThreshold.class );
                 getDevice().setMoistureCallbackThreshold(threshold);
             }
 
@@ -89,7 +76,7 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
     }
 
     @Override
-    public void moistureCallbackThresholdChanged(BrickletMoisture.MoistureCallbackThreshold threshold) {
+    public void moistureCallbackThresholdChanged(DeviceMoistureCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_TOPIC_MOISTURE_THRESHOLD,threshold);
     }
 

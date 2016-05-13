@@ -18,6 +18,6 @@ public interface HumidityDeviceCallback extends DeviceCallback, BrickletHumidity
     public void analogValueCallbackPeriodChanged(long period);
     public void humidityCallbackPeriodChanged(long period);
     public void debouncePeriodChanged(long period);
-    public void analogValueCallbackThresholdChanged(AnalogValueCallbackThreshold threshold);
-    public void humidityCallbackThresholdChanged(HumidityCallbackThreshold threshold);
+    public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold);
+    public void humidityCallbackThresholdChanged(DeviceHumidityCallbackThreshold threshold);
 }

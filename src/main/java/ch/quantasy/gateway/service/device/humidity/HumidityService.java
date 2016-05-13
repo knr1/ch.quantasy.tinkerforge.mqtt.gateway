@@ -14,8 +14,8 @@ package ch.quantasy.gateway.service.device.humidity;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
-import ch.quantasy.tinkerforge.device.humidity.DeviceAnalogValueThreshold;
-import ch.quantasy.tinkerforge.device.humidity.DeviceHumidityThreshold;
+import ch.quantasy.tinkerforge.device.humidity.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.tinkerforge.device.humidity.DeviceHumidityCallbackThreshold;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +23,6 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDeviceCallback;
-import com.tinkerforge.BrickletHumidity;
 
 /**
  *
@@ -58,12 +57,12 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
             }
             if (string.startsWith(getServiceContract().INTENT_TOPIC_ANALOG_VALUE_THRESHOLD)) {
               
-                DeviceAnalogValueThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueThreshold.class
+                DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class
                 );
                 getDevice().setAnalogValueThreshold(threshold);
             }
             if (string.startsWith(getServiceContract().INTENT_TOPIC_HUMIDITY_THRESHOLD)) {
-                DeviceHumidityThreshold threshold = getMapper().readValue(payload, DeviceHumidityThreshold.class);
+                DeviceHumidityCallbackThreshold threshold = getMapper().readValue(payload, DeviceHumidityCallbackThreshold.class);
                 getDevice().setHumidityCallbackThreshold(threshold);
             }
 
@@ -116,12 +115,12 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
     }
 
     @Override
-    public void analogValueCallbackThresholdChanged(BrickletHumidity.AnalogValueCallbackThreshold threshold) {
+    public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_TOPIC_ANALOG_VALUE_THRESHOLD,threshold);
     }
 
     @Override
-    public void humidityCallbackThresholdChanged(BrickletHumidity.HumidityCallbackThreshold threshold) {
+    public void humidityCallbackThresholdChanged(DeviceHumidityCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_TOPIC_HUMIDITY_THRESHOLD,threshold);
     }
 

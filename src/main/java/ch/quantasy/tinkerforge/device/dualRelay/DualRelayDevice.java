@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayDeviceCallback> {
+public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayDeviceCallback> implements BrickletDualRelay.MonoflopDoneListener {
 
     private Map<Short, DeviceMonoflopParameters> monoflopParametersMap;
     private DeviceState state;
@@ -59,7 +59,7 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
     public void setSelectedState(DeviceSelectedState parameters) {
         try {
             getDevice().setSelectedState(parameters.getRelay(), parameters.getState());
-            this.state=new DeviceState(getDevice().getState());
+            this.state = new DeviceState(getDevice().getState());
             super.getCallback().stateChanged(state);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
@@ -68,8 +68,18 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
 
     public void setState(DeviceState state) {
         try {
-            getDevice().setState(state.getRelay1(),state.getRelay2());
-            this.state=new DeviceState(getDevice().getState());
+            getDevice().setState(state.getRelay1(), state.getRelay2());
+            this.state = new DeviceState(getDevice().getState());
+            super.getCallback().stateChanged(state);
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void monoflopDone(short s, boolean bln) {
+        try {
+            this.state = new DeviceState(getDevice().getState());
             super.getCallback().stateChanged(state);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);

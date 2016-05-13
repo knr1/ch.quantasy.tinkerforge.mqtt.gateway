@@ -63,8 +63,8 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
     public void setDebouncePeriod(Long period) {
         try {
             getDevice().setDebouncePeriod(period);
-            super.getCallback().debouncePeriodChanged(getDevice().getDebouncePeriod());
-            this.debouncePeriod = period;
+            this.debouncePeriod = getDevice().getDebouncePeriod();
+            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(AmbientLightDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,8 +73,8 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
     public void setAnalogValueCallbackPeriod(Long period) {
         try {
             getDevice().setAnalogValueCallbackPeriod(period);
-            super.getCallback().analogValueCallbackPeriodChanged(getDevice().getAnalogValueCallbackPeriod());
-            this.analogCallbackPeriod = period;
+            this.analogCallbackPeriod = getDevice().getAnalogValueCallbackPeriod();
+            super.getCallback().analogValueCallbackPeriodChanged(this.analogCallbackPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(AmbientLightDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,8 +83,8 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
     public void setIlluminanceCallbackPeriod(Long period) {
         try {
             getDevice().setIlluminanceCallbackPeriod(period);
-            super.getCallback().illuminanceCallbackPeriodChanged(getDevice().getIlluminanceCallbackPeriod());
-            this.illuminanceCallbackPeriod = period;
+            this.illuminanceCallbackPeriod=getDevice().getIlluminanceCallbackPeriod();
+            super.getCallback().illuminanceCallbackPeriodChanged(this.illuminanceCallbackPeriod );
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(AmbientLightDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -92,9 +92,9 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
 
     public void setAnalogValueThreshold(DeviceAnalogValueCallbackThreshold threshold) {
         try {
-            getDevice().setAnalogValueCallbackThreshold(threshold.option, threshold.min, threshold.max);
-            super.getCallback().analogValueCallbackThresholdChanged(getDevice().getAnalogValueCallbackThreshold());
-            this.analogValueThreshold = threshold;
+            getDevice().setAnalogValueCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
+            this.analogValueThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
+            super.getCallback().analogValueCallbackThresholdChanged(this.analogValueThreshold);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(AmbientLightDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -102,9 +102,10 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
 
     public void setIlluminanceCallbackThreshold(DeviceIlluminanceCallbackThreshold threshold) {
         try {
-            getDevice().setIlluminanceCallbackThreshold(threshold.option, threshold.min, threshold.max);
-            super.getCallback().illuminanceCallbackThresholdChanged(getDevice().getIlluminanceCallbackThreshold());
-            this.illuminanceThreshold = threshold;
+            getDevice().setIlluminanceCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
+            this.illuminanceThreshold = new DeviceIlluminanceCallbackThreshold(getDevice().getIlluminanceCallbackThreshold());
+            super.getCallback().illuminanceCallbackThresholdChanged(this.illuminanceThreshold);
+            
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(AmbientLightDevice.class.getName()).log(Level.SEVERE, null, ex);
         }

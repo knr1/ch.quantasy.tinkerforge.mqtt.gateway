@@ -15,6 +15,6 @@ import com.tinkerforge.BrickletMoisture;
 public interface MoistureDeviceCallback extends DeviceCallback, BrickletMoisture.MoistureListener, BrickletMoisture.MoistureReachedListener {
     public void debouncePeriodChanged(long period);
     public void moistureCallbackPeriodChanged(long period);
-    public void moistureCallbackThresholdChanged(BrickletMoisture.MoistureCallbackThreshold threshold);
+    public void moistureCallbackThresholdChanged(DeviceMoistureCallbackThreshold threshold);
     public void movingAverageChanged(short average);
 }

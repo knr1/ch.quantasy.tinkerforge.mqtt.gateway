@@ -18,6 +18,7 @@ import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
+import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickletAmbientLight;
@@ -32,6 +33,7 @@ import com.tinkerforge.BrickletLEDStrip;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletRemoteSwitch;
+import com.tinkerforge.BrickletTemperatureIR;
 import com.tinkerforge.Device;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -80,6 +82,9 @@ public class TinkerforgeDeviceMapper {
         }
         if(TinkerforgeDeviceClass.DistanceUS==TinkerforgeDeviceClass.getDevice(device)){
             return new DistanceUSDevice(address,(BrickletDistanceUS)device);
+        }
+        if(TinkerforgeDeviceClass.TemperatureIR==TinkerforgeDeviceClass.getDevice(device)){
+            return new TemperatureIRDevice(address,(BrickletTemperatureIR)device);
         }
         return new TinkerforgeDevice(address, device);
     }

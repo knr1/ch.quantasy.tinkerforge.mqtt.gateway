@@ -84,9 +84,10 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
         }
 
     }
+
     @Override
     public void airPressure(int i) {
-        
+
         addEvent(getServiceContract().EVENT_TOPIC_AIR_PRESSURE, new AirPressureEvent(i));
     }
 
@@ -121,21 +122,19 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
     }
 
     @Override
-    public void airPressureCallbackThresholdChanged(BrickletBarometer.AirPressureCallbackThreshold threshold) {
+    public void airPressureCallbackThresholdChanged(DeviceAirPressureCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_TOPIC_AIR_PRESSURE_THRESHOLD, threshold);
     }
 
     @Override
-    public void altitudeCallbackThresholdChanged(BrickletBarometer.AltitudeCallbackThreshold threshold) {
+    public void altitudeCallbackThresholdChanged(DeviceAltitudeCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_TOPIC_ALTITUDE_THRESHOLD, threshold);
     }
 
     @Override
-    public void averagingChanged(BrickletBarometer.Averaging averaging) {
-        addStatus(getServiceContract().STATUS_TOPIC_AVERAGING,averaging);
+    public void averagingChanged(DeviceAveraging averaging) {
+        addStatus(getServiceContract().STATUS_TOPIC_AVERAGING, averaging);
     }
-    
-    
 
     class AirPressureEvent {
 

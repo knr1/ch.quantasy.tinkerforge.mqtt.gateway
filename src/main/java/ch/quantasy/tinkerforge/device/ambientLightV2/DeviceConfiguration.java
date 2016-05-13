@@ -23,9 +23,14 @@ public class DeviceConfiguration {
     public DeviceConfiguration() {
     }
 
+    public DeviceConfiguration(short illuminanceRange, short integrationTime) {
+        this.illuminanceRange = illuminanceRange;
+        this.integrationTime = integrationTime;
+    }
+
+    
     public DeviceConfiguration(BrickletAmbientLightV2.Configuration configuration) {
-        this.illuminanceRange = configuration.illuminanceRange;
-        this.integrationTime = configuration.integrationTime;
+        this(configuration.illuminanceRange,configuration.integrationTime);
     }
 
     public short getIlluminanceRange() {

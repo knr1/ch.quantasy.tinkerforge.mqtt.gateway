@@ -87,12 +87,12 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
     }
 
     @Override
-    public void illuminanceCallbackThresholdChanged(IlluminanceCallbackThreshold threshold) {
+    public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_TOPIC_ILLUMINANCE_THRESHOLD, threshold);
     }
 
     @Override
-    public void configurationChanged(Configuration configuration) {
+    public void configurationChanged(DeviceConfiguration configuration) {
         addStatus(getServiceContract().STATUS_TOPIC_CONFIGURATION, configuration);
     }
 

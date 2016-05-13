@@ -22,7 +22,7 @@ public class MoistureDevice extends GenericDevice<BrickletMoisture, MoistureDevi
     private Short average;
     private Long callbackPeriod;
     private Long debouncePeriod;
-    private DeviceMoistureThreshold moistureThreshold;
+    private DeviceMoistureCallbackThreshold moistureThreshold;
 
     public MoistureDevice(TinkerforgeStackAddress address, BrickletMoisture device) throws NotConnectedException, TimeoutException {
         super(address, device);
@@ -32,7 +32,7 @@ public class MoistureDevice extends GenericDevice<BrickletMoisture, MoistureDevi
     protected void addDeviceListeners() {
         getDevice().addMoistureListener(super.getCallback());
         getDevice().addMoistureReachedListener(super.getCallback());
-        
+
         if (average != null) {
             setMovingAverage(average);
         }
@@ -45,7 +45,7 @@ public class MoistureDevice extends GenericDevice<BrickletMoisture, MoistureDevi
         if (moistureThreshold != null) {
             setMoistureCallbackThreshold(moistureThreshold);
         }
-       
+
     }
 
     @Override
@@ -57,8 +57,8 @@ public class MoistureDevice extends GenericDevice<BrickletMoisture, MoistureDevi
     public void setDebouncePeriod(Long period) {
         try {
             getDevice().setDebouncePeriod(period);
-            super.getCallback().debouncePeriodChanged(getDevice().getDebouncePeriod());
-            this.debouncePeriod = period;
+            this.debouncePeriod = getDevice().getDebouncePeriod();
+            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(MoistureDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,19 +67,18 @@ public class MoistureDevice extends GenericDevice<BrickletMoisture, MoistureDevi
     public void setMoistureCallbackPeriod(Long period) {
         try {
             getDevice().setMoistureCallbackPeriod(period);
-            super.getCallback().moistureCallbackPeriodChanged(getDevice().getMoistureCallbackPeriod());
-            this.callbackPeriod = period;
+            this.callbackPeriod = getDevice().getMoistureCallbackPeriod();
+            super.getCallback().moistureCallbackPeriodChanged(this.callbackPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(MoistureDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    
-    public void setMoistureCallbackThreshold(DeviceMoistureThreshold threshold) {
+    public void setMoistureCallbackThreshold(DeviceMoistureCallbackThreshold threshold) {
         try {
-            getDevice().setMoistureCallbackThreshold(threshold.option, threshold.min, threshold.max);
-            super.getCallback().moistureCallbackThresholdChanged(getDevice().getMoistureCallbackThreshold());
-            this.moistureThreshold = threshold;
+            getDevice().setMoistureCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
+            this.moistureThreshold = new DeviceMoistureCallbackThreshold(getDevice().getMoistureCallbackThreshold());
+            super.getCallback().moistureCallbackThresholdChanged(this.moistureThreshold);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(MoistureDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -88,8 +87,8 @@ public class MoistureDevice extends GenericDevice<BrickletMoisture, MoistureDevi
     public void setMovingAverage(Short average) {
         try {
             getDevice().setMovingAverage(average);
-            super.getCallback().movingAverageChanged(getDevice().getMovingAverage());
-            this.average = average;
+            this.average = getDevice().getMovingAverage();
+            super.getCallback().movingAverageChanged(this.average);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(MoistureDevice.class.getName()).log(Level.SEVERE, null, ex);
         }

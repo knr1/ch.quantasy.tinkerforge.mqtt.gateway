@@ -17,6 +17,6 @@ import com.tinkerforge.BrickletAmbientLightV2.Configuration;
 public interface AmbientLightV2DeviceCallback extends DeviceCallback, BrickletAmbientLightV2.IlluminanceListener, BrickletAmbientLightV2.IlluminanceReachedListener {
     public void debouncePeriodChanged(long period);
     public void illuminanceCallbackPeriodChanged(long period);
-    public void illuminanceCallbackThresholdChanged(IlluminanceCallbackThreshold threshold);
-    public void configurationChanged(Configuration average);
+    public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold);
+    public void configurationChanged(DeviceConfiguration average);
 }

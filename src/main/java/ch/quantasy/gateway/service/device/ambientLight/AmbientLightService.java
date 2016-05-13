@@ -108,12 +108,12 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
     }
 
     @Override
-    public void analogValueCallbackThresholdChanged(AnalogValueCallbackThreshold threshold) {
+    public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_TOPIC_ANALOG_VALUE_THRESHOLD, threshold);
     }
 
     @Override
-    public void illuminanceCallbackThresholdChanged(IlluminanceCallbackThreshold threshold) {
+    public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_TOPIC_ILLUMINANCE_THRESHOLD, threshold);
 
     }
@@ -145,14 +145,14 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
     public static class IlluminanceEvent {
 
         long timestamp;
-        int illuminance;
+        int value;
 
         public IlluminanceEvent(int value) {
             this(value, System.currentTimeMillis());
         }
 
         public IlluminanceEvent(int value, long timeStamp) {
-            this.illuminance = value;
+            this.value = value;
             this.timestamp = timeStamp;
         }
 
@@ -160,8 +160,8 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
             return timestamp;
         }
 
-        public int getHumidity() {
-            return illuminance;
+        public int getValue() {
+            return value;
         }
 
     }

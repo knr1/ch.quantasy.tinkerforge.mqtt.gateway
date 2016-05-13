@@ -3,33 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.quantasy.tinkerforge.device.ambientLight;
+package ch.quantasy.tinkerforge.device.humidity;
 
-import com.tinkerforge.BrickletAmbientLight;
+import com.tinkerforge.BrickletHumidity;
 
 /**
  *
  * @author reto
  */
-public class DeviceAnalogValueCallbackThreshold {
+public class DeviceHumidityCallbackThreshold {
     
     private char option;
     private int min;
     private int max;
 
-    public DeviceAnalogValueCallbackThreshold() {
+    public DeviceHumidityCallbackThreshold() {
     }
 
-    public DeviceAnalogValueCallbackThreshold(char option, int min, int max) {
+    public DeviceHumidityCallbackThreshold(BrickletHumidity.HumidityCallbackThreshold threshold) {
+        this(threshold.option,threshold.min,threshold.max);
+    }
+
+    public DeviceHumidityCallbackThreshold(char option, int min, int max) {
         this.option = option;
         this.min = min;
         this.max = max;
-    }
-    
-    
-
-    public DeviceAnalogValueCallbackThreshold(BrickletAmbientLight.AnalogValueCallbackThreshold threshold) {
-        this(threshold.option,threshold.min,threshold.max);
     }
 
     public int getMax() {
@@ -43,6 +41,7 @@ public class DeviceAnalogValueCallbackThreshold {
     public char getOption() {
         return option;
     }
+    
     
     
     

@@ -52,7 +52,7 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
         if (altitudeThreshold != null) {
             setAltitudeCallbackThreshold(altitudeThreshold);
         }
-        if(averaging!=null){
+        if (averaging != null) {
             setAveraging(averaging);
         }
     }
@@ -68,8 +68,8 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
     public void setDebouncePeriod(Long period) {
         try {
             getDevice().setDebouncePeriod(period);
-            super.getCallback().debouncePeriodChanged(getDevice().getDebouncePeriod());
-            this.debouncePeriod = period;
+            this.debouncePeriod = getDevice().getDebouncePeriod();
+            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(BarometerDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -78,8 +78,8 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
     public void setAirPressureCallbackPeriod(Long period) {
         try {
             getDevice().setAirPressureCallbackPeriod(period);
-            super.getCallback().airPressureCallbackPeriodChanged(getDevice().getAirPressureCallbackPeriod());
-            this.airPressureCallbackPeriod = period;
+            this.airPressureCallbackPeriod = getDevice().getAirPressureCallbackPeriod();
+            super.getCallback().airPressureCallbackPeriodChanged(this.airPressureCallbackPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(BarometerDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -88,8 +88,8 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
     public void setAltitudeCallbackPeriod(Long period) {
         try {
             getDevice().setAltitudeCallbackPeriod(period);
-            super.getCallback().altitudeCallbackPeriodChanged(getDevice().getAltitudeCallbackPeriod());
-            this.altitudeCallbackPeriod = period;
+            this.altitudeCallbackPeriod = getDevice().getAltitudeCallbackPeriod();
+            super.getCallback().altitudeCallbackPeriodChanged(this.altitudeCallbackPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(BarometerDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,8 +98,8 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
     public void setAirPressureThreshold(DeviceAirPressureCallbackThreshold threshold) {
         try {
             getDevice().setAirPressureCallbackThreshold(threshold.option, threshold.min, threshold.max);
-            super.getCallback().airPressureCallbackThresholdChanged(getDevice().getAirPressureCallbackThreshold());
-            this.airPressureThreshold = threshold;
+            this.airPressureThreshold = new DeviceAirPressureCallbackThreshold(getDevice().getAirPressureCallbackThreshold());
+            super.getCallback().airPressureCallbackThresholdChanged(this.airPressureThreshold);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(BarometerDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -108,21 +108,21 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
     public void setAltitudeCallbackThreshold(DeviceAltitudeCallbackThreshold threshold) {
         try {
             getDevice().setAltitudeCallbackThreshold(threshold.option, threshold.min, threshold.max);
-            super.getCallback().altitudeCallbackThresholdChanged(getDevice().getAltitudeCallbackThreshold());
-            this.altitudeThreshold = threshold;
+            this.altitudeThreshold = new DeviceAltitudeCallbackThreshold(getDevice().getAltitudeCallbackThreshold());
+            super.getCallback().altitudeCallbackThresholdChanged(this.altitudeThreshold);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(BarometerDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void setAveraging(DeviceAveraging averaging){
+
+    public void setAveraging(DeviceAveraging averaging) {
         try {
-            getDevice().setAveraging(averaging.getMovingAveragePressure(),averaging.getAveragingPressure(),averaging.getAveragingTemperature());
-            super.getCallback().averagingChanged(getDevice().getAveraging());
-            this.averaging = averaging;
+            getDevice().setAveraging(averaging.getMovingAveragePressure(), averaging.getAveragingPressure(), averaging.getAveragingTemperature());
+            this.averaging = new DeviceAveraging(getDevice().getAveraging());
+            super.getCallback().averagingChanged(this.averaging);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(BarometerDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 
 }

@@ -32,7 +32,7 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
     protected void addDeviceListeners() {
         getDevice().addIlluminanceListener(super.getCallback());
         getDevice().addIlluminanceReachedListener(super.getCallback());
-        
+
         if (configuration != null) {
             setConfiguration(configuration);
         }
@@ -45,7 +45,7 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
         if (illuminanceThreshold != null) {
             setIlluminanceCallbackThreshold(illuminanceThreshold);
         }
-       
+
     }
 
     @Override
@@ -57,8 +57,8 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
     public void setDebouncePeriod(Long period) {
         try {
             getDevice().setDebouncePeriod(period);
-            super.getCallback().debouncePeriodChanged(getDevice().getDebouncePeriod());
-            this.debouncePeriod = period;
+            this.debouncePeriod = getDevice().getDebouncePeriod();
+            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,19 +67,18 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
     public void setIlluminanceCallbackPeriod(Long period) {
         try {
             getDevice().setIlluminanceCallbackPeriod(period);
-            super.getCallback().illuminanceCallbackPeriodChanged(getDevice().getIlluminanceCallbackPeriod());
-            this.callbackPeriod = period;
+            this.callbackPeriod = getDevice().getIlluminanceCallbackPeriod();
+            super.getCallback().illuminanceCallbackPeriodChanged(this.callbackPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    
     public void setIlluminanceCallbackThreshold(DeviceIlluminanceCallbackThreshold threshold) {
         try {
-            getDevice().setIlluminanceCallbackThreshold(threshold.option, threshold.min, threshold.max);
-            super.getCallback().illuminanceCallbackThresholdChanged(getDevice().getIlluminanceCallbackThreshold());
-            this.illuminanceThreshold = threshold;
+            getDevice().setIlluminanceCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
+            this.illuminanceThreshold = new DeviceIlluminanceCallbackThreshold(getDevice().getIlluminanceCallbackThreshold());
+            super.getCallback().illuminanceCallbackThresholdChanged(this.illuminanceThreshold);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -87,9 +86,9 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
 
     public void setConfiguration(DeviceConfiguration configuration) {
         try {
-            getDevice().setConfiguration(configuration.getIlluminanceRange(),configuration.getIntegrationTime());
-            super.getCallback().configurationChanged(getDevice().getConfiguration());
-            this.configuration = configuration;
+            getDevice().setConfiguration(configuration.getIlluminanceRange(), configuration.getIntegrationTime());
+            this.configuration = new DeviceConfiguration(getDevice().getConfiguration());
+            super.getCallback().configurationChanged(this.configuration);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
