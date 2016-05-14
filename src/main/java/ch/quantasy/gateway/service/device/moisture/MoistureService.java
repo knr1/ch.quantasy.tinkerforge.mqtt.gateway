@@ -21,7 +21,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDeviceCallback;
 import ch.quantasy.tinkerforge.device.moisture.DeviceMoistureCallbackThreshold;
-import com.tinkerforge.BrickletMoisture;
 
 /**
  *
@@ -98,14 +97,14 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
     class MoistureEvent {
 
         protected long timestamp;
-        protected int moisture;
+        protected int value;
 
         public MoistureEvent(int value) {
             this(value, System.currentTimeMillis());
         }
 
         public MoistureEvent(int value, long timeStamp) {
-            this.moisture = value;
+            this.value = value;
             this.timestamp = timeStamp;
         }
 
@@ -113,8 +112,8 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
             return timestamp;
         }
 
-        public int getMoisture() {
-            return moisture;
+        public int getValue() {
+            return value;
         }
 
     }

@@ -21,6 +21,7 @@ import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
+import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
@@ -39,6 +40,7 @@ import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletRemoteSwitch;
 import com.tinkerforge.BrickletTemperatureIR;
+import com.tinkerforge.BrickletTilt;
 import com.tinkerforge.BrickletUVLight;
 import com.tinkerforge.Device;
 import com.tinkerforge.NotConnectedException;
@@ -100,6 +102,9 @@ public class TinkerforgeDeviceMapper {
         }
          if(TinkerforgeDeviceClass.DustDetector==TinkerforgeDeviceClass.getDevice(device)){
             return new DustDetectorDevice(address,(BrickletDustDetector)device);
+        }
+         if(TinkerforgeDeviceClass.Tilt==TinkerforgeDeviceClass.getDevice(device)){
+            return new TiltDevice(address,(BrickletTilt)device);
         }
         return new TinkerforgeDevice(address, device);
     }

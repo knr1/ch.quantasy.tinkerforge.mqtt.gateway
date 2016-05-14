@@ -10,22 +10,22 @@
  * This time, an agent is communicating with the service and controls it.
  * This way we delve into the Service based Agent oriented programming
  */
-package ch.quantasy.gateway.service.device.motionDetector;
+package ch.quantasy.gateway.service.device.tilt;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
+import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
+import com.tinkerforge.BrickletTilt;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
-import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDeviceCallback;
 
 /**
  *
  * @author reto
  */
-public class MotionDetectorService extends AbstractDeviceService<MotionDetectorDevice, MotionDetectorServiceContract> implements MotionDetectorDeviceCallback {
+public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceContract> implements BrickletTilt.TiltStateListener {
 
-    public MotionDetectorService(MotionDetectorDevice device) throws MqttException {
-        super(device, new MotionDetectorServiceContract(device));
+    public TiltService(TiltDevice device) throws MqttException {
+        super(device, new TiltServiceContract(device));
     }
 
     @Override
@@ -34,13 +34,31 @@ public class MotionDetectorService extends AbstractDeviceService<MotionDetectorD
     }
 
     @Override
-    public void detectionCycleEnded() {
-        addEvent(getServiceContract().EVENT_TOPIC_DETECTION_CYCLE_ENDED, System.currentTimeMillis());
-
+    public void tiltState(short s) {
+        addEvent(getServiceContract().EVENT_TOPIC_TILT_STATE, new TiltEvent(s));
     }
+    
+    class TiltEvent {
 
-    @Override
-    public void motionDetected() {
-        addEvent(getServiceContract().EVENT_TOPIC_MOTION_DETECTED, System.currentTimeMillis());
+        long timestamp;
+        short value;
+
+        public TiltEvent(short value) {
+            this(value, System.currentTimeMillis());
+        }
+
+        public TiltEvent(short value, long timeStamp) {
+            this.value = value;
+            this.timestamp = timeStamp;
+        }
+
+        public long getTimestamp() {
+            return timestamp;
+        }
+
+        public short getValue() {
+            return value;
+        }
+
     }
 }

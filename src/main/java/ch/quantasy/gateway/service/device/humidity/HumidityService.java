@@ -151,14 +151,14 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
     class HumidityEvent {
 
         long timestamp;
-        int humidity;
+        int value;
 
         public HumidityEvent(int value) {
             this(value, System.currentTimeMillis());
         }
 
         public HumidityEvent(int value, long timeStamp) {
-            this.humidity = value;
+            this.value = value;
             this.timestamp = timeStamp;
         }
 
@@ -166,8 +166,8 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
             return timestamp;
         }
 
-        public int getHumidity() {
-            return humidity;
+        public int getValue() {
+            return value;
         }
 
     }
