@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.quantasy.tinkerforge.device.co2Device;
+package ch.quantasy.tinkerforge.device.co2;
 
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletCO2;
@@ -19,6 +19,6 @@ public interface CO2DeviceCallback extends DeviceCallback, BrickletCO2.CO2Concen
 
     public void debouncePeriodChanged(long period);
 
-    public void co2ConcentrationCallbackThresholdChanged(BrickletCO2.CO2ConcentrationCallbackThreshold threshold);
+    public void co2ConcentrationCallbackThresholdChanged(DeviceCO2ConcentrationCallbackThreshold threshold);
 
    }

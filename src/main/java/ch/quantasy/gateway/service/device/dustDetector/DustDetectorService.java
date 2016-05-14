@@ -10,12 +10,12 @@
  * This time, an agent is communicating with the service and controls it.
  * This way we delve into the Service based Agent oriented programming
  */
-package ch.quantasy.gateway.service.device.co2;
+package ch.quantasy.gateway.service.device.dustDetector;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.co2.CO2Device;
-import ch.quantasy.tinkerforge.device.co2.CO2DeviceCallback;
-import ch.quantasy.tinkerforge.device.co2.DeviceCO2ConcentrationCallbackThreshold;
+import ch.quantasy.tinkerforge.device.dustDetector.DeviceDustDensityCallbackThreshold;
+import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
+import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDeviceCallback;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,11 +26,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author reto
  */
-public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContract> implements CO2DeviceCallback {
+public class DustDetectorService extends AbstractDeviceService<DustDetectorDevice, DustDetectorServiceContract> implements DustDetectorDeviceCallback {
 
-    public CO2Service(CO2Device device) throws MqttException {
+    public DustDetectorService(DustDetectorDevice device) throws MqttException {
 
-        super(device, new CO2ServiceContract(device));
+        super(device, new DustDetectorServiceContract(device));
     }
 
     @Override
@@ -46,20 +46,20 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_CO2_CONCENTRATION_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_TOPIC_DUST_DENSITY_CALLBACK_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setCO2ConcentrationCallbackPeriod(period);
+                getDevice().setDustDensityCallbackPeriod(period);
             }
 
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_CO2_CONCENTRATION_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_TOPIC_DUST_DENSITY_THRESHOLD)) {
 
-                DeviceCO2ConcentrationCallbackThreshold threshold = getMapper().readValue(payload, DeviceCO2ConcentrationCallbackThreshold.class);
-                getDevice().setCO2ConcentrationCallbackThreshold(threshold);
+                DeviceDustDensityCallbackThreshold threshold = getMapper().readValue(payload, DeviceDustDensityCallbackThreshold.class);
+                getDevice().setDustDensityCallbackThreshold(threshold);
             }
 
         } catch (IOException ex) {
-            Logger.getLogger(CO2Service.class
+            Logger.getLogger(DustDetectorService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;
         }
@@ -73,35 +73,35 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
     }
 
     @Override
-    public void co2ConcentrationCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_CO2_CONCENTRATION_CALLBACK_PERIOD, period);
+    public void dustDensityCallbackPeriodChanged(long period) {
+        addStatus(getServiceContract().STATUS_TOPIC_DUST_DENSITY_CALLBACK_PERIOD, period);
     }
 
     @Override
-    public void co2ConcentrationCallbackThresholdChanged(DeviceCO2ConcentrationCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_CO2_CONCENTRATION_THRESHOLD, threshold);
+    public void dustDensityCallbackThresholdChanged(DeviceDustDensityCallbackThreshold threshold) {
+        addStatus(getServiceContract().STATUS_TOPIC_DUST_DENSITY_THRESHOLD, threshold);
     }
 
     @Override
-    public void co2Concentration(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_CO2_CONCENTRATION, new CO2ConcentrationEvent(i));
+    public void dustDensity(int i) {
+        addEvent(getServiceContract().EVENT_TOPIC_DUST_DENSITY, new DustDensityEvent(i));
     }
 
     @Override
-    public void co2ConcentrationReached(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_CO2_CONCENTRATION_REACHED, new CO2ConcentrationEvent(i));
+    public void dustDensityReached(int i) {
+        addEvent(getServiceContract().EVENT_TOPIC_DUST_DENSITY_REACHED, new DustDensityEvent(i));
     }
 
-    class CO2ConcentrationEvent {
+    class DustDensityEvent {
 
         protected long timestamp;
         protected long value;
 
-        public CO2ConcentrationEvent(long value) {
+        public DustDensityEvent(long value) {
             this(value, System.currentTimeMillis());
         }
 
-        public CO2ConcentrationEvent(long value, long timeStamp) {
+        public DustDensityEvent(long value, long timeStamp) {
             this.value = value;
             this.timestamp = timeStamp;
         }

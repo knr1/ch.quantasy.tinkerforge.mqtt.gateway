@@ -6,7 +6,7 @@
 package ch.quantasy.gateway.service.device.co2;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
-import ch.quantasy.tinkerforge.device.co2Device.CO2Device;
+import ch.quantasy.tinkerforge.device.co2.CO2Device;
 
 /**
  *

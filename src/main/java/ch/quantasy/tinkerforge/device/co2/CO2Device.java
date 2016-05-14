@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.quantasy.tinkerforge.device.co2Device;
+package ch.quantasy.tinkerforge.device.co2;
 
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
-import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletCO2;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -53,8 +52,8 @@ public class CO2Device extends GenericDevice<BrickletCO2, CO2DeviceCallback> {
     public void setDebouncePeriod(Long period) {
         try {
             getDevice().setDebouncePeriod(period);
-            super.getCallback().debouncePeriodChanged(getDevice().getDebouncePeriod());
-            this.debouncePeriod = period;
+            this.debouncePeriod = getDevice().getDebouncePeriod();
+            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(CO2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -63,8 +62,8 @@ public class CO2Device extends GenericDevice<BrickletCO2, CO2DeviceCallback> {
     public void setCO2ConcentrationCallbackPeriod(Long period) {
         try {
             getDevice().setCO2ConcentrationCallbackPeriod(period);
-            super.getCallback().co2ConcentrationCallbackPeriodChanged(getDevice().getCO2ConcentrationCallbackPeriod());
-            this.co2ConcentrationCallbackPeriod = period;
+            this.co2ConcentrationCallbackPeriod = getDevice().getCO2ConcentrationCallbackPeriod();
+            super.getCallback().co2ConcentrationCallbackPeriodChanged(this.co2ConcentrationCallbackPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(CO2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,9 +71,9 @@ public class CO2Device extends GenericDevice<BrickletCO2, CO2DeviceCallback> {
 
     public void setCO2ConcentrationCallbackThreshold(DeviceCO2ConcentrationCallbackThreshold threshold) {
         try {
-            getDevice().setCO2ConcentrationCallbackThreshold(threshold.option, threshold.min, threshold.max);
-            super.getCallback().co2ConcentrationCallbackThresholdChanged(getDevice().getCO2ConcentrationCallbackThreshold());
-            this.threshold = threshold;
+            getDevice().setCO2ConcentrationCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
+            this.threshold = new DeviceCO2ConcentrationCallbackThreshold(getDevice().getCO2ConcentrationCallbackThreshold());
+            super.getCallback().co2ConcentrationCallbackThresholdChanged(this.threshold);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(CO2Device.class.getName()).log(Level.SEVERE, null, ex);
         }

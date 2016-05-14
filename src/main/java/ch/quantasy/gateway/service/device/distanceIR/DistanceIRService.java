@@ -12,7 +12,6 @@
  */
 package ch.quantasy.gateway.service.device.distanceIR;
 
-import ch.quantasy.gateway.service.device.ambientLight.*;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.distanceIR.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.tinkerforge.device.distanceIR.DeviceDistanceCallbackThreshold;

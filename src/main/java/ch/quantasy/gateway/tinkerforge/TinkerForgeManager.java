@@ -19,6 +19,7 @@ import ch.quantasy.gateway.service.device.moisture.MoistureService;
 import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorService;
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchService;
 import ch.quantasy.gateway.service.device.dualButton.DualButtonService;
+import ch.quantasy.gateway.service.device.dustDetector.DustDetectorService;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
 import ch.quantasy.gateway.service.device.uvLight.UVLightService;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
@@ -27,12 +28,13 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
-import ch.quantasy.tinkerforge.device.co2Device.CO2Device;
+import ch.quantasy.tinkerforge.device.co2.CO2Device;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
+import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
@@ -194,6 +196,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof DistanceIRDevice) {
                 DistanceIRService service=new DistanceIRService((DistanceIRDevice) tinkerforgeDevice);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof DustDetectorDevice) {
+                DustDetectorService service=new DustDetectorService((DustDetectorDevice) tinkerforgeDevice);
                 System.out.println(service);
             }
         } catch (MqttException ex) {

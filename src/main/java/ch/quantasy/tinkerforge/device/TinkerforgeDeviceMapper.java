@@ -8,12 +8,13 @@ package ch.quantasy.tinkerforge.device;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
-import ch.quantasy.tinkerforge.device.co2Device.CO2Device;
+import ch.quantasy.tinkerforge.device.co2.CO2Device;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
+import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
@@ -31,6 +32,7 @@ import com.tinkerforge.BrickletDistanceIR;
 import com.tinkerforge.BrickletDistanceUS;
 import com.tinkerforge.BrickletDualButton;
 import com.tinkerforge.BrickletDualRelay;
+import com.tinkerforge.BrickletDustDetector;
 import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletLEDStrip;
 import com.tinkerforge.BrickletMoisture;
@@ -95,6 +97,9 @@ public class TinkerforgeDeviceMapper {
         }
         if(TinkerforgeDeviceClass.DistanceIR==TinkerforgeDeviceClass.getDevice(device)){
             return new DistanceIRDevice(address,(BrickletDistanceIR)device);
+        }
+         if(TinkerforgeDeviceClass.DustDetector==TinkerforgeDeviceClass.getDevice(device)){
+            return new DustDetectorDevice(address,(BrickletDustDetector)device);
         }
         return new TinkerforgeDevice(address, device);
     }

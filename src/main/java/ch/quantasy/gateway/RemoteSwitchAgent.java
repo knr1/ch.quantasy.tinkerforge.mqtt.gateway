@@ -83,7 +83,8 @@ public class RemoteSwitchAgent implements MQTTCommunicationCallback {
 
     public void config(SwitchSocketCParameters.SwitchTo switchTo) throws JsonProcessingException {
         //SwitchSocketCParameters config = new SwitchSocketCParameters('c', (short) 3, switchTo);
-        SwitchSocketCParameters config = new SwitchSocketCParameters('C', (short) 2, switchTo);
+        //SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 2, switchTo);
+SwitchSocketCParameters config = new SwitchSocketCParameters('C', (short) 2, switchTo);
 
         MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(config));
         String topic = serviceContract.INTENT_TOPIC_SWITCH_SOCKET_C;

@@ -13,18 +13,6 @@
 package ch.quantasy.gateway.service.device.remoteSwitch;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.service.device.DeviceServiceContract;
-import ch.quantasy.mqtt.communication.MQTTCommunication;
-import ch.quantasy.mqtt.communication.MQTTCommunicationCallback;
-import ch.quantasy.mqtt.communication.MQTTParameters;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.remoteSwitch.DimSocketBParameters;
