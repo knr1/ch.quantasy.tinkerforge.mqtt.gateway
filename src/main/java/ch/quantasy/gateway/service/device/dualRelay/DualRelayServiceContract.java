@@ -16,17 +16,17 @@ import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 public class DualRelayServiceContract extends DeviceServiceContract {
 
     public final String STATE;
-    public final String INTENT_TOPIC_STATE;
-    public final String STATUS_TOPIC_STATE;
+    public final String INTENT_STATE;
+    public final String STATUS_STATE;
 
     public final String SELECTED_STATE;
-    public final String INTENT_TOPIC_SELECTED_STATE;
+    public final String INTENT_SELECTED_STATE;
 
     public final String MONOFLOP_DONE;
-    public final String EVENT_TOPIC_MONOFLOP_DONE;
+    public final String EVENT_MONOFLOP_DONE;
 
     public final String MONOFLOP;
-    public final String INTENT_TOPIC_MONOFLOP;
+    public final String INTENT_MONOFLOP;
 
     public DualRelayServiceContract(DualRelayDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -35,17 +35,17 @@ public class DualRelayServiceContract extends DeviceServiceContract {
     public DualRelayServiceContract(String id, String device) {
         super(id, device);
         MONOFLOP_DONE = "monoflopDone";
-        EVENT_TOPIC_MONOFLOP_DONE = EVENT_TOPIC + "/" + MONOFLOP_DONE;
+        EVENT_MONOFLOP_DONE = EVENT + "/" + MONOFLOP_DONE;
 
         MONOFLOP = "monoflop";
-        INTENT_TOPIC_MONOFLOP = INTENT_TOPIC + "/" + MONOFLOP;
+        INTENT_MONOFLOP = INTENT + "/" + MONOFLOP;
 
         STATE = "state";
-        INTENT_TOPIC_STATE = INTENT_TOPIC + "/" + STATE;
-        STATUS_TOPIC_STATE = STATUS_TOPIC + "/" + STATE;
+        INTENT_STATE = INTENT + "/" + STATE;
+        STATUS_STATE = STATUS + "/" + STATE;
 
         SELECTED_STATE = "selectedState";
-        INTENT_TOPIC_SELECTED_STATE = INTENT_TOPIC + "/" + SELECTED_STATE;
+        INTENT_SELECTED_STATE = INTENT + "/" + SELECTED_STATE;
 
     }
 }

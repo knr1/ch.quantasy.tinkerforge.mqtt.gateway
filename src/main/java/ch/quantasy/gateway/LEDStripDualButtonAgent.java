@@ -68,7 +68,7 @@ public class LEDStripDualButtonAgent implements MQTTCommunicationCallback {
     @Override
     public void messageArrived(String string, MqttMessage mm) throws Exception {
         System.out.println(string);
-        if (string.equals(serviceContractDualButton.EVENT_TOPIC_STATE_CHANGED)) {
+        if (string.equals(serviceContractDualButton.EVENT_STATE_CHANGED)) {
             System.out.println(new String(mm.getPayload()));
             DualButtonService.StateChangedEvent[] stateChangedEvents = mapper.readValue(mm.getPayload(), DualButtonService.StateChangedEvent[].class);
             if (stateChangedEvents.length > 0) {
@@ -103,7 +103,7 @@ public class LEDStripDualButtonAgent implements MQTTCommunicationCallback {
     public void config() throws JsonProcessingException {
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2812, 2000000, 1, 120, LEDStripDeviceConfig.ChannelMapping.BRG);
         MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(config));
-        String topic = serviceContractLED.INTENT_TOPIC_CONFIG;
+        String topic = serviceContractLED.INTENT_CONFIG;
         messageMap.put(topic, message);
         communication.readyToPublish(this, topic);
 
@@ -122,7 +122,7 @@ public class LEDStripDualButtonAgent implements MQTTCommunicationCallback {
     public void leds(int switcher) throws JsonProcessingException {
 
         MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(this.leds[switcher]));
-        String topic = serviceContractLED.INTENT_TOPIC_LEDs;
+        String topic = serviceContractLED.INTENT_LEDs;
         messageMap.put(topic, message);
         communication.readyToPublish(this, topic);
 

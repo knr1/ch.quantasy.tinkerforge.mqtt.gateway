@@ -52,12 +52,12 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
             return;
         }
         try {
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_CONFIG)) {
+            if (string.startsWith(getServiceContract().INTENT_CONFIG)) {
                 LEDStripDeviceConfig config = getMapper().readValue(payload, LEDStripDeviceConfig.class
                 );
                 getDevice().setConfig(config);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_LEDs)) {
+            if (string.startsWith(getServiceContract().INTENT_LEDs)) {
                 leds = (getMapper().readValue(payload, short[][].class));
                 getDevice().readyToPublish(this);
             }
@@ -69,7 +69,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
     }
     @Override
     public void configurationChanged(LEDStripDeviceConfig config) {
-        addStatus(getServiceContract().STATUS_TOPIC_CONFIG,config);
+        addStatus(getServiceContract().STATUS_CONFIG,config);
     }
 
     @Override

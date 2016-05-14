@@ -39,24 +39,24 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
             return;
 
         }
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_DIM_SOCKET_B)) {
+        if (string.startsWith(getServiceContract().INTENT_DIM_SOCKET_B)) {
             DimSocketBParameters parameters = getMapper().readValue(payload, DimSocketBParameters.class);
             getDevice().dimSocketB(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_SWITCH_SOCKET_A)) {
+        if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_A)) {
             SwitchSocketAParameters parameters = getMapper().readValue(payload, SwitchSocketAParameters.class);
             getDevice().switchSocketA(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_SWITCH_SOCKET_B)) {
+        if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_B)) {
             SwitchSocketBParameters parameters = getMapper().readValue(payload, SwitchSocketBParameters.class);
             getDevice().switchSocketB(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_SWITCH_SOCKET_C)) {
+        if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_C)) {
 
             SwitchSocketCParameters parameters = getMapper().readValue(payload, SwitchSocketCParameters.class);
             getDevice().switchSocketC(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_REPEATS)) {
+        if (string.startsWith(getServiceContract().INTENT_REPEATS)) {
             short value = getMapper().readValue(payload, short.class);
             getDevice().setRepeats(value);
         }
@@ -64,12 +64,12 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
 
     @Override
     public void repeatsChanged(short period) {
-        addStatus(getServiceContract().STATUS_TOPIC_REPEATS, period);
+        addStatus(getServiceContract().STATUS_REPEATS, period);
     }
 
     @Override
     public void switchingDone() {
-        addEvent(getServiceContract().EVENT_TOPIC_SWITCHING_DONE, System.currentTimeMillis());
+        addEvent(getServiceContract().EVENT_SWITCHING_DONE, System.currentTimeMillis());
     }
 
 }

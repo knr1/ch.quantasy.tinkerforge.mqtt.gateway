@@ -38,15 +38,15 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
             return;
         }
 
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_MONOFLOP)) {
+        if (string.startsWith(getServiceContract().INTENT_MONOFLOP)) {
             DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
             getDevice().setMonoflop(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_SELECTED_STATE)) {
+        if (string.startsWith(getServiceContract().INTENT_SELECTED_STATE)) {
             DeviceSelectedState parameters = getMapper().readValue(payload, DeviceSelectedState.class);
             getDevice().setSelectedState(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_STATE)) {   
+        if (string.startsWith(getServiceContract().INTENT_STATE)) {   
             DeviceState parameters = getMapper().readValue(payload, DeviceState.class);
             getDevice().setState(parameters);
         }
@@ -55,12 +55,12 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     @Override
     public void stateChanged(DeviceState state) {
-        addStatus(getServiceContract().STATUS_TOPIC_STATE, state);
+        addStatus(getServiceContract().STATUS_STATE, state);
     }
 
     @Override
     public void monoflopDone(short relay, boolean state) {
-        addEvent(getServiceContract().EVENT_TOPIC_MONOFLOP_DONE,new MonoflopDoneEvent(relay, state));
+        addEvent(getServiceContract().EVENT_MONOFLOP_DONE,new MonoflopDoneEvent(relay, state));
     }
 
     class MonoflopDoneEvent {

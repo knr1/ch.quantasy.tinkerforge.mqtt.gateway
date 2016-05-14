@@ -41,18 +41,18 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
 
         }
         try {
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DEBOUNCE_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_CO2_CONCENTRATION_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setCO2ConcentrationCallbackPeriod(period);
             }
 
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_CO2_CONCENTRATION_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_CO2_CONCENTRATION_THRESHOLD)) {
 
                 DeviceCO2ConcentrationCallbackThreshold threshold = getMapper().readValue(payload, DeviceCO2ConcentrationCallbackThreshold.class);
                 getDevice().setCO2ConcentrationCallbackThreshold(threshold);
@@ -69,27 +69,27 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_DEBOUNCE_PERIOD, period);
+        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void co2ConcentrationCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_CO2_CONCENTRATION_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void co2ConcentrationCallbackThresholdChanged(DeviceCO2ConcentrationCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_CO2_CONCENTRATION_THRESHOLD, threshold);
+        addStatus(getServiceContract().STATUS_CO2_CONCENTRATION_THRESHOLD, threshold);
     }
 
     @Override
     public void co2Concentration(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_CO2_CONCENTRATION, new CO2ConcentrationEvent(i));
+        addEvent(getServiceContract().EVENT_CO2_CONCENTRATION, new CO2ConcentrationEvent(i));
     }
 
     @Override
     public void co2ConcentrationReached(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_CO2_CONCENTRATION_REACHED, new CO2ConcentrationEvent(i));
+        addEvent(getServiceContract().EVENT_CO2_CONCENTRATION_REACHED, new CO2ConcentrationEvent(i));
     }
 
     class CO2ConcentrationEvent {

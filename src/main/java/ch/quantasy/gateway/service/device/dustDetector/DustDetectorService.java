@@ -41,18 +41,18 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
         }
         try {
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DEBOUNCE_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DUST_DENSITY_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDustDensityCallbackPeriod(period);
             }
 
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DUST_DENSITY_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_DUST_DENSITY_THRESHOLD)) {
 
                 DeviceDustDensityCallbackThreshold threshold = getMapper().readValue(payload, DeviceDustDensityCallbackThreshold.class);
                 getDevice().setDustDensityCallbackThreshold(threshold);
@@ -69,27 +69,27 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_DEBOUNCE_PERIOD, period);
+        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void dustDensityCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_DUST_DENSITY_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void dustDensityCallbackThresholdChanged(DeviceDustDensityCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_DUST_DENSITY_THRESHOLD, threshold);
+        addStatus(getServiceContract().STATUS_DUST_DENSITY_THRESHOLD, threshold);
     }
 
     @Override
     public void dustDensity(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_DUST_DENSITY, new DustDensityEvent(i));
+        addEvent(getServiceContract().EVENT_DUST_DENSITY, new DustDensityEvent(i));
     }
 
     @Override
     public void dustDensityReached(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_DUST_DENSITY_REACHED, new DustDensityEvent(i));
+        addEvent(getServiceContract().EVENT_DUST_DENSITY_REACHED, new DustDensityEvent(i));
     }
 
     class DustDensityEvent {

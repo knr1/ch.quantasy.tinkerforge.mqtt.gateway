@@ -43,7 +43,7 @@ public class HumidityAgent implements MQTTCommunicationCallback {
         parameters.setLastWillMessage(humidityServiceContract.OFFLINE.getBytes());
         parameters.setLastWillQoS(1);
         parameters.setServerURIs(URI.create("tcp://127.0.0.1:1883"));
-        parameters.setWillTopic(humidityServiceContract.STATUS_TOPIC_CONNECTION);
+        parameters.setWillTopic(humidityServiceContract.STATUS_CONNECTION);
         parameters.setMqttCallback(this);
         communication.connect(parameters);
         communication.publishActualWill(humidityServiceContract.ONLINE.getBytes());

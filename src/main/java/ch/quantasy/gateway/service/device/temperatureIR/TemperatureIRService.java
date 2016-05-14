@@ -40,23 +40,23 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
             return;
         }
         try {
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DEBOUNCE_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_AMBIENT_TEMPERATURE_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setAmbientTemperatureCallbackPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_OBJECT_TEMPERATURE_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setObjectTemperatureCallbackPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_AMBIENT_TEMPERATURE_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_AMBIENT_TEMPERATURE_THRESHOLD)) {
                 DeviceAmbientTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceAmbientTemperatureCallbackThreshold.class);
                 getDevice().setAmbientTemperatureThreshold(threshold);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_OBJECT_TEMPERATURE_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_OBJECT_TEMPERATURE_THRESHOLD)) {
                 DeviceObjectTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceObjectTemperatureCallbackThreshold.class);
                 getDevice().setObjectTemperatureThreshold(threshold);
 
@@ -71,50 +71,50 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
 
     @Override
     public void ambientTemperature(short s) {
-        addEvent(getServiceContract().EVENT_TOPIC_AMBIENT_TEMPERATURE, new AmbientTemperatureEvent(s));
+        addEvent(getServiceContract().EVENT_AMBIENT_TEMPERATURE, new AmbientTemperatureEvent(s));
     }
 
     @Override
     public void ambientTemperatureReached(short s) {
-        addEvent(getServiceContract().EVENT_TOPIC_AMBIENT_TEMPERATURE_REACHED, new AmbientTemperatureEvent(s));
+        addEvent(getServiceContract().EVENT_AMBIENT_TEMPERATURE_REACHED, new AmbientTemperatureEvent(s));
     }
 
     @Override
     public void objectTemperature(short s) {
-        addEvent(getServiceContract().EVENT_TOPIC_OBJECT_TEMPERATURE, new ObjectTemperatureEvent(s));
+        addEvent(getServiceContract().EVENT_OBJECT_TEMPERATURE, new ObjectTemperatureEvent(s));
     }
 
     @Override
     public void objectTemperatureReached(short s) {
-        addEvent(getServiceContract().EVENT_TOPIC_OBJECT_TEMPERATURE_REACHED, new ObjectTemperatureEvent(s));
+        addEvent(getServiceContract().EVENT_OBJECT_TEMPERATURE_REACHED, new ObjectTemperatureEvent(s));
     }
     
     
 
     @Override
     public void ambientTemperatureCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void objectTemperatureCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().INTENT_TOPIC_OBJECT_TEMPERATURE_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_DEBOUNCE_PERIOD, period);
+        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void ambientTemperatureCallbackThresholdChanged(DeviceAmbientTemperatureCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_AMBIENT_TEMPERATURE_THRESHOLD, threshold);
+        addStatus(getServiceContract().STATUS_AMBIENT_TEMPERATURE_THRESHOLD, threshold);
     }
     
 
     @Override
     public void objectTemperatureCallbackThresholdChanged(DeviceObjectTemperatureCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_OBJECT_TEMPERATURE_THRESHOLD, threshold);
+        addStatus(getServiceContract().STATUS_OBJECT_TEMPERATURE_THRESHOLD, threshold);
 
     }
 

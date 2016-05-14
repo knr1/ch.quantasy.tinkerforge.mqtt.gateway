@@ -20,25 +20,25 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
     public final String THRESHOLD;
 
     public final String DISTANCE;
-    public final String STATUS_TOPIC_DISTANCE;
-    public final String STATUS_TOPIC_DISTANCE_THRESHOLD;
-    public final String STATUS_TOPIC_DISTANCE_CALLBACK_PERIOD;
-    public final String EVENT_TOPIC_DISTANCE;
-    public final String EVENT_TOPIC_DISTANCE_REACHED;
-    public final String INTENT_TOPIC_DISTANCE;
-    public final String INTENT_TOPIC_DISTANCE_THRESHOLD;
-    public final String INTENT_TOPIC_DISTANCE_CALLBACK_PERIOD;
+    public final String STATUS_DISTANCE;
+    public final String STATUS_DISTANCE_THRESHOLD;
+    public final String STATUS_DISTANCE_CALLBACK_PERIOD;
+    public final String EVENT_DISTANCE;
+    public final String EVENT_DISTANCE_REACHED;
+    public final String INTENT_DISTANCE;
+    public final String INTENT_DISTANCE_THRESHOLD;
+    public final String INTENT_DISTANCE_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
-    public final String STATUS_TOPIC_DEBOUNCE;
-    public final String EVENT_TOPIC_DEBOUNCE;
-    public final String INTENT_TOPIC_DEBOUNCE;
-    public final String INTENT_TOPIC_DEBOUNCE_PERIOD;
-    public final String STATUS_TOPIC_DEBOUNCE_PERIOD;
+    public final String STATUS_DEBOUNCE;
+    public final String EVENT_DEBOUNCE;
+    public final String INTENT_DEBOUNCE;
+    public final String INTENT_DEBOUNCE_PERIOD;
+    public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String MOVING_AVERAGE;
-    public final String STATUS_TOPIC_MOVING_AVERAGE;
-    public final String INTENT_TOPIC_MOVING_AVERAGE;
+    public final String STATUS_MOVING_AVERAGE;
+    public final String INTENT_MOVING_AVERAGE;
 
     public DistanceUSServiceContract(DistanceUSDevice device) {
         super(device);
@@ -49,25 +49,25 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
         REACHED = "reached";
 
         DISTANCE = "distance";
-        STATUS_TOPIC_DISTANCE = STATUS_TOPIC + "/" + DISTANCE;
-        STATUS_TOPIC_DISTANCE_THRESHOLD = STATUS_TOPIC_DISTANCE + "/" + THRESHOLD;
-        STATUS_TOPIC_DISTANCE_CALLBACK_PERIOD = STATUS_TOPIC_DISTANCE + "/" + CALLBACK_PERIOD;
-        EVENT_TOPIC_DISTANCE = EVENT_TOPIC + "/" + DISTANCE;
-        EVENT_TOPIC_DISTANCE_REACHED = EVENT_TOPIC_DISTANCE + "/" + REACHED;
-        INTENT_TOPIC_DISTANCE = INTENT_TOPIC + "/" + DISTANCE;
-        INTENT_TOPIC_DISTANCE_THRESHOLD = INTENT_TOPIC_DISTANCE + "/" + THRESHOLD;
-        INTENT_TOPIC_DISTANCE_CALLBACK_PERIOD = INTENT_TOPIC_DISTANCE + "/" + CALLBACK_PERIOD;
+        STATUS_DISTANCE = STATUS + "/" + DISTANCE;
+        STATUS_DISTANCE_THRESHOLD = STATUS_DISTANCE + "/" + THRESHOLD;
+        STATUS_DISTANCE_CALLBACK_PERIOD = STATUS_DISTANCE + "/" + CALLBACK_PERIOD;
+        EVENT_DISTANCE = EVENT + "/" + DISTANCE;
+        EVENT_DISTANCE_REACHED = EVENT_DISTANCE + "/" + REACHED;
+        INTENT_DISTANCE = INTENT + "/" + DISTANCE;
+        INTENT_DISTANCE_THRESHOLD = INTENT_DISTANCE + "/" + THRESHOLD;
+        INTENT_DISTANCE_CALLBACK_PERIOD = INTENT_DISTANCE + "/" + CALLBACK_PERIOD;
 
         DEBOUNCE = "debounce";
-        STATUS_TOPIC_DEBOUNCE = STATUS_TOPIC + "/" + DEBOUNCE;
-        STATUS_TOPIC_DEBOUNCE_PERIOD = STATUS_TOPIC_DEBOUNCE + "/" + PERIOD;
-        EVENT_TOPIC_DEBOUNCE = EVENT_TOPIC + "/" + DEBOUNCE;
-        INTENT_TOPIC_DEBOUNCE = INTENT_TOPIC + "/" + DEBOUNCE;
-        INTENT_TOPIC_DEBOUNCE_PERIOD = INTENT_TOPIC_DEBOUNCE + "/" + PERIOD;
+        STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
+        STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
+        EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
+        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
+        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
 
         MOVING_AVERAGE = "movingAverage";
-        STATUS_TOPIC_MOVING_AVERAGE = STATUS_TOPIC + "/" + MOVING_AVERAGE;
-        INTENT_TOPIC_MOVING_AVERAGE = INTENT_TOPIC + "/" + MOVING_AVERAGE;
+        STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
+        INTENT_MOVING_AVERAGE = INTENT + "/" + MOVING_AVERAGE;
 
     }
 }

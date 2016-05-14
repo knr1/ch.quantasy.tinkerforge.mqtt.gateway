@@ -17,10 +17,10 @@ import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 public class MotionDetectorServiceContract extends DeviceServiceContract {
 
     public final String DETECTION_CYCLE_ENDED;
-    public final String EVENT_TOPIC_DETECTION_CYCLE_ENDED;
+    public final String EVENT_DETECTION_CYCLE_ENDED;
 
     public final String MOTION_DETECTED;
-    public final String EVENT_TOPIC_MOTION_DETECTED;
+    public final String EVENT_MOTION_DETECTED;
 
     public MotionDetectorServiceContract(MotionDetectorDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -29,9 +29,9 @@ public class MotionDetectorServiceContract extends DeviceServiceContract {
         super(id, device);
 
         DETECTION_CYCLE_ENDED = "eventDetectionCycleEnded";
-        EVENT_TOPIC_DETECTION_CYCLE_ENDED = EVENT_TOPIC + "/" + DETECTION_CYCLE_ENDED;
+        EVENT_DETECTION_CYCLE_ENDED = EVENT + "/" + DETECTION_CYCLE_ENDED;
 
         MOTION_DETECTED = "motionDetected";
-        EVENT_TOPIC_MOTION_DETECTED = EVENT_TOPIC + "/" + MOTION_DETECTED;
+        EVENT_MOTION_DETECTED = EVENT + "/" + MOTION_DETECTED;
     }
 }

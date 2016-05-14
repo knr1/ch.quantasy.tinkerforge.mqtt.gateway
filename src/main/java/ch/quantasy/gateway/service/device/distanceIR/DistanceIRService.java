@@ -40,23 +40,23 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
             return;
         }
         try {
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DEBOUNCE_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_ANALOG_VALUE_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setAnalogValueCallbackPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DISTANCE_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDistanceCallbackPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_ANALOG_VALUE_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
                 DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
                 getDevice().setAnalogValueThreshold(threshold);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DISTANCE_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_DISTANCE_THRESHOLD)) {
                 DeviceDistanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceDistanceCallbackThreshold.class);
                 getDevice().setDistanceCallbackThreshold(threshold);
 
@@ -71,47 +71,47 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
 
     @Override
     public void analogValue(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_ANALOG_VALUE, new AnalogValueEvent(i));
+        addEvent(getServiceContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
+        addEvent(getServiceContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void distance(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_DISTANCE, new DistanceEvent(i));
+        addEvent(getServiceContract().EVENT_DISTANCE, new DistanceEvent(i));
     }
 
     @Override
     public void distanceReached(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_DISTANCE_REACHED, new DistanceEvent(i));
+        addEvent(getServiceContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
     }
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().INTENT_TOPIC_DISTANCE_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_DEBOUNCE_PERIOD, period);
+        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_ANALOG_VALUE_THRESHOLD, threshold);
+        addStatus(getServiceContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
     }
 
     @Override
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_DISTANCE_THRESHOLD, threshold);
+        addStatus(getServiceContract().STATUS_DISTANCE_THRESHOLD, threshold);
 
     }
 

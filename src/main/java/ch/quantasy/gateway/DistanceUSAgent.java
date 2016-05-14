@@ -42,7 +42,7 @@ public class DistanceUSAgent implements MQTTCommunicationCallback {
         parameters.setLastWillMessage(serviceContract.OFFLINE.getBytes());
         parameters.setLastWillQoS(1);
         parameters.setServerURIs(URI.create("tcp://127.0.0.1:1883"));
-        parameters.setWillTopic(serviceContract.STATUS_TOPIC_CONNECTION);
+        parameters.setWillTopic(serviceContract.STATUS_CONNECTION);
         parameters.setMqttCallback(this);
         communication.connect(parameters);
         communication.publishActualWill(serviceContract.ONLINE.getBytes());

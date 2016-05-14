@@ -46,7 +46,7 @@ public class RemoteSwitchAgent implements MQTTCommunicationCallback {
         parameters.setLastWillMessage(serviceContract.OFFLINE.getBytes());
         parameters.setLastWillQoS(1);
         parameters.setServerURIs(URI.create("tcp://127.0.0.1:1883"));
-        parameters.setWillTopic(serviceContract.STATUS_TOPIC_CONNECTION);
+        parameters.setWillTopic(serviceContract.STATUS_CONNECTION);
         parameters.setMqttCallback(this);
         communication.connect(parameters);
         communication.publishActualWill(serviceContract.ONLINE.getBytes());
@@ -87,7 +87,7 @@ public class RemoteSwitchAgent implements MQTTCommunicationCallback {
 SwitchSocketCParameters config = new SwitchSocketCParameters('C', (short) 2, switchTo);
 
         MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(config));
-        String topic = serviceContract.INTENT_TOPIC_SWITCH_SOCKET_C;
+        String topic = serviceContract.INTENT_SWITCH_SOCKET_C;
         messageMap.put(topic, message);
         communication.readyToPublish(this, topic);
     }

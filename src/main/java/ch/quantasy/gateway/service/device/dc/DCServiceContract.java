@@ -16,43 +16,43 @@ import ch.quantasy.tinkerforge.device.dc.DCDevice;
 public class DCServiceContract extends DeviceServiceContract {
 
     public final String ENABLED;
-    public final String STATUS_TOPIC_ENABLED;
-    public final String INTENT_TOPIC_ENABLED;
+    public final String STATUS_ENABLED;
+    public final String INTENT_ENABLED;
        
     public final String MINIMUM_VOLTAGE;
-    public final String INTENT_TOPIC_MINIMUM_VOLTAGE;
-    public final String STATUS_TOPIC_MINIMUM_VOLTAGE;
+    public final String INTENT_MINIMUM_VOLTAGE;
+    public final String STATUS_MINIMUM_VOLTAGE;
     
     public final String UNDERVOLTAGE;
-    public final String EVENT_TOPIC_UNDERVOLTAGE;
+    public final String EVENT_UNDERVOLTAGE;
 
     public final String VELOCITY;
-    public final String INTENT_TOPIC_VELOCITY;
-    public final String STATUS_TOPIC_VELOCITY;
-    public final String EVENT_TOPIC_VELOCITY;
+    public final String INTENT_VELOCITY;
+    public final String STATUS_VELOCITY;
+    public final String EVENT_VELOCITY;
     
     public final String CALLBACK_PERIOD;
-    public final String INTENT_TOPIC_VELOCITY_PERIOD;
-    public final String STATUS_TOPIC_VELOCITY_PERIOD;
+    public final String INTENT_VELOCITY_PERIOD;
+    public final String STATUS_VELOCITY_PERIOD;
             
     public final String DRIVER_MODE;
-    public final String INTENT_TOPIC_DRIVER_MODE;
-    public final String STATUS_TOPIC_DRIVER_MODE;
+    public final String INTENT_DRIVER_MODE;
+    public final String STATUS_DRIVER_MODE;
 
     
     public final String PWM_FREQUENCY;
-    public final String INTENT_TOPIC_PWM_FREQUENCY;
-    public final String STATUS_TOPIC_PWM_FREQUENCY;
+    public final String INTENT_PWM_FREQUENCY;
+    public final String STATUS_PWM_FREQUENCY;
             
     public final String FULL_BRAKE;
-    public final String EVENT_TOPIC_FULL_BRAKE;
+    public final String EVENT_FULL_BRAKE;
 
     public final String ACCELERATION;
-    public final String INTENT_TOPIC_ACCELERATION;
-    public final String STATUS_TOPIC_ACCELERATION;
+    public final String INTENT_ACCELERATION;
+    public final String STATUS_ACCELERATION;
     
     public final String EMERGENCY_SHUTDOWN;
-    public final String STATUS_TOPIC_EMERGENCY_SHUTDOWN;
+    public final String STATUS_EMERGENCY_SHUTDOWN;
 
     public DCServiceContract(DCDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -62,42 +62,42 @@ public class DCServiceContract extends DeviceServiceContract {
         super(id, device);
         
         ENABLED="enabled";
-        STATUS_TOPIC_ENABLED=STATUS_TOPIC+"/"+ENABLED;
-        INTENT_TOPIC_ENABLED=INTENT_TOPIC+"/"+ENABLED;
+        STATUS_ENABLED=STATUS+"/"+ENABLED;
+        INTENT_ENABLED=INTENT+"/"+ENABLED;
         
         VELOCITY="velocity";
-        STATUS_TOPIC_VELOCITY=STATUS_TOPIC+"/"+VELOCITY;
-        INTENT_TOPIC_VELOCITY=INTENT_TOPIC+"/"+VELOCITY;
-        EVENT_TOPIC_VELOCITY=EVENT_TOPIC+"/"+VELOCITY;
+        STATUS_VELOCITY=STATUS+"/"+VELOCITY;
+        INTENT_VELOCITY=INTENT+"/"+VELOCITY;
+        EVENT_VELOCITY=EVENT+"/"+VELOCITY;
         
         CALLBACK_PERIOD="callback_period";
         
-        STATUS_TOPIC_VELOCITY_PERIOD=STATUS_TOPIC_VELOCITY+"/"+CALLBACK_PERIOD;
-        INTENT_TOPIC_VELOCITY_PERIOD=INTENT_TOPIC_VELOCITY+"/"+CALLBACK_PERIOD;
+        STATUS_VELOCITY_PERIOD=STATUS_VELOCITY+"/"+CALLBACK_PERIOD;
+        INTENT_VELOCITY_PERIOD=INTENT_VELOCITY+"/"+CALLBACK_PERIOD;
         
         FULL_BRAKE = "fullBrake";
-        EVENT_TOPIC_FULL_BRAKE = EVENT_TOPIC + "/" + FULL_BRAKE;
+        EVENT_FULL_BRAKE = EVENT + "/" + FULL_BRAKE;
 
         ACCELERATION = "acceleration";
-        INTENT_TOPIC_ACCELERATION = INTENT_TOPIC + "/" + ACCELERATION;
-        STATUS_TOPIC_ACCELERATION=STATUS_TOPIC+"/"+ACCELERATION;
+        INTENT_ACCELERATION = INTENT + "/" + ACCELERATION;
+        STATUS_ACCELERATION=STATUS+"/"+ACCELERATION;
 
         MINIMUM_VOLTAGE = "minimumVoltage";
-        INTENT_TOPIC_MINIMUM_VOLTAGE = INTENT_TOPIC + "/" + MINIMUM_VOLTAGE;
-        STATUS_TOPIC_MINIMUM_VOLTAGE = STATUS_TOPIC + "/" + MINIMUM_VOLTAGE;
+        INTENT_MINIMUM_VOLTAGE = INTENT + "/" + MINIMUM_VOLTAGE;
+        STATUS_MINIMUM_VOLTAGE = STATUS + "/" + MINIMUM_VOLTAGE;
         
         UNDERVOLTAGE="undervoltage";
-        EVENT_TOPIC_UNDERVOLTAGE=EVENT_TOPIC+"/"+UNDERVOLTAGE;
+        EVENT_UNDERVOLTAGE=EVENT+"/"+UNDERVOLTAGE;
 
         DRIVER_MODE = "driverMode";
-        INTENT_TOPIC_DRIVER_MODE = INTENT_TOPIC + "/" + DRIVER_MODE;
-        STATUS_TOPIC_DRIVER_MODE=STATUS_TOPIC+"/"+DRIVER_MODE;
+        INTENT_DRIVER_MODE = INTENT + "/" + DRIVER_MODE;
+        STATUS_DRIVER_MODE=STATUS+"/"+DRIVER_MODE;
 
         EMERGENCY_SHUTDOWN="emergencyShutdown";
-        STATUS_TOPIC_EMERGENCY_SHUTDOWN=STATUS_TOPIC+"/"+EMERGENCY_SHUTDOWN;
+        STATUS_EMERGENCY_SHUTDOWN=STATUS+"/"+EMERGENCY_SHUTDOWN;
         
         PWM_FREQUENCY="pwmFrequency";
-        STATUS_TOPIC_PWM_FREQUENCY=STATUS_TOPIC+"/"+PWM_FREQUENCY;
-        INTENT_TOPIC_PWM_FREQUENCY=INTENT_TOPIC+"/"+PWM_FREQUENCY;
+        STATUS_PWM_FREQUENCY=STATUS+"/"+PWM_FREQUENCY;
+        INTENT_PWM_FREQUENCY=INTENT+"/"+PWM_FREQUENCY;
     }
 }

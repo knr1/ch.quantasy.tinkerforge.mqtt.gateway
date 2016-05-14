@@ -60,11 +60,11 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
         parameters.setLastWillMessage(serviceContract.OFFLINE.getBytes());
         parameters.setLastWillQoS(1);
         parameters.setServerURIs(URI.create("tcp://127.0.0.1:1883"));
-        parameters.setWillTopic(serviceContract.STATUS_TOPIC_CONNECTION);
+        parameters.setWillTopic(serviceContract.STATUS_CONNECTION);
         parameters.setMqttCallback(this);
         communication.connect(parameters);
         communication.publishActualWill(serviceContract.ONLINE.getBytes());
-        communication.subscribe(serviceContract.INTENT_TOPIC + "/#", 1);
+        communication.subscribe(serviceContract.INTENT + "/#", 1);
 
     }
 

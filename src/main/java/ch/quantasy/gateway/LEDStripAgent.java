@@ -45,7 +45,7 @@ public class LEDStripAgent implements MQTTCommunicationCallback {
         parameters.setLastWillMessage(serviceContract.OFFLINE.getBytes());
         parameters.setLastWillQoS(1);
         parameters.setServerURIs(URI.create("tcp://matrix:1883"));
-        parameters.setWillTopic(serviceContract.STATUS_TOPIC_CONNECTION);
+        parameters.setWillTopic(serviceContract.STATUS_CONNECTION);
         parameters.setMqttCallback(this);
         communication.connect(parameters);
         communication.publishActualWill(serviceContract.ONLINE.getBytes());
@@ -83,7 +83,7 @@ public class LEDStripAgent implements MQTTCommunicationCallback {
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2812, 2000000, 1, 120, LEDStripDeviceConfig.ChannelMapping.BRG);
         
         MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(config));
-        String topic = serviceContract.INTENT_TOPIC_CONFIG;
+        String topic = serviceContract.INTENT_CONFIG;
         messageMap.put(topic, message);
         communication.readyToPublish(this, topic);
         double sin1=0;
@@ -107,7 +107,7 @@ public class LEDStripAgent implements MQTTCommunicationCallback {
         }
         this.leds=leds;
         MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(this.leds));
-        String topic = serviceContract.INTENT_TOPIC_LEDs;
+        String topic = serviceContract.INTENT_LEDs;
         messageMap.put(topic, message);
         communication.readyToPublish(this, topic);
     }

@@ -35,7 +35,7 @@ public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceCo
 
     @Override
     public void tiltState(short s) {
-        addEvent(getServiceContract().EVENT_TOPIC_TILT_STATE, new TiltEvent(s));
+        addEvent(getServiceContract().EVENT_TILT_STATE, new TiltEvent(s));
     }
     
     class TiltEvent {

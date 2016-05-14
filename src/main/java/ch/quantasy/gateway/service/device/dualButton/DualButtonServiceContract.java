@@ -17,17 +17,17 @@ import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 public class DualButtonServiceContract extends DeviceServiceContract{
 
     public final String LED_STATE;
-    public final String INTENT_TOPIC_LED_STATE;
-    public final String STATUS_TOPIC_LED_STATE;
+    public final String INTENT_LED_STATE;
+    public final String STATUS_LED_STATE;
 
     public final String SELECTED_LED_STATE;
-    public final String INTENT_TOPIC_SELECTED_LED_STATE;
+    public final String INTENT_SELECTED_LED_STATE;
 
     public final String STATE_CHANGED;
-    public final String EVENT_TOPIC_STATE_CHANGED;
+    public final String EVENT_STATE_CHANGED;
     
     public final String MONOFLOP;
-    public final String INTENT_TOPIC_MONOFLOP;    
+    public final String INTENT_MONOFLOP;    
     
     public DualButtonServiceContract(DualButtonDevice device){
                 this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -36,17 +36,17 @@ public class DualButtonServiceContract extends DeviceServiceContract{
         super(id, device);
         
         STATE_CHANGED = "stateChanged";
-        EVENT_TOPIC_STATE_CHANGED = EVENT_TOPIC + "/" + STATE_CHANGED;
+        EVENT_STATE_CHANGED = EVENT + "/" + STATE_CHANGED;
 
         MONOFLOP = "monoflop";
-        INTENT_TOPIC_MONOFLOP = INTENT_TOPIC + "/" + MONOFLOP;
+        INTENT_MONOFLOP = INTENT + "/" + MONOFLOP;
 
         LED_STATE = "LEDState";
-        INTENT_TOPIC_LED_STATE = INTENT_TOPIC + "/" + LED_STATE;
-        STATUS_TOPIC_LED_STATE = STATUS_TOPIC + "/" + LED_STATE;
+        INTENT_LED_STATE = INTENT + "/" + LED_STATE;
+        STATUS_LED_STATE = STATUS + "/" + LED_STATE;
 
         SELECTED_LED_STATE = "selectedLEDState";
-        INTENT_TOPIC_SELECTED_LED_STATE = INTENT_TOPIC + "/" + SELECTED_LED_STATE;
+        INTENT_SELECTED_LED_STATE = INTENT + "/" + SELECTED_LED_STATE;
 
     }
 }

@@ -17,7 +17,7 @@ import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 public class TiltServiceContract extends DeviceServiceContract {
 
     public final String TILT_STATE;
-    public final String EVENT_TOPIC_TILT_STATE;
+    public final String EVENT_TILT_STATE;
 
     public TiltServiceContract(TiltDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -26,6 +26,6 @@ public class TiltServiceContract extends DeviceServiceContract {
         super(id, device);
 
         TILT_STATE = "tiltState";
-        EVENT_TOPIC_TILT_STATE = EVENT_TOPIC + "/" + TILT_STATE;
+        EVENT_TILT_STATE = EVENT + "/" + TILT_STATE;
     }
 }

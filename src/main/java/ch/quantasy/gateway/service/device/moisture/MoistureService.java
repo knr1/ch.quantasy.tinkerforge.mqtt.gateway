@@ -42,16 +42,16 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
 
                 }
         try {
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DEBOUNCE_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_MOISTURE_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_MOISTURE_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setMoistureCallbackPeriod(period);
             }
 
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_MOISTURE_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_MOISTURE_THRESHOLD)) {
                 DeviceMoistureCallbackThreshold threshold = getMapper().readValue(payload, DeviceMoistureCallbackThreshold.class );
                 getDevice().setMoistureCallbackThreshold(threshold);
             }
@@ -66,32 +66,32 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_DEBOUNCE_PERIOD,period);
+        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD,period);
     }
 
     @Override
     public void moistureCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_MOISTURE_CALLBACK_PERIOD,period);
+        addStatus(getServiceContract().STATUS_MOISTURE_CALLBACK_PERIOD,period);
     }
 
     @Override
     public void moistureCallbackThresholdChanged(DeviceMoistureCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_MOISTURE_THRESHOLD,threshold);
+        addStatus(getServiceContract().STATUS_MOISTURE_THRESHOLD,threshold);
     }
 
     @Override
     public void movingAverageChanged(short average) {
-        addStatus(getServiceContract().STATUS_TOPIC_MOVING_AVERAGE,average);
+        addStatus(getServiceContract().STATUS_MOVING_AVERAGE,average);
     }
 
     @Override
     public void moisture(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_MOISTURE,new MoistureEvent(i));
+        addEvent(getServiceContract().EVENT_MOISTURE,new MoistureEvent(i));
     }
 
     @Override
     public void moistureReached(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_MOISTURE_REACHED,new MoistureEvent(i));
+        addEvent(getServiceContract().EVENT_MOISTURE_REACHED,new MoistureEvent(i));
     }
 
     class MoistureEvent {

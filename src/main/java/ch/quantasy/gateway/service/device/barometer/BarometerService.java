@@ -44,33 +44,33 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
 
         }
         try {
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DEBOUNCE_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_AIR_PRESSURE_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_AIR_PRESSURE_CALLBACK_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setAirPressureCallbackPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_ALTITUDE_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_ALTITUDE_CALLBACK_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setAltitudeCallbackPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_AIR_PRESSURE_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_AIR_PRESSURE_THRESHOLD)) {
 
                 DeviceAirPressureCallbackThreshold threshold = getMapper().readValue(payload, DeviceAirPressureCallbackThreshold.class);
                 getDevice().setAirPressureThreshold(threshold);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_ALTITUDE_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_ALTITUDE_THRESHOLD)) {
 
                 DeviceAltitudeCallbackThreshold threshold = getMapper().readValue(payload, DeviceAltitudeCallbackThreshold.class);
                 getDevice().setAltitudeCallbackThreshold(threshold);
 
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_AVERAGING)) {
+            if (string.startsWith(getServiceContract().INTENT_AVERAGING)) {
 
                 DeviceAveraging averaging = getMapper().readValue(payload, DeviceAveraging.class);
                 getDevice().setAveraging(averaging);
@@ -88,52 +88,52 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
     @Override
     public void airPressure(int i) {
 
-        addEvent(getServiceContract().EVENT_TOPIC_AIR_PRESSURE, new AirPressureEvent(i));
+        addEvent(getServiceContract().EVENT_AIR_PRESSURE, new AirPressureEvent(i));
     }
 
     @Override
     public void airPressureReached(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_AIR_PRESSURE_REACHED, new AirPressureEvent(i));
+        addEvent(getServiceContract().EVENT_AIR_PRESSURE_REACHED, new AirPressureEvent(i));
     }
 
     @Override
     public void altitude(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_ALTITUDE, new AltitudeEvent(i));
+        addEvent(getServiceContract().EVENT_ALTITUDE, new AltitudeEvent(i));
     }
 
     @Override
     public void altitudeReached(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_ALTITUDE_REACHED, new AltitudeEvent(i));
+        addEvent(getServiceContract().EVENT_ALTITUDE_REACHED, new AltitudeEvent(i));
     }
 
     @Override
     public void airPressureCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_AIR_PRESSURE_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().STATUS_AIR_PRESSURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void altitudeCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_ALTITUDE_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().STATUS_ALTITUDE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_DEBOUNCE_PERIOD, period);
+        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void airPressureCallbackThresholdChanged(DeviceAirPressureCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_AIR_PRESSURE_THRESHOLD, threshold);
+        addStatus(getServiceContract().STATUS_AIR_PRESSURE_THRESHOLD, threshold);
     }
 
     @Override
     public void altitudeCallbackThresholdChanged(DeviceAltitudeCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_ALTITUDE_THRESHOLD, threshold);
+        addStatus(getServiceContract().STATUS_ALTITUDE_THRESHOLD, threshold);
     }
 
     @Override
     public void averagingChanged(DeviceAveraging averaging) {
-        addStatus(getServiceContract().STATUS_TOPIC_AVERAGING, averaging);
+        addStatus(getServiceContract().STATUS_AVERAGING, averaging);
     }
 
     class AirPressureEvent {

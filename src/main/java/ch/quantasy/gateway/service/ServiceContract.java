@@ -16,13 +16,13 @@ public class ServiceContract {
     public final String ID_TOPIC;
     public final String BASE;
     public final String BASE_TOPIC;
-    public final String STATUS_TOPIC;
-    public final String STATUS_TOPIC_CONNECTION;
+    public final String STATUS;
+    public final String STATUS_CONNECTION;
     public final String OFFLINE;
     public final String ONLINE;
 
-    public final String EVENT_TOPIC;
-    public final String INTENT_TOPIC;
+    public final String EVENT;
+    public final String INTENT;
     public final String DESCRIPTION_TOPIC;
 
     public ServiceContract(String base, String id) {
@@ -36,12 +36,12 @@ public class ServiceContract {
             ID_TOPIC = BASE_TOPIC;
         }
 
-        EVENT_TOPIC = ID_TOPIC + "/event";
-        INTENT_TOPIC = ID_TOPIC + "/intent";
-        STATUS_TOPIC = ID_TOPIC + "/status";
+        EVENT = ID_TOPIC + "/event";
+        INTENT = ID_TOPIC + "/intent";
+        STATUS = ID_TOPIC + "/status";
         DESCRIPTION_TOPIC=BASE_TOPIC+"/description";
 
-        STATUS_TOPIC_CONNECTION = STATUS_TOPIC + "/connection";
+        STATUS_CONNECTION = STATUS + "/connection";
         OFFLINE = "offline";
         ONLINE = "online";
 

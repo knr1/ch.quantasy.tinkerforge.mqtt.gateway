@@ -45,7 +45,7 @@ public class BarometerAgent implements MQTTCommunicationCallback {
         parameters.setLastWillMessage(serviceContract.OFFLINE.getBytes());
         parameters.setLastWillQoS(1);
         parameters.setServerURIs(URI.create("tcp://127.0.0.1:1883"));
-        parameters.setWillTopic(serviceContract.STATUS_TOPIC_CONNECTION);
+        parameters.setWillTopic(serviceContract.STATUS_CONNECTION);
         parameters.setMqttCallback(this);
         communication.connect(parameters);
         communication.publishActualWill(serviceContract.ONLINE.getBytes());
@@ -83,14 +83,14 @@ int count;
 
     public void airPressure() throws JsonProcessingException {
         MqttMessage message = new MqttMessage(mapper.writeValueAsBytes("1"));
-        String topic = serviceContract.INTENT_TOPIC_AIR_PRESSURE_CALLBACK_PERIOD;
+        String topic = serviceContract.INTENT_AIR_PRESSURE_CALLBACK_PERIOD;
         messageMap.put(topic, message);
         communication.readyToPublish(this, topic);
     }
 
     public void averaging() throws JsonProcessingException {
         MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(new DeviceAveraging((short)0,(short)0,(short)0)));
-        String topic = serviceContract.INTENT_TOPIC_AVERAGING;
+        String topic = serviceContract.INTENT_AVERAGING;
         messageMap.put(topic, message);
         communication.readyToPublish(this, topic);
     }

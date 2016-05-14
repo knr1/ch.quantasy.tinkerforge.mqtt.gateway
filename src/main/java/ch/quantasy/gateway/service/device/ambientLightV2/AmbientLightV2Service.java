@@ -22,8 +22,6 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.ambientLightV2.DeviceIlluminanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.ambientLightV2.DeviceConfiguration;
-import com.tinkerforge.BrickletAmbientLightV2.IlluminanceCallbackThreshold;
-import com.tinkerforge.BrickletAmbientLightV2.Configuration;
 
 /**
  *
@@ -44,24 +42,24 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
 
         }
         try {
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DEBOUNCE_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_ILLUMINANCE_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_ILLUMINANCE_CALLBACK_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setIlluminanceCallbackPeriod(period);
             }
 
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_ILLUMINANCE_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_ILLUMINANCE_THRESHOLD)) {
 
                 DeviceIlluminanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceIlluminanceCallbackThreshold.class);
                 getDevice().setIlluminanceCallbackThreshold(threshold);
             }
             
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_CONFIGURATION)) {
+            if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
 
                 DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
                 getDevice().setConfiguration(configuration);
@@ -78,32 +76,32 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_DEBOUNCE_PERIOD, period);
+        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_ILLUMINANCE_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_ILLUMINANCE_THRESHOLD, threshold);
+        addStatus(getServiceContract().STATUS_ILLUMINANCE_THRESHOLD, threshold);
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        addStatus(getServiceContract().STATUS_TOPIC_CONFIGURATION, configuration);
+        addStatus(getServiceContract().STATUS_CONFIGURATION, configuration);
     }
 
     @Override
     public void illuminance(long i) {
-        addEvent(getServiceContract().EVENT_TOPIC_IllUMINANCE, new IlluminanceEvent(i));
+        addEvent(getServiceContract().EVENT_IllUMINANCE, new IlluminanceEvent(i));
     }
 
     @Override
     public void illuminanceReached(long i) {
-        addEvent(getServiceContract().EVENT_TOPIC_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
+        addEvent(getServiceContract().EVENT_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
     }
 
     class IlluminanceEvent {

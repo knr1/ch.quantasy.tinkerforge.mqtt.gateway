@@ -42,26 +42,26 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
 
         }
         try {
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_DEBOUNCE_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_ANALOG_VALUE_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
                               Long period = getMapper().readValue(payload, Long.class                );
                 getDevice().setAnalogValueCallbackPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_HUMIDITY_CALLBACK_PERIOD)) {
+            if (string.startsWith(getServiceContract().INTENT_HUMIDITY_CALLBACK_PERIOD)) {
               
                 Long period = getMapper().readValue(payload, Long.class                );
                 getDevice().setHumidityCallbackPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_ANALOG_VALUE_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
               
                 DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class
                 );
                 getDevice().setAnalogValueThreshold(threshold);
             }
-            if (string.startsWith(getServiceContract().INTENT_TOPIC_HUMIDITY_THRESHOLD)) {
+            if (string.startsWith(getServiceContract().INTENT_HUMIDITY_THRESHOLD)) {
                 DeviceHumidityCallbackThreshold threshold = getMapper().readValue(payload, DeviceHumidityCallbackThreshold.class);
                 getDevice().setHumidityCallbackThreshold(threshold);
             }
@@ -81,47 +81,47 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
 
     @Override
     public void analogValue(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_ANALOG_VALUE,new AnalogValueEvent(i));
+        addEvent(getServiceContract().EVENT_ANALOG_VALUE,new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_ANALOG_VALUE_REACHED,new AnalogValueEvent(i));
+        addEvent(getServiceContract().EVENT_ANALOG_VALUE_REACHED,new AnalogValueEvent(i));
     }
 
     @Override
     public void humidity(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_HUMIDITY,new HumidityEvent(i));
+        addEvent(getServiceContract().EVENT_HUMIDITY,new HumidityEvent(i));
     }
 
     @Override
     public void humidityReached(int i) {
-        addEvent(getServiceContract().EVENT_TOPIC_HUMIDITY_REACHED,new HumidityEvent(i));
+        addEvent(getServiceContract().EVENT_HUMIDITY_REACHED,new HumidityEvent(i));
     }
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_ANALOG_VALUE_CALLBACK_PERIOD,period);
+        addStatus(getServiceContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD,period);
     }
 
     @Override
     public void humidityCallbackPeriodChanged(long period) {  
-            addStatus(getServiceContract().STATUS_TOPIC_HUMIDITY_CALLBACK_PERIOD,period);
+            addStatus(getServiceContract().STATUS_HUMIDITY_CALLBACK_PERIOD,period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TOPIC_DEBOUNCE_PERIOD,period);
+        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD,period);
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_ANALOG_VALUE_THRESHOLD,threshold);
+        addStatus(getServiceContract().STATUS_ANALOG_VALUE_THRESHOLD,threshold);
     }
 
     @Override
     public void humidityCallbackThresholdChanged(DeviceHumidityCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TOPIC_HUMIDITY_THRESHOLD,threshold);
+        addStatus(getServiceContract().STATUS_HUMIDITY_THRESHOLD,threshold);
     }
 
     class AnalogValueEvent {

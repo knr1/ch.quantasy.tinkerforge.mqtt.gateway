@@ -37,11 +37,11 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
             return;
 
         }
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_SELECTED_LED_STATE)) {
+        if (string.startsWith(getServiceContract().INTENT_SELECTED_LED_STATE)) {
             DeviceSelectedLEDStateParameters parameters = getMapper().readValue(payload, DeviceSelectedLEDStateParameters.class);
             getDevice().setSelectedLEDState(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_TOPIC_LED_STATE)) {
+        if (string.startsWith(getServiceContract().INTENT_LED_STATE)) {
             DeviceLEDState parameters = getMapper().readValue(payload, DeviceLEDState.class);
             getDevice().setLEDState(parameters);
         }
@@ -50,12 +50,12 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
     @Override
     public void ledStateChanged(DeviceLEDState state) {
-        addStatus(getServiceContract().STATUS_TOPIC_LED_STATE, state);
+        addStatus(getServiceContract().STATUS_LED_STATE, state);
     }
 
     @Override
     public void stateChanged(short s, short s1, short s2, short s3) {
-        addEvent(getServiceContract().EVENT_TOPIC_STATE_CHANGED, new StateChangedEvent(s, s1, s2, s3));
+        addEvent(getServiceContract().EVENT_STATE_CHANGED, new StateChangedEvent(s, s1, s2, s3));
     }
 
     public static class StateChangedEvent {
