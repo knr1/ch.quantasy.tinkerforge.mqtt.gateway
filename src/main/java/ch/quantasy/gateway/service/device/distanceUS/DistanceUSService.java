@@ -16,7 +16,6 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.distanceUS.DeviceDistanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDeviceCallback;
-import com.tinkerforge.BrickletDistanceUS;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,13 +33,13 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
         super(device, new DistanceUSServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [[40..300]|[100..800]|[200..1500]]\n max: [[40..300]|[100..800]|[200..1500]]");
+        addDescription(getServiceContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
         addDescription(getServiceContract().INTENT_MOVING_AVERAGE, "[0..100]");
         
-        addDescription(getServiceContract().EVENT_DISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[40..300]|[100..800]|[200..1500]]\n");
-        addDescription(getServiceContract().EVENT_DISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[40..300]|[100..800]|[200..1500]]\n");
+        addDescription(getServiceContract().EVENT_DISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[0..4095]\n");
+        addDescription(getServiceContract().EVENT_DISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
         addDescription(getServiceContract().STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [[40..300]|[100..800]|[200..1500]]\n max: [[40..300]|[100..800]|[200..1500]]");
+        addDescription(getServiceContract().STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
         addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_MOVING_AVERAGE, "[0..100]");
         

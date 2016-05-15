@@ -17,6 +17,7 @@ import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDeviceCallback;
 import ch.quantasy.tinkerforge.device.dualButton.DeviceLEDState;
 import ch.quantasy.tinkerforge.device.dualButton.DeviceSelectedLEDStateParameters;
+import ch.quantasy.tinkerforge.device.dualButton.LEDState;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -28,6 +29,14 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
     public DualButtonService(DualButtonDevice device) throws MqttException {
         super(device, new DualButtonServiceContract(device));
+        
+        addDescription(getServiceContract().INTENT_LED_STATE, "leftLED: [AutoToggleOn|AutoToggleOff|On|Off]\n rightLED: [AutoToggleOn|AutoToggleOff|On|Off] ");
+        addDescription(getServiceContract().INTENT_SELECTED_LED_STATE, "led: [AutoToggleOn|AutoToggleOff|On|Off]");
+        
+        
+        addDescription(getServiceContract().EVENT_STATE_CHANGED, "timestamp: [0.." + Long.MAX_VALUE + "]\n led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]\n \n led2: [AutoToggleOn|AutoToggleOff|On|Off]\n  switch1: [0|1]\n switch2: [0|1]");
+        addDescription(getServiceContract().STATUS_LED_STATE, "led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]");
+        
     }
 
     @Override
@@ -61,19 +70,21 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
     public static class StateChangedEvent {
 
         protected long timestamp;
-        protected short led1;
-        protected short led2;
+        protected LEDState led1;
+        protected LEDState led2;
         protected short switch1;
         protected short swicht2;
 
         private StateChangedEvent() {
         }
-
-        public StateChangedEvent(short switch1, short switch2, short led1, short led2) {
+public StateChangedEvent(short switch1, short switch2, short led1, short led2) {
+            this(LEDState.getLEDStateFor(led1), LEDState.getLEDStateFor(led1), switch1, switch2, System.currentTimeMillis());
+        }
+        public StateChangedEvent(short switch1, short switch2, LEDState led1, LEDState led2) {
             this(led1, led2, switch1, switch2, System.currentTimeMillis());
         }
 
-        public StateChangedEvent(short led1, short led2, short switch1, short switch2, long timeStamp) {
+        public StateChangedEvent(LEDState led1, LEDState led2, short switch1, short switch2, long timeStamp) {
             this.led1 = led1;
             this.led2 = led2;
             this.switch1 = switch1;
@@ -85,11 +96,11 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
             return timestamp;
         }
 
-        public short getLed1() {
+        public LEDState getLed1() {
             return led1;
         }
 
-        public short getLed2() {
+        public LEDState getLed2() {
             return led2;
         }
 

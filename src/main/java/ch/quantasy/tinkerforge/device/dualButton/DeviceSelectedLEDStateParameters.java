@@ -4,10 +4,6 @@
  * and open the template in the editor.
  */
 package ch.quantasy.tinkerforge.device.dualButton;
-import ch.quantasy.tinkerforge.device.dualRelay.*;
-import ch.quantasy.tinkerforge.device.remoteSwitch.*;
-import ch.quantasy.tinkerforge.device.moisture.*;
-import com.tinkerforge.BrickletMoisture;
 
 /**
  *
@@ -16,21 +12,24 @@ import com.tinkerforge.BrickletMoisture;
 public class DeviceSelectedLEDStateParameters {
     
     private short led;
-    private short state;
+    private LEDState state;
 
     public DeviceSelectedLEDStateParameters() {
     }
 
-    public DeviceSelectedLEDStateParameters(short led, short state) {
+    public DeviceSelectedLEDStateParameters(short led, LEDState state){
         this.led = led;
         this.state = state;
+    }
+    public DeviceSelectedLEDStateParameters(short led, short state)throws IllegalArgumentException {
+        this(led,LEDState.getLEDStateFor(state));
     }
 
     public short getLed() {
         return led;
     }
 
-    public short getState() {
+    public LEDState getState() {
         return state;
     }
 

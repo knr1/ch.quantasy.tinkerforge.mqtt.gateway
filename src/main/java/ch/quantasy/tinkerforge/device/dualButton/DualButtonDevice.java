@@ -42,7 +42,7 @@ public class DualButtonDevice extends GenericDevice<BrickletDualButton, DualButt
 
     public void setLEDState(DeviceLEDState ledState) {
         try {
-            getDevice().setLEDState(ledState.leftLED, ledState.rightLED);
+            getDevice().setLEDState(ledState.led1.getValue(), ledState.led2.getValue());
             this.LEDState = new DeviceLEDState(getDevice().getLEDState());
             super.getCallback().ledStateChanged(this.LEDState);
         } catch (TimeoutException | NotConnectedException ex) {
@@ -52,7 +52,7 @@ public class DualButtonDevice extends GenericDevice<BrickletDualButton, DualButt
 
     public void setSelectedLEDState(DeviceSelectedLEDStateParameters parameters) {
         try {
-            getDevice().setSelectedLEDState(parameters.getLed(), parameters.getState());
+            getDevice().setSelectedLEDState(parameters.getLed(), parameters.getState().getValue());
             this.LEDState = new DeviceLEDState(getDevice().getLEDState());
             super.getCallback().ledStateChanged(this.LEDState);
         } catch (TimeoutException | NotConnectedException ex) {

@@ -12,6 +12,7 @@ import ch.quantasy.mqtt.communication.MQTTCommunication;
 import ch.quantasy.mqtt.communication.MQTTCommunicationCallback;
 import ch.quantasy.mqtt.communication.MQTTParameters;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.dualButton.LEDState;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,10 +73,10 @@ public class LEDStripDualButtonAgent implements MQTTCommunicationCallback {
             System.out.println(new String(mm.getPayload()));
             DualButtonService.StateChangedEvent[] stateChangedEvents = mapper.readValue(mm.getPayload(), DualButtonService.StateChangedEvent[].class);
             if (stateChangedEvents.length > 0) {
-                if (stateChangedEvents[stateChangedEvents.length - 1].getLed1() == 0) {
+                if (stateChangedEvents[stateChangedEvents.length - 1].getLed1() == LEDState.getLEDStateFor((short)0)) {
                     leds(0);
                 }
-                if (stateChangedEvents[stateChangedEvents.length - 1].getLed1() == 1) {
+                if (stateChangedEvents[stateChangedEvents.length - 1].getLed1() == LEDState.getLEDStateFor((short)1)) {
                     leds(1);
                 }
                 

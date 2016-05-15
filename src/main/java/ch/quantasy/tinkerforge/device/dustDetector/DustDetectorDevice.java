@@ -23,6 +23,7 @@ public class DustDetectorDevice extends GenericDevice<BrickletDustDetector, Dust
     private Long debouncePeriod;
     private Long dustDensityCallbackPeriod;
     private DeviceDustDensityCallbackThreshold threshold;
+    private Short average;
     
     public DustDetectorDevice(TinkerforgeStackAddress address, BrickletDustDetector device) throws NotConnectedException, TimeoutException {
         super(address, device);
@@ -40,6 +41,9 @@ public class DustDetectorDevice extends GenericDevice<BrickletDustDetector, Dust
         }
         if(threshold!=null){
             setDustDensityCallbackThreshold(threshold);
+        }
+        if(average!=null){
+            setMovingAverage(average);
         }
     }
 
@@ -64,6 +68,16 @@ public class DustDetectorDevice extends GenericDevice<BrickletDustDetector, Dust
             getDevice().setDustDensityCallbackPeriod(period);
             this.dustDensityCallbackPeriod = getDevice().getDustDensityCallbackPeriod();
             super.getCallback().dustDensityCallbackPeriodChanged(this.dustDensityCallbackPeriod);
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(DustDetectorDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void setMovingAverage(short average) {
+        try {
+            getDevice().setMovingAverage(average);
+            this.average = getDevice().getMovingAverage();
+            super.getCallback().movingAverageChanged(this.average);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(DustDetectorDevice.class.getName()).log(Level.SEVERE, null, ex);
         }

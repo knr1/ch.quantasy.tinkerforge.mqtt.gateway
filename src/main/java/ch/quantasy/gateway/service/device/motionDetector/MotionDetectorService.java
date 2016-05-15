@@ -26,6 +26,10 @@ public class MotionDetectorService extends AbstractDeviceService<MotionDetectorD
 
     public MotionDetectorService(MotionDetectorDevice device) throws MqttException {
         super(device, new MotionDetectorServiceContract(device));
+        
+        addDescription(getServiceContract().EVENT_DETECTION_CYCLE_ENDED, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_MOTION_DETECTED, "[0.." + Long.MAX_VALUE + "]");
+     
     }
 
     @Override

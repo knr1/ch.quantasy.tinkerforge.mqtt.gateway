@@ -30,6 +30,17 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
 
     public RemoteSwitchService(RemoteSwitchDevice device) throws MqttException {
         super(device, new RemoteSwitchServiceContract(device));
+
+        addDescription(getServiceContract().INTENT_REPEATS, "[0.." + Short.MAX_VALUE + "]");
+
+        addDescription(getServiceContract().INTENT_SWITCH_SOCKET_A, "houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [ON|OFF]");
+        addDescription(getServiceContract().INTENT_SWITCH_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n switchingValue: [ON|OFF]");
+        addDescription(getServiceContract().INTENT_SWITCH_SOCKET_C, "systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [ON|OFF]");
+        addDescription(getServiceContract().INTENT_DIM_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]");
+
+        addDescription(getServiceContract().EVENT_SWITCHING_DONE, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
+
     }
 
     @Override

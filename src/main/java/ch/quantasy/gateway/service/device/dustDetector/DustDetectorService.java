@@ -31,6 +31,19 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
     public DustDetectorService(DustDetectorDevice device) throws MqttException {
 
         super(device, new DustDetectorServiceContract(device));
+        addDescription(getServiceContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().INTENT_MOVING_AVERAGE, "[0..100]");
+
+        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().INTENT_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
+
+        addDescription(getServiceContract().EVENT_DUST_DENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
+        addDescription(getServiceContract().EVENT_DUST_DENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
+        addDescription(getServiceContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().STATUS_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
+        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().STATUS_MOVING_AVERAGE, "[0..100]");
+
     }
 
     @Override
@@ -45,6 +58,11 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
+            }
+            if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
+
+                Short average = getMapper().readValue(payload, Short.class);
+                getDevice().setMovingAverage(average);
             }
             if (string.startsWith(getServiceContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD)) {
 
@@ -66,10 +84,14 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
     }
 
-
     @Override
     public void debouncePeriodChanged(long period) {
         addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+    }
+
+    @Override
+    public void movingAverageChanged(short movingAverage) {
+        addStatus(getServiceContract().STATUS_MOVING_AVERAGE, movingAverage);
     }
 
     @Override

@@ -25,13 +25,13 @@ public class DeviceConfiguration {
             return value;
         }
 
-        public static IlluminanceRange getIlluminanceRangeFor(short s) {
+        public static IlluminanceRange getIlluminanceRangeFor(short s) throws IllegalArgumentException{
             for (IlluminanceRange range : values()) {
                 if (range.value == s) {
                     return range;
                 }
             }
-            return null;
+            throw new IllegalArgumentException("Not supported: "+s);
         }
     }
 

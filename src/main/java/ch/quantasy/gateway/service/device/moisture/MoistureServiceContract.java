@@ -41,6 +41,7 @@ public class MoistureServiceContract extends DeviceServiceContract {
 
     public final String MOVING_AVERAGE;
     public final String STATUS_MOVING_AVERAGE;
+    public final String INTENT_MOVING_AVERAGE;
 
     public MoistureServiceContract(MoistureDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -73,5 +74,6 @@ public class MoistureServiceContract extends DeviceServiceContract {
 
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
+        INTENT_MOVING_AVERAGE = INTENT + "/"+ MOVING_AVERAGE;
     }
 }

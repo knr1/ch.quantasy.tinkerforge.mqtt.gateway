@@ -35,6 +35,10 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
     public final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
+    
+    public final String MOVING_AVERAGE;
+    public final String INTENT_MOVING_AVERAGE;
+    public final String STATUS_MOVING_AVERAGE;
 
 
     public DustDetectorServiceContract(DustDetectorDevice device) {
@@ -61,5 +65,9 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
         INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
         INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
+        
+        MOVING_AVERAGE = "movingAverage";
+        STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
+        INTENT_MOVING_AVERAGE = INTENT + "/" + MOVING_AVERAGE;
     }
 }

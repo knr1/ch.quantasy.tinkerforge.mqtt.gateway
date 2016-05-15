@@ -13,25 +13,14 @@
 package ch.quantasy.gateway.service.device.ledStrip;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.service.device.DeviceServiceContract;
-import ch.quantasy.mqtt.communication.MQTTCommunication;
-import ch.quantasy.mqtt.communication.MQTTCommunicationCallback;
-import ch.quantasy.mqtt.communication.MQTTParameters;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.io.IOException;
-import java.net.URI;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceCallback;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
-import java.util.Timer;
 
 /**
  *
@@ -43,6 +32,11 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     public LEDStripService(LEDStripDevice device) throws MqttException {
         super(device, new LEDStripServiceContract(device));
+        addDescription(getServiceContract().INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
+        addDescription(getServiceContract().INTENT_LEDs, "[{{r,r,...,r}_numLEDs {g,g,...,g}_numLEDs {b,b,...,b}_numLEDs}_3]");
+
+        addDescription(getServiceContract().STATUS_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
+
     }
 
     @Override
@@ -67,9 +61,10 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
             return;
         }
     }
+
     @Override
     public void configurationChanged(LEDStripDeviceConfig config) {
-        addStatus(getServiceContract().STATUS_CONFIG,config);
+        addStatus(getServiceContract().STATUS_CONFIG, config);
     }
 
     @Override

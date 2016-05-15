@@ -59,7 +59,7 @@ public class LEDStripDeviceConfig {
         if (frameDurationInMilliseconds < 1) {
             throw new IllegalArgumentException();
         }
-        if (clockFrequencyOfICsInHz < 100000 || clockFrequencyOfICsInHz > 2000000) {
+        if (clockFrequencyOfICsInHz < 10000 || clockFrequencyOfICsInHz > 2000000) {
             throw new IllegalArgumentException();
         }
         if (numberOfLEDs < 1 || numberOfLEDs > 320) {

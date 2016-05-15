@@ -20,5 +20,7 @@ public interface DustDetectorDeviceCallback extends DeviceCallback, BrickletDust
     public void debouncePeriodChanged(long period);
 
     public void dustDensityCallbackThresholdChanged(DeviceDustDensityCallbackThreshold threshold);
+    
+    public void movingAverageChanged(short movingAverage);
 
    }
