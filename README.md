@@ -8,7 +8,7 @@ Each Device provides the following interface:
 * description Each device describes its abilites via the description topic.
 * intent Each intention to a device is sent via its provided intent topic. 
 * status Each device describes its actual status via its specialized status topics.
-* event Each device provides all events via its specialied event topics.
+* event Each device provides all events via its specialied event topics. As there might be more events available than the mqtt broker is able to handle, all events are always covered within an array. Hence, there might be 0,1 or multiple events within one message.
 
 Tha language used within this project is [YAML]. Hence, all you need to learn is how to publish and subscribe to MQTT and how to write YAML.
 
