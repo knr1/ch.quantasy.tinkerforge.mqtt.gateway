@@ -50,7 +50,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author reto
  */
-public class Tinkerer {
+public class TiMqWay {
     public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
         ManagerService managerService=new ManagerService();
         System.out.println(""+managerService);
