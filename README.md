@@ -35,4 +35,4 @@ or any other address IP or name will work, if there is an actual Tinkerforge sta
 
  [tinkerforge]:<http://www.tinkerforge.com/en>
  [MQTT]: <http://mqtt.org/>
- [TiMqWay]: <https://prof.hti.bfh.ch/knr1/TiMqWay.jar>
+ [TiMqWay.jar]: <https://prof.hti.bfh.ch/knr1/TiMqWay.jar>
