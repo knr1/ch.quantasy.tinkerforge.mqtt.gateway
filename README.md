@@ -17,9 +17,14 @@ The root topic of TiMqWay is: TF
 Devices are not represented within their 'stack', but loosly coupled so a device might even change its stack but is still accessible in MQTT at the same location (TF/device-type/UID).
 
 ### Installation
-In order to start TiMqWay 
+In order to install TiMqWay 
 * Developers way: clone and build the project
-* Users way: download the latest [TiMqWay.jar] and executed via
+* Users way: download the latest [TiMqWay.jar]
+ 
+### Usage
+You need a running MQTT-Server at localhost right now. TiMqWay will for now only try to connect to localhost. (This will change in the future and you will be free to choose the server-location at startup)
+
+Then run
 ```sh
 $ java -jar TiMqWay.jar
 ```
