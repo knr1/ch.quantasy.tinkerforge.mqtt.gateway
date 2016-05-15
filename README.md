@@ -22,7 +22,7 @@ In order to install TiMqWay
 * Users way: download the latest [TiMqWay.jar]
  
 ### Usage
-You need a running MQTT-Server at localhost right now. TiMqWay will for now only try to connect to localhost. (This will change in the future and you will be free to choose the server-location at startup)
+You need Java (7 or higher) and a running MQTT-Server at localhost right now. TiMqWay will for now only try to connect to localhost. (This will change in the future and you will be free to choose the server-location at startup)
 
 Then run
 ```sh
@@ -37,7 +37,10 @@ Message: localhost
 ```
 or any other address IP or name will work, if there is an actual Tinkerforge stack accessible.
 
+### Tip
+You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Viewer].
 
  [tinkerforge]:<http://www.tinkerforge.com/en>
  [MQTT]: <http://mqtt.org/>
  [TiMqWay.jar]: <https://prof.hti.bfh.ch/knr1/TiMqWay.jar>
+ [d3Viewer]: >https://github.com/hardillb/d3-MQTT-Topic-Tree>
