@@ -44,3 +44,4 @@ You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Vi
  [MQTT]: <http://mqtt.org/>
  [TiMqWay.jar]: <https://prof.hti.bfh.ch/knr1/TiMqWay.jar>
  [d3Viewer]: <https://github.com/hardillb/d3-MQTT-Topic-Tree>
+ [YAML] <https://en.wikipedia.org/wiki/YAML>
