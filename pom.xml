@@ -91,7 +91,7 @@
 		    </descriptorRefs>
 		    <archive>
 			<manifest>
-			    <mainClass>ch.quantasy.gateway.Tinkerer</mainClass>
+			    <mainClass>ch.quantasy.gateway.TiMqWay</mainClass>
 			</manifest>
 		    </archive>
 		</configuration>
