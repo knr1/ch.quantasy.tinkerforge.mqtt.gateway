@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  */
 public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerDeviceCallback> {
 
+    private Integer referenceAirPressure;
     private Long airPressureCallbackPeriod;
     private Long altitudeCallbackPeriod;
     private Long debouncePeriod;
@@ -55,6 +56,9 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
         if (averaging != null) {
             setAveraging(averaging);
         }
+        if(referenceAirPressure!=null){
+            setReferenceAirPressure(referenceAirPressure);
+        }
     }
 
     @Override
@@ -80,6 +84,16 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
             getDevice().setAirPressureCallbackPeriod(period);
             this.airPressureCallbackPeriod = getDevice().getAirPressureCallbackPeriod();
             super.getCallback().airPressureCallbackPeriodChanged(this.airPressureCallbackPeriod);
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(BarometerDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void setReferenceAirPressure(Integer reference) {
+        try {
+            getDevice().setReferenceAirPressure(reference);
+            this.referenceAirPressure = getDevice().getReferenceAirPressure();
+            super.getCallback().referenceAirPressureChanged(this.referenceAirPressure);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(BarometerDevice.class.getName()).log(Level.SEVERE, null, ex);
         }

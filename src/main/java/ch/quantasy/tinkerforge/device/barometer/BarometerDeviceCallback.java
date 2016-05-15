@@ -28,5 +28,7 @@ public interface BarometerDeviceCallback extends DeviceCallback, BrickletBaromet
     public void altitudeCallbackThresholdChanged(DeviceAltitudeCallbackThreshold threshold);
 
     public void averagingChanged(DeviceAveraging averaging);
+    
+    public void referenceAirPressureChanged(Integer referenceAirPressure);
 
 }

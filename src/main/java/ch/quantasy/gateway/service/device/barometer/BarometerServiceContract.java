@@ -50,6 +50,10 @@ public class BarometerServiceContract extends DeviceServiceContract {
     public final String AVERAGING;
     public final String STATUS_AVERAGING;
     public final String INTENT_AVERAGING;
+    
+    public final String REFERENCE_AIR_PRESSURE;
+    public final String STATUS_REFERENCE_AIR_PRESSURE;
+    public final String INTENT_REFERENCE_AIR_PRESSURE;
 
     public BarometerServiceContract(BarometerDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -93,5 +97,9 @@ public class BarometerServiceContract extends DeviceServiceContract {
         AVERAGING = "averaging";
         STATUS_AVERAGING = STATUS + "/" + AVERAGING;
         INTENT_AVERAGING = INTENT + "/" + AVERAGING;
+        
+        REFERENCE_AIR_PRESSURE="referenceAirPressure";
+        INTENT_REFERENCE_AIR_PRESSURE=INTENT+"/"+REFERENCE_AIR_PRESSURE;
+        STATUS_REFERENCE_AIR_PRESSURE=STATUS+"/"+REFERENCE_AIR_PRESSURE;
     }
 }

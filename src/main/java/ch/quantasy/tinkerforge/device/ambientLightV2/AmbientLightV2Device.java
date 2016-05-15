@@ -86,7 +86,7 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
 
     public void setConfiguration(DeviceConfiguration configuration) {
         try {
-            getDevice().setConfiguration(configuration.getIlluminanceRange(), configuration.getIntegrationTime());
+            getDevice().setConfiguration(configuration.getIlluminanceRange().getValue(), configuration.getIntegrationTime().getValue());
             this.configuration = new DeviceConfiguration(getDevice().getConfiguration());
             super.getCallback().configurationChanged(this.configuration);
         } catch (TimeoutException | NotConnectedException ex) {

@@ -32,8 +32,8 @@ public class DCServiceContract extends DeviceServiceContract {
     public final String EVENT_VELOCITY;
     
     public final String CALLBACK_PERIOD;
-    public final String INTENT_VELOCITY_PERIOD;
-    public final String STATUS_VELOCITY_PERIOD;
+    public final String INTENT_VELOCITY_CALLBACK_PERIOD;
+    public final String STATUS_VELOCITY_CALLBACK_PERIOD;
             
     public final String DRIVER_MODE;
     public final String INTENT_DRIVER_MODE;
@@ -52,7 +52,7 @@ public class DCServiceContract extends DeviceServiceContract {
     public final String STATUS_ACCELERATION;
     
     public final String EMERGENCY_SHUTDOWN;
-    public final String STATUS_EMERGENCY_SHUTDOWN;
+    public final String EVENT_EMERGENCY_SHUTDOWN;
 
     public DCServiceContract(DCDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -70,10 +70,10 @@ public class DCServiceContract extends DeviceServiceContract {
         INTENT_VELOCITY=INTENT+"/"+VELOCITY;
         EVENT_VELOCITY=EVENT+"/"+VELOCITY;
         
-        CALLBACK_PERIOD="callback_period";
+        CALLBACK_PERIOD="callbackPeriod";
         
-        STATUS_VELOCITY_PERIOD=STATUS_VELOCITY+"/"+CALLBACK_PERIOD;
-        INTENT_VELOCITY_PERIOD=INTENT_VELOCITY+"/"+CALLBACK_PERIOD;
+        STATUS_VELOCITY_CALLBACK_PERIOD=STATUS_VELOCITY+"/"+CALLBACK_PERIOD;
+        INTENT_VELOCITY_CALLBACK_PERIOD=INTENT_VELOCITY+"/"+CALLBACK_PERIOD;
         
         FULL_BRAKE = "fullBrake";
         EVENT_FULL_BRAKE = EVENT + "/" + FULL_BRAKE;
@@ -94,7 +94,7 @@ public class DCServiceContract extends DeviceServiceContract {
         STATUS_DRIVER_MODE=STATUS+"/"+DRIVER_MODE;
 
         EMERGENCY_SHUTDOWN="emergencyShutdown";
-        STATUS_EMERGENCY_SHUTDOWN=STATUS+"/"+EMERGENCY_SHUTDOWN;
+        EVENT_EMERGENCY_SHUTDOWN=STATUS+"/"+EMERGENCY_SHUTDOWN;
         
         PWM_FREQUENCY="pwmFrequency";
         STATUS_PWM_FREQUENCY=STATUS+"/"+PWM_FREQUENCY;

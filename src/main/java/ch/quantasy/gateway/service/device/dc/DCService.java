@@ -26,6 +26,27 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     public DCService(DCDevice device) throws MqttException {
         super(device, new DCServiceContract(device));
+        addDescription(getServiceContract().INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
+        addDescription(getServiceContract().INTENT_DRIVER_MODE, "[0|1]");
+        addDescription(getServiceContract().INTENT_ENABLED, "[true|false]");
+        addDescription(getServiceContract().INTENT_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
+        addDescription(getServiceContract().INTENT_PWM_FREQUENCY, "[1..20000]");
+        addDescription(getServiceContract().INTENT_VELOCITY, "-32767..32767");
+        addDescription(getServiceContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
+
+        addDescription(getServiceContract().EVENT_FULL_BRAKE, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.."+Short.MAX_VALUE+"]");
+        addDescription(getServiceContract().EVENT_EMERGENCY_SHUTDOWN, "[0.." + Long.MAX_VALUE + "]");
+
+        addDescription(getServiceContract().STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
+        addDescription(getServiceContract().STATUS_DRIVER_MODE, "[0|1]");
+        addDescription(getServiceContract().STATUS_ENABLED, "[true|false]");
+        addDescription(getServiceContract().STATUS_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
+        addDescription(getServiceContract().STATUS_PWM_FREQUENCY, "[1..20000]");
+        addDescription(getServiceContract().STATUS_VELOCITY, "-32767..32767");
+        addDescription(getServiceContract().STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
+
     }
 
     @Override
@@ -59,7 +80,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
             Short velocity = getMapper().readValue(payload, Short.class);
             getDevice().setVelocity(velocity);
         }
-        if (string.startsWith(getServiceContract().INTENT_VELOCITY_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_VELOCITY_CALLBACK_PERIOD)) {
             Integer velocityPeriod = getMapper().readValue(payload, Integer.class);
             getDevice().setVelocityPeriod(velocityPeriod);
         }
@@ -89,7 +110,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void velocityPeriodChanged(Integer velocityPeriod) {
-        addStatus(getServiceContract().STATUS_VELOCITY_PERIOD, velocityPeriod);
+        addStatus(getServiceContract().STATUS_VELOCITY_CALLBACK_PERIOD, velocityPeriod);
     }
 
     @Override
@@ -104,7 +125,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void emergencyShutdown() {
-        addEvent(getServiceContract().STATUS_EMERGENCY_SHUTDOWN, System.currentTimeMillis());
+        addEvent(getServiceContract().EVENT_EMERGENCY_SHUTDOWN, System.currentTimeMillis());
     }
 
     @Override

@@ -4,10 +4,7 @@
  * and open the template in the editor.
  */
 package ch.quantasy.tinkerforge.device.dualRelay;
-import ch.quantasy.tinkerforge.device.remoteSwitch.*;
-import ch.quantasy.tinkerforge.device.moisture.*;
 import com.tinkerforge.BrickletDualRelay;
-import com.tinkerforge.BrickletMoisture;
 
 /**
  *
