@@ -45,7 +45,7 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
     private final HashMap<String, List<Object>> eventMap;
     private final HashMap<String, MqttMessage> contractDescriptionMap;
 
-    public AbstractService(S serviceContract,String clientID) throws MqttException {
+    public AbstractService(S serviceContract, String clientID) throws MqttException {
         this.serviceContract = serviceContract;
 
         statusMap = new HashMap<>();
@@ -66,6 +66,7 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
         communication.publishActualWill(serviceContract.ONLINE.getBytes());
         communication.subscribe(serviceContract.INTENT + "/#", 1);
 
+        addDescription(getServiceContract().STATUS_CONNECTION, "[" + getServiceContract().ONLINE + "|" + getServiceContract().OFFLINE + "]");
     }
 
     @Override
@@ -106,7 +107,6 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
         return null;
     }
 
-    
     protected void addEvent(String topic, Object event) {
         List<Object> eventList = eventMap.get(topic);
         if (eventList == null) {
@@ -120,10 +120,11 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
     protected void addStatus(String topic, Object status) {
         try {
             MqttMessage message = null;
-            if(status!=null)
-                message=new MqttMessage(mapper.writeValueAsBytes(status));
-            else
-                message=new MqttMessage();
+            if (status != null) {
+                message = new MqttMessage(mapper.writeValueAsBytes(status));
+            } else {
+                message = new MqttMessage();
+            }
             message.setQos(1);
             message.setRetained(true);
             statusMap.put(topic, message);
@@ -134,12 +135,15 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     protected void addDescription(String topic, Object description) {
         try {
             MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(description));
             message.setQos(1);
             message.setRetained(true);
-            String descriptionTopic=getServiceContract().DESCRIPTION_TOPIC+"/"+topic;
+            
+            topic = topic.replaceFirst(getServiceContract().ID_TOPIC,"");
+            String descriptionTopic = getServiceContract().DESCRIPTION + topic;
             contractDescriptionMap.put(descriptionTopic, message);
             communication.readyToPublish(this, descriptionTopic);
 

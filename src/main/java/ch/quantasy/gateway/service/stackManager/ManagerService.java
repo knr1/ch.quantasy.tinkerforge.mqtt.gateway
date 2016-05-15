@@ -22,6 +22,7 @@ import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackListener;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,17 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
 
     public ManagerService() throws MqttException {
         super(new ManagerServiceContract("Manager"), "TinkerforgeStackManager");
+                addDescription(getServiceContract().INTENT_STACK_ADDRESS_ADD, "<address");
+                addDescription(getServiceContract().INTENT_STACK_ADDRESS_REMOVE, "<address>");  
+                addDescription(getServiceContract().EVENT_ADDRESS_CONNECTED, "<address>");
+                addDescription(getServiceContract().EVENT_ADDRESS_DISCONNECTED, "<address>");
+                addDescription(getServiceContract().EVENT_STACK_ADDRESS_ADDED, "<address>");
+                addDescription(getServiceContract().EVENT_STACK_ADDRESS_REMOVED, "<address>");
+                addDescription(getServiceContract().STATUS_STACK_ADDRESS+"/<address>/connected", "[true|false]");
+                
+
+                
+
         TinkerForgeManager.getInstance().addListener(this);
         updateStatus();
     }
@@ -56,9 +68,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
                     return;
                 }
                 TinkerForgeManager.getInstance().addStack(address);
-
                 System.out.println(">>" + new String(mm.getPayload()));
-
             }
             if (string.startsWith(getServiceContract().INTENT_STACK_ADDRESS_REMOVE)) {
 
@@ -68,7 +78,6 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
                     return;
                 }
                 TinkerForgeManager.getInstance().removeStack(address);
-
                 System.out.println(">>" + new String(mm.getPayload()));
             }
 
@@ -99,7 +108,6 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
             TinkerforgeStack stack = TinkerForgeManager.getInstance().getStackFactory().getStack(address);
             this.stackAdded(stack);
         }
-
     }
 
     @Override
@@ -110,7 +118,6 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
         TinkerforgeStackAddress address = stack.getStackAddress();
         addStatus(getServiceContract().STATUS_STACK_ADDRESS + "/" + address.hostName + ":" + address.port, stack.isConnected());
         addEvent(getServiceContract().EVENT_STACK_ADDRESS_ADDED, address);
-
     }
 
     @Override
@@ -136,7 +143,6 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     private void updateDevice(TinkerforgeDevice device) {
         String topic = getServiceContract().STATUS_DEVICE + "/" + device.getAddress().hostName + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
         addStatus(topic, device.isConnected());
-
     }
 
     @Override

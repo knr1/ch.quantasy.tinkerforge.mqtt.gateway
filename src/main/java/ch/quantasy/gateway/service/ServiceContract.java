@@ -11,7 +11,7 @@ package ch.quantasy.gateway.service;
  */
 public class ServiceContract {
 
-    public final String ROOT_TOPIC;
+    public final String ROOT;
     public final String ID;
     public final String ID_TOPIC;
     public final String BASE;
@@ -23,12 +23,12 @@ public class ServiceContract {
 
     public final String EVENT;
     public final String INTENT;
-    public final String DESCRIPTION_TOPIC;
+    public final String DESCRIPTION;
 
     public ServiceContract(String base, String id) {
-        ROOT_TOPIC = "TF";
+        ROOT = "TF";
         BASE = base;
-        BASE_TOPIC = ROOT_TOPIC + "/" + BASE;
+        BASE_TOPIC = ROOT + "/" + BASE;
         ID = id;
         if (ID != null) {
             ID_TOPIC = BASE_TOPIC + "/" + ID;
@@ -39,7 +39,7 @@ public class ServiceContract {
         EVENT = ID_TOPIC + "/event";
         INTENT = ID_TOPIC + "/intent";
         STATUS = ID_TOPIC + "/status";
-        DESCRIPTION_TOPIC=BASE_TOPIC+"/description";
+        DESCRIPTION=BASE_TOPIC+"/description";
 
         STATUS_CONNECTION = STATUS + "/connection";
         OFFLINE = "offline";
