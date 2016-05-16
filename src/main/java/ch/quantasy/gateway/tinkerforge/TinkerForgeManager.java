@@ -41,6 +41,7 @@
  */
 package ch.quantasy.gateway.tinkerforge;
 
+import ch.quantasy.gateway.service.device.accelerometer.AccelerometerService;
 import ch.quantasy.gateway.service.device.ambientLight.AmbientLightService;
 import ch.quantasy.gateway.service.device.ambientLightV2.AmbientLightV2Service;
 import ch.quantasy.gateway.service.device.barometer.BarometerService;
@@ -62,6 +63,7 @@ import ch.quantasy.gateway.service.device.uvLight.UVLightService;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
+import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
@@ -242,6 +244,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof TiltDevice) {
                 TiltService service = new TiltService((TiltDevice) tinkerforgeDevice);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof AccelerometerDevice) {
+                AccelerometerService service = new AccelerometerService((AccelerometerDevice) tinkerforgeDevice);
                 System.out.println(service);
             }
         } catch (MqttException ex) {

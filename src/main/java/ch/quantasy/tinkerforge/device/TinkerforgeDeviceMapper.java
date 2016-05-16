@@ -41,6 +41,7 @@
  */
 package ch.quantasy.tinkerforge.device;
 
+import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
@@ -61,6 +62,7 @@ import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
+import com.tinkerforge.BrickletAccelerometer;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletAmbientLightV2;
 import com.tinkerforge.BrickletBarometer;
@@ -141,6 +143,9 @@ public class TinkerforgeDeviceMapper {
         }
          if(TinkerforgeDeviceClass.Tilt==TinkerforgeDeviceClass.getDevice(device)){
             return new TiltDevice(address,(BrickletTilt)device);
+        }
+         if(TinkerforgeDeviceClass.Accelerometer==TinkerforgeDeviceClass.getDevice(device)){
+            return new AccelerometerDevice(address,(BrickletAccelerometer)device);
         }
         return new TinkerforgeDevice(address, device);
     }
