@@ -46,6 +46,7 @@ import ch.quantasy.gateway.service.device.ambientLight.AmbientLightService;
 import ch.quantasy.gateway.service.device.ambientLightV2.AmbientLightV2Service;
 import ch.quantasy.gateway.service.device.barometer.BarometerService;
 import ch.quantasy.gateway.service.device.co2.CO2Service;
+import ch.quantasy.gateway.service.device.color.ColorService;
 import ch.quantasy.gateway.service.device.dc.DCService;
 import ch.quantasy.gateway.service.device.distanceIR.DistanceIRService;
 import ch.quantasy.gateway.service.device.distanceUS.DistanceUSService;
@@ -68,6 +69,7 @@ import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
+import ch.quantasy.tinkerforge.device.color.ColorDevice;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
@@ -243,6 +245,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof AccelerometerDevice) {
                 AccelerometerService service = new AccelerometerService((AccelerometerDevice) tinkerforgeDevice, mqttURI);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof ColorDevice) {
+                ColorService service = new ColorService((ColorDevice) tinkerforgeDevice, mqttURI);
                 System.out.println(service);
             }
         } catch (MqttException ex) {
