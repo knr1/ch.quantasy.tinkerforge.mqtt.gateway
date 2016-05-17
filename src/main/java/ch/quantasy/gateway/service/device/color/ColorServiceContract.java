@@ -62,12 +62,11 @@ public class ColorServiceContract extends DeviceServiceContract {
     public final String EVENT_COLOR;
     public final String EVENT_COLOR_REACHED;
     public final String INTENT_COLOR_VALUE;
-    public final String INTENT_COLOR_THRESHOLD;
+    public final String INTENT_COLOR_CALLBACK_THRESHOLD;
     public final String INTENT_COLOR_CALLBACK_PERIOD;
 
     public final String ILLUMINANCE;
     public final String STATUS_ILLUMINANCE;
-    public final String STATUS_ILLUMINANCE_THRESHOLD;
     public final String STATUS_ILLUMINANCE_CALLBACK_PERIOD;
     public final String EVENT_ILLUMINANCE;
     public final String EVENT_COLOR_TEMPERATURE_REACHED;
@@ -104,12 +103,11 @@ public class ColorServiceContract extends DeviceServiceContract {
         EVENT_COLOR = EVENT + "/" + COLOR;
         EVENT_COLOR_REACHED = EVENT_COLOR + "/" + REACHED;
         INTENT_COLOR_VALUE = INTENT + "/" + COLOR;
-        INTENT_COLOR_THRESHOLD = INTENT_COLOR_VALUE + "/" + THRESHOLD;
+        INTENT_COLOR_CALLBACK_THRESHOLD = INTENT_COLOR_VALUE + "/" + THRESHOLD;
         INTENT_COLOR_CALLBACK_PERIOD = INTENT_COLOR_VALUE + "/" + CALLBACK_PERIOD;
 
         ILLUMINANCE = "illuminance";
         STATUS_ILLUMINANCE = STATUS + "/" + ILLUMINANCE;
-        STATUS_ILLUMINANCE_THRESHOLD = STATUS_ILLUMINANCE + "/" + THRESHOLD;
         STATUS_ILLUMINANCE_CALLBACK_PERIOD = STATUS_ILLUMINANCE + "/" + CALLBACK_PERIOD;
         EVENT_ILLUMINANCE = EVENT + "/" + ILLUMINANCE;
         EVENT_COLOR_TEMPERATURE_REACHED = EVENT_ILLUMINANCE + "/" + REACHED;
