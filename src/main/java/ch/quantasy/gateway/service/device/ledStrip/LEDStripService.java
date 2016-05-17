@@ -50,6 +50,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceCallback;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
+import java.net.URI;
 
 /**
  *
@@ -59,8 +60,8 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     private short[][] leds;
 
-    public LEDStripService(LEDStripDevice device) throws MqttException {
-        super(device, new LEDStripServiceContract(device));
+    public LEDStripService(LEDStripDevice device,URI mqttURI) throws MqttException {
+        super(device, new LEDStripServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
         addDescription(getServiceContract().INTENT_LEDs, "[{{r,r,...,r}_numLEDs {g,g,...,g}_numLEDs {b,b,...,b}_numLEDs}_3]");
 

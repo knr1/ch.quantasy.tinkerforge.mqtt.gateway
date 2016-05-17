@@ -47,6 +47,7 @@ import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDeviceCallback;
 import ch.quantasy.tinkerforge.device.accelerometer.DeviceAccelerationCallbackThreshold;
 import ch.quantasy.tinkerforge.device.accelerometer.DeviceConfiguration;
 import java.io.IOException;
+import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -58,9 +59,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class AccelerometerService extends AbstractDeviceService<AccelerometerDevice, AccelerometerServiceContract> implements AccelerometerDeviceCallback {
 
-    public AccelerometerService(AccelerometerDevice device) throws MqttException {
+    public AccelerometerService(AccelerometerDevice device, URI mqttURI) throws MqttException {
 
-        super(device, new AccelerometerServiceContract(device));
+        super(device, new AccelerometerServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ACCELERATION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n minY: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n minZ: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxX: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxY: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxZ: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");

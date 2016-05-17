@@ -46,6 +46,7 @@ import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
+import ch.quantasy.tinkerforge.device.color.ColorDevice;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
@@ -67,6 +68,7 @@ import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletAmbientLightV2;
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletCO2;
+import com.tinkerforge.BrickletColor;
 import com.tinkerforge.BrickletDistanceIR;
 import com.tinkerforge.BrickletDistanceUS;
 import com.tinkerforge.BrickletDualButton;
@@ -146,6 +148,9 @@ public class TinkerforgeDeviceMapper {
         }
          if(TinkerforgeDeviceClass.Accelerometer==TinkerforgeDeviceClass.getDevice(device)){
             return new AccelerometerDevice(address,(BrickletAccelerometer)device);
+        }
+         if(TinkerforgeDeviceClass.Color==TinkerforgeDeviceClass.getDevice(device)){
+            return new ColorDevice(address,(BrickletColor)device);
         }
         return new TinkerforgeDevice(address, device);
     }

@@ -46,6 +46,7 @@ import ch.quantasy.tinkerforge.device.uvLight.DeviceUVLightCallbackThreshold;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDeviceCallback;
 import java.io.IOException;
+import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -57,9 +58,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLightServiceContract> implements UVLightDeviceCallback {
 
-    public UVLightService(UVLightDevice device) throws MqttException {
+    public UVLightService(UVLightDevice device,URI mqttURI) throws MqttException {
 
-        super(device, new UVLightServiceContract(device));
+        super(device, new UVLightServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");

@@ -44,6 +44,7 @@ package ch.quantasy.gateway.service.device.tilt;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import com.tinkerforge.BrickletTilt;
+import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -53,8 +54,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceContract> implements BrickletTilt.TiltStateListener {
 
-    public TiltService(TiltDevice device) throws MqttException {
-        super(device, new TiltServiceContract(device));
+    public TiltService(TiltDevice device,URI mqttURI) throws MqttException {
+        super(device, new TiltServiceContract(device),mqttURI);
         addDescription(getServiceContract().EVENT_TILT_STATE, "[0..2]");
      
     }

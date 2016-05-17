@@ -46,6 +46,7 @@ import ch.quantasy.tinkerforge.device.co2.CO2Device;
 import ch.quantasy.tinkerforge.device.co2.CO2DeviceCallback;
 import ch.quantasy.tinkerforge.device.co2.DeviceCO2ConcentrationCallbackThreshold;
 import java.io.IOException;
+import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -57,9 +58,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContract> implements CO2DeviceCallback {
 
-    public CO2Service(CO2Device device) throws MqttException {
+    public CO2Service(CO2Device device,URI mqttURI) throws MqttException {
 
-        super(device, new CO2ServiceContract(device));
+        super(device, new CO2ServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_CO2_CONCENTRATION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");

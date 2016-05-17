@@ -46,6 +46,7 @@ import ch.quantasy.tinkerforge.device.distanceUS.DeviceDistanceCallbackThreshold
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDeviceCallback;
 import java.io.IOException;
+import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -57,9 +58,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, DistanceUSServiceContract> implements DistanceUSDeviceCallback {
 
-    public DistanceUSService(DistanceUSDevice device) throws MqttException {
+    public DistanceUSService(DistanceUSDevice device,URI mqttURI) throws MqttException {
 
-        super(device, new DistanceUSServiceContract(device));
+        super(device, new DistanceUSServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");

@@ -44,6 +44,7 @@ package ch.quantasy.gateway.service.device;
 import ch.quantasy.gateway.service.AbstractService;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
+import java.net.URI;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -57,8 +58,8 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
 
     private final G device;
 
-    public AbstractDeviceService(G device, S serviceContract) throws MqttException {
-        super(serviceContract, device.getUid());
+    public AbstractDeviceService(G device, S serviceContract,URI mqttURI) throws MqttException {
+        super(serviceContract, device.getUid(),mqttURI);
         this.device = device;
         device.setCallback(this);
 

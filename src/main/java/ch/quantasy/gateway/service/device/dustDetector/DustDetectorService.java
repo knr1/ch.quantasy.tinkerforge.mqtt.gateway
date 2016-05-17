@@ -46,6 +46,7 @@ import ch.quantasy.tinkerforge.device.dustDetector.DeviceDustDensityCallbackThre
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDeviceCallback;
 import java.io.IOException;
+import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -57,9 +58,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class DustDetectorService extends AbstractDeviceService<DustDetectorDevice, DustDetectorServiceContract> implements DustDetectorDeviceCallback {
 
-    public DustDetectorService(DustDetectorDevice device) throws MqttException {
+    public DustDetectorService(DustDetectorDevice device,URI mqttURI) throws MqttException {
 
-        super(device, new DustDetectorServiceContract(device));
+        super(device, new DustDetectorServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_MOVING_AVERAGE, "[0..100]");
 

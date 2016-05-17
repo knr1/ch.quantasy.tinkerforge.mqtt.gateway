@@ -68,6 +68,8 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
     @Override
     protected void addDeviceListeners() {
         getDevice().addMonoflopDoneListener(super.getCallback());
+        getDevice().addMonoflopDoneListener(this);
+
         for (DeviceMonoflopParameters parameters : monoflopParametersMap.values()) {
             setMonoflop(parameters);
         }
@@ -80,13 +82,16 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
     @Override
     protected void removeDeviceListeners() {
         getDevice().removeMonoflopDoneListener(super.getCallback());
+        getDevice().removeMonoflopDoneListener(this);
+
     }
 
     public void setMonoflop(DeviceMonoflopParameters parameters) {
         try {
             getDevice().setMonoflop(parameters.getRelay(), parameters.getState(), parameters.getPeriod());
             this.monoflopParametersMap.put(parameters.getRelay(), parameters);
-            super.getCallback().stateChanged(new DeviceState(getDevice().getState()));
+            this.state = new DeviceState(getDevice().getState());
+            super.getCallback().stateChanged(this.state);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,7 +101,7 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
         try {
             getDevice().setSelectedState(parameters.getRelay(), parameters.getState());
             this.state = new DeviceState(getDevice().getState());
-            super.getCallback().stateChanged(state);
+            super.getCallback().stateChanged(this.state);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -106,7 +111,7 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
         try {
             getDevice().setState(state.getRelay1(), state.getRelay2());
             this.state = new DeviceState(getDevice().getState());
-            super.getCallback().stateChanged(state);
+            super.getCallback().stateChanged(this.state);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -116,7 +121,7 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
     public void monoflopDone(short s, boolean bln) {
         try {
             this.state = new DeviceState(getDevice().getState());
-            super.getCallback().stateChanged(state);
+            super.getCallback().stateChanged(this.state);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
         }

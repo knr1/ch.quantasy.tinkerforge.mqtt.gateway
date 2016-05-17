@@ -50,6 +50,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDeviceCallback;
 import ch.quantasy.tinkerforge.device.moisture.DeviceMoistureCallbackThreshold;
+import java.net.URI;
 
 /**
  *
@@ -57,8 +58,8 @@ import ch.quantasy.tinkerforge.device.moisture.DeviceMoistureCallbackThreshold;
  */
 public class MoistureService extends AbstractDeviceService<MoistureDevice, MoistureServiceContract> implements MoistureDeviceCallback {
 
-    public MoistureService(MoistureDevice device) throws MqttException {
-        super(device, new MoistureServiceContract(device));
+    public MoistureService(MoistureDevice device,URI mqttURI) throws MqttException {
+        super(device, new MoistureServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");

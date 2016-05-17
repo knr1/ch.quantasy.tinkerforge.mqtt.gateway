@@ -39,34 +39,86 @@
  *
  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.tinkerforge.device.color;
 
-import ch.quantasy.gateway.service.stackManager.ManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import com.tinkerforge.BrickletColor;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
-
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-        
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        ManagerService managerService = new ManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+public class DeviceColorCallbackThreshold {
+    
+    private char option;
+    private int minR;
+    private int maxR;
+    private int minG;
+    private int maxG;
+    private int minB;
+    private int maxB;
+    private int minC;
+    private int maxC;
+    
+    public DeviceColorCallbackThreshold() {
     }
+
+    public DeviceColorCallbackThreshold(char option, int minR, int maxR, int minG, int maxG, int minB, int maxB, int minC, int maxC) {
+        this.option = option;
+        this.minR = minR;
+        this.maxR = maxR;
+        this.minG = minG;
+        this.maxG = maxG;
+        this.minB = minB;
+        this.maxB = maxB;
+        this.minC = minC;
+        this.maxC = maxC;
+    }
+
+    
+    
+    
+
+    public DeviceColorCallbackThreshold(BrickletColor.ColorCallbackThreshold threshold) {
+        this(threshold.option,threshold.minR,threshold.maxR,threshold.minG,threshold.maxG,threshold.minB,threshold.maxB,threshold.minC,threshold.maxC);
+    }
+
+    public int getMaxB() {
+        return maxB;
+    }
+
+    public int getMaxC() {
+        return maxC;
+    }
+
+    public int getMaxG() {
+        return maxG;
+    }
+
+    public int getMaxR() {
+        return maxR;
+    }
+
+    public int getMinB() {
+        return minB;
+    }
+
+    public int getMinC() {
+        return minC;
+    }
+
+    public int getMinG() {
+        return minG;
+    }
+
+    public int getMinR() {
+        return minR;
+    }
+
+    
+    public char getOption() {
+        return option;
+    }
+    
+    
+    
 }

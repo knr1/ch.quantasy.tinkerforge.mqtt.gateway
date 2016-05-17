@@ -47,6 +47,7 @@ import ch.quantasy.tinkerforge.device.temperatureIR.DeviceObjectTemperatureCallb
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDeviceCallback;
 import java.io.IOException;
+import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -58,8 +59,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDevice, TemperatureIRServiceContract> implements TemperatureIRDeviceCallback {
 
-    public TemperatureIRService(TemperatureIRDevice device) throws MqttException {
-        super(device, new TemperatureIRServiceContract(device));
+    public TemperatureIRService(TemperatureIRDevice device,URI mqttURI) throws MqttException {
+        super(device, new TemperatureIRServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

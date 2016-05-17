@@ -51,6 +51,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.ambientLightV2.DeviceIlluminanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.ambientLightV2.DeviceConfiguration;
+import java.net.URI;
 
 /**
  *
@@ -58,9 +59,9 @@ import ch.quantasy.tinkerforge.device.ambientLightV2.DeviceConfiguration;
  */
 public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2Device, AmbientLightV2ServiceContract> implements AmbientLightV2DeviceCallback {
 
-    public AmbientLightV2Service(AmbientLightV2Device device) throws MqttException {
+    public AmbientLightV2Service(AmbientLightV2Device device,URI mqttURI) throws MqttException {
 
-        super(device, new AmbientLightV2ServiceContract(device));
+        super(device, new AmbientLightV2ServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");

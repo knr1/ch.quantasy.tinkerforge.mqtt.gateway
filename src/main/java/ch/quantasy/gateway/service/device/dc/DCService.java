@@ -44,6 +44,7 @@ package ch.quantasy.gateway.service.device.dc;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.dc.DCDeviceCallback;
+import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -53,8 +54,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract> implements DCDeviceCallback {
 
-    public DCService(DCDevice device) throws MqttException {
-        super(device, new DCServiceContract(device));
+    public DCService(DCDevice device,URI mqttURI) throws MqttException {
+        super(device, new DCServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DRIVER_MODE, "[0|1]");
         addDescription(getServiceContract().INTENT_ENABLED, "[true|false]");

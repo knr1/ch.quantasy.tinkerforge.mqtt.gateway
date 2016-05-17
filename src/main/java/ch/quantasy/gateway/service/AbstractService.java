@@ -64,7 +64,7 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
  * @author reto
  * @param <S>
  */
-public abstract class AbstractService<S extends ServiceContract> implements MQTTCommunicationCallback, DeviceCallback {
+public abstract class AbstractService<S extends ServiceContract> implements MQTTCommunicationCallback {
 
     private final MQTTParameters parameters;
     private final S serviceContract;
@@ -74,9 +74,8 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
     private final HashMap<String, List<Object>> eventMap;
     private final HashMap<String, MqttMessage> contractDescriptionMap;
 
-    public AbstractService(S serviceContract, String clientID) throws MqttException {
+    public AbstractService(S serviceContract, String clientID,URI mqttURI) throws MqttException {
         this.serviceContract = serviceContract;
-
         statusMap = new HashMap<>();
         eventMap = new HashMap<>();
         contractDescriptionMap = new HashMap<>();
@@ -88,7 +87,7 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
         parameters.setIsLastWillRetained(true);
         parameters.setLastWillMessage(serviceContract.OFFLINE.getBytes());
         parameters.setLastWillQoS(1);
-        parameters.setServerURIs(URI.create("tcp://127.0.0.1:1883"));
+        parameters.setServerURIs(mqttURI);
         parameters.setWillTopic(serviceContract.STATUS_CONNECTION);
         parameters.setMqttCallback(this);
         communication.connect(parameters);

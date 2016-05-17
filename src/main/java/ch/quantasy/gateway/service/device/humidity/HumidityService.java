@@ -52,6 +52,7 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDeviceCallback;
+import java.net.URI;
 
 /**
  *
@@ -59,8 +60,8 @@ import ch.quantasy.tinkerforge.device.humidity.HumidityDeviceCallback;
  */
 public class HumidityService extends AbstractDeviceService<HumidityDevice, HumidityServiceContract> implements HumidityDeviceCallback {
 
-    public HumidityService(HumidityDevice device) throws MqttException {
-        super(device, new HumidityServiceContract(device));
+    public HumidityService(HumidityDevice device,URI mqttURI) throws MqttException {
+        super(device, new HumidityServiceContract(device),mqttURI);
         
         addDescription(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

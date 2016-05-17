@@ -41,8 +41,6 @@
  */
 package ch.quantasy.tinkerforge.device.generic;
 
-import com.tinkerforge.BrickletHumidity;
-
 /**
  *
  * @author reto

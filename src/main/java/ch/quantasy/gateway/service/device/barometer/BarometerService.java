@@ -48,6 +48,7 @@ import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDeviceCallback;
 import ch.quantasy.tinkerforge.device.barometer.DeviceAveraging;
 import java.io.IOException;
+import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -59,8 +60,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class BarometerService extends AbstractDeviceService<BarometerDevice, BarometerServiceContract> implements BarometerDeviceCallback {
 
-    public BarometerService(BarometerDevice device) throws MqttException {
-        super(device, new BarometerServiceContract(device));
+    public BarometerService(BarometerDevice device,URI mqttURI) throws MqttException {
+        super(device, new BarometerServiceContract(device),mqttURI);
         addDescription(getServiceContract().INTENT_AIR_PRESSURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

@@ -50,6 +50,7 @@ import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDeviceCallback;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketAParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketBParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
+import java.net.URI;
 
 /**
  *
@@ -57,8 +58,8 @@ import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
  */
 public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevice, RemoteSwitchServiceContract> implements RemoteSwitchDeviceCallback {
 
-    public RemoteSwitchService(RemoteSwitchDevice device) throws MqttException {
-        super(device, new RemoteSwitchServiceContract(device));
+    public RemoteSwitchService(RemoteSwitchDevice device,URI mqttURI) throws MqttException {
+        super(device, new RemoteSwitchServiceContract(device),mqttURI);
 
         addDescription(getServiceContract().INTENT_REPEATS, "[0.." + Short.MAX_VALUE + "]");
 

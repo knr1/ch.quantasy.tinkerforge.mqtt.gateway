@@ -39,34 +39,28 @@
  *
  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.tinkerforge.device.color;
 
-import ch.quantasy.gateway.service.stackManager.ManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
+import com.tinkerforge.BrickletColor;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public interface ColorDeviceCallback extends DeviceCallback, BrickletColor.ColorListener, BrickletColor.ColorReachedListener, BrickletColor.ColorTemperatureListener, BrickletColor.IlluminanceListener {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-        
+    public void illuminanceCallbackPeriodChanged(long period);
 
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        ManagerService managerService = new ManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
-    }
+    public void colorCallbackPeriodChanged(long period);
+
+    public void debouncePeriodChanged(long period);
+
+    public void colorCallbackThresholdChanged(DeviceColorCallbackThreshold threshold);
+
+    public void colorTemperatureCallbackPeriodChanged(long period);
+    
+    public void configurationChanged(DeviceConfiguration config);
+    
+    public void lightStatusChanged(boolean isLightOn);
 }

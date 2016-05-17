@@ -46,6 +46,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDeviceCallback;
+import java.net.URI;
 
 /**
  *
@@ -53,8 +54,8 @@ import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDeviceCallbac
  */
 public class MotionDetectorService extends AbstractDeviceService<MotionDetectorDevice, MotionDetectorServiceContract> implements MotionDetectorDeviceCallback {
 
-    public MotionDetectorService(MotionDetectorDevice device) throws MqttException {
-        super(device, new MotionDetectorServiceContract(device));
+    public MotionDetectorService(MotionDetectorDevice device,URI mqttURI) throws MqttException {
+        super(device, new MotionDetectorServiceContract(device),mqttURI);
         
         addDescription(getServiceContract().EVENT_DETECTION_CYCLE_ENDED, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_MOTION_DETECTED, "[0.." + Long.MAX_VALUE + "]");
