@@ -58,6 +58,7 @@ import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
+import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
@@ -79,6 +80,7 @@ import com.tinkerforge.BrickletLEDStrip;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletRemoteSwitch;
+import com.tinkerforge.BrickletSegmentDisplay4x7;
 import com.tinkerforge.BrickletTemperatureIR;
 import com.tinkerforge.BrickletTilt;
 import com.tinkerforge.BrickletUVLight;
@@ -151,6 +153,9 @@ public class TinkerforgeDeviceMapper {
         }
          if(TinkerforgeDeviceClass.Color==TinkerforgeDeviceClass.getDevice(device)){
             return new ColorDevice(address,(BrickletColor)device);
+        }
+         if(TinkerforgeDeviceClass.SegmentDisplay4x7==TinkerforgeDeviceClass.getDevice(device)){
+            return new Segment4x7Device(address,(BrickletSegmentDisplay4x7)device);
         }
         return new TinkerforgeDevice(address, device);
     }

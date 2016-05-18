@@ -10,7 +10,7 @@ Each Device provides the following interface:
 * status Each device describes its actual status via its specialized status topics.
 * event Each device provides all events via its specialied event topics. As there might be more events available than the mqtt broker is able to handle, all events are always covered within an array. Hence, there might be 0,1 or multiple events within one message.
 
-Tha language used within this project is [YAML]. Hence, all you need to learn is how to publish and subscribe to MQTT and how to write YAML.
+The descriptive language used within this project is [YAML]. Hence, all you need to learn is how to publish and subscribe to MQTT and how to write YAML.
 
 The root topic of TiMqWay is: TF
 
@@ -22,12 +22,17 @@ In order to install TiMqWay
 * Users way: download the latest [TiMqWay.jar]
  
 ### Usage
-You need Java (7 or higher) and a running MQTT-Server at localhost right now. TiMqWay will for now only try to connect to localhost. (This will change in the future and you will be free to choose the server-location at startup)
+You need Java (7 or higher) and a running MQTT-Server. You can start TiMqWay with the MQTT-Server-Parameter.
 
-Then run
+Then run the following command in order to use an MQTT-Server at localhost
 ```sh
-$ java -jar TiMqWay.jar
+$ java -jar TiMqWay.jar tcp://127.0.0.1:1883
 ```
+Then run the following command in order to use an MQTT-Server at iot.eclipse.org:1883 (Not recommended as it is an open server everyone can read and write into)
+```sh
+$ java -jar TiMqWay.jar tcp://iot.eclipse.org:1883
+```
+
 Thus, if you subscribe to TF/# you will immediately get the description info for the 'virtual' Manager.
 
 In order to interact with some specific Tinkerforge-Stack, the following has to be sent to MQTT:
