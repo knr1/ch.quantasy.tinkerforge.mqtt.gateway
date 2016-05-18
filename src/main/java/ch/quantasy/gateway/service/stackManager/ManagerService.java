@@ -69,7 +69,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     public ManagerService(TinkerForgeManager manager, URI mqttURI) throws MqttException {
         super(new ManagerServiceContract("Manager"), "TinkerforgeStackManager",mqttURI);
         this.manager=manager;
-                addDescription(getServiceContract().INTENT_STACK_ADDRESS_ADD, "<address");
+                addDescription(getServiceContract().INTENT_STACK_ADDRESS_ADD, "<address>");
                 addDescription(getServiceContract().INTENT_STACK_ADDRESS_REMOVE, "<address>");  
                 addDescription(getServiceContract().EVENT_ADDRESS_CONNECTED, "<address>");
                 addDescription(getServiceContract().EVENT_ADDRESS_DISCONNECTED, "<address>");
