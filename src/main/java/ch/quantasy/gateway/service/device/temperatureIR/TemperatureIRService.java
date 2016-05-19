@@ -143,7 +143,7 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
 
     @Override
     public void objectTemperatureCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, period);
     }
 
     @Override

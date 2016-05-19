@@ -163,7 +163,7 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().INTENT_IllUMINANCE_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
     }
 
     @Override

@@ -140,7 +140,7 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD, period);
+        addStatus(getServiceContract().STATUS_DISTANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
