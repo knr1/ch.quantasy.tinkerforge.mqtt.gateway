@@ -54,6 +54,7 @@ import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
+import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
@@ -77,6 +78,7 @@ import com.tinkerforge.BrickletDualRelay;
 import com.tinkerforge.BrickletDustDetector;
 import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletLEDStrip;
+import com.tinkerforge.BrickletLaserRangeFinder;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletRemoteSwitch;
@@ -156,6 +158,9 @@ public class TinkerforgeDeviceMapper {
         }
          if(TinkerforgeDeviceClass.SegmentDisplay4x7==TinkerforgeDeviceClass.getDevice(device)){
             return new Segment4x7Device(address,(BrickletSegmentDisplay4x7)device);
+        }
+         if(TinkerforgeDeviceClass.LaserRangeFinder==TinkerforgeDeviceClass.getDevice(device)){
+            return new LaserRangeFinderDevice(address,(BrickletLaserRangeFinder)device);
         }
         return new TinkerforgeDevice(address, device);
     }

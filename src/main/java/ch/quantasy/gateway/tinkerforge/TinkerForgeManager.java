@@ -58,6 +58,7 @@ import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorService;
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchService;
 import ch.quantasy.gateway.service.device.dualButton.DualButtonService;
 import ch.quantasy.gateway.service.device.dustDetector.DustDetectorService;
+import ch.quantasy.gateway.service.device.laserRangeFinder.LaserRangeFinderService;
 import ch.quantasy.gateway.service.device.segment4x7.Segment4x7Service;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
 import ch.quantasy.gateway.service.device.tilt.TiltService;
@@ -77,6 +78,7 @@ import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
+import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
@@ -255,6 +257,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof Segment4x7Device) {
                 Segment4x7Service service = new Segment4x7Service((Segment4x7Device) tinkerforgeDevice, mqttURI);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof LaserRangeFinderDevice) {
+                LaserRangeFinderService service = new LaserRangeFinderService((LaserRangeFinderDevice) tinkerforgeDevice, mqttURI);
                 System.out.println(service);
             }
         } catch (MqttException ex) {

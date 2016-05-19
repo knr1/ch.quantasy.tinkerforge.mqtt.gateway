@@ -39,58 +39,40 @@
  *
  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.tinkerforge.device.laserRangeFinder;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import ch.quantasy.tinkerforge.device.barometer.*;
+import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletHumidity;
-import com.tinkerforge.BrickletHumidity.HumidityCallbackThreshold;
-import java.io.IOException;
+import com.tinkerforge.BrickletLaserRangeFinder;
 
 /**
  *
  * @author reto
  */
-public class Tester {
-
-    private ObjectMapper mapper;
-
-    public Tester() throws IOException {
-        mapper = new ObjectMapper(new YAMLFactory());
-       
-        String tester = "option: < \nmin: 10 \nmax: 100";
-        MyHumididtyCallbackThreshold th=new MyHumididtyCallbackThreshold('<', 10, 100);
-        System.out.println(mapper.writeValueAsString(th));
-        MyHumididtyCallbackThreshold threshold = mapper.readValue(tester, MyHumididtyCallbackThreshold.class);
-        System.out.println(threshold);
-    }
-    public static void main(String[] args) throws IOException {
-       Tester t= new Tester();
-        System.out.println(t);
-    }
+public class DeviceAveraging {
     
-    public static  class MyHumididtyCallbackThreshold {
-        public char option;
-        public int min;
-        public int max;
+    private short averagingDistance;
+    private short averagingVelocity;
 
-        public MyHumididtyCallbackThreshold(char option, int min, int max) {
-            this.option = option;
-            this.min = min;
-            this.max = max;
-        }
-        private MyHumididtyCallbackThreshold() {
-            
-        }
-
-        
-        @Override
-        public String toString() {
-            return "MyHumididtyCallbackThreshold{" + "option=" + option + ", min=" + min + ", max=" + max + '}';
-        }
-        
-        
+    public DeviceAveraging() {
     }
-            
+
+    public DeviceAveraging(BrickletLaserRangeFinder.MovingAverage averaging) {
+        this(averaging.distanceAverageLength,averaging.velocityAverageLength);
+    }
+
+    public DeviceAveraging(short averagingDistance, short averagingVelocity) {
+        this.averagingDistance = averagingDistance;
+        this.averagingVelocity = averagingVelocity;
+    }
+
+    public short getAveragingDistance() {
+        return averagingDistance;
+    }
+
+    public short getAveragingVelocity() {
+        return averagingVelocity;
+    }
+
 }
