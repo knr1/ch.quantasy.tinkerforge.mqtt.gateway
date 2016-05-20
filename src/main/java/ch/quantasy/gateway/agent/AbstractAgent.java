@@ -134,4 +134,8 @@ public abstract class AbstractAgent implements MQTTCommunicationCallback {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public ObjectMapper getMapper() {
+        return mapper;
+    }
 }
