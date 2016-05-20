@@ -48,6 +48,8 @@ import ch.quantasy.tinkerforge.device.dualRelay.DeviceMonoflopParameters;
 import ch.quantasy.tinkerforge.device.dualRelay.DeviceSelectedState;
 import ch.quantasy.tinkerforge.device.dualRelay.DeviceState;
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -57,37 +59,39 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class DualRelayService extends AbstractDeviceService<DualRelayDevice, DualRelayServiceContract> implements DualRelayDeviceCallback {
 
-    public DualRelayService(DualRelayDevice device,URI mqttURI) throws MqttException {
-        super(device, new DualRelayServiceContract(device),mqttURI);
-        addDescription(getServiceContract().INTENT_MONOFLOP, "relay: [1|2]\n state: [true|false]\n period: [0.."+Long.MAX_VALUE+"]");
+    public DualRelayService(DualRelayDevice device, URI mqttURI) throws MqttException {
+        super(device, new DualRelayServiceContract(device), mqttURI);
+        addDescription(getServiceContract().INTENT_MONOFLOP, "relay: [1|2]\n state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_SELECTED_STATE, "relay: [1|2]\n state: [true|false]\n");
         addDescription(getServiceContract().INTENT_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
-        addDescription(getServiceContract().EVENT_MONOFLOP_DONE, "timestamp: [0.."+Long.MAX_VALUE+"]\n relay: [1|2]\n state: [true|false]\n");
+        addDescription(getServiceContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n relay: [1|2]\n state: [true|false]\n");
         addDescription(getServiceContract().STATUS_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
-        
-        
-        
-        
+
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
         }
-
-        if (string.startsWith(getServiceContract().INTENT_MONOFLOP)) {
-            DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
-            getDevice().setMonoflop(parameters);
-        }
-        if (string.startsWith(getServiceContract().INTENT_SELECTED_STATE)) {
-            DeviceSelectedState parameters = getMapper().readValue(payload, DeviceSelectedState.class);
-            getDevice().setSelectedState(parameters);
-        }
-        if (string.startsWith(getServiceContract().INTENT_STATE)) {   
-            DeviceState parameters = getMapper().readValue(payload, DeviceState.class);
-            getDevice().setState(parameters);
+        try {
+            if (string.startsWith(getServiceContract().INTENT_MONOFLOP)) {
+                DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
+                getDevice().setMonoflop(parameters);
+            }
+            if (string.startsWith(getServiceContract().INTENT_SELECTED_STATE)) {
+                DeviceSelectedState parameters = getMapper().readValue(payload, DeviceSelectedState.class);
+                getDevice().setSelectedState(parameters);
+            }
+            if (string.startsWith(getServiceContract().INTENT_STATE)) {
+                DeviceState parameters = getMapper().readValue(payload, DeviceState.class);
+                getDevice().setState(parameters);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DualRelayService.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            return;
         }
 
     }
@@ -99,7 +103,7 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     @Override
     public void monoflopDone(short relay, boolean state) {
-        addEvent(getServiceContract().EVENT_MONOFLOP_DONE,new MonoflopDoneEvent(relay, state));
+        addEvent(getServiceContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(relay, state));
     }
 
     class MonoflopDoneEvent {

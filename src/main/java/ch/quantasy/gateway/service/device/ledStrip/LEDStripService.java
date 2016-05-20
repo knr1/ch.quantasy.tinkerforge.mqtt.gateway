@@ -42,7 +42,6 @@
 package ch.quantasy.gateway.service.device.ledStrip;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -60,8 +59,8 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     private short[][] leds;
 
-    public LEDStripService(LEDStripDevice device,URI mqttURI) throws MqttException {
-        super(device, new LEDStripServiceContract(device),mqttURI);
+    public LEDStripService(LEDStripDevice device, URI mqttURI) throws MqttException {
+        super(device, new LEDStripServiceContract(device), mqttURI);
         addDescription(getServiceContract().INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
         addDescription(getServiceContract().INTENT_LEDs, "[{{r,r,...,r}_numLEDs {g,g,...,g}_numLEDs {b,b,...,b}_numLEDs}_3]");
 
@@ -70,7 +69,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -85,7 +84,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
                 leds = (getMapper().readValue(payload, short[][].class));
                 getDevice().readyToPublish(this);
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(LEDStripService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;

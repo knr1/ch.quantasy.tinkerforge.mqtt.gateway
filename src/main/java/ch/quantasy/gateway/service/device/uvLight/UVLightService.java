@@ -45,7 +45,6 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.uvLight.DeviceUVLightCallbackThreshold;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDeviceCallback;
-import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,13 +57,13 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLightServiceContract> implements UVLightDeviceCallback {
 
-    public UVLightService(UVLightDevice device,URI mqttURI) throws MqttException {
+    public UVLightService(UVLightDevice device, URI mqttURI) throws MqttException {
 
-        super(device, new UVLightServiceContract(device),mqttURI);
+        super(device, new UVLightServiceContract(device), mqttURI);
         addDescription(getServiceContract().INTENT_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
-        
+
         addDescription(getServiceContract().EVENT_UV_LIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..328000]\n");
         addDescription(getServiceContract().EVENT_UV_LIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..328000]\n");
         addDescription(getServiceContract().STATUS_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -74,7 +73,7 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -97,16 +96,14 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
                 DeviceUVLightCallbackThreshold threshold = getMapper().readValue(payload, DeviceUVLightCallbackThreshold.class);
                 getDevice().setUVLightCallbackThreshold(threshold);
             }
-           
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(UVLightService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;
         }
 
     }
-
 
     @Override
     public void debouncePeriodChanged(long period) {

@@ -45,7 +45,6 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dustDetector.DeviceDustDensityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDeviceCallback;
-import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,7 +76,7 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -106,7 +105,7 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
                 getDevice().setDustDensityCallbackThreshold(threshold);
             }
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(DustDetectorService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;

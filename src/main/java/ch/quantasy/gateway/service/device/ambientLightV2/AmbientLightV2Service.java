@@ -76,7 +76,7 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -106,7 +106,7 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
                 getDevice().setConfiguration(configuration);
             }
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(AmbientLightV2Service.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;

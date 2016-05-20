@@ -47,7 +47,6 @@ import ch.quantasy.tinkerforge.device.color.ColorDeviceCallback;
 import ch.quantasy.tinkerforge.device.color.DeviceColorCallbackThreshold;
 import ch.quantasy.tinkerforge.device.color.DeviceConfiguration;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,7 +77,7 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm){
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -113,7 +112,7 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
                 getDevice().setLight(state);
             }
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ColorService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;

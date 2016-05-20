@@ -63,7 +63,7 @@ public class MotionDetectorService extends AbstractDeviceService<MotionDetectorD
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm){
         //There are no intents that can be handled
     }
 

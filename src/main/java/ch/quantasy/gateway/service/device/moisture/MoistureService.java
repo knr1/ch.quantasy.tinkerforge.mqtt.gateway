@@ -42,7 +42,6 @@
 package ch.quantasy.gateway.service.device.moisture;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -58,8 +57,8 @@ import java.net.URI;
  */
 public class MoistureService extends AbstractDeviceService<MoistureDevice, MoistureServiceContract> implements MoistureDeviceCallback {
 
-    public MoistureService(MoistureDevice device,URI mqttURI) throws MqttException {
-        super(device, new MoistureServiceContract(device),mqttURI);
+    public MoistureService(MoistureDevice device, URI mqttURI) throws MqttException {
+        super(device, new MoistureServiceContract(device), mqttURI);
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
@@ -75,7 +74,7 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -101,7 +100,7 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
                 getDevice().setMovingAverage(average);
             }
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(MoistureService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;

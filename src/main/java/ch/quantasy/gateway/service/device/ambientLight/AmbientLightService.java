@@ -79,7 +79,7 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -107,9 +107,9 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
 
             }
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(AmbientLightService.class
-                    .getName()).log(Level.SEVERE, null, ex);
+                    .getName()).log(Level.INFO, null, ex);
             return;
         }
     }

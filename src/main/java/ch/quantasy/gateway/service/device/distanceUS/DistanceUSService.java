@@ -77,7 +77,7 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -107,7 +107,7 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
                 getDevice().setMovingAverage(movingAverage);
             }
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(DistanceUSService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;

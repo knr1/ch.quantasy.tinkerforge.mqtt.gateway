@@ -47,6 +47,7 @@ import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import java.net.URI;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
@@ -68,5 +69,11 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
     public G getDevice() {
         return device;
     }
+
+    @Override
+    public abstract void messageArrived(String topic, MqttMessage mm);
+    //This is only overriden in order to get 'rid' of the 'throws Exception'.
+    
+    
 
 }

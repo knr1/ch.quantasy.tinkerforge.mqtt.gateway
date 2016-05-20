@@ -50,6 +50,8 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -60,31 +62,37 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
     public Segment4x7Service(Segment4x7Device device, URI mqttURI) throws MqttException {
         super(device, new Segment4x7ServiceContract(device), mqttURI);
 
-        addDescription(getServiceContract().INTENT_COUNTER, "from: [-999..9999]\n to: [-999..9999]\n increment: [-999..9999]\n lenght: [0.." + Long.MAX_VALUE+ "]");
+        addDescription(getServiceContract().INTENT_COUNTER, "from: [-999..9999]\n to: [-999..9999]\n increment: [-999..9999]\n lenght: [0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
 
         addDescription(getServiceContract().EVENT_COUNTER_STARTED, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
 
-
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
 
         }
-        if (string.startsWith(getServiceContract().INTENT_SEGMENTS)) {
-            DeviceSegments segments = getMapper().readValue(payload, DeviceSegments.class);
-            getDevice().setSegments(segments);
-        }
-        if (string.startsWith(getServiceContract().INTENT_COUNTER)) {
-            DeviceCounterParameters counter = getMapper().readValue(payload, DeviceCounterParameters.class);
-            getDevice().startCounter(counter);
-        }
+        try {
+            if (string.startsWith(getServiceContract().INTENT_SEGMENTS)) {
+                DeviceSegments segments = getMapper().readValue(payload, DeviceSegments.class);
+                getDevice().setSegments(segments);
 
+            }
+            if (string.startsWith(getServiceContract().INTENT_COUNTER)) {
+                DeviceCounterParameters counter = getMapper().readValue(payload, DeviceCounterParameters.class);
+                getDevice().startCounter(counter);
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Segment4x7Service.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
     }
 
     @Override

@@ -79,7 +79,7 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -107,7 +107,7 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
 
             }
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(TemperatureIRService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;

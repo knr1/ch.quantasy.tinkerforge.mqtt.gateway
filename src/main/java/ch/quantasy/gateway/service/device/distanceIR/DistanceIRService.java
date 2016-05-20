@@ -78,7 +78,7 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm){
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -106,7 +106,7 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
 
             }
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(DistanceIRService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;

@@ -45,6 +45,8 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.dc.DCDeviceCallback;
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -80,11 +82,12 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm){
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
         }
+        try{
         if (string.startsWith(getServiceContract().INTENT_ENABLED)) {
             Boolean enabled = getMapper().readValue(payload, Boolean.class);
             getDevice().setEnabled(enabled);
@@ -113,6 +116,11 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
         if (string.startsWith(getServiceContract().INTENT_VELOCITY_CALLBACK_PERIOD)) {
             Integer velocityPeriod = getMapper().readValue(payload, Integer.class);
             getDevice().setVelocityPeriod(velocityPeriod);
+        }
+        } catch (Exception ex) {
+            Logger.getLogger(DCService.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            return;
         }
 
     }

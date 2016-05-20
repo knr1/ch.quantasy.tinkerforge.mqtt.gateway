@@ -77,7 +77,7 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm){
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -107,9 +107,9 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
                 getDevice().setConfiguration(configuration);
             }
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(AccelerometerService.class
-                    .getName()).log(Level.SEVERE, null, ex);
+                    .getName()).log(Level.INFO, null, ex);
             return;
         }
 

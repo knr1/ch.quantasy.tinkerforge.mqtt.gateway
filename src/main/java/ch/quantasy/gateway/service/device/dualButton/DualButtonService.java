@@ -48,6 +48,8 @@ import ch.quantasy.tinkerforge.device.dualButton.DeviceLEDState;
 import ch.quantasy.tinkerforge.device.dualButton.DeviceSelectedLEDStateParameters;
 import ch.quantasy.tinkerforge.device.dualButton.LEDState;
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -70,12 +72,13 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm)  {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
 
         }
+        try{
         if (string.startsWith(getServiceContract().INTENT_SELECTED_LED_STATE)) {
             DeviceSelectedLEDStateParameters parameters = getMapper().readValue(payload, DeviceSelectedLEDStateParameters.class);
             getDevice().setSelectedLEDState(parameters);
@@ -83,6 +86,11 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
         if (string.startsWith(getServiceContract().INTENT_LED_STATE)) {
             DeviceLEDState parameters = getMapper().readValue(payload, DeviceLEDState.class);
             getDevice().setLEDState(parameters);
+        }
+        } catch (Exception ex) {
+            Logger.getLogger(DualButtonService.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            return;
         }
 
     }

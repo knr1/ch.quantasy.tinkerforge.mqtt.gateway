@@ -90,7 +90,7 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -129,7 +129,7 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
                 getDevice().setMode(deviceMode);
             }
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(LaserRangeFinderService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;

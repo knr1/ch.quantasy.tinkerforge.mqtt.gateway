@@ -51,6 +51,8 @@ import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketAParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketBParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -58,8 +60,8 @@ import java.net.URI;
  */
 public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevice, RemoteSwitchServiceContract> implements RemoteSwitchDeviceCallback {
 
-    public RemoteSwitchService(RemoteSwitchDevice device,URI mqttURI) throws MqttException {
-        super(device, new RemoteSwitchServiceContract(device),mqttURI);
+    public RemoteSwitchService(RemoteSwitchDevice device, URI mqttURI) throws MqttException {
+        super(device, new RemoteSwitchServiceContract(device), mqttURI);
 
         addDescription(getServiceContract().INTENT_REPEATS, "[0.." + Short.MAX_VALUE + "]");
 
@@ -74,32 +76,38 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
 
         }
-        if (string.startsWith(getServiceContract().INTENT_DIM_SOCKET_B)) {
-            DimSocketBParameters parameters = getMapper().readValue(payload, DimSocketBParameters.class);
-            getDevice().dimSocketB(parameters);
-        }
-        if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_A)) {
-            SwitchSocketAParameters parameters = getMapper().readValue(payload, SwitchSocketAParameters.class);
-            getDevice().switchSocketA(parameters);
-        }
-        if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_B)) {
-            SwitchSocketBParameters parameters = getMapper().readValue(payload, SwitchSocketBParameters.class);
-            getDevice().switchSocketB(parameters);
-        }
-        if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_C)) {
+        try {
+            if (string.startsWith(getServiceContract().INTENT_DIM_SOCKET_B)) {
+                DimSocketBParameters parameters = getMapper().readValue(payload, DimSocketBParameters.class);
+                getDevice().dimSocketB(parameters);
+            }
+            if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_A)) {
+                SwitchSocketAParameters parameters = getMapper().readValue(payload, SwitchSocketAParameters.class);
+                getDevice().switchSocketA(parameters);
+            }
+            if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_B)) {
+                SwitchSocketBParameters parameters = getMapper().readValue(payload, SwitchSocketBParameters.class);
+                getDevice().switchSocketB(parameters);
+            }
+            if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_C)) {
 
-            SwitchSocketCParameters parameters = getMapper().readValue(payload, SwitchSocketCParameters.class);
-            getDevice().switchSocketC(parameters);
-        }
-        if (string.startsWith(getServiceContract().INTENT_REPEATS)) {
-            short value = getMapper().readValue(payload, short.class);
-            getDevice().setRepeats(value);
+                SwitchSocketCParameters parameters = getMapper().readValue(payload, SwitchSocketCParameters.class);
+                getDevice().switchSocketC(parameters);
+            }
+            if (string.startsWith(getServiceContract().INTENT_REPEATS)) {
+                short value = getMapper().readValue(payload, short.class);
+                getDevice().setRepeats(value);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(RemoteSwitchService.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            return;
         }
     }
 
