@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.service.device.dustDetector;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 
 /**
@@ -78,7 +79,12 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
 
 
     public DustDetectorServiceContract(DustDetectorDevice device) {
-        super(device);
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public DustDetectorServiceContract(String id, String device) {
+        super(id, device);
+
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";

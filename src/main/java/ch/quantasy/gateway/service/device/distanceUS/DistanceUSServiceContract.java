@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.service.device.distanceUS;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 
 /**
@@ -77,7 +78,12 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
     public final String INTENT_MOVING_AVERAGE;
 
     public DistanceUSServiceContract(DistanceUSDevice device) {
-        super(device);
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public DistanceUSServiceContract(String id, String device) {
+        super(id, device);
+
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";

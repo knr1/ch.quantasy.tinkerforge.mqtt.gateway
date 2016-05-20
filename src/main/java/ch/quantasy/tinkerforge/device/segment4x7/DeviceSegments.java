@@ -50,7 +50,7 @@ import com.tinkerforge.BrickletSegmentDisplay4x7;
  */
 public class DeviceSegments {
     
-    private short[] segments;
+    private short[] bits;
     private short brightness;
     private boolean colon;
 
@@ -62,7 +62,7 @@ public class DeviceSegments {
     }
 
     public DeviceSegments(short[] segments, short brightness, boolean colon) {
-        this.segments = segments;
+        this.bits = segments;
         this.brightness = brightness;
         this.colon = colon;
     }
@@ -71,8 +71,8 @@ public class DeviceSegments {
         return brightness;
     }
 
-    public short[] getSegments() {
-        return segments;
+    public short[] getBits() {
+        return bits;
     }
 
     public boolean getColon() {

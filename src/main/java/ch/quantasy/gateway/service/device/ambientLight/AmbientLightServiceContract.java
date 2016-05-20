@@ -42,6 +42,8 @@
 package ch.quantasy.gateway.service.device.ambientLight;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 
 /**
@@ -82,7 +84,12 @@ public class AmbientLightServiceContract extends DeviceServiceContract {
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public AmbientLightServiceContract(AmbientLightDevice device) {
-        super(device);
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public AmbientLightServiceContract(String id, String device) {
+        super(id, device);
+
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";

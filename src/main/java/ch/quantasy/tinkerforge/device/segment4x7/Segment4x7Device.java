@@ -76,7 +76,7 @@ public class Segment4x7Device extends GenericDevice<BrickletSegmentDisplay4x7, S
 
     public void setSegments(DeviceSegments segments) {
         try {
-            getDevice().setSegments(segments.getSegments(), segments.getBrightness(), segments.getColon());
+            getDevice().setSegments(segments.getBits(), segments.getBrightness(), segments.getColon());
             this.segments = new DeviceSegments(getDevice().getSegments());
             getCallback().segmentsChanged(this.segments);
         } catch (TimeoutException | NotConnectedException ex) {

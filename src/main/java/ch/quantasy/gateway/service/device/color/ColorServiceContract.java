@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.service.device.color;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
 
 /**
@@ -89,7 +90,12 @@ public class ColorServiceContract extends DeviceServiceContract {
     public final String STATUS_LIGHT_STATE;
 
     public ColorServiceContract(ColorDevice device) {
-        super(device);
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public ColorServiceContract(String id, String device) {
+        super(id, device);
+
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";

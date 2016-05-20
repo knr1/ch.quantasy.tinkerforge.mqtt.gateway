@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.service.device.laserRangeFinder;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 
 /**
@@ -94,7 +95,12 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
     public final String STATUS_DEVICE_MODE;
 
     public LaserRangeFinderServiceContract(LaserRangeFinderDevice device) {
-        super(device);
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public LaserRangeFinderServiceContract(String id, String device) {
+        super(id, device);
+
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";

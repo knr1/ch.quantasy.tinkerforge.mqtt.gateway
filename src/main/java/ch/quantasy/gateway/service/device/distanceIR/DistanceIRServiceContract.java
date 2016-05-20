@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.service.device.distanceIR;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 
 /**
@@ -83,7 +84,12 @@ public class DistanceIRServiceContract extends DeviceServiceContract {
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public DistanceIRServiceContract(DistanceIRDevice device) {
-        super(device);
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public DistanceIRServiceContract(String id, String device) {
+        super(id, device);
+
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";

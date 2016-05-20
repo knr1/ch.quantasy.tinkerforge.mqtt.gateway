@@ -42,8 +42,8 @@
 package ch.quantasy.gateway.service.device.ambientLightV2;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
-import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2DeviceCallback;
 
 /**
  *
@@ -78,7 +78,12 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
     public final String INTENT_CONFIGURATION;
 
     public AmbientLightV2ServiceContract(AmbientLightV2Device device) {
-        super(device);
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public AmbientLightV2ServiceContract(String id, String device) {
+        super(id, device);
+
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";

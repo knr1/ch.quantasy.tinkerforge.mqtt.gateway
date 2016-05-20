@@ -42,6 +42,8 @@
 package ch.quantasy.gateway.service.device.co2;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
 
 /**
@@ -74,7 +76,12 @@ public class CO2ServiceContract extends DeviceServiceContract {
 
 
     public CO2ServiceContract(CO2Device device) {
-        super(device);
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public CO2ServiceContract(String id, String device) {
+        super(id, device);
+
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";

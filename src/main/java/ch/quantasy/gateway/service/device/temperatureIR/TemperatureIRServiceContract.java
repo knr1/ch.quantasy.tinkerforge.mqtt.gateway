@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.service.device.temperatureIR;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 
 /**
@@ -83,7 +84,12 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public TemperatureIRServiceContract(TemperatureIRDevice device) {
-        super(device);
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public TemperatureIRServiceContract(String id, String device) {
+        super(id, device);
+
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";

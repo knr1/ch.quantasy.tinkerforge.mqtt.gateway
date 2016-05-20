@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.service.device.accelerometer;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 
 /**
@@ -77,7 +78,12 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
     public final String INTENT_CONFIGURATION;
 
     public AccelerometerServiceContract(AccelerometerDevice device) {
-        super(device);
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public AccelerometerServiceContract(String id, String device) {
+        super(id, device);
+
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";
