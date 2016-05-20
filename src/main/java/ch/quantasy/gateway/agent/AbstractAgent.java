@@ -41,16 +41,9 @@
  */
 package ch.quantasy.gateway.agent;
 
-import ch.quantasy.gateway.service.AbstractService;
-import ch.quantasy.gateway.service.device.dualButton.DualButtonService;
-import ch.quantasy.gateway.service.device.dualButton.DualButtonServiceContract;
-import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.mqtt.communication.MQTTCommunication;
 import ch.quantasy.mqtt.communication.MQTTCommunicationCallback;
 import ch.quantasy.mqtt.communication.MQTTParameters;
-import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.dualButton.LEDState;
-import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -137,7 +130,7 @@ public abstract class AbstractAgent implements MQTTCommunicationCallback {
             communication.readyToPublish(this, topic);
 
         } catch (JsonProcessingException ex) {
-            Logger.getLogger(AbstractService.class
+            Logger.getLogger(AbstractAgent.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
