@@ -59,6 +59,7 @@ import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchService;
 import ch.quantasy.gateway.service.device.dualButton.DualButtonService;
 import ch.quantasy.gateway.service.device.dustDetector.DustDetectorService;
 import ch.quantasy.gateway.service.device.hallEffect.HallEffectService;
+import ch.quantasy.gateway.service.device.joystick.JoystickService;
 import ch.quantasy.gateway.service.device.laserRangeFinder.LaserRangeFinderService;
 import ch.quantasy.gateway.service.device.segment4x7.Segment4x7Service;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
@@ -80,6 +81,7 @@ import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
+import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
@@ -267,6 +269,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof HallEffectDevice) {
                 HallEffectService service = new HallEffectService((HallEffectDevice) tinkerforgeDevice, mqttURI);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof JoystickDevice) {
+                JoystickService service = new JoystickService((JoystickDevice) tinkerforgeDevice, mqttURI);
                 System.out.println(service);
             }
         } catch (MqttException ex) {
