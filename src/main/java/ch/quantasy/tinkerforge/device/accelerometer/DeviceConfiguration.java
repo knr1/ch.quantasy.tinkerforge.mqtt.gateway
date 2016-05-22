@@ -121,6 +121,9 @@ public class DeviceConfiguration {
     public DeviceConfiguration() {
     }
 
+    public DeviceConfiguration(String illuminanceRange, String integrationTime, String filterBandwidth){
+        this(DataRate.valueOf(illuminanceRange),FullScale.valueOf(integrationTime),FilterBandwidth.valueOf(filterBandwidth));
+    }
     public DeviceConfiguration(DataRate illuminanceRange, FullScale integrationTime, FilterBandwidth filterBandwidth) {
         this.dataRate = illuminanceRange;
         this.fullScale = integrationTime;

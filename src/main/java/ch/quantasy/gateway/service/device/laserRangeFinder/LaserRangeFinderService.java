@@ -48,9 +48,6 @@ import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceMode;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceVelocityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDeviceCallback;
-import com.tinkerforge.BrickletLaserRangeFinder;
-
-import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,7 +67,7 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
         addDescription(getServiceContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
         addDescription(getServiceContract().INTENT_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..127]\n max: [-127..127]");
-        addDescription(getServiceContract().INTENT_DEVICE_MODE, "[distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
+        addDescription(getServiceContract().INTENT_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
         addDescription(getServiceContract().INTENT_LASER, "[true|false]");
         addDescription(getServiceContract().INTENT_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
 
@@ -83,7 +80,7 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
         addDescription(getServiceContract().STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
         addDescription(getServiceContract().STATUS_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..-127]\n max: [-127..127]");
         addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_DEVICE_MODE, "[distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
+        addDescription(getServiceContract().STATUS_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
         addDescription(getServiceContract().STATUS_LASER, "[true|false]");
         addDescription(getServiceContract().STATUS_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
 

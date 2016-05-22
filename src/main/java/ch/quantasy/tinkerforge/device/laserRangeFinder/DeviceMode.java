@@ -39,6 +39,9 @@ public class DeviceMode {
     public DeviceMode() {
     }
 
+    public DeviceMode(String mode){
+        this(Mode.valueOf(mode));
+    }
     public DeviceMode(Mode mode) {
         this.mode = mode;
     }

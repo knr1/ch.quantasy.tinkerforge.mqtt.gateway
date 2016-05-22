@@ -43,7 +43,6 @@ package ch.quantasy.tinkerforge.device.color;
 
 import com.tinkerforge.BrickletColor;
 
-
 /**
  *
  * @author reto
@@ -94,11 +93,14 @@ public class DeviceConfiguration {
         }
     }
 
-    
     private Gain gain;
     private IntegrationTime integrationTime;
 
     public DeviceConfiguration() {
+    }
+
+    public DeviceConfiguration(String illuminanceRange, String integrationTime) {
+        this(Gain.valueOf(illuminanceRange), IntegrationTime.valueOf(integrationTime));
     }
 
     public DeviceConfiguration(Gain illuminanceRange, IntegrationTime integrationTime) {

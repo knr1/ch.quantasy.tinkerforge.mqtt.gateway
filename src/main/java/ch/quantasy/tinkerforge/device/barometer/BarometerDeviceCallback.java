@@ -43,9 +43,6 @@ package ch.quantasy.tinkerforge.device.barometer;
 
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletBarometer;
-import com.tinkerforge.BrickletBarometer.AirPressureCallbackThreshold;
-import com.tinkerforge.BrickletBarometer.AltitudeCallbackThreshold;
-import com.tinkerforge.BrickletBarometer.Averaging;
 
 /**
  *

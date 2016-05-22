@@ -98,6 +98,10 @@ public class DeviceConfiguration {
     public DeviceConfiguration() {
     }
 
+    public DeviceConfiguration(String illuminanceRange, String integrationTime) {
+        this(IlluminanceRange.valueOf(illuminanceRange),IntegrationTime.valueOf(integrationTime));
+    }
+
     public DeviceConfiguration(IlluminanceRange illuminanceRange, IntegrationTime integrationTime) {
         this.illuminanceRange = illuminanceRange;
         this.integrationTime = integrationTime;

@@ -42,7 +42,6 @@
 package ch.quantasy.tinkerforge.device.barometer;
 
 import com.tinkerforge.BrickletBarometer;
-import com.tinkerforge.BrickletHumidity;
 
 /**
  *
