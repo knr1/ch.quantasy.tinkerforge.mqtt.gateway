@@ -50,3 +50,39 @@ You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Vi
  [TiMqWay.jar]: <https://prof.hti.bfh.ch/knr1/TiMqWay.jar>
  [d3Viewer]: <https://github.com/hardillb/d3-MQTT-Topic-Tree>
  [YAML]: <https://en.wikipedia.org/wiki/YAML>
+
+### Example
+Imagine, you have a running MQTT-Broker at 192.168.1.77
+and start the TiMqWay with the argument 192.168.1.77 so it writes to the MQTT-Broker
+
+Now there are...
+... Stack1: one MasterBrick and one 4-7SegmentBricklet (uid: se1) at localhost
+... Stack2: one MasterBrick and two CO2Bricklets (uid: tta uid: qwe) at 192.168.1.17
+
+In order to knwo what is going on, you subscribe recursively to the following topic:
+```sh
+Topic: TF/#
+```
+In order to be able to use the bricklets, you need to connect the two stacks. Hence you publish the following message to the following topic at the MQTT-Broker
+```sh
+Topic: TF/Manager/stack/address/add
+Message: localhost
+```
+Only when you receive the following message from the following topic
+```sh
+Topic: TF/Manager/event/stack/address/added
+Message: --- - hostName: "localhost" port: 4223
+```
+then you proceed to add the second stack by publishing the following message to the following topic
+```sh
+Topic: TF/Manager/stack/address/add
+Message: 192.168.1.17
+```
+Only when you receive the following message from the following topic
+```sh
+Topic: TF/Manager/event/stack/address/added
+Message: --- - hostName: "192.168.1.17" port: 4223
+```
+then you are ready to access and manage the bricklets.
+
+
