@@ -62,6 +62,7 @@ import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
+import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
@@ -89,6 +90,7 @@ import com.tinkerforge.BrickletLinearPoti;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletRemoteSwitch;
+import com.tinkerforge.BrickletRotaryEncoder;
 import com.tinkerforge.BrickletRotaryPoti;
 import com.tinkerforge.BrickletSegmentDisplay4x7;
 import com.tinkerforge.BrickletTemperatureIR;
@@ -182,6 +184,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.RotaryPoti == TinkerforgeDeviceClass.getDevice(device)) {
             return new RotaryPotiDevice(address, (BrickletRotaryPoti) device);
+        }
+        if (TinkerforgeDeviceClass.RotaryEncoder == TinkerforgeDeviceClass.getDevice(device)) {
+            return new RotaryEncoderDevice(address, (BrickletRotaryEncoder) device);
         }
         return new TinkerforgeDevice(address, device);
     }
