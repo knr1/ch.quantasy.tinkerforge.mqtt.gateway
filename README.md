@@ -98,10 +98,10 @@ length: 1000
 ```
 Please remember, it is a YAML structure, so you need the 'newline'.
 
-Topic TF/SegmentDisplay4x7/se1/event/counterStarted will be updated with a big number, representing the timestamp, when the counter started at Tinkerforge-Level.
+Topic TF/SegmentDisplay4x7/se1/event/counterStarted will be updated with an array of number(s) (in this case usually only one number present, depending on the quality of the mqtt network throughput), representing the timestamp, when the counter started at Tinkerforge-Level.
 
 After 999 seconds
 
-Topic TF/SegmentDisplay4x7/se1/event/counterFinished will be updated with a big number, representing the timestamp, when the counter finished at Tinkerforge-Level.
+Topic TF/SegmentDisplay4x7/se1/event/counterFinished will be updated with an array of number(s) (in this case usually only one number present, depending on the quality of the mqtt network throughput), representing the timestamp, when the counter finished at Tinkerforge-Level.
 
 
