@@ -39,11 +39,11 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.dualRelay;
+package ch.quantasy.tinkerforge.device.solidState;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
-import com.tinkerforge.BrickletDualRelay;
+import com.tinkerforge.BrickletSolidStateRelay;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 import java.util.HashMap;
@@ -55,14 +55,13 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayDeviceCallback> implements BrickletDualRelay.MonoflopDoneListener {
+public class SolidStateRelayDevice extends GenericDevice<BrickletSolidStateRelay, SolidStateRelayDeviceCallback> implements BrickletSolidStateRelay.MonoflopDoneListener {
 
-    private Map<Short, DeviceMonoflopParameters> monoflopParametersMap;
-    private DeviceState state;
+    private DeviceMonoflopParameters monoflopParameters;
+    private Boolean state;
 
-    public DualRelayDevice(TinkerforgeStackAddress address, BrickletDualRelay device) throws NotConnectedException, TimeoutException {
+    public SolidStateRelayDevice(TinkerforgeStackAddress address, BrickletSolidStateRelay device) throws NotConnectedException, TimeoutException {
         super(address, device);
-        this.monoflopParametersMap = new HashMap<>();
     }
 
     @Override
@@ -70,8 +69,8 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
         getDevice().addMonoflopDoneListener(super.getCallback());
         getDevice().addMonoflopDoneListener(this);
 
-        for (DeviceMonoflopParameters parameters : monoflopParametersMap.values()) {
-            setMonoflop(parameters);
+        if(monoflopParameters!=null) {
+            setMonoflop(monoflopParameters);
         }
         if (state != null) {
             setState(state);
@@ -88,42 +87,32 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
 
     public void setMonoflop(DeviceMonoflopParameters parameters) {
         try {
-            getDevice().setMonoflop(parameters.getRelay(), parameters.getState(), parameters.getPeriod());
-            this.monoflopParametersMap.put(parameters.getRelay(),new DeviceMonoflopParameters(getDevice().getMonoflop(parameters.getRelay())));
-            this.state = new DeviceState(getDevice().getState());
+            getDevice().setMonoflop(parameters.getState(), parameters.getPeriod());
+            this.monoflopParameters=new DeviceMonoflopParameters(getDevice().getMonoflop());
+            this.state = getDevice().getState();
             super.getCallback().stateChanged(this.state);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SolidStateRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void setSelectedState(DeviceSelectedState parameters) {
+    public void setState(Boolean state) {
         try {
-            getDevice().setSelectedState(parameters.getRelay(), parameters.getState());
-            this.state = new DeviceState(getDevice().getState());
+            getDevice().setState(state);
+            this.state = getDevice().getState();
             super.getCallback().stateChanged(this.state);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setState(DeviceState state) {
-        try {
-            getDevice().setState(state.getRelay1(), state.getRelay2());
-            this.state = new DeviceState(getDevice().getState());
-            super.getCallback().stateChanged(this.state);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SolidStateRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void monoflopDone(short s, boolean bln) {
+    public void monoflopDone(boolean bln) {
         try {
-            this.state = new DeviceState(getDevice().getState());
+            this.state = getDevice().getState();
             super.getCallback().stateChanged(this.state);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SolidStateRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

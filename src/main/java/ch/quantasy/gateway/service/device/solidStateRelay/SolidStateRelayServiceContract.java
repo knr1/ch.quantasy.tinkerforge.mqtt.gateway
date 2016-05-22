@@ -39,70 +39,43 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.dualRelay;
+package ch.quantasy.gateway.service.device.solidStateRelay;
 
-import com.tinkerforge.BrickletDualRelay;
+import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 
 /**
  *
  * @author reto
  */
-public class DeviceMonoflopParameters {
-    
-    private short relay;
-    private boolean state;
-    private long period;
+public class SolidStateRelayServiceContract extends DeviceServiceContract {
 
-    private DeviceMonoflopParameters() {
-    }
+    public final String STATE;
+    public final String INTENT_STATE;
+    public final String STATUS_STATE;
 
-    public DeviceMonoflopParameters(short relay, boolean state, long period) {
-        this.relay = relay;
-        this.state = state;
-        this.period = period;
-    }
-    
-    public DeviceMonoflopParameters(BrickletDualRelay.Monoflop monoflop){
-        this.relay=monoflop.relay;
-        this.state=monoflop.state;
-        this.period=monoflop.timeRemaining;
+    public final String MONOFLOP_DONE;
+    public final String EVENT_MONOFLOP_DONE;
+
+    public final String MONOFLOP;
+    public final String INTENT_MONOFLOP;
+
+    public SolidStateRelayServiceContract(SolidStateRelayDevice device) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
-    public short getRelay() {
-        return relay;
-    }
+    public SolidStateRelayServiceContract(String id, String device) {
+        super(id, device);
+        MONOFLOP_DONE = "monoflopDone";
+        EVENT_MONOFLOP_DONE = EVENT + "/" + MONOFLOP_DONE;
 
-    public long getPeriod() {
-        return period;
-    }
+        MONOFLOP = "monoflop";
+        INTENT_MONOFLOP = INTENT + "/" + MONOFLOP;
 
-    public boolean getState() {
-        return state;
-    }
+        STATE = "state";
+        INTENT_STATE = INTENT + "/" + STATE;
+        STATUS_STATE = STATUS + "/" + STATE;
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 31 * hash + this.relay;
-        return hash;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final DeviceMonoflopParameters other = (DeviceMonoflopParameters) obj;
-        if (this.relay != other.relay) {
-            return false;
-        }
-        return true;
-    }
-    
 }

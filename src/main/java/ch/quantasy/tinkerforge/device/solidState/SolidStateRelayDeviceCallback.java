@@ -39,70 +39,19 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.dualRelay;
+package ch.quantasy.tinkerforge.device.solidState;
 
+import ch.quantasy.tinkerforge.device.dualRelay.*;
+import ch.quantasy.tinkerforge.device.remoteSwitch.*;
+import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletDualRelay;
+import com.tinkerforge.BrickletRemoteSwitch;
+import com.tinkerforge.BrickletSolidStateRelay;
 
 /**
  *
  * @author reto
  */
-public class DeviceMonoflopParameters {
-    
-    private short relay;
-    private boolean state;
-    private long period;
-
-    private DeviceMonoflopParameters() {
-    }
-
-    public DeviceMonoflopParameters(short relay, boolean state, long period) {
-        this.relay = relay;
-        this.state = state;
-        this.period = period;
-    }
-    
-    public DeviceMonoflopParameters(BrickletDualRelay.Monoflop monoflop){
-        this.relay=monoflop.relay;
-        this.state=monoflop.state;
-        this.period=monoflop.timeRemaining;
-    }
-
-    public short getRelay() {
-        return relay;
-    }
-
-    public long getPeriod() {
-        return period;
-    }
-
-    public boolean getState() {
-        return state;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 31 * hash + this.relay;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final DeviceMonoflopParameters other = (DeviceMonoflopParameters) obj;
-        if (this.relay != other.relay) {
-            return false;
-        }
-        return true;
-    }
-    
+public interface SolidStateRelayDeviceCallback extends DeviceCallback, BrickletSolidStateRelay.MonoflopDoneListener {
+    public void stateChanged(Boolean state);
 }
