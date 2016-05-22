@@ -66,6 +66,8 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
         addDescription(getServiceContract().INTENT_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
 
         addDescription(getServiceContract().EVENT_COUNTER_STARTED, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_COUNTER_FINISHED, "[0.." + Long.MAX_VALUE + "]");
+
         addDescription(getServiceContract().STATUS_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
 
     }

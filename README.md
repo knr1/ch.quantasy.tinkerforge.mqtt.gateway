@@ -83,10 +83,25 @@ Only when you receive the following message from the following topic
 Topic: TF/Manager/event/stack/address/added
 Message: --- - hostName: "192.168.1.17" port: 4223
 ```
-then you are ready to access and manage the bricklets. The documentation for each Bricklet is given on the 'description' topic. If you want to modify the
-behavior of the bricklet, write it to its intent state...
+then you are ready to access and manage the bricklets. The documentation for each Bricklet is given on the 'description' topic.
 
- 
+If you want to modify the behavior of the bricklet, write it to its intent state...
 
+If you want to count from 0 to 999 with one step per second, using the SegmentDisplay4x7 (se1) you write:
+```sh
+Topic: TF/SegmentDisplay4x7/se1/intent/counter
+Message: 
+from: 0
+to: 999
+increment: 1
+length: 1000
+```
+Please remember, it is a YAML structure, so you need the 'newline'.
+
+Topic TF/SegmentDisplay4x7/se1/event/counterStarted will be updated with a big number, representing the timestamp, when the counter started at Tinkerforge-Level.
+
+After 999 seconds
+
+Topic TF/SegmentDisplay4x7/se1/event/counterFinished will be updated with a big number, representing the timestamp, when the counter finished at Tinkerforge-Level.
 
 
