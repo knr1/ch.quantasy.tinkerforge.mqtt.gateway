@@ -87,7 +87,7 @@ then you are ready to access and manage the bricklets. The documentation for eac
 
 If you want to modify the behavior of the bricklet, write it to its intent state...
 
-If you want to count from 0 to 999 with one step per second, using the SegmentDisplay4x7 (se1) you write:
+If you want to count from 0 to 999 with one step per second, using the SegmentDisplay4x7 (se1) you write the following message to the following topic:
 ```sh
 Topic: TF/SegmentDisplay4x7/se1/intent/counter
 Message: 
