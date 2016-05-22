@@ -58,9 +58,11 @@ import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
+import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
+import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
@@ -83,9 +85,11 @@ import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletJoystick;
 import com.tinkerforge.BrickletLEDStrip;
 import com.tinkerforge.BrickletLaserRangeFinder;
+import com.tinkerforge.BrickletLinearPoti;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletRemoteSwitch;
+import com.tinkerforge.BrickletRotaryPoti;
 import com.tinkerforge.BrickletSegmentDisplay4x7;
 import com.tinkerforge.BrickletTemperatureIR;
 import com.tinkerforge.BrickletTilt;
@@ -172,6 +176,12 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.Joystick == TinkerforgeDeviceClass.getDevice(device)) {
             return new JoystickDevice(address, (BrickletJoystick) device);
+        }
+        if (TinkerforgeDeviceClass.LinearPoti == TinkerforgeDeviceClass.getDevice(device)) {
+            return new LinearPotiDevice(address, (BrickletLinearPoti) device);
+        }
+        if (TinkerforgeDeviceClass.RotaryPoti == TinkerforgeDeviceClass.getDevice(device)) {
+            return new RotaryPotiDevice(address, (BrickletRotaryPoti) device);
         }
         return new TinkerforgeDevice(address, device);
     }

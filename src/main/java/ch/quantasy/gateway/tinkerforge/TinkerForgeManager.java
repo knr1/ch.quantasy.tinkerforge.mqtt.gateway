@@ -61,6 +61,8 @@ import ch.quantasy.gateway.service.device.dustDetector.DustDetectorService;
 import ch.quantasy.gateway.service.device.hallEffect.HallEffectService;
 import ch.quantasy.gateway.service.device.joystick.JoystickService;
 import ch.quantasy.gateway.service.device.laserRangeFinder.LaserRangeFinderService;
+import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
+import ch.quantasy.gateway.service.device.rotaryPoti.RotaryPotiService;
 import ch.quantasy.gateway.service.device.segment4x7.Segment4x7Service;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
 import ch.quantasy.gateway.service.device.tilt.TiltService;
@@ -84,9 +86,11 @@ import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
+import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
+import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
@@ -273,6 +277,14 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof JoystickDevice) {
                 JoystickService service = new JoystickService((JoystickDevice) tinkerforgeDevice, mqttURI);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof LinearPotiDevice) {
+                LinearPotiService service = new LinearPotiService((LinearPotiDevice) tinkerforgeDevice, mqttURI);
+                System.out.println(service);
+            }
+            if (tinkerforgeDevice instanceof RotaryPotiDevice) {
+                RotaryPotiService service = new RotaryPotiService((RotaryPotiDevice) tinkerforgeDevice, mqttURI);
                 System.out.println(service);
             }
         } catch (MqttException ex) {
