@@ -28,14 +28,14 @@ Then run the following command in order to use an MQTT-Server at localhost
 ```sh
 $ java -jar TiMqWay.jar tcp://127.0.0.1:1883
 ```
-Then run the following command in order to use an MQTT-Server at iot.eclipse.org:1883 (Not recommended as it is an open server everyone can read and write into)
+Or, if you do not have any MQTT-Broker ready, use an existing one at iot.eclipse.org:1883 (Not recommended as it is an open server everyone can read and write into)
 ```sh
 $ java -jar TiMqWay.jar tcp://iot.eclipse.org:1883
 ```
 
-Thus, if you subscribe to TF/# you will immediately get the description info for the 'virtual' Manager.
+Then, if you subscribe to TF/# you will immediately get the description info for the TiMqWay-Manager, which does all the nasty stuff for you.
 
-In order to interact with some specific Tinkerforge-Stack, the following has to be sent to MQTT:
+In order to interact with some specific Tinkerforge-Stack (e.g. localhost), the following message has to be sent to the following topic:
 ```sh
 Topic: TF/Manager/stack/address/add
 Message: localhost
@@ -103,6 +103,23 @@ Topic TF/SegmentDisplay4x7/se1/event/counterStarted will be updated with an arra
 After 999 seconds
 
 Topic TF/SegmentDisplay4x7/se1/event/counterFinished will be updated with an array of number(s) (in this case usually only one number present, depending on the quality of the mqtt network throughput), representing the timestamp, when the counter finished at Tinkerforge-Level.
+
+
+Oh, yes, what about the two CO2 Sensors (tta and qwe). Well, reading the documentation provided at TF/CO2/description you can kick them on by sending the following
+message to the following topic (for tta):
+```sh
+Topic: TF/CO2/tta/intent/CO2Concentration/callbackPeriod
+100
+```
+
+message to the following topic (for qwe):
+```sh
+Topic: TF/CO2/qwe/intent/CO2Concentration/callbackPeriod
+100
+```
+
+And voilà, all the sensors and actors are working independently...
+
 
 
 ### Supported Device so far...
