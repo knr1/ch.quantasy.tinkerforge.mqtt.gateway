@@ -83,6 +83,10 @@ Only when you receive the following message from the following topic
 Topic: TF/Manager/event/stack/address/added
 Message: --- - hostName: "192.168.1.17" port: 4223
 ```
-then you are ready to access and manage the bricklets.
+then you are ready to access and manage the bricklets. The documentation for each Bricklet is given on the 'description' topic. If you want to modify the
+behavior of the bricklet, write it to its intent state...
+
+ 
+
 
 
