@@ -105,3 +105,34 @@ After 999 seconds
 Topic TF/SegmentDisplay4x7/se1/event/counterFinished will be updated with an array of number(s) (in this case usually only one number present, depending on the quality of the mqtt network throughput), representing the timestamp, when the counter finished at Tinkerforge-Level.
 
 
+### Suported Device so far...
+* BrickDC
+* BrickletAccelerometer
+* BrickletAmbientLight
+* BrickletAmbientLightV2
+* BrickletBarometer
+* BrickletCO2
+* BrickletColor
+* BrickletDistanceIR
+* BrickletDistanceUS
+* BrickletDualButton
+* BrickletDualRelay
+* BrickletDustDetector
+* BrickletHallEffect
+* BrickletHumidity
+* BrickletJoystick
+* BrickletLaserRangeFinder
+* BrickletLEDStrip
+* BrickletLinearPoti
+* BrickletMoisture
+* BrickletMotionDetector
+* BrickletMultiTouch
+* BrickletRemoteSwitch
+* BrickletRotaryEncoder
+* BrickletRotaryPoti
+* BrickletSegmentDisplay4x7
+* BrickletSolidStateRelay
+* BrickletTemperatureIR
+* BrickletTilt
+* BrickletUVLight
+
