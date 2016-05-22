@@ -61,6 +61,7 @@ import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
+import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
@@ -90,6 +91,7 @@ import com.tinkerforge.BrickletLaserRangeFinder;
 import com.tinkerforge.BrickletLinearPoti;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
+import com.tinkerforge.BrickletMultiTouch;
 import com.tinkerforge.BrickletRemoteSwitch;
 import com.tinkerforge.BrickletRotaryEncoder;
 import com.tinkerforge.BrickletRotaryPoti;
@@ -192,6 +194,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.SolidState == TinkerforgeDeviceClass.getDevice(device)) {
             return new SolidStateRelayDevice(address, (BrickletSolidStateRelay) device);
+        }
+        if (TinkerforgeDeviceClass.MultiTouch == TinkerforgeDeviceClass.getDevice(device)) {
+            return new MultiTouchDevice(address, (BrickletMultiTouch) device);
         }
         return new TinkerforgeDevice(address, device);
     }

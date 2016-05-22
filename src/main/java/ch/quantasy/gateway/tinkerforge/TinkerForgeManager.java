@@ -63,6 +63,7 @@ import ch.quantasy.gateway.service.device.hallEffect.HallEffectService;
 import ch.quantasy.gateway.service.device.joystick.JoystickService;
 import ch.quantasy.gateway.service.device.laserRangeFinder.LaserRangeFinderService;
 import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
+import ch.quantasy.gateway.service.device.multiTouch.MultiTouchService;
 import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderService;
 import ch.quantasy.gateway.service.device.rotaryPoti.RotaryPotiService;
 import ch.quantasy.gateway.service.device.segment4x7.Segment4x7Service;
@@ -92,6 +93,7 @@ import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
+import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
@@ -299,6 +301,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof SolidStateRelayDevice) {
                 SolidStateRelayService service = new SolidStateRelayService((SolidStateRelayDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof MultiTouchDevice) {
+                MultiTouchService service = new MultiTouchService((MultiTouchDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
         } catch (MqttException ex) {
