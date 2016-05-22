@@ -56,8 +56,8 @@ Imagine, you have a running MQTT-Broker at 192.168.1.77
 and start the TiMqWay with the argument 192.168.1.77 so it writes to the MQTT-Broker
 
 Now there are...
-*... Stack1: one MasterBrick and one 4-7SegmentBricklet (uid: se1) at localhost
-*... Stack2: one MasterBrick and two CO2Bricklets (uid: tta uid: qwe) at 192.168.1.17
+* ... Stack1: one MasterBrick and one 4-7SegmentBricklet (uid: se1) at localhost
+* ... Stack2: one MasterBrick and two CO2Bricklets (uid: tta uid: qwe) at 192.168.1.17
 
 In order to know what is going on, you subscribe recursively to the following topic:
 ```sh
