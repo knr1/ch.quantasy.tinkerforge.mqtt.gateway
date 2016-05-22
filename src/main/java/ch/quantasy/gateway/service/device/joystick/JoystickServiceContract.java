@@ -66,13 +66,13 @@ public class JoystickServiceContract extends DeviceServiceContract {
     public final String INTENT_ANALOG_VALUE_THRESHOLD;
     public final String INTENT_ANALOG_VALUE_CALLBACK_PERIOD;
 
-    public final String ILLUMINANCE;
-    public final String STATUS_ILLUMINANCE;
+    public final String Position;
+    public final String STATUS_POSITION;
     public final String STATUS_POSITION_THRESHOLD;
     public final String STATUS_POSITION_CALLBACK_PERIOD;
     public final String EVENT_POSITION;
     public final String EVENT_POSITION_REACHED;
-    public final String INTENT_ILLUMINANCE;
+    public final String INTENT_POSITION;
     public final String INTENT_POSITION_THRESHOLD;
     public final String INTENT_POSITION_CALLBACK_PERIOD;
 
@@ -114,15 +114,15 @@ public class JoystickServiceContract extends DeviceServiceContract {
         INTENT_ANALOG_VALUE_THRESHOLD = INTENT_ANALOG_VALUE + "/" + THRESHOLD;
         INTENT_ANALOG_VALUE_CALLBACK_PERIOD = INTENT_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
 
-        ILLUMINANCE = "illuminance";
-        STATUS_ILLUMINANCE = STATUS + "/" + ILLUMINANCE;
-        STATUS_POSITION_THRESHOLD = STATUS_ILLUMINANCE + "/" + THRESHOLD;
-        STATUS_POSITION_CALLBACK_PERIOD = STATUS_ILLUMINANCE + "/" + CALLBACK_PERIOD;
-        EVENT_POSITION = EVENT + "/" + ILLUMINANCE;
+        Position = "position";
+        STATUS_POSITION = STATUS + "/" + Position;
+        STATUS_POSITION_THRESHOLD = STATUS_POSITION + "/" + THRESHOLD;
+        STATUS_POSITION_CALLBACK_PERIOD = STATUS_POSITION + "/" + CALLBACK_PERIOD;
+        EVENT_POSITION = EVENT + "/" + Position;
         EVENT_POSITION_REACHED = EVENT_POSITION + "/" + REACHED;
-        INTENT_ILLUMINANCE = INTENT + "/" + ILLUMINANCE;
-        INTENT_POSITION_THRESHOLD = INTENT_ILLUMINANCE + "/" + THRESHOLD;
-        INTENT_POSITION_CALLBACK_PERIOD = INTENT_ILLUMINANCE + "/" + CALLBACK_PERIOD;
+        INTENT_POSITION = INTENT + "/" + Position;
+        INTENT_POSITION_THRESHOLD = INTENT_POSITION + "/" + THRESHOLD;
+        INTENT_POSITION_CALLBACK_PERIOD = INTENT_POSITION + "/" + CALLBACK_PERIOD;
 
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
