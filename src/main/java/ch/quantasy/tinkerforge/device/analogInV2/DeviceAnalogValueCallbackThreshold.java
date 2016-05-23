@@ -39,31 +39,32 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.barometer;
+package ch.quantasy.tinkerforge.device.analogInV2;
 
-import com.tinkerforge.BrickletBarometer;
+import com.tinkerforge.BrickletAnalogInV2;
+
 
 /**
  *
  * @author reto
  */
-public class DeviceAltitudeCallbackThreshold {
+public class DeviceAnalogValueCallbackThreshold {
 
     private char option;
     private int min;
     private int max;
 
-    public DeviceAltitudeCallbackThreshold() {
+    public DeviceAnalogValueCallbackThreshold() {
     }
 
-    public DeviceAltitudeCallbackThreshold(BrickletBarometer.AltitudeCallbackThreshold threshold) {
-        this(threshold.option, threshold.min, threshold.max);
-    }
-
-    public DeviceAltitudeCallbackThreshold(char option, int min, int max) {
+    public DeviceAnalogValueCallbackThreshold(char option, int min, int max) {
         this.option = option;
         this.min = min;
         this.max = max;
+    }
+
+    public DeviceAnalogValueCallbackThreshold(BrickletAnalogInV2.AnalogValueCallbackThreshold threshold) {
+        this(threshold.option, threshold.min, threshold.max);
     }
 
     public int getMax() {
@@ -77,7 +78,5 @@ public class DeviceAltitudeCallbackThreshold {
     public char getOption() {
         return option;
     }
-    
-    
 
 }

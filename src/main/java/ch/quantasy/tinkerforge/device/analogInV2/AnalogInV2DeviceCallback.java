@@ -39,45 +39,27 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.barometer;
+package ch.quantasy.tinkerforge.device.analogInV2;
 
-import com.tinkerforge.BrickletBarometer;
+import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
+import com.tinkerforge.BrickletAnalogInV2;
 
 /**
  *
  * @author reto
  */
-public class DeviceAltitudeCallbackThreshold {
+public interface AnalogInV2DeviceCallback extends DeviceCallback, BrickletAnalogInV2.AnalogValueListener, BrickletAnalogInV2.AnalogValueReachedListener,BrickletAnalogInV2.VoltageListener,BrickletAnalogInV2.VoltageReachedListener{
 
-    private char option;
-    private int min;
-    private int max;
+    public void analogValueCallbackPeriodChanged(long period);
 
-    public DeviceAltitudeCallbackThreshold() {
-    }
+    public void voltageCallbackPeriodChanged(long period);
 
-    public DeviceAltitudeCallbackThreshold(BrickletBarometer.AltitudeCallbackThreshold threshold) {
-        this(threshold.option, threshold.min, threshold.max);
-    }
+    public void debouncePeriodChanged(long period);
 
-    public DeviceAltitudeCallbackThreshold(char option, int min, int max) {
-        this.option = option;
-        this.min = min;
-        this.max = max;
-    }
+    public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold);
 
-    public int getMax() {
-        return max;
-    }
+    public void voltageCallbackThresholdChanged(DeviceVoltageCallbackThreshold threshold);
 
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
-    }
+    public void movingAverageChanged(Short movingAverage);
     
-    
-
 }

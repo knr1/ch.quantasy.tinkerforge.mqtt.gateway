@@ -41,7 +41,6 @@
  */
 package ch.quantasy.tinkerforge.device.barometer;
 
-import ch.quantasy.tinkerforge.device.humidity.*;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickletBarometer;
@@ -147,7 +146,7 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
 
     public void setAirPressureThreshold(DeviceAirPressureCallbackThreshold threshold) {
         try {
-            getDevice().setAirPressureCallbackThreshold(threshold.option, threshold.min, threshold.max);
+            getDevice().setAirPressureCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
             this.airPressureThreshold = new DeviceAirPressureCallbackThreshold(getDevice().getAirPressureCallbackThreshold());
             super.getCallback().airPressureCallbackThresholdChanged(this.airPressureThreshold);
         } catch (TimeoutException | NotConnectedException ex) {
@@ -157,7 +156,7 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
 
     public void setAltitudeCallbackThreshold(DeviceAltitudeCallbackThreshold threshold) {
         try {
-            getDevice().setAltitudeCallbackThreshold(threshold.option, threshold.min, threshold.max);
+            getDevice().setAltitudeCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
             this.altitudeThreshold = new DeviceAltitudeCallbackThreshold(getDevice().getAltitudeCallbackThreshold());
             super.getCallback().altitudeCallbackThresholdChanged(this.altitudeThreshold);
         } catch (TimeoutException | NotConnectedException ex) {

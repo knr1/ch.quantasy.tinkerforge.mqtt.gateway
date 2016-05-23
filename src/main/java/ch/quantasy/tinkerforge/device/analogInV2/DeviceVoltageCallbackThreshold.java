@@ -39,28 +39,28 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.barometer;
+package ch.quantasy.tinkerforge.device.analogInV2;
 
-import com.tinkerforge.BrickletBarometer;
+import com.tinkerforge.BrickletAnalogInV2;
 
 /**
  *
  * @author reto
  */
-public class DeviceAltitudeCallbackThreshold {
+public class DeviceVoltageCallbackThreshold {
 
     private char option;
     private int min;
     private int max;
 
-    public DeviceAltitudeCallbackThreshold() {
+    public DeviceVoltageCallbackThreshold() {
     }
 
-    public DeviceAltitudeCallbackThreshold(BrickletBarometer.AltitudeCallbackThreshold threshold) {
+    public DeviceVoltageCallbackThreshold(BrickletAnalogInV2.VoltageCallbackThreshold threshold) {
         this(threshold.option, threshold.min, threshold.max);
     }
 
-    public DeviceAltitudeCallbackThreshold(char option, int min, int max) {
+    public DeviceVoltageCallbackThreshold(char option, int min, int max) {
         this.option = option;
         this.min = min;
         this.max = max;

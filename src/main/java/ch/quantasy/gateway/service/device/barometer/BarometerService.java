@@ -197,14 +197,14 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
     class AirPressureEvent {
 
         protected long timestamp;
-        protected int airPressure;
+        protected int value;
 
         public AirPressureEvent(int value) {
             this(value, System.currentTimeMillis());
         }
 
         public AirPressureEvent(int value, long timeStamp) {
-            this.airPressure = value;
+            this.value = value;
             this.timestamp = timeStamp;
         }
 
@@ -212,8 +212,8 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
             return timestamp;
         }
 
-        public int getAirPressure() {
-            return airPressure;
+        public int getValue() {
+            return value;
         }
 
     }
@@ -221,14 +221,14 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
     class AltitudeEvent {
 
         long timestamp;
-        int altitude;
+        int value;
 
         public AltitudeEvent(int value) {
             this(value, System.currentTimeMillis());
         }
 
         public AltitudeEvent(int value, long timeStamp) {
-            this.altitude = value;
+            this.value = value;
             this.timestamp = timeStamp;
         }
 
@@ -236,8 +236,8 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
             return timestamp;
         }
 
-        public int getAltitude() {
-            return altitude;
+        public int getValue() {
+            return value;
         }
 
     }

@@ -43,24 +43,39 @@ package ch.quantasy.tinkerforge.device.barometer;
 
 import com.tinkerforge.BrickletBarometer;
 
-
 /**
  *
  * @author reto
  */
 public class DeviceAirPressureCallbackThreshold {
-    
-    public char option;
-    public int min;
-    public int max;
+
+    private char option;
+    private int min;
+    private int max;
 
     public DeviceAirPressureCallbackThreshold() {
     }
 
-    public DeviceAirPressureCallbackThreshold(BrickletBarometer.AirPressureCallbackThreshold threshold) {
-        this.option = threshold.option;
-        this.min = threshold.min;
-        this.max = threshold.max;
+    public DeviceAirPressureCallbackThreshold(char option, int min, int max) {
+        this.option = option;
+        this.min = min;
+        this.max = max;
     }
-    
+
+    public DeviceAirPressureCallbackThreshold(BrickletBarometer.AirPressureCallbackThreshold threshold) {
+        this(threshold.option, threshold.min, threshold.max);
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public char getOption() {
+        return option;
+    }
+
 }
