@@ -128,6 +128,7 @@ And voilà, all the sensors and actors are working independently...
 * BrickletAmbientLight
 * BrickletAmbientLightV2
 * BrickletAnalogInV2
+* BrickletAnalogOutV2
 * BrickletBarometer
 * BrickletCO2
 * BrickletColor
