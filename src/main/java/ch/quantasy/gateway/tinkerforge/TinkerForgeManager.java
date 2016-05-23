@@ -66,6 +66,7 @@ import ch.quantasy.gateway.service.device.joystick.JoystickService;
 import ch.quantasy.gateway.service.device.laserRangeFinder.LaserRangeFinderService;
 import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
 import ch.quantasy.gateway.service.device.multiTouch.MultiTouchService;
+import ch.quantasy.gateway.service.device.piezoSpeaker.PiezoSpeakerService;
 import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderService;
 import ch.quantasy.gateway.service.device.rotaryPoti.RotaryPotiService;
 import ch.quantasy.gateway.service.device.segment4x7.Segment4x7Service;
@@ -98,6 +99,7 @@ import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
+import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
@@ -319,7 +321,11 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
                 AnalogOutV2Service service = new AnalogOutV2Service((AnalogOutV2Device) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
-            
+            if (tinkerforgeDevice instanceof PiezoSpeakerDevice) {
+                PiezoSpeakerService service = new PiezoSpeakerService((PiezoSpeakerDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+
         } catch (MqttException ex) {
             Logger.getLogger(TinkerForgeManager.class.getName()).log(Level.SEVERE, null, ex);
         }

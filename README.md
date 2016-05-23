@@ -146,6 +146,7 @@ And voilà, all the sensors and actors are working independently...
 * BrickletMoisture
 * BrickletMotionDetector
 * BrickletMultiTouch
+* BrickletPiezoSpeaker
 * BrickletRemoteSwitch
 * BrickletRotaryEncoder
 * BrickletRotaryPoti

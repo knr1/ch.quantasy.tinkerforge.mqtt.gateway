@@ -64,6 +64,7 @@ import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
+import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
@@ -96,6 +97,7 @@ import com.tinkerforge.BrickletLinearPoti;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletMultiTouch;
+import com.tinkerforge.BrickletPiezoSpeaker;
 import com.tinkerforge.BrickletRemoteSwitch;
 import com.tinkerforge.BrickletRotaryEncoder;
 import com.tinkerforge.BrickletRotaryPoti;
@@ -207,6 +209,9 @@ public class TinkerforgeDeviceMapper {
         }
          if (TinkerforgeDeviceClass.AnalogOutV2 == TinkerforgeDeviceClass.getDevice(device)) {
             return new AnalogOutV2Device(address, (BrickletAnalogOutV2) device);
+        }
+         if (TinkerforgeDeviceClass.PiezoSpeaker == TinkerforgeDeviceClass.getDevice(device)) {
+            return new PiezoSpeakerDevice(address, (BrickletPiezoSpeaker) device);
         }
         return new TinkerforgeDevice(address, device);
     }
