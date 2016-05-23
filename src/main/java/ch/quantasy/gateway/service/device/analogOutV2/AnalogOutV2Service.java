@@ -39,15 +39,51 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.solidState;
+package ch.quantasy.gateway.service.device.analogOutV2;
 
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-import com.tinkerforge.BrickletSolidStateRelay;
+import ch.quantasy.gateway.service.device.AbstractDeviceService;
+import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
+import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2DeviceCallback;
+import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author reto
  */
-public interface SolidStateRelayDeviceCallback extends DeviceCallback, BrickletSolidStateRelay.MonoflopDoneListener {
-    public void stateChanged(Boolean state);
+public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device, AnalogOutV2ServiceContract> implements AnalogOutV2DeviceCallback {
+
+    public AnalogOutV2Service(AnalogOutV2Device device, URI mqttURI) throws MqttException {
+        super(device, new AnalogOutV2ServiceContract(device), mqttURI);
+        addDescription(getServiceContract().INTENT_OUTPUT_VOLTAGE, "[0..12000]");
+        addDescription(getServiceContract().STATUS_OUTPUT_VOLTAGE, "[0..12000]");
+    }
+
+    @Override
+    public void messageArrived(String string, MqttMessage mm) {
+        byte[] payload = mm.getPayload();
+        if (payload == null) {
+            return;
+        }
+        try {
+            if (string.startsWith(getServiceContract().INTENT_OUTPUT_VOLTAGE)) {
+                Integer outputVoltage = getMapper().readValue(payload, Integer.class);
+                getDevice().setOutputVoltage(outputVoltage);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(AnalogOutV2Service.class
+                    .getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+
+    }
+    
+    @Override
+    public void outputVoltageChanged(Integer voltage) {
+        addEvent(getServiceContract().STATUS_OUTPUT_VOLTAGE, voltage);
+    }
+
 }

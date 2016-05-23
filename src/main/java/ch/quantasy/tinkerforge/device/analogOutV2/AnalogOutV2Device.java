@@ -39,15 +39,53 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.solidState;
+package ch.quantasy.tinkerforge.device.analogOutV2;
 
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-import com.tinkerforge.BrickletSolidStateRelay;
+import ch.quantasy.tinkerforge.device.generic.GenericDevice;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import com.tinkerforge.BrickletAnalogOutV2;
+
+import com.tinkerforge.NotConnectedException;
+import com.tinkerforge.TimeoutException;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author reto
+ * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public interface SolidStateRelayDeviceCallback extends DeviceCallback, BrickletSolidStateRelay.MonoflopDoneListener {
-    public void stateChanged(Boolean state);
+public class AnalogOutV2Device extends GenericDevice<BrickletAnalogOutV2, AnalogOutV2DeviceCallback> {
+
+    private Integer outputVoltage;
+
+    public AnalogOutV2Device(TinkerforgeStackAddress address, BrickletAnalogOutV2 device) throws NotConnectedException, TimeoutException {
+        super(address, device);
+    }
+
+    @Override
+    protected void addDeviceListeners() {
+       //None existing
+        if (outputVoltage != null) {
+            setOutputVoltage(outputVoltage);
+        }
+        
+
+    }
+
+    @Override
+    protected void removeDeviceListeners() {
+        //None existing
+
+    }
+
+    public void setOutputVoltage(Integer voltage) {
+        try {
+            getDevice().setOutputVoltage(voltage);
+            this.outputVoltage = getDevice().getOutputVoltage();
+            super.getCallback().outputVoltageChanged(this.outputVoltage);
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(AnalogOutV2Device.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

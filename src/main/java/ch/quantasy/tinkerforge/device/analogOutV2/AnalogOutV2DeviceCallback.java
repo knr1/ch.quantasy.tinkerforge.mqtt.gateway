@@ -39,15 +39,15 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.solidState;
+package ch.quantasy.tinkerforge.device.analogOutV2;
+
 
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-import com.tinkerforge.BrickletSolidStateRelay;
 
 /**
  *
  * @author reto
  */
-public interface SolidStateRelayDeviceCallback extends DeviceCallback, BrickletSolidStateRelay.MonoflopDoneListener {
-    public void stateChanged(Boolean state);
+public interface AnalogOutV2DeviceCallback extends DeviceCallback {
+    public void outputVoltageChanged(Integer voltage);
 }

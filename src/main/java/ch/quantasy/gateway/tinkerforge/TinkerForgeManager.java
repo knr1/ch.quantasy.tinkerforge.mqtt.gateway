@@ -45,6 +45,8 @@ import ch.quantasy.gateway.service.AbstractService;
 import ch.quantasy.gateway.service.device.accelerometer.AccelerometerService;
 import ch.quantasy.gateway.service.device.ambientLight.AmbientLightService;
 import ch.quantasy.gateway.service.device.ambientLightV2.AmbientLightV2Service;
+import ch.quantasy.gateway.service.device.analogInV2.AnalogInV2Service;
+import ch.quantasy.gateway.service.device.analogOutV2.AnalogOutV2Service;
 import ch.quantasy.gateway.service.device.barometer.BarometerService;
 import ch.quantasy.gateway.service.device.co2.CO2Service;
 import ch.quantasy.gateway.service.device.color.ColorService;
@@ -77,6 +79,8 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
+import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
+import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
@@ -307,6 +311,15 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
                 MultiTouchService service = new MultiTouchService((MultiTouchDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
+            if (tinkerforgeDevice instanceof AnalogInV2Device) {
+                AnalogInV2Service service = new AnalogInV2Service((AnalogInV2Device) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof AnalogOutV2Device) {
+                AnalogOutV2Service service = new AnalogOutV2Service((AnalogOutV2Device) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            
         } catch (MqttException ex) {
             Logger.getLogger(TinkerForgeManager.class.getName()).log(Level.SEVERE, null, ex);
         }

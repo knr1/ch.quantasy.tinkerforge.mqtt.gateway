@@ -44,6 +44,8 @@ package ch.quantasy.tinkerforge.device;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
+import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
+import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
@@ -75,6 +77,8 @@ import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickletAccelerometer;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletAmbientLightV2;
+import com.tinkerforge.BrickletAnalogInV2;
+import com.tinkerforge.BrickletAnalogOutV2;
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletCO2;
 import com.tinkerforge.BrickletColor;
@@ -197,6 +201,12 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.MultiTouch == TinkerforgeDeviceClass.getDevice(device)) {
             return new MultiTouchDevice(address, (BrickletMultiTouch) device);
+        }
+        if (TinkerforgeDeviceClass.AnalogInV2 == TinkerforgeDeviceClass.getDevice(device)) {
+            return new AnalogInV2Device(address, (BrickletAnalogInV2) device);
+        }
+         if (TinkerforgeDeviceClass.AnalogOutV2 == TinkerforgeDeviceClass.getDevice(device)) {
+            return new AnalogOutV2Device(address, (BrickletAnalogOutV2) device);
         }
         return new TinkerforgeDevice(address, device);
     }
