@@ -85,7 +85,7 @@ public class PiezoSpeakerDevice extends GenericDevice<BrickletPiezoSpeaker, Piez
 
     public void morse(MorseCodeParameter morseCodeParameter) {
         try {
-            getDevice().morseCode(morseCodeParameter.getMorseString(), morseCodeParameter.getFrequency());
+            getDevice().morseCode(morseCodeParameter.getString(), morseCodeParameter.getFrequency());
             super.getCallback().morseCodeInvoked(morseCodeParameter);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(PiezoSpeakerDevice.class.getName()).log(Level.SEVERE, null, ex);

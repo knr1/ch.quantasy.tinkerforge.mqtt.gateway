@@ -46,7 +46,6 @@ import ch.quantasy.tinkerforge.device.temperatureIR.DeviceAmbientTemperatureCall
 import ch.quantasy.tinkerforge.device.temperatureIR.DeviceObjectTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDeviceCallback;
-import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;

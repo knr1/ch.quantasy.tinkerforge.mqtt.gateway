@@ -61,7 +61,7 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
     public PiezoSpeakerService(PiezoSpeakerDevice device, URI mqttURI) throws MqttException {
         super(device, new PiezoSpeakerServiceContract(device), mqttURI);
         addDescription(getServiceContract().INTENT_BEEP, "duration: [0..4294967295]\n frequency: [585..7100]");
-        addDescription(getServiceContract().INTENT_MORSE, "morse: [.|-| |]_60\n frequency: [585..7100]");
+        addDescription(getServiceContract().INTENT_MORSE, "string: [.|-| |]_60\n frequency: [585..7100]");
         addDescription(getServiceContract().INTENT_CALIBRATE, "[true|false]");
         addDescription(getServiceContract().EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_BEEP_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]");

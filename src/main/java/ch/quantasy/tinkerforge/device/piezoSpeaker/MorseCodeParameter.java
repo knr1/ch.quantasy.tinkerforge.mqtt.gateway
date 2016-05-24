@@ -53,14 +53,14 @@ import com.tinkerforge.BrickletUVLight;
  */
 public class MorseCodeParameter {
     
-    private String morseString;
+    private String string;
     private int frequency;
 
     public MorseCodeParameter() {
     }
 
-    public MorseCodeParameter(String morseString, int max) {
-        this.morseString = morseString;
+    public MorseCodeParameter(String string, int max) {
+        this.string = string;
         this.frequency = max;
     }
 
@@ -68,8 +68,8 @@ public class MorseCodeParameter {
         return frequency;
     }
 
-    public String getMorseString() {
-        return morseString;
+    public String getString() {
+        return string;
     }
  
 }
