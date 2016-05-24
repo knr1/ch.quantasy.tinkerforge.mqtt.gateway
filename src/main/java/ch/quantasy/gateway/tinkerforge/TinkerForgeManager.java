@@ -71,6 +71,8 @@ import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderService;
 import ch.quantasy.gateway.service.device.rotaryPoti.RotaryPotiService;
 import ch.quantasy.gateway.service.device.segment4x7.Segment4x7Service;
 import ch.quantasy.gateway.service.device.solidStateRelay.SolidStateRelayService;
+import ch.quantasy.gateway.service.device.soundIntensity.SoundIntensityService;
+import ch.quantasy.gateway.service.device.soundIntensity.SoundIntensityServiceContract;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
 import ch.quantasy.gateway.service.device.tilt.TiltService;
 import ch.quantasy.gateway.service.device.uvLight.UVLightService;
@@ -105,6 +107,7 @@ import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
+import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
@@ -323,6 +326,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof PiezoSpeakerDevice) {
                 PiezoSpeakerService service = new PiezoSpeakerService((PiezoSpeakerDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof SoundIntensityDevice) {
+                SoundIntensityService service = new SoundIntensityService((SoundIntensityDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
 
