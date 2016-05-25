@@ -41,6 +41,7 @@
  */
 package ch.quantasy.tinkerforge.device;
 
+import ch.quantasy.tinkerforge.device.IMUV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
@@ -76,6 +77,7 @@ import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
+import com.tinkerforge.BrickIMUV2;
 import com.tinkerforge.BrickletAccelerometer;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletAmbientLightV2;
@@ -217,6 +219,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.SoundIntensity == TinkerforgeDeviceClass.getDevice(device)) {
             return new SoundIntensityDevice(address, (BrickletSoundIntensity) device);
+        }
+        if (TinkerforgeDeviceClass.IMUV2 == TinkerforgeDeviceClass.getDevice(device)) {
+            return new IMUV2Device(address, (BrickIMUV2) device);
         }
         return new TinkerforgeDevice(address, device);
     }

@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.tinkerforge;
 
 import ch.quantasy.gateway.service.AbstractService;
+import ch.quantasy.gateway.service.device.IMUV2.IMUV2Service;
 import ch.quantasy.gateway.service.device.accelerometer.AccelerometerService;
 import ch.quantasy.gateway.service.device.ambientLight.AmbientLightService;
 import ch.quantasy.gateway.service.device.ambientLightV2.AmbientLightV2Service;
@@ -72,10 +73,10 @@ import ch.quantasy.gateway.service.device.rotaryPoti.RotaryPotiService;
 import ch.quantasy.gateway.service.device.segment4x7.Segment4x7Service;
 import ch.quantasy.gateway.service.device.solidStateRelay.SolidStateRelayService;
 import ch.quantasy.gateway.service.device.soundIntensity.SoundIntensityService;
-import ch.quantasy.gateway.service.device.soundIntensity.SoundIntensityServiceContract;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
 import ch.quantasy.gateway.service.device.tilt.TiltService;
 import ch.quantasy.gateway.service.device.uvLight.UVLightService;
+import ch.quantasy.tinkerforge.device.IMUV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
@@ -330,6 +331,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof SoundIntensityDevice) {
                 SoundIntensityService service = new SoundIntensityService((SoundIntensityDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof IMUV2Device) {
+                IMUV2Service service = new IMUV2Service((IMUV2Device) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
 

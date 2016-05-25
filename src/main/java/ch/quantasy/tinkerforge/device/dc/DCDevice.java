@@ -102,7 +102,7 @@ public class DCDevice extends GenericDevice<BrickDC, DCDeviceCallback> implement
 
     @Override
     protected void removeDeviceListeners() {
-        getDevice().addCurrentVelocityListener(super.getCallback());
+        getDevice().removeCurrentVelocityListener(super.getCallback());
         getDevice().removeEmergencyShutdownListener(super.getCallback());
         getDevice().removeEmergencyShutdownListener(this);
 
