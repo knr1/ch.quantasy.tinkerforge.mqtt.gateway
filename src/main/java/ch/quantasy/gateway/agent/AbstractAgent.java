@@ -41,9 +41,9 @@
  */
 package ch.quantasy.gateway.agent;
 
-import ch.quantasy.mqtt.communication.MQTTCommunication;
-import ch.quantasy.mqtt.communication.MQTTCommunicationCallback;
-import ch.quantasy.mqtt.communication.MQTTParameters;
+import ch.quantasy.communication.mqtt.MQTTCommunication;
+import ch.quantasy.communication.mqtt.MQTTCommunicationCallback;
+import ch.quantasy.communication.mqtt.MQTTParameters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;

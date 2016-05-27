@@ -60,7 +60,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class DualRelayService extends AbstractDeviceService<DualRelayDevice, DualRelayServiceContract> implements DualRelayDeviceCallback {
 
     public DualRelayService(DualRelayDevice device, URI mqttURI) throws MqttException {
-        super(device, new DualRelayServiceContract(device), mqttURI);
+        super(mqttURI, device, new DualRelayServiceContract(device));
         addDescription(getServiceContract().INTENT_MONOFLOP, "relay: [1|2]\n state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_SELECTED_STATE, "relay: [1|2]\n state: [true|false]\n");
         addDescription(getServiceContract().INTENT_STATE, "relay1: [true|false]\n relay2: [true|false]\n");

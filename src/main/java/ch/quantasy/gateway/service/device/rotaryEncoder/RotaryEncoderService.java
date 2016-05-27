@@ -59,7 +59,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDevice, RotaryEncoderServiceContract> implements RotaryEncoderDeviceCallback {
     
     public RotaryEncoderService(RotaryEncoderDevice device, URI mqttURI) throws MqttException {
-        super(device, new RotaryEncoderServiceContract(device), mqttURI);
+        super(mqttURI, device, new RotaryEncoderServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");

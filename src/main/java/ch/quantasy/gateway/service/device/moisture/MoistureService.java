@@ -58,7 +58,7 @@ import java.net.URI;
 public class MoistureService extends AbstractDeviceService<MoistureDevice, MoistureServiceContract> implements MoistureDeviceCallback {
 
     public MoistureService(MoistureDevice device, URI mqttURI) throws MqttException {
-        super(device, new MoistureServiceContract(device), mqttURI);
+        super(mqttURI, device, new MoistureServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");

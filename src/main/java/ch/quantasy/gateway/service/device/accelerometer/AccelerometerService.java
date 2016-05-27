@@ -61,7 +61,7 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
 
     public AccelerometerService(AccelerometerDevice device, URI mqttURI) throws MqttException {
 
-        super(device, new AccelerometerServiceContract(device),mqttURI);
+        super(mqttURI, device, new AccelerometerServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ACCELERATION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n minY: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n minZ: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxX: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxY: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxZ: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");

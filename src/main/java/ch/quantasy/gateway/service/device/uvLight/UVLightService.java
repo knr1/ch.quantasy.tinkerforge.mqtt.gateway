@@ -59,7 +59,7 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
 
     public UVLightService(UVLightDevice device, URI mqttURI) throws MqttException {
 
-        super(device, new UVLightServiceContract(device), mqttURI);
+        super(mqttURI, device, new UVLightServiceContract(device));
         addDescription(getServiceContract().INTENT_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");

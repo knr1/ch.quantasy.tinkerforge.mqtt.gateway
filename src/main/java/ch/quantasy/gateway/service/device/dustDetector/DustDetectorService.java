@@ -59,7 +59,7 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
     public DustDetectorService(DustDetectorDevice device,URI mqttURI) throws MqttException {
 
-        super(device, new DustDetectorServiceContract(device),mqttURI);
+        super(mqttURI, device, new DustDetectorServiceContract(device));
         addDescription(getServiceContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_MOVING_AVERAGE, "[0..100]");
 

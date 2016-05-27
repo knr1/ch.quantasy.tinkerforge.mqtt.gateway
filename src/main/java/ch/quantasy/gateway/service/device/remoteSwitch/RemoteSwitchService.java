@@ -61,7 +61,7 @@ import java.util.logging.Logger;
 public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevice, RemoteSwitchServiceContract> implements RemoteSwitchDeviceCallback {
 
     public RemoteSwitchService(RemoteSwitchDevice device, URI mqttURI) throws MqttException {
-        super(device, new RemoteSwitchServiceContract(device), mqttURI);
+        super(mqttURI, device, new RemoteSwitchServiceContract(device));
 
         addDescription(getServiceContract().INTENT_REPEATS, "[0.." + Short.MAX_VALUE + "]");
 

@@ -60,7 +60,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class DualButtonService extends AbstractDeviceService<DualButtonDevice, DualButtonServiceContract> implements DualButtonDeviceCallback {
 
     public DualButtonService(DualButtonDevice device,URI mqttURI) throws MqttException {
-        super(device, new DualButtonServiceContract(device),mqttURI);
+        super(mqttURI, device, new DualButtonServiceContract(device));
         
         addDescription(getServiceContract().INTENT_LED_STATE, "leftLED: [AutoToggleOn|AutoToggleOff|On|Off]\n rightLED: [AutoToggleOn|AutoToggleOff|On|Off] ");
         addDescription(getServiceContract().INTENT_SELECTED_LED_STATE, "led: [AutoToggleOn|AutoToggleOff|On|Off]");

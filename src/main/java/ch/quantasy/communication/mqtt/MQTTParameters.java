@@ -39,7 +39,7 @@
  *
  *
  */
-package ch.quantasy.mqtt.communication;
+package ch.quantasy.communication.mqtt;
 
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttCallback;

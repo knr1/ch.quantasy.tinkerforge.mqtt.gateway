@@ -59,8 +59,8 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
 
     private final G device;
 
-    public AbstractDeviceService(G device, S serviceContract,URI mqttURI) throws MqttException {
-        super(serviceContract, device.getUid(),mqttURI);
+    public AbstractDeviceService(URI mqttURI, G device, S serviceContract) throws MqttException {
+        super(mqttURI, device.getUid(), serviceContract);
         this.device = device;
         device.setCallback(this);
 
@@ -73,7 +73,5 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
     @Override
     public abstract void messageArrived(String topic, MqttMessage mm);
     //This is only overriden in order to get 'rid' of the 'throws Exception'.
-    
-    
 
 }

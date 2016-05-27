@@ -39,7 +39,7 @@
  *
  *
  */
-package ch.quantasy.mqtt.communication;
+package ch.quantasy.communication.mqtt;
 
 import java.util.Objects;
 import java.util.concurrent.BlockingDeque;

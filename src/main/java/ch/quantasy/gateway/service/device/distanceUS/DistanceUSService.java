@@ -60,7 +60,7 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
 
     public DistanceUSService(DistanceUSDevice device,URI mqttURI) throws MqttException {
 
-        super(device, new DistanceUSServiceContract(device),mqttURI);
+        super(mqttURI, device, new DistanceUSServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");

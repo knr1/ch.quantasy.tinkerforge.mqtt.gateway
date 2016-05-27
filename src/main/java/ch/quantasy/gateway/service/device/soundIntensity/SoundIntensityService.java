@@ -58,7 +58,7 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
 
     public SoundIntensityService(SoundIntensityDevice device,URI mqttURI) throws MqttException {
 
-        super(device, new SoundIntensityServiceContract(device),mqttURI);
+        super(mqttURI, device, new SoundIntensityServiceContract(device));
         addDescription(getServiceContract().INTENT_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_SOUND_INTENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");

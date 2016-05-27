@@ -59,7 +59,7 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
 
     public HallEffectService(HallEffectDevice device,URI mqttURI) throws MqttException {
 
-        super(device, new HallEffectServiceContract(device),mqttURI);
+        super(mqttURI, device, new HallEffectServiceContract(device));
         addDescription(getServiceContract().INTENT_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_EDGE_COUNT_RESET, "[true|false]");

@@ -61,7 +61,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class AmbientLightService extends AbstractDeviceService<AmbientLightDevice, AmbientLightServiceContract> implements AmbientLightDeviceCallback {
 
     public AmbientLightService(AmbientLightDevice device,URI mqttURI) throws MqttException {
-        super(device, new AmbientLightServiceContract(device),mqttURI);
+        super(mqttURI, device, new AmbientLightServiceContract(device));
         addDescription(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_IllUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

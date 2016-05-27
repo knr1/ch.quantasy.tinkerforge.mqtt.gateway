@@ -60,7 +60,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class ColorService extends AbstractDeviceService<ColorDevice, ColorServiceContract> implements ColorDeviceCallback {
 
     public ColorService(ColorDevice device,URI mqttURI) throws MqttException {
-        super(device, new ColorServiceContract(device),mqttURI);
+        super(mqttURI, device, new ColorServiceContract(device));
         addDescription(getServiceContract().INTENT_COLOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_IllUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

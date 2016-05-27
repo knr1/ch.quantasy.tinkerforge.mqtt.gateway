@@ -58,7 +58,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     public IMUV2Service(IMUV2Device device, URI mqttURI) throws MqttException {
 
-        super(device, new IMUV2ServiceContract(device), mqttURI);
+        super(mqttURI, device, new IMUV2ServiceContract(device));
         addDescription(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

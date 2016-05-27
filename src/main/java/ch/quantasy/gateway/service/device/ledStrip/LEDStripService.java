@@ -60,7 +60,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
     private short[][] leds;
 
     public LEDStripService(LEDStripDevice device, URI mqttURI) throws MqttException {
-        super(device, new LEDStripServiceContract(device), mqttURI);
+        super(mqttURI, device, new LEDStripServiceContract(device));
         addDescription(getServiceContract().INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
         addDescription(getServiceContract().INTENT_LEDs, "[{{r,r,...,r}_numLEDs {g,g,...,g}_numLEDs {b,b,...,b}_numLEDs}_3]");
 

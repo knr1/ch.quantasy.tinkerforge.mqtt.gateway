@@ -58,7 +58,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class SolidStateRelayService extends AbstractDeviceService<SolidStateRelayDevice, SolidStateRelayServiceContract> implements SolidStateRelayDeviceCallback {
 
     public SolidStateRelayService(SolidStateRelayDevice device, URI mqttURI) throws MqttException {
-        super(device, new SolidStateRelayServiceContract(device), mqttURI);
+        super(mqttURI, device, new SolidStateRelayServiceContract(device));
         addDescription(getServiceContract().INTENT_MONOFLOP, "state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_STATE, "[true|false]");
         addDescription(getServiceContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n state: [true|false]");

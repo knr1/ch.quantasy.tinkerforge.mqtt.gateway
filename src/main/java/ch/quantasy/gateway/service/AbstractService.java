@@ -41,10 +41,9 @@
  */
 package ch.quantasy.gateway.service;
 
-import ch.quantasy.mqtt.communication.MQTTCommunication;
-import ch.quantasy.mqtt.communication.MQTTCommunicationCallback;
-import ch.quantasy.mqtt.communication.MQTTParameters;
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
+import ch.quantasy.communication.mqtt.MQTTCommunication;
+import ch.quantasy.communication.mqtt.MQTTCommunicationCallback;
+import ch.quantasy.communication.mqtt.MQTTParameters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -74,7 +73,7 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
     private final HashMap<String, List<Object>> eventMap;
     private final HashMap<String, MqttMessage> contractDescriptionMap;
 
-    public AbstractService(S serviceContract, String clientID,URI mqttURI) throws MqttException {
+    public AbstractService(URI mqttURI, String clientID, S serviceContract) throws MqttException {
         this.serviceContract = serviceContract;
         statusMap = new HashMap<>();
         eventMap = new HashMap<>();
@@ -169,8 +168,8 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
             MqttMessage message = new MqttMessage(mapper.writeValueAsBytes(description));
             message.setQos(1);
             message.setRetained(true);
-            
-            topic = topic.replaceFirst(getServiceContract().ID_TOPIC,"");
+
+            topic = topic.replaceFirst(getServiceContract().ID_TOPIC, "");
             String descriptionTopic = getServiceContract().DESCRIPTION + topic;
             contractDescriptionMap.put(descriptionTopic, message);
             communication.readyToPublish(this, descriptionTopic);

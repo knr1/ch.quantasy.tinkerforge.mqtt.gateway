@@ -61,7 +61,7 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
 
     public AmbientLightV2Service(AmbientLightV2Device device,URI mqttURI) throws MqttException {
 
-        super(device, new AmbientLightV2ServiceContract(device),mqttURI);
+        super(mqttURI, device, new AmbientLightV2ServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");

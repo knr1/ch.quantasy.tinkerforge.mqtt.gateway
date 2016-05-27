@@ -60,7 +60,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, DistanceIRServiceContract> implements DistanceIRDeviceCallback {
 
     public DistanceIRService(DistanceIRDevice device,URI mqttURI) throws MqttException {
-        super(device, new DistanceIRServiceContract(device),mqttURI);
+        super(mqttURI, device, new DistanceIRServiceContract(device));
         addDescription(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

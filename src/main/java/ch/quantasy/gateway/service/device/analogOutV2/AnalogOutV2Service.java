@@ -57,7 +57,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device, AnalogOutV2ServiceContract> implements AnalogOutV2DeviceCallback {
 
     public AnalogOutV2Service(AnalogOutV2Device device, URI mqttURI) throws MqttException {
-        super(device, new AnalogOutV2ServiceContract(device), mqttURI);
+        super(mqttURI, device, new AnalogOutV2ServiceContract(device));
         addDescription(getServiceContract().INTENT_OUTPUT_VOLTAGE, "[0..12000]");
         addDescription(getServiceContract().STATUS_OUTPUT_VOLTAGE, "[0..12000]");
     }

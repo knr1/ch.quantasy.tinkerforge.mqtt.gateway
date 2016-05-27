@@ -61,7 +61,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFinderDevice, LaserRangeFinderServiceContract> implements LaserRangeFinderDeviceCallback {
 
     public LaserRangeFinderService(LaserRangeFinderDevice device, URI mqttURI) throws MqttException {
-        super(device, new LaserRangeFinderServiceContract(device), mqttURI);
+        super(mqttURI, device, new LaserRangeFinderServiceContract(device));
         addDescription(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

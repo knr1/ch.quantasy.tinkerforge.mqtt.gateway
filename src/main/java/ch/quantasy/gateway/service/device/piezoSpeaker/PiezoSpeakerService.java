@@ -59,7 +59,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevice, PiezoSpeakerServiceContract> implements PiezoSpeakerDeviceCallback {
 
     public PiezoSpeakerService(PiezoSpeakerDevice device, URI mqttURI) throws MqttException {
-        super(device, new PiezoSpeakerServiceContract(device), mqttURI);
+        super(mqttURI, device, new PiezoSpeakerServiceContract(device));
         addDescription(getServiceContract().INTENT_BEEP, "duration: [0..4294967295]\n frequency: [585..7100]");
         addDescription(getServiceContract().INTENT_MORSE, "string: [.|-| |]_60\n frequency: [585..7100]");
         addDescription(getServiceContract().INTENT_CALIBRATE, "[true|false]");

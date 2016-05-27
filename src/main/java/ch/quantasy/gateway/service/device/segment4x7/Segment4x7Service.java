@@ -60,7 +60,7 @@ import java.util.logging.Logger;
 public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, Segment4x7ServiceContract> implements Segment4x7DeviceCallback {
 
     public Segment4x7Service(Segment4x7Device device, URI mqttURI) throws MqttException {
-        super(device, new Segment4x7ServiceContract(device), mqttURI);
+        super(mqttURI, device, new Segment4x7ServiceContract(device));
 
         addDescription(getServiceContract().INTENT_COUNTER, "from: [-999..9999]\n to: [-999..9999]\n increment: [-999..9999]\n lenght: [0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");

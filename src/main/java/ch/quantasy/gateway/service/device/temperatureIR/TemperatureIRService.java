@@ -59,7 +59,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDevice, TemperatureIRServiceContract> implements TemperatureIRDeviceCallback {
 
     public TemperatureIRService(TemperatureIRDevice device,URI mqttURI) throws MqttException {
-        super(device, new TemperatureIRServiceContract(device),mqttURI);
+        super(mqttURI, device, new TemperatureIRServiceContract(device));
         addDescription(getServiceContract().INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

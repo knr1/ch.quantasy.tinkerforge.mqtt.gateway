@@ -57,7 +57,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract> implements DCDeviceCallback {
 
     public DCService(DCDevice device,URI mqttURI) throws MqttException {
-        super(device, new DCServiceContract(device),mqttURI);
+        super(mqttURI, device, new DCServiceContract(device));
         addDescription(getServiceContract().INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DRIVER_MODE, "[0|1]");
         addDescription(getServiceContract().INTENT_ENABLED, "[true|false]");

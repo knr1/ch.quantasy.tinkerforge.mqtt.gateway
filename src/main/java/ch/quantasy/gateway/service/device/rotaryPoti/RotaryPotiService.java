@@ -60,7 +60,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class RotaryPotiService extends AbstractDeviceService<RotaryPotiDevice, RotaryPotiServiceContract> implements RotaryPotiDeviceCallback {
 
     public RotaryPotiService(RotaryPotiDevice device, URI mqttURI) throws MqttException {
-        super(device, new RotaryPotiServiceContract(device), mqttURI);
+        super(mqttURI, device, new RotaryPotiServiceContract(device));
         addDescription(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

@@ -58,7 +58,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, MultiTouchServiceContract> implements MultiTouchDeviceCallback {
 
     public MultiTouchService(MultiTouchDevice device, URI mqttURI) throws MqttException {
-        super(device, new MultiTouchServiceContract(device), mqttURI);
+        super(mqttURI, device, new MultiTouchServiceContract(device));
         addDescription(getServiceContract().INTENT_ELECTRODE_CONFIG, "[0..8191]");
         addDescription(getServiceContract().INTENT_ELECTRODE_SENSITIVITY, "[0..8191]");
         addDescription(getServiceContract().INTENT_RECALIBRATE, "[true|false]");

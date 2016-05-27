@@ -55,7 +55,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceContract> implements BrickletTilt.TiltStateListener {
 
     public TiltService(TiltDevice device,URI mqttURI) throws MqttException {
-        super(device, new TiltServiceContract(device),mqttURI);
+        super(mqttURI, device, new TiltServiceContract(device));
         addDescription(getServiceContract().EVENT_TILT_STATE, "[0..2]");
      
     }

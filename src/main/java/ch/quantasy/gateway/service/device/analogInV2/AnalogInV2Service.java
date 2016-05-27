@@ -59,7 +59,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, AnalogInV2ServiceContract> implements AnalogInV2DeviceCallback {
 
     public AnalogInV2Service(AnalogInV2Device device,URI mqttURI) throws MqttException {
-        super(device, new AnalogInV2ServiceContract(device),mqttURI);
+        super(mqttURI, device, new AnalogInV2ServiceContract(device));
         addDescription(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

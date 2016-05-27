@@ -39,13 +39,14 @@
  *
  *
  */
-package ch.quantasy.mqtt.communication;
+package ch.quantasy.communication.mqtt;
 
-import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author reto
  */
-public interface MQTTCommunicationCallback extends MqttCallback,PublisherCallback{
+public interface PublisherCallback{
+    public MqttMessage getMessageToPublish(String topic);
 }

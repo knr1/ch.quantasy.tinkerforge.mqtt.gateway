@@ -60,7 +60,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class JoystickService extends AbstractDeviceService<JoystickDevice, JoystickServiceContract> implements JoystickDeviceCallback {
 
     public JoystickService(JoystickDevice device, URI mqttURI) throws MqttException {
-        super(device, new JoystickServiceContract(device), mqttURI);
+        super(mqttURI, device, new JoystickServiceContract(device));
         addDescription(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

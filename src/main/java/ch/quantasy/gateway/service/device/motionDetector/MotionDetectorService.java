@@ -55,7 +55,7 @@ import java.net.URI;
 public class MotionDetectorService extends AbstractDeviceService<MotionDetectorDevice, MotionDetectorServiceContract> implements MotionDetectorDeviceCallback {
 
     public MotionDetectorService(MotionDetectorDevice device,URI mqttURI) throws MqttException {
-        super(device, new MotionDetectorServiceContract(device),mqttURI);
+        super(mqttURI, device, new MotionDetectorServiceContract(device));
         
         addDescription(getServiceContract().EVENT_DETECTION_CYCLE_ENDED, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_MOTION_DETECTED, "[0.." + Long.MAX_VALUE + "]");
