@@ -1,10 +1,10 @@
 # TiMqWay
 ch.quantasy.tinkerforge.mqtt.gateway
 Provides an [MQTT] view to the [Tinkerforge](tm) world.
-The underlying idea of TiMqWay is a self-explaining mqtt view which dynamically provides access to known Tinkerforge devices. 
+The underlying idea of TiMqWay is a bunch of [micro-service]s, providing a self-explaining mqtt view for dynamic access to known Tinkerforge devices. 
 
-In order to understand this micro-Service Based Agent oriented Design (SBAOD) and maybe provide own services... there is a Tutorial that tries
-to get you into it: [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]
+In order to understand this micro-Service Based Agent oriented Design (SBAOD) and maybe to provide own services in this manner... 
+there is a Tutorial that tries to get you into it: [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]
 
 ### Ideology
 Each Device provides the following interface:
@@ -17,7 +17,7 @@ The descriptive language used within this project is [YAML]. Hence, all you need
 
 The root topic of TiMqWay is: TF
 
-Devices are not represented within their 'stack', but loosly coupled so a device might even change its stack but is still accessible in MQTT at the same location (TF/device-type/UID).
+Tinkerforge devices are not represented within their 'stack', but loosely coupled so a device might even change its stack but is still accessible in MQTT at the same location (TF/device-type/UID).
 
 ### Installation
 In order to install TiMqWay 
@@ -48,6 +48,7 @@ or any other address IP or name will work, if there is an actual Tinkerforge sta
 ### Tip
 You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Viewer].
 
+ [micro-service]:<https://en.wikipedia.org/wiki/Microservices>
  [tinkerforge]:<http://www.tinkerforge.com/en>
  [MQTT]: <http://mqtt.org/>
  [TiMqWay.jar]: <https://prof.hti.bfh.ch/knr1/TiMqWay.jar>
