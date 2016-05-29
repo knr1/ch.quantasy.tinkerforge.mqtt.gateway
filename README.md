@@ -3,6 +3,9 @@ ch.quantasy.tinkerforge.mqtt.gateway
 Provides an [MQTT] view to the [Tinkerforge](tm) world.
 The underlying idea of TiMqWay is a self-explaining mqtt view which dynamically provides access to known Tinkerforge devices. 
 
+In order to understand this micro-Service Based Agent oriented Design (SBAOD) and maybe provide own services... there is a Tutorial that tries
+to get you into it: [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]
+
 ### Ideology
 Each Device provides the following interface:
 * description Each device describes its abilities via the description topic.
@@ -50,6 +53,7 @@ You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Vi
  [TiMqWay.jar]: <https://prof.hti.bfh.ch/knr1/TiMqWay.jar>
  [d3Viewer]: <https://github.com/hardillb/d3-MQTT-Topic-Tree>
  [YAML]: <https://en.wikipedia.org/wiki/YAML>
+ [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]: <https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial>
 
 ### Example
 Imagine, you have a running MQTT-Broker at 192.168.1.77
