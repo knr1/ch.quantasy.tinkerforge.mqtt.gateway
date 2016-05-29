@@ -266,7 +266,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         addEvent(getServiceContract().EVENT_TEMPERATURE, new TemperatureEvent(b));
     }
 
-    class AccelerationEvent {
+    public static class AccelerationEvent {
 
         private long timestamp;
         private short x;
@@ -302,7 +302,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    class AngularVelocityEvent {
+    public static class AngularVelocityEvent {
 
         private long timestamp;
         private short x;
@@ -338,7 +338,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    class GravityVectorEvent {
+    public static class GravityVectorEvent {
 
         private long timestamp;
         private short x;
@@ -374,7 +374,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    class LinearAccelerationEvent {
+    public static class LinearAccelerationEvent {
 
         private long timestamp;
         private short x;
@@ -410,7 +410,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    class MagneticFieldEvent {
+    public static class MagneticFieldEvent {
 
         private long timestamp;
         private short x;
@@ -446,7 +446,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    class OrientationEvent {
+    public static class OrientationEvent {
 
         private long timestamp;
         private short heading;
@@ -482,7 +482,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    class QuaternionEvent {
+    public static class QuaternionEvent {
 
         private long timestamp;
         private short w;
@@ -524,7 +524,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    class TemperatureEvent {
+    public static class TemperatureEvent {
 
         private long timestamp;
         private byte value;
@@ -547,7 +547,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         }
     }
 
-    public class AllDataEvent {
+    public static class AllDataEvent {
 
         private long timestamp;
 

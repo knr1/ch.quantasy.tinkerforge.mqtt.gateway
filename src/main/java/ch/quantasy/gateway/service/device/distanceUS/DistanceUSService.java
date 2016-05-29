@@ -146,7 +146,7 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
         addEvent(getServiceContract().EVENT_DISTANCE_REACHED, new DisntanceEvent(i));
     }
 
-    class DisntanceEvent {
+    public static class DisntanceEvent {
 
         protected long timestamp;
         protected int value;

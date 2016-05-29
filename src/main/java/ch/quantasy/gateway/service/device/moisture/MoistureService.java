@@ -138,7 +138,7 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
         addEvent(getServiceContract().EVENT_MOISTURE_REACHED, new MoistureEvent(i));
     }
 
-    class MoistureEvent {
+    public static class MoistureEvent {
 
         protected long timestamp;
         protected int value;

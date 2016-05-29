@@ -180,7 +180,7 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
         addStatus(getServiceContract().STATUS_MOVING_AVERAGE, averaging);
     }
 
-    class AnalogValueEvent {
+    public static class AnalogValueEvent {
 
         protected long timestamp;
         protected int value;
@@ -204,7 +204,7 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
 
     }
 
-    class VoltageEvent {
+    public static class VoltageEvent {
 
         long timestamp;
         int value;

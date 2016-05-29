@@ -145,7 +145,7 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
         addEvent(getServiceContract().EVENT_ACCELERATION_REACHED, new AccelerationEvent(x, y, z));
     }
 
-    class AccelerationEvent {
+    public static class AccelerationEvent {
 
         protected long timestamp;
         protected short x;

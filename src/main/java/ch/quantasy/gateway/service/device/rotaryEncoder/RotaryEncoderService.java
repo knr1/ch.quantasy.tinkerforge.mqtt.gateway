@@ -57,7 +57,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  * @author reto
  */
 public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDevice, RotaryEncoderServiceContract> implements RotaryEncoderDeviceCallback {
-    
+
     public RotaryEncoderService(RotaryEncoderDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new RotaryEncoderServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -66,14 +66,14 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
         addDescription(getServiceContract().EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [" + Long.MIN_VALUE + "0.." + Long.MAX_VALUE + "]\n");
-        
+
         addDescription(getServiceContract().EVENT_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
         addDescription(getServiceContract().EVENT_COUNT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-150..150]\n");
         addDescription(getServiceContract().STATUS_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
         addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
-    
+
     @Override
     public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
@@ -85,63 +85,61 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
             }
-         
+
             if (string.startsWith(getServiceContract().INTENT_COUNT_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setCountCallbackPeriod(period);
             }
-            
+
             if (string.startsWith(getServiceContract().INTENT_COUNT_THRESHOLD)) {
                 DeviceCountCallbackThreshold threshold = getMapper().readValue(payload, DeviceCountCallbackThreshold.class);
                 getDevice().setPositionCallbackThreshold(threshold);
-                
+
             }
             if (string.startsWith(getServiceContract().INTENT_COUNT_RESET)) {
-                
+
                 Boolean reset = getMapper().readValue(payload, Boolean.class);
                 getDevice().setCountReset(reset);
-            }            
-            
+            }
+
         } catch (Exception ex) {
             Logger.getLogger(RotaryEncoderService.class
                     .getName()).log(Level.INFO, null, ex);
             return;
         }
     }
-    
+
     @Override
     public void count(int i) {
         addEvent(getServiceContract().EVENT_COUNT, new CountEvent(i));
     }
-    
+
     @Override
     public void countReached(int i) {
         addEvent(getServiceContract().EVENT_COUNT_REACHED, new CountEvent(i));
     }
-    
+
     @Override
     public void countCallbackPeriodChanged(long period) {
         addStatus(getServiceContract().STATUS_COUNT_CALLBACK_PERIOD, period);
     }
-    
+
     @Override
     public void debouncePeriodChanged(long period) {
         addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
     }
-   
-    
+
     @Override
     public void countCallbackThresholdChanged(DeviceCountCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_COUNT_THRESHOLD, threshold);
-        
+
     }
 
     @Override
     public void countReset(long latestCount) {
-        addEvent(getServiceContract().EVENT_COUNT_RESET, new CountReset(latestCount));
+        addEvent(getServiceContract().EVENT_COUNT_RESET, new CountResetEvent(latestCount));
     }
 
-    
     @Override
     public void pressed() {
         addEvent(getServiceContract().EVENT_PRESSED, System.currentTimeMillis());
@@ -151,52 +149,52 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
     public void released() {
         addEvent(getServiceContract().EVENT_RELEASED, System.currentTimeMillis());
     }
-    
+
     public static class CountEvent {
-        
+
         long timestamp;
         int value;
-        
+
         public CountEvent(int value) {
             this(value, System.currentTimeMillis());
         }
-        
+
         public CountEvent(int value, long timeStamp) {
             this.value = value;
             this.timestamp = timeStamp;
         }
-        
+
         public long getTimestamp() {
             return timestamp;
         }
-        
+
         public int getValue() {
             return value;
         }
-        
+
     }
-    
-    class CountReset {
-        
+
+    public static class CountResetEvent {
+
         protected long timestamp;
         protected long count;
-        
-        public CountReset(long value) {
+
+        public CountResetEvent(long value) {
             this(value, System.currentTimeMillis());
         }
-        
-        public CountReset(long value, long timeStamp) {
+
+        public CountResetEvent(long value, long timeStamp) {
             this.count = value;
             this.timestamp = timeStamp;
         }
-        
+
         public long getTimestamp() {
             return timestamp;
         }
-        
+
         public long getCount() {
             return count;
         }
     }
-    
+
 }

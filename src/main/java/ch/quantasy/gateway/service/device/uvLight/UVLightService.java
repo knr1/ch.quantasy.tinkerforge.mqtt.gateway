@@ -130,7 +130,7 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
         addEvent(getServiceContract().EVENT_UV_LIGHT_REACHED, new UVLightEvent(i));
     }
 
-    class UVLightEvent {
+    public static class UVLightEvent {
 
         protected long timestamp;
         protected long value;

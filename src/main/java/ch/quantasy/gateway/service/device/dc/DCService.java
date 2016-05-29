@@ -158,7 +158,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void currentVelocity(short s) {
-        addEvent(getServiceContract().EVENT_VELOCITY, new Velocity(s));
+        addEvent(getServiceContract().EVENT_VELOCITY, new VelocityEvent(s));
     }
 
     @Override
@@ -168,12 +168,12 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void underVoltage(int i) {
-        addEvent(getServiceContract().EVENT_UNDERVOLTAGE, new UnderVoltage(i));
+        addEvent(getServiceContract().EVENT_UNDERVOLTAGE, new UnderVoltageEvent(i));
     }
 
     @Override
     public void velocityReached(short s) {
-        addEvent(getServiceContract().EVENT_FULL_BRAKE, new Velocity(s));
+        addEvent(getServiceContract().EVENT_FULL_BRAKE, new VelocityEvent(s));
     }
 
     @Override
@@ -186,19 +186,19 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
         addEvent(getServiceContract().EVENT_FULL_BRAKE, System.currentTimeMillis());
     }
 
-    class Velocity {
+    public static class VelocityEvent {
 
         protected long timestamp;
         protected short value;
 
-        private Velocity() {
+        private VelocityEvent() {
         }
 
-        public Velocity(short value) {
+        public VelocityEvent(short value) {
             this(value, System.currentTimeMillis());
         }
 
-        public Velocity(short value, long timeStamp) {
+        public VelocityEvent(short value, long timeStamp) {
             this.value = value;
             this.timestamp = timeStamp;
         }
@@ -213,19 +213,19 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     }
 
-    class UnderVoltage {
+    public static class UnderVoltageEvent {
 
         protected long timestamp;
         protected int value;
 
-        private UnderVoltage() {
+        private UnderVoltageEvent() {
         }
 
-        public UnderVoltage(int value) {
+        public UnderVoltageEvent(int value) {
             this(value, System.currentTimeMillis());
         }
 
-        public UnderVoltage(int value, long timeStamp) {
+        public UnderVoltageEvent(int value, long timeStamp) {
             this.value = value;
             this.timestamp = timeStamp;
         }

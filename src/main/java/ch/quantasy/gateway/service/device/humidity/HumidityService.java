@@ -168,7 +168,7 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
         addStatus(getServiceContract().STATUS_HUMIDITY_THRESHOLD, threshold);
     }
 
-    class AnalogValueEvent {
+    public static class AnalogValueEvent {
 
         protected long timestamp;
         protected int value;
@@ -192,7 +192,7 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
 
     }
 
-    class HumidityEvent {
+    public static class HumidityEvent {
 
         long timestamp;
         int value;

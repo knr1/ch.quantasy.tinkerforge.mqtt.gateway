@@ -132,7 +132,7 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
         addEvent(getServiceContract().EVENT_CO2_CONCENTRATION_REACHED, new CO2ConcentrationEvent(i));
     }
 
-    class CO2ConcentrationEvent {
+    public static class CO2ConcentrationEvent {
 
         protected long timestamp;
         protected long value;

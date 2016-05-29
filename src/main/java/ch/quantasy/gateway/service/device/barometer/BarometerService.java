@@ -193,7 +193,7 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
         addStatus(getServiceContract().STATUS_REFERENCE_AIR_PRESSURE, referenceAirPressure);
     }
 
-    class AirPressureEvent {
+    public static class AirPressureEvent {
 
         protected long timestamp;
         protected int value;
@@ -217,7 +217,7 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
 
     }
 
-    class AltitudeEvent {
+    public static class AltitudeEvent {
 
         long timestamp;
         int value;

@@ -70,7 +70,7 @@ public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceCo
         addEvent(getServiceContract().EVENT_TILT_STATE, new TiltEvent(s));
     }
     
-    class TiltEvent {
+    public static class TiltEvent {
 
         long timestamp;
         short value;

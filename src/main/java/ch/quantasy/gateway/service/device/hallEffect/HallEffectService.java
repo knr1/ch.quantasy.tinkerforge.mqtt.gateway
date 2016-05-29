@@ -129,7 +129,7 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
 
     @Override
     public void edgeCountReset(long latestEdgeCount) {
-        addEvent(getServiceContract().EVENT_EDGE_COUNT_RESET, new EdgeCountReset(latestEdgeCount));
+        addEvent(getServiceContract().EVENT_EDGE_COUNT_RESET, new EdgeCountResetEvent(latestEdgeCount));
     }
 
 
@@ -139,7 +139,7 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
     }
 
     
-    class EdgeCountEvent {
+    public static class EdgeCountEvent {
 
         protected long timestamp;
         protected long count;
@@ -169,16 +169,16 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
 
     }
 
-    class EdgeCountReset {
+    public static class EdgeCountResetEvent {
 
         protected long timestamp;
         protected long count;
 
-        public EdgeCountReset(long value) {
+        public EdgeCountResetEvent(long value) {
             this(value, System.currentTimeMillis());
         }
 
-        public EdgeCountReset(long value, long timeStamp) {
+        public EdgeCountResetEvent(long value, long timeStamp) {
             this.count = value;
             this.timestamp = timeStamp;
         }

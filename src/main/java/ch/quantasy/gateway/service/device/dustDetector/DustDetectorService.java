@@ -143,7 +143,7 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
         addEvent(getServiceContract().EVENT_DUST_DENSITY_REACHED, new DustDensityEvent(i));
     }
 
-    class DustDensityEvent {
+    public static class DustDensityEvent {
 
         protected long timestamp;
         protected long value;

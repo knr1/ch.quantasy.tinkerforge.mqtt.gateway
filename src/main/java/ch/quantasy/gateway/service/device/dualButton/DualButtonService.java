@@ -59,34 +59,33 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class DualButtonService extends AbstractDeviceService<DualButtonDevice, DualButtonServiceContract> implements DualButtonDeviceCallback {
 
-    public DualButtonService(DualButtonDevice device,URI mqttURI) throws MqttException {
+    public DualButtonService(DualButtonDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DualButtonServiceContract(device));
-        
+
         addDescription(getServiceContract().INTENT_LED_STATE, "leftLED: [AutoToggleOn|AutoToggleOff|On|Off]\n rightLED: [AutoToggleOn|AutoToggleOff|On|Off] ");
         addDescription(getServiceContract().INTENT_SELECTED_LED_STATE, "led: [AutoToggleOn|AutoToggleOff|On|Off]");
-        
-        
+
         addDescription(getServiceContract().EVENT_STATE_CHANGED, "timestamp: [0.." + Long.MAX_VALUE + "]\n led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]\n \n led2: [AutoToggleOn|AutoToggleOff|On|Off]\n  switch1: [0|1]\n switch2: [0|1]");
         addDescription(getServiceContract().STATUS_LED_STATE, "led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]");
-        
+
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm)  {
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
 
         }
-        try{
-        if (string.startsWith(getServiceContract().INTENT_SELECTED_LED_STATE)) {
-            DeviceSelectedLEDStateParameters parameters = getMapper().readValue(payload, DeviceSelectedLEDStateParameters.class);
-            getDevice().setSelectedLEDState(parameters);
-        }
-        if (string.startsWith(getServiceContract().INTENT_LED_STATE)) {
-            DeviceLEDState parameters = getMapper().readValue(payload, DeviceLEDState.class);
-            getDevice().setLEDState(parameters);
-        }
+        try {
+            if (string.startsWith(getServiceContract().INTENT_SELECTED_LED_STATE)) {
+                DeviceSelectedLEDStateParameters parameters = getMapper().readValue(payload, DeviceSelectedLEDStateParameters.class);
+                getDevice().setSelectedLEDState(parameters);
+            }
+            if (string.startsWith(getServiceContract().INTENT_LED_STATE)) {
+                DeviceLEDState parameters = getMapper().readValue(payload, DeviceLEDState.class);
+                getDevice().setLEDState(parameters);
+            }
         } catch (Exception ex) {
             Logger.getLogger(DualButtonService.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -115,9 +114,11 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
         private StateChangedEvent() {
         }
-public StateChangedEvent(short switch1, short switch2, short led1, short led2) {
+
+        public StateChangedEvent(short switch1, short switch2, short led1, short led2) {
             this(LEDState.getLEDStateFor(led1), LEDState.getLEDStateFor(led1), switch1, switch2, System.currentTimeMillis());
         }
+
         public StateChangedEvent(short switch1, short switch2, LEDState led1, LEDState led2) {
             this(led1, led2, switch1, switch2, System.currentTimeMillis());
         }

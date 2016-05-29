@@ -100,7 +100,7 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
         addEvent(getServiceContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(state));
     }
 
-    class MonoflopDoneEvent {
+    public static class MonoflopDoneEvent {
 
         protected long timestamp;
         protected boolean state;

@@ -144,7 +144,7 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
         addEvent(getServiceContract().EVENT_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
     }
 
-    class IlluminanceEvent {
+    public static class IlluminanceEvent {
 
         protected long timestamp;
         protected long value;

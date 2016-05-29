@@ -132,7 +132,7 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
 
     
 
-    class SoundIntensityEvent {
+    public static class SoundIntensityEvent {
 
         protected long timestamp;
         protected long value;

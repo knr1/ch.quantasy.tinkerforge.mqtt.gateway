@@ -59,7 +59,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class ColorService extends AbstractDeviceService<ColorDevice, ColorServiceContract> implements ColorDeviceCallback {
 
-    public ColorService(ColorDevice device,URI mqttURI) throws MqttException {
+    public ColorService(ColorDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new ColorServiceContract(device));
         addDescription(getServiceContract().INTENT_COLOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -77,7 +77,7 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm){
+    public void messageArrived(String string, MqttMessage mm) {
         byte[] payload = mm.getPayload();
         if (payload == null) {
             return;
@@ -153,8 +153,7 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
     public void lightStatusChanged(boolean isLightOn) {
         addStatus(getServiceContract().STATUS_LIGHT_STATE, isLightOn);
     }
-    
-    
+
     @Override
     public void colorCallbackPeriodChanged(long period) {
         addStatus(getServiceContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, period);
@@ -174,7 +173,6 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
     public void colorCallbackThresholdChanged(DeviceColorCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_COLOR_THRESHOLD, threshold);
     }
-
 
     public static class ColorEvent {
 

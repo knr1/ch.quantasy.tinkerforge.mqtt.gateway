@@ -106,7 +106,7 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
         addEvent(getServiceContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(relay, state));
     }
 
-    class MonoflopDoneEvent {
+    public static class MonoflopDoneEvent {
 
         protected long timestamp;
         protected short relay;
