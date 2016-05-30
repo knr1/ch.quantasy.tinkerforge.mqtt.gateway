@@ -129,6 +129,7 @@ And voilà, all the sensors and actors are working independently...
 
 ### Supported Device so far...
 * BrickDC
+* BrickIMU
 * BrickIMUV2
 * BrickletAccelerometer
 * BrickletAmbientLight

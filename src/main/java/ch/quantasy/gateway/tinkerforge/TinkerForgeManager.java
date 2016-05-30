@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.tinkerforge;
 
 import ch.quantasy.gateway.service.AbstractService;
+import ch.quantasy.gateway.service.device.IMU.IMUService;
 import ch.quantasy.gateway.service.device.IMUV2.IMUV2Service;
 import ch.quantasy.gateway.service.device.accelerometer.AccelerometerService;
 import ch.quantasy.gateway.service.device.ambientLight.AmbientLightService;
@@ -65,6 +66,7 @@ import ch.quantasy.gateway.service.device.dustDetector.DustDetectorService;
 import ch.quantasy.gateway.service.device.hallEffect.HallEffectService;
 import ch.quantasy.gateway.service.device.joystick.JoystickService;
 import ch.quantasy.gateway.service.device.laserRangeFinder.LaserRangeFinderService;
+import ch.quantasy.gateway.service.device.line.LineService;
 import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
 import ch.quantasy.gateway.service.device.multiTouch.MultiTouchService;
 import ch.quantasy.gateway.service.device.piezoSpeaker.PiezoSpeakerService;
@@ -76,6 +78,7 @@ import ch.quantasy.gateway.service.device.soundIntensity.SoundIntensityService;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
 import ch.quantasy.gateway.service.device.tilt.TiltService;
 import ch.quantasy.gateway.service.device.uvLight.UVLightService;
+import ch.quantasy.tinkerforge.device.IMU.IMUDevice;
 import ch.quantasy.tinkerforge.device.IMUV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
@@ -98,6 +101,7 @@ import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
+import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
@@ -335,6 +339,14 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof IMUV2Device) {
                 IMUV2Service service = new IMUV2Service((IMUV2Device) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof IMUDevice) {
+                IMUService service = new IMUService((IMUDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof LineDevice) {
+                LineService service = new LineService((LineDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
 

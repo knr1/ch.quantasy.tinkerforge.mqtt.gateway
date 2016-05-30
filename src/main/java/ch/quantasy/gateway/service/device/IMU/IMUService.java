@@ -39,11 +39,11 @@
  *
  *
  */
-package ch.quantasy.gateway.service.device.IMUV2;
+package ch.quantasy.gateway.service.device.IMU;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.IMUV2.IMUV2Device;
-import ch.quantasy.tinkerforge.device.IMUV2.IMUV2DeviceCallback;
+import ch.quantasy.tinkerforge.device.IMU.IMUDevice;
+import ch.quantasy.tinkerforge.device.IMU.IMUDeviceCallback;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -54,45 +54,38 @@ import java.net.URI;
  *
  * @author reto
  */
-public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2ServiceContract> implements IMUV2DeviceCallback {
+public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContract> implements IMUDeviceCallback {
 
-    public IMUV2Service(IMUV2Device device, URI mqttURI) throws MqttException {
+    public IMUService(IMUDevice device, URI mqttURI) throws MqttException {
 
-        super(mqttURI, device, new IMUV2ServiceContract(device));
+        super(mqttURI, device, new IMUServiceContract(device));
         addDescription(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_GRAVITY_VECTOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_LINEAR_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_LEDS, "true|false]");
         addDescription(getServiceContract().INTENT_STATUS_LED, "true|false]");
+        addDescription(getServiceContract().INTENT_ORIENTATION_CALCULATION, "true|false]");
 
         addDescription(getServiceContract().STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_GRAVITY_VECTOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_LINEAR_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_STATUS_LED, "[true|false]");
         addDescription(getServiceContract().STATUS_LEDS, "[true|false]");
+        addDescription(getServiceContract().STATUS_ORIENTATION_CALCULATION, "[true|false]");
 
-        addDescription(getServiceContract().EVENT_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_ANGULAR_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_GRAVITY_VECTOR, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_LINEAR_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_MAGNETIC_FIELD, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_ORIENTATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n heading: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n roll: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n pitch: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_QUATERNION, "timestamp: [0.." + Long.MAX_VALUE + "]\n w: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: ["+Byte.MIN_VALUE+".."+Byte.MAX_VALUE+"]");
+        addDescription(getServiceContract().EVENT_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_ANGULAR_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_MAGNETIC_FIELD, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_ORIENTATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n heading: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n roll: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n pitch: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_QUATERNION, "timestamp: [0.." + Long.MAX_VALUE + "]\n w: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_ALL_DATA, "timestamp: [0.." + Long.MAX_VALUE + "]\n @acceleration \n @magneticField \n @angularVelocity \n @orientation \n @quaternion \n @linearAcceleration \n @gravityVector \n @temperature \n calibrationStatus: [0..255]");
-        
+
     }
 
     @Override
@@ -116,14 +109,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setAngularVelocityPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_GRAVITY_VECTOR_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setGravityVectorPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_LINEAR_ACCELERATION_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setLinearAccelerationPeriod(period);
-            }
+
             if (string.startsWith(getServiceContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setMagneticFieldPeriod(period);
@@ -136,10 +122,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setQuaternionPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setTemperaturePeriod(period);
-            }
+
             if (string.startsWith(getServiceContract().INTENT_LEDS)) {
                 Boolean enabled = getMapper().readValue(payload, Boolean.class);
                 getDevice().setLEDs(enabled);
@@ -148,9 +131,13 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
                 Boolean enabled = getMapper().readValue(payload, Boolean.class);
                 getDevice().setStatusLED(enabled);
             }
+            if (string.startsWith(getServiceContract().INTENT_ORIENTATION_CALCULATION)) {
+                Boolean enabled = getMapper().readValue(payload, Boolean.class);
+                getDevice().setOrientationCalculation(enabled);
+            }
 
         } catch (Exception ex) {
-            Logger.getLogger(IMUV2Service.class
+            Logger.getLogger(IMUService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;
         }
@@ -174,16 +161,6 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
     }
 
     @Override
-    public void gravityVectorPeriodChanged(Long period) {
-        addStatus(getServiceContract().STATUS_GRAVITY_VECTOR_CALLBACK_PERIOD, period);
-    }
-
-    @Override
-    public void linearAccelerationPeriodChanged(Long period) {
-        addStatus(getServiceContract().STATUS_LINEAR_ACCELERATION_CALLBACK_PERIOD, period);
-    }
-
-    @Override
     public void magneticFieldPeriodChanged(Long period) {
         addStatus(getServiceContract().STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, period);
     }
@@ -199,11 +176,6 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
     }
 
     @Override
-    public void temperaturePeriodChanged(Long period) {
-        addStatus(getServiceContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
-    }
-
-    @Override
     public void statusLEDChanged(Boolean isEnabled) {
         addStatus(getServiceContract().STATUS_STATUS_LED, isEnabled);
     }
@@ -214,36 +186,26 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
     }
 
     @Override
+    public void orientationCalculationChanged(Boolean isEnabled) {
+        addStatus(getServiceContract().STATUS_ORIENTATION_CALCULATION, isEnabled);
+    }
+
+    @Override
     public void acceleration(short s, short s1, short s2) {
         addEvent(getServiceContract().EVENT_ACCELERATION, new AccelerationEvent(s, s1, s2));
     }
 
     @Override
-    public void allData(short[] shorts, short[] shorts1, short[] shorts2, short[] shorts3, short[] shorts4, short[] shorts5, short[] shorts6, byte b, short s) {
-        addEvent(getServiceContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts[0], shorts[1], shorts[2]),
-                new MagneticFieldEvent(shorts1[0], shorts1[1], shorts1[2]),
-                new AngularVelocityEvent(shorts2[0], shorts2[1], shorts2[2]),
-                new OrientationEvent(shorts3[0], shorts3[1], shorts3[2]),
-                new QuaternionEvent(shorts4[0], shorts4[1], shorts4[2], shorts4[3]),
-                new LinearAccelerationEvent(shorts5[0], shorts5[1], shorts5[2]),
-                new GravityVectorEvent(shorts6[0], shorts6[1], shorts6[2]),
-                new TemperatureEvent(b),
-                s));
+    public void allData(short shorts, short shorts1, short shorts2, short shorts3, short shorts4, short shorts5, short shorts6, short short7, short s8, short s9) {
+        addEvent(getServiceContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts, shorts1, shorts2),
+                new MagneticFieldEvent(shorts3, shorts4, shorts5),
+                new AngularVelocityEvent(shorts6, short7, s8),
+                new TemperatureEvent(s9)));
     }
 
     @Override
     public void angularVelocity(short s, short s1, short s2) {
         addEvent(getServiceContract().EVENT_ANGULAR_VELOCITY, new AngularVelocityEvent(s, s1, s2));
-    }
-
-    @Override
-    public void gravityVector(short s, short s1, short s2) {
-        addEvent(getServiceContract().EVENT_GRAVITY_VECTOR, new GravityVectorEvent(s, s1, s2));
-    }
-
-    @Override
-    public void linearAcceleration(short s, short s1, short s2) {
-        addEvent(getServiceContract().EVENT_LINEAR_ACCELERATION, new LinearAccelerationEvent(s, s1, s2));
     }
 
     @Override
@@ -257,13 +219,8 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
     }
 
     @Override
-    public void quaternion(short s, short s1, short s2, short s3) {
+    public void quaternion(float s, float s1, float s2, float s3) {
         addEvent(getServiceContract().EVENT_QUATERNION, new QuaternionEvent(s, s1, s2, s3));
-    }
-
-    @Override
-    public void temperature(byte b) {
-        addEvent(getServiceContract().EVENT_TEMPERATURE, new TemperatureEvent(b));
     }
 
     public static class AccelerationEvent {
@@ -485,16 +442,16 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
     public static class QuaternionEvent {
 
         private long timestamp;
-        private short w;
-        private short x;
-        private short y;
-        private short z;
+        private float w;
+        private float x;
+        private float y;
+        private float z;
 
-        public QuaternionEvent(short w, short x, short y, short z) {
+        public QuaternionEvent(float w, float x, float y, float z) {
             this(w, x, y, z, System.currentTimeMillis());
         }
 
-        public QuaternionEvent(short w, short x, short y, short z, long timestamp) {
+        public QuaternionEvent(float w, float x, float y, float z, long timestamp) {
             this.timestamp = timestamp;
             this.w = w;
             this.x = x;
@@ -506,19 +463,19 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
             return timestamp;
         }
 
-        public short getW() {
+        public float getW() {
             return w;
         }
 
-        public short getX() {
+        public float getX() {
             return x;
         }
 
-        public short getY() {
+        public float getY() {
             return y;
         }
 
-        public short getZ() {
+        public float getZ() {
             return z;
         }
 
@@ -527,13 +484,13 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
     public static class TemperatureEvent {
 
         private long timestamp;
-        private byte value;
+        private short value;
 
-        public TemperatureEvent(byte value) {
+        public TemperatureEvent(short value) {
             this(value, System.currentTimeMillis());
         }
 
-        public TemperatureEvent(byte value, long timestamp) {
+        public TemperatureEvent(short value, long timestamp) {
             this.timestamp = timestamp;
             this.value = value;
         }
@@ -542,7 +499,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
             return timestamp;
         }
 
-        public byte getValue() {
+        public short getValue() {
             return value;
         }
     }
@@ -554,28 +511,18 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         private AccelerationEvent acceleration;
         private MagneticFieldEvent magneticField;
         private AngularVelocityEvent angularVelocity;
-        private OrientationEvent orientation;
-        private QuaternionEvent quaternion;
-        private LinearAccelerationEvent linearAcceleration;
-        private GravityVectorEvent gravityVector;
         private TemperatureEvent temperature;
-        private short calibrationStatus;
 
-        public AllDataEvent(AccelerationEvent acceleration, MagneticFieldEvent magneticField, AngularVelocityEvent angularVelocity, OrientationEvent orientation, QuaternionEvent quaternion, LinearAccelerationEvent linearAcceleration, GravityVectorEvent gravityVector, TemperatureEvent temperature, short calibrationStatus) {
-            this(acceleration, magneticField, angularVelocity, orientation, quaternion, linearAcceleration, gravityVector, temperature, calibrationStatus, System.currentTimeMillis());
+        public AllDataEvent(AccelerationEvent acceleration, MagneticFieldEvent magneticField, AngularVelocityEvent angularVelocity, TemperatureEvent temperature) {
+            this(acceleration, magneticField, angularVelocity, temperature, System.currentTimeMillis());
         }
 
-        public AllDataEvent(AccelerationEvent acceleration, MagneticFieldEvent magneticField, AngularVelocityEvent angularVelocity, OrientationEvent orientation, QuaternionEvent quaternion, LinearAccelerationEvent linearAcceleration, GravityVectorEvent gravityVector, TemperatureEvent temperature, short calibrationStatus, long timestamp) {
+        public AllDataEvent(AccelerationEvent acceleration, MagneticFieldEvent magneticField, AngularVelocityEvent angularVelocity, TemperatureEvent temperature, long timestamp) {
             this.timestamp = timestamp;
             this.acceleration = acceleration;
             this.magneticField = magneticField;
             this.angularVelocity = angularVelocity;
-            this.orientation = orientation;
-            this.quaternion = quaternion;
-            this.linearAcceleration = linearAcceleration;
-            this.gravityVector = gravityVector;
             this.temperature = temperature;
-            this.calibrationStatus = calibrationStatus;
         }
 
         public long getTimestamp() {
@@ -594,28 +541,8 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
             return angularVelocity;
         }
 
-        public OrientationEvent getOrientation() {
-            return orientation;
-        }
-
-        public QuaternionEvent getQuaternion() {
-            return quaternion;
-        }
-
-        public LinearAccelerationEvent getLinearAcceleration() {
-            return linearAcceleration;
-        }
-
-        public GravityVectorEvent getGravityVector() {
-            return gravityVector;
-        }
-
         public TemperatureEvent getTemperature() {
             return temperature;
-        }
-
-        public short getCalibrationStatus() {
-            return calibrationStatus;
         }
 
     }

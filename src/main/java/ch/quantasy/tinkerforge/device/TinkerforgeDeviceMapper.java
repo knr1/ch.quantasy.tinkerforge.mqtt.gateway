@@ -41,6 +41,7 @@
  */
 package ch.quantasy.tinkerforge.device;
 
+import ch.quantasy.tinkerforge.device.IMU.IMUDevice;
 import ch.quantasy.tinkerforge.device.IMUV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
@@ -61,6 +62,7 @@ import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
+import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
@@ -77,6 +79,7 @@ import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
+import com.tinkerforge.BrickIMU;
 import com.tinkerforge.BrickIMUV2;
 import com.tinkerforge.BrickletAccelerometer;
 import com.tinkerforge.BrickletAmbientLight;
@@ -96,6 +99,7 @@ import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletJoystick;
 import com.tinkerforge.BrickletLEDStrip;
 import com.tinkerforge.BrickletLaserRangeFinder;
+import com.tinkerforge.BrickletLine;
 import com.tinkerforge.BrickletLinearPoti;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
@@ -222,6 +226,12 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.IMUV2 == TinkerforgeDeviceClass.getDevice(device)) {
             return new IMUV2Device(address, (BrickIMUV2) device);
+        }
+        if (TinkerforgeDeviceClass.IMU == TinkerforgeDeviceClass.getDevice(device)) {
+            return new IMUDevice(address, (BrickIMU) device);
+        }
+        if (TinkerforgeDeviceClass.Line == TinkerforgeDeviceClass.getDevice(device)) {
+            return new LineDevice(address, (BrickletLine) device);
         }
         return new TinkerforgeDevice(address, device);
     }
