@@ -149,6 +149,7 @@ And voilà, all the sensors and actors are working independently...
 * BrickletJoystick
 * BrickletLaserRangeFinder
 * BrickletLEDStrip
+* BrickletLine
 * BrickletLinearPoti
 * BrickletMoisture
 * BrickletMotionDetector
