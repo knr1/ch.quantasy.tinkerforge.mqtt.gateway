@@ -39,11 +39,11 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.IMUV2;
+package ch.quantasy.tinkerforge.device.IMU;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
-import com.tinkerforge.BrickIMUV2;
+import com.tinkerforge.BrickIMU;
 
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -54,22 +54,20 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> {
+public class IMUDevice extends GenericDevice<BrickIMU, IMUDeviceCallback> {
 
     private Long accelerationPeriod;
     private Long allDataPeriod;
     private Long angularVelocityPeriod;
-    private Long gravityVectorPeriod;
-    private Long linearAccelerationPeriod;
     private Long magneticFieldPeriod;
     private Long orientationPeriod;
     private Long quaternionPeriod;
-    private Long temperaturePeriod;
+    private Boolean isOrientationCalculationOn;
 
     private Boolean isStatusLEDEnabled;
     private Boolean areLEDsEnabled;
 
-    public IMUV2Device(TinkerforgeStackAddress address, BrickIMUV2 device) throws NotConnectedException, TimeoutException {
+    public IMUDevice(TinkerforgeStackAddress address, BrickIMU device) throws NotConnectedException, TimeoutException {
         super(address, device);
     }
 
@@ -78,12 +76,9 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
         getDevice().addAccelerationListener(super.getCallback());
         getDevice().addAllDataListener(super.getCallback());
         getDevice().addAngularVelocityListener(super.getCallback());
-        getDevice().addGravityVectorListener(super.getCallback());
-        getDevice().addLinearAccelerationListener(super.getCallback());
         getDevice().addMagneticFieldListener(super.getCallback());
         getDevice().addOrientationListener(super.getCallback());
         getDevice().addQuaternionListener(super.getCallback());
-        getDevice().addTemperatureListener(super.getCallback());
 
         if (accelerationPeriod != null) {
             setAccelerationPeriod(accelerationPeriod);
@@ -94,12 +89,7 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
         if (angularVelocityPeriod != null) {
             setAngularVelocityPeriod(angularVelocityPeriod);
         }
-        if (gravityVectorPeriod != null) {
-            setGravityVectorPeriod(gravityVectorPeriod);
-        }
-        if (linearAccelerationPeriod != null) {
-            setLinearAccelerationPeriod(linearAccelerationPeriod);
-        }
+
         if (magneticFieldPeriod != null) {
             setMagneticFieldPeriod(magneticFieldPeriod);
         }
@@ -109,8 +99,8 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
         if (quaternionPeriod != null) {
             setQuaternionPeriod(quaternionPeriod);
         }
-        if (temperaturePeriod != null) {
-            setTemperaturePeriod(temperaturePeriod);
+        if(isOrientationCalculationOn!=null){
+            setOrientationCalculation(isOrientationCalculationOn);
         }
         if(isStatusLEDEnabled!=null){
             setStatusLED(isStatusLEDEnabled);
@@ -118,18 +108,16 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
         if(areLEDsEnabled!=null){
             setLEDs(areLEDsEnabled);
         }
+
     }
 
     @Override
     protected void removeDeviceListeners() {
         getDevice().removeAllDataListener(super.getCallback());
         getDevice().removeAngularVelocityListener(super.getCallback());
-        getDevice().removeGravityVectorListener(super.getCallback());
-        getDevice().removeLinearAccelerationListener(super.getCallback());
         getDevice().removeMagneticFieldListener(super.getCallback());
         getDevice().removeOrientationListener(super.getCallback());
         getDevice().removeQuaternionListener(super.getCallback());
-        getDevice().removeTemperatureListener(super.getCallback());
     }
 
     public void setAccelerationPeriod(Long accelerationPeriod) {
@@ -138,7 +126,7 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
             this.accelerationPeriod = getDevice().getAccelerationPeriod();
             super.getCallback().accelerationPeriodChanged(this.accelerationPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IMUDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -148,7 +136,7 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
             this.allDataPeriod = getDevice().getAllDataPeriod();
             super.getCallback().allDataPeriodChanged(this.accelerationPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IMUDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -158,27 +146,7 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
             this.angularVelocityPeriod = getDevice().getAngularVelocityPeriod();
             super.getCallback().angularVelocityPeriodChanged(this.angularVelocityPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setGravityVectorPeriod(Long gravityVectorPeriod) {
-        try {
-            getDevice().setGravityVectorPeriod(gravityVectorPeriod);
-            this.gravityVectorPeriod = getDevice().getGravityVectorPeriod();
-            super.getCallback().gravityVectorPeriodChanged(this.gravityVectorPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setLinearAccelerationPeriod(Long linearAccelerationPeriod) {
-        try {
-            getDevice().setLinearAccelerationPeriod(linearAccelerationPeriod);
-            this.linearAccelerationPeriod = getDevice().getLinearAccelerationPeriod();
-            super.getCallback().linearAccelerationPeriodChanged(this.linearAccelerationPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IMUDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -188,17 +156,29 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
             this.magneticFieldPeriod = getDevice().getMagneticFieldPeriod();
             super.getCallback().magneticFieldPeriodChanged(this.magneticFieldPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IMUDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public void setOrientationCalculation(Boolean isOrientationCalculationOn){
+try {
+            if (isOrientationCalculationOn) {
+                getDevice().orientationCalculationOn();;
+            } else {
+                getDevice().orientationCalculationOff();
+            }
+            this.isOrientationCalculationOn = getDevice().isOrientationCalculationOn();
+            super.getCallback().orientationCalculationChanged(this.isOrientationCalculationOn);
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(IMUDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }    }
     public void setOrientationPeriod(Long orientationPeriod) {
         try {
             getDevice().setOrientationPeriod(orientationPeriod);
             this.orientationPeriod = getDevice().getOrientationPeriod();
             super.getCallback().orientationPeriodChanged(this.orientationPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IMUDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -208,17 +188,7 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
             this.quaternionPeriod = getDevice().getQuaternionPeriod();
             super.getCallback().quaternionPeriodChanged(this.quaternionPeriod);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setTemperaturePeriod(Long temperaturePeriod) {
-        try {
-            getDevice().setTemperaturePeriod(temperaturePeriod);
-            this.temperaturePeriod = getDevice().getTemperaturePeriod();
-            super.getCallback().temperaturePeriodChanged(this.temperaturePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IMUDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -232,7 +202,7 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
             this.isStatusLEDEnabled = getDevice().isStatusLEDEnabled();
             super.getCallback().statusLEDChanged(this.isStatusLEDEnabled);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IMUDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -246,7 +216,7 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
             this.areLEDsEnabled = getDevice().areLedsOn();
             super.getCallback().LEDsChanged(this.areLEDsEnabled);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IMUDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
