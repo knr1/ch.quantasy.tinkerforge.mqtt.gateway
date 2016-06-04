@@ -163,6 +163,7 @@ And voilà, all the sensors and actors are working independently...
 * BrickletSegmentDisplay4x7
 * BrickletSolidStateRelay
 * BrickletSoundIntensity
+* BrickletTemperature
 * BrickletTemperatureIR
 * BrickletTilt
 * BrickletUVLight

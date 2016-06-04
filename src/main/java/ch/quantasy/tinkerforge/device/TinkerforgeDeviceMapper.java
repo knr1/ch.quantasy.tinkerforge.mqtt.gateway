@@ -76,6 +76,7 @@ import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
+import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
@@ -115,6 +116,7 @@ import com.tinkerforge.BrickletRotaryPoti;
 import com.tinkerforge.BrickletSegmentDisplay4x7;
 import com.tinkerforge.BrickletSolidStateRelay;
 import com.tinkerforge.BrickletSoundIntensity;
+import com.tinkerforge.BrickletTemperature;
 import com.tinkerforge.BrickletTemperatureIR;
 import com.tinkerforge.BrickletTilt;
 import com.tinkerforge.BrickletUVLight;
@@ -242,6 +244,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.LCD16x2 == TinkerforgeDeviceClass.getDevice(device)) {
             return new LCD16x2Device(address, (BrickletLCD16x2) device);
+        }
+        if (TinkerforgeDeviceClass.Temperature == TinkerforgeDeviceClass.getDevice(device)) {
+            return new TemperatureDevice(address, (BrickletTemperature) device);
         }
         return new TinkerforgeDevice(address, device);
     }

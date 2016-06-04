@@ -77,6 +77,7 @@ import ch.quantasy.gateway.service.device.rotaryPoti.RotaryPotiService;
 import ch.quantasy.gateway.service.device.segment4x7.Segment4x7Service;
 import ch.quantasy.gateway.service.device.solidStateRelay.SolidStateRelayService;
 import ch.quantasy.gateway.service.device.soundIntensity.SoundIntensityService;
+import ch.quantasy.gateway.service.device.temperature.TemperatureService;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
 import ch.quantasy.gateway.service.device.tilt.TiltService;
 import ch.quantasy.gateway.service.device.uvLight.UVLightService;
@@ -117,6 +118,7 @@ import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
+import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
@@ -359,6 +361,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof LCD16x2Device) {
                 LCD16x2Service service = new LCD16x2Service((LCD16x2Device) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof TemperatureDevice) {
+                TemperatureService service = new TemperatureService((TemperatureDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
 

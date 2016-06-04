@@ -44,7 +44,6 @@ package ch.quantasy.gateway.service.device.ambientLightV2;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2DeviceCallback;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -109,7 +108,6 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
         } catch (Exception ex) {
             Logger.getLogger(AmbientLightV2Service.class
                     .getName()).log(Level.SEVERE, null, ex);
-            return;
         }
 
     }
