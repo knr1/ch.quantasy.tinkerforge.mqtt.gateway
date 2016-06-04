@@ -62,10 +62,10 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
     public final String INTENT_CUSTOM_CHARACTERS;
     public final String STATUS_CUSTOM_CHARACTERS;
     public final String CUSTOM_CHARACTERS;
-    public final String DEFAULT_TEXTS;
-    public final String INTENT_DEFAULT_TEXTS;
-    public final String STATUS_DEFAULT_TEXTS;
-    public final String DEFAULT_TEXT_COUNTER;
+    public final String DEFAULT_TEXT;
+    public final String INTENT_DEFAULT_TEXT_TEXTS;
+    public final String STATUS_DEFAULT_TEXT_TEXTS;
+    public final String COUNTER;
     public final String INTENT_DEFAULT_TEXT_COUNTER;
     public final String STATUS_DEFAULT_TEXT_COUNTER;
     public final String WRITE_LINES;
@@ -75,6 +75,7 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
     public final String RELEASED;
     public final String EVENT_BUTTON_RELEASED;
     public final String EVENT_BUTTON_PRESSED;
+    public final String TEXT;
 
     public LCD20x4ServiceContract(LCD20x4Device device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -98,21 +99,22 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
         INTENT_CUSTOM_CHARACTERS = INTENT + "/" + CUSTOM_CHARACTERS;
         STATUS_CUSTOM_CHARACTERS = STATUS + "/" + CUSTOM_CHARACTERS;
 
-        DEFAULT_TEXTS = "defaultTexts";
-        INTENT_DEFAULT_TEXTS = INTENT + "/" + DEFAULT_TEXTS;
-        STATUS_DEFAULT_TEXTS = STATUS + "/" + DEFAULT_TEXTS;
+        DEFAULT_TEXT = "defaultText";
+        TEXT = "texts";
+        INTENT_DEFAULT_TEXT_TEXTS = INTENT + "/" + DEFAULT_TEXT + "/" + TEXT;
+        STATUS_DEFAULT_TEXT_TEXTS = STATUS + "/" + DEFAULT_TEXT + "/" + TEXT;
 
-        DEFAULT_TEXT_COUNTER = "defaultTextCounter";
-        INTENT_DEFAULT_TEXT_COUNTER = INTENT + "/" + DEFAULT_TEXT_COUNTER;
-        STATUS_DEFAULT_TEXT_COUNTER = STATUS + "/" + DEFAULT_TEXT_COUNTER;
+        COUNTER = "counter";
+        INTENT_DEFAULT_TEXT_COUNTER = INTENT + "/" + DEFAULT_TEXT + "/" + COUNTER;
+        STATUS_DEFAULT_TEXT_COUNTER = STATUS + "/" + DEFAULT_TEXT + "/" + COUNTER;
 
         WRITE_LINES = "writeLines";
         INTENT_WRITE_LINES = INTENT + "/" + WRITE_LINES;
-        
-        BUTTON="button";
-        PRESSED="pressed";
-        RELEASED="released";
-        EVENT_BUTTON_RELEASED=EVENT+"/"+BUTTON+"/"+RELEASED;
-        EVENT_BUTTON_PRESSED=EVENT+"/"+BUTTON+"/"+PRESSED;
+
+        BUTTON = "button";
+        PRESSED = "pressed";
+        RELEASED = "released";
+        EVENT_BUTTON_RELEASED = EVENT + "/" + BUTTON + "/" + RELEASED;
+        EVENT_BUTTON_PRESSED = EVENT + "/" + BUTTON + "/" + PRESSED;
     }
 }

@@ -70,8 +70,8 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
         addDescription(getServiceContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
         addDescription(getServiceContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
         addDescription(getServiceContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        addDescription(getServiceContract().INTENT_DEFAULT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
-        addDescription(getServiceContract().STATUS_DEFAULT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
+        addDescription(getServiceContract().INTENT_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
+        addDescription(getServiceContract().STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
         addDescription(getServiceContract().INTENT_DEFAULT_TEXT_COUNTER,"[-1.."+Integer.MAX_VALUE+"]");
         addDescription(getServiceContract().STATUS_DEFAULT_TEXT_COUNTER,"[-1.."+Integer.MAX_VALUE+"]");
         addDescription(getServiceContract().INTENT_WRITE_LINES,"[line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]");   
@@ -101,7 +101,7 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
                 DeviceCustomCharacter[] characters = getMapper().readValue(payload, DeviceCustomCharacter[].class);
                 getDevice().setCustomCharacters(characters);
             }
-            if (string.startsWith(getServiceContract().INTENT_DEFAULT_TEXTS)) {
+            if (string.startsWith(getServiceContract().INTENT_DEFAULT_TEXT_TEXTS)) {
                 DeviceDefaultText[] texts = getMapper().readValue(payload, DeviceDefaultText[].class);
                 getDevice().setDefaultText(texts);
             }
@@ -140,7 +140,7 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
     @Override
     public void defaultTextsChanged(DeviceDefaultText... defaultTexts) {
         Arrays.sort(defaultTexts);
-        addStatus(getServiceContract().STATUS_DEFAULT_TEXTS, defaultTexts);
+        addStatus(getServiceContract().STATUS_DEFAULT_TEXT_TEXTS, defaultTexts);
     }
 
     @Override
