@@ -43,6 +43,7 @@ package ch.quantasy.tinkerforge.device;
 
 import ch.quantasy.tinkerforge.device.IMU.IMUDevice;
 import ch.quantasy.tinkerforge.device.IMUV2.IMUV2Device;
+import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
@@ -98,6 +99,7 @@ import com.tinkerforge.BrickletDustDetector;
 import com.tinkerforge.BrickletHallEffect;
 import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletJoystick;
+import com.tinkerforge.BrickletLCD16x2;
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.BrickletLEDStrip;
 import com.tinkerforge.BrickletLaserRangeFinder;
@@ -237,6 +239,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.LCD20x4 == TinkerforgeDeviceClass.getDevice(device)) {
             return new LCD20x4Device(address, (BrickletLCD20x4) device);
+        }
+        if (TinkerforgeDeviceClass.LCD16x2 == TinkerforgeDeviceClass.getDevice(device)) {
+            return new LCD16x2Device(address, (BrickletLCD16x2) device);
         }
         return new TinkerforgeDevice(address, device);
     }

@@ -39,11 +39,11 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.LCD20x4;
+package ch.quantasy.tinkerforge.device.LCD16x2;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
-import com.tinkerforge.BrickletLCD20x4;
+import com.tinkerforge.BrickletLCD16x2;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 import java.util.HashSet;
@@ -57,23 +57,20 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceCallback> {
+public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceCallback> {
 
     private Boolean isBacklightEnabled;
     private DeviceConfigParameters configParameters;
     private final Set<DeviceCustomCharacter> customCharacters;
-    private final Set<DeviceDefaultText> defaultTexts;
-    private Integer defaultTextCounter;
     private final StringBuffer[] lines;
     private Thread writerThread;
     private final Writer writer;
 
-    public LCD20x4Device(TinkerforgeStackAddress address, BrickletLCD20x4 device) throws NotConnectedException, TimeoutException {
+    public LCD16x2Device(TinkerforgeStackAddress address, BrickletLCD16x2 device) throws NotConnectedException, TimeoutException {
         super(address, device);
         writer = new Writer();
 
         this.customCharacters = new HashSet<>();
-        this.defaultTexts = new HashSet<>();
         lines = new StringBuffer[4];
         for (int i = 0; i < lines.length; i++) {
             lines[i] = new StringBuffer("                    ");
@@ -95,12 +92,7 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
         if (!this.customCharacters.isEmpty()) {
             setCustomCharacters(customCharacters.toArray(new DeviceCustomCharacter[0]));
         }
-        if (!this.defaultTexts.isEmpty()) {
-            setDefaultText(defaultTexts.toArray(new DeviceDefaultText[0]));
-        }
-        if (this.defaultTextCounter != null) {
-            setDefaultTextCounter(defaultTextCounter);
-        }
+        
 
     }
 
@@ -122,7 +114,7 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
             this.isBacklightEnabled = getDevice().isBacklightOn();
             super.getCallback().backlightChanged(this.isBacklightEnabled);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -135,7 +127,7 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
                 lines[i] = new StringBuffer("                    ");
             }
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -145,7 +137,7 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
             this.configParameters = new DeviceConfigParameters(getDevice().getConfig());
             super.getCallback().configurationChanged(this.configParameters);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -157,30 +149,7 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
             }
             super.getCallback().customCharactersChanged(this.customCharacters.toArray(new DeviceCustomCharacter[0]));
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setDefaultText(DeviceDefaultText... texts) {
-        try {
-            for (DeviceDefaultText text : texts) {
-                getDevice().setDefaultText(text.getLine(), text.getText());
-                this.defaultTexts.add(new DeviceDefaultText(text.getLine(), getDevice().getDefaultText(text.getLine())));
-            }
-            super.getCallback().defaultTextsChanged(this.defaultTexts.toArray(new DeviceDefaultText[0]));
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setDefaultTextCounter(Integer counter) {
-        try {
-
-            getDevice().setDefaultTextCounter(counter);
-            this.defaultTextCounter = getDevice().getDefaultTextCounter();
-            super.getCallback().defaultTextCounterChanged(this.defaultTextCounter);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -191,7 +160,7 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
                 writer.readyToWrite(line.getLine());
             }
         } catch (Exception ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -219,7 +188,7 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
                         getDevice().writeLine(line, (short) 0, utf16ToKS0066U(lines[line].toString()));
 
                     } catch (TimeoutException | NotConnectedException ex) {
-                        Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             } catch (InterruptedException ex) {

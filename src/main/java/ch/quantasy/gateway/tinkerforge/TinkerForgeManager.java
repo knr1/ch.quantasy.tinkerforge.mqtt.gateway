@@ -44,6 +44,7 @@ package ch.quantasy.gateway.tinkerforge;
 import ch.quantasy.gateway.service.AbstractService;
 import ch.quantasy.gateway.service.device.IMU.IMUService;
 import ch.quantasy.gateway.service.device.IMUV2.IMUV2Service;
+import ch.quantasy.gateway.service.device.LCD16x2.LCD16x2Service;
 import ch.quantasy.gateway.service.device.LCD20x4.LCD20x4Service;
 import ch.quantasy.gateway.service.device.accelerometer.AccelerometerService;
 import ch.quantasy.gateway.service.device.ambientLight.AmbientLightService;
@@ -81,6 +82,7 @@ import ch.quantasy.gateway.service.device.tilt.TiltService;
 import ch.quantasy.gateway.service.device.uvLight.UVLightService;
 import ch.quantasy.tinkerforge.device.IMU.IMUDevice;
 import ch.quantasy.tinkerforge.device.IMUV2.IMUV2Device;
+import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
@@ -353,6 +355,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof LCD20x4Device) {
                 LCD20x4Service service = new LCD20x4Service((LCD20x4Device) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof LCD16x2Device) {
+                LCD16x2Service service = new LCD16x2Service((LCD16x2Device) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
 
