@@ -62,7 +62,7 @@ public class BarometerServiceContract extends DeviceServiceContract {
     public final String STATUS_AIR_PRESSURE_CALLBACK_PERIOD;
     public final String EVENT_AIR_PRESSURE;
     public final String EVENT_AIR_PRESSURE_REACHED;
-    public final String INTENT_AIR_PRESSURE;
+    private final String INTENT_AIR_PRESSURE;
     public final String INTENT_AIR_PRESSURE_THRESHOLD;
     public final String INTENT_AIR_PRESSURE_CALLBACK_PERIOD;
 
@@ -72,14 +72,14 @@ public class BarometerServiceContract extends DeviceServiceContract {
     public final String STATUS_ALTITUDE_CALLBACK_PERIOD;
     public final String EVENT_ALTITUDE;
     public final String EVENT_ALTITUDE_REACHED;
-    public final String INTENT_ALTITUDE;
+    private final String INTENT_ALTITUDE;
     public final String INTENT_ALTITUDE_THRESHOLD;
     public final String INTENT_ALTITUDE_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 

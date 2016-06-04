@@ -71,13 +71,13 @@ public class ColorServiceContract extends DeviceServiceContract {
     public final String STATUS_ILLUMINANCE_CALLBACK_PERIOD;
     public final String EVENT_ILLUMINANCE;
     public final String EVENT_COLOR_TEMPERATURE_REACHED;
-    public final String INTENT_ILLUMINANCE;
+    private final String INTENT_ILLUMINANCE;
     public final String INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD;
     public final String INTENT_IllUMINANCE_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 

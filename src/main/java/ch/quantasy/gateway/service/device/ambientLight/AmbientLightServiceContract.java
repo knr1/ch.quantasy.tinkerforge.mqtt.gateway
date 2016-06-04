@@ -63,7 +63,7 @@ public class AmbientLightServiceContract extends DeviceServiceContract {
     public final String STATUS_ANALOG_VALUE_CALLBACK_PERIOD;
     public final String EVENT_ANALOG_VALUE;
     public final String EVENT_ANALOG_VALUE_REACHED;
-    public final String INTENT_ANALOG_VALUE;
+    private final String INTENT_ANALOG_VALUE;
     public final String INTENT_ANALOG_VALUE_THRESHOLD;
     public final String INTENT_ANALOG_VALUE_CALLBACK_PERIOD;
 
@@ -73,13 +73,13 @@ public class AmbientLightServiceContract extends DeviceServiceContract {
     public final String STATUS_ILLUMINANCE_CALLBACK_PERIOD;
     public final String EVENT_ILLUMINANCE;
     public final String EVENT_ILLUMINANCE_REACHED;
-    public final String INTENT_ILLUMINANCE;
+    private final String INTENT_ILLUMINANCE;
     public final String INTENT_ILLUMINANCE_THRESHOLD;
     public final String INTENT_IllUMINANCE_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 

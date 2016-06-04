@@ -69,7 +69,7 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
     

@@ -62,14 +62,14 @@ public class CO2ServiceContract extends DeviceServiceContract {
     public final String STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD;
     public final String EVENT_CO2_CONCENTRATION;
     public final String EVENT_CO2_CONCENTRATION_REACHED;
-    public final String INTENT_CO2_CONCENTRATION;
+    private final String INTENT_CO2_CONCENTRATION;
     public final String INTENT_CO2_CONCENTRATION_THRESHOLD;
     public final String INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 

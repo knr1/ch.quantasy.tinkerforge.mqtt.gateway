@@ -64,14 +64,14 @@ public class MoistureServiceContract extends DeviceServiceContract {
     public final String STATUS_MOISTURE_CALLBACK_PERIOD;
     public final String EVENT_MOISTURE;
     public final String EVENT_MOISTURE_REACHED;
-    public final String INTENT_MOISTURE;
+    private final String INTENT_MOISTURE;
     public final String INTENT_MOISTURE_THRESHOLD;
     public final String INTENT_MOISTURE_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 

@@ -62,14 +62,14 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
     public final String STATUS_SOUND_INTENSITY_CALLBACK_PERIOD;
     public final String EVENT_INTENSITY;
     public final String EVENT_INTENSITY_REACHED;
-    public final String INTENT_SOUND_INTENSITY;
+    private final String INTENT_SOUND_INTENSITY;
     public final String INTENT_SOUND_INTENSITY_THRESHOLD;
     public final String INTENT_SOUND_INTENSITY_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 

@@ -57,7 +57,7 @@ public class HallEffectServiceContract extends DeviceServiceContract {
 
     public final String EDGE_COUNT;
     public final String STATUS_EDGE_COUNT;
-    public final String INTENT_EDGE_COUNT;
+    private final String INTENT_EDGE_COUNT;
     public final String EVENT_EDGE_COUNT;
 
     public final String INTENT_EDGE_COUNT_CALLBACK_PERIOD;

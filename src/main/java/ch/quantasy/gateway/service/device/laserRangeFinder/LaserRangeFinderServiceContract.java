@@ -72,13 +72,13 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
     public final String STATUS_VELOCITY_CALLBACK_PERIOD;
     public final String EVENT_VELOCITY;
     public final String EVENT_VELOCITY_REACHED;
-    public final String INTENT_VELOCITY;
+    private final String INTENT_VELOCITY;
     public final String INTENT_VELOCITY_THRESHOLD;
     public final String INTENT_VELOCITY_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 

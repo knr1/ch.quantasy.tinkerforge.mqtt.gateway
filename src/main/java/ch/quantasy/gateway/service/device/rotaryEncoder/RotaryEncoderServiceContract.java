@@ -68,13 +68,13 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
     public final String STATUS_COUNT_CALLBACK_PERIOD;
     public final String EVENT_COUNT;
     public final String EVENT_COUNT_REACHED;
-    public final String INTENT_COUNT;
+    private final String INTENT_COUNT;
     public final String INTENT_COUNT_THRESHOLD;
     public final String INTENT_COUNT_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 

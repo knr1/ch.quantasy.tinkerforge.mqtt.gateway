@@ -61,14 +61,14 @@ public class UVLightServiceContract extends DeviceServiceContract {
     public final String STATUS_UV_LIGHT_CALLBACK_PERIOD;
     public final String EVENT_UV_LIGHT;
     public final String EVENT_UV_LIGHT_REACHED;
-    public final String INTENT_UV_LIGHT;
+    private final String INTENT_UV_LIGHT;
     public final String INTENT_UV_LIGHT_THRESHOLD;
     public final String INTENT_UV_LIGHT_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 

@@ -62,14 +62,14 @@ public class LineServiceContract extends DeviceServiceContract {
     public final String STATUS_REFLECTIVITY_CALLBACK_PERIOD;
     public final String EVENT_REFLECTIVITY;
     public final String EVENT_REFLECTIVITY_REACHED;
-    public final String INTENT_REFLECTIVITY;
+    private final String INTENT_REFLECTIVITY;
     public final String INTENT_REFLECTIVITY_THRESHOLD;
     public final String INTENT_REFLECTIVITY_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
+    private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 

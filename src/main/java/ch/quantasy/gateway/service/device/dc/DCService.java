@@ -63,7 +63,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
         addDescription(getServiceContract().INTENT_ENABLED, "[true|false]");
         addDescription(getServiceContract().INTENT_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_PWM_FREQUENCY, "[1..20000]");
-        addDescription(getServiceContract().INTENT_VELOCITY, "-32767..32767");
+        addDescription(getServiceContract().INTENT_VELOCITY_VELOCITY, "-32767..32767");
         addDescription(getServiceContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
 
         addDescription(getServiceContract().EVENT_FULL_BRAKE, "[0.." + Long.MAX_VALUE + "]");
@@ -76,7 +76,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
         addDescription(getServiceContract().STATUS_ENABLED, "[true|false]");
         addDescription(getServiceContract().STATUS_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_PWM_FREQUENCY, "[1..20000]");
-        addDescription(getServiceContract().STATUS_VELOCITY, "-32767..32767");
+        addDescription(getServiceContract().STATUS_VELOCITY_VELOCITY, "-32767..32767");
         addDescription(getServiceContract().STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
 
     }
@@ -109,7 +109,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
             Integer pwmFrequency = getMapper().readValue(payload, Integer.class);
             getDevice().setPWMFrequency(pwmFrequency);
         }
-        if (string.startsWith(getServiceContract().INTENT_VELOCITY)) {
+        if (string.startsWith(getServiceContract().INTENT_VELOCITY_VELOCITY)) {
             Short velocity = getMapper().readValue(payload, Short.class);
             getDevice().setVelocity(velocity);
         }
@@ -153,7 +153,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void velocityChanged(Short velocity) {
-        addStatus(getServiceContract().STATUS_VELOCITY, velocity);
+        addStatus(getServiceContract().STATUS_VELOCITY_VELOCITY, velocity);
     }
 
     @Override
