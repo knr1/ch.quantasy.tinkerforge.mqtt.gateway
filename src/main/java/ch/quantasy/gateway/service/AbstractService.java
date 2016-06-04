@@ -56,6 +56,8 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 
 /**
@@ -179,33 +181,34 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
+    private Timer timer;
 
     @Override
     public void connectionLost(Throwable thrwbl) {
         thrwbl.printStackTrace();
         System.out.println("Ouups, lost connection to subscriptions");
-//        if (this.timer != null) {
-//            return;
-//        }
-//        this.timer = new Timer(true);
-//        this.timer.scheduleAtFixedRate(new TimerTask() {
-//
-//            @Override
-//            public void run() {
-//                try {
-//                    try {
-//                        communication.connect(parameters);
-//                        Thread.sleep(3000);
-//                    } catch (final InterruptedException e) {
-//                        //OK, we go on
-//                    }
-//                    if (communication.isConnected()) {
-//                        timer.cancel();
-//                        timer=null;
-//                    }
-//                } catch (MqttException ex) {
-//                }
-//            }
-//        }, 0, 3000);
+        if (this.timer != null) {
+            return;
+        }
+        this.timer = new Timer(true);
+        this.timer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                try {
+                    try {
+                        communication.connect(parameters);
+                        Thread.sleep(3000);
+                    } catch (final InterruptedException e) {
+                        //OK, we go on
+                    }
+                    if (communication.isConnected()) {
+                        timer.cancel();
+                        timer = null;
+                    }
+                } catch (MqttException ex) {
+                }
+            }
+        }, 0, 3000);
     }
 }
