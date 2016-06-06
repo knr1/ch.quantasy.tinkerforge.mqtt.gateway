@@ -6,6 +6,10 @@ The underlying idea of TiMqWay is a bunch of [micro-service]s, providing a self-
 In order to understand this micro-Service Based Agent oriented Design (SBAOD) and maybe to provide own services in this manner... 
 there is a Tutorial that tries to get you into it: [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]
 
+<a href="https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial/blob/master/Agent.svg">
+<img src="https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial/blob/master/Agent.svg.png" alt="SBAO-Diagram" />
+</a>
+
 ### Ideology
 Each Device provides the following interface:
 * description Each device describes its abilities via the description topic.

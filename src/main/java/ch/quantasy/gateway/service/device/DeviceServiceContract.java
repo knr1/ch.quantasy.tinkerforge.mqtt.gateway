@@ -49,7 +49,11 @@ import ch.quantasy.tinkerforge.device.generic.GenericDevice;
  *
  * @author reto
  */
-public class DeviceServiceContract extends ServiceContract{
+public class DeviceServiceContract extends ServiceContract {
+
+    public final String STATUS_POSITION;
+    public final String STATUS_FIRMWARE;
+    public final String STATUS_HARDWARE;
 
     public DeviceServiceContract(GenericDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -57,6 +61,9 @@ public class DeviceServiceContract extends ServiceContract{
 
     public DeviceServiceContract(String id, String device) {
         super(device, id);
+        STATUS_POSITION = STATUS + "/position";
+        STATUS_FIRMWARE = STATUS + "/firmware";
+        STATUS_HARDWARE = STATUS + "/hardware";
 
     }
 }
