@@ -168,26 +168,7 @@ TF
            add --- master-brick-1
    Temperature
      description
-       status
-         connection ---[online|offline]
-         position --- [0|1|2|3|4|5|6|7|8|a|b|c|d]
-         firmware --- [-32768..32767]_*
-         hardware --- [-32768..32767]_*
-         temperature
-           callbackPeriod --- [0..9223372036854775807]
-           threshold --- option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]
-           deounce --- [0..9223372036854775807]
-           mode ---[Slow|Fast]
-       event
-         temperature --- timestamp: [0..9223372036854775807]\n value: [-2500..8500]\n
-           reached --- timestamp: [0..9223372036854775807]\n value: [-2500..8500]\n
-       intent
-         debounce
-           period --- [0..9223372036854775807]
-         temperature
-           callbackPeriod --- [0..9223372036854775807]
-           threshold --- option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]
-         mode -- mode:[Slow|Fast]
+       #omitted for better readability
      blue
        status
          connection --- online
@@ -196,22 +177,7 @@ TF
          hardware --- 1-1-0
    LCD20x4
      description
-       status
-         connection ---[online|offline]
-         position --- [0|1|2|3|4|5|6|7|8|a|b|c|d]
-         firmware --- [-32768..32767]_*
-         hardware --- [-32768..32767]_*
-         backlight --- [true|false]
-         defaultText
-           texts --- [line: [0..3]\n text: [String]_[1..20]]
-           counter --- [-1..2147483647]
-       intent
-         backlight --- [true|false]
-         clearDisplay --- [true|false]
-         defaultText
-           texts --- [line: [0..3]\n text: [String]_[1..20]]
-           counter --- [-1..2147483647]
-         writeLines --- [line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]
+       #omitted for better readability
      lcd
        status
          connection --- online
