@@ -187,7 +187,7 @@ TF
 If you want to switch on the backlight of the device called 'lcd' which is an instance of the 20x4LCD class then you publish the following message to
 the following topic:
 ```
-Topic: TF/Manager/lcd/intent/backlight
+Topic: TF/LCD20x4/lcd/intent/backlight
 Message: true
 ```
 What happenes is that the backlight is now switched to on at the specific 20x4LCD device. In the mqtt-broker, some topics changed as well.
