@@ -70,6 +70,11 @@ You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Vi
 
 # Example
 The following real-world example shall help to understand how to work with this TiMqWay.
+<a href="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/Example01.svg">
+<img src="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/Example01.svg.png" alt="Example-Diagram" />
+</a>
+
+
 ##Common Hardware
 Our setup runs at home. We have a local (wlan-)network and a connected computer (could be a PC, Notebook, RaspberryPi,...)
 
