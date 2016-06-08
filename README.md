@@ -10,13 +10,12 @@ The underlying idea of TiMqWay is a bunch of [micro-service]s, providing a self-
 In order to understand this micro-Service Based Agent oriented Design (SBAOD) and maybe to provide own services in this manner... 
 there is a Tutorial that tries to get you into it: [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]
 
-<a href="https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial/blob/master/Agent.svg">
-<img src="https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial/blob/master/Agent.svg.png" alt="SBAO-Diagram" />
-</a>
-
 
 ## Ideology
 Each tinkerforge micro-service provides the following interface:
+<a href="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TiMqWayService.svg">
+<img src="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TiMqWayService.svg.png" alt="Service-Diagram" />
+</a>
 * **description** Each micro-service describes its abilities via the description topic.
 * **status** Each micro-service describes its actual status via its specialized status topics.
 * **event** Each micro-service provides all events via its specialized event topics. As there might be more events available than the mqtt broker is able to handle, all events are always covered within an array. Hence, there might be 0,1 or multiple events within one message.
