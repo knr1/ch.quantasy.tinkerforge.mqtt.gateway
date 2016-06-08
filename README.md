@@ -15,7 +15,7 @@ there is a Tutorial that tries to get you into it: [https://github.com/knr1/ch.b
 </a>
 
 
-### Ideology
+## Ideology
 Each tinkerforge micro-service provides the following interface:
 * **description** Each micro-service describes its abilities via the description topic.
 * **status** Each micro-service describes its actual status via its specialized status topics.
@@ -27,16 +27,16 @@ Each tinkerforge micro-service provides the following interface:
 
 **Message lanaguage** TiMqWay's message language used is **[YAML]**.
 
-## Tinkerforge abstraction 
+### Tinkerforge abstraction 
 Tinkerforge devices are not represented within their 'stack', but loosely coupled so a device might even change its stack but is still accessible in MQTT at the same location (TF/device-type/UID).
 
 
-### Installation
+## Installation
 In order to install TiMqWay 
 * Developers way: clone and build the project
 * Users way: download the latest [TiMqWay.jar]
  
-### Usage
+## Usage
 You need Java (7 or higher) and a running MQTT-Server. You can start TiMqWay with the MQTT-Server-Parameter.
 
 Then run the following command in order to use an MQTT-Server at localhost
@@ -68,7 +68,7 @@ You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Vi
  [YAML]: <https://en.wikipedia.org/wiki/YAML>
  [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]: <https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial>
 
-### Example
+## Example
 Imagine, you have a running MQTT-Broker at 192.168.1.77
 and start the TiMqWay with the argument 192.168.1.77 so it writes to the MQTT-Broker
 
