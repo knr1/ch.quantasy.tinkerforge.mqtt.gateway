@@ -67,7 +67,7 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
         addDescription(getServiceContract().INTENT_I2C_MODE, "mode:[Fast|Slow]");
 
         addDescription(getServiceContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-2500..8500]\n");
-        addDescription(getServiceContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..100000]\n");
+        addDescription(getServiceContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-2500..8500]\n");
         addDescription(getServiceContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]");
         addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
