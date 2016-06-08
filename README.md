@@ -26,6 +26,11 @@ Each tinkerforge micro-service provides the following interface:
 
 **Message lanaguage** TiMqWay's message language used is **[YAML]**.
 
+**Connection between services** The services do not know each other and cannot 'learn' from other services. What is needed is a tiny piece of software
+that glues the services together. It is no big deal, even though this glueing program is called **agent** that that
+gets information from some services and puts information to other services. That is why it is called **Service-Based-Agent-Orientet**.
+You can write that piece of program in any programming language, as long as you can access the mqtt-broker used.
+
 ### Tinkerforge abstraction 
 Tinkerforge devices are not represented within their 'stack', but loosely coupled so a device might even change its stack but is still accessible in MQTT at the same location (TF/device-type/UID).
 
