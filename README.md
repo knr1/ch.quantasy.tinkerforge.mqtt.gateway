@@ -3,25 +3,33 @@ ch.quantasy.tinkerforge.mqtt.gateway
 Provides an [MQTT] view to the [Tinkerforge](tm) world.
 The underlying idea of TiMqWay is a bunch of [micro-service]s, providing a self-explaining mqtt view for dynamic access to known Tinkerforge devices. 
 
-In order to understand this micro-Service Based Agent oriented Design (SBAOD) and maybe to provide own services in this manner... 
-there is a Tutorial that tries to get you into it: [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]
-
 <a href="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TinkerforgeSBAO.svg">
 <img src="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TinkerforgeSBAO.svg.png" alt="SBAO-Diagram" />
 </a>
 
+In order to understand this micro-Service Based Agent oriented Design (SBAOD) and maybe to provide own services in this manner... 
+there is a Tutorial that tries to get you into it: [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]
+
+<a href="https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial/blob/master/Agent.svg">
+<img src="https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial/blob/master/Agent.svg.png" alt="SBAO-Diagram" />
+</a>
+
+
 ### Ideology
-Each Device provides the following interface:
-* description Each device describes its abilities via the description topic.
-* intent Each intention to a device is sent via its provided intent topic. 
-* status Each device describes its actual status via its specialized status topics.
-* event Each device provides all events via its specialized event topics. As there might be more events available than the mqtt broker is able to handle, all events are always covered within an array. Hence, there might be 0,1 or multiple events within one message.
+Each tinkerforge micro-service provides the following interface:
+* **description** Each micro-service describes its abilities via the description topic.
+* **status** Each micro-service describes its actual status via its specialized status topics.
+* **event** Each micro-service provides all events via its specialized event topics. As there might be more events available than the mqtt broker is able to handle, all events are always covered within an array. Hence, there might be 0,1 or multiple events within one message.
+* **intent** Each micro-service accepts _intentions_ via the intent topic. It is equivalent to the setter methods but allows _parallel_ and _concurrent_ 'requests'.
 
-The descriptive language used within this project is [YAML]. Hence, all you need to learn is how to publish and subscribe to MQTT and how to write YAML.
 
-The root topic of TiMqWay is: TF
+**Root topic** The root topic of TiMqWay, where all thinkerforge micro-services can be reached: **TF/**.
 
+**Message lanaguage** TiMqWay's message language used is **[YAML]**.
+
+## Tinkerforge abstraction 
 Tinkerforge devices are not represented within their 'stack', but loosely coupled so a device might even change its stack but is still accessible in MQTT at the same location (TF/device-type/UID).
+
 
 ### Installation
 In order to install TiMqWay 
