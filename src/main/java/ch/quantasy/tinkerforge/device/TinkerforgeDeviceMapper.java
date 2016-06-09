@@ -66,6 +66,7 @@ import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
+import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
@@ -106,6 +107,7 @@ import com.tinkerforge.BrickletLEDStrip;
 import com.tinkerforge.BrickletLaserRangeFinder;
 import com.tinkerforge.BrickletLine;
 import com.tinkerforge.BrickletLinearPoti;
+import com.tinkerforge.BrickletLoadCell;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletMultiTouch;
@@ -247,6 +249,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.Temperature == TinkerforgeDeviceClass.getDevice(device)) {
             return new TemperatureDevice(address, (BrickletTemperature) device);
+        }
+        if (TinkerforgeDeviceClass.LoadCell == TinkerforgeDeviceClass.getDevice(device)) {
+            return new LoadCellDevice(address, (BrickletLoadCell) device);
         }
         return new TinkerforgeDevice(address, device);
     }

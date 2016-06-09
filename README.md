@@ -404,6 +404,7 @@ Message: - line: 0
 * BrickletLEDStrip
 * BrickletLine
 * BrickletLinearPoti
+* BrickletLoadCell
 * BrickletMoisture
 * BrickletMotionDetector
 * BrickletMultiTouch

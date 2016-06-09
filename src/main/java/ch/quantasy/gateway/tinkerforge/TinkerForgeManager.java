@@ -70,6 +70,7 @@ import ch.quantasy.gateway.service.device.joystick.JoystickService;
 import ch.quantasy.gateway.service.device.laserRangeFinder.LaserRangeFinderService;
 import ch.quantasy.gateway.service.device.line.LineService;
 import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
+import ch.quantasy.gateway.service.device.loadCell.LoadCellService;
 import ch.quantasy.gateway.service.device.multiTouch.MultiTouchService;
 import ch.quantasy.gateway.service.device.piezoSpeaker.PiezoSpeakerService;
 import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderService;
@@ -108,6 +109,7 @@ import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
+import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
@@ -365,6 +367,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof TemperatureDevice) {
                 TemperatureService service = new TemperatureService((TemperatureDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof LoadCellDevice) {
+                LoadCellService service = new LoadCellService((LoadCellDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
 
