@@ -55,17 +55,17 @@ public class LoadCellServiceContract extends DeviceServiceContract {
     public final String PERIOD;
     public final String CALLBACK_PERIOD;
     public final String THRESHOLD;
-    
+
     public final String TARE;
     public final String INTENT_TARE;
 
-    public final String ILLUMINANCE;
-    public final String STATUS_ILLUMINANCE;
+    public final String WEIGHT;
+    public final String STATUS_WEIGHT;
     public final String STATUS_WEIGHT_THRESHOLD;
     public final String STATUS_WEIGHT_CALLBACK_PERIOD;
     public final String EVENT_WEIGHT;
     public final String EVENT_WEIGHT_REACHED;
-    private final String INTENT_ILLUMINANCE;
+    private final String INTENT_WEIGHT;
     public final String INTENT_WEIGHT_THRESHOLD;
     public final String INTENT_WEIGHT_CALLBACK_PERIOD;
 
@@ -79,15 +79,15 @@ public class LoadCellServiceContract extends DeviceServiceContract {
     public final String CONFIGURATION;
     public final String STATUS_CONFIGURATION;
     public final String INTENT_CONFIGURATION;
-    
+
     public final String MOVING_AVERAGE;
     public final String STATUS_MOVING_AVERAGE;
     public final String INTENT_MOVING_AVERAGE;
-    
+
     public final String LED;
     public final String INTENT_LED;
     public final String STATUS_LED;
-   
+
     public LoadCellServiceContract(LoadCellDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -101,15 +101,15 @@ public class LoadCellServiceContract extends DeviceServiceContract {
 
         REACHED = "reached";
 
-        ILLUMINANCE = "illuminance";
-        STATUS_ILLUMINANCE = STATUS + "/" + ILLUMINANCE;
-        STATUS_WEIGHT_THRESHOLD = STATUS_ILLUMINANCE + "/" + THRESHOLD;
-        STATUS_WEIGHT_CALLBACK_PERIOD = STATUS_ILLUMINANCE + "/" + CALLBACK_PERIOD;
-        EVENT_WEIGHT = EVENT + "/" + ILLUMINANCE;
+        WEIGHT = "illuminance";
+        STATUS_WEIGHT = STATUS + "/" + WEIGHT;
+        STATUS_WEIGHT_THRESHOLD = STATUS_WEIGHT + "/" + THRESHOLD;
+        STATUS_WEIGHT_CALLBACK_PERIOD = STATUS_WEIGHT + "/" + CALLBACK_PERIOD;
+        EVENT_WEIGHT = EVENT + "/" + WEIGHT;
         EVENT_WEIGHT_REACHED = EVENT_WEIGHT + "/" + REACHED;
-        INTENT_ILLUMINANCE = INTENT + "/" + ILLUMINANCE;
-        INTENT_WEIGHT_THRESHOLD = INTENT_ILLUMINANCE + "/" + THRESHOLD;
-        INTENT_WEIGHT_CALLBACK_PERIOD = INTENT_ILLUMINANCE + "/" + CALLBACK_PERIOD;
+        INTENT_WEIGHT = INTENT + "/" + WEIGHT;
+        INTENT_WEIGHT_THRESHOLD = INTENT_WEIGHT + "/" + THRESHOLD;
+        INTENT_WEIGHT_CALLBACK_PERIOD = INTENT_WEIGHT + "/" + CALLBACK_PERIOD;
 
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
@@ -122,17 +122,16 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
         INTENT_CONFIGURATION = INTENT + "/" + CONFIGURATION;
 
-        TARE="tare";
-        INTENT_TARE=INTENT+"/"+TARE;
-        
+        TARE = "tare";
+        INTENT_TARE = INTENT + "/" + TARE;
+
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-        INTENT_MOVING_AVERAGE = INTENT + "/"+ MOVING_AVERAGE;
-        
-        LED="LED";
-        INTENT_LED=INTENT+"/"+LED;
-        STATUS_LED=STATUS+"/"+LED;
-        
-        
+        INTENT_MOVING_AVERAGE = INTENT + "/" + MOVING_AVERAGE;
+
+        LED = "LED";
+        INTENT_LED = INTENT + "/" + LED;
+        STATUS_LED = STATUS + "/" + LED;
+
     }
 }
