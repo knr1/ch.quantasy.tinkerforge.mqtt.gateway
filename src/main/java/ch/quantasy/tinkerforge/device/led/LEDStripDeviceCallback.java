@@ -54,4 +54,6 @@ import com.tinkerforge.BrickletHumidity.HumidityCallbackThreshold;
 public interface LEDStripDeviceCallback extends DeviceCallback{
     public void configurationChanged(LEDStripDeviceConfig config);
     public short[][] getLEDsToPublish();
+    public void frameRendered();
+    public void isLaging();
 }

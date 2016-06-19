@@ -81,6 +81,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
     private Thread publisherThread;
     private final Publisher publisher;
     private boolean readyToSend;
+    private boolean sent;
 
     public LEDStripDevice(TinkerforgeStackAddress address, BrickletLEDStrip device) throws NotConnectedException, TimeoutException {
         super(address, device);
@@ -103,7 +104,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     @Override
     protected void removeDeviceListeners() {
-        this.readyToSend=false;
+        this.readyToSend = false;
         getDevice().removeFrameRenderedListener(this);
     }
 
@@ -122,12 +123,14 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
             if (config == null) {
                 return;
             }
-            this.config=config;
             setNumberOfLEDs(config.getNumberOfLEDs());
             setChipType(config.getChipType().getType());
             setClockFrequencyOfICsInHz(config.getClockFrequencyOfICsInHz());
             setFrameDurationInMilliseconds(config.getFrameDurationInMilliseconds());
-            super.getCallback().configurationChanged(config);
+            this.config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.getChipTypeFor(getDevice().getChipType()),
+                    getDevice().getClockFrequency(),
+                    getDevice().getFrameDuration(), config.getNumberOfLEDs(), config.getChannelMapping());
+            super.getCallback().configurationChanged(this.config);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -167,7 +170,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
      *
      * @param rgbLEDs
      */
-    public synchronized void setRGBLEDs(final short[][] rgbLEDs) {
+    public void setRGBLEDs(final short[][] rgbLEDs) {
         LEDStripDeviceConfig localConfig = this.config;
         if (rgbLEDs == null) {
             return;
@@ -200,22 +203,24 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
     /**
      * This method is called via setRGBLEDs.
      */
-    private synchronized void sendRGBLEDFrame() {
+    private void sendRGBLEDFrame() {
         if (getDevice() == null) {
             return;
         }
+        synchronized (this) {
+            while (!readyToSend) {
+                try {
+                    this.wait();
+                } catch (InterruptedException ex) {
+                    //Fine, we just go on
+                }
 
-        while (!readyToSend) {
-            try {
-                this.wait();
-            } catch (InterruptedException ex) {
-                //Fine, we just go on
             }
-
+            readyToSend = false;
+            sent = false;
         }
         try {
             for (int write = 0; write < this.numberOfWrites; write++) {
-
                 getDevice()
                         .setRGBValues(write
                                 * LEDStripDevice.NUMBER_OF_LEDS_PER_WRITE,
@@ -223,7 +228,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
                                 this.frame[config.getChannelMapping().mapTo(0)][write], this.frame[config.getChannelMapping().mapTo(1)][write],
                                 this.frame[config.getChannelMapping().mapTo(2)][write]);
             }
-
+            sent = true;
         } catch (final TimeoutException e) {
             // Eh... ok
         } catch (final NotConnectedException e) {
@@ -235,9 +240,15 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     @Override
     public void frameRendered(final int length) {
-        synchronized (this) {
+        if (readyToSend != true) {
+            if (sent != true) {
+                super.getCallback().isLaging();
+            }
             readyToSend = true;
-            this.notifyAll();
+            super.getCallback().frameRendered();
+        }
+        synchronized (this) {
+            this.notify();
         }
     }
 
@@ -268,8 +279,6 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
                     LEDStripDeviceCallback callback = publishingQueue.take();
                     synchronized (LEDStripDevice.this) {
                         setRGBLEDs(callback.getLEDsToPublish());
-                        sendRGBLEDFrame();
-
                     }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);

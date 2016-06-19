@@ -62,6 +62,15 @@ public class LEDStripDeviceConfig {
         public int getType() {
             return type;
         }
+
+        public static ChipType getChipTypeFor(int i) throws IllegalArgumentException {
+            for (ChipType chipType : values()) {
+                if (chipType.type == i) {
+                    return chipType;
+                }
+            }
+            throw new IllegalArgumentException("Not supported: " + i);
+        }
     }
 
     public static enum ChannelMapping {
@@ -75,7 +84,8 @@ public class LEDStripDeviceConfig {
         public int[] getMapping() {
             return mapping;
         }
-        public int mapTo(int rgbChannel){
+
+        public int mapTo(int rgbChannel) {
             return mapping[rgbChannel];
         }
     }
@@ -85,8 +95,9 @@ public class LEDStripDeviceConfig {
     private int numberOfLEDs;
     private ChannelMapping channelMapping;
 
-    private LEDStripDeviceConfig()  {
+    private LEDStripDeviceConfig() {
     }
+
     public LEDStripDeviceConfig(String chipType, long clockFrequencyOfICsInHz, int frameDurationInMilliseconds, int numberOfLEDs, String channelMapping) throws IllegalArgumentException {
         this(ChipType.valueOf(chipType), clockFrequencyOfICsInHz, frameDurationInMilliseconds, numberOfLEDs, ChannelMapping.valueOf(channelMapping));
     }
@@ -105,7 +116,7 @@ public class LEDStripDeviceConfig {
         this.frameDurationInMilliseconds = frameDurationInMilliseconds;
         this.clockFrequencyOfICsInHz = clockFrequencyOfICsInHz;
         this.numberOfLEDs = numberOfLEDs;
-        this.channelMapping=channelMapping;
+        this.channelMapping = channelMapping;
     }
 
     public ChipType getChipType() {
@@ -168,9 +179,7 @@ public class LEDStripDeviceConfig {
         }
         return true;
     }
-    
 
-    
     /**
      * Returns a new 2-dimensional array of shorts representing all the RGB-LEDs
      * of the strip.

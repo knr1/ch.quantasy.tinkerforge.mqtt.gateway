@@ -52,13 +52,19 @@ import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 public class LEDStripServiceContract extends DeviceServiceContract {
 
     public final String LEDs;
-    public final String EVENT_LEDs;
+    private final String EVENT_LEDs;
     public final String INTENT_LEDs;
+    public final String FRAMES;
+    public final String INTENT_FRAMES;
 
     public final String CONFIG;
     public final String STATUS_CONFIG;
     public final String EVENT_CONFIG;
     public final String INTENT_CONFIG;
+    public final String RENDERED;
+    public final String EVENT_LEDs_RENDERED;
+    public final String LAGING;
+    public final String EVENT_LAGING;
 
     public LEDStripServiceContract(LEDStripDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -69,10 +75,20 @@ public class LEDStripServiceContract extends DeviceServiceContract {
         LEDs = "rgbLEDs";
         EVENT_LEDs = EVENT + "/" + LEDs;
         INTENT_LEDs = INTENT + "/" + LEDs;
+        
+        FRAMES="frames";
+        INTENT_FRAMES = INTENT + "/" + FRAMES;
+        
 
         CONFIG = "config";
         STATUS_CONFIG = STATUS + "/" + CONFIG;
         EVENT_CONFIG = EVENT + "/" + CONFIG;
         INTENT_CONFIG = INTENT + "/" + CONFIG;
+        
+        RENDERED="rendered";
+        EVENT_LEDs_RENDERED= EVENT_LEDs+"/"+RENDERED;
+        
+        LAGING="laging";
+        EVENT_LAGING=EVENT+"/"+LAGING;
     }
 }

@@ -186,7 +186,7 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
     @Override
     public void connectionLost(Throwable thrwbl) {
         thrwbl.printStackTrace();
-        System.out.println("Ouups, lost connection to subscriptions");
+        System.out.println("Ouups, lost connection to subscriptions... will try again in some seconds");
         if (this.timer != null) {
             return;
         }
@@ -196,17 +196,11 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
             @Override
             public void run() {
                 try {
-                    try {
-                        communication.connect(parameters);
-                        Thread.sleep(3000);
-                    } catch (final InterruptedException e) {
-                        //OK, we go on
-                    }
-                    if (communication.isConnected()) {
-                        timer.cancel();
-                        timer = null;
-                    }
-                } catch (MqttException ex) {
+                    communication.connect(parameters);
+                    timer.cancel();
+                    timer = null;
+
+                } catch (Exception ex) {
                 }
             }
         }, 0, 3000);
