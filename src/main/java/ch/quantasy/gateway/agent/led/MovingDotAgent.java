@@ -69,12 +69,12 @@ public class MovingDotAgent extends AbstractAgent {
     private int amountOfLEDs;
 
     public MovingDotAgent(URI mqttURI) throws MqttException {
-        super(mqttURI, "f083482023087h287", "MovinDotAgent");
+        super(mqttURI, "87586cobwe", "MovinDotAgent");
         frameDurationInMillis = 55;
         amountOfLEDs = 120;
         managerServiceContract = new ManagerServiceContract("Manager");
-        addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights01");
-        ledServiceContract = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
+        addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights02");
+        ledServiceContract = new LEDStripServiceContract("oZU", TinkerforgeDeviceClass.LEDStrip.toString());
         super.subscribe(ledServiceContract.EVENT_LEDs_RENDERED, 0);
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
         super.addMessage(ledServiceContract.INTENT_CONFIG, config);

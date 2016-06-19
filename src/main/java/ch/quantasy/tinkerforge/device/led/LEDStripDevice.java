@@ -110,7 +110,11 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     private void setup() throws TimeoutException, NotConnectedException {
         setConfig(config);
-        this.readyToSend = true;
+        synchronized (this) {
+            this.notify();
+            this.readyToSend = true;
+        }
+
         if (publisherThread == null) {
             publisherThread = new Thread(publisher);
             //publisherThread.setDaemon(true);
@@ -272,18 +276,18 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
         @Override
         public void run() {
-            while (LEDStripDevice.this.isConnected()) {
+            while (true) {
                 try {
+
                     LEDStripDeviceCallback callback = publishingQueue.take();
                     synchronized (LEDStripDevice.this) {
                         setRGBLEDs(callback.getLEDsToPublish());
                     }
-                } catch (InterruptedException ex) {
+
+                } catch (Exception ex) {
                     Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            LEDStripDevice.this.publisherThread = null;
-            System.out.println("We are out...");
 
         }
     }
