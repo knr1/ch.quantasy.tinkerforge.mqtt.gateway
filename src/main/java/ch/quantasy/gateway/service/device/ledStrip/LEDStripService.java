@@ -49,9 +49,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceCallback;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
+import ch.quantasy.tinkerforge.device.led.LEDFrame;
+
 import java.net.URI;
 import java.util.Deque;
-import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
@@ -60,15 +61,15 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  */
 public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDStripServiceContract> implements LEDStripDeviceCallback {
 
-    private short[][] leds;
-    private Deque<short[][]> frames;
+    private LEDFrame frame;
+    private Deque<LEDFrame> frames;
 
     public LEDStripService(LEDStripDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LEDStripServiceContract(device));
         frames = new ConcurrentLinkedDeque<>();
         addDescription(getServiceContract().INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
-        addDescription(getServiceContract().INTENT_LEDs, "[{{r,r,...,r}_numLEDs {g,g,...,g}_numLEDs {b,b,...,b}_numLEDs}_3]");
-        addDescription(getServiceContract().INTENT_FRAMES, "[{{{r,r,...,r}_numLEDs {g,g,...,g}_numLEDs {b,b,...,b}_numLEDs}_3}_*]");
+        addDescription(getServiceContract().INTENT_FRAME, "red: {[0..255],..,[0..255]}_numLEDs\n green: {[0..255],..,[0..255]}_numLEDs\n blue: {[0..255],..,[0..255]}_numLEDs");
+        addDescription(getServiceContract().INTENT_FRAMES, "{red: {[0..255],..,[0..255]}_numLEDs\n green: {[0..255],..,[0..255]}_numLEDs\n blue: {[0..255],..,[0..255]}_numLEDs\n}_*");
         addDescription(getServiceContract().EVENT_LEDs_RENDERED, "timestamp: [0.." + Long.MAX_VALUE + "]\n framesBuffered: [0.." + Integer.MAX_VALUE + "]\n");
         addDescription(getServiceContract().EVENT_LAGING, "timestamp: [0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
@@ -87,14 +88,14 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
                 );
                 getDevice().setConfig(config);
             }
-            if (string.startsWith(getServiceContract().INTENT_LEDs)) {
-                leds = (getMapper().readValue(payload, short[][].class));
+            if (string.startsWith(getServiceContract().INTENT_FRAME)) {
+                frame = (getMapper().readValue(payload, LEDFrame.class));
                 frames.clear();
                 getDevice().readyToPublish(this);
             }
             if (string.startsWith(getServiceContract().INTENT_FRAMES)) {
-                short[][][] internalFrames = (getMapper().readValue(payload, short[][][].class));
-                for (short[][] frame : internalFrames) {
+                LEDFrame[] internalFrames = (getMapper().readValue(payload, LEDFrame[].class));
+                for (LEDFrame frame : internalFrames) {
                     frames.offer(frame);
                 }
                 getDevice().readyToPublish(this);
@@ -113,15 +114,15 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
     }
 
     @Override
-    public short[][] getLEDsToPublish() {
-        short[][] frame = frames.poll();
+    public LEDFrame getLEDsToPublish() {
+        LEDFrame frame = frames.poll();
         if (frame != null) {
             if (!frames.isEmpty()) {
                 getDevice().readyToPublish(this);
             }
             return frame;
         } else {
-            return leds;
+            return this.frame;
         }
     }
 
@@ -133,9 +134,8 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     @Override
     public void isLaging() {
-        addEvent(getServiceContract().EVENT_LAGING,System.currentTimeMillis());
+        addEvent(getServiceContract().EVENT_LAGING, System.currentTimeMillis());
     }
-    
 
     public static class FrameRenderedEvent {
 

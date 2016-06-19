@@ -39,56 +39,60 @@
  *
  *
  */
-package ch.quantasy.gateway.service.device.ledStrip;
-
-import ch.quantasy.gateway.service.device.DeviceServiceContract;
-import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
+package ch.quantasy.tinkerforge.device.led;
 
 /**
  *
  * @author reto
  */
-public class LEDStripServiceContract extends DeviceServiceContract {
+public class LEDFrame {
 
-    public final String FRAME;
-    private final String EVENT_LEDs;
-    public final String INTENT_FRAME;
-    public final String FRAMES;
-    public final String INTENT_FRAMES;
+    private short[] red;
+    private short[] green;
+    private short[] blue;
 
-    public final String CONFIG;
-    public final String STATUS_CONFIG;
-    public final String EVENT_CONFIG;
-    public final String INTENT_CONFIG;
-    public final String RENDERED;
-    public final String EVENT_LEDs_RENDERED;
-    public final String LAGING;
-    public final String EVENT_LAGING;
-
-    public LEDStripServiceContract(LEDStripDevice device) {
-        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    public LEDFrame() {
     }
 
-    public LEDStripServiceContract(String id, String device) {
-        super(id, device);
-        FRAME = "frame";
-        EVENT_LEDs = EVENT + "/" + FRAME;
-        INTENT_FRAME = INTENT + "/" + FRAME;
-        
-        FRAMES="multiFrames";
-        INTENT_FRAMES = INTENT + "/" + FRAMES;
-        
-
-        CONFIG = "config";
-        STATUS_CONFIG = STATUS + "/" + CONFIG;
-        EVENT_CONFIG = EVENT + "/" + CONFIG;
-        INTENT_CONFIG = INTENT + "/" + CONFIG;
-        
-        RENDERED="rendered";
-        EVENT_LEDs_RENDERED= EVENT_LEDs+"/"+RENDERED;
-        
-        LAGING="laging";
-        EVENT_LAGING=EVENT+"/"+LAGING;
+    public LEDFrame(int amountOfLEDs) {
+        red = new short[amountOfLEDs];
+        green = new short[amountOfLEDs];
+        blue = new short[amountOfLEDs];
     }
+
+    public LEDFrame(LEDFrame frame) {
+        this(frame.red, frame.green, frame.blue);
+    }
+
+    public LEDFrame(short[] red, short[] green, short[] blue) {
+        this.red = red.clone();
+        this.green = green.clone();
+        this.blue = blue.clone();
+    }
+
+    public short[] getBlue() {
+        return blue;
+    }
+
+    public short[] getGreen() {
+        return green;
+    }
+
+    public short[] getRed() {
+        return red;
+    }
+
+    public short[] getColorChannel(int channel) {
+        switch (channel) {
+            case 0:
+                return red;
+            case 1:
+                return green;
+            case 2:
+                return blue;
+            default:
+                return null;
+        }
+    }
+
 }

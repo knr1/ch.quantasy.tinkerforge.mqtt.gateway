@@ -47,6 +47,7 @@ import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
+import ch.quantasy.tinkerforge.device.led.LEDFrame;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,8 +70,8 @@ public class MovingDotAgent extends AbstractAgent {
 
     public MovingDotAgent(URI mqttURI) throws MqttException {
         super(mqttURI, "f083482023087h287", "MovinDotAgent");
-        frameDurationInMillis=55;
-        amountOfLEDs=120;
+        frameDurationInMillis = 55;
+        amountOfLEDs = 120;
         managerServiceContract = new ManagerServiceContract("Manager");
         addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights01");
         ledServiceContract = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
@@ -95,13 +96,24 @@ public class MovingDotAgent extends AbstractAgent {
         }
     }
 
+    public void clear() {
+        t.interrupt();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(120));
+    }
+
     class switcher implements Runnable {
 
-        List<int[][]> frames = new ArrayList<>();
-        private int[][] leds = new int[3][amountOfLEDs];
+        List<LEDFrame> frames = new ArrayList<>();
+        private LEDFrame leds = new LEDFrame(amountOfLEDs);
 
         @Override
         public void run() {
+
             wave();
         }
 
@@ -110,98 +122,94 @@ public class MovingDotAgent extends AbstractAgent {
             double sineRed = 0;
             double sineGreen = 0;
             double sineBlue = 0;
-            int[][] newLEDs = new int[3][amountOfLEDs];
+            LEDFrame newLEDs = new LEDFrame(amountOfLEDs);
 
-            for (int i = 0; i < leds[0].length; i++) {
+            for (int i = 0; i < leds.getColorChannel(0).length; i++) {
                 sineRed = Math.sin((i / 120.0) * Math.PI * 2);
                 sineGreen = Math.sin((i / 60.0) * Math.PI * 2);
                 sineBlue = Math.sin((i / 30.0) * Math.PI * 2);
 
-                leds[0][i] = (int) (127.0 + (sineRed * 127.0));
-                leds[1][i] = (int) (127.0 + (sineGreen * 127.0));
-                leds[2][i] = (int) (127.0 + (sineBlue * 127.0));
+                leds.getColorChannel(0)[i] = (short) (127.0 + (sineRed * 127.0));
+                leds.getColorChannel(1)[i] = (short) (127.0 + (sineGreen * 127.0));
+                leds.getColorChannel(2)[i] = (short) (127.0 + (sineBlue * 127.0));
             }
-
-            while (true) {
-                for (int frameCount = 0; frameCount < 100; frameCount++) {
-                    for (int i = 1; i < leds[0].length; i++) {
-                        newLEDs[0][i] = leds[0][i - 1];
-                        newLEDs[1][i] = leds[1][i - 1];
-                        newLEDs[2][i] = leds[2][i - 1];
+            try {
+                while (true) {
+                    for (int frameCount = 0; frameCount < 100; frameCount++) {
+                        for (int i = 1; i < leds.getColorChannel(0).length; i++) {
+                            newLEDs.getColorChannel(0)[i] = leds.getColorChannel(0)[i - 1];
+                            newLEDs.getColorChannel(1)[i] = leds.getColorChannel(1)[i - 1];
+                            newLEDs.getColorChannel(2)[i] = leds.getColorChannel(2)[i - 1];
+                        }
+                        newLEDs.getColorChannel(0)[0] = leds.getColorChannel(0)[amountOfLEDs - 1];
+                        newLEDs.getColorChannel(1)[0] = leds.getColorChannel(1)[amountOfLEDs - 1];
+                        newLEDs.getColorChannel(2)[0] = leds.getColorChannel(2)[amountOfLEDs - 1];
+                        LEDFrame tmpLEDs = leds;
+                        leds = newLEDs;
+                        newLEDs = tmpLEDs;
+                        frames.add(new LEDFrame(leds));
                     }
-                    newLEDs[0][0] = leds[0][amountOfLEDs-1];
-                    newLEDs[1][0] = leds[1][amountOfLEDs-1];
-                    newLEDs[2][0] = leds[2][amountOfLEDs-1];
-                    int[][] tmpLEDs = leds;
-                    leds = newLEDs;
-                    newLEDs = tmpLEDs;
-                    int[][] frame = new int[][]{leds[0].clone(), leds[1].clone(), leds[2].clone()};
-                    frames.add(frame);
-                }
-                System.out.println("FRAMES: " + frames.size());
-                addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new int[0][][]));
-                frames.clear();
-                try {
-                    Thread.sleep(frameDurationInMillis*50);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                synchronized (MovingDotAgent.this) {
-                    System.out.println(counter);
-                    while (counter > 100) {
-                        try {
+                    System.out.println("FRAMES: " + frames.size());
+                    addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[0]));
+                    frames.clear();
+
+                    Thread.sleep(frameDurationInMillis * 50);
+
+                    synchronized (MovingDotAgent.this) {
+                        System.out.println(counter);
+                        while (counter > 100) {
                             MovingDotAgent.this.wait();
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
+                addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(120));
+
             }
         }
 
         private void movingDot() {
-            leds[0][0] = 255;
-            leds[1][0] = 255;
-            leds[2][0] = 255;
+            leds.getColorChannel(0)[0] = 255;
+            leds.getColorChannel(1)[0] = 255;
+            leds.getColorChannel(2)[0] = 255;
 
-            int[][] newLEDs = new int[3][amountOfLEDs];
-            while (true) {
-                for (int frameCount = 0; frameCount < 100; frameCount++) {
-                    for (int i = 1; i < leds[0].length; i++) {
-                        newLEDs[0][i] = leds[0][i - 1];
-                        newLEDs[1][i] = leds[1][i - 1];
-                        newLEDs[2][i] = leds[2][i - 1];
+            LEDFrame newLEDs = new LEDFrame(amountOfLEDs);
+            try {
+                while (true) {
+                    for (int frameCount = 0; frameCount < 100; frameCount++) {
+                        for (int i = 1; i < leds.getColorChannel(0).length; i++) {
+                            newLEDs.getColorChannel(0)[i] = leds.getColorChannel(0)[i - 1];
+                            newLEDs.getColorChannel(1)[i] = leds.getColorChannel(1)[i - 1];
+                            newLEDs.getColorChannel(2)[i] = leds.getColorChannel(2)[i - 1];
+                        }
+                        newLEDs.getColorChannel(0)[0] = leds.getColorChannel(0)[amountOfLEDs - 1];
+                        newLEDs.getColorChannel(1)[0] = leds.getColorChannel(1)[amountOfLEDs - 1];
+                        newLEDs.getColorChannel(2)[0] = leds.getColorChannel(2)[amountOfLEDs - 1];
+                        LEDFrame tmpLEDs = leds;
+                        leds = newLEDs;
+                        newLEDs = tmpLEDs;
+                        frames.add(new LEDFrame(leds));
                     }
-                    newLEDs[0][0] = leds[0][amountOfLEDs-1];
-                    newLEDs[1][0] = leds[1][amountOfLEDs-1];
-                    newLEDs[2][0] = leds[2][amountOfLEDs-1];
-                    int[][] tmpLEDs = leds;
-                    leds = newLEDs;
-                    newLEDs = tmpLEDs;
-                    int[][] frame = new int[][]{leds[0].clone(), leds[1].clone(), leds[2].clone()};
-                    frames.add(frame);
-                }
-                System.out.println("FRAMES:" + frames.size());
-                addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new int[0][][]));
-                frames.clear();
-                try {
-                    Thread.sleep(frameDurationInMillis*50);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    System.out.println("FRAMES:" + frames.size());
+                    addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new int[0][][]));
+                    frames.clear();
 
-                synchronized (MovingDotAgent.this) {
-                    System.out.println(counter);
-                    while (counter > 100) {
-                        try {
+                    Thread.sleep(frameDurationInMillis * 50);
+
+                    synchronized (MovingDotAgent.this) {
+                        System.out.println(counter);
+                        while (counter > 100) {
                             MovingDotAgent.this.wait();
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
+                addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(120));
             }
         }
+
     }
 
     public static void main(String[] args) throws Throwable {
@@ -214,6 +222,7 @@ public class MovingDotAgent extends AbstractAgent {
         System.out.printf("\n%s will be used as broker address.\n", mqttURI);
         MovingDotAgent agent = new MovingDotAgent(mqttURI);
         System.in.read();
+        agent.clear();
     }
 
 }

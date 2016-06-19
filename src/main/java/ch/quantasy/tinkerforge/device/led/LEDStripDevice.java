@@ -170,25 +170,23 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
      *
      * @param rgbLEDs
      */
-    public void setRGBLEDs(final short[][] rgbLEDs) {
+    public void setRGBLEDs(final LEDFrame rgbLEDs) {
         LEDStripDeviceConfig localConfig = this.config;
         if (rgbLEDs == null) {
             return;
         }
-        if (rgbLEDs.length != LEDStripDevice.NUMBER_OF_COLOR_CHANNELS) {
-            return;
-        }
 
         for (int colorChannel = 0; colorChannel < LEDStripDevice.NUMBER_OF_COLOR_CHANNELS; colorChannel++) {
-            if ((rgbLEDs[colorChannel] == null)
-                    || (rgbLEDs[colorChannel].length != localConfig.getNumberOfLEDs())) {
+            short[] channel = rgbLEDs.getColorChannel(colorChannel);
+            if (channel == null
+                    || channel.length != localConfig.getNumberOfLEDs()) {
                 return;
             }
         }
 
         for (int colorChannel = 0; colorChannel < LEDStripDevice.NUMBER_OF_COLOR_CHANNELS; colorChannel++) {
             for (int write = 0, remaining = localConfig.getNumberOfLEDs(); write < this.numberOfWrites; write++, remaining -= LEDStripDevice.NUMBER_OF_LEDS_PER_WRITE) {
-                System.arraycopy(rgbLEDs[colorChannel],
+                System.arraycopy(rgbLEDs.getColorChannel(colorChannel),
                         write
                         * LEDStripDevice.NUMBER_OF_LEDS_PER_WRITE,
                         this.frame[colorChannel][write],
