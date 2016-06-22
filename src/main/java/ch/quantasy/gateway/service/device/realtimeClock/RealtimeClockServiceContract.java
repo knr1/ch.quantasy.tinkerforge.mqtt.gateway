@@ -39,34 +39,38 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.piezoSpeaker;
+package ch.quantasy.gateway.service.device.realtimeClock;
 
-
+import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.realtimeClock.RealtimeClockDevice;
 
 /**
  *
  * @author reto
  */
-public class BeepParameter {
-    
-    private long duration;
-    private int frequency;
+public class RealtimeClockServiceContract extends DeviceServiceContract {
 
-    public BeepParameter() {
+    public final String DATE_TIME;
+    public final String OFFSET;
+    public final String INTENT_DATE_TIME;
+    public final String STATUS_DATE_TIME;
+    public final String INTENT_OFFSET;
+    public final String STATUS_OFFSET;
+
+    public RealtimeClockServiceContract(RealtimeClockDevice device) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
-    public BeepParameter(long min, int max) {
-        this.duration = min;
-        this.frequency = max;
-    }
+    public RealtimeClockServiceContract(String id, String device) {
+        super(id, device);
+        DATE_TIME = "dateTime";
+        OFFSET = "offset";
 
-    public int getFrequency() {
-        return frequency;
-    }
+        INTENT_DATE_TIME = INTENT + "/" + DATE_TIME;
+        INTENT_OFFSET = INTENT + "/" + OFFSET;
+        STATUS_DATE_TIME = STATUS + "/" + DATE_TIME;
+        STATUS_OFFSET = STATUS + "/" + OFFSET;
 
-    public long getDuration() {
-        return duration;
     }
-    
-    
 }

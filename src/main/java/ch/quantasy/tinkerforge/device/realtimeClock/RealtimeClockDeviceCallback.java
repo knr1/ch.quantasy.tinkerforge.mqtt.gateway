@@ -39,34 +39,15 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.piezoSpeaker;
-
-
+package ch.quantasy.tinkerforge.device.realtimeClock;
+import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 
 /**
  *
  * @author reto
  */
-public class BeepParameter {
-    
-    private long duration;
-    private int frequency;
+public interface RealtimeClockDeviceCallback extends DeviceCallback{
 
-    public BeepParameter() {
-    }
-
-    public BeepParameter(long min, int max) {
-        this.duration = min;
-        this.frequency = max;
-    }
-
-    public int getFrequency() {
-        return frequency;
-    }
-
-    public long getDuration() {
-        return duration;
-    }
-    
-    
+    public void dateTimeChanged(DateTimeParameter dateTimeParameter);
+    public void offsetChanged(byte offset);
 }

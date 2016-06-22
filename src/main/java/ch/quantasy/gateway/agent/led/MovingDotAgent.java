@@ -71,7 +71,7 @@ public class MovingDotAgent extends AbstractAgent {
     public MovingDotAgent(URI mqttURI) throws MqttException {
         super(mqttURI, "87586cobwe", "MovinDotAgent");
         frameDurationInMillis = 55;
-        amountOfLEDs = 120;
+        amountOfLEDs = 144;
         managerServiceContract = new ManagerServiceContract("Manager");
         addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights02");
         ledServiceContract = new LEDStripServiceContract("oZU", TinkerforgeDeviceClass.LEDStrip.toString());
@@ -141,9 +141,9 @@ public class MovingDotAgent extends AbstractAgent {
                             newLEDs.getColorChannel(1)[i] = leds.getColorChannel(1)[i - 1];
                             newLEDs.getColorChannel(2)[i] = leds.getColorChannel(2)[i - 1];
                         }
-                        newLEDs.getColorChannel(0)[0] = leds.getColorChannel(0)[amountOfLEDs - 1];
-                        newLEDs.getColorChannel(1)[0] = leds.getColorChannel(1)[amountOfLEDs - 1];
-                        newLEDs.getColorChannel(2)[0] = leds.getColorChannel(2)[amountOfLEDs - 1];
+                        newLEDs.getColorChannel(0)[0] = leds.getColorChannel(1)[amountOfLEDs - 1];
+                        newLEDs.getColorChannel(1)[0] = leds.getColorChannel(2)[amountOfLEDs - 1];
+                        newLEDs.getColorChannel(2)[0] = leds.getColorChannel(0)[amountOfLEDs - 1];
                         LEDFrame tmpLEDs = leds;
                         leds = newLEDs;
                         newLEDs = tmpLEDs;
@@ -164,7 +164,7 @@ public class MovingDotAgent extends AbstractAgent {
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
-                addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(120));
+                addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfLEDs));
 
             }
         }

@@ -82,22 +82,12 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
                 BeepParameter beepParameter = getMapper().readValue(payload, BeepParameter.class);
                 getDevice().beep(beepParameter);
             }
-        } catch (Exception ex) {
-            Logger.getLogger(PiezoSpeakerService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-        try {
+
             if (string.startsWith(getServiceContract().INTENT_MORSE)) {
                 MorseCodeParameter morseCodeParameter = getMapper().readValue(payload, MorseCodeParameter.class);
                 getDevice().morse(morseCodeParameter);
             }
-        } catch (Exception ex) {
-            Logger.getLogger(PiezoSpeakerService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-        try {
+
             if (string.startsWith(getServiceContract().INTENT_CALIBRATE)) {
                 Boolean calibrate = getMapper().readValue(payload, Boolean.class);
                 getDevice().calibrate(calibrate);
@@ -122,7 +112,7 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
 
     @Override
     public void calibrationInvoked() {
-        addStatus(getServiceContract().EVENT_CALIBRATED, System.currentTimeMillis());
+        addEvent(getServiceContract().EVENT_CALIBRATED, System.currentTimeMillis());
     }
 
     @Override

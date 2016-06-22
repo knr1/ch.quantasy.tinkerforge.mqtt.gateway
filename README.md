@@ -409,6 +409,7 @@ Message: - line: 0
 * BrickletMotionDetector
 * BrickletMultiTouch
 * BrickletPiezoSpeaker
+* BrickletRealtimeClock (->without alarm listeners... as Tinkerforge did not yet release the new version)
 * BrickletRemoteSwitch
 * BrickletRotaryEncoder
 * BrickletRotaryPoti

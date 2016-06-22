@@ -41,10 +41,6 @@
  */
 package ch.quantasy.tinkerforge.device.piezoSpeaker;
 
-import ch.quantasy.tinkerforge.device.uvLight.*;
-import com.tinkerforge.BrickletPiezoSpeaker;
-import com.tinkerforge.BrickletUVLight;
-
 
 
 /**
