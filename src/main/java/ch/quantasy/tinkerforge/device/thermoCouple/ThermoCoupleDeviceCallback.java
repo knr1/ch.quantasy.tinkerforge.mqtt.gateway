@@ -39,18 +39,18 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.ambientLightV2;
+package ch.quantasy.tinkerforge.device.thermoCouple;
 
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-import com.tinkerforge.BrickletAmbientLightV2;
+import com.tinkerforge.BrickletThermocouple;
 
 /**
  *
  * @author reto
  */
-public interface AmbientLightV2DeviceCallback extends DeviceCallback, BrickletAmbientLightV2.IlluminanceListener, BrickletAmbientLightV2.IlluminanceReachedListener {
+public interface ThermoCoupleDeviceCallback extends DeviceCallback, BrickletThermocouple.TemperatureListener, BrickletThermocouple.TemperatureReachedListener, BrickletThermocouple.ErrorStateListener {
     public void debouncePeriodChanged(long period);
-    public void illuminanceCallbackPeriodChanged(long period);
-    public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold);
+    public void temperatureCallbackPeriodChanged(long period);
+    public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold);
     public void configurationChanged(DeviceConfiguration average);
 }

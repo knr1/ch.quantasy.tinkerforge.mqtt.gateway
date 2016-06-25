@@ -39,38 +39,46 @@
  *
  *
  */
-package ch.quantasy.gateway.service.device.realtimeClock;
+package ch.quantasy.tinkerforge.device.thermoCouple;
 
-import ch.quantasy.gateway.service.device.DeviceServiceContract;
-import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.realtimeClock.RealtimeClockDevice;
+import com.tinkerforge.BrickletThermocouple;
+
+
 
 /**
  *
  * @author reto
  */
-public class RealtimeClockServiceContract extends DeviceServiceContract {
+public class DeviceTemperatureCallbackThreshold {
+    
+    private char option;
+    private int min;
+    private int max;
 
-    public final String DATE_TIME;
-    public final String OFFSET;
-    public final String INTENT_DATE_TIME;
-    public final String STATUS_DATE_TIME;
-    public final String INTENT_OFFSET;
-    public final String STATUS_OFFSET;
-
-    public RealtimeClockServiceContract(RealtimeClockDevice device) {
-        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    public DeviceTemperatureCallbackThreshold() {
     }
 
-    public RealtimeClockServiceContract(String id, String device) {
-        super(id, device);
-        DATE_TIME = "dateTime";
-        OFFSET = "offset";
-
-        INTENT_DATE_TIME = INTENT + "/" + DATE_TIME;
-        INTENT_OFFSET = INTENT + "/" + OFFSET;
-        STATUS_DATE_TIME = STATUS + "/" + DATE_TIME;
-        STATUS_OFFSET = STATUS + "/" + OFFSET;
-
+    public DeviceTemperatureCallbackThreshold(char option, int min, int max) {
+        this.option = option;
+        this.min = min;
+        this.max = max;
     }
+
+    public DeviceTemperatureCallbackThreshold(BrickletThermocouple.TemperatureCallbackThreshold threshold) {
+        this(threshold.option,threshold.min,threshold.max);
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public char getOption() {
+        return option;
+    }
+    
+    
 }

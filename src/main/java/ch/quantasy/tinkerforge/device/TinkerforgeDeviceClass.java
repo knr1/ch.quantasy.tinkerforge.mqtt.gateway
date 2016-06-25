@@ -89,6 +89,7 @@ import com.tinkerforge.BrickletPTC;
 import com.tinkerforge.BrickletPiezoBuzzer;
 import com.tinkerforge.BrickletPiezoSpeaker;
 import com.tinkerforge.BrickletRS232;
+import com.tinkerforge.BrickletRealTimeClock;
 import com.tinkerforge.BrickletRemoteSwitch;
 import com.tinkerforge.BrickletRotaryEncoder;
 import com.tinkerforge.BrickletRotaryPoti;
@@ -97,6 +98,7 @@ import com.tinkerforge.BrickletSolidStateRelay;
 import com.tinkerforge.BrickletSoundIntensity;
 import com.tinkerforge.BrickletTemperature;
 import com.tinkerforge.BrickletTemperatureIR;
+import com.tinkerforge.BrickletThermocouple;
 import com.tinkerforge.BrickletTilt;
 import com.tinkerforge.BrickletUVLight;
 import com.tinkerforge.BrickletVoltage;
@@ -128,10 +130,10 @@ public enum TinkerforgeDeviceClass {
             BrickletLCD16x2.class), LCD20x4(BrickletLCD20x4.class), LEDStrip(BrickletLEDStrip.class), Line(
             BrickletLine.class), LinearPoti(BrickletLinearPoti.class), LoadCell(BrickletLoadCell.class), Moisture(BrickletMoisture.class), MotionDetector(
             BrickletMotionDetector.class), MultiTouch(BrickletMultiTouch.class), NfcRfid(BrickletNFCRFID.class), PiezoBuzzer(BrickletPiezoBuzzer.class), PiezoSpeaker(
-            BrickletPiezoSpeaker.class), PTC(BrickletPTC.class), RemoteSwitch(BrickletRemoteSwitch.class), RotaryEncoder(
+            BrickletPiezoSpeaker.class), PTC(BrickletPTC.class), RealTimeClock(BrickletRealTimeClock.class), RemoteSwitch(BrickletRemoteSwitch.class), RotaryEncoder(
             BrickletRotaryEncoder.class), RotaryPoti(BrickletRotaryPoti.class), RS232(BrickletRS232.class), SegmentDisplay4x7(
             BrickletSegmentDisplay4x7.class), SolidState(BrickletSolidStateRelay.class), SoundIntensity(BrickletSoundIntensity.class), Temperature(
-            BrickletTemperature.class), TemperatureIR(BrickletTemperatureIR.class), Tilt(BrickletTilt.class), UVLight(BrickletUVLight.class), Voltage(
+            BrickletTemperature.class), TemperatureIR(BrickletTemperatureIR.class), ThermoCouple(BrickletThermocouple.class), Tilt(BrickletTilt.class), UVLight(BrickletUVLight.class), Voltage(
             BrickletVoltage.class), VoltageCurrent(BrickletVoltageCurrent.class);
 
     public final int identifier;

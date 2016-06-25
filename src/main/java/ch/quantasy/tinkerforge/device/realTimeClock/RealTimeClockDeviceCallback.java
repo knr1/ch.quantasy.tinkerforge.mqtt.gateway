@@ -39,18 +39,15 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.ambientLightV2;
-
+package ch.quantasy.tinkerforge.device.realTimeClock;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-import com.tinkerforge.BrickletAmbientLightV2;
 
 /**
  *
  * @author reto
  */
-public interface AmbientLightV2DeviceCallback extends DeviceCallback, BrickletAmbientLightV2.IlluminanceListener, BrickletAmbientLightV2.IlluminanceReachedListener {
-    public void debouncePeriodChanged(long period);
-    public void illuminanceCallbackPeriodChanged(long period);
-    public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold);
-    public void configurationChanged(DeviceConfiguration average);
+public interface RealTimeClockDeviceCallback extends DeviceCallback{
+
+    public void dateTimeChanged(DateTimeParameter dateTimeParameter);
+    public void offsetChanged(byte offset);
 }

@@ -41,7 +41,6 @@
  */
 package ch.quantasy.tinkerforge.device;
 
-import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.Device;
 import com.tinkerforge.NotConnectedException;
@@ -49,8 +48,6 @@ import com.tinkerforge.TimeoutException;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

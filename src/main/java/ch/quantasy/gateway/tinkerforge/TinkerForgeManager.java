@@ -73,6 +73,7 @@ import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
 import ch.quantasy.gateway.service.device.loadCell.LoadCellService;
 import ch.quantasy.gateway.service.device.multiTouch.MultiTouchService;
 import ch.quantasy.gateway.service.device.piezoSpeaker.PiezoSpeakerService;
+import ch.quantasy.gateway.service.device.realTimeClock.RealTimeClockService;
 import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderService;
 import ch.quantasy.gateway.service.device.rotaryPoti.RotaryPotiService;
 import ch.quantasy.gateway.service.device.segment4x7.Segment4x7Service;
@@ -80,6 +81,7 @@ import ch.quantasy.gateway.service.device.solidStateRelay.SolidStateRelayService
 import ch.quantasy.gateway.service.device.soundIntensity.SoundIntensityService;
 import ch.quantasy.gateway.service.device.temperature.TemperatureService;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
+import ch.quantasy.gateway.service.device.thermoCouple.ThermoCoupleService;
 import ch.quantasy.gateway.service.device.tilt.TiltService;
 import ch.quantasy.gateway.service.device.uvLight.UVLightService;
 import ch.quantasy.tinkerforge.device.IMU.IMUDevice;
@@ -114,6 +116,7 @@ import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
+import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
@@ -122,6 +125,7 @@ import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
+import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.factory.TinkerforgeStackFactory;
@@ -371,6 +375,14 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof LoadCellDevice) {
                 LoadCellService service = new LoadCellService((LoadCellDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof RealTimeClockDevice) {
+                RealTimeClockService service = new RealTimeClockService((RealTimeClockDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof ThermoCoupleDevice) {
+                ThermoCoupleService service = new ThermoCoupleService((ThermoCoupleDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
 

@@ -39,9 +39,9 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.ambientLightV2;
+package ch.quantasy.tinkerforge.device.thermoCouple;
 
-import com.tinkerforge.BrickletAmbientLightV2;
+import com.tinkerforge.BrickletThermocouple;
 
 /**
  *
@@ -49,11 +49,11 @@ import com.tinkerforge.BrickletAmbientLightV2;
  */
 public class DeviceConfiguration {
 
-    public static enum IlluminanceRange {
-        lx_unlimitted((short) 6), lx_64000((short) 0), lx_32000((short) 1), lx_16000((short) 2), lx_8000((short) 3), lx_1300((short) 4), lx_600((short) 5);
+    public static enum Averaging {
+        sample_1((short) 1), sample_2((short) 2), sample_4((short) 4), sample_8((short) 8), sample_16((short) 16);
         private short value;
 
-        private IlluminanceRange(short value) {
+        private Averaging(short value) {
             this.value = value;
         }
 
@@ -61,21 +61,21 @@ public class DeviceConfiguration {
             return value;
         }
 
-        public static IlluminanceRange getIlluminanceRangeFor(short s) throws IllegalArgumentException{
-            for (IlluminanceRange range : values()) {
+        public static Averaging getAveragingFor(short s) throws IllegalArgumentException {
+            for (Averaging range : values()) {
                 if (range.value == s) {
                     return range;
                 }
             }
-            throw new IllegalArgumentException("Not supported: "+s);
+            throw new IllegalArgumentException("Not supported: " + s);
         }
     }
 
-    public static enum IntegrationTime {
-        ms_50((short) 0), ms_100((short) 1), ms_150((short) 2), ms_200((short) 3), ms_250((short) 4), ms_300((short) 5), ms_350((short) 6), ms_400((short) 7);
+    public static enum Type {
+        B((short) 0), E((short) 1), J((short) 2), K((short) 3), N((short) 4), R((short) 5), S((short) 6), T((short) 7), G8((short) 8), G32((short) 9);
         private short value;
 
-        private IntegrationTime(short value) {
+        private Type(short value) {
             this.value = value;
         }
 
@@ -83,8 +83,8 @@ public class DeviceConfiguration {
             return value;
         }
 
-        public static IntegrationTime getIntegrationTimeFor(short s) {
-            for (IntegrationTime range : values()) {
+        public static Type getTypeFor(short s) {
+            for (Type range : values()) {
                 if (range.value == s) {
                     return range;
                 }
@@ -92,35 +92,64 @@ public class DeviceConfiguration {
             return null;
         }
     }
-    private IlluminanceRange illuminanceRange;
-    private IntegrationTime integrationTime;
+    public static enum Filter {
+        Hz_50((short) 0), Hz_60((short) 1);
+        private short value;
+
+        private Filter(short value) {
+            this.value = value;
+        }
+
+        public short getValue() {
+            return value;
+        }
+
+        public static Filter getFilterFor(short s) {
+            for (Filter range : values()) {
+                if (range.value == s) {
+                    return range;
+                }
+            }
+            return null;
+        }
+    }
+    private Averaging averaging;
+    private Type type;
+    private Filter filter;
 
     public DeviceConfiguration() {
     }
 
-    public DeviceConfiguration(String illuminanceRange, String integrationTime) {
-        this(IlluminanceRange.valueOf(illuminanceRange),IntegrationTime.valueOf(integrationTime));
+    public DeviceConfiguration(String averaging, String type, String filter) {
+        this(Averaging.valueOf(averaging), Type.valueOf(type), Filter.valueOf(filter));
     }
 
-    public DeviceConfiguration(IlluminanceRange illuminanceRange, IntegrationTime integrationTime) {
-        this.illuminanceRange = illuminanceRange;
-        this.integrationTime = integrationTime;
+    public DeviceConfiguration(Averaging averaging, Type type, Filter filter) {
+        this.averaging = averaging;
+        this.type = type;
+        this.filter=filter;
     }
 
-    public DeviceConfiguration(short illuminanceRange, short integrationTime) throws IllegalArgumentException {
-        this(IlluminanceRange.getIlluminanceRangeFor(illuminanceRange), IntegrationTime.getIntegrationTimeFor(integrationTime));
+    public DeviceConfiguration(short averaging, short type, short filter) throws IllegalArgumentException {
+        this(Averaging.getAveragingFor(averaging), Type.getTypeFor(type), Filter.getFilterFor(filter));
     }
 
-    public DeviceConfiguration(BrickletAmbientLightV2.Configuration configuration) {
-        this(configuration.illuminanceRange, configuration.integrationTime);
+    public DeviceConfiguration(BrickletThermocouple.Configuration configuration) {
+        this(configuration.averaging, configuration.thermocoupleType, configuration.filter);
     }
 
-    public IlluminanceRange getIlluminanceRange() {
-        return illuminanceRange;
+    public Averaging getAveraging() {
+        return averaging;
     }
 
-    public IntegrationTime getIntegrationTime() {
-        return integrationTime;
+    public Type getType() {
+        return type;
     }
+
+    public Filter getFilter() {
+        return filter;
+    }
+    
+    
 
 }

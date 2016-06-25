@@ -39,15 +39,38 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.realtimeClock;
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
+package ch.quantasy.gateway.service.device.realTimeClock;
+
+import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 
 /**
  *
  * @author reto
  */
-public interface RealtimeClockDeviceCallback extends DeviceCallback{
+public class RealTimeClockServiceContract extends DeviceServiceContract {
 
-    public void dateTimeChanged(DateTimeParameter dateTimeParameter);
-    public void offsetChanged(byte offset);
+    public final String DATE_TIME;
+    public final String OFFSET;
+    public final String INTENT_DATE_TIME;
+    public final String STATUS_DATE_TIME;
+    public final String INTENT_OFFSET;
+    public final String STATUS_OFFSET;
+
+    public RealTimeClockServiceContract(RealTimeClockDevice device) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public RealTimeClockServiceContract(String id, String device) {
+        super(id, device);
+        DATE_TIME = "dateTime";
+        OFFSET = "offset";
+
+        INTENT_DATE_TIME = INTENT + "/" + DATE_TIME;
+        INTENT_OFFSET = INTENT + "/" + OFFSET;
+        STATUS_DATE_TIME = STATUS + "/" + DATE_TIME;
+        STATUS_OFFSET = STATUS + "/" + OFFSET;
+
+    }
 }

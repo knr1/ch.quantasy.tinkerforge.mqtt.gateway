@@ -39,7 +39,7 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.realtimeClock;
+package ch.quantasy.tinkerforge.device.realTimeClock;
 
 import com.tinkerforge.BrickletRealTimeClock;
 

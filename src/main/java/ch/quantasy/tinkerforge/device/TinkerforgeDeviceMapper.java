@@ -71,6 +71,7 @@ import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
+import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
@@ -79,6 +80,7 @@ import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
+import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
@@ -112,6 +114,7 @@ import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletMultiTouch;
 import com.tinkerforge.BrickletPiezoSpeaker;
+import com.tinkerforge.BrickletRealTimeClock;
 import com.tinkerforge.BrickletRemoteSwitch;
 import com.tinkerforge.BrickletRotaryEncoder;
 import com.tinkerforge.BrickletRotaryPoti;
@@ -120,6 +123,7 @@ import com.tinkerforge.BrickletSolidStateRelay;
 import com.tinkerforge.BrickletSoundIntensity;
 import com.tinkerforge.BrickletTemperature;
 import com.tinkerforge.BrickletTemperatureIR;
+import com.tinkerforge.BrickletThermocouple;
 import com.tinkerforge.BrickletTilt;
 import com.tinkerforge.BrickletUVLight;
 import com.tinkerforge.Device;
@@ -252,6 +256,12 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.LoadCell == TinkerforgeDeviceClass.getDevice(device)) {
             return new LoadCellDevice(address, (BrickletLoadCell) device);
+        }
+        if (TinkerforgeDeviceClass.RealTimeClock == TinkerforgeDeviceClass.getDevice(device)) {
+            return new RealTimeClockDevice(address, (BrickletRealTimeClock) device);
+        }
+         if (TinkerforgeDeviceClass.ThermoCouple == TinkerforgeDeviceClass.getDevice(device)) {
+            return new ThermoCoupleDevice(address, (BrickletThermocouple) device);
         }
         return new TinkerforgeDevice(address, device);
     }

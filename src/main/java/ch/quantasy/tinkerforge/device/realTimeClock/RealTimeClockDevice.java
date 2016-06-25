@@ -39,7 +39,7 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.realtimeClock;
+package ch.quantasy.tinkerforge.device.realTimeClock;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
@@ -56,12 +56,12 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class RealtimeClockDevice extends GenericDevice<BrickletRealTimeClock, RealtimeClockDeviceCallback> {
+public class RealTimeClockDevice extends GenericDevice<BrickletRealTimeClock, RealTimeClockDeviceCallback> {
 
     private DateTimeParameter dateTimeParameter;
     private Byte offset;
 
-    public RealtimeClockDevice(TinkerforgeStackAddress address, BrickletRealTimeClock device) throws NotConnectedException, TimeoutException {
+    public RealTimeClockDevice(TinkerforgeStackAddress address, BrickletRealTimeClock device) throws NotConnectedException, TimeoutException {
         super(address, device);
     }
 
@@ -87,7 +87,7 @@ public class RealtimeClockDevice extends GenericDevice<BrickletRealTimeClock, Re
             this.dateTimeParameter = new DateTimeParameter(getDevice().getDateTime());
             super.getCallback().dateTimeChanged(this.dateTimeParameter);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RealtimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -97,7 +97,7 @@ public class RealtimeClockDevice extends GenericDevice<BrickletRealTimeClock, Re
             this.offset = getDevice().getOffset();
             super.getCallback().offsetChanged(this.offset);
         } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RealtimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

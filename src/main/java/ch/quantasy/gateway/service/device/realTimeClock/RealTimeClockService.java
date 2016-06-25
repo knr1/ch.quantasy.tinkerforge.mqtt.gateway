@@ -39,26 +39,26 @@
  *
  *
  */
-package ch.quantasy.gateway.service.device.realtimeClock;
+package ch.quantasy.gateway.service.device.realTimeClock;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.realtimeClock.DateTimeParameter;
-import ch.quantasy.tinkerforge.device.realtimeClock.RealtimeClockDevice;
-import ch.quantasy.tinkerforge.device.realtimeClock.RealtimeClockDeviceCallback;
+import ch.quantasy.tinkerforge.device.realTimeClock.DateTimeParameter;
+import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDeviceCallback;
 
 /**
  *
  * @author reto
  */
-public class RealtimeClockService extends AbstractDeviceService<RealtimeClockDevice, RealtimeClockServiceContract> implements RealtimeClockDeviceCallback {
+public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDevice, RealTimeClockServiceContract> implements RealTimeClockDeviceCallback {
 
-    public RealtimeClockService(RealtimeClockDevice device, URI mqttURI) throws MqttException {
-        super(mqttURI, device, new RealtimeClockServiceContract(device));
+    public RealTimeClockService(RealTimeClockDevice device, URI mqttURI) throws MqttException {
+        super(mqttURI, device, new RealTimeClockServiceContract(device));
         addDescription(getServiceContract().INTENT_DATE_TIME, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
         addDescription(getServiceContract().STATUS_DATE_TIME, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
         addDescription(getServiceContract().INTENT_OFFSET, "[-128..127]");
@@ -83,7 +83,7 @@ public class RealtimeClockService extends AbstractDeviceService<RealtimeClockDev
                 getDevice().setOffset(morseCodeParameter);
             }
         } catch (Exception ex) {
-            Logger.getLogger(RealtimeClockService.class
+            Logger.getLogger(RealTimeClockService.class
                     .getName()).log(Level.SEVERE, null, ex);
             return;
         }

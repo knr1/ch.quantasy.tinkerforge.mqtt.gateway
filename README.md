@@ -418,6 +418,7 @@ Message: - line: 0
 * BrickletSoundIntensity
 * BrickletTemperature
 * BrickletTemperatureIR
+* BrickletThermoCouple
 * BrickletTilt
 * BrickletUVLight
 
