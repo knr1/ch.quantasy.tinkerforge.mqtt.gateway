@@ -67,7 +67,7 @@ You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Vi
  [micro-service]:<https://en.wikipedia.org/wiki/Microservices>
  [tinkerforge]:<http://www.tinkerforge.com/en>
  [MQTT]: <http://mqtt.org/>
- [TiMqWay.jar]: <https://drive.google.com/open?id=0B9adEExqrkwQdmVpRmE2NkR6YWM>
+ [TiMqWay.jar]: <https://drive.google.com/open?id=0B9adEExqrkwQQzJyQnU4NVUtOHc>
  [d3Viewer]: <https://github.com/hardillb/d3-MQTT-Topic-Tree>
  [YAML]: <https://en.wikipedia.org/wiki/YAML>
  [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]: <https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial>
