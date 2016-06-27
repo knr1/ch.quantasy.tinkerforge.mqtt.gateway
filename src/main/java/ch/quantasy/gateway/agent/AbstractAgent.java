@@ -60,17 +60,19 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author reto
  */
-public abstract class AbstractAgent implements MQTTCommunicationCallback {
+public abstract class AbstractAgent implements MQTTCommunicationCallback{
 
     private final MQTTCommunication communication;
     private final ObjectMapper mapper;
 
     private final Map<String, MqttMessage> messageMap;
     private String agentIdentifier;
+    private final Map<String, MessageConsumer> messageConsumerMap;
 
     public AbstractAgent(URI mqttURI, String sessionID, String agentIdentifier) throws MqttException {
         this.agentIdentifier = agentIdentifier;
         messageMap = new HashMap<>();
+        messageConsumerMap=new HashMap<>();
         mapper = new ObjectMapper(new YAMLFactory());
         communication = new MQTTCommunication();
         MQTTParameters parameters = new MQTTParameters();
@@ -98,6 +100,11 @@ public abstract class AbstractAgent implements MQTTCommunicationCallback {
     public void subscribe(String topic,int qualityOfService){
         communication.subscribe(topic, qualityOfService);
     }
+    
+//    public void subscribe(String topic,int qualityOfService,MessageConsumer consumer){
+//        messageConsumerMap.
+//        communication.subscribe(topic, qualityOfService);
+//    }
 
     @Override
     public void connectionLost(Throwable thrwbl) {

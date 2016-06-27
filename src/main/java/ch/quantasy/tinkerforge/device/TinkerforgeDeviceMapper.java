@@ -71,6 +71,7 @@ import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
+import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
@@ -113,6 +114,7 @@ import com.tinkerforge.BrickletLoadCell;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletMultiTouch;
+import com.tinkerforge.BrickletPTC;
 import com.tinkerforge.BrickletPiezoSpeaker;
 import com.tinkerforge.BrickletRealTimeClock;
 import com.tinkerforge.BrickletRemoteSwitch;
@@ -260,8 +262,11 @@ public class TinkerforgeDeviceMapper {
         if (TinkerforgeDeviceClass.RealTimeClock == TinkerforgeDeviceClass.getDevice(device)) {
             return new RealTimeClockDevice(address, (BrickletRealTimeClock) device);
         }
-         if (TinkerforgeDeviceClass.ThermoCouple == TinkerforgeDeviceClass.getDevice(device)) {
+        if (TinkerforgeDeviceClass.ThermoCouple == TinkerforgeDeviceClass.getDevice(device)) {
             return new ThermoCoupleDevice(address, (BrickletThermocouple) device);
+        }
+        if (TinkerforgeDeviceClass.PTC == TinkerforgeDeviceClass.getDevice(device)) {
+            return new PTCDevice(address, (BrickletPTC) device);
         }
         return new TinkerforgeDevice(address, device);
     }
