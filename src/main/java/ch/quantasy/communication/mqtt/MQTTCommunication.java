@@ -127,6 +127,17 @@ public class MQTTCommunication implements IMqttActionListener {
             return null;
         }
     }
+    
+    public synchronized IMqttToken unsubscribe(String topic) {
+        try {
+            if (mqttClient == null || !mqttClient.isConnected()) {
+                return null;
+            }
+            return mqttClient.unsubscribe(topic);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
 
     public synchronized void disconnect() throws MqttException {
         if (mqttClient == null) {

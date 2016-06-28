@@ -39,14 +39,12 @@
  *
  *
  */
-package ch.quantasy.gateway.agent.connector;
+package ch.quantasy.gateway.agent.describer;
 
 import ch.quantasy.gateway.agent.AbstractAgent;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
-import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.StringTokenizer;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -54,55 +52,46 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author reto
  */
-public class Connector extends AbstractAgent {
+public class DescriberAgent extends AbstractAgent {
 
     private final ManagerServiceContract managerServiceContract;
 
-    public Connector(URI mqttURI) throws MqttException {
-        super(mqttURI, "f94kjf93d9", "Connector");
+    public DescriberAgent(URI mqttURI) throws MqttException {
+        super(mqttURI, "349h3492zf", "DescriberAgent");
+
         managerServiceContract = new ManagerServiceContract("Manager");
-        super.subscribe(managerServiceContract.ID_TOPIC + "/#", 1);
-        stackManager("erdgeschoss");
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        stackManager("untergeschoss");
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        stackManager("obergeschoss");
-        
+        addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights01");
+
+        subscribe("TF/LEDStrip/description/#", 0);
+
     }
 
-    
     @Override
     public void messageArrived(String string, MqttMessage mm) throws Exception {
-        System.out.printf("Topic: %s Message: %s\n", string, new String(mm.getPayload()));
+        string=string.replaceAll("description", "<serviceUID>").replaceAll("intent","intent/<agentID>");
+        System.out.println(string);
+
+        String message = new String(mm.getPayload()).replaceAll("\"", "");
+
+        String[] split = message.split("\\\\n");
+        for (String m : split) {
+            m=m.replaceAll("\\\\\n", " ").replaceAll("\\\\", "").replaceAll("---", "---\n");
+            
+            if(m.length()<2)continue;
+            System.out.println(" " + m);
+        }
+        System.out.println("");
     }
 
-    private SwitchSocketCParameters.SwitchTo state;
-
-    private void stackManager(String stackName) {
-        String topic=managerServiceContract.INTENT_STACK_ADDRESS_ADD;
-        addMessage(topic, stackName);
-        System.out.println("Adding: " + stackName);
-    }
-
-    public static void main(String[] args) throws Throwable {
+    public static void main(String... args) throws Throwable {
         URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        //URI mqttURI = URI.create("tcp://matrix:1883");
-
         if (args.length > 0) {
             mqttURI = URI.create(args[0]);
         } else {
             System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
         }
         System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-        Connector agent = new Connector(mqttURI);
+        DescriberAgent agent = new DescriberAgent(mqttURI);
         System.in.read();
     }
 

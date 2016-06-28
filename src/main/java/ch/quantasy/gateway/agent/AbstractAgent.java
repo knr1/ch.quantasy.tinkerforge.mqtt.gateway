@@ -101,6 +101,10 @@ public abstract class AbstractAgent implements MQTTCommunicationCallback{
         communication.subscribe(topic, qualityOfService);
     }
     
+    public void unsubscribe(String topic){
+        communication.unsubscribe(topic);
+    }
+    
 //    public void subscribe(String topic,int qualityOfService,MessageConsumer consumer){
 //        messageConsumerMap.
 //        communication.subscribe(topic, qualityOfService);
