@@ -65,6 +65,7 @@ import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorService;
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchService;
 import ch.quantasy.gateway.service.device.dualButton.DualButtonService;
 import ch.quantasy.gateway.service.device.dustDetector.DustDetectorService;
+import ch.quantasy.gateway.service.device.gps.GPSService;
 import ch.quantasy.gateway.service.device.hallEffect.HallEffectService;
 import ch.quantasy.gateway.service.device.joystick.JoystickService;
 import ch.quantasy.gateway.service.device.laserRangeFinder.LaserRangeFinderService;
@@ -105,6 +106,7 @@ import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
+import ch.quantasy.tinkerforge.device.gps.GPSDevice;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
@@ -384,6 +386,11 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             if (tinkerforgeDevice instanceof ThermoCoupleDevice) {
                 ThermoCoupleService service = new ThermoCoupleService((ThermoCoupleDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
+            }
+            if(tinkerforgeDevice instanceof GPSDevice){
+                GPSService service=new GPSService((GPSDevice)tinkerforgeDevice, mqttURI);
+                services.add(service);
+                
             }
 
         } catch (MqttException ex) {

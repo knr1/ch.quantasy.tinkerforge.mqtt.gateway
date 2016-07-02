@@ -59,6 +59,7 @@ import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
+import ch.quantasy.tinkerforge.device.gps.GPSDevice;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
@@ -101,6 +102,7 @@ import com.tinkerforge.BrickletDistanceUS;
 import com.tinkerforge.BrickletDualButton;
 import com.tinkerforge.BrickletDualRelay;
 import com.tinkerforge.BrickletDustDetector;
+import com.tinkerforge.BrickletGPS;
 import com.tinkerforge.BrickletHallEffect;
 import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletJoystick;
@@ -267,6 +269,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.PTC == TinkerforgeDeviceClass.getDevice(device)) {
             return new PTCDevice(address, (BrickletPTC) device);
+        }
+        if (TinkerforgeDeviceClass.GPS == TinkerforgeDeviceClass.getDevice(device)) {
+            return new GPSDevice(address, (BrickletGPS) device);
         }
         return new TinkerforgeDevice(address, device);
     }
