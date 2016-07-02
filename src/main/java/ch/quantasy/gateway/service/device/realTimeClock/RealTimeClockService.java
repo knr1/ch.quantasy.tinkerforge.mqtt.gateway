@@ -60,12 +60,12 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
 
     public RealTimeClockService(RealTimeClockDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new RealTimeClockServiceContract(device));
-        addDescription(getServiceContract().INTENT_DATE_TIME_SET, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        addDescription(getServiceContract().INTENT_DATE_TIME_SET, "year: [2000..2099]\n month: [1..12]\n day:b[1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
         addDescription(getServiceContract().STATUS_DATE_TIME, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
         addDescription(getServiceContract().INTENT_OFFSET, "[-128..127]");
         addDescription(getServiceContract().STATUS_OFFSET, "[-128..127]");
-        addDescription(getServiceContract().INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
+        addDescription(getServiceContract().INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
         addDescription(getServiceContract().INTENT_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.."+Integer.MAX_VALUE+"]");
         addDescription(getServiceContract().STATUS_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.."+Integer.MAX_VALUE+"]");
