@@ -60,6 +60,8 @@ public class RealTimeClockDevice extends GenericDevice<BrickletRealTimeClock, Re
 
     private DateTimeParameter dateTimeParameter;
     private Byte offset;
+    private Long period;
+    private AlarmParamter alarmParameter;
 
     public RealTimeClockDevice(TinkerforgeStackAddress address, BrickletRealTimeClock device) throws NotConnectedException, TimeoutException {
         super(address, device);
@@ -67,18 +69,27 @@ public class RealTimeClockDevice extends GenericDevice<BrickletRealTimeClock, Re
 
     @Override
     protected void addDeviceListeners() {
+        getDevice().addAlarmListener(super.getCallback());
+        getDevice().addDateTimeListener(super.getCallback());
         if (dateTimeParameter != null) {
             this.setDateTime(dateTimeParameter);
         }
         if (offset != null) {
             this.setOffset(offset);
         }
+        if(period!=null){
+            this.setDateTimeCallbackPeriod(period);
+        }
+        if(alarmParameter!=null){
+            this.setAlarm(alarmParameter);
+        }
 
     }
 
     @Override
     protected void removeDeviceListeners() {
-
+        getDevice().removeAlarmListener(super.getCallback());
+        getDevice().removeDateTimeListener(super.getCallback());
     }
 
     public void setDateTime(DateTimeParameter dateTimeParameter) {
@@ -90,7 +101,25 @@ public class RealTimeClockDevice extends GenericDevice<BrickletRealTimeClock, Re
             Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void setDateTimeCallbackPeriod(Long period){
+         try {
+            getDevice().setDateTimeCallbackPeriod(period);
+            this.period = getDevice().getDateTimeCallbackPeriod();
+            super.getCallback().dateTimeCallbackPeriodChanged(this.period);
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    public void setAlarm(AlarmParamter alarmParameter) {
+        try {
+            getDevice().setAlarm(alarmParameter.getMonth(), alarmParameter.getDay(), alarmParameter.getHour(), alarmParameter.getMinute(), alarmParameter.getSecond(), alarmParameter.getWeekday().getValue(),alarmParameter.getInterval());
+            this.alarmParameter = new AlarmParamter(getDevice().getAlarm());
+            super.getCallback().alarmChanged(this.alarmParameter);
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void setOffset(Byte offset) {
         try {
             getDevice().setOffset(offset);

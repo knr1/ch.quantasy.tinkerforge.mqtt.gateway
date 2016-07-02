@@ -68,8 +68,7 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
         addDescription(getServiceContract().INTENT_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.."+Short.MAX_VALUE+"]\n max: [0.."+Short.MAX_VALUE+"]");
         addDescription(getServiceContract().INTENT_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
-        addDescription(getServiceContract().INTENT_WIRE_MODE, "[2|3|4]");
-        
+        addDescription(getServiceContract().INTENT_WIRE_MODE, "[2|3|4]"); 
         addDescription(getServiceContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
         addDescription(getServiceContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
         addDescription(getServiceContract().EVENT_RESISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.."+Short.MAX_VALUE+"]");
@@ -77,8 +76,7 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
         addDescription(getServiceContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
         addDescription(getServiceContract().STATUS_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.."+Short.MAX_VALUE+"]\n max: [0.."+Short.MAX_VALUE+"]");
-        
+        addDescription(getServiceContract().STATUS_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.."+Short.MAX_VALUE+"]\n max: [0.."+Short.MAX_VALUE+"]");      
         addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
          addDescription(getServiceContract().STATUS_WIRE_MODE, "[2|3|4]");

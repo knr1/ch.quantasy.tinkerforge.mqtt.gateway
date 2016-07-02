@@ -47,21 +47,22 @@ import com.tinkerforge.BrickletRealTimeClock;
  *
  * @author reto
  */
-public class DateTimeParameter {
+public class AlarmParamter {
 
+    public static final byte MATCH_DISABLED=-1;
     public static enum WeekDay {
-        monday((short) 1), tuesday((short) 2), wednesday((short) 3), thursday((short) 4), friday((short) 5), saturday((short) 6), sunday((short) 7);
-        private short value;
+        monday((byte) 1), tuesday((byte) 2), wednesday((byte) 3), thursday((byte) 4), friday((byte) 5), saturday((byte) 6), sunday((byte) 7), disabled(MATCH_DISABLED);
+        private byte value;
 
-        private WeekDay(short value) {
+        private WeekDay(byte value) {
             this.value = value;
         }
 
-        public short getValue() {
+        public byte getValue() {
             return value;
         }
 
-        public static WeekDay getWeekdayFor(short s) throws IllegalArgumentException {
+        public static WeekDay getWeekdayFor(byte s) throws IllegalArgumentException {
             for (WeekDay weekday : values()) {
                 if (weekday.value == s) {
                     return weekday;
@@ -71,71 +72,67 @@ public class DateTimeParameter {
         }
     }
 
-    private int year;
-    private short month;
-    private short day;
-    private short hour;
-    private short minute;
-    private short second;
-    private short centisecond;
+    private byte month;
+    private byte day;
+    private byte hour;
+    private byte minute;
+    private byte second;
     private WeekDay weekday;
+    private int interval;
 
-    private DateTimeParameter() {
+    private AlarmParamter() {
     }
 
-    public DateTimeParameter(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday) {
-        this(year, month, day, hour, minute, second, centisecond, WeekDay.getWeekdayFor(weekday));
+    public AlarmParamter(byte month, byte day, byte hour, byte minute, byte second, byte weekday,int interval) {
+        this(month, day, hour, minute, second, WeekDay.getWeekdayFor(weekday),interval);
     }
 
-    public DateTimeParameter(int year, short month, short day, short hour, short minute, short second, short centisecond, String weekday) {
-        this(year, month, day, hour, minute, second, centisecond, WeekDay.valueOf(weekday));
+    public AlarmParamter(byte month, byte day, byte hour, byte minute, byte second, String weekday,int interval) {
+        this(month, day, hour, minute, second, WeekDay.valueOf(weekday),interval);
     }
 
-    public DateTimeParameter(int year, short month, short day, short hour, short minute, short second, short centisecond, WeekDay weekday) {
-        this.year = year;
+    public AlarmParamter( byte month, byte day, byte hour, byte minute, byte second, WeekDay weekday,int interval) {
         this.month = month;
         this.day = day;
         this.hour = hour;
         this.minute = minute;
         this.second = second;
-        this.centisecond = centisecond;
         this.weekday = weekday;
+        this.interval=interval;
     }
 
-    public DateTimeParameter(BrickletRealTimeClock.DateTime dateTime) {
-        this(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute, dateTime.second, dateTime.centisecond, dateTime.weekday);
+    public AlarmParamter(BrickletRealTimeClock.Alarm alarm) {
+        this(alarm.month,alarm.day,alarm.hour,alarm.minute,alarm.second,alarm.weekday,alarm.interval);
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public short getMonth() {
+    public byte getMonth() {
         return month;
     }
 
-    public short getDay() {
+    public byte getDay() {
         return day;
     }
 
-    public short getHour() {
+    public byte getHour() {
         return hour;
     }
 
-    public short getMinute() {
+    public byte getMinute() {
         return minute;
     }
 
-    public short getSecond() {
+    public byte getSecond() {
         return second;
-    }
-
-    public short getCentisecond() {
-        return centisecond;
     }
 
     public WeekDay getWeekday() {
         return weekday;
     }
+
+    public int getInterval() {
+        return interval;
+    }
+    
+    
 
 }

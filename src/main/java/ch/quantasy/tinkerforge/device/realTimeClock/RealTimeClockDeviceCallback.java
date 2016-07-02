@@ -41,13 +41,16 @@
  */
 package ch.quantasy.tinkerforge.device.realTimeClock;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
+import com.tinkerforge.BrickletRealTimeClock;
 
 /**
  *
  * @author reto
  */
-public interface RealTimeClockDeviceCallback extends DeviceCallback{
+public interface RealTimeClockDeviceCallback extends DeviceCallback,BrickletRealTimeClock.AlarmListener,BrickletRealTimeClock.DateTimeListener{
 
     public void dateTimeChanged(DateTimeParameter dateTimeParameter);
     public void offsetChanged(byte offset);
+    public void dateTimeCallbackPeriodChanged(long period);
+    public void alarmChanged(AlarmParamter alarmParameter);
 }
