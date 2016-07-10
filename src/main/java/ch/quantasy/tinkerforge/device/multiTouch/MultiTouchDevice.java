@@ -85,7 +85,7 @@ public class MultiTouchDevice extends GenericDevice<BrickletMultiTouch, MultiTou
                 super.getCallback().recalibrated();
             }
 
-        } catch (TimeoutException | NotConnectedException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(MultiTouchDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -95,7 +95,7 @@ public class MultiTouchDevice extends GenericDevice<BrickletMultiTouch, MultiTou
             getDevice().setElectrodeConfig(config);
             this.electrodeConfig = getDevice().getElectrodeConfig();
             super.getCallback().electrodeConfigChanged(this.electrodeConfig);
-        } catch (TimeoutException | NotConnectedException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(MultiTouchDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -105,7 +105,7 @@ public class MultiTouchDevice extends GenericDevice<BrickletMultiTouch, MultiTou
             getDevice().setElectrodeSensitivity(sensitivity);
             this.sensitivity = getDevice().getElectrodeSensitivity();
             super.getCallback().electrodeSensitivityChanged(this.sensitivity);
-        } catch (TimeoutException | NotConnectedException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(MultiTouchDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

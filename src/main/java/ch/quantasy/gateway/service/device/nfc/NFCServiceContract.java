@@ -39,56 +39,42 @@
  *
  *
  */
-package ch.quantasy.tinkerforge.device.remoteSwitch;
+package ch.quantasy.gateway.service.device.nfc;
+
+import ch.quantasy.gateway.service.device.multiTouch.*;
+import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
+import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 
 /**
  *
  * @author reto
  */
-public class SwitchSocketCParameters implements SocketParameters{
-    public static enum SwitchTo{
-        ON((short)1),OFF((short)0);
-        private short value;
-        private SwitchTo(short value){
-            this.value=value;
-        }
+public class NFCServiceContract extends DeviceServiceContract {
 
-        public short getValue() {
-            return value;
-        }
-    }
-    private char systemCode;
-    private short deviceCode;
-    private SwitchTo switchingValue;
-
-    public SwitchSocketCParameters() {
-    }
-    public SwitchSocketCParameters(char systemCode, short deviceCode, String switchingValue) {
-        this(systemCode, deviceCode, SwitchTo.valueOf(switchingValue));
-    }
-
-    public SwitchSocketCParameters(char systemCode, short deviceCode, SwitchTo switchingValue) {
-        this.systemCode = systemCode;
-        this.deviceCode = deviceCode;
-        this.switchingValue = switchingValue;
-    }
-
-    public short getDeviceCode() {
-        return deviceCode;
-    }
-
-    public SwitchTo getSwitchingValue() {
-        return switchingValue;
-    }
-
-    public char getSystemCode() {
-        return systemCode;
-    }
-
-    
-
+    public final String SCANNING;
+    public final String CALLBACK_PERIOD;
+    public final String INTENT_SCANNING_CALLBACK_PERIOD;
+    public final String STATUS_SCANNING_CALLBACK_PERIOD;
+    public final String TAG;
+    public final String EVENT_TAG_DISCOVERD;
+    public final String EVENT_TAG_VANISHED;
     
     
-    
-    
+    public NFCServiceContract(NFCRFIDDevice device) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public NFCServiceContract(String id, String device) {
+        super(id, device);
+        SCANNING="scanning";
+        CALLBACK_PERIOD="callbackPeriod";
+        INTENT_SCANNING_CALLBACK_PERIOD=INTENT+"/"+SCANNING+"/"+CALLBACK_PERIOD;
+        STATUS_SCANNING_CALLBACK_PERIOD=STATUS+"/"+SCANNING+"/"+CALLBACK_PERIOD;
+        TAG="tag";
+        EVENT_TAG_DISCOVERD=EVENT+"/"+TAG+"/discovered";
+        EVENT_TAG_VANISHED=EVENT+"/"+TAG+"/vanished";
+        
+    }
 }

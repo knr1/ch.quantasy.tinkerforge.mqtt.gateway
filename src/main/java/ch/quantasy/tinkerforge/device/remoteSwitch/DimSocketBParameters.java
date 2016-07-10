@@ -45,7 +45,7 @@ package ch.quantasy.tinkerforge.device.remoteSwitch;
  *
  * @author reto
  */
-public class DimSocketBParameters {
+public class DimSocketBParameters implements SocketParameters{
     
     public long address;
     public short unit;

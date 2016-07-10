@@ -48,6 +48,7 @@ import com.tinkerforge.BrickletRemoteSwitch;
  *
  * @author reto
  */
-public interface RemoteSwitchDeviceCallback extends DeviceCallback, BrickletRemoteSwitch.SwitchingDoneListener {
+public interface RemoteSwitchDeviceCallback extends DeviceCallback {
     public void repeatsChanged(short repeats);
+    public void switchingDone(SocketParameters socketParamters);
 }

@@ -47,6 +47,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.remoteSwitch.DimSocketBParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDeviceCallback;
+import ch.quantasy.tinkerforge.device.remoteSwitch.SocketParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketAParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketBParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
@@ -70,7 +71,7 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
         addDescription(getServiceContract().INTENT_SWITCH_SOCKET_C, "systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [ON|OFF]");
         addDescription(getServiceContract().INTENT_DIM_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]");
 
-        addDescription(getServiceContract().EVENT_SWITCHING_DONE, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_SWITCHING_DONE, "[0.." + Long.MAX_VALUE + "]\n value: [houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n switchingValue: [ON|OFF] | systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]]");
         addDescription(getServiceContract().STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
 
     }
@@ -117,8 +118,33 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
     }
 
     @Override
-    public void switchingDone() {
-        addEvent(getServiceContract().EVENT_SWITCHING_DONE, System.currentTimeMillis());
+    public void switchingDone(SocketParameters socketParameters) {
+        addEvent(getServiceContract().EVENT_SWITCHING_DONE, new SwitchedEvent(socketParameters));
+    }
+    
+    public static class SwitchedEvent {
+
+        protected long timestamp;
+        protected SocketParameters value;
+
+        public SwitchedEvent(SocketParameters value) {
+            this(value, System.currentTimeMillis());
+        }
+
+        public SwitchedEvent(SocketParameters value, long timeStamp) {
+            this.value = value;
+            this.timestamp = timeStamp;
+        }
+
+        public long getTimestamp() {
+            return timestamp;
+        }
+
+        public SocketParameters getValue() {
+            return value;
+        }
+
+        
     }
 
 }

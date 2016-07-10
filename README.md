@@ -61,6 +61,7 @@ Message: localhost
 ```
 or any other address IP or name will work, if there is an actual Tinkerforge stack accessible.
 
+
 ### Tip
 You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Viewer].
 
@@ -409,6 +410,7 @@ Message: - line: 0
 * BrickletMoisture
 * BrickletMotionDetector
 * BrickletMultiTouch
+* BrickletNFC (ID-Discovery)
 * BrickletPiezoSpeaker
 * BrickletPTC
 * BrickletRealtimeClock

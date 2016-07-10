@@ -73,6 +73,7 @@ import ch.quantasy.gateway.service.device.line.LineService;
 import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
 import ch.quantasy.gateway.service.device.loadCell.LoadCellService;
 import ch.quantasy.gateway.service.device.multiTouch.MultiTouchService;
+import ch.quantasy.gateway.service.device.nfc.NFCService;
 import ch.quantasy.gateway.service.device.piezoSpeaker.PiezoSpeakerService;
 import ch.quantasy.gateway.service.device.realTimeClock.RealTimeClockService;
 import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderService;
@@ -117,6 +118,7 @@ import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
+import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
@@ -387,11 +389,15 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
                 ThermoCoupleService service = new ThermoCoupleService((ThermoCoupleDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
-            if(tinkerforgeDevice instanceof GPSDevice){
-                GPSService service=new GPSService((GPSDevice)tinkerforgeDevice, mqttURI);
+            if (tinkerforgeDevice instanceof GPSDevice) {
+                GPSService service = new GPSService((GPSDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
-                
             }
+            if (tinkerforgeDevice instanceof NFCRFIDDevice) {
+                NFCService service = new NFCService((NFCRFIDDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            
 
         } catch (MqttException ex) {
             Logger.getLogger(TinkerForgeManager.class.getName()).log(Level.SEVERE, null, ex);

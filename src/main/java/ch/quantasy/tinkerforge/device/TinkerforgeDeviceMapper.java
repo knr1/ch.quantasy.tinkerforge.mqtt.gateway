@@ -71,6 +71,7 @@ import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
+import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
@@ -116,6 +117,7 @@ import com.tinkerforge.BrickletLoadCell;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.BrickletMultiTouch;
+import com.tinkerforge.BrickletNFCRFID;
 import com.tinkerforge.BrickletPTC;
 import com.tinkerforge.BrickletPiezoSpeaker;
 import com.tinkerforge.BrickletRealTimeClock;
@@ -272,6 +274,10 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.GPS == TinkerforgeDeviceClass.getDevice(device)) {
             return new GPSDevice(address, (BrickletGPS) device);
+        }
+        
+        if(TinkerforgeDeviceClass.NfcRfid == TinkerforgeDeviceClass.getDevice(device)){
+            return new NFCRFIDDevice(address, (BrickletNFCRFID)device);
         }
         return new TinkerforgeDevice(address, device);
     }

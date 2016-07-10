@@ -45,7 +45,7 @@ package ch.quantasy.tinkerforge.device.remoteSwitch;
  *
  * @author reto
  */
-public class SwitchSocketAParameters {
+public class SwitchSocketAParameters implements SocketParameters {
     public static enum SwitchTo{
         ON((short)1),OFF((short)0);
         private short value;
