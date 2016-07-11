@@ -41,10 +41,8 @@
  */
 package ch.quantasy.gateway.service.device.nfc;
 
-import ch.quantasy.gateway.service.device.multiTouch.*;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 
 /**
@@ -60,6 +58,9 @@ public class NFCServiceContract extends DeviceServiceContract {
     public final String TAG;
     public final String EVENT_TAG_DISCOVERD;
     public final String EVENT_TAG_VANISHED;
+    public final String READ;
+    public final String EVENT_TAG_READ;
+    public final String INTENT_READ;
     
     
     public NFCServiceContract(NFCRFIDDevice device) {
@@ -75,6 +76,9 @@ public class NFCServiceContract extends DeviceServiceContract {
         TAG="tag";
         EVENT_TAG_DISCOVERD=EVENT+"/"+TAG+"/discovered";
         EVENT_TAG_VANISHED=EVENT+"/"+TAG+"/vanished";
+        READ="read";
+        INTENT_READ=INTENT+"/"+READ;
+        EVENT_TAG_READ=EVENT+"/"+TAG+"/"+READ;
         
     }
 }

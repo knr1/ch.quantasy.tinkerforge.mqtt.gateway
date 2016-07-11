@@ -42,14 +42,18 @@
 package ch.quantasy.tinkerforge.device.nfc;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.device.nfc.NFCTagID.NFCType;
+import ch.quantasy.tinkerforge.device.nfc.NFCTag.NFCType;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickletNFCRFID;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -93,16 +97,28 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
         getCallback().scanningCallbackPeriodChanged(this.period);
     }
 
+    public void setActiveTagIDToRead(String tagID) {
+        nfcReader.addActiveTagToRead(tagID);
+    }
+
     class NFCReader implements Runnable, BrickletNFCRFID.StateChangedListener {
 
-        private Map<String, NFCTagID> tagMap;
+        private Map<String, NFCTag> tagMap;
 
         private NFCRFIDReaderState nfcRFIDReaderState;
 
         private long interval;
 
+        private Set<String> activeTagsToRead;
+
         public NFCReader() {
             tagMap = new HashMap<>();
+            activeTagsToRead = new HashSet<>();
+        }
+
+        public synchronized void addActiveTagToRead(String tagID) {
+            this.activeTagsToRead.add(tagID);
+            this.notifyAll();
         }
 
         @Override
@@ -123,13 +139,21 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
                                 if (nfcRFIDReaderState.getState() == BrickletNFCRFID.STATE_REQUEST_TAG_ID_READY) {
                                     nfcRFIDReaderState = null;
                                     try {
-                                        NFCTagID nfcTagID = new NFCTagID(getDevice().getTagID());
-                                        if (!this.tagMap.containsKey(nfcTagID.getTidAsHexString()))
-                                        {
+                                        BrickletNFCRFID.TagID tagID = getDevice().getTagID();
+                                        String tidAsHexString = NFCTag.getTidAsHexString(tagID.tid);
+                                        if (!this.tagMap.containsKey(tidAsHexString)) {
+                                            NFCTag nfcTagID = new NFCTag(tagID);
+                                            this.tagMap.put(tidAsHexString, nfcTagID);
                                             getCallback().tagDiscovered(nfcTagID);
+                                        } else {
+                                            this.tagMap.get(tidAsHexString).updateDiscoveryTimeStamp();
                                         }
-                                        this.tagMap.put(nfcTagID.getTidAsHexString(), nfcTagID);
-
+                                        if (activeTagsToRead.contains(tidAsHexString)) {
+                                            activeTagsToRead.remove(tidAsHexString);
+                                            NFCTag nfcTagID = this.tagMap.get(tidAsHexString);
+                                            nfcTagID.setReadContent(readTag(nfcTagID));
+                                            getCallback().tagRead(nfcTagID);
+                                        }
                                     } catch (TimeoutException ex) {
                                         Logger.getLogger(NFCRFIDDevice.class.getName()).log(Level.SEVERE, null, ex);
                                         Thread.sleep(200);
@@ -138,11 +162,12 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
                                     nfcRFIDReaderState = null;
                                 }
                             }
-                            for(Iterator<Map.Entry<String,NFCTagID>> entries=this.tagMap.entrySet().iterator();entries.hasNext();){
-                                Map.Entry<String,NFCTagID> entry=entries.next();
-                                if(System.currentTimeMillis()-entry.getValue().getLatestDiscoveryTimeStamp()>getScanningInterval()*3){
+                            for (Iterator<Map.Entry<String, NFCTag>> entries = this.tagMap.entrySet().iterator(); entries.hasNext();) {
+                                Map.Entry<String, NFCTag> entry = entries.next();
+                                if (System.currentTimeMillis() - entry.getValue().getLatestDiscoveryTimeStamp() > getScanningInterval() * 3) {
                                     entries.remove();
-                                            getCallback().tagVanished(entry.getValue());
+                                    activeTagsToRead.remove(entry.getValue().getTidAsHexString());
+                                    getCallback().tagVanished(entry.getValue());
                                 }
                             }
                         }
@@ -153,6 +178,34 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
                     }
                 }
             }
+        }
+
+        public Short[] readTag(NFCTag nfcTAGID) throws Exception {
+            List<Short> shorts = new LinkedList<>();
+            int requestingPage = 0;
+            boolean endOfFile = false;
+            while (!endOfFile) {
+                getDevice().requestPage(requestingPage);
+                while (nfcRFIDReaderState == null || !nfcRFIDReaderState.getIsIdle() || nfcRFIDReaderState.getState() == BrickletNFCRFID.STATE_REQUEST_PAGE) {
+                    this.wait(1000);
+                }
+                if (nfcRFIDReaderState.getState() == BrickletNFCRFID.STATE_REQUEST_PAGE_READY) {
+                    short[] page = getDevice().getPage();
+                    for (short word : page) {
+                        shorts.add(word);
+                    };
+                    if (nfcTAGID.getType() == NFCType.Type1) {
+                        requestingPage += 2;
+                    }
+                    if (nfcTAGID.getType() == NFCType.Type2) {
+                        requestingPage += 4;
+                    }
+                } else {
+                    endOfFile = true;
+                }
+                nfcRFIDReaderState = null;
+            }
+            return shorts.toArray(new Short[0]);
         }
 
         public synchronized void setScanningInterval(long interval) {
@@ -173,8 +226,6 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
             }
         }
     }
-
-    
 
     public static class NFCRFIDReaderState {
 

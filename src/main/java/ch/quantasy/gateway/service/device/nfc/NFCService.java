@@ -44,7 +44,7 @@ package ch.quantasy.gateway.service.device.nfc;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDeviceCallback;
-import ch.quantasy.tinkerforge.device.nfc.NFCTagID;
+import ch.quantasy.tinkerforge.device.nfc.NFCTag;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -60,9 +60,12 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
     public NFCService(NFCRFIDDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new NFCServiceContract(device));
         addDescription(getServiceContract().INTENT_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getServiceContract().INTENT_READ, "[00..FF]_9");
 
-        addDescription(getServiceContract().EVENT_TAG_DISCOVERD, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]\n");
-        addDescription(getServiceContract().EVENT_TAG_VANISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]\n");
+        addDescription(getServiceContract().EVENT_TAG_DISCOVERD, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
+        addDescription(getServiceContract().EVENT_TAG_READ, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  value: [00..FF]_*");
+
+        addDescription(getServiceContract().EVENT_TAG_VANISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
         addDescription(getServiceContract().STATUS_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
     }
@@ -79,6 +82,11 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setScanningCallbackPeriod(period);
             }
+            if (string.startsWith(getServiceContract().INTENT_READ)) {
+                String id = getMapper().readValue(payload, String.class);
+                getDevice().setActiveTagIDToRead(id);
+            }
+            
         } catch (Exception ex) {
             Logger.getLogger(NFCService.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -93,29 +101,71 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
     }
 
     @Override
-    public void tagDiscovered(NFCTagID tagID) {
+    public void tagDiscovered(NFCTag tagID) {
         addEvent(getServiceContract().EVENT_TAG_DISCOVERD,new TagIDEvent(tagID));
     }
 
     @Override
-    public void tagVanished(NFCTagID tagID) {
+    public void tagVanished(NFCTag tagID) {
         addEvent(getServiceContract().EVENT_TAG_VANISHED,new TagIDEvent(tagID));
+    }
+
+    @Override
+    public void tagRead(NFCTag tagID) {
+        addEvent(getServiceContract().EVENT_TAG_READ,new TagReadEvent(tagID));
+    }
+    
+    static class TagReadEvent{
+         private long timestamp;
+        private String id;
+        private Short[] value;
+
+        public TagReadEvent(NFCTag tag) {
+            this(tag.getLatestDiscoveryTimeStamp(),tag.getTidAsHexString(),tag.getReadContent());
+        }
+
+        public TagReadEvent() {
+        }
+
+        public TagReadEvent(long timestamp, String id, Short[] value) {
+            this.timestamp = timestamp;
+            this.id = id;
+            this.value = value;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public long getTimestamp() {
+            return timestamp;
+        }
+
+        public Short[] getValue() {
+            return value;
+        }
+        
+        
+        
+        
+        
+        
     }
 
     static class TagIDEvent{
         private long timestamp;
         private String id;
-        private NFCTagID.NFCType type;
+        private NFCTag.NFCType type;
 
         public TagIDEvent() {
         }
 
         
-        public TagIDEvent(NFCTagID tagID) {
+        public TagIDEvent(NFCTag tagID) {
             this(tagID.getLatestDiscoveryTimeStamp(),tagID.getTidAsHexString(),tagID.getType());
         }
 
-        public TagIDEvent(long timestamp, String id, NFCTagID.NFCType type) {
+        public TagIDEvent(long timestamp, String id, NFCTag.NFCType type) {
             this.timestamp = timestamp;
             this.id = id;
             this.type = type;
@@ -129,7 +179,7 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
             return timestamp;
         }
 
-        public NFCTagID.NFCType getType() {
+        public NFCTag.NFCType getType() {
             return type;
         }     
         

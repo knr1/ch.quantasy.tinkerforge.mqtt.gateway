@@ -410,7 +410,7 @@ Message: - line: 0
 * BrickletMoisture
 * BrickletMotionDetector
 * BrickletMultiTouch
-* BrickletNFC (ID-Discovery)
+* BrickletNFC (ID-Discovery / Read)
 * BrickletPiezoSpeaker
 * BrickletPTC
 * BrickletRealtimeClock

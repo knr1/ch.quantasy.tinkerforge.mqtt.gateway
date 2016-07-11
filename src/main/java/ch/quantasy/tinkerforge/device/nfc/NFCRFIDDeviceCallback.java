@@ -49,6 +49,7 @@ import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
  */
 public interface NFCRFIDDeviceCallback extends DeviceCallback {
     public void scanningCallbackPeriodChanged(long period);
-    public void tagDiscovered(NFCTagID tagID);
-    public void tagVanished(NFCTagID tagID);
+    public void tagDiscovered(NFCTag tagID);
+    public void tagVanished(NFCTag tagID);
+    public void tagRead(NFCTag tagID);
 }

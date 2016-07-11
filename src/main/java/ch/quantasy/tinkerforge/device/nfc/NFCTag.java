@@ -47,7 +47,7 @@ import com.tinkerforge.BrickletNFCRFID;
  *
  * @author reto
  */
-public class NFCTagID {
+public class NFCTag {
 
     public static enum NFCType {
         MifareClassic(BrickletNFCRFID.TAG_TYPE_MIFARE_CLASSIC), Type1(BrickletNFCRFID.TAG_TYPE_TYPE1), Type2(BrickletNFCRFID.TAG_TYPE_TYPE2);
@@ -76,15 +76,17 @@ public class NFCTagID {
     private transient short[] tid;
     private transient int tidLength;
     private String tidAsHexString;
+    
+    private Short[] readContent;
 
-    private NFCTagID() {
+    private NFCTag() {
     }
 
-    public NFCTagID(BrickletNFCRFID.TagID tagID) {
+    public NFCTag(BrickletNFCRFID.TagID tagID) {
         this(NFCType.getNFCTypeFor(tagID.tagType), tagID.tid, tagID.tidLength);
     }
 
-    public NFCTagID(NFCType type, String tidAsHexString) {
+    public NFCTag(NFCType type, String tidAsHexString) {
         this.type = type;
         this.tidAsHexString = tidAsHexString;
         this.tidLength = tidAsHexString.length();
@@ -105,22 +107,41 @@ public class NFCTagID {
         return data;
     }
 
-    public NFCTagID(NFCType type, short[] tid, int tidLength) {
+    public NFCTag(NFCType type, short[] tid, int tidLength) {
         this.type = type;
         this.tid = tid;
         this.tidLength = tidLength;
-        this.tidAsHexString = "";
-        for (short id : tid) {
-            if (id < 10) {
-                this.tidAsHexString += "0";
-            }
-            this.tidAsHexString += Integer.toHexString(id);
-        }
-        this.latestDiscoveryTimeStamp = System.currentTimeMillis();
+        this.tidAsHexString=getTidAsHexString(tid);
+        latestDiscoveryTimeStamp = System.currentTimeMillis();
+       
     }
 
-    public NFCTagID(String type, short[] tid, int tidLength) {
+    public static String getTidAsHexString(short[] tid){
+        String tidAsHexString = "";
+        for (short id : tid) {
+            if (id < 10) {
+                tidAsHexString += "0";
+            }
+            tidAsHexString += Integer.toHexString(id);
+        }
+        return tidAsHexString;
+    }
+    
+    public NFCTag(String type, short[] tid, int tidLength) {
         this(NFCType.valueOf(type), tid, tidLength);
+    }
+    
+    public void setReadContent(Short[] content){
+        this.readContent=content.clone();
+    }
+
+    public Short[] getReadContent() {
+        return readContent.clone();
+    }
+    
+    
+    public void updateDiscoveryTimeStamp(){
+        this.latestDiscoveryTimeStamp=System.currentTimeMillis();
     }
 
     public long getLatestDiscoveryTimeStamp() {
