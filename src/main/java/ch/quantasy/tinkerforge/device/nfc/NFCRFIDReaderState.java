@@ -41,16 +41,41 @@
  */
 package ch.quantasy.tinkerforge.device.nfc;
 
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
+import com.tinkerforge.BrickletNFCRFID;
 
 /**
  *
  * @author reto
  */
-public interface NFCRFIDDeviceCallback extends DeviceCallback {
-    public void scanningCallbackPeriodChanged(long period);
-    public void tagDiscovered(NFCTag tag);
-    public void tagVanished(NFCTag tag);
-    public void tagRead(NFCTag tag);
-    public void tagWritten(NFCTag tag);
-}
+public class NFCRFIDReaderState {
+
+        private long timeStamp;
+        private short state;
+        private boolean isIdle;
+
+        public NFCRFIDReaderState(BrickletNFCRFID.State state) {
+            this(state.state, state.idle);
+        }
+
+        public NFCRFIDReaderState(short state, boolean isIdle) {
+            this.state = state;
+            this.isIdle = isIdle;
+            this.timeStamp = System.currentTimeMillis();
+        }
+
+        public NFCRFIDReaderState() {
+        }
+
+        public short getState() {
+            return state;
+        }
+
+        public boolean getIsIdle() {
+            return isIdle;
+        }
+
+        public long getTimeStamp() {
+            return timeStamp;
+        }
+    }
+

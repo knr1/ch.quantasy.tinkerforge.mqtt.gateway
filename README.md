@@ -61,6 +61,29 @@ Message: localhost
 ```
 or any other address IP or name will work, if there is an actual Tinkerforge stack accessible.
 
+### Quick Shots
+In the following, some one-liners are shown in order to demonstrate how easy it is to get information from TF.
+In order to see who is calling, the intent will always end with '/quickshot' as the intending party (you can put anything (or nothing) there).
+ 
+**Setting backlight of LCD-Display (uid: lcd):**
+```
+Topic: TF/LCD20x4/lcd/intent/backlight/quickshot
+Message: true
+```
+
+**Measuring the temperature once per second on temperature bricklet (uid: red):**
+```
+Topic: TF/Temperature/red/intent/temperature/callbackPeriod/quickshot
+Message: 1000
+```
+
+**Detecting NFC-Tags once per second on NFCRFID bricklet (uid: ouu):**
+```
+Topic: TF/NfcRfid/ouu/intent/scanning/callbackPeriod/quickshot
+Message: 1000
+```
+
+
 
 ### Tip
 You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Viewer].
@@ -410,7 +433,7 @@ Message: - line: 0
 * BrickletMoisture
 * BrickletMotionDetector
 * BrickletMultiTouch
-* BrickletNFC (ID-Discovery / Read)
+* BrickletNFC (Type1 / Type2)
 * BrickletPiezoSpeaker
 * BrickletPTC
 * BrickletRealtimeClock

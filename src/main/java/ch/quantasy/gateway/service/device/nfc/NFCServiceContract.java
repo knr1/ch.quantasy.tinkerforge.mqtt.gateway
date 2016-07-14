@@ -61,6 +61,9 @@ public class NFCServiceContract extends DeviceServiceContract {
     public final String READ;
     public final String EVENT_TAG_READ;
     public final String INTENT_READ;
+    public final String WRITE;
+    public final String EVENT_TAG_WRITTEN;
+    public final String INTENT_WRITE;
     
     
     public NFCServiceContract(NFCRFIDDevice device) {
@@ -79,6 +82,10 @@ public class NFCServiceContract extends DeviceServiceContract {
         READ="read";
         INTENT_READ=INTENT+"/"+READ;
         EVENT_TAG_READ=EVENT+"/"+TAG+"/"+READ;
+        WRITE="write";
+        INTENT_WRITE=INTENT+"/"+WRITE;
+        EVENT_TAG_WRITTEN=EVENT+"/"+TAG+"/written";
+        
         
     }
 }

@@ -42,6 +42,8 @@
 package ch.quantasy.tinkerforge.device.nfc;
 
 import com.tinkerforge.BrickletNFCRFID;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -76,8 +78,11 @@ public class NFCTag {
     private transient short[] tid;
     private transient int tidLength;
     private String tidAsHexString;
-    
+
     private Short[] readContent;
+    private Short[] writeContent;
+
+    NFCRFIDReaderState latestReaderState;
 
     private NFCTag() {
     }
@@ -93,7 +98,6 @@ public class NFCTag {
         this.tid = new short[tidLength];
         this.tid = hexStringToShortArray(tidAsHexString);
         this.latestDiscoveryTimeStamp = System.currentTimeMillis();
-
     }
 
     //actually it was hexStringToByteArray
@@ -111,12 +115,12 @@ public class NFCTag {
         this.type = type;
         this.tid = tid;
         this.tidLength = tidLength;
-        this.tidAsHexString=getTidAsHexString(tid);
+        this.tidAsHexString = getTidAsHexString(tid);
         latestDiscoveryTimeStamp = System.currentTimeMillis();
-       
+
     }
 
-    public static String getTidAsHexString(short[] tid){
+    public static String getTidAsHexString(short[] tid) {
         String tidAsHexString = "";
         for (short id : tid) {
             if (id < 10) {
@@ -126,22 +130,58 @@ public class NFCTag {
         }
         return tidAsHexString;
     }
-    
+
     public NFCTag(String type, short[] tid, int tidLength) {
         this(NFCType.valueOf(type), tid, tidLength);
     }
-    
-    public void setReadContent(Short[] content){
-        this.readContent=content.clone();
+
+    public void setReadContent(Short[] content) {
+        this.readContent = content.clone();
+    }
+
+    public void setWriteContent(Short[] writeContent) {
+        this.writeContent = writeContent.clone();
     }
 
     public Short[] getReadContent() {
         return readContent.clone();
     }
-    
-    
-    public void updateDiscoveryTimeStamp(){
-        this.latestDiscoveryTimeStamp=System.currentTimeMillis();
+
+    public Short[] getWriteContent() {
+        return writeContent.clone();
+    }
+
+    public Map<Integer, short[]> getPagesToWrite() {
+        Map<Integer, short[]> pages = new HashMap<>();
+        Short[] readContent = this.readContent.clone();
+        Short[] writeContent = this.writeContent.clone();
+        if (readContent == null || writeContent == null || writeContent.length != readContent.length) {
+            return pages;
+        }
+        for (int i = 0; i < readContent.length; i += 16) {
+            short[] content = new short[16];
+            boolean newContent = false;
+            for (int j = 0; j < content.length; j++) {
+                content[j] = writeContent[i + j];
+                if (content[j] != readContent[i + j]) {
+                    newContent = true;
+                }
+            }
+            if (newContent) {
+                if (this.type == NFCType.Type1) {
+                    pages.put(i / 2, content);
+
+                }
+                if (this.type == NFCType.Type2) {
+                    pages.put(i / 4, content);
+                }
+            }
+        }
+        return pages;
+    }
+
+    public void updateDiscoveryTimeStamp() {
+        this.latestDiscoveryTimeStamp = System.currentTimeMillis();
     }
 
     public long getLatestDiscoveryTimeStamp() {
@@ -162,6 +202,14 @@ public class NFCTag {
 
     public NFCType getType() {
         return type;
+    }
+
+    public void setLatestReaderState(NFCRFIDReaderState latestReaderState) {
+        this.latestReaderState = latestReaderState;
+    }
+
+    public NFCRFIDReaderState getLatestReaderState() {
+        return latestReaderState;
     }
 
 }

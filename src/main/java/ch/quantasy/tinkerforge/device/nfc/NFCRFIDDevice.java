@@ -47,12 +47,14 @@ import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickletNFCRFID;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,7 +83,6 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
         if (period != null) {
             setScanningCallbackPeriod(period);
         }
-
     }
 
     @Override
@@ -101,6 +102,10 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
         nfcReader.addActiveTagToRead(tagID);
     }
 
+    public void setActiveTagToWrite(NFCWrite write) {
+        nfcReader.addActiveTagToWrite(write);
+    }
+
     class NFCReader implements Runnable, BrickletNFCRFID.StateChangedListener {
 
         private Map<String, NFCTag> tagMap;
@@ -111,13 +116,21 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
 
         private Set<String> activeTagsToRead;
 
+        private Map<String, NFCWrite> activeTagsToWrite;
+
         public NFCReader() {
             tagMap = new HashMap<>();
             activeTagsToRead = new HashSet<>();
+            activeTagsToWrite = new HashMap<>();
         }
 
         public synchronized void addActiveTagToRead(String tagID) {
             this.activeTagsToRead.add(tagID);
+            this.notifyAll();
+        }
+
+        public synchronized void addActiveTagToWrite(NFCWrite write) {
+            this.activeTagsToWrite.put(write.getId(), write);
             this.notifyAll();
         }
 
@@ -150,9 +163,16 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
                                         }
                                         if (activeTagsToRead.contains(tidAsHexString)) {
                                             activeTagsToRead.remove(tidAsHexString);
-                                            NFCTag nfcTagID = this.tagMap.get(tidAsHexString);
-                                            nfcTagID.setReadContent(readTag(nfcTagID));
-                                            getCallback().tagRead(nfcTagID);
+                                            NFCTag nfcTag = this.tagMap.get(tidAsHexString);
+                                            nfcTag.setReadContent(readTag(nfcTag));
+                                            getCallback().tagRead(nfcTag);
+                                        }
+                                        if (activeTagsToWrite.containsKey(tidAsHexString)) {
+                                            NFCWrite write = activeTagsToWrite.remove(tidAsHexString);
+                                            NFCTag nfcTag = this.tagMap.get(tidAsHexString);
+                                            nfcTag.setWriteContent(write.getValue());
+                                            writeTag(nfcTag);
+                                            getCallback().tagWritten(nfcTag);
                                         }
                                     } catch (TimeoutException ex) {
                                         Logger.getLogger(NFCRFIDDevice.class.getName()).log(Level.SEVERE, null, ex);
@@ -180,7 +200,24 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
             }
         }
 
-        public Short[] readTag(NFCTag nfcTAGID) throws Exception {
+        private void writeTag(NFCTag nfcTag) throws Exception {
+            for (Entry<Integer, short[]> entry : nfcTag.getPagesToWrite().entrySet()) {
+//                System.out.println("Writing: @" + entry.getKey() + ": " + Arrays.toString(entry.getValue()));
+                getDevice().writePage(entry.getKey(), entry.getValue());
+                //nfcRFIDReaderState = new NFCRFIDReaderState(BrickletNFCRFID.STATE_WRITE_PAGE_READY, true);
+                while (nfcRFIDReaderState == null || !nfcRFIDReaderState.getIsIdle() || nfcRFIDReaderState.getState() == BrickletNFCRFID.STATE_WRITE_PAGE) {
+                    this.wait(1000);
+                }
+                nfcTag.setLatestReaderState(nfcRFIDReaderState);
+                if (nfcRFIDReaderState.getState() == BrickletNFCRFID.STATE_WRITE_PAGE_ERROR) {
+                    nfcRFIDReaderState = null;
+                    return;
+                }
+                nfcRFIDReaderState = null;
+            }
+        }
+
+        private Short[] readTag(NFCTag nfcTAGID) throws Exception {
             List<Short> shorts = new LinkedList<>();
             int requestingPage = 0;
             boolean endOfFile = false;
@@ -221,42 +258,8 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
         public void stateChanged(short s, boolean bln) {
             synchronized (this) {
                 this.nfcRFIDReaderState = new NFCRFIDReaderState(s, bln);
-                // System.out.println("STATE: " + this.nfcRFIDReaderState.state + " " + this.nfcRFIDReaderState.isIdle);
                 notifyAll();
             }
         }
     }
-
-    public static class NFCRFIDReaderState {
-
-        private long timeStamp;
-        private short state;
-        private boolean isIdle;
-
-        public NFCRFIDReaderState(BrickletNFCRFID.State state) {
-            this(state.state, state.idle);
-        }
-
-        public NFCRFIDReaderState(short state, boolean isIdle) {
-            this.state = state;
-            this.isIdle = isIdle;
-            this.timeStamp = System.currentTimeMillis();
-        }
-
-        public NFCRFIDReaderState() {
-        }
-
-        public short getState() {
-            return state;
-        }
-
-        public boolean getIsIdle() {
-            return isIdle;
-        }
-
-        public long getTimeStamp() {
-            return timeStamp;
-        }
-    }
-
 }

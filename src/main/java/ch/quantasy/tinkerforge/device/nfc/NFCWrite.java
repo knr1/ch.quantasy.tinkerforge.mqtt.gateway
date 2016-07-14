@@ -41,16 +41,32 @@
  */
 package ch.quantasy.tinkerforge.device.nfc;
 
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-
 /**
  *
  * @author reto
  */
-public interface NFCRFIDDeviceCallback extends DeviceCallback {
-    public void scanningCallbackPeriodChanged(long period);
-    public void tagDiscovered(NFCTag tag);
-    public void tagVanished(NFCTag tag);
-    public void tagRead(NFCTag tag);
-    public void tagWritten(NFCTag tag);
+public class NFCWrite {
+    private String id;
+    private Short[] value;
+
+    public NFCWrite() {
+    }
+
+    public NFCWrite(String id, Short[] content) {
+        this.id = id;
+        this.value = content.clone();
+    }
+
+    public Short[] getValue() {
+        return value.clone();
+    }
+
+    public String getId() {
+        return id;
+    }
+    
+    
+    
+   
+    
 }
