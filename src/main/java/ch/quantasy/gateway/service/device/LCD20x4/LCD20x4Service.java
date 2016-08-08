@@ -77,14 +77,8 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
         addDescription(getServiceContract().INTENT_WRITE_LINES,"[line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]");   
     }
 
-    @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+        public void messageArrived(String string, byte[] payload) throws Exception {
 
-        }
-        try {
             if (string.startsWith(getServiceContract().INTENT_BACKLIGHT)) {
                 Boolean backlight = getMapper().readValue(payload, Boolean.class);
                 getDevice().setBacklight(backlight);
@@ -113,11 +107,7 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
                 DeviceWriteLine[] lines = getMapper().readValue(payload, DeviceWriteLine[].class);
                 getDevice().write(lines);
             }
-        } catch (Exception ex) {
-            Logger.getLogger(LCD20x4Service.class
-                    .getName()).log(Level.INFO, null, ex);
-            return;
-        }
+      
 
     }
 

@@ -84,13 +84,8 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+       public void messageArrived(String string, byte[] payload) throws Exception {
 
-        }
-        try {
             if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
@@ -128,12 +123,6 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
                 getDevice().setReferenceAirPressure(reference);
 
             }
-
-        } catch (Exception ex) {
-            Logger.getLogger(BarometerService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
 
     }
 

@@ -75,38 +75,29 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
+
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
 
-            if (string.startsWith(getServiceContract().INTENT_COUNT_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setCountCallbackPeriod(period);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_COUNT_THRESHOLD)) {
-                DeviceCountCallbackThreshold threshold = getMapper().readValue(payload, DeviceCountCallbackThreshold.class);
-                getDevice().setPositionCallbackThreshold(threshold);
-
-            }
-            if (string.startsWith(getServiceContract().INTENT_COUNT_RESET)) {
-
-                Boolean reset = getMapper().readValue(payload, Boolean.class);
-                getDevice().setCountReset(reset);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(RotaryEncoderService.class
-                    .getName()).log(Level.INFO, null, ex);
-            return;
+        if (string.startsWith(getServiceContract().INTENT_COUNT_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setCountCallbackPeriod(period);
         }
+
+        if (string.startsWith(getServiceContract().INTENT_COUNT_THRESHOLD)) {
+            DeviceCountCallbackThreshold threshold = getMapper().readValue(payload, DeviceCountCallbackThreshold.class);
+            getDevice().setPositionCallbackThreshold(threshold);
+
+        }
+        if (string.startsWith(getServiceContract().INTENT_COUNT_RESET)) {
+
+            Boolean reset = getMapper().readValue(payload, Boolean.class);
+            getDevice().setCountReset(reset);
+        }
+
     }
 
     @Override

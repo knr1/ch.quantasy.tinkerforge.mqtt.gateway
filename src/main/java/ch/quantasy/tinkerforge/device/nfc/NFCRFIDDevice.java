@@ -208,7 +208,7 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
                 while (nfcRFIDReaderState == null || !nfcRFIDReaderState.getIsIdle() || nfcRFIDReaderState.getState() == BrickletNFCRFID.STATE_WRITE_PAGE) {
                     this.wait(1000);
                 }
-                nfcTag.setLatestReaderState(nfcRFIDReaderState);
+                nfcTag.setLatestReaderState(NFCTag.NFCRFIDReaderState.getNFCTReaderStateTypeFor(nfcRFIDReaderState.getState()));
                 if (nfcRFIDReaderState.getState() == BrickletNFCRFID.STATE_WRITE_PAGE_ERROR) {
                     nfcRFIDReaderState = null;
                     return;

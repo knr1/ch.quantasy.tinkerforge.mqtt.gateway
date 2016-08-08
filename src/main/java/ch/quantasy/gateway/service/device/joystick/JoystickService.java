@@ -85,43 +85,34 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAnalogValueCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_POSITION_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setPositionCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
-                DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
-                getDevice().setAnalogValueThreshold(threshold);
-            }
-            if (string.startsWith(getServiceContract().INTENT_POSITION_THRESHOLD)) {
-                DevicePositionCallbackThreshold threshold = getMapper().readValue(payload, DevicePositionCallbackThreshold.class);
-                getDevice().setIlluminanceCallbackThreshold(threshold);
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-            }
-            if (string.startsWith(getServiceContract().INTENT_CALIBRATE)) {
-                Boolean calibrate = getMapper().readValue(payload, Boolean.class);
-                getDevice().setCalibration(calibrate);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(JoystickService.class
-                    .getName()).log(Level.INFO, null, ex);
-            return;
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
+        if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAnalogValueCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_POSITION_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setPositionCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
+            DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
+            getDevice().setAnalogValueThreshold(threshold);
+        }
+        if (string.startsWith(getServiceContract().INTENT_POSITION_THRESHOLD)) {
+            DevicePositionCallbackThreshold threshold = getMapper().readValue(payload, DevicePositionCallbackThreshold.class);
+            getDevice().setIlluminanceCallbackThreshold(threshold);
+
+        }
+        if (string.startsWith(getServiceContract().INTENT_CALIBRATE)) {
+            Boolean calibrate = getMapper().readValue(payload, Boolean.class);
+            getDevice().setCalibration(calibrate);
+        }
+
     }
 
     @Override

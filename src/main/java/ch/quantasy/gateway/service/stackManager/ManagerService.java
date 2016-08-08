@@ -65,57 +65,43 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class ManagerService extends AbstractService<ManagerServiceContract> implements TinkerforgeFactoryListener, TinkerforgeStackListener, TinkerforgeDeviceListener {
 
     private TinkerForgeManager manager;
-    
-    public ManagerService(TinkerForgeManager manager, URI mqttURI) throws MqttException {
-        super(mqttURI,"TinkerforgeStackManager",new ManagerServiceContract("Manager"));
-        this.manager=manager;
-                addDescription(getServiceContract().INTENT_STACK_ADDRESS_ADD, "<address>");
-                addDescription(getServiceContract().INTENT_STACK_ADDRESS_REMOVE, "<address>");  
-                addDescription(getServiceContract().EVENT_ADDRESS_CONNECTED, "<address>");
-                addDescription(getServiceContract().EVENT_ADDRESS_DISCONNECTED, "<address>");
-                addDescription(getServiceContract().EVENT_STACK_ADDRESS_ADDED, "<address>");
-                addDescription(getServiceContract().EVENT_STACK_ADDRESS_REMOVED, "<address>");
-                addDescription(getServiceContract().STATUS_STACK_ADDRESS+"/<address>/connected", "[true|false]");
-                
 
-                
+    public ManagerService(TinkerForgeManager manager, URI mqttURI) throws MqttException {
+        super(mqttURI, "TinkerforgeStackManager", new ManagerServiceContract("Manager"));
+        this.manager = manager;
+        addDescription(getServiceContract().INTENT_STACK_ADDRESS_ADD, "<address>");
+        addDescription(getServiceContract().INTENT_STACK_ADDRESS_REMOVE, "<address>");
+        addDescription(getServiceContract().EVENT_ADDRESS_CONNECTED, "<address>");
+        addDescription(getServiceContract().EVENT_ADDRESS_DISCONNECTED, "<address>");
+        addDescription(getServiceContract().EVENT_STACK_ADDRESS_ADDED, "<address>");
+        addDescription(getServiceContract().EVENT_STACK_ADDRESS_REMOVED, "<address>");
+        addDescription(getServiceContract().STATUS_STACK_ADDRESS + "/<address>/connected", "[true|false]");
 
         manager.addListener(this);
         updateStatus();
     }
 
-    
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
+        if (string.startsWith(getServiceContract().INTENT_STACK_ADDRESS_ADD)) {
+
+            String payloadString = new String(payload);
+            TinkerforgeStackAddress address = getMapper().readValue(payloadString, TinkerforgeStackAddress.class);
+            if (manager.containsStack(address)) {
+                return;
+            }
+            manager.addStack(address);
+            System.out.println(">>" + getMapper().readValue(payload, String.class));
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_STACK_ADDRESS_ADD)) {
+        if (string.startsWith(getServiceContract().INTENT_STACK_ADDRESS_REMOVE)) {
 
-                String payloadString = new String(payload);
-                TinkerforgeStackAddress address = getMapper().readValue(payloadString, TinkerforgeStackAddress.class);
-                if (manager.containsStack(address)) {
-                    return;
-                }
-                manager.addStack(address);
-                System.out.println(">>" + new String(mm.getPayload()));
+            String payloadString = new String(payload);
+            TinkerforgeStackAddress address = getMapper().readValue(payloadString, TinkerforgeStackAddress.class);
+            if (!manager.containsStack(address)) {
+                return;
             }
-            if (string.startsWith(getServiceContract().INTENT_STACK_ADDRESS_REMOVE)) {
-
-                String payloadString = new String(payload);
-                TinkerforgeStackAddress address = getMapper().readValue(payloadString, TinkerforgeStackAddress.class);
-                if (!manager.containsStack(address)) {
-                    return;
-                }
-                manager.removeStack(address);
-                System.out.println(">>" + new String(mm.getPayload()));
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(ManagerService.class.getName()).log(Level.SEVERE, null, ex);
-            return;
+            manager.removeStack(address);
+            System.out.println(">>" + getMapper().readValue(payload, String.class));
         }
 
     }

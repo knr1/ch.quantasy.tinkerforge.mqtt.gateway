@@ -74,13 +74,8 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+       public void messageArrived(String string, byte[] payload) throws Exception {
 
-        }
-        try {
             if (string.startsWith(getServiceContract().INTENT_EDGE_COUNT_INTERRUPT)) {
 
                 Long edges = getMapper().readValue(payload, Long.class);
@@ -103,13 +98,6 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
                 DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
                 getDevice().setEdgeCountConfig(configuration);
             }
-
-        } catch (Exception ex) {
-            Logger.getLogger(HallEffectService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-
     }
 
     @Override

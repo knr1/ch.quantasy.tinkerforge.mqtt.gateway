@@ -63,22 +63,13 @@ public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device,
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try {
+      public void messageArrived(String string, byte[] payload) throws Exception {
+
             if (string.startsWith(getServiceContract().INTENT_OUTPUT_VOLTAGE)) {
                 Integer outputVoltage = getMapper().readValue(payload, Integer.class);
                 getDevice().setOutputVoltage(outputVoltage);
             }
-        } catch (Exception ex) {
-            Logger.getLogger(AnalogOutV2Service.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-
+        
     }
     
     @Override

@@ -78,48 +78,37 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_ALTITUDE_CALLBACK_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAltitudeCallbackPeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_ALTITUDE_CALLBACK_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_COORDINATES_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAltitudeCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_COORDINATES_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setCoordinatesCallbackPeriod(period);
+        }
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setCoordinatesCallbackPeriod(period);
-            }
+        if (string.startsWith(getServiceContract().INTENT_DATE_TIME_CALLBACK_PERIOD)) {
 
-            if (string.startsWith(getServiceContract().INTENT_DATE_TIME_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDateTimeCallbackPeriod(period);
+        }
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDateTimeCallbackPeriod(period);
-            }
+        if (string.startsWith(getServiceContract().INTENT_MOTION_CALLBACK_PERIOD)) {
 
-            if (string.startsWith(getServiceContract().INTENT_MOTION_CALLBACK_PERIOD)) {
-
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setMotionCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_STATE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setStatusCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_RESTART)) {
-                RestartType type = getMapper().readValue(payload, RestartType.class);
-                getDevice().restart(type);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(GPSService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setMotionCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_STATE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setStatusCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_RESTART)) {
+            RestartType type = getMapper().readValue(payload, RestartType.class);
+            getDevice().restart(type);
         }
 
     }

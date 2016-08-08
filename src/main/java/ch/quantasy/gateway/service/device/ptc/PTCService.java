@@ -83,13 +83,8 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+        public void messageArrived(String string, byte[] payload) throws Exception {
 
-        }
-        try {
             if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
@@ -126,12 +121,6 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
                 Short wireMode = getMapper().readValue(payload, Short.class);
                 getDevice().setWireMode(wireMode);
             }
-
-        } catch (Exception ex) {
-            Logger.getLogger(PTCService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     @Override

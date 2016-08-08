@@ -74,38 +74,26 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_MOISTURE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setMoistureCallbackPeriod(period);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_MOISTURE_THRESHOLD)) {
-                DeviceMoistureCallbackThreshold threshold = getMapper().readValue(payload, DeviceMoistureCallbackThreshold.class);
-                getDevice().setMoistureCallbackThreshold(threshold);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
-                Short average = getMapper().readValue(payload, Short.class);
-                getDevice().setMovingAverage(average);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(MoistureService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+        if (string.startsWith(getServiceContract().INTENT_MOISTURE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setMoistureCallbackPeriod(period);
         }
 
+        if (string.startsWith(getServiceContract().INTENT_MOISTURE_THRESHOLD)) {
+            DeviceMoistureCallbackThreshold threshold = getMapper().readValue(payload, DeviceMoistureCallbackThreshold.class);
+            getDevice().setMoistureCallbackThreshold(threshold);
+        }
+
+        if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
+            Short average = getMapper().readValue(payload, Short.class);
+            getDevice().setMovingAverage(average);
+        }
     }
 
     @Override

@@ -70,28 +70,19 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
+
+        if (string.startsWith(getServiceContract().INTENT_MONOFLOP)) {
+            DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
+            getDevice().setMonoflop(parameters);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_MONOFLOP)) {
-                DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
-                getDevice().setMonoflop(parameters);
-            }
-            if (string.startsWith(getServiceContract().INTENT_SELECTED_STATE)) {
-                DeviceSelectedState parameters = getMapper().readValue(payload, DeviceSelectedState.class);
-                getDevice().setSelectedState(parameters);
-            }
-            if (string.startsWith(getServiceContract().INTENT_STATE)) {
-                DeviceState parameters = getMapper().readValue(payload, DeviceState.class);
-                getDevice().setState(parameters);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(DualRelayService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+        if (string.startsWith(getServiceContract().INTENT_SELECTED_STATE)) {
+            DeviceSelectedState parameters = getMapper().readValue(payload, DeviceSelectedState.class);
+            getDevice().setSelectedState(parameters);
+        }
+        if (string.startsWith(getServiceContract().INTENT_STATE)) {
+            DeviceState parameters = getMapper().readValue(payload, DeviceState.class);
+            getDevice().setState(parameters);
         }
 
     }
@@ -104,6 +95,7 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
     @Override
     public void monoflopDone(short relay, boolean state) {
         addEvent(getServiceContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(relay, state));
+
     }
 
     public static class MonoflopDoneEvent {

@@ -81,13 +81,8 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+       public void messageArrived(String string, byte[] payload) throws Exception {
 
-        }
-        try {
             if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
@@ -120,13 +115,7 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
                 getDevice().setMovingAverage(movingAverage);
 
             }
-            
-        } catch (Exception ex) {
-            Logger.getLogger(AnalogInV2Service.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-
+           
     }
 
     @Override

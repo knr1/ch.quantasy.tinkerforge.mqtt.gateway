@@ -58,13 +58,13 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContract> implements CO2DeviceCallback {
 
-    public CO2Service(CO2Device device,URI mqttURI) throws MqttException {
+    public CO2Service(CO2Device device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new CO2ServiceContract(device));
         addDescription(getServiceContract().INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_CO2_CONCENTRATION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
-        
+
         addDescription(getServiceContract().EVENT_CO2_CONCENTRATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
         addDescription(getServiceContract().EVENT_CO2_CONCENTRATION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
         addDescription(getServiceContract().STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -74,38 +74,26 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setCO2ConcentrationCallbackPeriod(period);
+        }
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setCO2ConcentrationCallbackPeriod(period);
-            }
+        if (string.startsWith(getServiceContract().INTENT_CO2_CONCENTRATION_THRESHOLD)) {
 
-            if (string.startsWith(getServiceContract().INTENT_CO2_CONCENTRATION_THRESHOLD)) {
-
-                DeviceCO2ConcentrationCallbackThreshold threshold = getMapper().readValue(payload, DeviceCO2ConcentrationCallbackThreshold.class);
-                getDevice().setCO2ConcentrationCallbackThreshold(threshold);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(CO2Service.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+            DeviceCO2ConcentrationCallbackThreshold threshold = getMapper().readValue(payload, DeviceCO2ConcentrationCallbackThreshold.class);
+            getDevice().setCO2ConcentrationCallbackThreshold(threshold);
         }
 
     }
-
 
     @Override
     public void debouncePeriodChanged(long period) {

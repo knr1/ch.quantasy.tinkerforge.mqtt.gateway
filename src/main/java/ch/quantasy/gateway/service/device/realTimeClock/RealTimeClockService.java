@@ -67,43 +67,32 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
         addDescription(getServiceContract().INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        addDescription(getServiceContract().INTENT_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.."+Integer.MAX_VALUE+"]");
-        addDescription(getServiceContract().STATUS_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.."+Integer.MAX_VALUE+"]");
+        addDescription(getServiceContract().INTENT_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
+        addDescription(getServiceContract().STATUS_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_ALARM, "timestamp: [0.." + Long.MAX_VALUE + "]\n year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        
 
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DATE_TIME_SET)) {
-                DateTimeParameter parameter = getMapper().readValue(payload, DateTimeParameter.class);
-                getDevice().setDateTime(parameter);
-            }
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-            if (string.startsWith(getServiceContract().INTENT_OFFSET)) {
-                Byte offset = getMapper().readValue(payload, Byte.class);
-                getDevice().setOffset(offset);
-            }
-             if (string.startsWith(getServiceContract().INTENT_DATE_TIME_CALLBACK_PERIOD)) {
-                Long callback = getMapper().readValue(payload, Long.class);
-                getDevice().setDateTimeCallbackPeriod(callback);
-            }
-             if (string.startsWith(getServiceContract().INTENT_ALARM)) {
-                AlarmParamter alarm = getMapper().readValue(payload, AlarmParamter.class);
-                getDevice().setAlarm(alarm);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(RealTimeClockService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+        if (string.startsWith(getServiceContract().INTENT_DATE_TIME_SET)) {
+            DateTimeParameter parameter = getMapper().readValue(payload, DateTimeParameter.class);
+            getDevice().setDateTime(parameter);
         }
 
+        if (string.startsWith(getServiceContract().INTENT_OFFSET)) {
+            Byte offset = getMapper().readValue(payload, Byte.class);
+            getDevice().setOffset(offset);
+        }
+        if (string.startsWith(getServiceContract().INTENT_DATE_TIME_CALLBACK_PERIOD)) {
+            Long callback = getMapper().readValue(payload, Long.class);
+            getDevice().setDateTimeCallbackPeriod(callback);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ALARM)) {
+            AlarmParamter alarm = getMapper().readValue(payload, AlarmParamter.class);
+            getDevice().setAlarm(alarm);
+        }
     }
 
     @Override
@@ -118,22 +107,22 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
 
     @Override
     public void dateTimeCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DATE_TIME_CALLBACK_PERIOD,period);
+        addStatus(getServiceContract().STATUS_DATE_TIME_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void alarmChanged(AlarmParamter alarmParameter) {
-        addStatus(getServiceContract().STATUS_ALARM,alarmParameter);
+        addStatus(getServiceContract().STATUS_ALARM, alarmParameter);
     }
 
     @Override
     public void alarm(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-        addEvent(getServiceContract().EVENT_ALARM,new DateTimeEvent(year,month,day,hour,minute,second,centisecond,weekday,timestamp));
+        addEvent(getServiceContract().EVENT_ALARM, new DateTimeEvent(year, month, day, hour, minute, second, centisecond, weekday, timestamp));
     }
 
     @Override
     public void dateTime(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-        addEvent(getServiceContract().EVENT_DATE_TIME,new DateTimeEvent(year,month,day,hour,minute,second,centisecond,weekday,timestamp));
+        addEvent(getServiceContract().EVENT_DATE_TIME, new DateTimeEvent(year, month, day, hour, minute, second, centisecond, weekday, timestamp));
     }
 
     public static class DateTimeEvent {
@@ -142,13 +131,13 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
         DateTimeParameter value;
 
         public DateTimeEvent(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday) {
-            this(year,month,day,hour,minute,second,centisecond,weekday,System.currentTimeMillis());
-        }
-        public DateTimeEvent(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-            this.value=new DateTimeParameter(year,month,day,hour,minute,second,centisecond,weekday);
-            this.timestamp=timestamp;
+            this(year, month, day, hour, minute, second, centisecond, weekday, System.currentTimeMillis());
         }
 
+        public DateTimeEvent(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
+            this.value = new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday);
+            this.timestamp = timestamp;
+        }
 
         public long getTimestamp() {
             return timestamp;
@@ -159,5 +148,5 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
         }
 
     }
-    
+
 }

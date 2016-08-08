@@ -83,49 +83,40 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
+
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_WEIGHT_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_WEIGHT_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setWeightCallbackPeriod(period);
+        }
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setWeightCallbackPeriod(period);
-            }
+        if (string.startsWith(getServiceContract().INTENT_WEIGHT_THRESHOLD)) {
 
-            if (string.startsWith(getServiceContract().INTENT_WEIGHT_THRESHOLD)) {
+            DeviceWeightCallbackThreshold threshold = getMapper().readValue(payload, DeviceWeightCallbackThreshold.class);
+            getDevice().setWeightCallbackThreshold(threshold);
+        }
 
-                DeviceWeightCallbackThreshold threshold = getMapper().readValue(payload, DeviceWeightCallbackThreshold.class);
-                getDevice().setWeightCallbackThreshold(threshold);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
-                DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-                getDevice().setConfiguration(configuration);
-            }
-            if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
-                Short average = getMapper().readValue(payload, Short.class);
-                getDevice().setMovingAverage(average);
-            }
-            if (string.startsWith(getServiceContract().INTENT_TARE)) {
-                Boolean tare = getMapper().readValue(payload, Boolean.class);
-                getDevice().tare(tare);
-            }
-            if (string.startsWith(getServiceContract().INTENT_LED)) {
-                Boolean LED = getMapper().readValue(payload, Boolean.class);
-                getDevice().setLED(LED);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(LoadCellService.class
-                    .getName()).log(Level.SEVERE, null, ex);
+        if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
+            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
+            getDevice().setConfiguration(configuration);
+        }
+        if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
+            Short average = getMapper().readValue(payload, Short.class);
+            getDevice().setMovingAverage(average);
+        }
+        if (string.startsWith(getServiceContract().INTENT_TARE)) {
+            Boolean tare = getMapper().readValue(payload, Boolean.class);
+            getDevice().tare(tare);
+        }
+        if (string.startsWith(getServiceContract().INTENT_LED)) {
+            Boolean LED = getMapper().readValue(payload, Boolean.class);
+            getDevice().setLED(LED);
         }
 
     }

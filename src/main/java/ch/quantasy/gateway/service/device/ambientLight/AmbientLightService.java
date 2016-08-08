@@ -79,12 +79,8 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try {
+        public void messageArrived(String string, byte[] payload) throws Exception {
+
             if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setDebouncePeriod(period);
@@ -107,11 +103,7 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
 
             }
 
-        } catch (Exception ex) {
-            Logger.getLogger(AmbientLightService.class
-                    .getName()).log(Level.INFO, null, ex);
-            return;
-        }
+       
     }
 
     @Override

@@ -67,27 +67,17 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_MONOFLOP)) {
-                DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
-                getDevice().setMonoflop(parameters);
-            }
-            
-            if (string.startsWith(getServiceContract().INTENT_STATE)) {
-                Boolean parameters = getMapper().readValue(payload, Boolean.class);
-                getDevice().setState(parameters);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(SolidStateRelayService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
+
+        if (string.startsWith(getServiceContract().INTENT_MONOFLOP)) {
+            DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
+            getDevice().setMonoflop(parameters);
         }
 
+        if (string.startsWith(getServiceContract().INTENT_STATE)) {
+            Boolean parameters = getMapper().readValue(payload, Boolean.class);
+            getDevice().setState(parameters);
+        }
     }
 
     @Override

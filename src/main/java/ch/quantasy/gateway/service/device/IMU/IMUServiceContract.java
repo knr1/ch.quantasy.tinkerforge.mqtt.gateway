@@ -41,9 +41,13 @@
  */
 package ch.quantasy.gateway.service.device.IMU;
 
+import ch.quantasy.gateway.service.ServiceContract;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.IMU.IMUDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import java.lang.reflect.Field;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  *
@@ -112,7 +116,6 @@ public class IMUServiceContract extends DeviceServiceContract {
         STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD = STATUS + "/" + ANGULAR_VELOCITY + "/" + CALLBACK_PERIOD;
         EVENT_ANGULAR_VELOCITY = EVENT + "/" + ANGULAR_VELOCITY;
 
-        
         MAGNETIC_FIELD = "magneticField";
         INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD = INTENT + "/" + MAGNETIC_FIELD + "/" + CALLBACK_PERIOD;
         STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD = STATUS + "/" + MAGNETIC_FIELD + "/" + CALLBACK_PERIOD;
@@ -128,7 +131,6 @@ public class IMUServiceContract extends DeviceServiceContract {
         STATUS_QUATERNION_CALLBACK_PERIOD = STATUS + "/" + QUATERNION + "/" + CALLBACK_PERIOD;
         EVENT_QUATERNION = EVENT + "/" + QUATERNION;
 
-        
         LEDS = "LEDs";
         INTENT_LEDS = INTENT + "/" + LEDS + "/" + CALLBACK_PERIOD;
         STATUS_LEDS = STATUS + "/" + LEDS + "/" + CALLBACK_PERIOD;
@@ -137,8 +139,8 @@ public class IMUServiceContract extends DeviceServiceContract {
         INTENT_STATUS_LED = INTENT + "/" + STATUS_LED + "/" + CALLBACK_PERIOD;
         STATUS_STATUS_LED = STATUS + "/" + STATUS_LED + "/" + CALLBACK_PERIOD;
 
-        ORIENTATION_CALCULATION= ORIENTATION+"/"+"calculation";
-        INTENT_ORIENTATION_CALCULATION=INTENT +"/"+ORIENTATION_CALCULATION;
-        STATUS_ORIENTATION_CALCULATION=STATUS +"/"+ORIENTATION_CALCULATION;
+        ORIENTATION_CALCULATION = ORIENTATION + "/" + "calculation";
+        INTENT_ORIENTATION_CALCULATION = INTENT + "/" + ORIENTATION_CALCULATION;
+        STATUS_ORIENTATION_CALCULATION = STATUS + "/" + ORIENTATION_CALCULATION;
     }
 }

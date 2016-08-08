@@ -62,37 +62,30 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
         addDescription(getServiceContract().INTENT_ELECTRODE_CONFIG, "[0..8191]");
         addDescription(getServiceContract().INTENT_ELECTRODE_SENSITIVITY, "[0..8191]");
         addDescription(getServiceContract().INTENT_RECALIBRATE, "[true|false]");
-        
+
         addDescription(getServiceContract().EVENT_TOUCH_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..8191]\n");
         addDescription(getServiceContract().EVENT_RECALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]");
-        
+
         addDescription(getServiceContract().STATUS_ELECTRODE_SENSITIVITY, "[5..201]");
         addDescription(getServiceContract().STATUS_ELECTRODE_CONFIG, "[0..8191]");
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_RECALIBRATE)) {
-                Boolean recalibrate = getMapper().readValue(payload, Boolean.class);
-                getDevice().recalibrate(recalibrate);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ELECTRODE_CONFIG)) {
-                Integer electrodeConfig = getMapper().readValue(payload, Integer.class);
-                getDevice().setElectrodeConfig(electrodeConfig);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ELECTRODE_SENSITIVITY)) {
-                Short electrodeConfig = getMapper().readValue(payload, Short.class);
-                getDevice().setElectrodeSensitivity(electrodeConfig);
-            }
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-        } catch (Exception ex) {
-            Logger.getLogger(MultiTouchService.class.getName()).log(Level.INFO, null, ex);
+        if (string.startsWith(getServiceContract().INTENT_RECALIBRATE)) {
+            Boolean recalibrate = getMapper().readValue(payload, Boolean.class);
+            getDevice().recalibrate(recalibrate);
         }
+        if (string.startsWith(getServiceContract().INTENT_ELECTRODE_CONFIG)) {
+            Integer electrodeConfig = getMapper().readValue(payload, Integer.class);
+            getDevice().setElectrodeConfig(electrodeConfig);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ELECTRODE_SENSITIVITY)) {
+            Short electrodeConfig = getMapper().readValue(payload, Short.class);
+            getDevice().setElectrodeSensitivity(electrodeConfig);
+        }
+
     }
 
     @Override

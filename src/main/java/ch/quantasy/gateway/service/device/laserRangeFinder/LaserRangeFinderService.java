@@ -87,49 +87,39 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDistanceCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_VELOCITY_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setVelocityCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_DISTANCE_THRESHOLD)) {
-                DeviceDistanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceDistanceCallbackThreshold.class);
-                getDevice().setDistanceCallbackThreshold(threshold);
-            }
-            if (string.startsWith(getServiceContract().INTENT_VELOCITY_THRESHOLD)) {
-                DeviceVelocityCallbackThreshold threshold = getMapper().readValue(payload, DeviceVelocityCallbackThreshold.class);
-                getDevice().setVelocityCallbackThreshold(threshold);
-            }
-            if (string.startsWith(getServiceContract().INTENT_LASER)) {
-                Boolean laserEnabled = getMapper().readValue(payload, Boolean.class);
-                getDevice().setLaser(laserEnabled);
-            }
-            if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
-                DeviceAveraging movingAverage = getMapper().readValue(payload, DeviceAveraging.class);
-                getDevice().setMovingAverage(movingAverage);
-            }
-            if (string.startsWith(getServiceContract().INTENT_DEVICE_MODE)) {
-                DeviceMode deviceMode = getMapper().readValue(payload, DeviceMode.class);
-                getDevice().setMode(deviceMode);
-            }
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-        } catch (Exception ex) {
-            Logger.getLogger(LaserRangeFinderService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDistanceCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_VELOCITY_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setVelocityCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_DISTANCE_THRESHOLD)) {
+            DeviceDistanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceDistanceCallbackThreshold.class);
+            getDevice().setDistanceCallbackThreshold(threshold);
+        }
+        if (string.startsWith(getServiceContract().INTENT_VELOCITY_THRESHOLD)) {
+            DeviceVelocityCallbackThreshold threshold = getMapper().readValue(payload, DeviceVelocityCallbackThreshold.class);
+            getDevice().setVelocityCallbackThreshold(threshold);
+        }
+        if (string.startsWith(getServiceContract().INTENT_LASER)) {
+            Boolean laserEnabled = getMapper().readValue(payload, Boolean.class);
+            getDevice().setLaser(laserEnabled);
+        }
+        if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
+            DeviceAveraging movingAverage = getMapper().readValue(payload, DeviceAveraging.class);
+            getDevice().setMovingAverage(movingAverage);
+        }
+        if (string.startsWith(getServiceContract().INTENT_DEVICE_MODE)) {
+            DeviceMode deviceMode = getMapper().readValue(payload, DeviceMode.class);
+            getDevice().setMode(deviceMode);
         }
     }
 

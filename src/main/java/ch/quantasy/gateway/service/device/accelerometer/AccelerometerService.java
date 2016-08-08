@@ -76,14 +76,8 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
         addDescription(getServiceContract().STATUS_CONFIGURATION, "dataRate: [OFF|Hz3|Hz6|Hz12|Hz25|Hz50|Hz100|Hz400|Hz800|Hz1600]\n fullScale: [G2|G4|G6|G8|G16\n filterBandwidth: [Hz800|Hz400|Hz200|Hz50]");
     }
 
-    @Override
-    public void messageArrived(String string, MqttMessage mm){
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+        public void messageArrived(String string, byte[] payload) throws Exception {
 
-        }
-        try {
             if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
@@ -106,12 +100,6 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
                 DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
                 getDevice().setConfiguration(configuration);
             }
-
-        } catch (Exception ex) {
-            Logger.getLogger(AccelerometerService.class
-                    .getName()).log(Level.INFO, null, ex);
-            return;
-        }
 
     }
 

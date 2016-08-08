@@ -54,16 +54,16 @@ import java.net.URI;
  */
 public class MotionDetectorService extends AbstractDeviceService<MotionDetectorDevice, MotionDetectorServiceContract> implements MotionDetectorDeviceCallback {
 
-    public MotionDetectorService(MotionDetectorDevice device,URI mqttURI) throws MqttException {
+    public MotionDetectorService(MotionDetectorDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new MotionDetectorServiceContract(device));
-        
+
         addDescription(getServiceContract().EVENT_DETECTION_CYCLE_ENDED, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_MOTION_DETECTED, "[0.." + Long.MAX_VALUE + "]");
-     
+
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm){
+    public void messageArrived(String string, byte[] payload) throws Exception {
         //There are no intents that can be handled
     }
 

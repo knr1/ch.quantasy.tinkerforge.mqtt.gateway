@@ -58,7 +58,7 @@ import java.net.URI;
  */
 public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevice, ThermoCoupleServiceContract> implements ThermoCoupleDeviceCallback {
 
-    public ThermoCoupleService(ThermoCoupleDevice device,URI mqttURI) throws MqttException {
+    public ThermoCoupleService(ThermoCoupleDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new ThermoCoupleServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -75,39 +75,29 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setTemperatureCallbackPeriod(period);
+        }
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setTemperatureCallbackPeriod(period);
-            }
+        if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_THRESHOLD)) {
 
-            if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_THRESHOLD)) {
+            DeviceTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceTemperatureCallbackThreshold.class);
+            getDevice().setTemperatureCallbackThreshold(threshold);
+        }
 
-                DeviceTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceTemperatureCallbackThreshold.class);
-                getDevice().setTemperatureCallbackThreshold(threshold);
-            }
+        if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
 
-            if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
-
-                DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-                getDevice().setConfiguration(configuration);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(ThermoCoupleService.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
+            getDevice().setConfiguration(configuration);
         }
 
     }
@@ -144,10 +134,8 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
 
     @Override
     public void errorState(boolean bln, boolean bln1) {
-        addEvent(getServiceContract().EVENT_ERROR, new ErrorEvent(bln,bln1));
+        addEvent(getServiceContract().EVENT_ERROR, new ErrorEvent(bln, bln1));
     }
-    
-    
 
     public static class ErrorEvent {
 
@@ -156,12 +144,12 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
         protected boolean openCircuit;
 
         public ErrorEvent(boolean voltage, boolean openCircuit) {
-            this(voltage,openCircuit, System.currentTimeMillis());
+            this(voltage, openCircuit, System.currentTimeMillis());
         }
 
-        public ErrorEvent(boolean voltage,boolean openCircuit, long timeStamp) {
+        public ErrorEvent(boolean voltage, boolean openCircuit, long timeStamp) {
             this.voltage = voltage;
-            this.openCircuit=openCircuit;
+            this.openCircuit = openCircuit;
             this.timestamp = timeStamp;
         }
 
@@ -176,11 +164,10 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
         public boolean getOpenCircuit() {
             return openCircuit;
         }
-        
 
     }
-    
-     public static class TemperatureEvent {
+
+    public static class TemperatureEvent {
 
         protected long timestamp;
         protected long value;

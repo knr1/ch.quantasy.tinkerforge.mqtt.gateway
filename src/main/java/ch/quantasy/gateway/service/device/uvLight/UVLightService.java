@@ -73,34 +73,23 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_UV_LIGHT_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_UV_LIGHT_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setUVLightCallbackPeriod(period);
+        }
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setUVLightCallbackPeriod(period);
-            }
+        if (string.startsWith(getServiceContract().INTENT_UV_LIGHT_THRESHOLD)) {
 
-            if (string.startsWith(getServiceContract().INTENT_UV_LIGHT_THRESHOLD)) {
-
-                DeviceUVLightCallbackThreshold threshold = getMapper().readValue(payload, DeviceUVLightCallbackThreshold.class);
-                getDevice().setUVLightCallbackThreshold(threshold);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(UVLightService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+            DeviceUVLightCallbackThreshold threshold = getMapper().readValue(payload, DeviceUVLightCallbackThreshold.class);
+            getDevice().setUVLightCallbackThreshold(threshold);
         }
 
     }

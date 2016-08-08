@@ -57,55 +57,41 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class LineService extends AbstractDeviceService<LineDevice, LineServiceContract> implements LineDeviceCallback {
 
-    public LineService(LineDevice device,URI mqttURI) throws MqttException {
+    public LineService(LineDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new LineServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        
+
         addDescription(getServiceContract().EVENT_REFLECTIVITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[0..4095]\n");
         addDescription(getServiceContract().EVENT_REFLECTIVITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
         addDescription(getServiceContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
         addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        
-   
+
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD)) {
-
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setReflectivityCallbackPeriod(period);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_REFLECTIVITY_THRESHOLD)) {
-
-                DeviceReflectivityCallbackThreshold threshold = getMapper().readValue(payload, DeviceReflectivityCallbackThreshold.class);
-                getDevice().setReflectivityCallbackThreshold(threshold);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(LineService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setReflectivityCallbackPeriod(period);
         }
 
+        if (string.startsWith(getServiceContract().INTENT_REFLECTIVITY_THRESHOLD)) {
+
+            DeviceReflectivityCallbackThreshold threshold = getMapper().readValue(payload, DeviceReflectivityCallbackThreshold.class);
+            getDevice().setReflectivityCallbackThreshold(threshold);
+        }
     }
-
 
     @Override
     public void debouncePeriodChanged(long period) {
@@ -122,11 +108,9 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
         addStatus(getServiceContract().STATUS_REFLECTIVITY_THRESHOLD, threshold);
     }
 
-   
-    
     @Override
     public void reflectivity(int i) {
-        addEvent(getServiceContract().EVENT_REFLECTIVITY, new ReflectivityEvent(i));  
+        addEvent(getServiceContract().EVENT_REFLECTIVITY, new ReflectivityEvent(i));
     }
 
     @Override

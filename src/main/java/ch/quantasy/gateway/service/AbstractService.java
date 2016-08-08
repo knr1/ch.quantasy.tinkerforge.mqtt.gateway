@@ -58,6 +58,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 
 /**
@@ -75,7 +77,11 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
     private final HashMap<String, List<Object>> eventMap;
     private final HashMap<String, MqttMessage> contractDescriptionMap;
 
+    private final ExecutorService executorService;
+
     public AbstractService(URI mqttURI, String clientID, S serviceContract) throws MqttException {
+        //I do not know if this is a great idea... Check with load-tests!
+        executorService = Executors.newCachedThreadPool();
         this.serviceContract = serviceContract;
         statusMap = new HashMap<>();
         eventMap = new HashMap<>();
@@ -205,4 +211,28 @@ public abstract class AbstractService<S extends ServiceContract> implements MQTT
             }
         }, 0, 3000);
     }
+
+    @Override
+    public void messageArrived(String topic, MqttMessage mm) {
+        byte[] payload = mm.getPayload();
+        if (payload == null) {
+            return;
+        }
+        executorService.submit(new Runnable() {
+            @Override
+            //Not so sure if this is a great idea... Check it!
+            public void run() {
+                try {
+                    messageArrived(topic, payload);
+                } catch (Exception ex) {
+                    Logger.getLogger(getClass().
+                            getName()).log(Level.INFO, null, ex);
+                    return;
+                }
+            }
+        });
+
+    }
+
+    public abstract void messageArrived(String topic, byte[] payload) throws Exception;
 }

@@ -54,14 +54,14 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceContract> implements BrickletTilt.TiltStateListener {
 
-    public TiltService(TiltDevice device,URI mqttURI) throws MqttException {
+    public TiltService(TiltDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new TiltServiceContract(device));
         addDescription(getServiceContract().EVENT_TILT_STATE, "[0..2]");
-     
+
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm){
+    public void messageArrived(String string, byte[] payload) throws Exception {
         //There are no intents that can be handled
     }
 
@@ -69,7 +69,7 @@ public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceCo
     public void tiltState(short s) {
         addEvent(getServiceContract().EVENT_TILT_STATE, new TiltEvent(s));
     }
-    
+
     public static class TiltEvent {
 
         long timestamp;

@@ -77,8 +77,4 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
         return device;
     }
 
-    @Override
-    public abstract void messageArrived(String topic, MqttMessage mm);
-    //This is only overriden in order to get 'rid' of the 'throws Exception'.
-
 }

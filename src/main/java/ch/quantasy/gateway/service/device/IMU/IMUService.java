@@ -89,13 +89,7 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-
-        }
-        try {
+    public void messageArrived(String string, byte[] payload) throws Exception {
             if (string.startsWith(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
@@ -135,13 +129,6 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
                 Boolean enabled = getMapper().readValue(payload, Boolean.class);
                 getDevice().setOrientationCalculation(enabled);
             }
-
-        } catch (Exception ex) {
-            Logger.getLogger(IMUService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-
     }
 
     @Override

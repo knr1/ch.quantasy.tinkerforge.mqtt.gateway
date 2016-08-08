@@ -68,39 +68,26 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
 
         addDescription(getServiceContract().EVENT_TAG_VANISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
         addDescription(getServiceContract().STATUS_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        
-        addDescription(getServiceContract().EVENT_TAG_WRITTEN, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  value: [00..FF]_*");
+
+        addDescription(getServiceContract().EVENT_TAG_WRITTEN, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  state: [WritePageError|WritePageReady]\n value: [00..FF]_*");
         addDescription(getServiceContract().INTENT_WRITE, "id: [00..FF]_9\n  value: [00..FF]_*");
-        
-        
 
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_SCANNING_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setScanningCallbackPeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_SCANNING_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setScanningCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_READ)) {
-                String id = getMapper().readValue(payload, String.class);
-                getDevice().setActiveTagIDToRead(id);
-            }
-            if(string.startsWith(getServiceContract().INTENT_WRITE)){
-                NFCWrite write=getMapper().readValue(payload, NFCWrite.class);
-                getDevice().setActiveTagToWrite(write);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(NFCService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+        if (string.startsWith(getServiceContract().INTENT_READ)) {
+            String id = getMapper().readValue(payload, String.class);
+            getDevice().setActiveTagIDToRead(id);
+        }
+        if (string.startsWith(getServiceContract().INTENT_WRITE)) {
+            NFCWrite write = getMapper().readValue(payload, NFCWrite.class);
+            getDevice().setActiveTagToWrite(write);
         }
 
     }
@@ -134,18 +121,20 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
 
         private long timestamp;
         private String id;
+        private NFCTag.NFCRFIDReaderState state;
         private Short[] value;
 
         public TagWrittenEvent(NFCTag tag) {
-            this(tag.getLatestDiscoveryTimeStamp(), tag.getTidAsHexString(), tag.getWriteContent());
+            this(tag.getLatestDiscoveryTimeStamp(), tag.getTidAsHexString(), tag.getLatestReaderState(), tag.getWriteContent());
         }
 
         public TagWrittenEvent() {
         }
 
-        public TagWrittenEvent(long timestamp, String id, Short[] value) {
+        public TagWrittenEvent(long timestamp, String id, NFCTag.NFCRFIDReaderState readerState, Short[] value) {
             this.timestamp = timestamp;
             this.id = id;
+            this.state = readerState;
             this.value = value;
         }
 
@@ -160,6 +149,11 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
         public Short[] getValue() {
             return value;
         }
+
+        public NFCTag.NFCRFIDReaderState getState() {
+            return state;
+        }
+
     }
 
     static class TagReadEvent {

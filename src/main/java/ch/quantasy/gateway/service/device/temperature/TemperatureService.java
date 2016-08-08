@@ -75,41 +75,30 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
-
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setTemperatureCallbackPeriod(period);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_THRESHOLD)) {
-
-                DeviceTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceTemperatureCallbackThreshold.class);
-                getDevice().setTemperatureCallbackThreshold(threshold);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_I2C_MODE)) {
-
-                DeviceI2CMode mode = getMapper().readValue(payload, DeviceI2CMode.class);
-                getDevice().setI2CMode(mode);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(TemperatureService.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setTemperatureCallbackPeriod(period);
         }
 
+        if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_THRESHOLD)) {
+
+            DeviceTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceTemperatureCallbackThreshold.class);
+            getDevice().setTemperatureCallbackThreshold(threshold);
+        }
+
+        if (string.startsWith(getServiceContract().INTENT_I2C_MODE)) {
+
+            DeviceI2CMode mode = getMapper().readValue(payload, DeviceI2CMode.class);
+            getDevice().setI2CMode(mode);
+        }
     }
 
     @Override

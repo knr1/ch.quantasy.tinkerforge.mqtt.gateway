@@ -71,27 +71,15 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-
+    public void messageArrived(String string, byte[] payload) throws Exception {
+        if (string.startsWith(getServiceContract().INTENT_SELECTED_LED_STATE)) {
+            DeviceSelectedLEDStateParameters parameters = getMapper().readValue(payload, DeviceSelectedLEDStateParameters.class);
+            getDevice().setSelectedLEDState(parameters);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_SELECTED_LED_STATE)) {
-                DeviceSelectedLEDStateParameters parameters = getMapper().readValue(payload, DeviceSelectedLEDStateParameters.class);
-                getDevice().setSelectedLEDState(parameters);
-            }
-            if (string.startsWith(getServiceContract().INTENT_LED_STATE)) {
-                DeviceLEDState parameters = getMapper().readValue(payload, DeviceLEDState.class);
-                getDevice().setLEDState(parameters);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(DualButtonService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+        if (string.startsWith(getServiceContract().INTENT_LED_STATE)) {
+            DeviceLEDState parameters = getMapper().readValue(payload, DeviceLEDState.class);
+            getDevice().setLEDState(parameters);
         }
-
     }
 
     @Override

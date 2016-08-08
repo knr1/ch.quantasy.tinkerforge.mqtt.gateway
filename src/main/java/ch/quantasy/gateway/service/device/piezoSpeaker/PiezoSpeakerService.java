@@ -72,32 +72,21 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_BEEP)) {
-                BeepParameter beepParameter = getMapper().readValue(payload, BeepParameter.class);
-                getDevice().beep(beepParameter);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_MORSE)) {
-                MorseCodeParameter morseCodeParameter = getMapper().readValue(payload, MorseCodeParameter.class);
-                getDevice().morse(morseCodeParameter);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_CALIBRATE)) {
-                Boolean calibrate = getMapper().readValue(payload, Boolean.class);
-                getDevice().calibrate(calibrate);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(PiezoSpeakerService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
+        if (string.startsWith(getServiceContract().INTENT_BEEP)) {
+            BeepParameter beepParameter = getMapper().readValue(payload, BeepParameter.class);
+            getDevice().beep(beepParameter);
         }
 
+        if (string.startsWith(getServiceContract().INTENT_MORSE)) {
+            MorseCodeParameter morseCodeParameter = getMapper().readValue(payload, MorseCodeParameter.class);
+            getDevice().morse(morseCodeParameter);
+        }
+
+        if (string.startsWith(getServiceContract().INTENT_CALIBRATE)) {
+            Boolean calibrate = getMapper().readValue(payload, Boolean.class);
+            getDevice().calibrate(calibrate);
+        }
     }
 
     @Override

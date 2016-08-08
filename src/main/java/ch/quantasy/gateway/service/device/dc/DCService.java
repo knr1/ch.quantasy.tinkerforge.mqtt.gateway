@@ -56,7 +56,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract> implements DCDeviceCallback {
 
-    public DCService(DCDevice device,URI mqttURI) throws MqttException {
+    public DCService(DCDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DCServiceContract(device));
         addDescription(getServiceContract().INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DRIVER_MODE, "[0|1]");
@@ -68,7 +68,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
         addDescription(getServiceContract().EVENT_FULL_BRAKE, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.."+Short.MAX_VALUE+"]");
+        addDescription(getServiceContract().EVENT_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_EMERGENCY_SHUTDOWN, "[0.." + Long.MAX_VALUE + "]");
 
         addDescription(getServiceContract().STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
@@ -82,17 +82,13 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm){
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try{
+    public void messageArrived(String string, byte[] payload) throws Exception {
+
         if (string.startsWith(getServiceContract().INTENT_ENABLED)) {
             Boolean enabled = getMapper().readValue(payload, Boolean.class);
             getDevice().setEnabled(enabled);
         }
-        
+
         if (string.startsWith(getServiceContract().INTENT_ACCELERATION)) {
             Integer acceleration = getMapper().readValue(payload, Integer.class);
             getDevice().setAcceleration(acceleration);
@@ -117,12 +113,6 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
             Integer velocityPeriod = getMapper().readValue(payload, Integer.class);
             getDevice().setVelocityPeriod(velocityPeriod);
         }
-        } catch (Exception ex) {
-            Logger.getLogger(DCService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-
     }
 
     @Override

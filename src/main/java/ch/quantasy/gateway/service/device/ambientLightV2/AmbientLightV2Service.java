@@ -58,7 +58,7 @@ import java.net.URI;
  */
 public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2Device, AmbientLightV2ServiceContract> implements AmbientLightV2DeviceCallback {
 
-    public AmbientLightV2Service(AmbientLightV2Device device,URI mqttURI) throws MqttException {
+    public AmbientLightV2Service(AmbientLightV2Device device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new AmbientLightV2ServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -75,41 +75,30 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_ILLUMINANCE_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ILLUMINANCE_CALLBACK_PERIOD)) {
-
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setIlluminanceCallbackPeriod(period);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_ILLUMINANCE_THRESHOLD)) {
-
-                DeviceIlluminanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceIlluminanceCallbackThreshold.class);
-                getDevice().setIlluminanceCallbackThreshold(threshold);
-            }
-
-            if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
-
-                DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-                getDevice().setConfiguration(configuration);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(AmbientLightV2Service.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setIlluminanceCallbackPeriod(period);
         }
 
+        if (string.startsWith(getServiceContract().INTENT_ILLUMINANCE_THRESHOLD)) {
+
+            DeviceIlluminanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceIlluminanceCallbackThreshold.class);
+            getDevice().setIlluminanceCallbackThreshold(threshold);
+        }
+
+        if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
+
+            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
+            getDevice().setConfiguration(configuration);
+        }
     }
 
     @Override

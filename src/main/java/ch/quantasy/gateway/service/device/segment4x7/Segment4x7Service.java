@@ -73,27 +73,17 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
+
+        if (string.startsWith(getServiceContract().INTENT_SEGMENTS)) {
+            DeviceSegments segments = getMapper().readValue(payload, DeviceSegments.class);
+            getDevice().setSegments(segments);
 
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_SEGMENTS)) {
-                DeviceSegments segments = getMapper().readValue(payload, DeviceSegments.class);
-                getDevice().setSegments(segments);
+        if (string.startsWith(getServiceContract().INTENT_COUNTER)) {
+            DeviceCounterParameters counter = getMapper().readValue(payload, DeviceCounterParameters.class);
+            getDevice().startCounter(counter);
 
-            }
-            if (string.startsWith(getServiceContract().INTENT_COUNTER)) {
-                DeviceCounterParameters counter = getMapper().readValue(payload, DeviceCounterParameters.class);
-                getDevice().startCounter(counter);
-
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(Segment4x7Service.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
         }
     }
 

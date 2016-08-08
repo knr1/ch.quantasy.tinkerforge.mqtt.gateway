@@ -57,7 +57,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class DustDetectorService extends AbstractDeviceService<DustDetectorDevice, DustDetectorServiceContract> implements DustDetectorDeviceCallback {
 
-    public DustDetectorService(DustDetectorDevice device,URI mqttURI) throws MqttException {
+    public DustDetectorService(DustDetectorDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new DustDetectorServiceContract(device));
         addDescription(getServiceContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -76,39 +76,28 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
+            Short average = getMapper().readValue(payload, Short.class);
+            getDevice().setMovingAverage(average);
+        }
+        if (string.startsWith(getServiceContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD)) {
 
-                Short average = getMapper().readValue(payload, Short.class);
-                getDevice().setMovingAverage(average);
-            }
-            if (string.startsWith(getServiceContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDustDensityCallbackPeriod(period);
+        }
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDustDensityCallbackPeriod(period);
-            }
+        if (string.startsWith(getServiceContract().INTENT_DUST_DENSITY_THRESHOLD)) {
 
-            if (string.startsWith(getServiceContract().INTENT_DUST_DENSITY_THRESHOLD)) {
-
-                DeviceDustDensityCallbackThreshold threshold = getMapper().readValue(payload, DeviceDustDensityCallbackThreshold.class);
-                getDevice().setDustDensityCallbackThreshold(threshold);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(DustDetectorService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+            DeviceDustDensityCallbackThreshold threshold = getMapper().readValue(payload, DeviceDustDensityCallbackThreshold.class);
+            getDevice().setDustDensityCallbackThreshold(threshold);
         }
 
     }

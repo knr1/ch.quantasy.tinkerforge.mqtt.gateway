@@ -58,7 +58,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDevice, TemperatureIRServiceContract> implements TemperatureIRDeviceCallback {
 
-    public TemperatureIRService(TemperatureIRDevice device,URI mqttURI) throws MqttException {
+    public TemperatureIRService(TemperatureIRDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new TemperatureIRServiceContract(device));
         addDescription(getServiceContract().INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -73,43 +73,33 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
         addDescription(getServiceContract().STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_AMBIENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-400..1250]\n max: [-400..1250]");
         addDescription(getServiceContract().STATUS_OBJECT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-700..3800]\n max: [-700..3800]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]"); 
- 
+        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
+
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAmbientTemperatureCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setObjectTemperatureCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_AMBIENT_TEMPERATURE_THRESHOLD)) {
-                DeviceAmbientTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceAmbientTemperatureCallbackThreshold.class);
-                getDevice().setAmbientTemperatureThreshold(threshold);
-            }
-            if (string.startsWith(getServiceContract().INTENT_OBJECT_TEMPERATURE_THRESHOLD)) {
-                DeviceObjectTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceObjectTemperatureCallbackThreshold.class);
-                getDevice().setObjectTemperatureThreshold(threshold);
+        if (string.startsWith(getServiceContract().INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAmbientTemperatureCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setObjectTemperatureCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_AMBIENT_TEMPERATURE_THRESHOLD)) {
+            DeviceAmbientTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceAmbientTemperatureCallbackThreshold.class);
+            getDevice().setAmbientTemperatureThreshold(threshold);
+        }
+        if (string.startsWith(getServiceContract().INTENT_OBJECT_TEMPERATURE_THRESHOLD)) {
+            DeviceObjectTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceObjectTemperatureCallbackThreshold.class);
+            getDevice().setObjectTemperatureThreshold(threshold);
 
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(TemperatureIRService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
         }
     }
 
@@ -132,8 +122,6 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
     public void objectTemperatureReached(short s) {
         addEvent(getServiceContract().EVENT_OBJECT_TEMPERATURE_REACHED, new ObjectTemperatureEvent(s));
     }
-    
-    
 
     @Override
     public void ambientTemperatureCallbackPeriodChanged(long period) {
@@ -154,7 +142,6 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
     public void ambientTemperatureCallbackThresholdChanged(DeviceAmbientTemperatureCallbackThreshold threshold) {
         addStatus(getServiceContract().STATUS_AMBIENT_TEMPERATURE_THRESHOLD, threshold);
     }
-    
 
     @Override
     public void objectTemperatureCallbackThresholdChanged(DeviceObjectTemperatureCallbackThreshold threshold) {

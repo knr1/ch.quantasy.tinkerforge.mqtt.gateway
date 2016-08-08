@@ -58,63 +58,50 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, DistanceUSServiceContract> implements DistanceUSDeviceCallback {
 
-    public DistanceUSService(DistanceUSDevice device,URI mqttURI) throws MqttException {
+    public DistanceUSService(DistanceUSDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new DistanceUSServiceContract(device));
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
         addDescription(getServiceContract().INTENT_MOVING_AVERAGE, "[0..100]");
-        
+
         addDescription(getServiceContract().EVENT_DISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[0..4095]\n");
         addDescription(getServiceContract().EVENT_DISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
         addDescription(getServiceContract().STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
         addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_MOVING_AVERAGE, "[0..100]");
-        
-   
+
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_DISTANCE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDistanceCallbackPeriod(period);
+        }
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDistanceCallbackPeriod(period);
-            }
+        if (string.startsWith(getServiceContract().INTENT_DISTANCE_THRESHOLD)) {
 
-            if (string.startsWith(getServiceContract().INTENT_DISTANCE_THRESHOLD)) {
+            DeviceDistanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceDistanceCallbackThreshold.class);
+            getDevice().setDistanceCallbackThreshold(threshold);
+        }
 
-                DeviceDistanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceDistanceCallbackThreshold.class);
-                getDevice().setDistanceCallbackThreshold(threshold);
-            }
-            
-            if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
+        if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
 
-                Short movingAverage = getMapper().readValue(payload, Short.class);
-                getDevice().setMovingAverage(movingAverage);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(DistanceUSService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+            Short movingAverage = getMapper().readValue(payload, Short.class);
+            getDevice().setMovingAverage(movingAverage);
         }
 
     }
-
 
     @Override
     public void debouncePeriodChanged(long period) {
@@ -135,10 +122,10 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
     public void movingAverageChanged(short movingAverage) {
         addStatus(getServiceContract().STATUS_MOVING_AVERAGE, movingAverage);
     }
-    
+
     @Override
     public void distance(int i) {
-        addEvent(getServiceContract().EVENT_DISTANCE, new DisntanceEvent(i));  
+        addEvent(getServiceContract().EVENT_DISTANCE, new DisntanceEvent(i));
     }
 
     @Override

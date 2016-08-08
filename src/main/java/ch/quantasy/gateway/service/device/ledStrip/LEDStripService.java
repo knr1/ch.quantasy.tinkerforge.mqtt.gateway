@@ -77,34 +77,27 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
+
+        if (string.startsWith(getServiceContract().INTENT_CONFIG)) {
+            LEDStripDeviceConfig config = getMapper().readValue(payload, LEDStripDeviceConfig.class);
+            getDevice().setConfig(config);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_CONFIG)) {
-                LEDStripDeviceConfig config = getMapper().readValue(payload, LEDStripDeviceConfig.class
-                );
-                getDevice().setConfig(config);
-            }
-            if (string.startsWith(getServiceContract().INTENT_FRAME)) {
+        if (string.startsWith(getServiceContract().INTENT_FRAME)) {
+            synchronized (this) {
                 frame = (getMapper().readValue(payload, LEDFrame.class));
                 frames.clear();
                 getDevice().readyToPublish(this);
             }
-            if (string.startsWith(getServiceContract().INTENT_FRAMES)) {
-                LEDFrame[] internalFrames = (getMapper().readValue(payload, LEDFrame[].class));
+        }
+        if (string.startsWith(getServiceContract().INTENT_FRAMES)) {
+            LEDFrame[] internalFrames = (getMapper().readValue(payload, LEDFrame[].class));
+            synchronized (this) {
                 for (LEDFrame frame : internalFrames) {
                     frames.offer(frame);
                 }
                 getDevice().readyToPublish(this);
-
             }
-        } catch (Exception ex) {
-            Logger.getLogger(LEDStripService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
         }
     }
 
@@ -135,6 +128,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
     @Override
     public void isLaging() {
         addEvent(getServiceContract().EVENT_LAGING, System.currentTimeMillis());
+
     }
 
     public static class FrameRenderedEvent {

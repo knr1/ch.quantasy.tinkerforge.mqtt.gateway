@@ -71,13 +71,8 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
         addDescription(getServiceContract().INTENT_WRITE_LINES, "[line: [0..1]\n position: [0..15]\n text: [String]_[1..16]]");
     }
 
-    @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try {
+        public void messageArrived(String string, byte[] payload) throws Exception {
+
             if (string.startsWith(getServiceContract().INTENT_BACKLIGHT)) {
                 Boolean backlight = getMapper().readValue(payload, Boolean.class);
                 getDevice().setBacklight(backlight);
@@ -86,10 +81,7 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
                 Boolean clear = getMapper().readValue(payload, Boolean.class);
                 getDevice().clearDisplay(clear);
             }
-        } catch (Exception ex) {
-            Logger.getLogger(LCD16x2Service.class
-                    .getName()).log(Level.INFO, null, ex);
-        }
+       
     }
 
     @Override

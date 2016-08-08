@@ -51,6 +51,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -86,7 +88,13 @@ public class TimedSwitch extends AbstractAgent {
                 state = SwitchSocketCParameters.SwitchTo.ON;
                 System.out.println("on");
             }
-
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TimedSwitch.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            switchAlwaysOn();
+            System.out.println("Always-on switched");
         }
 
     }
@@ -107,6 +115,12 @@ public class TimedSwitch extends AbstractAgent {
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
         addMessage(topic, config);
         System.out.println("Switching: " + state);
+    }
+    
+    private void switchAlwaysOn() { 
+        SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 1, SwitchSocketCParameters.SwitchTo.ON);
+        String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
+        addMessage(topic, config);
     }
 
     public static void main(String[] args) throws Throwable {

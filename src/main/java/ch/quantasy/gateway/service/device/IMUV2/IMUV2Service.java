@@ -83,76 +83,65 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         addDescription(getServiceContract().STATUS_STATUS_LED, "[true|false]");
         addDescription(getServiceContract().STATUS_LEDS, "[true|false]");
 
-        addDescription(getServiceContract().EVENT_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_ANGULAR_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_GRAVITY_VECTOR, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_LINEAR_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_MAGNETIC_FIELD, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_ORIENTATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n heading: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n roll: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n pitch: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_QUATERNION, "timestamp: [0.." + Long.MAX_VALUE + "]\n w: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n x: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n y: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]\n z: ["+Short.MIN_VALUE+".."+Short.MAX_VALUE+"]");
-        addDescription(getServiceContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: ["+Byte.MIN_VALUE+".."+Byte.MAX_VALUE+"]");
+        addDescription(getServiceContract().EVENT_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_ANGULAR_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_GRAVITY_VECTOR, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_LINEAR_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_MAGNETIC_FIELD, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_ORIENTATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n heading: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n roll: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n pitch: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_QUATERNION, "timestamp: [0.." + Long.MAX_VALUE + "]\n w: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getServiceContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Byte.MIN_VALUE + ".." + Byte.MAX_VALUE + "]");
         addDescription(getServiceContract().EVENT_ALL_DATA, "timestamp: [0.." + Long.MAX_VALUE + "]\n @acceleration \n @magneticField \n @angularVelocity \n @orientation \n @quaternion \n @linearAcceleration \n @gravityVector \n @temperature \n calibrationStatus: [0..255]");
-        
+
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAccelerationPeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
-
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAccelerationPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ALL_DATA_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAllDataPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAngularVelocityPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_GRAVITY_VECTOR_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setGravityVectorPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_LINEAR_ACCELERATION_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setLinearAccelerationPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setMagneticFieldPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ORIENTATION_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setOrientationPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_QUATERNION_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setQuaternionPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setTemperaturePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_LEDS)) {
-                Boolean enabled = getMapper().readValue(payload, Boolean.class);
-                getDevice().setLEDs(enabled);
-            }
-            if (string.startsWith(getServiceContract().INTENT_STATUS_LED)) {
-                Boolean enabled = getMapper().readValue(payload, Boolean.class);
-                getDevice().setStatusLED(enabled);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(IMUV2Service.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+        if (string.startsWith(getServiceContract().INTENT_ALL_DATA_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAllDataPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAngularVelocityPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_GRAVITY_VECTOR_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setGravityVectorPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_LINEAR_ACCELERATION_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setLinearAccelerationPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setMagneticFieldPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ORIENTATION_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setOrientationPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_QUATERNION_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setQuaternionPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setTemperaturePeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_LEDS)) {
+            Boolean enabled = getMapper().readValue(payload, Boolean.class);
+            getDevice().setLEDs(enabled);
+        }
+        if (string.startsWith(getServiceContract().INTENT_STATUS_LED)) {
+            Boolean enabled = getMapper().readValue(payload, Boolean.class);
+            getDevice().setStatusLED(enabled);
         }
 
     }

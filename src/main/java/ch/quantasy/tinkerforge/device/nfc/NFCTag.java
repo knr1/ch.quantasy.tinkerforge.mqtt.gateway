@@ -51,6 +51,29 @@ import java.util.Map;
  */
 public class NFCTag {
 
+    public static enum NFCRFIDReaderState {
+        WritePageError(BrickletNFCRFID.STATE_WRITE_PAGE_ERROR), WritePageReady(BrickletNFCRFID.STATE_WRITE_PAGE_READY);
+        private short type;
+
+        private NFCRFIDReaderState(short type) {
+            this.type = type;
+        }
+
+        public short getType() {
+            return type;
+        }
+
+        public static NFCRFIDReaderState getNFCTReaderStateTypeFor(short s) throws IllegalArgumentException {
+            for (NFCRFIDReaderState type : values()) {
+                if (type.type == s) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("Not supported: " + s);
+        }
+
+    }
+
     public static enum NFCType {
         MifareClassic(BrickletNFCRFID.TAG_TYPE_MIFARE_CLASSIC), Type1(BrickletNFCRFID.TAG_TYPE_TYPE1), Type2(BrickletNFCRFID.TAG_TYPE_TYPE2);
         private short type;

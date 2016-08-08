@@ -40,6 +40,7 @@
  *
  */
 package ch.quantasy.gateway.service.device.soundIntensity;
+
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.soundIntensity.DeviceSoundIntensityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
@@ -56,13 +57,13 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class SoundIntensityService extends AbstractDeviceService<SoundIntensityDevice, SoundIntensityServiceContract> implements SoundIntensityDeviceCallback {
 
-    public SoundIntensityService(SoundIntensityDevice device,URI mqttURI) throws MqttException {
+    public SoundIntensityService(SoundIntensityDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new SoundIntensityServiceContract(device));
         addDescription(getServiceContract().INTENT_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_SOUND_INTENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
-        
+
         addDescription(getServiceContract().EVENT_INTENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
         addDescription(getServiceContract().EVENT_INTENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
         addDescription(getServiceContract().STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -72,38 +73,26 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_SOUND_INTENSITY_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_SOUND_INTENSITY_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setSoundIntensityCallbackPeriod(period);
+        }
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setSoundIntensityCallbackPeriod(period);
-            }
+        if (string.startsWith(getServiceContract().INTENT_SOUND_INTENSITY_THRESHOLD)) {
 
-            if (string.startsWith(getServiceContract().INTENT_SOUND_INTENSITY_THRESHOLD)) {
-
-                DeviceSoundIntensityCallbackThreshold threshold = getMapper().readValue(payload, DeviceSoundIntensityCallbackThreshold.class);
-                getDevice().setSoundIntensityCallbackThreshold(threshold);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(SoundIntensityService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+            DeviceSoundIntensityCallbackThreshold threshold = getMapper().readValue(payload, DeviceSoundIntensityCallbackThreshold.class);
+            getDevice().setSoundIntensityCallbackThreshold(threshold);
         }
 
     }
-
 
     @Override
     public void debouncePeriodChanged(long period) {
@@ -129,8 +118,6 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
     public void intensityReached(int i) {
         addEvent(getServiceContract().EVENT_INTENSITY_REACHED, new SoundIntensityEvent(i));
     }
-
-    
 
     public static class SoundIntensityEvent {
 

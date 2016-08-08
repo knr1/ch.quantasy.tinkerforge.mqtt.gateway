@@ -77,46 +77,37 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) {
-        byte[] payload = mm.getPayload();
-        if (payload == null) {
-            return;
-        }
-        try {
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_COLOR_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setColorCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_IllUMINANCE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setIlluminanceCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_COLOR_CALLBACK_THRESHOLD)) {
-                DeviceColorCallbackThreshold threshold = getMapper().readValue(payload, DeviceColorCallbackThreshold.class);
-                getDevice().setColorCallbackThreshold(threshold);
-            }
-            if (string.startsWith(getServiceContract().INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setColorTemperatureCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
-                DeviceConfiguration config = getMapper().readValue(payload, DeviceConfiguration.class);
-                getDevice().setConfig(config);
-            }
-            if (string.startsWith(getServiceContract().INTENT_LIGHT_STATE)) {
-                Boolean state = getMapper().readValue(payload, Boolean.class);
-                getDevice().setLight(state);
-            }
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-        } catch (Exception ex) {
-            Logger.getLogger(ColorService.class
-                    .getName()).log(Level.SEVERE, null, ex);
-            return;
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
         }
+        if (string.startsWith(getServiceContract().INTENT_COLOR_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setColorCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_IllUMINANCE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setIlluminanceCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_COLOR_CALLBACK_THRESHOLD)) {
+            DeviceColorCallbackThreshold threshold = getMapper().readValue(payload, DeviceColorCallbackThreshold.class);
+            getDevice().setColorCallbackThreshold(threshold);
+        }
+        if (string.startsWith(getServiceContract().INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setColorTemperatureCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
+            DeviceConfiguration config = getMapper().readValue(payload, DeviceConfiguration.class);
+            getDevice().setConfig(config);
+        }
+        if (string.startsWith(getServiceContract().INTENT_LIGHT_STATE)) {
+            Boolean state = getMapper().readValue(payload, Boolean.class);
+            getDevice().setLight(state);
+        }
+
     }
 
     @Override
