@@ -46,10 +46,7 @@ import ch.quantasy.tinkerforge.device.line.DeviceReflectivityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.line.LineDeviceCallback;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

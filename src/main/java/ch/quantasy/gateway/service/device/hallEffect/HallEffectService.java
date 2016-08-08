@@ -45,10 +45,7 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.hallEffect.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDeviceCallback;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.net.URI;
 
 /**
@@ -57,7 +54,7 @@ import java.net.URI;
  */
 public class HallEffectService extends AbstractDeviceService<HallEffectDevice, HallEffectServiceContract> implements HallEffectDeviceCallback {
 
-    public HallEffectService(HallEffectDevice device,URI mqttURI) throws MqttException {
+    public HallEffectService(HallEffectDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new HallEffectServiceContract(device));
         addDescription(getServiceContract().INTENT_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
@@ -67,37 +64,37 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
 
         addDescription(getServiceContract().EVENT_EDGE_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [0.." + Long.MAX_VALUE + "]\n greater35Gauss: [true|false]");
         addDescription(getServiceContract().EVENT_EDGE_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [0.." + Long.MAX_VALUE + "]\n");
-        
+
         addDescription(getServiceContract().STATUS_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
     }
 
     @Override
-       public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-            if (string.startsWith(getServiceContract().INTENT_EDGE_COUNT_INTERRUPT)) {
+        if (string.startsWith(getServiceContract().INTENT_EDGE_COUNT_INTERRUPT)) {
 
-                Long edges = getMapper().readValue(payload, Long.class);
-                getDevice().setEdgeInterrupt(edges);
-            }
-            if (string.startsWith(getServiceContract().INTENT_EDGE_COUNT_CALLBACK_PERIOD)) {
+            Long edges = getMapper().readValue(payload, Long.class);
+            getDevice().setEdgeInterrupt(edges);
+        }
+        if (string.startsWith(getServiceContract().INTENT_EDGE_COUNT_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setEdgeCountCallbackPeriod(period);
-            }
-            
-            if (string.startsWith(getServiceContract().INTENT_EDGE_COUNT_RESET)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setEdgeCountCallbackPeriod(period);
+        }
 
-                Boolean reset = getMapper().readValue(payload, Boolean.class);
-                getDevice().setEdgeCountReset(reset);
-            }    
+        if (string.startsWith(getServiceContract().INTENT_EDGE_COUNT_RESET)) {
 
-            if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
+            Boolean reset = getMapper().readValue(payload, Boolean.class);
+            getDevice().setEdgeCountReset(reset);
+        }
 
-                DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-                getDevice().setEdgeCountConfig(configuration);
-            }
+        if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
+
+            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
+            getDevice().setEdgeCountConfig(configuration);
+        }
     }
 
     @Override
@@ -120,26 +117,24 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
         addEvent(getServiceContract().EVENT_EDGE_COUNT_RESET, new EdgeCountResetEvent(latestEdgeCount));
     }
 
-
     @Override
     public void edgeCount(long l, boolean bln) {
-        addEvent(getServiceContract().EVENT_EDGE_COUNT, new EdgeCountEvent(l,bln));
+        addEvent(getServiceContract().EVENT_EDGE_COUNT, new EdgeCountEvent(l, bln));
     }
 
-    
     public static class EdgeCountEvent {
 
         protected long timestamp;
         protected long count;
         protected boolean greater35Gauss;
 
-        public EdgeCountEvent(long count,boolean greater35Gauss) {
-            this(count,greater35Gauss, System.currentTimeMillis());
+        public EdgeCountEvent(long count, boolean greater35Gauss) {
+            this(count, greater35Gauss, System.currentTimeMillis());
         }
 
         public EdgeCountEvent(long value, boolean greater35Gauss, long timeStamp) {
             this.count = value;
-            this.greater35Gauss=greater35Gauss;
+            this.greater35Gauss = greater35Gauss;
             this.timestamp = timeStamp;
         }
 

@@ -45,11 +45,8 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.humidity.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.tinkerforge.device.humidity.DeviceHumidityCallbackThreshold;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDeviceCallback;
 import java.net.URI;
 

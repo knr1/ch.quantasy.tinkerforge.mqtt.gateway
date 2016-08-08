@@ -47,10 +47,7 @@ import ch.quantasy.tinkerforge.device.piezoSpeaker.MorseCodeParameter;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDeviceCallback;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

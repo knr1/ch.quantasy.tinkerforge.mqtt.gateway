@@ -45,10 +45,7 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
 import ch.quantasy.tinkerforge.device.gps.GPSDeviceCallback;
 import ch.quantasy.tinkerforge.device.gps.RestartType;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.net.URI;
 
 /**

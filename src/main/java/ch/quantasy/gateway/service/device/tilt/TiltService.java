@@ -46,7 +46,6 @@ import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import com.tinkerforge.BrickletTilt;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

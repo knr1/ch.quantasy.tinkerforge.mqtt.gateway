@@ -48,10 +48,7 @@ import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDeviceCallback;
 import ch.quantasy.tinkerforge.device.barometer.DeviceAveraging;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
@@ -59,7 +56,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class BarometerService extends AbstractDeviceService<BarometerDevice, BarometerServiceContract> implements BarometerDeviceCallback {
 
-    public BarometerService(BarometerDevice device,URI mqttURI) throws MqttException {
+    public BarometerService(BarometerDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new BarometerServiceContract(device));
         addDescription(getServiceContract().INTENT_AIR_PRESSURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -84,45 +81,45 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
     }
 
     @Override
-       public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_AIR_PRESSURE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_AIR_PRESSURE_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAirPressureCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ALTITUDE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAirPressureCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ALTITUDE_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAltitudeCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_AIR_PRESSURE_THRESHOLD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAltitudeCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_AIR_PRESSURE_THRESHOLD)) {
 
-                DeviceAirPressureCallbackThreshold threshold = getMapper().readValue(payload, DeviceAirPressureCallbackThreshold.class);
-                getDevice().setAirPressureThreshold(threshold);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ALTITUDE_THRESHOLD)) {
+            DeviceAirPressureCallbackThreshold threshold = getMapper().readValue(payload, DeviceAirPressureCallbackThreshold.class);
+            getDevice().setAirPressureThreshold(threshold);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ALTITUDE_THRESHOLD)) {
 
-                DeviceAltitudeCallbackThreshold threshold = getMapper().readValue(payload, DeviceAltitudeCallbackThreshold.class);
-                getDevice().setAltitudeCallbackThreshold(threshold);
+            DeviceAltitudeCallbackThreshold threshold = getMapper().readValue(payload, DeviceAltitudeCallbackThreshold.class);
+            getDevice().setAltitudeCallbackThreshold(threshold);
 
-            }
-            if (string.startsWith(getServiceContract().INTENT_AVERAGING)) {
+        }
+        if (string.startsWith(getServiceContract().INTENT_AVERAGING)) {
 
-                DeviceAveraging averaging = getMapper().readValue(payload, DeviceAveraging.class);
-                getDevice().setAveraging(averaging);
+            DeviceAveraging averaging = getMapper().readValue(payload, DeviceAveraging.class);
+            getDevice().setAveraging(averaging);
 
-            }
-            if (string.startsWith(getServiceContract().INTENT_REFERENCE_AIR_PRESSURE)) {
-                Integer reference = getMapper().readValue(payload, Integer.class);
-                getDevice().setReferenceAirPressure(reference);
+        }
+        if (string.startsWith(getServiceContract().INTENT_REFERENCE_AIR_PRESSURE)) {
+            Integer reference = getMapper().readValue(payload, Integer.class);
+            getDevice().setReferenceAirPressure(reference);
 
-            }
+        }
 
     }
 

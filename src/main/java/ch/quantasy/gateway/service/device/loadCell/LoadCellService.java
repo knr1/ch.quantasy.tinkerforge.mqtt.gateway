@@ -46,10 +46,7 @@ import ch.quantasy.tinkerforge.device.loadCell.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.loadCell.DeviceWeightCallbackThreshold;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDeviceCallback;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.net.URI;
 
 /**

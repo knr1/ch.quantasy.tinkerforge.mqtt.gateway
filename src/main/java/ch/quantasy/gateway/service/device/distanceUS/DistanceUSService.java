@@ -45,12 +45,8 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.distanceUS.DeviceDistanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDeviceCallback;
-import java.io.IOException;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

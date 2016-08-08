@@ -46,10 +46,7 @@ import ch.quantasy.tinkerforge.device.uvLight.DeviceUVLightCallbackThreshold;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDeviceCallback;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

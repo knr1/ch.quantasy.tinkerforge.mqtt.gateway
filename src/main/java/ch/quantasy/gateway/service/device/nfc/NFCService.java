@@ -46,10 +46,7 @@ import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDeviceCallback;
 import ch.quantasy.tinkerforge.device.nfc.NFCTag;
 import ch.quantasy.tinkerforge.device.nfc.NFCWrite;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.net.URI;
 
 /**

@@ -43,7 +43,6 @@ package ch.quantasy.gateway.service.device.motionDetector;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDeviceCallback;
 import java.net.URI;

@@ -48,10 +48,7 @@ import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2DeviceCallback;
 import java.net.URI;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
@@ -71,17 +68,18 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
         addDescription(getServiceContract().INTENT_WRITE_LINES, "[line: [0..1]\n position: [0..15]\n text: [String]_[1..16]]");
     }
 
-        public void messageArrived(String string, byte[] payload) throws Exception {
+    @Override
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-            if (string.startsWith(getServiceContract().INTENT_BACKLIGHT)) {
-                Boolean backlight = getMapper().readValue(payload, Boolean.class);
-                getDevice().setBacklight(backlight);
-            }
-            if (string.startsWith(getServiceContract().INTENT_CLEAR_DISPLAY)) {
-                Boolean clear = getMapper().readValue(payload, Boolean.class);
-                getDevice().clearDisplay(clear);
-            }
-       
+        if (string.startsWith(getServiceContract().INTENT_BACKLIGHT)) {
+            Boolean backlight = getMapper().readValue(payload, Boolean.class);
+            getDevice().setBacklight(backlight);
+        }
+        if (string.startsWith(getServiceContract().INTENT_CLEAR_DISPLAY)) {
+            Boolean clear = getMapper().readValue(payload, Boolean.class);
+            getDevice().clearDisplay(clear);
+        }
+
     }
 
     @Override

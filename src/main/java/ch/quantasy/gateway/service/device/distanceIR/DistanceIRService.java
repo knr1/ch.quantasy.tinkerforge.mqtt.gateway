@@ -46,12 +46,8 @@ import ch.quantasy.tinkerforge.device.distanceIR.DeviceAnalogValueCallbackThresh
 import ch.quantasy.tinkerforge.device.distanceIR.DeviceDistanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDeviceCallback;
-import java.io.IOException;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

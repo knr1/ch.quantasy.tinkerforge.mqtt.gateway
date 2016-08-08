@@ -46,10 +46,7 @@ import ch.quantasy.tinkerforge.device.realTimeClock.AlarmParamter;
 import ch.quantasy.tinkerforge.device.realTimeClock.DateTimeParameter;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDeviceCallback;
 
 /**

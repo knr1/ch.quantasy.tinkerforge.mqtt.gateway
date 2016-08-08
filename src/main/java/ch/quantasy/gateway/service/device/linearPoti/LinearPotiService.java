@@ -48,10 +48,7 @@ import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDeviceCallback;
 
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

@@ -46,12 +46,8 @@ import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDeviceCallback;
 import ch.quantasy.tinkerforge.device.accelerometer.DeviceAccelerationCallbackThreshold;
 import ch.quantasy.tinkerforge.device.accelerometer.DeviceConfiguration;
-import java.io.IOException;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
@@ -69,37 +65,38 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
 
         addDescription(getServiceContract().EVENT_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n");
         addDescription(getServiceContract().EVENT_ACCELERATION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        
+
         addDescription(getServiceContract().STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_ACCELERATION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n minY: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n minZ: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxX: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxY: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxZ: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_CONFIGURATION, "dataRate: [OFF|Hz3|Hz6|Hz12|Hz25|Hz50|Hz100|Hz400|Hz800|Hz1600]\n fullScale: [G2|G4|G6|G8|G16\n filterBandwidth: [Hz800|Hz400|Hz200|Hz50]");
     }
 
-        public void messageArrived(String string, byte[] payload) throws Exception {
+    @Override
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAccelerationCallbackPeriod(period);
-            }
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAccelerationCallbackPeriod(period);
+        }
 
-            if (string.startsWith(getServiceContract().INTENT_ACCELERATION_THRESHOLD)) {
+        if (string.startsWith(getServiceContract().INTENT_ACCELERATION_THRESHOLD)) {
 
-                DeviceAccelerationCallbackThreshold threshold = getMapper().readValue(payload, DeviceAccelerationCallbackThreshold.class);
-                getDevice().setAccelerationCallbackThreshold(threshold);
-            }
+            DeviceAccelerationCallbackThreshold threshold = getMapper().readValue(payload, DeviceAccelerationCallbackThreshold.class);
+            getDevice().setAccelerationCallbackThreshold(threshold);
+        }
 
-            if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
+        if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
 
-                DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-                getDevice().setConfiguration(configuration);
-            }
+            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
+            getDevice().setConfiguration(configuration);
+        }
 
     }
 

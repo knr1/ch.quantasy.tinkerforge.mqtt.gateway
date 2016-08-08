@@ -50,13 +50,9 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackListener;
-import java.io.IOException;
 import java.net.URI;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

@@ -50,10 +50,7 @@ import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4DeviceCallback;
 import java.net.URI;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
@@ -72,43 +69,42 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
         addDescription(getServiceContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
         addDescription(getServiceContract().INTENT_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
         addDescription(getServiceContract().STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
-        addDescription(getServiceContract().INTENT_DEFAULT_TEXT_COUNTER,"[-1.."+Integer.MAX_VALUE+"]");
-        addDescription(getServiceContract().STATUS_DEFAULT_TEXT_COUNTER,"[-1.."+Integer.MAX_VALUE+"]");
-        addDescription(getServiceContract().INTENT_WRITE_LINES,"[line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]");   
+        addDescription(getServiceContract().INTENT_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
+        addDescription(getServiceContract().STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
+        addDescription(getServiceContract().INTENT_WRITE_LINES, "[line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]");
     }
 
-        public void messageArrived(String string, byte[] payload) throws Exception {
+    @Override
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-            if (string.startsWith(getServiceContract().INTENT_BACKLIGHT)) {
-                Boolean backlight = getMapper().readValue(payload, Boolean.class);
-                getDevice().setBacklight(backlight);
-            }
-            if (string.startsWith(getServiceContract().INTENT_CLEAR_DISPLAY)) {
-                Boolean clear = getMapper().readValue(payload, Boolean.class);
-                getDevice().clearDisplay(clear);
-            }
-            if (string.startsWith(getServiceContract().INTENT_CONFIG_PARAMETERS)) {
-                DeviceConfigParameters parameters = getMapper().readValue(payload, DeviceConfigParameters.class);
-                getDevice().setConfigParameters(parameters);
-            }
-            if (string.startsWith(getServiceContract().INTENT_CUSTOM_CHARACTERS)) {
-                DeviceCustomCharacter[] characters = getMapper().readValue(payload, DeviceCustomCharacter[].class);
-                getDevice().setCustomCharacters(characters);
-            }
-            if (string.startsWith(getServiceContract().INTENT_DEFAULT_TEXT_TEXTS)) {
-                DeviceDefaultText[] texts = getMapper().readValue(payload, DeviceDefaultText[].class);
-                getDevice().setDefaultText(texts);
-            }
-            if (string.startsWith(getServiceContract().INTENT_DEFAULT_TEXT_COUNTER)) {
-                Integer counter = getMapper().readValue(payload, Integer.class);
-                getDevice().setDefaultTextCounter(counter);
-            }
-            if (string.startsWith(getServiceContract().INTENT_WRITE_LINES)) {
-                DeviceWriteLine[] lines = getMapper().readValue(payload, DeviceWriteLine[].class);
-                getDevice().write(lines);
-            }
-      
-
+        if (string.startsWith(getServiceContract().INTENT_BACKLIGHT)) {
+            Boolean backlight = getMapper().readValue(payload, Boolean.class);
+            getDevice().setBacklight(backlight);
+        }
+        if (string.startsWith(getServiceContract().INTENT_CLEAR_DISPLAY)) {
+            Boolean clear = getMapper().readValue(payload, Boolean.class);
+            getDevice().clearDisplay(clear);
+        }
+        if (string.startsWith(getServiceContract().INTENT_CONFIG_PARAMETERS)) {
+            DeviceConfigParameters parameters = getMapper().readValue(payload, DeviceConfigParameters.class);
+            getDevice().setConfigParameters(parameters);
+        }
+        if (string.startsWith(getServiceContract().INTENT_CUSTOM_CHARACTERS)) {
+            DeviceCustomCharacter[] characters = getMapper().readValue(payload, DeviceCustomCharacter[].class);
+            getDevice().setCustomCharacters(characters);
+        }
+        if (string.startsWith(getServiceContract().INTENT_DEFAULT_TEXT_TEXTS)) {
+            DeviceDefaultText[] texts = getMapper().readValue(payload, DeviceDefaultText[].class);
+            getDevice().setDefaultText(texts);
+        }
+        if (string.startsWith(getServiceContract().INTENT_DEFAULT_TEXT_COUNTER)) {
+            Integer counter = getMapper().readValue(payload, Integer.class);
+            getDevice().setDefaultTextCounter(counter);
+        }
+        if (string.startsWith(getServiceContract().INTENT_WRITE_LINES)) {
+            DeviceWriteLine[] lines = getMapper().readValue(payload, DeviceWriteLine[].class);
+            getDevice().write(lines);
+        }
     }
 
     @Override

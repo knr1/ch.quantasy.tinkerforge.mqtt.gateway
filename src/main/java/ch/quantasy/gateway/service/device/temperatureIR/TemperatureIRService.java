@@ -47,10 +47,7 @@ import ch.quantasy.tinkerforge.device.temperatureIR.DeviceObjectTemperatureCallb
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDeviceCallback;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

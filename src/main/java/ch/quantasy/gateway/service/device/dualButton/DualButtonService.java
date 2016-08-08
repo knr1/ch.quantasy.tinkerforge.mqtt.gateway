@@ -48,10 +48,7 @@ import ch.quantasy.tinkerforge.device.dualButton.DeviceLEDState;
 import ch.quantasy.tinkerforge.device.dualButton.DeviceSelectedLEDStateParameters;
 import ch.quantasy.tinkerforge.device.dualButton.LEDState;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

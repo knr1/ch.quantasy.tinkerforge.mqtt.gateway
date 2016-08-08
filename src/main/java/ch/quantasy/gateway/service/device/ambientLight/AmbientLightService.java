@@ -47,12 +47,8 @@ import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDeviceCallback;
 import ch.quantasy.tinkerforge.device.ambientLight.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.tinkerforge.device.ambientLight.DeviceIlluminanceCallbackThreshold;
 
-import java.io.IOException;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
@@ -60,7 +56,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class AmbientLightService extends AbstractDeviceService<AmbientLightDevice, AmbientLightServiceContract> implements AmbientLightDeviceCallback {
 
-    public AmbientLightService(AmbientLightDevice device,URI mqttURI) throws MqttException {
+    public AmbientLightService(AmbientLightDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new AmbientLightServiceContract(device));
         addDescription(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -75,35 +71,34 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
         addDescription(getServiceContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getServiceContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
         addDescription(getServiceContract().STATUS_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..9000]\n max: [0..9000]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]"); 
+        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 
     @Override
-        public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-            if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setDebouncePeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAnalogValueCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_IllUMINANCE_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setIlluminanceCallbackPeriod(period);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
-                DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
-                getDevice().setAnalogValueThreshold(threshold);
-            }
-            if (string.startsWith(getServiceContract().INTENT_ILLUMINANCE_THRESHOLD)) {
-                DeviceIlluminanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceIlluminanceCallbackThreshold.class);
-                getDevice().setIlluminanceCallbackThreshold(threshold);
+        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setDebouncePeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAnalogValueCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_IllUMINANCE_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setIlluminanceCallbackPeriod(period);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
+            DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
+            getDevice().setAnalogValueThreshold(threshold);
+        }
+        if (string.startsWith(getServiceContract().INTENT_ILLUMINANCE_THRESHOLD)) {
+            DeviceIlluminanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceIlluminanceCallbackThreshold.class);
+            getDevice().setIlluminanceCallbackThreshold(threshold);
 
-            }
+        }
 
-       
     }
 
     @Override

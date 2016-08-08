@@ -43,7 +43,6 @@ package ch.quantasy.gateway.service.device.remoteSwitch;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.remoteSwitch.DimSocketBParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDeviceCallback;
@@ -52,8 +51,6 @@ import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketAParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketBParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

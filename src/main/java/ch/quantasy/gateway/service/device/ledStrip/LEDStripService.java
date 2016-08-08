@@ -42,10 +42,7 @@
 package ch.quantasy.gateway.service.device.ledStrip;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceCallback;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;

@@ -44,10 +44,7 @@ package ch.quantasy.gateway.service.device.IMUV2;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.IMUV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.IMUV2.IMUV2DeviceCallback;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.net.URI;
 
 /**

@@ -46,10 +46,7 @@ import ch.quantasy.tinkerforge.device.thermoCouple.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.thermoCouple.DeviceTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDeviceCallback;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import java.net.URI;
 
 /**

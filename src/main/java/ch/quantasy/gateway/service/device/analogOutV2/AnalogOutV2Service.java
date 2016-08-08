@@ -45,10 +45,7 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2DeviceCallback;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
@@ -63,15 +60,15 @@ public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device,
     }
 
     @Override
-      public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageArrived(String string, byte[] payload) throws Exception {
 
-            if (string.startsWith(getServiceContract().INTENT_OUTPUT_VOLTAGE)) {
-                Integer outputVoltage = getMapper().readValue(payload, Integer.class);
-                getDevice().setOutputVoltage(outputVoltage);
-            }
-        
+        if (string.startsWith(getServiceContract().INTENT_OUTPUT_VOLTAGE)) {
+            Integer outputVoltage = getMapper().readValue(payload, Integer.class);
+            getDevice().setOutputVoltage(outputVoltage);
+        }
+
     }
-    
+
     @Override
     public void outputVoltageChanged(Integer voltage) {
         addEvent(getServiceContract().STATUS_OUTPUT_VOLTAGE, voltage);
