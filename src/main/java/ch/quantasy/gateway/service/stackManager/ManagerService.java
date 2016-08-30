@@ -41,9 +41,9 @@
  */
 package ch.quantasy.gateway.service.stackManager;
 
-import ch.quantasy.gateway.service.AbstractService;
 import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
 import ch.quantasy.gateway.tinkerforge.TinkerforgeFactoryListener;
+import ch.quantasy.mqtt.gateway.service.AbstractService;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;

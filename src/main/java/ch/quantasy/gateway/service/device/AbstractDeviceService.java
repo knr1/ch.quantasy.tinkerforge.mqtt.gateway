@@ -41,13 +41,12 @@
  */
 package ch.quantasy.gateway.service.device;
 
-import ch.quantasy.gateway.service.AbstractService;
+import ch.quantasy.mqtt.gateway.service.AbstractService;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import java.net.URI;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *

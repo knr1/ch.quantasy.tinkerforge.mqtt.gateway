@@ -41,7 +41,7 @@
  */
 package ch.quantasy.gateway.service.device;
 
-import ch.quantasy.gateway.service.ServiceContract;
+import ch.quantasy.gateway.service.TinkerForgeServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 
@@ -49,7 +49,7 @@ import ch.quantasy.tinkerforge.device.generic.GenericDevice;
  *
  * @author reto
  */
-public class DeviceServiceContract extends ServiceContract {
+public class DeviceServiceContract extends TinkerForgeServiceContract {
 
     public final String STATUS_POSITION;
     public final String STATUS_FIRMWARE;

@@ -41,8 +41,9 @@
  */
 package ch.quantasy.gateway.agent.describer;
 
-import ch.quantasy.gateway.agent.AbstractAgent;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
+import ch.quantasy.mqtt.gateway.agent.AbstractAgent;
+import ch.quantasy.mqtt.gateway.agent.AgentContract;
 import java.net.URI;
 import java.util.StringTokenizer;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -52,12 +53,12 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author reto
  */
-public class DescriberAgent extends AbstractAgent {
+public class DescriberAgent extends AbstractAgent<AgentContract> {
 
     private final ManagerServiceContract managerServiceContract;
 
     public DescriberAgent(URI mqttURI) throws MqttException {
-        super(mqttURI, "349h3492zf", "DescriberAgent");
+        super(mqttURI, "349h3492zf", new AgentContract("Agent","Describer","desc"));
 
         managerServiceContract = new ManagerServiceContract("Manager");
         addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights01");

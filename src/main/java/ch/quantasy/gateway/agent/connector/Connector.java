@@ -41,8 +41,9 @@
  */
 package ch.quantasy.gateway.agent.connector;
 
-import ch.quantasy.gateway.agent.AbstractAgent;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
+import ch.quantasy.mqtt.gateway.agent.AbstractAgent;
+import ch.quantasy.mqtt.gateway.agent.AgentContract;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
 import java.util.logging.Level;
@@ -54,12 +55,12 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author reto
  */
-public class Connector extends AbstractAgent {
+public class Connector extends AbstractAgent<AgentContract> {
 
     private final ManagerServiceContract managerServiceContract;
 
     public Connector(URI mqttURI) throws MqttException {
-        super(mqttURI, "f94kjf93d9", "Connector");
+        super(mqttURI, "f94kjf93d9", new AgentContract("Agent","Connector","euo"));
         managerServiceContract = new ManagerServiceContract("Manager");
         super.subscribe(managerServiceContract.ID_TOPIC + "/#", 1);
         stackManager("erdgeschoss");

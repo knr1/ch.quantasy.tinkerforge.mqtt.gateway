@@ -41,9 +41,10 @@
  */
 package ch.quantasy.gateway.agent.TimedSwitch;
 
-import ch.quantasy.gateway.agent.AbstractAgent;
 import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceContract;
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchServiceContract;
+import ch.quantasy.mqtt.gateway.agent.AbstractAgent;
+import ch.quantasy.mqtt.gateway.agent.AgentContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
@@ -60,12 +61,12 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author reto
  */
-public class TimedSwitch extends AbstractAgent {
+public class TimedSwitch extends AbstractAgent<AgentContract> {
 
     private final RemoteSwitchServiceContract remoteSwitchServiceContract;
 
     public TimedSwitch(URI mqttURI) throws MqttException {
-        super(mqttURI, "9520efj30sdk", "TimedSwitch");
+        super(mqttURI, "9520efj30sdk", new AgentContract("Agent","TimedSwitch","qD7"));
         remoteSwitchServiceContract = new RemoteSwitchServiceContract("qD7", TinkerforgeDeviceClass.RemoteSwitch.toString());
         super.subscribe(remoteSwitchServiceContract.ID_TOPIC + "/#", 1);
         Timer t = new Timer();

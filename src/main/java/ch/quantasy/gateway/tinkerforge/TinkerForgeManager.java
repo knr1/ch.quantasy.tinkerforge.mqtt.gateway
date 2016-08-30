@@ -41,7 +41,6 @@
  */
 package ch.quantasy.gateway.tinkerforge;
 
-import ch.quantasy.gateway.service.AbstractService;
 import ch.quantasy.gateway.service.device.IMU.IMUService;
 import ch.quantasy.gateway.service.device.IMUV2.IMUV2Service;
 import ch.quantasy.gateway.service.device.LCD16x2.LCD16x2Service;
@@ -86,6 +85,7 @@ import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
 import ch.quantasy.gateway.service.device.thermoCouple.ThermoCoupleService;
 import ch.quantasy.gateway.service.device.tilt.TiltService;
 import ch.quantasy.gateway.service.device.uvLight.UVLightService;
+import ch.quantasy.mqtt.gateway.service.AbstractService;
 import ch.quantasy.tinkerforge.device.IMU.IMUDevice;
 import ch.quantasy.tinkerforge.device.IMUV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;

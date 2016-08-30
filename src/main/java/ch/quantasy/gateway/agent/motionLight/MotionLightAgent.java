@@ -41,9 +41,10 @@
  */
 package ch.quantasy.gateway.agent.motionLight;
 
-import ch.quantasy.gateway.agent.AbstractAgent;
 import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceContract;
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchServiceContract;
+import ch.quantasy.mqtt.gateway.agent.AbstractAgent;
+import ch.quantasy.mqtt.gateway.agent.AgentContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
@@ -54,14 +55,14 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author reto
  */
-public class MotionLightAgent extends AbstractAgent {
+public class MotionLightAgent extends AbstractAgent<AgentContract> {
 
     private final RemoteSwitchServiceContract remoteSwitchServiceContract;
     private final MotionDetectorServiceContract motionDetectorServiceContract;
     private final Thread t;
 
     public MotionLightAgent(URI mqttURI) throws MqttException {
-        super(mqttURI, "4ug83f983hf653bc732g", "MotionLightAgent");
+        super(mqttURI, "4ug83f983hf653bc732g", new AgentContract("Agent","MotionLight","jKQkfT"));
         remoteSwitchServiceContract = new RemoteSwitchServiceContract("jKQ", TinkerforgeDeviceClass.RemoteSwitch.toString());
         motionDetectorServiceContract = new MotionDetectorServiceContract("kfT", TinkerforgeDeviceClass.MotionDetector.toString());
         super.subscribe(remoteSwitchServiceContract.ID_TOPIC + "/#", 1);

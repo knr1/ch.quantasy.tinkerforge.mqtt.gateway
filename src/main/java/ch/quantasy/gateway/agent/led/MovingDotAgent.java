@@ -41,10 +41,11 @@
  */
 package ch.quantasy.gateway.agent.led;
 
-import ch.quantasy.gateway.agent.AbstractAgent;
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripService;
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
+import ch.quantasy.mqtt.gateway.agent.AbstractAgent;
+import ch.quantasy.mqtt.gateway.agent.AgentContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
@@ -60,7 +61,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author reto
  */
-public class MovingDotAgent extends AbstractAgent {
+public class MovingDotAgent extends AbstractAgent<AgentContract> {
 
     private final ManagerServiceContract managerServiceContract;
     private switcher switcher1;
@@ -72,7 +73,7 @@ public class MovingDotAgent extends AbstractAgent {
     private int amountOfLEDs;
 
     public MovingDotAgent(URI mqttURI) throws MqttException {
-        super(mqttURI, "875786cbwe", "MovinDotAgent");
+        super(mqttURI, "875786cbwe", new AgentContract("Agent","MovingDot","oZUp5z"));
         frameDurationInMillis = 55;
         amountOfLEDs = 120;
         managerServiceContract = new ManagerServiceContract("Manager");

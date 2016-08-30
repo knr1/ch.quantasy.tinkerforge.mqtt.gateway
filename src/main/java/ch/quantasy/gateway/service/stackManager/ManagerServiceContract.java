@@ -41,13 +41,14 @@
  */
 package ch.quantasy.gateway.service.stackManager;
 
-import ch.quantasy.gateway.service.*;
+import ch.quantasy.gateway.service.TinkerForgeServiceContract;
+import ch.quantasy.mqtt.gateway.service.ServiceContract;
 
 /**
  *
  * @author reto
  */
-public class ManagerServiceContract extends ServiceContract {
+public class ManagerServiceContract extends TinkerForgeServiceContract {
 
     public final String STACK;
 

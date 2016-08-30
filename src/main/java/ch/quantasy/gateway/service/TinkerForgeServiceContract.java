@@ -39,14 +39,16 @@
  *
  *
  */
-package ch.quantasy.communication.mqtt;
+package ch.quantasy.gateway.service;
 
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import ch.quantasy.mqtt.gateway.service.ServiceContract;
 
 /**
  *
  * @author reto
  */
-public interface PublisherCallback{
-    public MqttMessage getMessageToPublish(String topic);
+public class TinkerForgeServiceContract extends ServiceContract{
+    public TinkerForgeServiceContract(String baseClass,String instance){
+        super("TF",baseClass,instance);
+    }        
 }
