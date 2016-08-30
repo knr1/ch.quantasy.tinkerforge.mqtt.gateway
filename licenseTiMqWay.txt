@@ -3,7 +3,7 @@
  *
  *    TiMqWay(tm): A gateway to provide an MQTT-View for the Tinkerforge(tm) world (Tinkerforge-MQTT-Gateway).
  *
- *    Copyright (c) 2015 Bern University of Applied Sciences (BFH),
+ *    Copyright (c) 2016 Bern University of Applied Sciences (BFH),
  *    Research Institute for Security in the Information Society (RISIS), Wireless Communications & Secure Internet of Things (WiCom & SIoT),
  *    Quellgasse 21, CH-2501 Biel, Switzerland
  *
