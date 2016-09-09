@@ -45,8 +45,9 @@ package ch.quantasy.gateway.agent.led;
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripService;
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
-import ch.quantasy.mqtt.gateway.agent.AbstractAgent;
+import ch.quantasy.mqtt.gateway.agent.Agent;
 import ch.quantasy.mqtt.gateway.agent.AgentContract;
+import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
@@ -56,13 +57,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author reto
  */
-public class MovingDotAgent extends AbstractAgent<AgentContract> {
+public class MovingDotAgent implements MessageConsumer {
 
     private final ManagerServiceContract managerServiceContract;
     private switcher switcher1;
@@ -72,13 +72,15 @@ public class MovingDotAgent extends AbstractAgent<AgentContract> {
     private final Thread t2;
     private int frameDurationInMillis;
     private int amountOfLEDs;
+    private Agent agent;
 
     public MovingDotAgent(URI mqttURI) throws MqttException {
-        super(mqttURI, "875786cbwe", new AgentContract("Agent","MovingDot","oZUp5z"));
         frameDurationInMillis = 55;
         amountOfLEDs = 120;
         managerServiceContract = new ManagerServiceContract("Manager");
-        addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights01");
+        agent = new Agent(mqttURI, "875786cbwe", new AgentContract("Agent", "MovingDot", "oZUp5z"));
+        agent.connect();
+        agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights01");
 
         LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("oZU", TinkerforgeDeviceClass.LEDStrip.toString());
         LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
@@ -94,13 +96,13 @@ public class MovingDotAgent extends AbstractAgent<AgentContract> {
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
+    public void messageArrived(Agent agent, String string, byte[] payload) throws Exception {
         // System.out.println(string + ": " + new String(mm.getPayload()));
         if (string.contains(switcher1.getLedServiceContract().EVENT_LEDs_RENDERED)) {
-            switcher1.messageArrived(string, mm);
+            switcher1.messageArrived(string, payload);
         }
         if (string.contains(switcher2.getLedServiceContract().EVENT_LEDs_RENDERED)) {
-            switcher2.messageArrived(string, mm);
+            switcher2.messageArrived(string, payload);
         }
 
     }
@@ -125,18 +127,16 @@ public class MovingDotAgent extends AbstractAgent<AgentContract> {
 
         public switcher(LEDStripServiceContract ledServiceContract, LEDStripDeviceConfig config) {
             this.ledServiceContract = ledServiceContract;
-            MovingDotAgent.super.addMessage(ledServiceContract.INTENT_CONFIG, config);
+            agent.addMessage(ledServiceContract.INTENT_CONFIG, config);
         }
 
         public LEDStripServiceContract getLedServiceContract() {
             return ledServiceContract;
         }
-        
-        
 
-        public void messageArrived(String string, MqttMessage mm) throws Exception {
+        public void messageArrived(String string, byte[] payload) throws Exception {
             synchronized (this) {
-                LEDStripService.FrameRenderedEvent[] framesRendered = getMapper().readValue(mm.getPayload(), LEDStripService.FrameRenderedEvent[].class);
+                LEDStripService.FrameRenderedEvent[] framesRendered = agent.getMapper().readValue(payload, LEDStripService.FrameRenderedEvent[].class);
                 if (framesRendered.length > 0) {
                     counter = framesRendered[framesRendered.length - 1].getFramesBuffered();
                 }
@@ -183,7 +183,7 @@ public class MovingDotAgent extends AbstractAgent<AgentContract> {
                         frames.add(new LEDFrame(leds));
                     }
                     System.out.println("FRAMES: " + frames.size());
-                    addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
+                    agent.addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
                     frames.clear();
 
                     Thread.sleep(frameDurationInMillis * 50);
@@ -197,7 +197,7 @@ public class MovingDotAgent extends AbstractAgent<AgentContract> {
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
-                addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfLEDs));
+                agent.addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfLEDs));
 
             }
         }
@@ -225,7 +225,7 @@ public class MovingDotAgent extends AbstractAgent<AgentContract> {
                         frames.add(new LEDFrame(leds));
                     }
                     System.out.println("FRAMES:" + frames.size());
-                    addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
+                    agent.addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
 
                     frames.clear();
 
@@ -240,7 +240,7 @@ public class MovingDotAgent extends AbstractAgent<AgentContract> {
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
-                addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(120));
+                agent.addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(120));
 
             }
         }

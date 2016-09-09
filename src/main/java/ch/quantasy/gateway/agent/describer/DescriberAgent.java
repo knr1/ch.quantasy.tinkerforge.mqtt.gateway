@@ -43,43 +43,44 @@
 package ch.quantasy.gateway.agent.describer;
 
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
-import ch.quantasy.mqtt.gateway.agent.AbstractAgent;
+import ch.quantasy.mqtt.gateway.agent.Agent;
 import ch.quantasy.mqtt.gateway.agent.AgentContract;
+import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
 import java.net.URI;
-import java.util.StringTokenizer;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author reto
  */
-public class DescriberAgent extends AbstractAgent<AgentContract> {
+public class DescriberAgent implements MessageConsumer {
 
     private final ManagerServiceContract managerServiceContract;
+    private Agent agent;
 
     public DescriberAgent(URI mqttURI) throws MqttException {
-        super(mqttURI, "349h3492zf", new AgentContract("Agent","Describer","desc"));
-
         managerServiceContract = new ManagerServiceContract("Manager");
-        addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights01");
-
-        subscribe("TF/LEDStrip/description/#", 0);
+        agent = new Agent(mqttURI, "349h3492zf", new AgentContract("Agent", "Describer", "desc"));
+        agent.subscribe("TF/LEDStrip/description/#", this);
+        agent.connect();
+        agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights01");
 
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
-        string=string.replaceAll("description", "<serviceUID>").replaceAll("intent","intent/<agentID>");
+    public void messageArrived(Agent agent, String string, byte[] payload) throws Exception {
+        string = string.replaceAll("description", "<serviceUID>").replaceAll("intent", "intent/<agentID>");
         System.out.println(string);
 
-        String message = new String(mm.getPayload()).replaceAll("\"", "");
+        String message = new String(payload).replaceAll("\"", "");
 
         String[] split = message.split("\\\\n");
         for (String m : split) {
-            m=m.replaceAll("\\\\\n", " ").replaceAll("\\\\", "").replaceAll("---", "---\n");
-            
-            if(m.length()<2)continue;
+            m = m.replaceAll("\\\\\n", " ").replaceAll("\\\\", "").replaceAll("---", "---\n");
+
+            if (m.length() < 2) {
+                continue;
+            }
             System.out.println(" " + m);
         }
         System.out.println("");

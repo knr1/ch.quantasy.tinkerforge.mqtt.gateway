@@ -43,27 +43,29 @@
 package ch.quantasy.gateway.agent.connector;
 
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
-import ch.quantasy.mqtt.gateway.agent.AbstractAgent;
+import ch.quantasy.mqtt.gateway.agent.Agent;
 import ch.quantasy.mqtt.gateway.agent.AgentContract;
+import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author reto
  */
-public class Connector extends AbstractAgent<AgentContract> {
+public class Connector implements MessageConsumer {
 
     private final ManagerServiceContract managerServiceContract;
+    private Agent agent;
 
     public Connector(URI mqttURI) throws MqttException {
-        super(mqttURI, "f94kjf93d9", new AgentContract("Agent","Connector","euo"));
         managerServiceContract = new ManagerServiceContract("Manager");
-        super.subscribe(managerServiceContract.ID_TOPIC + "/#", 1);
+        agent = new Agent(mqttURI, "f94kjf93d9", new AgentContract("Agent", "Connector", "euo"));
+        agent.subscribe(managerServiceContract.ID_TOPIC + "/#", this);
+        agent.connect();
         stackManager("erdgeschoss");
         try {
             Thread.sleep(5000);
@@ -77,20 +79,19 @@ public class Connector extends AbstractAgent<AgentContract> {
             Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
         }
         stackManager("obergeschoss");
-        
+
     }
 
-    
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
-        System.out.printf("Topic: %s Message: %s\n", string, new String(mm.getPayload()));
+    public void messageArrived(Agent agent, String string, byte[] payload) throws Exception {
+        System.out.printf("Topic: %s Message: %s\n", string, new String(payload));
     }
 
     private SwitchSocketCParameters.SwitchTo state;
 
     private void stackManager(String stackName) {
-        String topic=managerServiceContract.INTENT_STACK_ADDRESS_ADD;
-        addMessage(topic, stackName);
+        String topic = managerServiceContract.INTENT_STACK_ADDRESS_ADD;
+        agent.addMessage(topic, stackName);
         System.out.println("Adding: " + stackName);
     }
 

@@ -37,8 +37,8 @@ Tinkerforge devices are not represented within their 'stack', but loosely couple
 
 ## Installation
 In order to install TiMqWay 
-* Developers way: clone and build the project
-* Users way: download the latest [TiMqWay.jar]
+* **Developers way** clone and build the project. Please note that it depends on [https://github.com/knr1/ch.quantasy.mqtt.gateway]
+* **Users way** download the latest [TiMqWay.jar]
  
 ## Usage
 You need Java (7 or higher) and a running MQTT-Server. You can start TiMqWay with the MQTT-Server-Parameter.
@@ -95,6 +95,7 @@ You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Vi
  [d3Viewer]: <https://github.com/hardillb/d3-MQTT-Topic-Tree>
  [YAML]: <https://en.wikipedia.org/wiki/YAML>
  [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]: <https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial>
+ [https://github.com/knr1/ch.quantasy.mqtt.gateway]: <https://github.com/knr1/ch.quantasy.mqtt.gateway>
 
 # Example
 The following real-world example shall help to understand how to work with this TiMqWay.

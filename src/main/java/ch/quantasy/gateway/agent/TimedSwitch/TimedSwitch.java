@@ -42,34 +42,33 @@
  */
 package ch.quantasy.gateway.agent.TimedSwitch;
 
-import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceContract;
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchServiceContract;
-import ch.quantasy.mqtt.gateway.agent.AbstractAgent;
+import ch.quantasy.mqtt.gateway.agent.Agent;
 import ch.quantasy.mqtt.gateway.agent.AgentContract;
+import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author reto
  */
-public class TimedSwitch extends AbstractAgent<AgentContract> {
+public class TimedSwitch implements MessageConsumer{
 
     private final RemoteSwitchServiceContract remoteSwitchServiceContract;
-
+    private final Agent agent;
     public TimedSwitch(URI mqttURI) throws MqttException {
-        super(mqttURI, "9520efj30sdk", new AgentContract("Agent","TimedSwitch","qD7"));
+        agent=new Agent(mqttURI, "9520efj30sdk", new AgentContract("Agent","TimedSwitch","qD7"));
         remoteSwitchServiceContract = new RemoteSwitchServiceContract("qD7", TinkerforgeDeviceClass.RemoteSwitch.toString());
-        super.subscribe(remoteSwitchServiceContract.ID_TOPIC + "/#", 1);
+        agent.subscribe(remoteSwitchServiceContract.ID_TOPIC + "/#",this);
+        agent.connect();
         Timer t = new Timer();
         t.scheduleAtFixedRate(new Switcher(), 0, 1000*60*60);
     }
@@ -102,8 +101,8 @@ public class TimedSwitch extends AbstractAgent<AgentContract> {
     }
 
     @Override
-    public void messageArrived(String string, MqttMessage mm) throws Exception {
-        System.out.printf("Topic: %s Message: %s\n", string, new String(mm.getPayload()));
+    public void messageArrived(Agent agent,String string, byte[] payload) throws Exception {
+        System.out.printf("Topic: %s Message: %s\n", string, new String(payload));
     }
 
     private SwitchSocketCParameters.SwitchTo state;
@@ -115,14 +114,14 @@ public class TimedSwitch extends AbstractAgent<AgentContract> {
         this.state = state;
         SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 2, state);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
-        addMessage(topic, config);
+        agent.addMessage(topic, config);
         System.out.println("Switching: " + state);
     }
     
     private void switchAlwaysOn() { 
         SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 1, SwitchSocketCParameters.SwitchTo.ON);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
-        addMessage(topic, config);
+        agent.addMessage(topic, config);
     }
 
     public static void main(String[] args) throws Throwable {

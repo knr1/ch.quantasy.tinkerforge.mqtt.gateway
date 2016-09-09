@@ -161,7 +161,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void velocityReached(short s) {
-        addEvent(getServiceContract().EVENT_FULL_BRAKE, new VelocityEvent(s));
+        addEvent(getServiceContract().EVENT_VELOCITY_REACHED, new VelocityEvent(s));
     }
 
     @Override

@@ -67,6 +67,8 @@ public class DCServiceContract extends DeviceServiceContract {
     private final String INTENT_VELOCITY;
     private final String STATUS_VELOCITY;
     public final String EVENT_VELOCITY;
+    public final String EVENT_VELOCITY_REACHED;
+    public final String REACHED;
 
     public final String CALLBACK_PERIOD;
     public final String INTENT_VELOCITY_CALLBACK_PERIOD;
@@ -112,6 +114,8 @@ public class DCServiceContract extends DeviceServiceContract {
         STATUS_VELOCITY_VELOCITY = STATUS_VELOCITY + "/" + VELOCITY;
         EVENT_VELOCITY_VELOCITY = EVENT_VELOCITY + "/" + VELOCITY;
         INTENT_VELOCITY_VELOCITY = INTENT_VELOCITY + "/" + VELOCITY;
+        REACHED="reached";
+        EVENT_VELOCITY_REACHED = EVENT_VELOCITY  + "/" +REACHED;
 
         CALLBACK_PERIOD = "callbackPeriod";
         STATUS_VELOCITY_CALLBACK_PERIOD = STATUS_VELOCITY + "/" + CALLBACK_PERIOD;
