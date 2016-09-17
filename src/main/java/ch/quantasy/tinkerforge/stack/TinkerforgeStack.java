@@ -172,7 +172,7 @@ public class TinkerforgeStack {
             public void run() {
                 try {
                     try {
-                        ipConnection.connect(stackAddress.hostName, stackAddress.port);
+                        ipConnection.connect(stackAddress.getHostName(), stackAddress.getPort());
                         Thread.sleep(3000);
                     } catch (final AlreadyConnectedException e) {
                         // So what

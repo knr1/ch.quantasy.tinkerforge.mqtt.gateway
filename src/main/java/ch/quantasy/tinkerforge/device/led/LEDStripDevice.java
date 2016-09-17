@@ -71,9 +71,6 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     public static final LEDStripDeviceConfig.ChannelMapping DEFAULT_CHANNEL_MAPPING = LEDStripDeviceConfig.ChannelMapping.RGB;
 
-    private final static int NUMBER_OF_LEDS_PER_WRITE = 16;
-    public final static int NUMBER_OF_COLOR_CHANNELS = 3;
-
     private int numberOfWrites;
 
     private LEDStripDeviceConfig config;
@@ -128,13 +125,14 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
             if (config == null) {
                 return;
             }
-            setNumberOfLEDs(config.getNumberOfLEDs());
+            setNumberOfLEDs(config.getNumberOfLEDs(), config.getChipType().getNumberOfChannels(), config.getNumberOfLEDsPerWrite());
             setChipType(config.getChipType().getType());
             setClockFrequencyOfICsInHz(config.getClockFrequencyOfICsInHz());
             setFrameDurationInMilliseconds(config.getFrameDurationInMilliseconds());
-            this.config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.getChipTypeFor(getDevice().getChipType()),
-                    getDevice().getClockFrequency(),
-                    getDevice().getFrameDuration(), config.getNumberOfLEDs(), config.getChannelMapping());
+            setChannelMapping(config.getChannelMapping().getMapping());
+
+            LEDStripDeviceConfig.ChipType chipType = LEDStripDeviceConfig.ChipType.getChipTypeFor(getDevice().getChipType(), config.getChipType().getNumberOfChannels());
+            this.config = new LEDStripDeviceConfig(chipType, getDevice().getClockFrequency(), getDevice().getFrameDuration(), config.getNumberOfLEDs(), config.getChannelMapping());
             super.getCallback().configurationChanged(this.config);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
@@ -142,10 +140,9 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     }
 
-    private synchronized void setNumberOfLEDs(final int numberOfLEDs) {
-        this.numberOfWrites = (int) Math.ceil((double) numberOfLEDs
-                / LEDStripDevice.NUMBER_OF_LEDS_PER_WRITE);
-        this.frame = new short[LEDStripDevice.NUMBER_OF_COLOR_CHANNELS][this.numberOfWrites][LEDStripDevice.NUMBER_OF_LEDS_PER_WRITE];
+    private synchronized void setNumberOfLEDs(final int numberOfLEDs, final int numberOfChannels, final int numberOfLEDsPerWrite) {
+        this.numberOfWrites = (int) Math.ceil((double) numberOfLEDs / numberOfLEDsPerWrite);
+        this.frame = new short[numberOfChannels][this.numberOfWrites][numberOfLEDsPerWrite];
     }
 
     private void setFrameDurationInMilliseconds(
@@ -165,39 +162,44 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     private void setClockFrequencyOfICsInHz(final long clockFrequencyOfICsInHz) throws TimeoutException, NotConnectedException {
         if (getDevice() != null) {
-
             getDevice().setClockFrequency(clockFrequencyOfICsInHz);
+        }
+    }
+
+    private void setChannelMapping(short channelMapping) throws TimeoutException, NotConnectedException {
+        if (getDevice() != null) {
+            getDevice().setChannelMapping(channelMapping);
         }
     }
 
     /**
      * This will guarantee the display of the set LEDs! in the next rendering!
      *
-     * @param rgbLEDs
+     * @param leds
      */
-    public void setRGBLEDs(final LEDFrame rgbLEDs) {
+    public void setRGBLEDs(final LEDFrame leds) {
         LEDStripDeviceConfig localConfig = this.config;
-        if (rgbLEDs == null) {
+        if (leds == null) {
             return;
         }
 
-        for (int colorChannel = 0; colorChannel < LEDStripDevice.NUMBER_OF_COLOR_CHANNELS; colorChannel++) {
-            short[] channel = rgbLEDs.getColorChannel(colorChannel);
+        for (int colorChannel = 0; colorChannel < localConfig.getChipType().getNumberOfChannels(); colorChannel++) {
+            short[] channel = leds.getColorChannel(colorChannel);
             if (channel == null
                     || channel.length != localConfig.getNumberOfLEDs()) {
                 return;
             }
         }
 
-        for (int colorChannel = 0; colorChannel < LEDStripDevice.NUMBER_OF_COLOR_CHANNELS; colorChannel++) {
-            for (int write = 0, remaining = localConfig.getNumberOfLEDs(); write < this.numberOfWrites; write++, remaining -= LEDStripDevice.NUMBER_OF_LEDS_PER_WRITE) {
-                System.arraycopy(rgbLEDs.getColorChannel(colorChannel),
+        for (int colorChannel = 0; colorChannel < localConfig.getChipType().getNumberOfChannels(); colorChannel++) {
+            for (int write = 0, remaining = localConfig.getNumberOfLEDs(); write < this.numberOfWrites; write++, remaining -= localConfig.getNumberOfLEDsPerWrite()) {
+                System.arraycopy(leds.getColorChannel(colorChannel),
                         write
-                        * LEDStripDevice.NUMBER_OF_LEDS_PER_WRITE,
+                        * localConfig.getNumberOfLEDsPerWrite(),
                         this.frame[colorChannel][write],
                         0,
                         Math.min(remaining,
-                                LEDStripDevice.NUMBER_OF_LEDS_PER_WRITE));
+                                localConfig.getNumberOfLEDsPerWrite()));
             }
         }
         sendRGBLEDFrame();
@@ -223,13 +225,23 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
             sent = false;
         }
         try {
+            LEDStripDeviceConfig localConfig = this.config;
             for (int write = 0; write < this.numberOfWrites; write++) {
-                getDevice()
-                        .setRGBValues(write
-                                * LEDStripDevice.NUMBER_OF_LEDS_PER_WRITE,
-                                (short) LEDStripDevice.NUMBER_OF_LEDS_PER_WRITE,
-                                this.frame[config.getChannelMapping().mapTo(0)][write], this.frame[config.getChannelMapping().mapTo(1)][write],
-                                this.frame[config.getChannelMapping().mapTo(2)][write]);
+                if (this.frame.length == 3) {
+                    getDevice()
+                            .setRGBValues(write
+                                    * localConfig.getNumberOfLEDsPerWrite(),
+                                    (short) localConfig.getNumberOfLEDsPerWrite(),
+                                    this.frame[0][write], this.frame[1][write],
+                                    this.frame[2][write]);
+                } else if (this.frame.length == 4) {
+                    getDevice()
+                            .setRGBWValues(write
+                                    * localConfig.getNumberOfLEDsPerWrite(),
+                                    (short) localConfig.getNumberOfLEDsPerWrite(),
+                                    this.frame[0][write], this.frame[1][write],
+                                    this.frame[2][write], this.frame[3][write]);
+                }
             }
             sent = true;
         } catch (final TimeoutException e) {

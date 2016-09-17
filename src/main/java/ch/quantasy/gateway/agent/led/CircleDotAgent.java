@@ -63,59 +63,48 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author reto
  */
-public class MovingDotAgent implements MessageConsumer {
+public class CircleDotAgent implements MessageConsumer {
 
     private final ManagerServiceContract managerServiceContract;
     private switcher switcher1;
-    private switcher switcher2;
 
     private final Thread t1;
-    private final Thread t2;
     private int frameDurationInMillis;
     private int amountOfLEDs;
     private Agent agent;
-    private  int amountOfChannels;
+    private int amountOfChannels;
 
-    public MovingDotAgent(URI mqttURI) throws MqttException {
-        frameDurationInMillis = 55;
-        amountOfLEDs = 120;
+    public CircleDotAgent(URI mqttURI) throws MqttException {
+        frameDurationInMillis = 100;
+        amountOfLEDs = 16;
         managerServiceContract = new ManagerServiceContract("Manager");
-        agent = new Agent(mqttURI, "875786cbwe", new AgentContract("Agent", "MovingDot", "oZUp5z"));
+        agent = new Agent(mqttURI, "3fpn3ph", new AgentContract("Agent", "CircleDot", "Uvn3"));
         agent.connect();
-        agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress("lights01"));
+        agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress("localhost"));
 
-        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("oZU", TinkerforgeDeviceClass.LEDStrip.toString());
-        LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
-        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
-        amountOfChannels=config.getChipType().getNumberOfChannels();
+        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("jJE", TinkerforgeDeviceClass.LEDStrip.toString());
+        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2812RGBW, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.RGBW);
+        amountOfChannels = config.getChipType().getNumberOfChannels();
+
         agent.subscribe(ledServiceContract1.EVENT_LEDs_RENDERED, this);
 
         switcher1 = new switcher(ledServiceContract1, config);
-        switcher2 = new switcher(ledServiceContract2, config);
 
         t1 = new Thread(switcher1);
-        t2 = new Thread(switcher2);
         t1.start();
-        t2.start();
     }
 
     @Override
     public void messageArrived(Agent agent, String string, byte[] payload) throws Exception {
-        // System.out.println(string + ": " + new String(mm.getPayload()));
         if (string.contains(switcher1.getLedServiceContract().EVENT_LEDs_RENDERED)) {
             switcher1.messageArrived(string, payload);
-        }
-        if (string.contains(switcher2.getLedServiceContract().EVENT_LEDs_RENDERED)) {
-            switcher2.messageArrived(string, payload);
         }
 
     }
 
     public void clear() {
         t1.interrupt();
-        t2.interrupt();
         t1.yield();
-        t2.yield();
         // addMessage(ledServiceContract1.INTENT_FRAME, new LEDFrame(120));
         // addMessage(ledServiceContract2.INTENT_FRAME, new LEDFrame(120));
 
@@ -125,9 +114,9 @@ public class MovingDotAgent implements MessageConsumer {
 
         private final LEDStripServiceContract ledServiceContract;
 
-        private int counter = 0;
+        private int counter = 1000;
         List<LEDFrame> frames = new ArrayList<>();
-        private LEDFrame leds = new LEDFrame(3,amountOfLEDs);
+        private LEDFrame leds = new LEDFrame(amountOfChannels, amountOfLEDs);
 
         public switcher(LEDStripServiceContract ledServiceContract, LEDStripDeviceConfig config) {
             this.ledServiceContract = ledServiceContract;
@@ -143,7 +132,9 @@ public class MovingDotAgent implements MessageConsumer {
                 LEDStripService.FrameRenderedEvent[] framesRendered = agent.getMapper().readValue(payload, LEDStripService.FrameRenderedEvent[].class);
                 if (framesRendered.length > 0) {
                     counter = framesRendered[framesRendered.length - 1].getFramesBuffered();
+                    System.out.println(".." + counter);
                     this.notifyAll();
+
                 }
             }
         }
@@ -151,7 +142,8 @@ public class MovingDotAgent implements MessageConsumer {
         @Override
         public void run() {
 
-            wave();
+            this.movingDot();
+            //this.wave();
         }
 
         private void wave() {
@@ -159,16 +151,19 @@ public class MovingDotAgent implements MessageConsumer {
             double sineRed = 0;
             double sineGreen = 0;
             double sineBlue = 0;
-            LEDFrame newLEDs = new LEDFrame(amountOfChannels,amountOfLEDs);
+            double sineWhite = 0;
+            LEDFrame newLEDs = new LEDFrame(amountOfChannels, amountOfLEDs);
 
             for (int i = 0; i < leds.getColorChannel(0).length; i++) {
                 sineRed = Math.sin((i / 120.0) * Math.PI * 2);
                 sineGreen = Math.sin((i / 60.0) * Math.PI * 2);
                 sineBlue = Math.sin((i / 30.0) * Math.PI * 2);
+                sineWhite = Math.sin((i / 90.0) * Math.PI * 2);
 
                 leds.getColorChannel(0)[i] = (short) (127.0 + (sineRed * 127.0));
                 leds.getColorChannel(1)[i] = (short) (127.0 + (sineGreen * 127.0));
                 leds.getColorChannel(2)[i] = (short) (127.0 + (sineBlue * 127.0));
+                leds.getColorChannel(3)[i] = (short) (127.0 + (sineWhite * 127.0));
             }
             try {
                 while (true) {
@@ -177,10 +172,14 @@ public class MovingDotAgent implements MessageConsumer {
                             newLEDs.getColorChannel(0)[i] = leds.getColorChannel(0)[i - 1];
                             newLEDs.getColorChannel(1)[i] = leds.getColorChannel(1)[i - 1];
                             newLEDs.getColorChannel(2)[i] = leds.getColorChannel(2)[i - 1];
+                            newLEDs.getColorChannel(3)[i] = leds.getColorChannel(3)[i - 1];
+
                         }
                         newLEDs.getColorChannel(0)[0] = leds.getColorChannel(1)[amountOfLEDs - 1];
                         newLEDs.getColorChannel(1)[0] = leds.getColorChannel(2)[amountOfLEDs - 1];
-                        newLEDs.getColorChannel(2)[0] = leds.getColorChannel(0)[amountOfLEDs - 1];
+                        newLEDs.getColorChannel(2)[0] = leds.getColorChannel(3)[amountOfLEDs - 1];
+                        newLEDs.getColorChannel(3)[0] = leds.getColorChannel(0)[amountOfLEDs - 1];
+
                         LEDFrame tmpLEDs = leds;
                         leds = newLEDs;
                         newLEDs = tmpLEDs;
@@ -193,25 +192,26 @@ public class MovingDotAgent implements MessageConsumer {
                     Thread.sleep(frameDurationInMillis * 50);
 
                     synchronized (this) {
-                        System.out.println(counter);
                         while (counter > 100) {
                             wait();
                         }
                     }
                 }
             } catch (InterruptedException ex) {
-                Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
-                agent.addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfChannels,amountOfLEDs));
+                Logger.getLogger(CircleDotAgent.class.getName()).log(Level.SEVERE, null, ex);
+                agent.addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfChannels, amountOfLEDs));
 
             }
         }
 
         private void movingDot() {
-            leds.getColorChannel(0)[0] = 255;
-            leds.getColorChannel(1)[0] = 255;
-            leds.getColorChannel(2)[0] = 255;
-
-            LEDFrame newLEDs = new LEDFrame(amountOfChannels,amountOfLEDs);
+            for (int i = 0; i < amountOfLEDs - 1; i++) {
+                leds.getColorChannel(0)[i] = 110;
+                leds.getColorChannel(1)[i] = 255;
+                leds.getColorChannel(2)[i] = 30;
+                leds.getColorChannel(3)[i] = 255;
+            }
+            LEDFrame newLEDs = new LEDFrame(amountOfChannels, amountOfLEDs);
             try {
                 while (true) {
                     for (int frameCount = 0; frameCount < 100; frameCount++) {
@@ -219,17 +219,22 @@ public class MovingDotAgent implements MessageConsumer {
                             newLEDs.getColorChannel(0)[i] = leds.getColorChannel(0)[i - 1];
                             newLEDs.getColorChannel(1)[i] = leds.getColorChannel(1)[i - 1];
                             newLEDs.getColorChannel(2)[i] = leds.getColorChannel(2)[i - 1];
+                            newLEDs.getColorChannel(3)[i] = leds.getColorChannel(3)[i - 1];
+
                         }
                         newLEDs.getColorChannel(0)[0] = leds.getColorChannel(0)[amountOfLEDs - 1];
                         newLEDs.getColorChannel(1)[0] = leds.getColorChannel(1)[amountOfLEDs - 1];
                         newLEDs.getColorChannel(2)[0] = leds.getColorChannel(2)[amountOfLEDs - 1];
+                        newLEDs.getColorChannel(3)[0] = leds.getColorChannel(3)[amountOfLEDs - 1];
+
                         LEDFrame tmpLEDs = leds;
                         leds = newLEDs;
                         newLEDs = tmpLEDs;
                         frames.add(new LEDFrame(leds));
                     }
                     System.out.println("FRAMES:" + frames.size());
-                    agent.addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
+                    LEDFrame[] framesArray = frames.toArray(new LEDFrame[frames.size()]);
+                    agent.addMessage(ledServiceContract.INTENT_FRAMES, framesArray);
 
                     frames.clear();
 
@@ -238,13 +243,15 @@ public class MovingDotAgent implements MessageConsumer {
                     synchronized (this) {
                         System.out.println(counter);
                         while (counter > 100) {
-                            this.wait();
+                            System.out.println("wait");
+                            wait();
+                            System.out.println("Notified");
                         }
                     }
                 }
             } catch (InterruptedException ex) {
-                Logger.getLogger(MovingDotAgent.class.getName()).log(Level.SEVERE, null, ex);
-                agent.addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfChannels,120));
+                Logger.getLogger(CircleDotAgent.class.getName()).log(Level.SEVERE, null, ex);
+                agent.addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfChannels, 120));
 
             }
         }
@@ -259,7 +266,7 @@ public class MovingDotAgent implements MessageConsumer {
             System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
         }
         System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-        MovingDotAgent agent = new MovingDotAgent(mqttURI);
+        CircleDotAgent agent = new CircleDotAgent(mqttURI);
         System.in.read();
         agent.clear();
     }

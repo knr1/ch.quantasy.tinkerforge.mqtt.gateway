@@ -48,52 +48,33 @@ package ch.quantasy.tinkerforge.device.led;
  */
 public class LEDFrame {
 
-    private short[] red;
-    private short[] green;
-    private short[] blue;
+    private short[][] channels;
 
     public LEDFrame() {
     }
 
-    public LEDFrame(int amountOfLEDs) {
-        red = new short[amountOfLEDs];
-        green = new short[amountOfLEDs];
-        blue = new short[amountOfLEDs];
+    public LEDFrame(int amountOfChannels, int amountOfLEDs) {
+        channels = new short[amountOfChannels][amountOfLEDs];
     }
 
     public LEDFrame(LEDFrame frame) {
-        this(frame.red, frame.green, frame.blue);
+        this(frame.channels);
     }
 
-    public LEDFrame(short[] red, short[] green, short[] blue) {
-        this.red = red.clone();
-        this.green = green.clone();
-        this.blue = blue.clone();
-    }
-
-    public short[] getBlue() {
-        return blue;
-    }
-
-    public short[] getGreen() {
-        return green;
-    }
-
-    public short[] getRed() {
-        return red;
+    public LEDFrame(short[][] channels) {
+        this.channels = new short[channels.length][];
+        for (int i = 0; i < this.channels.length; i++) {
+            this.channels[i] = channels[i].clone();
+        }
     }
 
     public short[] getColorChannel(int channel) {
-        switch (channel) {
-            case 0:
-                return red;
-            case 1:
-                return green;
-            case 2:
-                return blue;
-            default:
-                return null;
-        }
+        if (channel > 0 && channel < this.channels.length);
+        return channels[channel];
+    }
+
+    public short[][] getChannels() {
+        return channels;
     }
 
 }

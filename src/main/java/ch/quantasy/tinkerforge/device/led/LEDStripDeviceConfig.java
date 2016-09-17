@@ -52,42 +52,62 @@ import java.util.Objects;
  */
 public class LEDStripDeviceConfig {
 
-    public static enum ChipType {
-        WS2801(BrickletLEDStrip.CHIP_TYPE_WS2801), WS2811(BrickletLEDStrip.CHIP_TYPE_WS2811), WS2812(BrickletLEDStrip.CHIP_TYPE_WS2812);
-        public final int type;
+    private transient final static int NUMBER_OF_LEDS_PER_WRITE = 48;
 
-        private ChipType(int value) {
-            this.type = value;
+    public static enum ChipType {
+        WS2801(BrickletLEDStrip.CHIP_TYPE_WS2801, 3), WS2811(BrickletLEDStrip.CHIP_TYPE_WS2811, 3), WS2812(BrickletLEDStrip.CHIP_TYPE_WS2812, 3), WS2812RGBW(BrickletLEDStrip.CHIP_TYPE_WS2812, 4),LPD8806(BrickletLEDStrip.CHIP_TYPE_LPD8806, 3), APA102(BrickletLEDStrip.CHIP_TYPE_APA102, 3);
+        public final int type;
+        public final int numberOfChannels;
+
+        private ChipType(int type, int numberOfChannels) {
+            this.type = type;
+            this.numberOfChannels = numberOfChannels;
         }
 
         public int getType() {
             return type;
         }
 
-        public static ChipType getChipTypeFor(int i) throws IllegalArgumentException {
+        public int getNumberOfChannels() {
+            return numberOfChannels;
+        }
+
+        public static ChipType getChipTypeFor(int numericChipType,int numberOfChannels) throws IllegalArgumentException {
             for (ChipType chipType : values()) {
-                if (chipType.type == i) {
+                if (chipType.type == numericChipType && chipType.numberOfChannels==numberOfChannels) {
                     return chipType;
                 }
             }
-            throw new IllegalArgumentException("Not supported: " + i);
+            throw new IllegalArgumentException("Not supported: " + numericChipType);
         }
     }
 
     public static enum ChannelMapping {
-        RGB(0, 1, 2), RBG(0, 2, 1), GBR(1, 2, 0), GRB(1, 0, 2), BGR(2, 1, 0), BRG(2, 0, 1);
-        public final int[] mapping;
+        BGR(BrickletLEDStrip.CHANNEL_MAPPING_BGR), BGRW(BrickletLEDStrip.CHANNEL_MAPPING_BGRW), BGWR(BrickletLEDStrip.CHANNEL_MAPPING_BGWR),
+        BRG(BrickletLEDStrip.CHANNEL_MAPPING_BRG), BRGW(BrickletLEDStrip.CHANNEL_MAPPING_BRGW), BRWG(BrickletLEDStrip.CHANNEL_MAPPING_BRWG), BWGR(BrickletLEDStrip.CHANNEL_MAPPING_BWGR),
+        BWRG(BrickletLEDStrip.CHANNEL_MAPPING_BWRG), GBR(BrickletLEDStrip.CHANNEL_MAPPING_GBR), GBRW(BrickletLEDStrip.CHANNEL_MAPPING_GBRW), GBWR(BrickletLEDStrip.CHANNEL_MAPPING_GBWR),
+        GRB(BrickletLEDStrip.CHANNEL_MAPPING_GRB), GRBW(BrickletLEDStrip.CHANNEL_MAPPING_GRBW), GRWB(BrickletLEDStrip.CHANNEL_MAPPING_GRWB), GWBR(BrickletLEDStrip.CHANNEL_MAPPING_GWBR),
+        GWRB(BrickletLEDStrip.CHANNEL_MAPPING_GWRB), RBG(BrickletLEDStrip.CHANNEL_MAPPING_RBG), RBGW(BrickletLEDStrip.CHANNEL_MAPPING_RBGW), RBWG(BrickletLEDStrip.CHANNEL_MAPPING_RBWG),
+        RGB(BrickletLEDStrip.CHANNEL_MAPPING_RGB), RGBW(BrickletLEDStrip.CHANNEL_MAPPING_RGBW), RGWB(BrickletLEDStrip.CHANNEL_MAPPING_RGWB), RWBG(BrickletLEDStrip.CHANNEL_MAPPING_RWBG),
+        RWGB(BrickletLEDStrip.CHANNEL_MAPPING_RWGB);
 
-        private ChannelMapping(int... mapping) {
+        public final short mapping;
+
+        private ChannelMapping(short mapping) {
             this.mapping = mapping;
         }
 
-        public int[] getMapping() {
+        public short getMapping() {
             return mapping;
         }
 
-        public int mapTo(int rgbChannel) {
-            return mapping[rgbChannel];
+        public static ChannelMapping getChannelMappingFor(int i) throws IllegalArgumentException {
+            for (ChannelMapping channelMapping : values()) {
+                if (channelMapping.mapping == i) {
+                    return channelMapping;
+                }
+            }
+            throw new IllegalArgumentException("Not supported: " + i);
         }
     }
     private ChipType chipType;
@@ -97,6 +117,10 @@ public class LEDStripDeviceConfig {
     private ChannelMapping channelMapping;
 
     private LEDStripDeviceConfig() {
+    }
+
+    protected int getNumberOfLEDsPerWrite() {
+        return NUMBER_OF_LEDS_PER_WRITE / chipType.getNumberOfChannels();
     }
 
     public LEDStripDeviceConfig(String chipType, long clockFrequencyOfICsInHz, int frameDurationInMilliseconds, int numberOfLEDs, String channelMapping) throws IllegalArgumentException {
@@ -182,14 +206,14 @@ public class LEDStripDeviceConfig {
     }
 
     /**
-     * Returns a new 2-dimensional array of shorts representing all the RGB-LEDs
-     * of the strip.
+     * Returns a new 2-dimensional array of shorts representing all the
+     * different channels of the RGB(W)-LEDs of the strip.
      *
-     * @return 3-channel-array of shorts
+     * @return n-channel-array of shorts
      */
     @JsonIgnore
     public short[][] getFreshRGBLEDs() {
-        return new short[LEDStripDevice.NUMBER_OF_COLOR_CHANNELS][numberOfLEDs];
+        return new short[chipType.getNumberOfChannels()][numberOfLEDs];
     }
 
 }

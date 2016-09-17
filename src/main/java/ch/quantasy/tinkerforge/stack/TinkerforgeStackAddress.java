@@ -53,11 +53,10 @@ import java.util.Objects;
 public class TinkerforgeStackAddress {
 
     public static final int DEFAULT_PORT = 4223;
-    public final String hostName;
-    public final int port;
+    private String hostName;
+    private int port = DEFAULT_PORT;
 
-    @JsonCreator
-    public TinkerforgeStackAddress(@JsonProperty("hostName") String hostName, @JsonProperty("port") int port) {
+    public TinkerforgeStackAddress( String hostName, int port) {
         if ((hostName == null) || hostName.equals("")) {
             throw new IllegalArgumentException();
         }
@@ -68,8 +67,11 @@ public class TinkerforgeStackAddress {
         this.port = port;
     }
 
-    public TinkerforgeStackAddress(String host) {
-        this(host, DEFAULT_PORT);
+    public TinkerforgeStackAddress(String hostName) {
+        this(hostName, DEFAULT_PORT);
+    }
+
+    public TinkerforgeStackAddress() {
     }
 
     @Override
@@ -96,6 +98,14 @@ public class TinkerforgeStackAddress {
             return false;
         }
         return true;
+    }
+
+    public String getHostName() {
+        return hostName;
+    }
+
+    public int getPort() {
+        return port;
     }
 
     @Override
