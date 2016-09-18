@@ -47,6 +47,7 @@ import ch.quantasy.mqtt.gateway.agent.Agent;
 import ch.quantasy.mqtt.gateway.agent.AgentContract;
 import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,36 +65,43 @@ public class Connector implements MessageConsumer {
     public Connector(URI mqttURI) throws MqttException {
         managerServiceContract = new ManagerServiceContract("Manager");
         agent = new Agent(mqttURI, "f94kjf93d9", new AgentContract("Agent", "Connector", "euo"));
-        agent.subscribe(managerServiceContract.ID_TOPIC + "/#", this);
         agent.connect();
-        stackManager("erdgeschoss");
+        connectRemoteServices(new TinkerforgeStackAddress("erdgeschoss"));
         try {
             Thread.sleep(5000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
         }
-        stackManager("untergeschoss");
+        connectRemoteServices(new TinkerforgeStackAddress("untergeschoss"));
         try {
             Thread.sleep(5000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
         }
-        stackManager("obergeschoss");
+        connectRemoteServices(new TinkerforgeStackAddress("obergeschoss"));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectRemoteServices(new TinkerforgeStackAddress("lights01"));
 
+    }
+    
+     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
+        for (TinkerforgeStackAddress address : addresses) {
+            agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
+        }
     }
 
     @Override
     public void messageArrived(Agent agent, String string, byte[] payload) throws Exception {
-        System.out.printf("Topic: %s Message: %s\n", string, new String(payload));
+
     }
 
     private SwitchSocketCParameters.SwitchTo state;
 
-    private void stackManager(String stackName) {
-        String topic = managerServiceContract.INTENT_STACK_ADDRESS_ADD;
-        agent.addMessage(topic, stackName);
-        System.out.println("Adding: " + stackName);
-    }
+    
 
     public static void main(String[] args) throws Throwable {
         URI mqttURI = URI.create("tcp://127.0.0.1:1883");

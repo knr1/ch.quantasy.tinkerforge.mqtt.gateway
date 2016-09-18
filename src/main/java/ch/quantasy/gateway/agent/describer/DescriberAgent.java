@@ -46,6 +46,7 @@ import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.agent.Agent;
 import ch.quantasy.mqtt.gateway.agent.AgentContract;
 import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -63,8 +64,14 @@ public class DescriberAgent implements MessageConsumer {
         agent = new Agent(mqttURI, "349h3492zf", new AgentContract("Agent", "Describer", "desc"));
         agent.subscribe("TF/LEDStrip/description/#", this);
         agent.connect();
-        agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, "Lights01");
+        connectRemoteServices(new TinkerforgeStackAddress("Lights01"));
 
+    }
+    
+    private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
+        for (TinkerforgeStackAddress address : addresses) {
+            agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
+        }
     }
 
     @Override

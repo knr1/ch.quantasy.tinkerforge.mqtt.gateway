@@ -82,13 +82,15 @@ public class MovingDotAgent implements MessageConsumer {
         managerServiceContract = new ManagerServiceContract("Manager");
         agent = new Agent(mqttURI, "875786cbwe", new AgentContract("Agent", "MovingDot", "oZUp5z"));
         agent.connect();
-        agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress("lights01"));
+        agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress("lights02"));
 
-        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("oZU", TinkerforgeDeviceClass.LEDStrip.toString());
-        LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
+        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("xxx", TinkerforgeDeviceClass.LEDStrip.toString());
+        LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("yyy", TinkerforgeDeviceClass.LEDStrip.toString());
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
         amountOfChannels=config.getChipType().getNumberOfChannels();
         agent.subscribe(ledServiceContract1.EVENT_LEDs_RENDERED, this);
+        agent.subscribe(ledServiceContract2.EVENT_LEDs_RENDERED, this);
+        
 
         switcher1 = new switcher(ledServiceContract1, config);
         switcher2 = new switcher(ledServiceContract2, config);
@@ -116,8 +118,8 @@ public class MovingDotAgent implements MessageConsumer {
         t2.interrupt();
         t1.yield();
         t2.yield();
-        // addMessage(ledServiceContract1.INTENT_FRAME, new LEDFrame(120));
-        // addMessage(ledServiceContract2.INTENT_FRAME, new LEDFrame(120));
+        agent.addMessage(switcher1.getLedServiceContract().INTENT_FRAME, new LEDFrame(120,3));
+        agent.addMessage(switcher2.getLedServiceContract().INTENT_FRAME, new LEDFrame(120,3));
 
     }
 

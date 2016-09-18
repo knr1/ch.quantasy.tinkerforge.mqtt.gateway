@@ -48,6 +48,7 @@ import ch.quantasy.mqtt.gateway.agent.AgentContract;
 import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Timer;
@@ -67,7 +68,6 @@ public class TimedSwitch implements MessageConsumer{
     public TimedSwitch(URI mqttURI) throws MqttException {
         agent=new Agent(mqttURI, "9520efj30sdk", new AgentContract("Agent","TimedSwitch","qD7"));
         remoteSwitchServiceContract = new RemoteSwitchServiceContract("qD7", TinkerforgeDeviceClass.RemoteSwitch.toString());
-        agent.subscribe(remoteSwitchServiceContract.ID_TOPIC + "/#",this);
         agent.connect();
         Timer t = new Timer();
         t.scheduleAtFixedRate(new Switcher(), 0, 1000*60*60);
@@ -102,7 +102,7 @@ public class TimedSwitch implements MessageConsumer{
 
     @Override
     public void messageArrived(Agent agent,String string, byte[] payload) throws Exception {
-        System.out.printf("Topic: %s Message: %s\n", string, new String(payload));
+
     }
 
     private SwitchSocketCParameters.SwitchTo state;

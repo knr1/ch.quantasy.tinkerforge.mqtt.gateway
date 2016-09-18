@@ -67,9 +67,10 @@ public class MotionLightAgent implements MessageConsumer{
         remoteSwitchServiceContract = new RemoteSwitchServiceContract("jKQ", TinkerforgeDeviceClass.RemoteSwitch.toString());
         motionDetectorServiceContract = new MotionDetectorServiceContract("kfT", TinkerforgeDeviceClass.MotionDetector.toString());
        
-        agent=new Agent(mqttURI, "4ug83f983hf653bc732g", new AgentContract("Agent","MotionLight","jKQkfT"));
-        agent.subscribe(remoteSwitchServiceContract.ID_TOPIC + "/#", this);
-        agent.subscribe(motionDetectorServiceContract.ID_TOPIC + "/#", this);
+        agent=new Agent(mqttURI, "2408h40h4", new AgentContract("Agent","MotionLight","e48"));
+        agent.subscribe(motionDetectorServiceContract.EVENT_DETECTION_CYCLE_ENDED, this);
+        agent.subscribe(motionDetectorServiceContract.EVENT_MOTION_DETECTED, this);
+        
         agent.connect();
         t=new Thread(new switcher());
         t.start();
@@ -138,7 +139,7 @@ public class MotionLightAgent implements MessageConsumer{
     }
 
     public static void main(String[] args) throws Throwable {
-        URI mqttURI = URI.create("tcp://127.0.0.1:1883");
+        URI mqttURI = URI.create("tcp://matrix:1883");
         if (args.length > 0) {
             mqttURI = URI.create(args[0]);
         } else {
