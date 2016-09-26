@@ -66,12 +66,12 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     public ManagerService(TinkerForgeManager manager, URI mqttURI) throws MqttException {
         super(mqttURI, "TinkerforgeStackManager", new ManagerServiceContract("Manager"));
         this.manager = manager;
-        addDescription(getServiceContract().INTENT_STACK_ADDRESS_ADD, "<address>");
-        addDescription(getServiceContract().INTENT_STACK_ADDRESS_REMOVE, "<address>");
-        addDescription(getServiceContract().EVENT_ADDRESS_CONNECTED, "<address>");
-        addDescription(getServiceContract().EVENT_ADDRESS_DISCONNECTED, "<address>");
-        addDescription(getServiceContract().EVENT_STACK_ADDRESS_ADDED, "<address>");
-        addDescription(getServiceContract().EVENT_STACK_ADDRESS_REMOVED, "<address>");
+        addDescription(getServiceContract().INTENT_STACK_ADDRESS_ADD, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getServiceContract().INTENT_STACK_ADDRESS_REMOVE, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getServiceContract().EVENT_ADDRESS_CONNECTED, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getServiceContract().EVENT_ADDRESS_DISCONNECTED, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getServiceContract().EVENT_STACK_ADDRESS_ADDED, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getServiceContract().EVENT_STACK_ADDRESS_REMOVED, "hostName: <String>\n prot: [0..4223..65536]");
         addDescription(getServiceContract().STATUS_STACK_ADDRESS + "/<address>/connected", "[true|false]");
 
         manager.addListener(this);

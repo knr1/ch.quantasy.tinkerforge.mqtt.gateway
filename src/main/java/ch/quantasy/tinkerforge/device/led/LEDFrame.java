@@ -50,7 +50,11 @@ public class LEDFrame {
 
     private short[][] channels;
 
-    public LEDFrame() {
+    private LEDFrame() {
+    }
+    
+    public boolean isValid(){
+        return channels!=null;
     }
 
     public LEDFrame(int amountOfChannels, int amountOfLEDs) {
@@ -63,18 +67,78 @@ public class LEDFrame {
 
     public LEDFrame(short[][] channels) {
         this.channels = new short[channels.length][];
-        for (int i = 0; i < this.channels.length; i++) {
+        this.channels[0] = channels[0].clone();
+
+        for (int i = 1; i < this.channels.length; i++) {
+            if (channels[i - 1].length != channels[i].length) {
+                throw new IllegalArgumentException();
+            }
             this.channels[i] = channels[i].clone();
         }
     }
-
-    public short[] getColorChannel(int channel) {
-        if (channel > 0 && channel < this.channels.length);
-        return channels[channel];
+    
+    public short getMaxValue(){
+        short maxValue=Short.MIN_VALUE;
+        for (int i = 0; i < channels.length; i++) {
+            for (int j = 0; j < channels[i].length; j++) {
+                if(maxValue<channels[i][j])
+                    maxValue=channels[i][j];
+            }
+        }
+        return maxValue;
+    }
+    public short getMinValue(){
+        short minValue=Short.MAX_VALUE;
+        for (int i = 0; i < channels.length; i++) {
+            for (int j = 0; j < channels[i].length; j++) {
+                if(minValue>channels[i][j])
+                    minValue=channels[i][j];
+            }
+        }
+        return minValue;
     }
 
-    public short[][] getChannels() {
-        return channels;
+    public int getNumberOfChannels() {
+        return channels.length;
     }
 
+    public int getNumberOfLEDs() {
+        return channels[0].length;
+    }
+
+    public short getColor(int channel, int position) {
+        return channels[channel][position];
+    }
+
+    public void setColor(int channel, int position, short color) {
+        channels[channel][position] = color;
+    }
+
+    public void copyFraction(int channel, int startAtPosition, short[] target) {
+        System.arraycopy(channels[channel],
+                startAtPosition,
+                target,
+                0,
+                Math.min(channels[channel].length - startAtPosition, target.length));
+    }
+
+    /**
+     * Returns a new LEDFrame with the specified brightness. 0 is true black,
+     * 512 is true white
+     *
+     * @param brightnessFactor (something between 0 and infinity)
+     * @return
+     */
+    public LEDFrame(LEDFrame ledFrame, double brightnessFactor) {
+        this(ledFrame);
+        for (int i = 0; i < channels.length; i++) {
+            for (int j = 0; j < channels[i].length; j++) {
+                channels[i][j] = (short) Math.min(255, (short) ((channels[i][j] * brightnessFactor) + 0.5));
+                channels[i][j] = (short) Math.max(0, channels[i][j]);
+                if (channels[i][j] < 0 || channels[i][j] > 255) {
+                    System.out.println("Too big.");
+                }
+            }
+        }
+    }
 }

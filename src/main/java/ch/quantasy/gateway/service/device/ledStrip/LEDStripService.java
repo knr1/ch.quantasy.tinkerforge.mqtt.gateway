@@ -84,8 +84,10 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
         if (string.startsWith(getServiceContract().INTENT_FRAME)) {
             synchronized (this) {
                 frame = (getMapper().readValue(payload, LEDFrame.class));
-                frames.clear();
-                getDevice().readyToPublish(this);
+                if (frame.isValid()) {
+                    frames.clear();
+                    getDevice().readyToPublish(this);
+                }
             }
         }
         if (string.startsWith(getServiceContract().INTENT_FRAMES)) {
