@@ -89,13 +89,14 @@ public class AmbientLEDLightAgent {
         RotaryEncoderServiceContract rotaryEncoderServiceContract = new RotaryEncoderServiceContract("je3", TinkerforgeDeviceClass.RotaryEncoder.toString());
 
         MotionDetectorServiceContract motionDetectorServiceContract = new MotionDetectorServiceContract("kfP", TinkerforgeDeviceClass.MotionDetector.toString());
+        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
         agent.addMessage(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
         agent.subscribe(rotaryEncoderServiceContract.EVENT_COUNT, new Brightness());
         agent.subscribe(rotaryEncoderServiceContract.EVENT_PRESSED, new MessageConsumer() {
             @Override
             public void messageArrived(Agent agent, String topic, byte[] mm) throws Exception {
                 for (Wave wave : waveList) {
-                    if (wave.getBrightness() > 0) {
+                    if (wave.getTargetBrightness() > 0) {
                         wave.clearFrames();
                         wave.setTargetBrightness(0, 1.0);
                     } else {
@@ -105,8 +106,6 @@ public class AmbientLEDLightAgent {
             }
         });
         LEDStripServiceContract ledServiceContract = new LEDStripServiceContract("jJE", TinkerforgeDeviceClass.LEDStrip.toString());
-        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
-        
         waveList.add(new Wave(ledServiceContract, config));
         for (Wave wave : waveList) {
             new Thread(wave).start();
@@ -229,10 +228,9 @@ public class AmbientLEDLightAgent {
 
             this.ambientBrightness += ambientBrightness;
             this.ambientBrightness = Math.min(0, Math.max(-1, this.ambientBrightness));
-            System.out.println("ambient: " + this.ambientBrightness);
             this.notifyAll();
             super.addLEDFrame(new LEDFrame(prototypeLEDFrame, Math.max(0, Math.min(1, brightness + this.ambientBrightness))));
-           
+
         }
 
         public synchronized double getAmbientBrightness() {
@@ -276,18 +274,19 @@ public class AmbientLEDLightAgent {
             try {
                 short maxValue = 0;
                 while (true) {
-                    while (frames.size() < 150 && (getBrightness()+getAmbientBrightness() > 0 || getTargetBrightness() > 0) && (getAmbientBrightness() >= -1)) {
+                    while (frames.size() < 150 && (getBrightness() + getAmbientBrightness() > 0 || getTargetBrightness() > 0) && (getAmbientBrightness() >= -1)) {
                         LEDFrame newLEDFrame = super.getNewLEDFrame();
                         synchronized (this) {
                             double targetBrightness = getTargetBrightness();
                             double brightness = getBrightness();
-                            double ambientBrightness=getAmbientBrightness();
+                            double ambientBrightness = getAmbientBrightness();
                             double step = getStep();
-                            if (brightness > targetBrightness) {
-                                this.setBrightness(Math.max(targetBrightness, brightness - step));
-
+                            if (brightness+ambientBrightness > targetBrightness) {
+                                brightness = Math.max(brightness - step, targetBrightness-ambientBrightness);
+                                this.setBrightness(brightness);
                             } else if (brightness < targetBrightness) {
-                                this.setBrightness(Math.min(targetBrightness, brightness + step));
+                                brightness = Math.min(brightness + step, targetBrightness);
+                                this.setBrightness(brightness);
                             }
                         }
                         for (int channel = 0; channel < currentLEDFrame.getNumberOfChannels(); channel++) {
@@ -309,9 +308,9 @@ public class AmbientLEDLightAgent {
                         frames.clear();
                     }
                     Thread.sleep(frameDurationInMillis * 20);
-                    
+
                     synchronized (this) {
-                        while (getCounter() > 100 || (getBrightness()+getAmbientBrightness() <= 0 && getTargetBrightness() <= 0) || (getAmbientBrightness() <= -1 && maxValue == 0)) {
+                        while (getCounter() > 100 || (getBrightness() + getAmbientBrightness() <= 0 && getTargetBrightness() <= 0) || (getAmbientBrightness() <= -1 && maxValue == 0)) {
                             wait(frameDurationInMillis * 1000);
                         }
                     }
