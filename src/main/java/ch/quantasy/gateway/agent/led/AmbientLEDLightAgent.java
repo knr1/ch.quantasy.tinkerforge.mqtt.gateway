@@ -67,9 +67,6 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  */
 public class AmbientLEDLightAgent {
 
-    enum LightsState {
-        On, OnTimer, TransitionToOff, Off, TransitionToOn;
-    }
     private final ManagerServiceContract managerServiceContract;
     private final List<Wave> waveList;
     private Thread timerThread;
@@ -92,7 +89,6 @@ public class AmbientLEDLightAgent {
         RotaryEncoderServiceContract rotaryEncoderServiceContract = new RotaryEncoderServiceContract("je3", TinkerforgeDeviceClass.RotaryEncoder.toString());
 
         MotionDetectorServiceContract motionDetectorServiceContract = new MotionDetectorServiceContract("kfP", TinkerforgeDeviceClass.MotionDetector.toString());
-        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
         agent.addMessage(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
         agent.subscribe(rotaryEncoderServiceContract.EVENT_COUNT, new Brightness());
         agent.subscribe(rotaryEncoderServiceContract.EVENT_PRESSED, new MessageConsumer() {
@@ -109,6 +105,8 @@ public class AmbientLEDLightAgent {
             }
         });
         LEDStripServiceContract ledServiceContract = new LEDStripServiceContract("jJE", TinkerforgeDeviceClass.LEDStrip.toString());
+        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
+        
         waveList.add(new Wave(ledServiceContract, config));
         for (Wave wave : waveList) {
             new Thread(wave).start();
