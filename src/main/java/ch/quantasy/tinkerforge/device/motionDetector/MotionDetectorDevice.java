@@ -64,6 +64,7 @@ public class MotionDetectorDevice extends GenericDevice<BrickletMotionDetector, 
     protected void addDeviceListeners() {
         getDevice().addDetectionCycleEndedListener(super.getCallback());
         getDevice().addMotionDetectedListener(super.getCallback());
+        System.out.println("------ADD");
        
        
     }
@@ -72,6 +73,7 @@ public class MotionDetectorDevice extends GenericDevice<BrickletMotionDetector, 
     protected void removeDeviceListeners() {
         getDevice().removeDetectionCycleEndedListener(super.getCallback());
         getDevice().removeMotionDetectedListener(super.getCallback());
+        System.out.println("-------REMOVE");
     }
 
     

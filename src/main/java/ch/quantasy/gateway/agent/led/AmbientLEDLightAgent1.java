@@ -44,8 +44,6 @@ package ch.quantasy.gateway.agent.led;
 
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceContract;
-import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderService;
-import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.agent.Agent;
 import ch.quantasy.mqtt.gateway.agent.AgentContract;
@@ -57,62 +55,54 @@ import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
  *
  * @author reto
  */
-public class AmbientLEDLightAgent {
+public class AmbientLEDLightAgent1 {
 
     enum LightsState {
         On, OnTimer, TransitionToOff, Off, TransitionToOn;
     }
     private final ManagerServiceContract managerServiceContract;
-    private final List<Wave> waveList;
+    private final Wave wave1;
+    private final Thread waveThread1;
+    private final Wave wave2;
+    private final Thread waveThread2;
     private Thread timerThread;
     private final int frameDurationInMillis;
     private final int amountOfLEDs;
     private final Agent agent;
     private int delayInMinutes;
 
-    public AmbientLEDLightAgent(URI mqttURI) throws MqttException {
+    public AmbientLEDLightAgent1(URI mqttURI) throws MqttException {
         frameDurationInMillis = 55;
         amountOfLEDs = 120;
         delayInMinutes = 1;
-        waveList = new ArrayList<>();
         managerServiceContract = new ManagerServiceContract("Manager");
-        agent = new Agent(mqttURI, "349h3fdh", new AgentContract("Agent", "AmbientLEDLight", "r4iu4re98"));
+        agent = new Agent(mqttURI, "5jgp4h24r9", new AgentContract("Agent", "AmbientLEDLight", "243439f"));
         agent.connect();
-        connectRemoteServices(new TinkerforgeStackAddress("lights02"));
-        connectRemoteServices(new TinkerforgeStackAddress("localhost"));
+        connectRemoteServices(new TinkerforgeStackAddress("lights01"));
 
-        RotaryEncoderServiceContract rotaryEncoderServiceContract = new RotaryEncoderServiceContract("je3", TinkerforgeDeviceClass.RotaryEncoder.toString());
+        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("oZU", TinkerforgeDeviceClass.LEDStrip.toString());
+        LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
 
-        MotionDetectorServiceContract motionDetectorServiceContract = new MotionDetectorServiceContract("kfP", TinkerforgeDeviceClass.MotionDetector.toString());
+        MotionDetectorServiceContract motionDetectorServiceContract = new MotionDetectorServiceContract("kgx", TinkerforgeDeviceClass.MotionDetector.toString());
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
-        agent.addMessage(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
-        agent.subscribe(rotaryEncoderServiceContract.EVENT_COUNT, new Brightness());
-        agent.subscribe(rotaryEncoderServiceContract.EVENT_PRESSED, new MessageConsumer() {
-            @Override
-            public void messageArrived(Agent agent, String topic, byte[] mm) throws Exception {
-                for (Wave wave : waveList) {
-                    if (wave.getBrightness() > 0) {
-                        wave.clearFrames();
-                        wave.setTargetBrightness(0, 1.0);
-                    } else {
-                        wave.setTargetBrightness(1, 1.0);
-                    }
-                }
-            }
-        });
-        LEDStripServiceContract ledServiceContract = new LEDStripServiceContract("jJE", TinkerforgeDeviceClass.LEDStrip.toString());
-        waveList.add(new Wave(ledServiceContract, config));
-        for (Wave wave : waveList) {
-            new Thread(wave).start();
-        }
+        agent.addMessage(ledServiceContract1.INTENT_CONFIG, config);
+        agent.addMessage(ledServiceContract2.INTENT_CONFIG, config);
+
+        wave1 = new Wave(ledServiceContract1, config);
+        wave2 = new Wave(ledServiceContract2, config);
+
+        agent.subscribe(ledServiceContract1.EVENT_LEDs_RENDERED, wave1);
+        agent.subscribe(ledServiceContract2.EVENT_LEDs_RENDERED, wave2);
+        waveThread1 = new Thread(wave1);
+        waveThread1.start();
+        waveThread2 = new Thread(wave2);
+        waveThread2.start();
 
         agent.subscribe(motionDetectorServiceContract.EVENT_MOTION_DETECTED, new MessageConsumer() {
             @Override
@@ -120,10 +110,8 @@ public class AmbientLEDLightAgent {
                 if (timerThread != null) {
                     timerThread.interrupt();
                 }
-                for (Wave wave : waveList) {
-                    wave.setTargetBrightness(1.0, 0.01);
-
-                }
+                wave1.setTargetBrightness(1.0, 0.01);
+                wave2.setTargetBrightness(1.0, 0.01);
             }
         });
         agent.subscribe(motionDetectorServiceContract.EVENT_DETECTION_CYCLE_ENDED, new MessageConsumer() {
@@ -134,9 +122,8 @@ public class AmbientLEDLightAgent {
                     public void run() {
                         try {
                             Thread.sleep(delayInMinutes * 60 * 1000);
-                            for (Wave wave : waveList) {
-                                wave.setTargetBrightness(0.0, 0.001);
-                            }
+                            wave1.setTargetBrightness(0.0, 0.001);
+                            wave2.setTargetBrightness(0.0, 0.001);
                         } catch (InterruptedException ex) {
                             // Interrupted while sleeping... That is ok....
                         }
@@ -150,42 +137,13 @@ public class AmbientLEDLightAgent {
     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
         for (TinkerforgeStackAddress address : addresses) {
             agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(AmbientLEDLightAgent.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
-    }
-
-    public void changeAmbientBrithness(double ambientBrightness) {
-        for (Wave wave : waveList) {
-            wave.changeAmbientBrightness(ambientBrightness);
-        }
-    }
-
-    public class Brightness implements MessageConsumer {
-
-        private Integer latestCount;
-
-        @Override
-        public void messageArrived(Agent agent, String topic, byte[] mm) throws Exception {
-            RotaryEncoderService.CountEvent[] countEvents = agent.getMapper().readValue(mm, RotaryEncoderService.CountEvent[].class);
-            if (latestCount == null) {
-                latestCount = countEvents[0].getValue();
-            }
-            int difference = latestCount;
-            latestCount = countEvents[countEvents.length - 1].getValue();
-            changeAmbientBrithness((difference - latestCount) / 100.0);
-        }
-
     }
 
     public class Wave extends AnLEDAbility {
 
         private final LEDFrame prototypeLEDFrame;
         private double brightness;
-        private double ambientBrightness;
 
         private double targetBrightness;
         private double step;
@@ -207,9 +165,7 @@ public class AmbientLEDLightAgent {
         public synchronized void setTargetBrightness(double targetBrightness, double step) {
 
             if (this.targetBrightness != targetBrightness) {
-                synchronized (frames) {
-                    frames.clear();
-                }
+                clearFrames();
                 this.targetBrightness = targetBrightness;
             }
             this.step = step;
@@ -220,31 +176,14 @@ public class AmbientLEDLightAgent {
          * Can be between 0 and infinity
          *
          * @param brightness
-         * @param brightness
          */
-        public synchronized void setBrightness(double brightness) {
-            this.brightness = brightness;
+        public synchronized void setBrightness(double brightnessFactor) {
+            this.brightness = brightnessFactor;
             this.notifyAll();
-        }
-
-        public synchronized void changeAmbientBrightness(double ambientBrightness) {
-
-            this.ambientBrightness += ambientBrightness;
-            this.ambientBrightness = Math.min(0, Math.max(-1, this.ambientBrightness));
-            System.out.println("ambient: " + this.ambientBrightness);
-            this.notifyAll();
-            super.addLEDFrame(new LEDFrame(prototypeLEDFrame, Math.max(0, Math.min(1, brightness + this.ambientBrightness))));
-           
-        }
-
-        public synchronized double getAmbientBrightness() {
-            return ambientBrightness;
         }
 
         public Wave(LEDStripServiceContract ledServiceContract, LEDStripDeviceConfig config) {
             super(agent, ledServiceContract, config);
-            agent.addMessage(ledServiceContract.INTENT_CONFIG, config);
-
             frames = new ArrayList<>();
 
             double sineRed = 0;
@@ -260,15 +199,12 @@ public class AmbientLEDLightAgent {
                 prototypeLEDFrame.setColor(1, i, (short) (127.0 + (sineGreen * 127.0)));
                 prototypeLEDFrame.setColor(2, i, (short) (127.0 + (sineBlue * 127.0)));
             }
-            agent.subscribe(ledServiceContract.EVENT_LEDs_RENDERED, this);
         }
 
         public void clearFrames() {
-            synchronized (this) {
-                synchronized (frames) {
-                    frames.clear();
-                }
-                super.addLEDFrame(super.getNewLEDFrame());
+            synchronized (frames) {
+                frames.clear();
+                //Hier noch die LEDs im LEDDevice löschen
             }
         }
 
@@ -276,14 +212,12 @@ public class AmbientLEDLightAgent {
             LEDFrame currentLEDFrame = new LEDFrame(prototypeLEDFrame, 1.0);
             super.addLEDFrame(currentLEDFrame);
             try {
-                short maxValue = 0;
                 while (true) {
-                    while (frames.size() < 150 && (getBrightness()+getAmbientBrightness() > 0 || getTargetBrightness() > 0) && (getAmbientBrightness() >= -1)) {
+                    while (frames.size() < 100) {
                         LEDFrame newLEDFrame = super.getNewLEDFrame();
                         synchronized (this) {
                             double targetBrightness = getTargetBrightness();
                             double brightness = getBrightness();
-                            double ambientBrightness=getAmbientBrightness();
                             double step = getStep();
                             if (brightness > targetBrightness) {
                                 this.setBrightness(Math.max(targetBrightness, brightness - step));
@@ -299,25 +233,25 @@ public class AmbientLEDLightAgent {
                             newLEDFrame.setColor(channel, 0, currentLEDFrame.getColor(channel, amountOfLEDs - 1));
                         }
                         synchronized (frames) {
-                            frames.add(new LEDFrame(newLEDFrame, Math.max(0, Math.min(1, brightness + ambientBrightness))));
+                            frames.add(new LEDFrame(newLEDFrame, brightness));
                         }
                         currentLEDFrame = newLEDFrame;
+
                     }
+                    System.out.println("FRAMES: " + frames.size());
                     synchronized (frames) {
                         super.addLEDFrame(frames);
-                        if (frames.size() != 0) {
-                            maxValue = frames.get(frames.size() - 1).getMaxValue();
-                        }
                         frames.clear();
                     }
-                    Thread.sleep(frameDurationInMillis * 20);
-                    
+
+                    Thread.sleep(frameDurationInMillis * 50);
+
                     synchronized (this) {
-                        while (getCounter() > 100 || (getBrightness()+getAmbientBrightness() <= 0 && getTargetBrightness() <= 0) || (getAmbientBrightness() <= -1 && maxValue == 0)) {
-                            wait(frameDurationInMillis * 1000);
+                        System.out.println(getCounter());
+                        while (getCounter() > 100 || (getBrightness() <= 0 && getTargetBrightness() <= 0)) {
+                            wait();
                         }
                     }
-
                 }
             } catch (InterruptedException ex) {
                 System.out.printf("%s: Is interrupted: ", Thread.currentThread());
@@ -381,7 +315,7 @@ public class AmbientLEDLightAgent {
             System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
         }
         System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-        AmbientLEDLightAgent agent = new AmbientLEDLightAgent(mqttURI);
+        AmbientLEDLightAgent1 agent = new AmbientLEDLightAgent1(mqttURI);
         System.in.read();
     }
 }

@@ -152,6 +152,10 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
             this.value = value;
             this.timestamp = timeStamp;
         }
+        
+        private CountEvent(){
+            
+        }
 
         public long getTimestamp() {
             return timestamp;
