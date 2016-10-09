@@ -81,7 +81,7 @@ public class AmbientLEDLightAgent {
         delayInMinutes = 1;
         waveList = new ArrayList<>();
         managerServiceContract = new ManagerServiceContract("Manager");
-        agent = new Agent(mqttURI, "349h3fdh", new AgentContract("Agent", "AmbientLEDLight", "r4iu4re98"));
+        agent = new Agent(mqttURI, "349h3fdh", new AgentContract("Agent", "AmbientLEDLight", "test01"));
         agent.connect();
         connectRemoteServices(new TinkerforgeStackAddress("lights02"));
         connectRemoteServices(new TinkerforgeStackAddress("localhost"));
@@ -89,7 +89,7 @@ public class AmbientLEDLightAgent {
         RotaryEncoderServiceContract rotaryEncoderServiceContract = new RotaryEncoderServiceContract("je3", TinkerforgeDeviceClass.RotaryEncoder.toString());
 
         MotionDetectorServiceContract motionDetectorServiceContract = new MotionDetectorServiceContract("kfP", TinkerforgeDeviceClass.MotionDetector.toString());
-        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
+        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2812RGBW, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRGW);
         agent.addMessage(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
         agent.subscribe(rotaryEncoderServiceContract.EVENT_COUNT, new Brightness());
         agent.subscribe(rotaryEncoderServiceContract.EVENT_PRESSED, new MessageConsumer() {
@@ -244,17 +244,20 @@ public class AmbientLEDLightAgent {
             frames = new ArrayList<>();
 
             double sineRed = 0;
-            double sineGreen = 0;
             double sineBlue = 0;
+            double sineGreen = 0;
+            double sineWhite=0;
             prototypeLEDFrame = super.getNewLEDFrame();
             for (int i = 0; i < prototypeLEDFrame.getNumberOfLEDs(); i++) {
                 sineRed = Math.sin((i / 120.0) * Math.PI * 2);
-                sineGreen = Math.sin((i / 60.0) * Math.PI * 2);
-                sineBlue = Math.sin((i / 30.0) * Math.PI * 2);
+                sineBlue = Math.sin((i / 60.0) * Math.PI * 2);
+                sineGreen = Math.sin((i / 30.0) * Math.PI * 2);
+                sineWhite= Math.sin((i / 90.0) * Math.PI * 2);;
 
                 prototypeLEDFrame.setColor(0, i, (short) (127.0 + (sineRed * 127.0)));
-                prototypeLEDFrame.setColor(1, i, (short) (127.0 + (sineGreen * 127.0)));
-                prototypeLEDFrame.setColor(2, i, (short) (127.0 + (sineBlue * 127.0)));
+                prototypeLEDFrame.setColor(1, i, (short) (127.0 + (sineBlue * 127.0)));
+                prototypeLEDFrame.setColor(2, i, (short) (127.0 + (sineGreen * 127.0)));
+                prototypeLEDFrame.setColor(3, i, (short) (127.0 + (sineWhite * 127.0)));
             }
             agent.subscribe(ledServiceContract.EVENT_LEDs_RENDERED, this);
         }

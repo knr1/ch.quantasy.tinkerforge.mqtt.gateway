@@ -160,6 +160,10 @@ public class LinearPotiService extends AbstractDeviceService<LinearPotiDevice, L
             this.value = value;
             this.timestamp = timeStamp;
         }
+        
+        private AnalogValueEvent(){
+            
+        }
 
         public long getTimestamp() {
             return timestamp;
@@ -175,6 +179,10 @@ public class LinearPotiService extends AbstractDeviceService<LinearPotiDevice, L
 
         long timestamp;
         int value;
+        
+        private PositionEvent(){
+            
+        }
 
         public PositionEvent(int value) {
             this(value, System.currentTimeMillis());
