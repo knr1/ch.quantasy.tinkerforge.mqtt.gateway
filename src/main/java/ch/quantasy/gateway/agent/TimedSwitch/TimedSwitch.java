@@ -80,13 +80,13 @@ public class TimedSwitch implements MessageConsumer{
             LocalDateTime theDate = LocalDateTime.now();
             int hour = theDate.getHour();
             System.out.print("Switch: ");
-            if (state == SwitchSocketCParameters.SwitchTo.ON || (hour >21 || hour < 7)) {
-                switchMotor(SwitchSocketCParameters.SwitchTo.OFF);
-                state = SwitchSocketCParameters.SwitchTo.OFF;
+            if (state == SwitchSocketCParameters.SwitchTo.switchOn || (hour >21 || hour < 7)) {
+                switchMotor(SwitchSocketCParameters.SwitchTo.switchOff);
+                state = SwitchSocketCParameters.SwitchTo.switchOff;
                 System.out.println("off");
             } else {
-                switchMotor(SwitchSocketCParameters.SwitchTo.ON);
-                state = SwitchSocketCParameters.SwitchTo.ON;
+                switchMotor(SwitchSocketCParameters.SwitchTo.switchOn);
+                state = SwitchSocketCParameters.SwitchTo.switchOn;
                 System.out.println("on");
             }
             try {
@@ -119,13 +119,13 @@ public class TimedSwitch implements MessageConsumer{
     }
     
     private void switchAlwaysOn() { 
-        SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 1, SwitchSocketCParameters.SwitchTo.ON);
+        SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 1, SwitchSocketCParameters.SwitchTo.switchOn);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
         agent.addMessage(topic, config);
     }
 
     public static void main(String[] args) throws Throwable {
-        URI mqttURI = URI.create("tcp://127.0.0.1:1883");
+        URI mqttURI = URI.create("tcp://localhost:1883");
         //URI mqttURI = URI.create("tcp://matrix:1883");
 
         if (args.length > 0) {

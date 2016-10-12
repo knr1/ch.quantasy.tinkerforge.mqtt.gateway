@@ -48,9 +48,9 @@ package ch.quantasy.tinkerforge.device.remoteSwitch;
  */
 public class DimSocketBParameters implements SocketParameters{
     
-    public long address;
-    public short unit;
-    public short dimValue;
+    private long address;
+    private short unit;
+    private short dimValue;
 
     public DimSocketBParameters() {
     }
@@ -60,5 +60,19 @@ public class DimSocketBParameters implements SocketParameters{
         this.unit = unit;
         this.dimValue = dimValue;
     }
+
+    public long getAddress() {
+        return address;
+    }
+
+    public short getDimValue() {
+        return dimValue;
+    }
+
+    public short getUnit() {
+        return unit;
+    }
+    
+    
     
 }

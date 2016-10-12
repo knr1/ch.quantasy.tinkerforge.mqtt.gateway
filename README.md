@@ -1,18 +1,24 @@
 # TiMqWay
+[Data-driven] [micro-service]s for the bricks and bricklets of the [Tinkerforge](tm) world, using [MQTT] as transport and decoupling layer.
+
 ch.quantasy.tinkerforge.mqtt.gateway
-Provides an [MQTT] view to the [Tinkerforge](tm) world.
-The underlying idea of TiMqWay is a bunch of [micro-service]s, providing a self-explaining mqtt view for dynamic access to known Tinkerforge devices. 
 
-<a href="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TinkerforgeSBAO.svg">
-<img src="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TinkerforgeSBAO.svg.png" alt="SBAO-Diagram" />
-</a>
+The underlying idea of TiMqWay is a bunch of self-explaining micro-services, providing a data-driven interface to the known Tinkerforge devices. This way,
+ the implementation is agnostic to the programming-language and paradigm used for orchestration. Any of which fits, as long as you master it.
 
-In order to understand this micro-Service Based Agent oriented Design (SBAOD) and maybe to provide own services in this manner... 
-there is a Tutorial that tries to get you into it: [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]
+What is left to do for the user of TiMqWay, is the orchestration and choreography of how these services in order to fit the needs.
+
+
+ <!---<a href="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TinkerforgeSBAO.svg">--->
+ <!---<img src="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TinkerforgeSBAO.svg.png" alt="SBAO-Diagram" />--->
+ <!---</a>--->
+
+ <!---In order to understand this micro-Service Based Agent oriented Design (SBAOD) and maybe to provide own services in this manner... --->
+ <!---there is a Tutorial that tries to get you into it: [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]--->
 
 
 ## Ideology
-Each tinkerforge micro-service provides the following interface:
+Each Tinkerforge micro-service provides the following minimal contract:
 <a href="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TiMqWayService.svg">
 <img src="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TiMqWayService.svg.png" alt="Service-Diagram" />
 </a>
@@ -24,15 +30,14 @@ Each tinkerforge micro-service provides the following interface:
 
 **Root topic** The root topic of TiMqWay, where all thinkerforge micro-services can be reached: **TF/**.
 
-**Message lanaguage** TiMqWay's message language used is **[YAML]**.
+**Data language** TiMqWay's data language used is **[YAML]**.
 
-**Connection between services** The services do not know each other and cannot 'learn' from other services. What is needed is a tiny piece of software
-that glues the services together. It is no big deal, even though this glueing program is called **agent** that that
-gets information from some services and puts information to other services. That is why it is called **Service-Based-Agent-Orientet**.
-You can write that piece of program in any programming language, as long as you can access the mqtt-broker used.
+**No Connection between services** The services do not know each other and cannot 'learn' from other services (i.e. they are cohesive). What is needed is a software
+that orchestrates the services. You can write the orchestration in any programming language (e.g. Node-Red, Java, js, Swift, ...), as long as you can access the mqtt-broker used.
 
-### Tinkerforge abstraction 
-Tinkerforge devices are not represented within their 'stack', but loosely coupled so a device might even change its stack but is still accessible in MQTT at the same location (TF/device-type/UID).
+### Abstraction to Tinkerforge 
+Each micro-service is an instance of a Tinkerforge-Device class, accessible by its UID. Hence, devices are not represented within their 'stack', but loosely coupled so
+ a device might even change its stack but is still accessible in MQTT at the same location (TF/device-class/UID).
 
 
 ## Installation
@@ -88,6 +93,7 @@ Message: 1000
 ### Tip
 You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Viewer].
 
+ [Data-driven]:<https://en.wikipedia.org/wiki/Data-driven_programming>
  [micro-service]:<https://en.wikipedia.org/wiki/Microservices>
  [tinkerforge]:<http://www.tinkerforge.com/en>
  [MQTT]: <http://mqtt.org/>
@@ -96,6 +102,9 @@ You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Vi
  [YAML]: <https://en.wikipedia.org/wiki/YAML>
  [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]: <https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial>
  [https://github.com/knr1/ch.quantasy.mqtt.gateway]: <https://github.com/knr1/ch.quantasy.mqtt.gateway>
+
+ #<http://martinfowler.com/articles/microservices.html>
+ 
 
 # Example
 The following real-world example shall help to understand how to work with this TiMqWay.

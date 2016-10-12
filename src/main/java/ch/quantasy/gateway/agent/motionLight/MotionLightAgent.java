@@ -81,7 +81,7 @@ public class MotionLightAgent implements MessageConsumer{
     public void messageArrived(Agent agent, String string, byte[] payload) throws Exception {
         if (string.equals(motionDetectorServiceContract.EVENT_MOTION_DETECTED)) {
             synchronized (this) {
-                switchLight(SwitchSocketCParameters.SwitchTo.ON);
+                switchLight(SwitchSocketCParameters.SwitchTo.switchOn);
                 delayStart = null;
             }
 
@@ -118,7 +118,7 @@ public class MotionLightAgent implements MessageConsumer{
                         }
                     }
                     if(delayStart!=null){
-                        switchLight(SwitchSocketCParameters.SwitchTo.OFF);
+                        switchLight(SwitchSocketCParameters.SwitchTo.switchOff);
                         delayStart=null;
                     }
                 }
@@ -139,7 +139,7 @@ public class MotionLightAgent implements MessageConsumer{
     }
 
     public static void main(String[] args) throws Throwable {
-        URI mqttURI = URI.create("tcp://matrix:1883");
+        URI mqttURI = URI.create("tcp://localhost:1883");
         if (args.length > 0) {
             mqttURI = URI.create(args[0]);
         } else {

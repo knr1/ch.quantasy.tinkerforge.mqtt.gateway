@@ -98,7 +98,7 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
             }
         }
         try {
-            getDevice().dimSocketB(parameters.address, parameters.unit, parameters.dimValue);
+            getDevice().dimSocketB(parameters.getAddress(), parameters.getUnit(), parameters.getDimValue());
             this.socketParameters = parameters;
             isSwitching = true;
 

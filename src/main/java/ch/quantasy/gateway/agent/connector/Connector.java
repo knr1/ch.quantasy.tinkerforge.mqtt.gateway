@@ -66,12 +66,18 @@ public class Connector implements MessageConsumer {
         managerServiceContract = new ManagerServiceContract("Manager");
         agent = new Agent(mqttURI, "f94kjf93d9", new AgentContract("Agent", "Connector", "euo"));
         agent.connect();
-        connectRemoteServices(new TinkerforgeStackAddress("erdgeschoss"));
+        connectRemoteServices(new TinkerforgeStackAddress("localhost"));
         try {
             Thread.sleep(5000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        connectRemoteServices(new TinkerforgeStackAddress("erdgeschoss"));
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Connector.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         connectRemoteServices(new TinkerforgeStackAddress("untergeschoss"));
         try {
             Thread.sleep(5000);
@@ -104,7 +110,7 @@ public class Connector implements MessageConsumer {
     
 
     public static void main(String[] args) throws Throwable {
-        URI mqttURI = URI.create("tcp://127.0.0.1:1883");
+        URI mqttURI = URI.create("tcp://localhost:1883");
         //URI mqttURI = URI.create("tcp://matrix:1883");
 
         if (args.length > 0) {
