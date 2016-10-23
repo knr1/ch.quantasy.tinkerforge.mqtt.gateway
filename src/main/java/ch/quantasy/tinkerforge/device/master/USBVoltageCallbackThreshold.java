@@ -40,36 +40,43 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.IMUV2;
+package ch.quantasy.tinkerforge.device.master;
 
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-import com.tinkerforge.BrickIMUV2;
+import com.tinkerforge.BrickMaster;
 
 /**
  *
  * @author reto
  */
-public interface IMUV2DeviceCallback extends DeviceCallback, BrickIMUV2.AccelerationListener, BrickIMUV2.AllDataListener, BrickIMUV2.AngularVelocityListener, BrickIMUV2.GravityVectorListener, BrickIMUV2.LinearAccelerationListener, BrickIMUV2.MagneticFieldListener, BrickIMUV2.OrientationListener, BrickIMUV2.QuaternionListener, BrickIMUV2.TemperatureListener {
+public class USBVoltageCallbackThreshold {
 
-    public void accelerationPeriodChanged(Long accelerationPeriod);
+    private char option;
+    private int min;
+    private int max;
 
-    public void allDataPeriodChanged(Long allDataPeriod);
+    public USBVoltageCallbackThreshold() {
+    }
 
-    public void angularVelocityPeriodChanged(Long angularVelocityPeriod);
+    public USBVoltageCallbackThreshold(BrickMaster.USBVoltageCallbackThreshold threshold) {
+        this(threshold.option, threshold.min, threshold.max);
+    }
 
-    public void gravityVectorPeriodChanged(Long gravityVectorPeriod);
+    public USBVoltageCallbackThreshold(char option, int min, int max) {
+        this.option = option;
+        this.min = min;
+        this.max = max;
+    }
 
-    public void linearAccelerationPeriodChanged(Long linearAccelerationPeriod);
+    public int getMax() {
+        return max;
+    }
 
-    public void magneticFieldPeriodChanged(Long magneticFieldPeriod);
+    public int getMin() {
+        return min;
+    }
 
-    public void orientationPeriodChanged(Long orientationPeriod);
+    public char getOption() {
+        return option;
+    }
 
-    public void quaternionPeriodChanged(Long quaternionPeriod);
-
-    public void temperaturePeriodChanged(Long temperaturePeriod);
-
-    public void statusLEDChanged(Boolean isEnabled);
-
-    public void LEDsChanged(Boolean areEnabled);
 }

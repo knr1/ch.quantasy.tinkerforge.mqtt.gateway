@@ -40,33 +40,34 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.IMU;
+package ch.quantasy.tinkerforge.device.master;
+
 
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-import com.tinkerforge.BrickIMU;
+import com.tinkerforge.BrickMaster;
 
 /**
  *
  * @author reto
  */
-public interface IMUDeviceCallback extends DeviceCallback, BrickIMU.AccelerationListener,BrickIMU.AllDataListener,BrickIMU.AngularVelocityListener,BrickIMU.MagneticFieldListener,BrickIMU.OrientationListener,BrickIMU.QuaternionListener {
+public interface MasterDeviceCallback extends DeviceCallback, BrickMaster.StackCurrentListener, BrickMaster.StackCurrentReachedListener,BrickMaster.StackVoltageListener,BrickMaster.StackVoltageReachedListener,BrickMaster.USBVoltageListener,BrickMaster.USBVoltageReachedListener {
 
-    public void accelerationPeriodChanged(Long accelerationPeriod);
+    public void debouncePeriodChanged(Long debouncePeriod);
 
-    public void allDataPeriodChanged(Long allDataPeriod);
+    public void stackCurrentCallbackThresholdChanged(StackCurrentCallbackThreshold stackCurrentCallbackThreshold);
 
-    public void angularVelocityPeriodChanged(Long angularVelocityPeriod);
+    public void stackCurrentCallbackPeriodChanged(Long currentCallbackPeriod);
 
-    public void magneticFieldPeriodChanged(Long magneticFieldPeriod);
+    public void stackVoltageCallbackPeriodChanged(long voltageCallbackPeriod);
 
-    public void orientationPeriodChanged(Long orientationPeriod);
+    public void stackVoltageCallbackThresholdChanged(StackVoltageCallbackThreshold voltageCallbackThreshold);
 
-    public void quaternionPeriodChanged(Long quaternionPeriod);
+    public void usbVoltageCallbackPeriodChanged(long usbVoltageCallbackPeriod);
 
+    public void USBVoltageCallbackThresholdChanged(USBVoltageCallbackThreshold usbVoltageCallbackThreshold);
 
-    public void statusLEDChanged(Boolean isEnabled);
+    public void reset();
 
-    public void LEDsChanged(Boolean areEnabled);
-    
-    public void orientationCalculationChanged(Boolean isOrientationCalculationOn);
+    public void statusLEDEnabledChanged(Boolean statusLEDEnabled);
+
 }

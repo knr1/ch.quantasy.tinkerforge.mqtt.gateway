@@ -44,7 +44,7 @@ package ch.quantasy.gateway.service.device.IMU;
 
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
-import ch.quantasy.tinkerforge.device.IMU.IMUDevice;
+import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import java.lang.reflect.Field;
 import java.util.SortedSet;

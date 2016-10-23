@@ -106,11 +106,11 @@ public class RemoteSwitchAgent {
                 }
                 if (switcher.getType().equals("switchSocketB")) {
                     SwitchSocketBParameters[] bs = agent.getMapper().readValue(mm, SwitchSocketBParameters[].class);
-                    agent.addMessage(contract.INTENT_SWITCH_SOCKET_B, bs[bs.length - 1]);
+                    agent.addIntent(contract.INTENT_SWITCH_SOCKET_B, bs[bs.length - 1]);
                 }
                 if (switcher.getType().equals("dimSocketB")) {
                     DimSocketBParameters[] bs = agent.getMapper().readValue(mm, DimSocketBParameters[].class);
-                    agent.addMessage(contract.INTENT_DIM_SOCKET_B, bs[bs.length - 1]);
+                    agent.addIntent(contract.INTENT_DIM_SOCKET_B, bs[bs.length - 1]);
                 }
             }
         }
@@ -120,7 +120,7 @@ public class RemoteSwitchAgent {
 
     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
         for (TinkerforgeStackAddress address : addresses) {
-            agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
+            agent.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
             try {
                 Thread.sleep(1000);
 

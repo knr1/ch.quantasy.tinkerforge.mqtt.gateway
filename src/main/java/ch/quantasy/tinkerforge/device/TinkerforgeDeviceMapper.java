@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device;
 
-import ch.quantasy.tinkerforge.device.IMU.IMUDevice;
-import ch.quantasy.tinkerforge.device.IMUV2.IMUV2Device;
+import ch.quantasy.tinkerforge.device.imu.IMUDevice;
+import ch.quantasy.tinkerforge.device.imuV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;

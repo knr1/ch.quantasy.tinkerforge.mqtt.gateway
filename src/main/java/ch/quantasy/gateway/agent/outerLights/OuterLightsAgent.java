@@ -80,14 +80,13 @@ public class OuterLightsAgent {
 
         agent = new Agent(mqttURI, "wrth563g", new AgentContract("Agent", "OuterLights", "01"));
         agent.connect();
-        connectRemoteServices(new TinkerforgeStackAddress("controller01"));
-        connectRemoteServices(new TinkerforgeStackAddress("localhost"));
+        connectRemoteServices("controller01","localhost");
 
-        agent.addMessage(linearPotiServiceContract.INTENT_POSITION_CALLBACK_PERIOD, 100);
-        agent.addMessage(dcServiceContract.INTENT_ACCELERATION, 20000);
-        agent.addMessage(dcServiceContract.INTENT_DRIVER_MODE, 1);
-        agent.addMessage(dcServiceContract.INTENT_PWM_FREQUENCY, 20000);
-        agent.addMessage(dcServiceContract.INTENT_ENABLED, true);
+        agent.addIntent(linearPotiServiceContract.INTENT_POSITION_CALLBACK_PERIOD, 100);
+        agent.addIntent(dcServiceContract.INTENT_ACCELERATION, 20000);
+        agent.addIntent(dcServiceContract.INTENT_DRIVER_MODE, 1);
+        agent.addIntent(dcServiceContract.INTENT_PWM_FREQUENCY, 20000);
+        agent.addIntent(dcServiceContract.INTENT_ENABLED, true);
 
         
         agent.subscribe(linearPotiServiceContract.EVENT_POSITION, new MessageConsumer() {
@@ -95,16 +94,17 @@ public class OuterLightsAgent {
             public void messageArrived(Agent agent, String topic, byte[] mm) throws Exception {
                 LinearPotiService.PositionEvent[] positionEvents=agent.getMapper().readValue(mm,LinearPotiService.PositionEvent[].class);
                 int position=positionEvents[positionEvents.length-1].getValue();
-                agent.addMessage(dcServiceContract.INTENT_VELOCITY_VELOCITY,(32767/100)*position);
+                agent.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY,(32767/100)*position);
             }
         });
 
     }
 
-    private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
-        for (TinkerforgeStackAddress address : addresses) {
-            agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
+    private void connectRemoteServices(String... addresses) {
+        for (String address : addresses) {
+            agent.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
             try {
+                //Bad idea! Better wait for the event of the managerService... having accepted the stack(s).
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(AmbientLEDLightAgent.class.getName()).log(Level.SEVERE, null, ex);

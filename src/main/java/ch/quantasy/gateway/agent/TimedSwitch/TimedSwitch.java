@@ -60,7 +60,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 /**
  *
  * @author reto
- */
+ */ 
 public class TimedSwitch implements MessageConsumer{
 
     private final RemoteSwitchServiceContract remoteSwitchServiceContract;
@@ -114,14 +114,14 @@ public class TimedSwitch implements MessageConsumer{
         this.state = state;
         SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 2, state);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
-        agent.addMessage(topic, config);
+        agent.addIntent(topic, config);
         System.out.println("Switching: " + state);
     }
     
     private void switchAlwaysOn() { 
         SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 1, SwitchSocketCParameters.SwitchTo.switchOn);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
-        agent.addMessage(topic, config);
+        agent.addIntent(topic, config);
     }
 
     public static void main(String[] args) throws Throwable {

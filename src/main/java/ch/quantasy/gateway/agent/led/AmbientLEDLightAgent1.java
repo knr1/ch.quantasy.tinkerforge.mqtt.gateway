@@ -92,7 +92,7 @@ public class AmbientLEDLightAgent1 {
 
         MotionDetectorServiceContract motionDetectorServiceContract = new MotionDetectorServiceContract("kgx", TinkerforgeDeviceClass.MotionDetector.toString());
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
-        agent.addMessage(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
+        agent.addIntent(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
         agent.subscribe(rotaryEncoderServiceContract.EVENT_COUNT, new Brightness());
         agent.subscribe(rotaryEncoderServiceContract.EVENT_PRESSED, new MessageConsumer() {
             @Override
@@ -152,7 +152,7 @@ public class AmbientLEDLightAgent1 {
 
     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
         for (TinkerforgeStackAddress address : addresses) {
-            agent.addMessage(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
+            agent.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
@@ -235,7 +235,7 @@ public class AmbientLEDLightAgent1 {
             this.ambientBrightness += ambientBrightness;
             this.ambientBrightness = Math.min(0, Math.max(-1, this.ambientBrightness));
             this.notifyAll();
-            super.addLEDFrame(new LEDFrame(prototypeLEDFrame, Math.max(0, Math.min(1, brightness + this.ambientBrightness))));
+            super.setLEDFrame(new LEDFrame(prototypeLEDFrame, Math.max(0, Math.min(1, brightness + this.ambientBrightness))));
 
         }
 
@@ -245,7 +245,7 @@ public class AmbientLEDLightAgent1 {
 
         public Wave(LEDStripServiceContract ledServiceContract, LEDStripDeviceConfig config) {
             super(agent, ledServiceContract, config);
-            agent.addMessage(ledServiceContract.INTENT_CONFIG, config);
+            agent.addIntent(ledServiceContract.INTENT_CONFIG, config);
 
             frames = new ArrayList<>();
 
@@ -270,13 +270,13 @@ public class AmbientLEDLightAgent1 {
                 synchronized (frames) {
                     frames.clear();
                 }
-                super.addLEDFrame(super.getNewLEDFrame());
+                super.setLEDFrame(super.getNewLEDFrame());
             }
         }
 
         public void run() {
             LEDFrame currentLEDFrame = new LEDFrame(prototypeLEDFrame, 1.0);
-            super.addLEDFrame(currentLEDFrame);
+            super.setLEDFrame(currentLEDFrame);
             try {
                 short maxValue = 0;
                 while (true) {
@@ -307,7 +307,7 @@ public class AmbientLEDLightAgent1 {
                         currentLEDFrame = newLEDFrame;
                     }
                     synchronized (frames) {
-                        super.addLEDFrame(frames);
+                        super.setLEDFrames(frames);
                         if (frames.size() != 0) {
                             maxValue = frames.get(frames.size() - 1).getMaxValue();
                         }
@@ -356,7 +356,7 @@ public class AmbientLEDLightAgent1 {
 //                        frames.add(new LEDFrame(leds));
 //                    }
 //                    System.out.println("FRAMES:" + frames.size());
-//                    agent.addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
+//                    agent.addIntent(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
 //
 //                    frames.clear();
 //
@@ -370,7 +370,7 @@ public class AmbientLEDLightAgent1 {
 //                    }
 //                }
 //            } catch (InterruptedException ex) {
-//                agent.addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfChannels, amountOfLEDs));
+//                agent.addIntent(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfChannels, amountOfLEDs));
 //
 //            }
 //        }

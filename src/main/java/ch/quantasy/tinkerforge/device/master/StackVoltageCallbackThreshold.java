@@ -40,62 +40,46 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.agent.connector;
+package ch.quantasy.tinkerforge.device.master;
 
-import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
-import ch.quantasy.mqtt.gateway.agent.Agent;
-import ch.quantasy.mqtt.gateway.agent.AgentContract;
-import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
-import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
-import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import com.tinkerforge.BrickMaster;
+
 
 /**
  *
  * @author reto
  */
-public class Connector implements MessageConsumer {
+public class StackVoltageCallbackThreshold {
 
-    private final ManagerServiceContract managerServiceContract;
-    private Agent agent;
+    private char option;
+    private int min;
+    private int max;
 
-    public Connector(URI mqttURI) throws MqttException {
-        managerServiceContract = new ManagerServiceContract("Manager");
-        agent = new Agent(mqttURI, "f94kjf93d9", new AgentContract("Agent", "Connector", "euo"));
-        agent.connect();
-        connectRemoteServices("localhost","untergeschoss","obergeschoss","lights01");
-
-    }
-     private void connectRemoteServices(String... addresses) {
-        for (String address : addresses) {
-            agent.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
-        }
+    public StackVoltageCallbackThreshold() {
     }
 
-    @Override
-    public void messageArrived(Agent agent, String string, byte[] payload) throws Exception {
-
+    public StackVoltageCallbackThreshold(BrickMaster.StackVoltageCallbackThreshold threshold) {
+        this(threshold.option, threshold.min, threshold.max);
     }
 
-    private SwitchSocketCParameters.SwitchTo state;
+    public StackVoltageCallbackThreshold(char option, int min, int max) {
+        this.option = option;
+        this.min = min;
+        this.max = max;
+    }
 
+    public int getMax() {
+        return max;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public char getOption() {
+        return option;
+    }
     
-
-    public static void main(String[] args) throws Throwable {
-        URI mqttURI = URI.create("tcp://localhost:1883");
-        //URI mqttURI = URI.create("tcp://matrix:1883");
-
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-        Connector agent = new Connector(mqttURI);
-        System.in.read();
-    }
+    
 
 }

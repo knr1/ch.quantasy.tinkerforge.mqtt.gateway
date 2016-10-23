@@ -88,13 +88,13 @@ public abstract class AnLEDAbility implements Runnable, MessageConsumer {
         return new LEDFrame(config.getChipType().getNumberOfChannels(), config.getNumberOfLEDs());
     }
 
-    public void addLEDFrame(LEDFrame ledFrame) {
-        agent.addMessage(ledServiceContract.INTENT_FRAME, new LEDFrame(ledFrame));
+    public void setLEDFrame(LEDFrame ledFrame) {
+        agent.addIntent(ledServiceContract.INTENT_FRAME, new LEDFrame(ledFrame));
     }
 
-    public void addLEDFrame(List<LEDFrame> ledFrames) {
+    public void setLEDFrames(List<LEDFrame> ledFrames) {
         List<LEDFrame> frames = new ArrayList<>(ledFrames);
-        agent.addMessage(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
+        agent.addIntent(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
     }
 
     @Override
