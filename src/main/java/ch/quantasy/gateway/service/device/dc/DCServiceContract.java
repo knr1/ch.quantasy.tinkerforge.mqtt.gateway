@@ -140,7 +140,7 @@ public class DCServiceContract extends DeviceServiceContract {
         STATUS_DRIVER_MODE = STATUS + "/" + DRIVER_MODE;
 
         EMERGENCY_SHUTDOWN = "emergencyShutdown";
-        EVENT_EMERGENCY_SHUTDOWN = STATUS + "/" + EMERGENCY_SHUTDOWN;
+        EVENT_EMERGENCY_SHUTDOWN = EVENT + "/" + EMERGENCY_SHUTDOWN;
 
         PWM_FREQUENCY = "pwmFrequency";
         STATUS_PWM_FREQUENCY = STATUS + "/" + PWM_FREQUENCY;

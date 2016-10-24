@@ -72,6 +72,7 @@ import ch.quantasy.gateway.service.device.laserRangeFinder.LaserRangeFinderServi
 import ch.quantasy.gateway.service.device.line.LineService;
 import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
 import ch.quantasy.gateway.service.device.loadCell.LoadCellService;
+import ch.quantasy.gateway.service.device.master.MasterService;
 import ch.quantasy.gateway.service.device.multiTouch.MultiTouchService;
 import ch.quantasy.gateway.service.device.nfc.NFCService;
 import ch.quantasy.gateway.service.device.piezoSpeaker.PiezoSpeakerService;
@@ -116,6 +117,7 @@ import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
+import ch.quantasy.tinkerforge.device.master.MasterDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
@@ -398,7 +400,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
                 NFCService service = new NFCService((NFCRFIDDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
-            
+            if (tinkerforgeDevice instanceof MasterDevice) {
+                MasterService service = new MasterService((MasterDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
 
         } catch (MqttException ex) {
             Logger.getLogger(TinkerForgeManager.class.getName()).log(Level.SEVERE, null, ex);
