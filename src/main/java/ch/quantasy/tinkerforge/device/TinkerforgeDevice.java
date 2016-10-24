@@ -56,7 +56,7 @@ import java.util.Set;
  */
 public class TinkerforgeDevice<D extends Device> {
 
-    private Set<TinkerforgeDeviceListener> deviceListeners;
+    private final Set<TinkerforgeDeviceListener> deviceListeners;
 
     private final TinkerforgeStackAddress address;
     private transient D device;

@@ -69,6 +69,7 @@ import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
+import ch.quantasy.tinkerforge.device.master.MasterDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
@@ -91,6 +92,7 @@ import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickIMU;
 import com.tinkerforge.BrickIMUV2;
+import com.tinkerforge.BrickMaster;
 import com.tinkerforge.BrickletAccelerometer;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletAmbientLightV2;
@@ -275,6 +277,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.GPS == TinkerforgeDeviceClass.getDevice(device)) {
             return new GPSDevice(address, (BrickletGPS) device);
+        }
+        if (TinkerforgeDeviceClass.Master == TinkerforgeDeviceClass.getDevice(device)) {
+            return new MasterDevice(address, (BrickMaster) device);
         }
         
         if(TinkerforgeDeviceClass.NfcRfid == TinkerforgeDeviceClass.getDevice(device)){

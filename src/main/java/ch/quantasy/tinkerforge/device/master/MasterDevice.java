@@ -60,11 +60,6 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
     private Long debouncePeriod;
     private Long currentCallbackPeriod;
     private StackCurrentCallbackThreshold currentCallbackThreshold;
-    private Integer velocityPeriod;
-    private Short driverMode;
-    private Integer voltage;
-    private Integer frequency;
-    private Short velocity;
     private Boolean isStatusLEDEnabled;
     private Long voltageCallbackPeriod;
     private StackVoltageCallbackThreshold voltageCallbackThreshold;
@@ -172,7 +167,7 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
     }
     public void setUSBVoltageCallbackPeriod(Long usbVoltageCallbackPeriod) {
         try {
-            getDevice().setStackVoltageCallbackPeriod(usbVoltageCallbackPeriod);
+            getDevice().setUSBVoltageCallbackPeriod(usbVoltageCallbackPeriod);
             this.usbVoltageCallbackPeriod = getDevice().getUSBVoltageCallbackPeriod();
             super.getCallback().usbVoltageCallbackPeriodChanged(this.usbVoltageCallbackPeriod);
         } catch (TimeoutException | NotConnectedException ex) {

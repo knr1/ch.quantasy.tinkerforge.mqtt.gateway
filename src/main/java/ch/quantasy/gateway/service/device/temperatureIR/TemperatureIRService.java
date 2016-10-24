@@ -174,14 +174,14 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
     public static class ObjectTemperatureEvent {
 
         long timestamp;
-        short illuminance;
+        short value;
 
         public ObjectTemperatureEvent(short value) {
             this(value, System.currentTimeMillis());
         }
 
         public ObjectTemperatureEvent(short value, long timeStamp) {
-            this.illuminance = value;
+            this.value = value;
             this.timestamp = timeStamp;
         }
 
@@ -190,7 +190,7 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
         }
 
         public short getHumidity() {
-            return illuminance;
+            return value;
         }
 
     }
