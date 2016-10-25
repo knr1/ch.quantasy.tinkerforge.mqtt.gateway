@@ -43,9 +43,9 @@
 package ch.quantasy.gateway.agent.describer;
 
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
-import ch.quantasy.mqtt.gateway.agent.Agent;
-import ch.quantasy.mqtt.gateway.agent.AgentContract;
-import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
+import ch.quantasy.mqtt.gateway.client.ClientContract;
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -57,25 +57,25 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class DescriberAgent implements MessageConsumer {
 
     private final ManagerServiceContract managerServiceContract;
-    private Agent agent;
+    private GatewayClient<ClientContract> gatewayClient;
 
     public DescriberAgent(URI mqttURI) throws MqttException {
         managerServiceContract = new ManagerServiceContract("Manager");
-        agent = new Agent(mqttURI, "349h3492zf", new AgentContract("Agent", "Describer", "desc"));
-        agent.subscribe("TF/LEDStrip/description/#", this);
-        agent.connect();
+        gatewayClient = new GatewayClient(mqttURI, "349h3492zf", new ClientContract("Agent", "Describer", "desc"));
+        gatewayClient.subscribe("TF/LEDStrip/description/#", this);
+        gatewayClient.connect();
         connectRemoteServices(new TinkerforgeStackAddress("Lights01"));
 
     }
     
     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
         for (TinkerforgeStackAddress address : addresses) {
-            agent.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
+            gatewayClient.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
         }
     }
 
     @Override
-    public void messageArrived(Agent agent, String string, byte[] payload) throws Exception {
+    public void messageArrived(GatewayClient client, String string, byte[] payload) throws Exception {
         string = string.replaceAll("description", "<serviceUID>").replaceAll("intent", "intent/<agentID>");
         System.out.println(string);
 

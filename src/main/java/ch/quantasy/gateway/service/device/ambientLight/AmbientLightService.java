@@ -59,42 +59,42 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
 
     public AmbientLightService(AmbientLightDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new AmbientLightServiceContract(device));
-        addDescription(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_IllUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getServiceContract().INTENT_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..9000]\n max: [0..9000]");
-        addDescription(getServiceContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getServiceContract().EVENT_ILLUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
-        addDescription(getServiceContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getServiceContract().EVENT_ILLUMINANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
-        addDescription(getServiceContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getServiceContract().STATUS_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..9000]\n max: [0..9000]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_IllUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        addDescription(getContract().INTENT_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..9000]\n max: [0..9000]");
+        addDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        addDescription(getContract().EVENT_ILLUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
+        addDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        addDescription(getContract().EVENT_ILLUMINANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
+        addDescription(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        addDescription(getContract().STATUS_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..9000]\n max: [0..9000]");
+        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDebouncePeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setAnalogValueCallbackPeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_IllUMINANCE_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_IllUMINANCE_CALLBACK_PERIOD)) {
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setIlluminanceCallbackPeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
             DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
             getDevice().setAnalogValueThreshold(threshold);
         }
-        if (string.startsWith(getServiceContract().INTENT_ILLUMINANCE_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_ILLUMINANCE_THRESHOLD)) {
             DeviceIlluminanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceIlluminanceCallbackThreshold.class);
             getDevice().setIlluminanceCallbackThreshold(threshold);
 
@@ -104,47 +104,47 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
 
     @Override
     public void analogValue(int i) {
-        addEvent(getServiceContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
+        addEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        addEvent(getServiceContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
+        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void illuminance(int i) {
-        addEvent(getServiceContract().EVENT_ILLUMINANCE, new IlluminanceEvent(i));
+        addEvent(getContract().EVENT_ILLUMINANCE, new IlluminanceEvent(i));
     }
 
     @Override
     public void illuminanceReached(int i) {
-        addEvent(getServiceContract().EVENT_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
+        addEvent(getContract().EVENT_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
     }
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
     }
 
     @Override
     public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_ILLUMINANCE_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, threshold);
 
     }
 

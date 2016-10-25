@@ -43,12 +43,11 @@
 package ch.quantasy.gateway.agent.TimedSwitch;
 
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchServiceContract;
-import ch.quantasy.mqtt.gateway.agent.Agent;
-import ch.quantasy.mqtt.gateway.agent.AgentContract;
-import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
+import ch.quantasy.mqtt.gateway.client.ClientContract;
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.Timer;
@@ -64,11 +63,11 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class TimedSwitch implements MessageConsumer{
 
     private final RemoteSwitchServiceContract remoteSwitchServiceContract;
-    private final Agent agent;
+    private final GatewayClient<ClientContract> gatewayClient;
     public TimedSwitch(URI mqttURI) throws MqttException {
-        agent=new Agent(mqttURI, "9520efj30sdk", new AgentContract("Agent","TimedSwitch","qD7"));
+        gatewayClient=new GatewayClient(mqttURI, "9520efj30sdk", new ClientContract("Agent","TimedSwitch","qD7"));
         remoteSwitchServiceContract = new RemoteSwitchServiceContract("qD7", TinkerforgeDeviceClass.RemoteSwitch.toString());
-        agent.connect();
+        gatewayClient.connect();
         Timer t = new Timer();
         t.scheduleAtFixedRate(new Switcher(), 0, 1000*60*60);
     }
@@ -101,7 +100,7 @@ public class TimedSwitch implements MessageConsumer{
     }
 
     @Override
-    public void messageArrived(Agent agent,String string, byte[] payload) throws Exception {
+    public void messageArrived(GatewayClient agent,String string, byte[] payload) throws Exception {
 
     }
 
@@ -114,14 +113,14 @@ public class TimedSwitch implements MessageConsumer{
         this.state = state;
         SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 2, state);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
-        agent.addIntent(topic, config);
+        gatewayClient.addIntent(topic, config);
         System.out.println("Switching: " + state);
     }
     
     private void switchAlwaysOn() { 
         SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 1, SwitchSocketCParameters.SwitchTo.switchOn);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
-        agent.addIntent(topic, config);
+        gatewayClient.addIntent(topic, config);
     }
 
     public static void main(String[] args) throws Throwable {

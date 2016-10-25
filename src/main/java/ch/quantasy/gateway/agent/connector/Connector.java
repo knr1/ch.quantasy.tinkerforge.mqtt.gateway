@@ -43,14 +43,12 @@
 package ch.quantasy.gateway.agent.connector;
 
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
-import ch.quantasy.mqtt.gateway.agent.Agent;
-import ch.quantasy.mqtt.gateway.agent.AgentContract;
-import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
+import ch.quantasy.mqtt.gateway.client.ClientContract;
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
@@ -60,23 +58,23 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class Connector implements MessageConsumer {
 
     private final ManagerServiceContract managerServiceContract;
-    private Agent agent;
+    private GatewayClient<ClientContract> gatewayClient;
 
     public Connector(URI mqttURI) throws MqttException {
         managerServiceContract = new ManagerServiceContract("Manager");
-        agent = new Agent(mqttURI, "f94kjf93d9", new AgentContract("Agent", "Connector", "euo"));
-        agent.connect();
+        gatewayClient = new GatewayClient(mqttURI, "f94kjf93d9", new ClientContract("Agent", "Connector", "euo"));
+        gatewayClient.connect();
         connectRemoteServices("localhost","untergeschoss","obergeschoss","lights01");
 
     }
      private void connectRemoteServices(String... addresses) {
         for (String address : addresses) {
-            agent.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
+            gatewayClient.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
         }
     }
 
     @Override
-    public void messageArrived(Agent agent, String string, byte[] payload) throws Exception {
+    public void messageArrived(GatewayClient client, String string, byte[] payload) throws Exception {
 
     }
 

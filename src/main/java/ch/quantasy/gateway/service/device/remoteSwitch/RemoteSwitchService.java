@@ -62,39 +62,39 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
     public RemoteSwitchService(RemoteSwitchDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new RemoteSwitchServiceContract(device));
 
-        addDescription(getServiceContract().INTENT_REPEATS, "[0.." + Short.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_REPEATS, "[0.." + Short.MAX_VALUE + "]");
 
-        addDescription(getServiceContract().INTENT_SWITCH_SOCKET_A, "houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [switchOn|switchOff]");
-        addDescription(getServiceContract().INTENT_SWITCH_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n switchingValue: [switchOn|switchOff]");
-        addDescription(getServiceContract().INTENT_SWITCH_SOCKET_C, "systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [switchOn|switchOff]");
-        addDescription(getServiceContract().INTENT_DIM_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]");
+        addDescription(getContract().INTENT_SWITCH_SOCKET_A, "houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [switchOn|switchOff]");
+        addDescription(getContract().INTENT_SWITCH_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n switchingValue: [switchOn|switchOff]");
+        addDescription(getContract().INTENT_SWITCH_SOCKET_C, "systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [switchOn|switchOff]");
+        addDescription(getContract().INTENT_DIM_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]");
 
-        addDescription(getServiceContract().EVENT_SWITCHING_DONE, "[0.." + Long.MAX_VALUE + "]\n value: [houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n switchingValue: [ON|OFF] | systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]]");
-        addDescription(getServiceContract().STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_SWITCHING_DONE, "[0.." + Long.MAX_VALUE + "]\n value: [houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n switchingValue: [ON|OFF] | systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]]");
+        addDescription(getContract().STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DIM_SOCKET_B)) {
+        if (string.startsWith(getContract().INTENT_DIM_SOCKET_B)) {
             DimSocketBParameters parameters = getMapper().readValue(payload, DimSocketBParameters.class);
             getDevice().dimSocketB(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_A)) {
+        if (string.startsWith(getContract().INTENT_SWITCH_SOCKET_A)) {
             SwitchSocketAParameters parameters = getMapper().readValue(payload, SwitchSocketAParameters.class);
             getDevice().switchSocketA(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_B)) {
+        if (string.startsWith(getContract().INTENT_SWITCH_SOCKET_B)) {
             SwitchSocketBParameters parameters = getMapper().readValue(payload, SwitchSocketBParameters.class);
             getDevice().switchSocketB(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_SWITCH_SOCKET_C)) {
+        if (string.startsWith(getContract().INTENT_SWITCH_SOCKET_C)) {
 
             SwitchSocketCParameters parameters = getMapper().readValue(payload, SwitchSocketCParameters.class);
             getDevice().switchSocketC(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_REPEATS)) {
+        if (string.startsWith(getContract().INTENT_REPEATS)) {
             short value = getMapper().readValue(payload, short.class);
             getDevice().setRepeats(value);
         }
@@ -102,12 +102,12 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
 
     @Override
     public void repeatsChanged(short period) {
-        addStatus(getServiceContract().STATUS_REPEATS, period);
+        addStatus(getContract().STATUS_REPEATS, period);
     }
 
     @Override
     public void switchingDone(SocketParameters socketParameters) {
-        addEvent(getServiceContract().EVENT_SWITCHING_DONE, new SwitchedEvent(socketParameters));
+        addEvent(getContract().EVENT_SWITCHING_DONE, new SwitchedEvent(socketParameters));
     }
 
     public static class SwitchedEvent {

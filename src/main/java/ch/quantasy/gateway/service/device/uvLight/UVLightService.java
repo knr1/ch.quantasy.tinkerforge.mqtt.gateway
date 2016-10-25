@@ -58,33 +58,33 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
     public UVLightService(UVLightDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new UVLightServiceContract(device));
-        addDescription(getServiceContract().INTENT_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
+        addDescription(getContract().INTENT_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
 
-        addDescription(getServiceContract().EVENT_UV_LIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..328000]\n");
-        addDescription(getServiceContract().EVENT_UV_LIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..328000]\n");
-        addDescription(getServiceContract().STATUS_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_UV_LIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..328000]\n");
+        addDescription(getContract().EVENT_UV_LIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..328000]\n");
+        addDescription(getContract().STATUS_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
+        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDebouncePeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_UV_LIGHT_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_UV_LIGHT_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setUVLightCallbackPeriod(period);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_UV_LIGHT_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_UV_LIGHT_THRESHOLD)) {
 
             DeviceUVLightCallbackThreshold threshold = getMapper().readValue(payload, DeviceUVLightCallbackThreshold.class);
             getDevice().setUVLightCallbackThreshold(threshold);
@@ -94,27 +94,27 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void uvLightCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_UV_LIGHT_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_UV_LIGHT_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void uvLightCallbackThresholdChanged(DeviceUVLightCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_UV_LIGHT_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_UV_LIGHT_THRESHOLD, threshold);
     }
 
     @Override
     public void uvLight(long i) {
-        addEvent(getServiceContract().EVENT_UV_LIGHT, new UVLightEvent(i));
+        addEvent(getContract().EVENT_UV_LIGHT, new UVLightEvent(i));
     }
 
     @Override
     public void uvLightReached(long i) {
-        addEvent(getServiceContract().EVENT_UV_LIGHT_REACHED, new UVLightEvent(i));
+        addEvent(getContract().EVENT_UV_LIGHT_REACHED, new UVLightEvent(i));
     }
 
     public static class UVLightEvent {

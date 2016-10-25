@@ -66,13 +66,13 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     public ManagerService(TinkerForgeManager manager, URI mqttURI) throws MqttException {
         super(mqttURI, "TinkerforgeStackManager", new ManagerServiceContract("Manager"));
         this.manager = manager;
-        addDescription(getServiceContract().INTENT_STACK_ADDRESS_ADD, "hostName: <String>\n prot: [0..4223..65536]");
-        addDescription(getServiceContract().INTENT_STACK_ADDRESS_REMOVE, "hostName: <String>\n prot: [0..4223..65536]");
-        addDescription(getServiceContract().EVENT_ADDRESS_CONNECTED, "hostName: <String>\n prot: [0..4223..65536]");
-        addDescription(getServiceContract().EVENT_ADDRESS_DISCONNECTED, "hostName: <String>\n prot: [0..4223..65536]");
-        addDescription(getServiceContract().EVENT_STACK_ADDRESS_ADDED, "hostName: <String>\n prot: [0..4223..65536]");
-        addDescription(getServiceContract().EVENT_STACK_ADDRESS_REMOVED, "hostName: <String>\n prot: [0..4223..65536]");
-        addDescription(getServiceContract().STATUS_STACK_ADDRESS + "/<address>/connected", "[true|false]");
+        addDescription(getContract().INTENT_STACK_ADDRESS_ADD, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getContract().INTENT_STACK_ADDRESS_REMOVE, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getContract().EVENT_ADDRESS_CONNECTED, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getContract().EVENT_ADDRESS_DISCONNECTED, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getContract().EVENT_STACK_ADDRESS_ADDED, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getContract().EVENT_STACK_ADDRESS_REMOVED, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getContract().STATUS_STACK_ADDRESS + "/<address>/connected", "[true|false]");
 
         manager.addListener(this);
         updateStatus();
@@ -80,7 +80,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
-        if (string.startsWith(getServiceContract().INTENT_STACK_ADDRESS_ADD)) {
+        if (string.startsWith(getContract().INTENT_STACK_ADDRESS_ADD)) {
 
             String payloadString = new String(payload);
             TinkerforgeStackAddress address = getMapper().readValue(payloadString, TinkerforgeStackAddress.class);
@@ -91,7 +91,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
             
             //System.out.println(">>" + getMapper().readValue(payload, String.class));
         }
-        if (string.startsWith(getServiceContract().INTENT_STACK_ADDRESS_REMOVE)) {
+        if (string.startsWith(getContract().INTENT_STACK_ADDRESS_REMOVE)) {
 
             String payloadString = new String(payload);
             TinkerforgeStackAddress address = getMapper().readValue(payloadString, TinkerforgeStackAddress.class);
@@ -106,7 +106,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
 
     public void connected(TinkerforgeStack stack) {
         TinkerforgeStackAddress address = stack.getStackAddress();
-        String topic = getServiceContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
+        String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
         addStatus(topic, stack.isConnected());
 
     }
@@ -114,7 +114,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     @Override
     public void disconnected(TinkerforgeStack stack) {
         TinkerforgeStackAddress address = stack.getStackAddress();
-        String topic = getServiceContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
+        String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
         addStatus(topic, stack.isConnected());
     }
 
@@ -132,8 +132,8 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
         stack.addListener((TinkerforgeDeviceListener) this);
 
         TinkerforgeStackAddress address = stack.getStackAddress();
-        addStatus(getServiceContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort(), stack.isConnected());
-        addEvent(getServiceContract().EVENT_STACK_ADDRESS_ADDED, address);
+        addStatus(getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort(), stack.isConnected());
+        addEvent(getContract().EVENT_STACK_ADDRESS_ADDED, address);
     }
 
     @Override
@@ -145,37 +145,37 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
         {
             stack.removeListener((TinkerforgeStackListener) this);
             TinkerforgeStackAddress address = stack.getStackAddress();
-            String topic = getServiceContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
+            String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
             addStatus(topic, null);
-            addEvent(getServiceContract().EVENT_STACK_ADDRESS_REMOVED, address);
+            addEvent(getContract().EVENT_STACK_ADDRESS_REMOVED, address);
         }
         for (TinkerforgeDevice device : stack.getDevices()) {
             device.removeListener(this);
-            String topic = getServiceContract().STATUS_DEVICE + "/" + device.getAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
+            String topic = getContract().STATUS_DEVICE + "/" + device.getAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
             addStatus(topic, null);
         }
     }
 
     private void updateDevice(TinkerforgeDevice device) {
-        String topic = getServiceContract().STATUS_DEVICE + "/" + device.getAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
+        String topic = getContract().STATUS_DEVICE + "/" + device.getAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
         addStatus(topic, device.isConnected());
     }
 
     @Override
     public void connected(TinkerforgeDevice device) {
-        String topic = getServiceContract().STATUS_DEVICE + "/" + device.getAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
+        String topic = getContract().STATUS_DEVICE + "/" + device.getAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
         addStatus(topic, true);
     }
 
     @Override
     public void reConnected(TinkerforgeDevice device) {
-        String topic = getServiceContract().STATUS_DEVICE + "/" + device.getAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
+        String topic = getContract().STATUS_DEVICE + "/" + device.getAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
         addStatus(topic, true);
     }
 
     @Override
     public void disconnected(TinkerforgeDevice device) {
-        String topic = getServiceContract().STATUS_DEVICE + "/" + device.getAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
+        String topic = getContract().STATUS_DEVICE + "/" + device.getAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
         addStatus(topic, false);
     }
 }

@@ -65,23 +65,23 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
     public LEDStripService(LEDStripDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LEDStripServiceContract(device));
         frames = new ConcurrentLinkedDeque<>();
-        addDescription(getServiceContract().INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
-        addDescription(getServiceContract().INTENT_FRAME, "channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels");
-        addDescription(getServiceContract().INTENT_FRAMES, "{ channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels }_*");
-        addDescription(getServiceContract().EVENT_LEDs_RENDERED, "timestamp: [0.." + Long.MAX_VALUE + "]\n framesBuffered: [0.." + Integer.MAX_VALUE + "]\n");
-        addDescription(getServiceContract().EVENT_LAGING, "timestamp: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_CONFIG, "chipType: [WS2801|WS2811|WS2812|WS2812RGBW|LPD8806|APA102]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
+        addDescription(getContract().INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
+        addDescription(getContract().INTENT_FRAME, "channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels");
+        addDescription(getContract().INTENT_FRAMES, "{ channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels }_*");
+        addDescription(getContract().EVENT_LEDs_RENDERED, "timestamp: [0.." + Long.MAX_VALUE + "]\n framesBuffered: [0.." + Integer.MAX_VALUE + "]\n");
+        addDescription(getContract().EVENT_LAGING, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_CONFIG, "chipType: [WS2801|WS2811|WS2812|WS2812RGBW|LPD8806|APA102]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_CONFIG)) {
+        if (string.startsWith(getContract().INTENT_CONFIG)) {
             LEDStripDeviceConfig config = getMapper().readValue(payload, LEDStripDeviceConfig.class);
             getDevice().setConfig(config);
         }
-        if (string.startsWith(getServiceContract().INTENT_FRAME)) {
+        if (string.startsWith(getContract().INTENT_FRAME)) {
             synchronized (this) {
                 frame = (getMapper().readValue(payload, LEDFrame.class));
                 if (frame.isValid()) {
@@ -90,7 +90,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
                 }
             }
         }
-        if (string.startsWith(getServiceContract().INTENT_FRAMES)) {
+        if (string.startsWith(getContract().INTENT_FRAMES)) {
             LEDFrame[] internalFrames = (getMapper().readValue(payload, LEDFrame[].class));
             synchronized (this) {
                 for (LEDFrame frame : internalFrames) {
@@ -103,7 +103,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     @Override
     public void configurationChanged(LEDStripDeviceConfig config) {
-        addStatus(getServiceContract().STATUS_CONFIG, config);
+        addStatus(getContract().STATUS_CONFIG, config);
     }
 
     @Override
@@ -121,13 +121,13 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     @Override
     public void frameRendered() {
-        addEvent(getServiceContract().EVENT_LEDs_RENDERED, new FrameRenderedEvent(frames.size()));
+        addEvent(getContract().EVENT_LEDs_RENDERED, new FrameRenderedEvent(frames.size()));
 
     }
 
     @Override
     public void isLaging() {
-        addEvent(getServiceContract().EVENT_LAGING, System.currentTimeMillis());
+        addEvent(getContract().EVENT_LAGING, System.currentTimeMillis());
 
     }
 

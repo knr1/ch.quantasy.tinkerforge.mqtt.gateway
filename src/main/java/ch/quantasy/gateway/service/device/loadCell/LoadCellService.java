@@ -59,60 +59,60 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
     public LoadCellService(LoadCellDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new LoadCellServiceContract(device));
-        addDescription(getServiceContract().INTENT_TARE, "[true|false]");
+        addDescription(getContract().INTENT_TARE, "[true|false]");
 
-        addDescription(getServiceContract().INTENT_MOVING_AVERAGE, "[1..40]");
-        addDescription(getServiceContract().STATUS_MOVING_AVERAGE, "[1..40]");
+        addDescription(getContract().INTENT_MOVING_AVERAGE, "[1..40]");
+        addDescription(getContract().STATUS_MOVING_AVERAGE, "[1..40]");
 
-        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
-        addDescription(getServiceContract().INTENT_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
-        addDescription(getServiceContract().INTENT_LED, "true|false]");
+        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
+        addDescription(getContract().INTENT_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
+        addDescription(getContract().INTENT_LED, "true|false]");
 
-        addDescription(getServiceContract().EVENT_WEIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]\n");
-        addDescription(getServiceContract().EVENT_WEIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]");
-        addDescription(getServiceContract().STATUS_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
-        addDescription(getServiceContract().STATUS_LED, "[true|false]");
+        addDescription(getContract().EVENT_WEIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]\n");
+        addDescription(getContract().EVENT_WEIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]");
+        addDescription(getContract().STATUS_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
+        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
+        addDescription(getContract().STATUS_LED, "[true|false]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDebouncePeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_WEIGHT_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_WEIGHT_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setWeightCallbackPeriod(period);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_WEIGHT_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_WEIGHT_THRESHOLD)) {
 
             DeviceWeightCallbackThreshold threshold = getMapper().readValue(payload, DeviceWeightCallbackThreshold.class);
             getDevice().setWeightCallbackThreshold(threshold);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
+        if (string.startsWith(getContract().INTENT_CONFIGURATION)) {
             DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
             getDevice().setConfiguration(configuration);
         }
-        if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
+        if (string.startsWith(getContract().INTENT_MOVING_AVERAGE)) {
             Short average = getMapper().readValue(payload, Short.class);
             getDevice().setMovingAverage(average);
         }
-        if (string.startsWith(getServiceContract().INTENT_TARE)) {
+        if (string.startsWith(getContract().INTENT_TARE)) {
             Boolean tare = getMapper().readValue(payload, Boolean.class);
             getDevice().tare(tare);
         }
-        if (string.startsWith(getServiceContract().INTENT_LED)) {
+        if (string.startsWith(getContract().INTENT_LED)) {
             Boolean LED = getMapper().readValue(payload, Boolean.class);
             getDevice().setLED(LED);
         }
@@ -121,42 +121,42 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void weightCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_WEIGHT_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_WEIGHT_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void weightCallbackThresholdChanged(DeviceWeightCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_WEIGHT_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_WEIGHT_THRESHOLD, threshold);
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        addStatus(getServiceContract().STATUS_CONFIGURATION, configuration);
+        addStatus(getContract().STATUS_CONFIGURATION, configuration);
     }
 
     @Override
     public void movingAverageChanged(short average) {
-        addStatus(getServiceContract().STATUS_MOVING_AVERAGE, average);
+        addStatus(getContract().STATUS_MOVING_AVERAGE, average);
     }
 
     @Override
     public void statusLEDChanged(boolean led) {
-        addStatus(getServiceContract().STATUS_LED, led);
+        addStatus(getContract().STATUS_LED, led);
     }
 
     @Override
     public void weight(int i) {
-        addEvent(getServiceContract().EVENT_WEIGHT, new WeightEvent(i));
+        addEvent(getContract().EVENT_WEIGHT, new WeightEvent(i));
     }
 
     @Override
     public void weightReached(int i) {
-        addEvent(getServiceContract().EVENT_WEIGHT_REACHED, new WeightEvent(i));
+        addEvent(getContract().EVENT_WEIGHT_REACHED, new WeightEvent(i));
     }
 
     public static class WeightEvent {

@@ -57,73 +57,73 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
     public IMUService(IMUDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new IMUServiceContract(device));
-        addDescription(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_LEDS, "true|false]");
-        addDescription(getServiceContract().INTENT_STATUS_LED, "true|false]");
-        addDescription(getServiceContract().INTENT_ORIENTATION_CALCULATION, "true|false]");
+        addDescription(getContract().INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_LEDS, "true|false]");
+        addDescription(getContract().INTENT_STATUS_LED, "true|false]");
+        addDescription(getContract().INTENT_ORIENTATION_CALCULATION, "true|false]");
 
-        addDescription(getServiceContract().STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_STATUS_LED, "[true|false]");
-        addDescription(getServiceContract().STATUS_LEDS, "[true|false]");
-        addDescription(getServiceContract().STATUS_ORIENTATION_CALCULATION, "[true|false]");
+        addDescription(getContract().STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_STATUS_LED, "[true|false]");
+        addDescription(getContract().STATUS_LEDS, "[true|false]");
+        addDescription(getContract().STATUS_ORIENTATION_CALCULATION, "[true|false]");
 
-        addDescription(getServiceContract().EVENT_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_ANGULAR_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_MAGNETIC_FIELD, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_ORIENTATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n heading: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n roll: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n pitch: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_QUATERNION, "timestamp: [0.." + Long.MAX_VALUE + "]\n w: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_ALL_DATA, "timestamp: [0.." + Long.MAX_VALUE + "]\n @acceleration \n @magneticField \n @angularVelocity \n @orientation \n @quaternion \n @linearAcceleration \n @gravityVector \n @temperature \n calibrationStatus: [0..255]");
+        addDescription(getContract().EVENT_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_ANGULAR_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_MAGNETIC_FIELD, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_ORIENTATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n heading: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n roll: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n pitch: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_QUATERNION, "timestamp: [0.." + Long.MAX_VALUE + "]\n w: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_ALL_DATA, "timestamp: [0.." + Long.MAX_VALUE + "]\n @acceleration \n @magneticField \n @angularVelocity \n @orientation \n @quaternion \n @linearAcceleration \n @gravityVector \n @temperature \n calibrationStatus: [0..255]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
-            if (string.startsWith(getServiceContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
+            if (string.startsWith(getContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
 
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setAccelerationPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_ALL_DATA_CALLBACK_PERIOD)) {
+            if (string.startsWith(getContract().INTENT_ALL_DATA_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setAllDataPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD)) {
+            if (string.startsWith(getContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setAngularVelocityPeriod(period);
             }
 
-            if (string.startsWith(getServiceContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD)) {
+            if (string.startsWith(getContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setMagneticFieldPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_ORIENTATION_CALLBACK_PERIOD)) {
+            if (string.startsWith(getContract().INTENT_ORIENTATION_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setOrientationPeriod(period);
             }
-            if (string.startsWith(getServiceContract().INTENT_QUATERNION_CALLBACK_PERIOD)) {
+            if (string.startsWith(getContract().INTENT_QUATERNION_CALLBACK_PERIOD)) {
                 Long period = getMapper().readValue(payload, Long.class);
                 getDevice().setQuaternionPeriod(period);
             }
 
-            if (string.startsWith(getServiceContract().INTENT_LEDS)) {
+            if (string.startsWith(getContract().INTENT_LEDS)) {
                 Boolean enabled = getMapper().readValue(payload, Boolean.class);
                 getDevice().setLEDs(enabled);
             }
-            if (string.startsWith(getServiceContract().INTENT_STATUS_LED)) {
+            if (string.startsWith(getContract().INTENT_STATUS_LED)) {
                 Boolean enabled = getMapper().readValue(payload, Boolean.class);
                 getDevice().setStatusLED(enabled);
             }
-            if (string.startsWith(getServiceContract().INTENT_ORIENTATION_CALCULATION)) {
+            if (string.startsWith(getContract().INTENT_ORIENTATION_CALCULATION)) {
                 Boolean enabled = getMapper().readValue(payload, Boolean.class);
                 getDevice().setOrientationCalculation(enabled);
             }
@@ -131,58 +131,58 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     @Override
     public void accelerationPeriodChanged(Long period) {
-        addStatus(getServiceContract().STATUS_ACCELERATION_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_ACCELERATION_CALLBACK_PERIOD, period);
 
     }
 
     @Override
     public void allDataPeriodChanged(Long period) {
-        addStatus(getServiceContract().STATUS_ALL_DATA_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_ALL_DATA_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void angularVelocityPeriodChanged(Long period) {
-        addStatus(getServiceContract().STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void magneticFieldPeriodChanged(Long period) {
-        addStatus(getServiceContract().STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void orientationPeriodChanged(Long period) {
-        addStatus(getServiceContract().STATUS_ORIENTATION_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_ORIENTATION_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void quaternionPeriodChanged(Long period) {
-        addStatus(getServiceContract().STATUS_QUATERNION_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_QUATERNION_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void statusLEDChanged(Boolean isEnabled) {
-        addStatus(getServiceContract().STATUS_STATUS_LED, isEnabled);
+        addStatus(getContract().STATUS_STATUS_LED, isEnabled);
     }
 
     @Override
     public void LEDsChanged(Boolean areEnabled) {
-        addStatus(getServiceContract().STATUS_LED, areEnabled);
+        addStatus(getContract().STATUS_LED, areEnabled);
     }
 
     @Override
     public void orientationCalculationChanged(Boolean isEnabled) {
-        addStatus(getServiceContract().STATUS_ORIENTATION_CALCULATION, isEnabled);
+        addStatus(getContract().STATUS_ORIENTATION_CALCULATION, isEnabled);
     }
 
     @Override
     public void acceleration(short s, short s1, short s2) {
-        addEvent(getServiceContract().EVENT_ACCELERATION, new AccelerationEvent(s, s1, s2));
+        addEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(s, s1, s2));
     }
 
     @Override
     public void allData(short shorts, short shorts1, short shorts2, short shorts3, short shorts4, short shorts5, short shorts6, short short7, short s8, short s9) {
-        addEvent(getServiceContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts, shorts1, shorts2),
+        addEvent(getContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts, shorts1, shorts2),
                 new MagneticFieldEvent(shorts3, shorts4, shorts5),
                 new AngularVelocityEvent(shorts6, short7, s8),
                 new TemperatureEvent(s9)));
@@ -190,22 +190,22 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     @Override
     public void angularVelocity(short s, short s1, short s2) {
-        addEvent(getServiceContract().EVENT_ANGULAR_VELOCITY, new AngularVelocityEvent(s, s1, s2));
+        addEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocityEvent(s, s1, s2));
     }
 
     @Override
     public void magneticField(short s, short s1, short s2) {
-        addEvent(getServiceContract().EVENT_MAGNETIC_FIELD, new MagneticFieldEvent(s, s1, s2));
+        addEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticFieldEvent(s, s1, s2));
     }
 
     @Override
     public void orientation(short s, short s1, short s2) {
-        addEvent(getServiceContract().EVENT_ORIENTATION, new OrientationEvent(s, s1, s2));
+        addEvent(getContract().EVENT_ORIENTATION, new OrientationEvent(s, s1, s2));
     }
 
     @Override
     public void quaternion(float s, float s1, float s2, float s3) {
-        addEvent(getServiceContract().EVENT_QUATERNION, new QuaternionEvent(s, s1, s2, s3));
+        addEvent(getContract().EVENT_QUATERNION, new QuaternionEvent(s, s1, s2, s3));
     }
 
     public static class AccelerationEvent {

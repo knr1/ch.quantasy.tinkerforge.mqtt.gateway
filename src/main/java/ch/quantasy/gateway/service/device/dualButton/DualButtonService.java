@@ -60,21 +60,21 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
     public DualButtonService(DualButtonDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DualButtonServiceContract(device));
 
-        addDescription(getServiceContract().INTENT_LED_STATE, "leftLED: [AutoToggleOn|AutoToggleOff|On|Off]\n rightLED: [AutoToggleOn|AutoToggleOff|On|Off] ");
-        addDescription(getServiceContract().INTENT_SELECTED_LED_STATE, "led: [AutoToggleOn|AutoToggleOff|On|Off]");
+        addDescription(getContract().INTENT_LED_STATE, "leftLED: [AutoToggleOn|AutoToggleOff|On|Off]\n rightLED: [AutoToggleOn|AutoToggleOff|On|Off] ");
+        addDescription(getContract().INTENT_SELECTED_LED_STATE, "led: [AutoToggleOn|AutoToggleOff|On|Off]");
 
-        addDescription(getServiceContract().EVENT_STATE_CHANGED, "timestamp: [0.." + Long.MAX_VALUE + "]\n led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]\n \n led2: [AutoToggleOn|AutoToggleOff|On|Off]\n  switch1: [0|1]\n switch2: [0|1]");
-        addDescription(getServiceContract().STATUS_LED_STATE, "led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]");
+        addDescription(getContract().EVENT_STATE_CHANGED, "timestamp: [0.." + Long.MAX_VALUE + "]\n led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]\n \n led2: [AutoToggleOn|AutoToggleOff|On|Off]\n  switch1: [0|1]\n switch2: [0|1]");
+        addDescription(getContract().STATUS_LED_STATE, "led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
-        if (string.startsWith(getServiceContract().INTENT_SELECTED_LED_STATE)) {
+        if (string.startsWith(getContract().INTENT_SELECTED_LED_STATE)) {
             DeviceSelectedLEDStateParameters parameters = getMapper().readValue(payload, DeviceSelectedLEDStateParameters.class);
             getDevice().setSelectedLEDState(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_LED_STATE)) {
+        if (string.startsWith(getContract().INTENT_LED_STATE)) {
             DeviceLEDState parameters = getMapper().readValue(payload, DeviceLEDState.class);
             getDevice().setLEDState(parameters);
         }
@@ -82,12 +82,12 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
     @Override
     public void ledStateChanged(DeviceLEDState state) {
-        addStatus(getServiceContract().STATUS_LED_STATE, state);
+        addStatus(getContract().STATUS_LED_STATE, state);
     }
 
     @Override
     public void stateChanged(short s, short s1, short s2, short s3) {
-        addEvent(getServiceContract().EVENT_STATE_CHANGED, new StateChangedEvent(s, s1, s2, s3));
+        addEvent(getContract().EVENT_STATE_CHANGED, new StateChangedEvent(s, s1, s2, s3));
     }
 
     public static class StateChangedEvent {

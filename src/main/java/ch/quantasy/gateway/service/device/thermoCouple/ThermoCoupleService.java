@@ -59,40 +59,40 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
     public ThermoCoupleService(ThermoCoupleDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new ThermoCoupleServiceContract(device));
-        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-21000..180000]\n max: [-21000..180000]");
-        addDescription(getServiceContract().INTENT_CONFIGURATION, "averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]\n type: [B|E|J|K|N|R|S|T|G8|G32]\n filter: [Hz_50|Hz_60]");
+        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-21000..180000]\n max: [-21000..180000]");
+        addDescription(getContract().INTENT_CONFIGURATION, "averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]\n type: [B|E|J|K|N|R|S|T|G8|G32]\n filter: [Hz_50|Hz_60]");
 
-        addDescription(getServiceContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-21000..180000]\n");
-        addDescription(getServiceContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-21000..180000]\n");
-        addDescription(getServiceContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-21000..180000]\n max: [-21000..180000]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_CONFIGURATION, "averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]\n type: [B|E|J|K|N|R|S|T|G8|G32]\n filter: [Hz_50|Hz_60]");
+        addDescription(getContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-21000..180000]\n");
+        addDescription(getContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-21000..180000]\n");
+        addDescription(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-21000..180000]\n max: [-21000..180000]");
+        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_CONFIGURATION, "averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]\n type: [B|E|J|K|N|R|S|T|G8|G32]\n filter: [Hz_50|Hz_60]");
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDebouncePeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setTemperatureCallbackPeriod(period);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_TEMPERATURE_THRESHOLD)) {
 
             DeviceTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceTemperatureCallbackThreshold.class);
             getDevice().setTemperatureCallbackThreshold(threshold);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
+        if (string.startsWith(getContract().INTENT_CONFIGURATION)) {
 
             DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
             getDevice().setConfiguration(configuration);
@@ -102,37 +102,37 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void temperatureCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        addStatus(getServiceContract().STATUS_CONFIGURATION, configuration);
+        addStatus(getContract().STATUS_CONFIGURATION, configuration);
     }
 
     @Override
     public void temperature(int i) {
-        addEvent(getServiceContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
+        addEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
     }
 
     @Override
     public void temperatureReached(int i) {
-        addEvent(getServiceContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
+        addEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
     }
 
     @Override
     public void errorState(boolean bln, boolean bln1) {
-        addEvent(getServiceContract().EVENT_ERROR, new ErrorEvent(bln, bln1));
+        addEvent(getContract().EVENT_ERROR, new ErrorEvent(bln, bln1));
     }
 
     public static class ErrorEvent {

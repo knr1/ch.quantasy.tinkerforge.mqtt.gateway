@@ -58,40 +58,40 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
     public HallEffectService(HallEffectDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new HallEffectServiceContract(device));
-        addDescription(getServiceContract().INTENT_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_EDGE_COUNT_RESET, "[true|false]");
-        addDescription(getServiceContract().INTENT_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
+        addDescription(getContract().INTENT_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_EDGE_COUNT_RESET, "[true|false]");
+        addDescription(getContract().INTENT_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
 
-        addDescription(getServiceContract().EVENT_EDGE_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [0.." + Long.MAX_VALUE + "]\n greater35Gauss: [true|false]");
-        addDescription(getServiceContract().EVENT_EDGE_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [0.." + Long.MAX_VALUE + "]\n");
+        addDescription(getContract().EVENT_EDGE_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [0.." + Long.MAX_VALUE + "]\n greater35Gauss: [true|false]");
+        addDescription(getContract().EVENT_EDGE_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [0.." + Long.MAX_VALUE + "]\n");
 
-        addDescription(getServiceContract().STATUS_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
+        addDescription(getContract().STATUS_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_EDGE_COUNT_INTERRUPT)) {
+        if (string.startsWith(getContract().INTENT_EDGE_COUNT_INTERRUPT)) {
 
             Long edges = getMapper().readValue(payload, Long.class);
             getDevice().setEdgeInterrupt(edges);
         }
-        if (string.startsWith(getServiceContract().INTENT_EDGE_COUNT_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_EDGE_COUNT_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setEdgeCountCallbackPeriod(period);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_EDGE_COUNT_RESET)) {
+        if (string.startsWith(getContract().INTENT_EDGE_COUNT_RESET)) {
 
             Boolean reset = getMapper().readValue(payload, Boolean.class);
             getDevice().setEdgeCountReset(reset);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_CONFIGURATION)) {
+        if (string.startsWith(getContract().INTENT_CONFIGURATION)) {
 
             DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
             getDevice().setEdgeCountConfig(configuration);
@@ -100,27 +100,27 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
 
     @Override
     public void edgeInterruptChanged(long period) {
-        addStatus(getServiceContract().STATUS_EDGE_COUNT_INTERRUPT, period);
+        addStatus(getContract().STATUS_EDGE_COUNT_INTERRUPT, period);
     }
 
     @Override
     public void edgeCountCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void edgeCountConfigChanged(DeviceConfiguration configuration) {
-        addStatus(getServiceContract().STATUS_CONFIGURATION, configuration);
+        addStatus(getContract().STATUS_CONFIGURATION, configuration);
     }
 
     @Override
     public void edgeCountReset(long latestEdgeCount) {
-        addEvent(getServiceContract().EVENT_EDGE_COUNT_RESET, new EdgeCountResetEvent(latestEdgeCount));
+        addEvent(getContract().EVENT_EDGE_COUNT_RESET, new EdgeCountResetEvent(latestEdgeCount));
     }
 
     @Override
     public void edgeCount(long l, boolean bln) {
-        addEvent(getServiceContract().EVENT_EDGE_COUNT, new EdgeCountEvent(l, bln));
+        addEvent(getContract().EVENT_EDGE_COUNT, new EdgeCountEvent(l, bln));
     }
 
     public static class EdgeCountEvent {

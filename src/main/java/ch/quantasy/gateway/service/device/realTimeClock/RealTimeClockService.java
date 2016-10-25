@@ -58,36 +58,36 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
 
     public RealTimeClockService(RealTimeClockDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new RealTimeClockServiceContract(device));
-        addDescription(getServiceContract().INTENT_DATE_TIME_SET, "year: [2000..2099]\n month: [1..12]\n day:b[1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        addDescription(getServiceContract().STATUS_DATE_TIME, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        addDescription(getServiceContract().INTENT_OFFSET, "[-128..127]");
-        addDescription(getServiceContract().STATUS_OFFSET, "[-128..127]");
-        addDescription(getServiceContract().INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        addDescription(getServiceContract().INTENT_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_ALARM, "timestamp: [0.." + Long.MAX_VALUE + "]\n year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        addDescription(getContract().INTENT_DATE_TIME_SET, "year: [2000..2099]\n month: [1..12]\n day:b[1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        addDescription(getContract().STATUS_DATE_TIME, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        addDescription(getContract().INTENT_OFFSET, "[-128..127]");
+        addDescription(getContract().STATUS_OFFSET, "[-128..127]");
+        addDescription(getContract().INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        addDescription(getContract().INTENT_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_ALARM, "timestamp: [0.." + Long.MAX_VALUE + "]\n year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DATE_TIME_SET)) {
+        if (string.startsWith(getContract().INTENT_DATE_TIME_SET)) {
             DateTimeParameter parameter = getMapper().readValue(payload, DateTimeParameter.class);
             getDevice().setDateTime(parameter);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_OFFSET)) {
+        if (string.startsWith(getContract().INTENT_OFFSET)) {
             Byte offset = getMapper().readValue(payload, Byte.class);
             getDevice().setOffset(offset);
         }
-        if (string.startsWith(getServiceContract().INTENT_DATE_TIME_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DATE_TIME_CALLBACK_PERIOD)) {
             Long callback = getMapper().readValue(payload, Long.class);
             getDevice().setDateTimeCallbackPeriod(callback);
         }
-        if (string.startsWith(getServiceContract().INTENT_ALARM)) {
+        if (string.startsWith(getContract().INTENT_ALARM)) {
             AlarmParamter alarm = getMapper().readValue(payload, AlarmParamter.class);
             getDevice().setAlarm(alarm);
         }
@@ -95,32 +95,32 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
 
     @Override
     public void dateTimeChanged(DateTimeParameter dateTimeParameter) {
-        addStatus(getServiceContract().STATUS_DATE_TIME, dateTimeParameter);
+        addStatus(getContract().STATUS_DATE_TIME, dateTimeParameter);
     }
 
     @Override
     public void offsetChanged(byte offset) {
-        addStatus(getServiceContract().STATUS_OFFSET, offset);
+        addStatus(getContract().STATUS_OFFSET, offset);
     }
 
     @Override
     public void dateTimeCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DATE_TIME_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void alarmChanged(AlarmParamter alarmParameter) {
-        addStatus(getServiceContract().STATUS_ALARM, alarmParameter);
+        addStatus(getContract().STATUS_ALARM, alarmParameter);
     }
 
     @Override
     public void alarm(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-        addEvent(getServiceContract().EVENT_ALARM, new DateTimeEvent(year, month, day, hour, minute, second, centisecond, weekday, timestamp));
+        addEvent(getContract().EVENT_ALARM, new DateTimeEvent(year, month, day, hour, minute, second, centisecond, weekday, timestamp));
     }
 
     @Override
     public void dateTime(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-        addEvent(getServiceContract().EVENT_DATE_TIME, new DateTimeEvent(year, month, day, hour, minute, second, centisecond, weekday, timestamp));
+        addEvent(getContract().EVENT_DATE_TIME, new DateTimeEvent(year, month, day, hour, minute, second, centisecond, weekday, timestamp));
     }
 
     public static class DateTimeEvent {

@@ -44,9 +44,9 @@ package ch.quantasy.gateway.agent.remoteSwitch;
 
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
-import ch.quantasy.mqtt.gateway.agent.Agent;
-import ch.quantasy.mqtt.gateway.agent.AgentContract;
-import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
+import ch.quantasy.mqtt.gateway.client.ClientContract;
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.DimSocketBParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketBParameters;
@@ -67,7 +67,7 @@ public class RemoteSwitchAgent {
     private final RemoteSwitchServiceContract remoteSwitchEG;
     private final RemoteSwitchServiceContract remoteSwitchOG;
 
-    private final Agent agent;
+    private final GatewayClient<ClientContract> gatewayClient;
 
     public RemoteSwitchAgent(URI mqttURI) throws MqttException {
         managerServiceContract = new ManagerServiceContract("Manager");
@@ -76,17 +76,17 @@ public class RemoteSwitchAgent {
         remoteSwitchEG = new RemoteSwitchServiceContract("jKQ", TinkerforgeDeviceClass.RemoteSwitch.toString());
         remoteSwitchOG = new RemoteSwitchServiceContract("jKE", TinkerforgeDeviceClass.RemoteSwitch.toString());
 
-        agent = new Agent(mqttURI, "5pq34in", new AgentContract("Agent", "RemoteSwitcher", "remoteSwitcher01"));
-        agent.connect();
+        gatewayClient = new GatewayClient(mqttURI, "5pq34in", new ClientContract("Agent", "RemoteSwitcher", "remoteSwitcher01"));
+        gatewayClient.connect();
         connectRemoteServices(new TinkerforgeStackAddress("obergeschoss"));
         connectRemoteServices(new TinkerforgeStackAddress("untergeschoss"));
         connectRemoteServices(new TinkerforgeStackAddress("localhost"));
 
-        agent.subscribe("WebView/RemoteSwitch/event/touched/#", new MessageConsumer() {
+        gatewayClient.subscribe("WebView/RemoteSwitch/event/touched/#", new MessageConsumer() {
             @Override
-            public void messageArrived(Agent agent, String topic, byte[] mm) throws Exception {
+            public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
 
-                Switcher[] switchers = agent.getMapper().readValue(mm, Switcher[].class);
+                Switcher[] switchers = gatewayClient.getMapper().readValue(mm, Switcher[].class);
                 Switcher switcher = switchers[switchers.length - 1];
                 RemoteSwitchServiceContract contract = null;
                 switch (switcher.getFloor()) {
@@ -105,12 +105,12 @@ public class RemoteSwitchAgent {
                     return;
                 }
                 if (switcher.getType().equals("switchSocketB")) {
-                    SwitchSocketBParameters[] bs = agent.getMapper().readValue(mm, SwitchSocketBParameters[].class);
-                    agent.addIntent(contract.INTENT_SWITCH_SOCKET_B, bs[bs.length - 1]);
+                    SwitchSocketBParameters[] bs = gatewayClient.getMapper().readValue(mm, SwitchSocketBParameters[].class);
+                    gatewayClient.addIntent(contract.INTENT_SWITCH_SOCKET_B, bs[bs.length - 1]);
                 }
                 if (switcher.getType().equals("dimSocketB")) {
-                    DimSocketBParameters[] bs = agent.getMapper().readValue(mm, DimSocketBParameters[].class);
-                    agent.addIntent(contract.INTENT_DIM_SOCKET_B, bs[bs.length - 1]);
+                    DimSocketBParameters[] bs = gatewayClient.getMapper().readValue(mm, DimSocketBParameters[].class);
+                    gatewayClient.addIntent(contract.INTENT_DIM_SOCKET_B, bs[bs.length - 1]);
                 }
             }
         }
@@ -120,7 +120,7 @@ public class RemoteSwitchAgent {
 
     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
         for (TinkerforgeStackAddress address : addresses) {
-            agent.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
+            gatewayClient.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
             try {
                 Thread.sleep(1000);
 

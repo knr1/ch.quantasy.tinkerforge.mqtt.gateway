@@ -60,25 +60,25 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
     public Segment4x7Service(Segment4x7Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new Segment4x7ServiceContract(device));
 
-        addDescription(getServiceContract().INTENT_COUNTER, "from: [-999..9999]\n to: [-999..9999]\n increment: [-999..9999]\n lenght: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
+        addDescription(getContract().INTENT_COUNTER, "from: [-999..9999]\n to: [-999..9999]\n increment: [-999..9999]\n lenght: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
 
-        addDescription(getServiceContract().EVENT_COUNTER_STARTED, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_COUNTER_FINISHED, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_COUNTER_STARTED, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_COUNTER_FINISHED, "[0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getServiceContract().STATUS_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
+        addDescription(getContract().STATUS_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_SEGMENTS)) {
+        if (string.startsWith(getContract().INTENT_SEGMENTS)) {
             DeviceSegments segments = getMapper().readValue(payload, DeviceSegments.class);
             getDevice().setSegments(segments);
 
         }
-        if (string.startsWith(getServiceContract().INTENT_COUNTER)) {
+        if (string.startsWith(getContract().INTENT_COUNTER)) {
             DeviceCounterParameters counter = getMapper().readValue(payload, DeviceCounterParameters.class);
             getDevice().startCounter(counter);
 
@@ -87,17 +87,17 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
 
     @Override
     public void counterStarted(DeviceCounterParameters counterParameters) {
-        addEvent(getServiceContract().EVENT_COUNTER_STARTED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_COUNTER_STARTED, System.currentTimeMillis());
     }
 
     @Override
     public void segmentsChanged(DeviceSegments segments) {
-        addStatus(getServiceContract().STATUS_SEGMENTS, segments);
+        addStatus(getContract().STATUS_SEGMENTS, segments);
     }
 
     @Override
     public void counterFinished() {
-        addEvent(getServiceContract().EVENT_COUNTER_FINISHED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_COUNTER_FINISHED, System.currentTimeMillis());
     }
 
 }

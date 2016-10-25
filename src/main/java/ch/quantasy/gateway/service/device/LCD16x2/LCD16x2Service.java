@@ -59,24 +59,24 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     public LCD16x2Service(LCD16x2Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LCD16x2ServiceContract(device));
-        addDescription(getServiceContract().INTENT_BACKLIGHT, "[true|false]");
-        addDescription(getServiceContract().STATUS_BACKLIGHT, "[true|false]");
-        addDescription(getServiceContract().INTENT_CLEAR_DISPLAY, "[true|false]");
-        addDescription(getServiceContract().INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        addDescription(getServiceContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        addDescription(getServiceContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        addDescription(getServiceContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        addDescription(getServiceContract().INTENT_WRITE_LINES, "[line: [0..1]\n position: [0..15]\n text: [String]_[1..16]]");
+        addDescription(getContract().INTENT_BACKLIGHT, "[true|false]");
+        addDescription(getContract().STATUS_BACKLIGHT, "[true|false]");
+        addDescription(getContract().INTENT_CLEAR_DISPLAY, "[true|false]");
+        addDescription(getContract().INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
+        addDescription(getContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
+        addDescription(getContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
+        addDescription(getContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
+        addDescription(getContract().INTENT_WRITE_LINES, "[line: [0..1]\n position: [0..15]\n text: [String]_[1..16]]");
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_BACKLIGHT)) {
+        if (string.startsWith(getContract().INTENT_BACKLIGHT)) {
             Boolean backlight = getMapper().readValue(payload, Boolean.class);
             getDevice().setBacklight(backlight);
         }
-        if (string.startsWith(getServiceContract().INTENT_CLEAR_DISPLAY)) {
+        if (string.startsWith(getContract().INTENT_CLEAR_DISPLAY)) {
             Boolean clear = getMapper().readValue(payload, Boolean.class);
             getDevice().clearDisplay(clear);
         }
@@ -85,28 +85,28 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     @Override
     public void backlightChanged(Boolean isBacklightEnabled) {
-        addStatus(getServiceContract().STATUS_BACKLIGHT, isBacklightEnabled);
+        addStatus(getContract().STATUS_BACKLIGHT, isBacklightEnabled);
     }
 
     @Override
     public void configurationChanged(DeviceConfigParameters configParameters) {
-        addStatus(getServiceContract().STATUS_CONFIG_PARAMETERS, configParameters);
+        addStatus(getContract().STATUS_CONFIG_PARAMETERS, configParameters);
     }
 
     @Override
     public void customCharactersChanged(DeviceCustomCharacter... customCharacters) {
         Arrays.sort(customCharacters);
-        addStatus(getServiceContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
+        addStatus(getContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
     }
 
     @Override
     public void buttonPressed(short s) {
-        addEvent(getServiceContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s));
+        addEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s));
     }
 
     @Override
     public void buttonReleased(short s) {
-        addEvent(getServiceContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s));
+        addEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s));
     }
 
     public static class ButtonEvent {

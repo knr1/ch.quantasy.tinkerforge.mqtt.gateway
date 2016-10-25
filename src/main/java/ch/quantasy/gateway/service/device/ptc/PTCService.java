@@ -60,62 +60,62 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
     public PTCService(PTCDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new PTCServiceContract(device));
-        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
-        addDescription(getServiceContract().INTENT_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
-        addDescription(getServiceContract().INTENT_WIRE_MODE, "[2|3|4]");
-        addDescription(getServiceContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
-        addDescription(getServiceContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
-        addDescription(getServiceContract().EVENT_RESISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_RESISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
-        addDescription(getServiceContract().STATUS_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
-        addDescription(getServiceContract().STATUS_WIRE_MODE, "[2|3|4]");
+        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
+        addDescription(getContract().INTENT_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
+        addDescription(getContract().INTENT_WIRE_MODE, "[2|3|4]");
+        addDescription(getContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
+        addDescription(getContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
+        addDescription(getContract().EVENT_RESISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_RESISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
+        addDescription(getContract().STATUS_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
+        addDescription(getContract().STATUS_WIRE_MODE, "[2|3|4]");
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDebouncePeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setTemperatureCallbackPeriod(period);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_TEMPERATURE_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_TEMPERATURE_THRESHOLD)) {
 
             DeviceTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceTemperatureCallbackThreshold.class);
             getDevice().setTemperatureCallbackThreshold(threshold);
         }
-        if (string.startsWith(getServiceContract().INTENT_RESISTANCE_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_RESISTANCE_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setResistanceCallbackPeriod(period);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_RESISTANCE_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_RESISTANCE_THRESHOLD)) {
 
             DeviceResistanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceResistanceCallbackThreshold.class);
             getDevice().setResistanceCallbackThreshold(threshold);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_NOISE_REDUCTION_FILTER)) {
+        if (string.startsWith(getContract().INTENT_NOISE_REDUCTION_FILTER)) {
             DeviceNoiseReductionFilter filter = getMapper().readValue(payload, DeviceNoiseReductionFilter.class);
             getDevice().setNoiseReductionFilter(filter);
         }
-        if (string.startsWith(getServiceContract().INTENT_WIRE_MODE)) {
+        if (string.startsWith(getContract().INTENT_WIRE_MODE)) {
             Short wireMode = getMapper().readValue(payload, Short.class);
             getDevice().setWireMode(wireMode);
         }
@@ -123,57 +123,57 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void temperatureCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
     }
 
     @Override
     public void noiseReductionFilterChanged(DeviceNoiseReductionFilter filter) {
-        addStatus(getServiceContract().STATUS_NOISE_REDUCTION_FILTER, filter);
+        addStatus(getContract().STATUS_NOISE_REDUCTION_FILTER, filter);
     }
 
     @Override
     public void temperature(int i) {
-        addEvent(getServiceContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
+        addEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
     }
 
     @Override
     public void temperatureReached(int i) {
-        addEvent(getServiceContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
+        addEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
     }
 
     @Override
     public void resistance(int i) {
-        addEvent(getServiceContract().EVENT_RESISTANCE, new ResistanceEvent(i));
+        addEvent(getContract().EVENT_RESISTANCE, new ResistanceEvent(i));
     }
 
     @Override
     public void resistanceReached(int i) {
-        addEvent(getServiceContract().EVENT_RESISTANCE_REACHED, new ResistanceEvent(i));
+        addEvent(getContract().EVENT_RESISTANCE_REACHED, new ResistanceEvent(i));
     }
 
     @Override
     public void resistanceCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_RESISTANCE_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_RESISTANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void resistanceCallbackThresholdChanged(DeviceResistanceCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_RESISTANCE_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_RESISTANCE_THRESHOLD, threshold);
     }
 
     @Override
     public void wireModeChanged(short wireMode) {
-        addStatus(getServiceContract().STATUS_WIRE_MODE, wireMode);
+        addStatus(getContract().STATUS_WIRE_MODE, wireMode);
     }
 
     public static class TemperatureEvent {

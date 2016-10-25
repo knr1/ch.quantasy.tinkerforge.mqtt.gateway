@@ -61,48 +61,48 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     public LCD20x4Service(LCD20x4Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LCD20x4ServiceContract(device));
-        addDescription(getServiceContract().INTENT_BACKLIGHT, "[true|false]");
-        addDescription(getServiceContract().STATUS_BACKLIGHT, "[true|false]");
-        addDescription(getServiceContract().INTENT_CLEAR_DISPLAY, "[true|false]");
-        addDescription(getServiceContract().INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        addDescription(getServiceContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        addDescription(getServiceContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        addDescription(getServiceContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        addDescription(getServiceContract().INTENT_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
-        addDescription(getServiceContract().STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
-        addDescription(getServiceContract().INTENT_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_WRITE_LINES, "[line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]");
+        addDescription(getContract().INTENT_BACKLIGHT, "[true|false]");
+        addDescription(getContract().STATUS_BACKLIGHT, "[true|false]");
+        addDescription(getContract().INTENT_CLEAR_DISPLAY, "[true|false]");
+        addDescription(getContract().INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
+        addDescription(getContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
+        addDescription(getContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
+        addDescription(getContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
+        addDescription(getContract().INTENT_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
+        addDescription(getContract().STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
+        addDescription(getContract().INTENT_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_WRITE_LINES, "[line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]");
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_BACKLIGHT)) {
+        if (string.startsWith(getContract().INTENT_BACKLIGHT)) {
             Boolean backlight = getMapper().readValue(payload, Boolean.class);
             getDevice().setBacklight(backlight);
         }
-        if (string.startsWith(getServiceContract().INTENT_CLEAR_DISPLAY)) {
+        if (string.startsWith(getContract().INTENT_CLEAR_DISPLAY)) {
             Boolean clear = getMapper().readValue(payload, Boolean.class);
             getDevice().clearDisplay(clear);
         }
-        if (string.startsWith(getServiceContract().INTENT_CONFIG_PARAMETERS)) {
+        if (string.startsWith(getContract().INTENT_CONFIG_PARAMETERS)) {
             DeviceConfigParameters parameters = getMapper().readValue(payload, DeviceConfigParameters.class);
             getDevice().setConfigParameters(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_CUSTOM_CHARACTERS)) {
+        if (string.startsWith(getContract().INTENT_CUSTOM_CHARACTERS)) {
             DeviceCustomCharacter[] characters = getMapper().readValue(payload, DeviceCustomCharacter[].class);
             getDevice().setCustomCharacters(characters);
         }
-        if (string.startsWith(getServiceContract().INTENT_DEFAULT_TEXT_TEXTS)) {
+        if (string.startsWith(getContract().INTENT_DEFAULT_TEXT_TEXTS)) {
             DeviceDefaultText[] texts = getMapper().readValue(payload, DeviceDefaultText[].class);
             getDevice().setDefaultText(texts);
         }
-        if (string.startsWith(getServiceContract().INTENT_DEFAULT_TEXT_COUNTER)) {
+        if (string.startsWith(getContract().INTENT_DEFAULT_TEXT_COUNTER)) {
             Integer counter = getMapper().readValue(payload, Integer.class);
             getDevice().setDefaultTextCounter(counter);
         }
-        if (string.startsWith(getServiceContract().INTENT_WRITE_LINES)) {
+        if (string.startsWith(getContract().INTENT_WRITE_LINES)) {
             DeviceWriteLine[] lines = getMapper().readValue(payload, DeviceWriteLine[].class);
             getDevice().write(lines);
         }
@@ -110,39 +110,39 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     @Override
     public void backlightChanged(Boolean isBacklightEnabled) {
-        addStatus(getServiceContract().STATUS_BACKLIGHT, isBacklightEnabled);
+        addStatus(getContract().STATUS_BACKLIGHT, isBacklightEnabled);
     }
 
     @Override
     public void configurationChanged(DeviceConfigParameters configParameters) {
-        addStatus(getServiceContract().STATUS_CONFIG_PARAMETERS, configParameters);
+        addStatus(getContract().STATUS_CONFIG_PARAMETERS, configParameters);
     }
 
     @Override
     public void customCharactersChanged(DeviceCustomCharacter... customCharacters) {
         Arrays.sort(customCharacters);
-        addStatus(getServiceContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
+        addStatus(getContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
     }
 
     @Override
     public void defaultTextsChanged(DeviceDefaultText... defaultTexts) {
         Arrays.sort(defaultTexts);
-        addStatus(getServiceContract().STATUS_DEFAULT_TEXT_TEXTS, defaultTexts);
+        addStatus(getContract().STATUS_DEFAULT_TEXT_TEXTS, defaultTexts);
     }
 
     @Override
     public void defaultTextCounterChanged(Integer defaultTextCounter) {
-        addStatus(getServiceContract().STATUS_DEFAULT_TEXT_COUNTER, defaultTextCounter);
+        addStatus(getContract().STATUS_DEFAULT_TEXT_COUNTER, defaultTextCounter);
     }
 
     @Override
     public void buttonPressed(short s) {
-        addEvent(getServiceContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s));
+        addEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s));
     }
 
     @Override
     public void buttonReleased(short s) {
-        addEvent(getServiceContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s));
+        addEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s));
     }
 
     public static class ButtonEvent {

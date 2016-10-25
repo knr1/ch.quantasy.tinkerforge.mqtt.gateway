@@ -59,26 +59,26 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     public DualRelayService(DualRelayDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DualRelayServiceContract(device));
-        addDescription(getServiceContract().INTENT_MONOFLOP, "relay: [1|2]\n state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_SELECTED_STATE, "relay: [1|2]\n state: [true|false]\n");
-        addDescription(getServiceContract().INTENT_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
-        addDescription(getServiceContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n relay: [1|2]\n state: [true|false]\n");
-        addDescription(getServiceContract().STATUS_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
+        addDescription(getContract().INTENT_MONOFLOP, "relay: [1|2]\n state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_SELECTED_STATE, "relay: [1|2]\n state: [true|false]\n");
+        addDescription(getContract().INTENT_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
+        addDescription(getContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n relay: [1|2]\n state: [true|false]\n");
+        addDescription(getContract().STATUS_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_MONOFLOP)) {
+        if (string.startsWith(getContract().INTENT_MONOFLOP)) {
             DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
             getDevice().setMonoflop(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_SELECTED_STATE)) {
+        if (string.startsWith(getContract().INTENT_SELECTED_STATE)) {
             DeviceSelectedState parameters = getMapper().readValue(payload, DeviceSelectedState.class);
             getDevice().setSelectedState(parameters);
         }
-        if (string.startsWith(getServiceContract().INTENT_STATE)) {
+        if (string.startsWith(getContract().INTENT_STATE)) {
             DeviceState parameters = getMapper().readValue(payload, DeviceState.class);
             getDevice().setState(parameters);
         }
@@ -87,12 +87,12 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     @Override
     public void stateChanged(DeviceState state) {
-        addStatus(getServiceContract().STATUS_STATE, state);
+        addStatus(getContract().STATUS_STATE, state);
     }
 
     @Override
     public void monoflopDone(short relay, boolean state) {
-        addEvent(getServiceContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(relay, state));
+        addEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(relay, state));
 
     }
 

@@ -59,64 +59,64 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
 
     public BarometerService(BarometerDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new BarometerServiceContract(device));
-        addDescription(getServiceContract().INTENT_AIR_PRESSURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_AIR_PRESSURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [10000..1200000]\n max: [10000..1200000]");
-        addDescription(getServiceContract().INTENT_ALTITUDE_THRESHOLD, "option: [x|o|i|<|>]\n min: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n max: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_AVERAGING, "averagingPressure: [0..10]\n averagingTemperature: [0..255]\n movingAveragePressure: [0..25]");
-        addDescription(getServiceContract().INTENT_REFERENCE_AIR_PRESSURE, "[" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_AIR_PRESSURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_AIR_PRESSURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [10000..1200000]\n max: [10000..1200000]");
+        addDescription(getContract().INTENT_ALTITUDE_THRESHOLD, "option: [x|o|i|<|>]\n min: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n max: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_AVERAGING, "averagingPressure: [0..10]\n averagingTemperature: [0..255]\n movingAveragePressure: [0..25]");
+        addDescription(getContract().INTENT_REFERENCE_AIR_PRESSURE, "[" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
 
-        addDescription(getServiceContract().EVENT_AIR_PRESSURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [10000..1200000]\n");
-        addDescription(getServiceContract().EVENT_ALTITUDE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
-        addDescription(getServiceContract().EVENT_AIR_PRESSURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [10000..1200000]\n");
-        addDescription(getServiceContract().EVENT_ALTITUDE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
-        addDescription(getServiceContract().STATUS_AIR_PRESSURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_AIR_PRESSURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [10000..1200000]\n max: [10000..1200000]");
-        addDescription(getServiceContract().STATUS_ALTITUDE_THRESHOLD, "option: [x|o|i|<|>]\n min: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n max: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_AVERAGING, "averagingPressure: [0..10]\n averagingTemperature: [0..255]\n movingAveragePressure: [0..25]");
-        addDescription(getServiceContract().STATUS_REFERENCE_AIR_PRESSURE, "[" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_AIR_PRESSURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [10000..1200000]\n");
+        addDescription(getContract().EVENT_ALTITUDE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
+        addDescription(getContract().EVENT_AIR_PRESSURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [10000..1200000]\n");
+        addDescription(getContract().EVENT_ALTITUDE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
+        addDescription(getContract().STATUS_AIR_PRESSURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_AIR_PRESSURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [10000..1200000]\n max: [10000..1200000]");
+        addDescription(getContract().STATUS_ALTITUDE_THRESHOLD, "option: [x|o|i|<|>]\n min: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n max: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_AVERAGING, "averagingPressure: [0..10]\n averagingTemperature: [0..255]\n movingAveragePressure: [0..25]");
+        addDescription(getContract().STATUS_REFERENCE_AIR_PRESSURE, "[" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDebouncePeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_AIR_PRESSURE_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_AIR_PRESSURE_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setAirPressureCallbackPeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_ALTITUDE_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_ALTITUDE_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setAltitudeCallbackPeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_AIR_PRESSURE_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_AIR_PRESSURE_THRESHOLD)) {
 
             DeviceAirPressureCallbackThreshold threshold = getMapper().readValue(payload, DeviceAirPressureCallbackThreshold.class);
             getDevice().setAirPressureThreshold(threshold);
         }
-        if (string.startsWith(getServiceContract().INTENT_ALTITUDE_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_ALTITUDE_THRESHOLD)) {
 
             DeviceAltitudeCallbackThreshold threshold = getMapper().readValue(payload, DeviceAltitudeCallbackThreshold.class);
             getDevice().setAltitudeCallbackThreshold(threshold);
 
         }
-        if (string.startsWith(getServiceContract().INTENT_AVERAGING)) {
+        if (string.startsWith(getContract().INTENT_AVERAGING)) {
 
             DeviceAveraging averaging = getMapper().readValue(payload, DeviceAveraging.class);
             getDevice().setAveraging(averaging);
 
         }
-        if (string.startsWith(getServiceContract().INTENT_REFERENCE_AIR_PRESSURE)) {
+        if (string.startsWith(getContract().INTENT_REFERENCE_AIR_PRESSURE)) {
             Integer reference = getMapper().readValue(payload, Integer.class);
             getDevice().setReferenceAirPressure(reference);
 
@@ -127,57 +127,57 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
     @Override
     public void airPressure(int i) {
 
-        addEvent(getServiceContract().EVENT_AIR_PRESSURE, new AirPressureEvent(i));
+        addEvent(getContract().EVENT_AIR_PRESSURE, new AirPressureEvent(i));
     }
 
     @Override
     public void airPressureReached(int i) {
-        addEvent(getServiceContract().EVENT_AIR_PRESSURE_REACHED, new AirPressureEvent(i));
+        addEvent(getContract().EVENT_AIR_PRESSURE_REACHED, new AirPressureEvent(i));
     }
 
     @Override
     public void altitude(int i) {
-        addEvent(getServiceContract().EVENT_ALTITUDE, new AltitudeEvent(i));
+        addEvent(getContract().EVENT_ALTITUDE, new AltitudeEvent(i));
     }
 
     @Override
     public void altitudeReached(int i) {
-        addEvent(getServiceContract().EVENT_ALTITUDE_REACHED, new AltitudeEvent(i));
+        addEvent(getContract().EVENT_ALTITUDE_REACHED, new AltitudeEvent(i));
     }
 
     @Override
     public void airPressureCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_AIR_PRESSURE_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_AIR_PRESSURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void altitudeCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_ALTITUDE_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void airPressureCallbackThresholdChanged(DeviceAirPressureCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_AIR_PRESSURE_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_AIR_PRESSURE_THRESHOLD, threshold);
     }
 
     @Override
     public void altitudeCallbackThresholdChanged(DeviceAltitudeCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_ALTITUDE_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_ALTITUDE_THRESHOLD, threshold);
     }
 
     @Override
     public void averagingChanged(DeviceAveraging averaging) {
-        addStatus(getServiceContract().STATUS_AVERAGING, averaging);
+        addStatus(getContract().STATUS_AVERAGING, averaging);
     }
 
     @Override
     public void referenceAirPressureChanged(Integer referenceAirPressure) {
-        addStatus(getServiceContract().STATUS_REFERENCE_AIR_PRESSURE, referenceAirPressure);
+        addStatus(getContract().STATUS_REFERENCE_AIR_PRESSURE, referenceAirPressure);
     }
 
     public static class AirPressureEvent {

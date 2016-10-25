@@ -58,41 +58,41 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
     public DustDetectorService(DustDetectorDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new DustDetectorServiceContract(device));
-        addDescription(getServiceContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_MOVING_AVERAGE, "[0..100]");
+        addDescription(getContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_MOVING_AVERAGE, "[0..100]");
 
-        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
+        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
 
-        addDescription(getServiceContract().EVENT_DUST_DENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
-        addDescription(getServiceContract().EVENT_DUST_DENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
-        addDescription(getServiceContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_MOVING_AVERAGE, "[0..100]");
+        addDescription(getContract().EVENT_DUST_DENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
+        addDescription(getContract().EVENT_DUST_DENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
+        addDescription(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
+        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_MOVING_AVERAGE, "[0..100]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDebouncePeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_MOVING_AVERAGE)) {
+        if (string.startsWith(getContract().INTENT_MOVING_AVERAGE)) {
 
             Short average = getMapper().readValue(payload, Short.class);
             getDevice().setMovingAverage(average);
         }
-        if (string.startsWith(getServiceContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDustDensityCallbackPeriod(period);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_DUST_DENSITY_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_DUST_DENSITY_THRESHOLD)) {
 
             DeviceDustDensityCallbackThreshold threshold = getMapper().readValue(payload, DeviceDustDensityCallbackThreshold.class);
             getDevice().setDustDensityCallbackThreshold(threshold);
@@ -102,32 +102,32 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void movingAverageChanged(short movingAverage) {
-        addStatus(getServiceContract().STATUS_MOVING_AVERAGE, movingAverage);
+        addStatus(getContract().STATUS_MOVING_AVERAGE, movingAverage);
     }
 
     @Override
     public void dustDensityCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void dustDensityCallbackThresholdChanged(DeviceDustDensityCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_DUST_DENSITY_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_DUST_DENSITY_THRESHOLD, threshold);
     }
 
     @Override
     public void dustDensity(int i) {
-        addEvent(getServiceContract().EVENT_DUST_DENSITY, new DustDensityEvent(i));
+        addEvent(getContract().EVENT_DUST_DENSITY, new DustDensityEvent(i));
     }
 
     @Override
     public void dustDensityReached(int i) {
-        addEvent(getServiceContract().EVENT_DUST_DENSITY_REACHED, new DustDensityEvent(i));
+        addEvent(getContract().EVENT_DUST_DENSITY_REACHED, new DustDensityEvent(i));
     }
 
     public static class DustDensityEvent {

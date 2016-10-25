@@ -57,29 +57,29 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
 
     public MultiTouchService(MultiTouchDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new MultiTouchServiceContract(device));
-        addDescription(getServiceContract().INTENT_ELECTRODE_CONFIG, "[0..8191]");
-        addDescription(getServiceContract().INTENT_ELECTRODE_SENSITIVITY, "[0..8191]");
-        addDescription(getServiceContract().INTENT_RECALIBRATE, "[true|false]");
+        addDescription(getContract().INTENT_ELECTRODE_CONFIG, "[0..8191]");
+        addDescription(getContract().INTENT_ELECTRODE_SENSITIVITY, "[0..8191]");
+        addDescription(getContract().INTENT_RECALIBRATE, "[true|false]");
 
-        addDescription(getServiceContract().EVENT_TOUCH_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..8191]\n");
-        addDescription(getServiceContract().EVENT_RECALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_TOUCH_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..8191]\n");
+        addDescription(getContract().EVENT_RECALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getServiceContract().STATUS_ELECTRODE_SENSITIVITY, "[5..201]");
-        addDescription(getServiceContract().STATUS_ELECTRODE_CONFIG, "[0..8191]");
+        addDescription(getContract().STATUS_ELECTRODE_SENSITIVITY, "[5..201]");
+        addDescription(getContract().STATUS_ELECTRODE_CONFIG, "[0..8191]");
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_RECALIBRATE)) {
+        if (string.startsWith(getContract().INTENT_RECALIBRATE)) {
             Boolean recalibrate = getMapper().readValue(payload, Boolean.class);
             getDevice().recalibrate(recalibrate);
         }
-        if (string.startsWith(getServiceContract().INTENT_ELECTRODE_CONFIG)) {
+        if (string.startsWith(getContract().INTENT_ELECTRODE_CONFIG)) {
             Integer electrodeConfig = getMapper().readValue(payload, Integer.class);
             getDevice().setElectrodeConfig(electrodeConfig);
         }
-        if (string.startsWith(getServiceContract().INTENT_ELECTRODE_SENSITIVITY)) {
+        if (string.startsWith(getContract().INTENT_ELECTRODE_SENSITIVITY)) {
             Short electrodeConfig = getMapper().readValue(payload, Short.class);
             getDevice().setElectrodeSensitivity(electrodeConfig);
         }
@@ -88,22 +88,22 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
 
     @Override
     public void electrodeConfigChanged(Integer electrodeConfig) {
-        addStatus(getServiceContract().STATUS_ELECTRODE_CONFIG, electrodeConfig);
+        addStatus(getContract().STATUS_ELECTRODE_CONFIG, electrodeConfig);
     }
 
     @Override
     public void electrodeSensitivityChanged(Short electrodeSensitivity) {
-        addStatus(getServiceContract().STATUS_ELECTRODE_SENSITIVITY, electrodeSensitivity);
+        addStatus(getContract().STATUS_ELECTRODE_SENSITIVITY, electrodeSensitivity);
     }
 
     @Override
     public void recalibrated() {
-        addEvent(getServiceContract().EVENT_RECALIBRATED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_RECALIBRATED, System.currentTimeMillis());
     }
 
     @Override
     public void touchState(int i) {
-        addEvent(getServiceContract().EVENT_TOUCH_STATE, new TouchStateEvent(i));
+        addEvent(getContract().EVENT_TOUCH_STATE, new TouchStateEvent(i));
     }
 
     public static class TouchStateEvent {

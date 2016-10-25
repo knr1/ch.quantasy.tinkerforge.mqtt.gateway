@@ -59,54 +59,54 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
 
     public JoystickService(JoystickDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new JoystickServiceContract(device));
-        addDescription(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");
-        addDescription(getServiceContract().INTENT_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [-100..100]\n maxX: [-100..100]\n minY: [-100..100]\n maxY: [-100..100]");
-        addDescription(getServiceContract().INTENT_CALIBRATE, "[true|false]");
+        addDescription(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");
+        addDescription(getContract().INTENT_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [-100..100]\n maxX: [-100..100]\n minY: [-100..100]\n maxY: [-100..100]");
+        addDescription(getContract().INTENT_CALIBRATE, "[true|false]");
 
-        addDescription(getServiceContract().EVENT_CALIBRATE, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_CALIBRATE, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getServiceContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getServiceContract().EVENT_POSITION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
-        addDescription(getServiceContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [0..4095]\n y: [0..4095]");
-        addDescription(getServiceContract().EVENT_POSITION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [-100..100]\n y: [-100..100]");
-        addDescription(getServiceContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");
-        addDescription(getServiceContract().STATUS_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [-100..100]\n maxX: [-100..100]\n minY: [-100..100]\n maxY: [-100..100]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        addDescription(getContract().EVENT_POSITION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
+        addDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [0..4095]\n y: [0..4095]");
+        addDescription(getContract().EVENT_POSITION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [-100..100]\n y: [-100..100]");
+        addDescription(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");
+        addDescription(getContract().STATUS_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [-100..100]\n maxX: [-100..100]\n minY: [-100..100]\n maxY: [-100..100]");
+        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDebouncePeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setAnalogValueCallbackPeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_POSITION_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_POSITION_CALLBACK_PERIOD)) {
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setPositionCallbackPeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
             DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
             getDevice().setAnalogValueThreshold(threshold);
         }
-        if (string.startsWith(getServiceContract().INTENT_POSITION_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_POSITION_THRESHOLD)) {
             DevicePositionCallbackThreshold threshold = getMapper().readValue(payload, DevicePositionCallbackThreshold.class);
             getDevice().setIlluminanceCallbackThreshold(threshold);
 
         }
-        if (string.startsWith(getServiceContract().INTENT_CALIBRATE)) {
+        if (string.startsWith(getContract().INTENT_CALIBRATE)) {
             Boolean calibrate = getMapper().readValue(payload, Boolean.class);
             getDevice().setCalibration(calibrate);
         }
@@ -115,62 +115,62 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void positionCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_POSITION_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_POSITION_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
     }
 
     @Override
     public void postionCallbackThresholdChanged(DevicePositionCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_POSITION_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_POSITION_THRESHOLD, threshold);
     }
 
     @Override
     public void calibrated() {
-        addEvent(getServiceContract().EVENT_CALIBRATE, System.currentTimeMillis());
+        addEvent(getContract().EVENT_CALIBRATE, System.currentTimeMillis());
     }
 
     @Override
     public void analogValue(int i, int i1) {
-        addEvent(getServiceContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i, i1));
+        addEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i, i1));
     }
 
     @Override
     public void analogValueReached(int i, int i1) {
-        addEvent(getServiceContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i, i1));
+        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i, i1));
     }
 
     @Override
     public void position(short s, short s1) {
-        addEvent(getServiceContract().EVENT_POSITION, new PositionEvent(s, s1));
+        addEvent(getContract().EVENT_POSITION, new PositionEvent(s, s1));
     }
 
     @Override
     public void positionReached(short s, short s1) {
-        addEvent(getServiceContract().EVENT_POSITION_REACHED, new PositionEvent(s, s1));
+        addEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(s, s1));
     }
 
     @Override
     public void pressed() {
-        addEvent(getServiceContract().EVENT_PRESSED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_PRESSED, System.currentTimeMillis());
     }
 
     @Override
     public void released() {
-        addEvent(getServiceContract().EVENT_RELEASED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_RELEASED, System.currentTimeMillis());
     }
 
     public static class AnalogValueEvent {

@@ -44,9 +44,9 @@ package ch.quantasy.gateway.agent.motionLight;
 
 import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceContract;
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchServiceContract;
-import ch.quantasy.mqtt.gateway.agent.Agent;
-import ch.quantasy.mqtt.gateway.agent.AgentContract;
-import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
+import ch.quantasy.mqtt.gateway.client.ClientContract;
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
@@ -61,24 +61,24 @@ public class MotionLightAgent implements MessageConsumer{
     private final RemoteSwitchServiceContract remoteSwitchServiceContract;
     private final MotionDetectorServiceContract motionDetectorServiceContract;
     private final Thread t;
-    private final Agent agent;
+    private final GatewayClient<ClientContract> gatewayClient;
 
     public MotionLightAgent(URI mqttURI) throws MqttException {
         remoteSwitchServiceContract = new RemoteSwitchServiceContract("jKQ", TinkerforgeDeviceClass.RemoteSwitch.toString());
         motionDetectorServiceContract = new MotionDetectorServiceContract("kfT", TinkerforgeDeviceClass.MotionDetector.toString());
        
-        agent=new Agent(mqttURI, "2408h40h4", new AgentContract("Agent","MotionLight","e48"));
-        agent.subscribe(motionDetectorServiceContract.EVENT_DETECTION_CYCLE_ENDED, this);
-        agent.subscribe(motionDetectorServiceContract.EVENT_MOTION_DETECTED, this);
+        gatewayClient=new GatewayClient(mqttURI, "2408h40h4", new ClientContract("Agent","MotionLight","e48"));
+        gatewayClient.subscribe(motionDetectorServiceContract.EVENT_DETECTION_CYCLE_ENDED, this);
+        gatewayClient.subscribe(motionDetectorServiceContract.EVENT_MOTION_DETECTED, this);
         
-        agent.connect();
+        gatewayClient.connect();
         t=new Thread(new switcher());
         t.start();
         
     }
 
     @Override
-    public void messageArrived(Agent agent, String string, byte[] payload) throws Exception {
+    public void messageArrived(GatewayClient gatewayClient, String string, byte[] payload) throws Exception {
         if (string.equals(motionDetectorServiceContract.EVENT_MOTION_DETECTED)) {
             synchronized (this) {
                 switchLight(SwitchSocketCParameters.SwitchTo.switchOn);
@@ -134,7 +134,7 @@ public class MotionLightAgent implements MessageConsumer{
         this.state = state;
         SwitchSocketCParameters config = new SwitchSocketCParameters('D', (short) 3, state);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
-        agent.addIntent(topic, config);
+        gatewayClient.addIntent(topic, config);
         System.out.println("Switching: " + state);
     }
 

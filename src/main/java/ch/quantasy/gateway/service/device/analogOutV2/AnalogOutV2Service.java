@@ -56,14 +56,14 @@ public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device,
 
     public AnalogOutV2Service(AnalogOutV2Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new AnalogOutV2ServiceContract(device));
-        addDescription(getServiceContract().INTENT_OUTPUT_VOLTAGE, "[0..12000]");
-        addDescription(getServiceContract().STATUS_OUTPUT_VOLTAGE, "[0..12000]");
+        addDescription(getContract().INTENT_OUTPUT_VOLTAGE, "[0..12000]");
+        addDescription(getContract().STATUS_OUTPUT_VOLTAGE, "[0..12000]");
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_OUTPUT_VOLTAGE)) {
+        if (string.startsWith(getContract().INTENT_OUTPUT_VOLTAGE)) {
             Integer outputVoltage = getMapper().readValue(payload, Integer.class);
             getDevice().setOutputVoltage(outputVoltage);
         }
@@ -72,7 +72,7 @@ public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device,
 
     @Override
     public void outputVoltageChanged(Integer voltage) {
-        addEvent(getServiceContract().STATUS_OUTPUT_VOLTAGE, voltage);
+        addEvent(getContract().STATUS_OUTPUT_VOLTAGE, voltage);
     }
 
 }

@@ -63,13 +63,13 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
         super(mqttURI, device.getUid(), serviceContract);
         this.device = device;
         device.setCallback(this);
-        addDescription(getServiceContract().STATUS_POSITION, "[0|1|2|3|4|5|6|7|8|a|b|c|d]");
-        addDescription(getServiceContract().STATUS_FIRMWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
-        addDescription(getServiceContract().STATUS_HARDWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
+        addDescription(getContract().STATUS_POSITION, "[0|1|2|3|4|5|6|7|8|a|b|c|d]");
+        addDescription(getContract().STATUS_FIRMWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
+        addDescription(getContract().STATUS_HARDWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
 
-        addStatus(getServiceContract().STATUS_POSITION, device.getPosition());
-        addStatus(getServiceContract().STATUS_FIRMWARE, device.getFirmwareVersion());
-        addStatus(getServiceContract().STATUS_HARDWARE, device.getHardwareVersion());
+        addStatus(getContract().STATUS_POSITION, device.getPosition());
+        addStatus(getContract().STATUS_FIRMWARE, device.getFirmwareVersion());
+        addStatus(getContract().STATUS_HARDWARE, device.getHardwareVersion());
 
     }
 

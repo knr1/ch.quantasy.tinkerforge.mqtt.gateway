@@ -56,7 +56,7 @@ public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceCo
 
     public TiltService(TiltDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new TiltServiceContract(device));
-        addDescription(getServiceContract().EVENT_TILT_STATE, "[0..2]");
+        addDescription(getContract().EVENT_TILT_STATE, "[0..2]");
 
     }
 
@@ -67,7 +67,7 @@ public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceCo
 
     @Override
     public void tiltState(short s) {
-        addEvent(getServiceContract().EVENT_TILT_STATE, new TiltEvent(s));
+        addEvent(getContract().EVENT_TILT_STATE, new TiltEvent(s));
     }
 
     public static class TiltEvent {

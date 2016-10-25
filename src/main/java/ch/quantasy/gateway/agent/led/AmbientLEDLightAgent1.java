@@ -47,9 +47,9 @@ import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceCo
 import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderService;
 import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
-import ch.quantasy.mqtt.gateway.agent.Agent;
-import ch.quantasy.mqtt.gateway.agent.AgentContract;
-import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
+import ch.quantasy.mqtt.gateway.client.ClientContract;
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
@@ -72,7 +72,7 @@ public class AmbientLEDLightAgent1 {
     private Thread timerThread;
     private final int frameDurationInMillis;
     private final int amountOfLEDs;
-    private final Agent agent;
+    private final GatewayClient<ClientContract> gatewayClient;
     private int delayInMinutes;
 
     
@@ -84,19 +84,19 @@ public class AmbientLEDLightAgent1 {
         delayInMinutes = 1;
         waveList = new ArrayList<>();
         managerServiceContract = new ManagerServiceContract("Manager");
-        agent = new Agent(mqttURI, "433407hfra", new AgentContract("Agent", "AmbientLEDLight", "lulu"));
-        agent.connect();
+        gatewayClient = new GatewayClient(mqttURI, "433407hfra", new ClientContract("Agent", "AmbientLEDLight", "lulu"));
+        gatewayClient.connect();
         connectRemoteServices(new TinkerforgeStackAddress("lights01"));
 
         RotaryEncoderServiceContract rotaryEncoderServiceContract = new RotaryEncoderServiceContract("je3", TinkerforgeDeviceClass.RotaryEncoder.toString());
 
         MotionDetectorServiceContract motionDetectorServiceContract = new MotionDetectorServiceContract("kgx", TinkerforgeDeviceClass.MotionDetector.toString());
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
-        agent.addIntent(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
-        agent.subscribe(rotaryEncoderServiceContract.EVENT_COUNT, new Brightness());
-        agent.subscribe(rotaryEncoderServiceContract.EVENT_PRESSED, new MessageConsumer() {
+        gatewayClient.addIntent(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
+        gatewayClient.subscribe(rotaryEncoderServiceContract.EVENT_COUNT, new Brightness());
+        gatewayClient.subscribe(rotaryEncoderServiceContract.EVENT_PRESSED, new MessageConsumer() {
             @Override
-            public void messageArrived(Agent agent, String topic, byte[] mm) throws Exception {
+            public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
                 for (Wave wave : waveList) {
                     if (wave.getTargetBrightness() > 0) {
                         wave.clearFrames();
@@ -117,9 +117,9 @@ public class AmbientLEDLightAgent1 {
             new Thread(wave).start();
         }
 
-        agent.subscribe(motionDetectorServiceContract.EVENT_MOTION_DETECTED, new MessageConsumer() {
+        gatewayClient.subscribe(motionDetectorServiceContract.EVENT_MOTION_DETECTED, new MessageConsumer() {
             @Override
-            public void messageArrived(Agent agent, String topic, byte[] mm) throws Exception {
+            public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
                 if (timerThread != null) {
                     timerThread.interrupt();
                 }
@@ -129,9 +129,9 @@ public class AmbientLEDLightAgent1 {
                 }
             }
         });
-        agent.subscribe(motionDetectorServiceContract.EVENT_DETECTION_CYCLE_ENDED, new MessageConsumer() {
+        gatewayClient.subscribe(motionDetectorServiceContract.EVENT_DETECTION_CYCLE_ENDED, new MessageConsumer() {
             @Override
-            public void messageArrived(Agent agent, String topic, byte[] mm) throws Exception {
+            public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
                 timerThread = new Thread() {
                     @Override
                     public void run() {
@@ -152,7 +152,7 @@ public class AmbientLEDLightAgent1 {
 
     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
         for (TinkerforgeStackAddress address : addresses) {
-            agent.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
+            gatewayClient.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
@@ -172,8 +172,8 @@ public class AmbientLEDLightAgent1 {
         private Integer latestCount;
 
         @Override
-        public void messageArrived(Agent agent, String topic, byte[] mm) throws Exception {
-            RotaryEncoderService.CountEvent[] countEvents = agent.getMapper().readValue(mm, RotaryEncoderService.CountEvent[].class);
+        public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
+            RotaryEncoderService.CountEvent[] countEvents = gatewayClient.getMapper().readValue(mm, RotaryEncoderService.CountEvent[].class);
             if (latestCount == null) {
                 latestCount = countEvents[0].getValue();
             }
@@ -244,8 +244,8 @@ public class AmbientLEDLightAgent1 {
         }
 
         public Wave(LEDStripServiceContract ledServiceContract, LEDStripDeviceConfig config) {
-            super(agent, ledServiceContract, config);
-            agent.addIntent(ledServiceContract.INTENT_CONFIG, config);
+            super(gatewayClient, ledServiceContract, config);
+            gatewayClient.addIntent(ledServiceContract.INTENT_CONFIG, config);
 
             frames = new ArrayList<>();
 
@@ -262,7 +262,7 @@ public class AmbientLEDLightAgent1 {
                 prototypeLEDFrame.setColor(1, i, (short) (127.0 + (sineGreen * 127.0)));
                 prototypeLEDFrame.setColor(2, i, (short) (127.0 + (sineBlue * 127.0)));
             }
-            agent.subscribe(ledServiceContract.EVENT_LEDs_RENDERED, this);
+            gatewayClient.subscribe(ledServiceContract.EVENT_LEDs_RENDERED, this);
         }
 
         public void clearFrames() {

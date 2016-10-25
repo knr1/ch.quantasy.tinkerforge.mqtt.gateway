@@ -58,33 +58,33 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
     public LineService(LineDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new LineServiceContract(device));
-        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
 
-        addDescription(getServiceContract().EVENT_REFLECTIVITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[0..4095]\n");
-        addDescription(getServiceContract().EVENT_REFLECTIVITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getServiceContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_REFLECTIVITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[0..4095]\n");
+        addDescription(getContract().EVENT_REFLECTIVITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        addDescription(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDebouncePeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setReflectivityCallbackPeriod(period);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_REFLECTIVITY_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_REFLECTIVITY_THRESHOLD)) {
 
             DeviceReflectivityCallbackThreshold threshold = getMapper().readValue(payload, DeviceReflectivityCallbackThreshold.class);
             getDevice().setReflectivityCallbackThreshold(threshold);
@@ -93,27 +93,27 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void reflectivityCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void reflectivityThresholdChanged(DeviceReflectivityCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_REFLECTIVITY_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_REFLECTIVITY_THRESHOLD, threshold);
     }
 
     @Override
     public void reflectivity(int i) {
-        addEvent(getServiceContract().EVENT_REFLECTIVITY, new ReflectivityEvent(i));
+        addEvent(getContract().EVENT_REFLECTIVITY, new ReflectivityEvent(i));
     }
 
     @Override
     public void reflectivityReached(int i) {
-        addEvent(getServiceContract().EVENT_REFLECTIVITY_REACHED, new ReflectivityEvent(i));
+        addEvent(getContract().EVENT_REFLECTIVITY_REACHED, new ReflectivityEvent(i));
     }
 
     public static class ReflectivityEvent {

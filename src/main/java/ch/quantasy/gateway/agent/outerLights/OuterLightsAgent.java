@@ -46,14 +46,11 @@ import ch.quantasy.gateway.agent.led.AmbientLEDLightAgent;
 import ch.quantasy.gateway.service.device.dc.DCServiceContract;
 import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
 import ch.quantasy.gateway.service.device.linearPoti.LinearPotiServiceContract;
-import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceContract;
-import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
-import ch.quantasy.mqtt.gateway.agent.Agent;
-import ch.quantasy.mqtt.gateway.agent.AgentContract;
-import ch.quantasy.mqtt.gateway.agent.MessageConsumer;
+import ch.quantasy.mqtt.gateway.client.ClientContract;
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import java.util.logging.Level;
@@ -70,7 +67,7 @@ public class OuterLightsAgent {
     private final DCServiceContract dcServiceContract;
     private final LinearPotiServiceContract linearPotiServiceContract;
 
-    private final Agent agent;
+    private final GatewayClient<ClientContract> gatewayClient;
 
     public OuterLightsAgent(URI mqttURI) throws MqttException {
         managerServiceContract = new ManagerServiceContract("Manager");
@@ -78,23 +75,23 @@ public class OuterLightsAgent {
         dcServiceContract = new DCServiceContract("6kP5Zh", TinkerforgeDeviceClass.DC.toString());
         linearPotiServiceContract = new LinearPotiServiceContract("bxJ", TinkerforgeDeviceClass.LinearPoti.toString());
 
-        agent = new Agent(mqttURI, "wrth563g", new AgentContract("Agent", "OuterLights", "01"));
-        agent.connect();
+        gatewayClient = new GatewayClient(mqttURI, "wrth563g", new ClientContract("Agent", "OuterLights", "01"));
+        gatewayClient.connect();
         connectRemoteServices("controller01","localhost");
 
-        agent.addIntent(linearPotiServiceContract.INTENT_POSITION_CALLBACK_PERIOD, 100);
-        agent.addIntent(dcServiceContract.INTENT_ACCELERATION, 20000);
-        agent.addIntent(dcServiceContract.INTENT_DRIVER_MODE, 1);
-        agent.addIntent(dcServiceContract.INTENT_PWM_FREQUENCY, 20000);
-        agent.addIntent(dcServiceContract.INTENT_ENABLED, true);
+        gatewayClient.addIntent(linearPotiServiceContract.INTENT_POSITION_CALLBACK_PERIOD, 100);
+        gatewayClient.addIntent(dcServiceContract.INTENT_ACCELERATION, 20000);
+        gatewayClient.addIntent(dcServiceContract.INTENT_DRIVER_MODE, 1);
+        gatewayClient.addIntent(dcServiceContract.INTENT_PWM_FREQUENCY, 20000);
+        gatewayClient.addIntent(dcServiceContract.INTENT_ENABLED, true);
 
         
-        agent.subscribe(linearPotiServiceContract.EVENT_POSITION, new MessageConsumer() {
+        gatewayClient.subscribe(linearPotiServiceContract.EVENT_POSITION, new MessageConsumer() {
             @Override
-            public void messageArrived(Agent agent, String topic, byte[] mm) throws Exception {
-                LinearPotiService.PositionEvent[] positionEvents=agent.getMapper().readValue(mm,LinearPotiService.PositionEvent[].class);
+            public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
+                LinearPotiService.PositionEvent[] positionEvents=gatewayClient.getMapper().readValue(mm,LinearPotiService.PositionEvent[].class);
                 int position=positionEvents[positionEvents.length-1].getValue();
-                agent.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY,(32767/100)*position);
+                gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY,(32767/100)*position);
             }
         });
 
@@ -102,7 +99,7 @@ public class OuterLightsAgent {
 
     private void connectRemoteServices(String... addresses) {
         for (String address : addresses) {
-            agent.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
+            gatewayClient.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
             try {
                 //Bad idea! Better wait for the event of the managerService... having accepted the stack(s).
                 Thread.sleep(1000);

@@ -57,22 +57,22 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
 
     public SolidStateRelayService(SolidStateRelayDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new SolidStateRelayServiceContract(device));
-        addDescription(getServiceContract().INTENT_MONOFLOP, "state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_STATE, "[true|false]");
-        addDescription(getServiceContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n state: [true|false]");
-        addDescription(getServiceContract().STATUS_STATE, "[true|false]");
+        addDescription(getContract().INTENT_MONOFLOP, "state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_STATE, "[true|false]");
+        addDescription(getContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n state: [true|false]");
+        addDescription(getContract().STATUS_STATE, "[true|false]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_MONOFLOP)) {
+        if (string.startsWith(getContract().INTENT_MONOFLOP)) {
             DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
             getDevice().setMonoflop(parameters);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_STATE)) {
+        if (string.startsWith(getContract().INTENT_STATE)) {
             Boolean parameters = getMapper().readValue(payload, Boolean.class);
             getDevice().setState(parameters);
         }
@@ -80,12 +80,12 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
 
     @Override
     public void stateChanged(Boolean state) {
-        addStatus(getServiceContract().STATUS_STATE, state);
+        addStatus(getContract().STATUS_STATE, state);
     }
 
     @Override
     public void monoflopDone(boolean state) {
-        addEvent(getServiceContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(state));
+        addEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(state));
     }
 
     public static class MonoflopDoneEvent {

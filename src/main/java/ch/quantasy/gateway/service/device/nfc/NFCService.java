@@ -58,32 +58,32 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
 
     public NFCService(NFCRFIDDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new NFCServiceContract(device));
-        addDescription(getServiceContract().INTENT_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_READ, "[00..FF]_9");
+        addDescription(getContract().INTENT_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_READ, "[00..FF]_9");
 
-        addDescription(getServiceContract().EVENT_TAG_DISCOVERD, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
-        addDescription(getServiceContract().EVENT_TAG_READ, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  value: [00..FF]_*");
+        addDescription(getContract().EVENT_TAG_DISCOVERD, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
+        addDescription(getContract().EVENT_TAG_READ, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  value: [00..FF]_*");
 
-        addDescription(getServiceContract().EVENT_TAG_VANISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
-        addDescription(getServiceContract().STATUS_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_TAG_VANISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
+        addDescription(getContract().STATUS_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getServiceContract().EVENT_TAG_WRITTEN, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  state: [WritePageError|WritePageReady]\n value: [00..FF]_*");
-        addDescription(getServiceContract().INTENT_WRITE, "id: [00..FF]_9\n  value: [00..FF]_*");
+        addDescription(getContract().EVENT_TAG_WRITTEN, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [00..FF]_9\n  state: [WritePageError|WritePageReady]\n value: [00..FF]_*");
+        addDescription(getContract().INTENT_WRITE, "id: [00..FF]_9\n  value: [00..FF]_*");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_SCANNING_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_SCANNING_CALLBACK_PERIOD)) {
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setScanningCallbackPeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_READ)) {
+        if (string.startsWith(getContract().INTENT_READ)) {
             String id = getMapper().readValue(payload, String.class);
             getDevice().setActiveTagIDToRead(id);
         }
-        if (string.startsWith(getServiceContract().INTENT_WRITE)) {
+        if (string.startsWith(getContract().INTENT_WRITE)) {
             NFCWrite write = getMapper().readValue(payload, NFCWrite.class);
             getDevice().setActiveTagToWrite(write);
         }
@@ -92,27 +92,27 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
 
     @Override
     public void scanningCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_SCANNING_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_SCANNING_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void tagDiscovered(NFCTag tagID) {
-        addEvent(getServiceContract().EVENT_TAG_DISCOVERD, new TagIDEvent(tagID));
+        addEvent(getContract().EVENT_TAG_DISCOVERD, new TagIDEvent(tagID));
     }
 
     @Override
     public void tagVanished(NFCTag tagID) {
-        addEvent(getServiceContract().EVENT_TAG_VANISHED, new TagIDEvent(tagID));
+        addEvent(getContract().EVENT_TAG_VANISHED, new TagIDEvent(tagID));
     }
 
     @Override
     public void tagRead(NFCTag tag) {
-        addEvent(getServiceContract().EVENT_TAG_READ, new TagReadEvent(tag));
+        addEvent(getContract().EVENT_TAG_READ, new TagReadEvent(tag));
     }
 
     @Override
     public void tagWritten(NFCTag tag) {
-        addEvent(getServiceContract().EVENT_TAG_WRITTEN, new TagWrittenEvent(tag));
+        addEvent(getContract().EVENT_TAG_WRITTEN, new TagWrittenEvent(tag));
     }
 
     static class TagWrittenEvent {

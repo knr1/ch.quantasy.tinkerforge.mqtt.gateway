@@ -56,58 +56,58 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     public DCService(DCDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DCServiceContract(device));
-        addDescription(getServiceContract().INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_DRIVER_MODE, "[0|1]");
-        addDescription(getServiceContract().INTENT_ENABLED, "[true|false]");
-        addDescription(getServiceContract().INTENT_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_PWM_FREQUENCY, "[1..20000]");
-        addDescription(getServiceContract().INTENT_VELOCITY_VELOCITY, "-32767..32767");
-        addDescription(getServiceContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_DRIVER_MODE, "[0|1]");
+        addDescription(getContract().INTENT_ENABLED, "[true|false]");
+        addDescription(getContract().INTENT_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_PWM_FREQUENCY, "[1..20000]");
+        addDescription(getContract().INTENT_VELOCITY_VELOCITY, "-32767..32767");
+        addDescription(getContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
 
-        addDescription(getServiceContract().EVENT_FULL_BRAKE, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_EMERGENCY_SHUTDOWN, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_FULL_BRAKE, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_EMERGENCY_SHUTDOWN, "[0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getServiceContract().STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_DRIVER_MODE, "[0|1]");
-        addDescription(getServiceContract().STATUS_ENABLED, "[true|false]");
-        addDescription(getServiceContract().STATUS_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_PWM_FREQUENCY, "[1..20000]");
-        addDescription(getServiceContract().STATUS_VELOCITY_VELOCITY, "-32767..32767");
-        addDescription(getServiceContract().STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_DRIVER_MODE, "[0|1]");
+        addDescription(getContract().STATUS_ENABLED, "[true|false]");
+        addDescription(getContract().STATUS_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_PWM_FREQUENCY, "[1..20000]");
+        addDescription(getContract().STATUS_VELOCITY_VELOCITY, "-32767..32767");
+        addDescription(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_ENABLED)) {
+        if (string.startsWith(getContract().INTENT_ENABLED)) {
             Boolean enabled = getMapper().readValue(payload, Boolean.class);
             getDevice().setEnabled(enabled);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_ACCELERATION)) {
+        if (string.startsWith(getContract().INTENT_ACCELERATION)) {
             Integer acceleration = getMapper().readValue(payload, Integer.class);
             getDevice().setAcceleration(acceleration);
         }
-        if (string.startsWith(getServiceContract().INTENT_DRIVER_MODE)) {
+        if (string.startsWith(getContract().INTENT_DRIVER_MODE)) {
             Short driverMode = getMapper().readValue(payload, Short.class);
             getDevice().setDriveMode(driverMode);
         }
-        if (string.startsWith(getServiceContract().INTENT_MINIMUM_VOLTAGE)) {
+        if (string.startsWith(getContract().INTENT_MINIMUM_VOLTAGE)) {
             Integer minimumVoltage = getMapper().readValue(payload, Integer.class);
             getDevice().setMinimumVoltage(minimumVoltage);
         }
-        if (string.startsWith(getServiceContract().INTENT_PWM_FREQUENCY)) {
+        if (string.startsWith(getContract().INTENT_PWM_FREQUENCY)) {
             Integer pwmFrequency = getMapper().readValue(payload, Integer.class);
             getDevice().setPWMFrequency(pwmFrequency);
         }
-        if (string.startsWith(getServiceContract().INTENT_VELOCITY_VELOCITY)) {
+        if (string.startsWith(getContract().INTENT_VELOCITY_VELOCITY)) {
             Short velocity = getMapper().readValue(payload, Short.class);
             getDevice().setVelocity(velocity);
         }
-        if (string.startsWith(getServiceContract().INTENT_VELOCITY_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_VELOCITY_CALLBACK_PERIOD)) {
             Integer velocityPeriod = getMapper().readValue(payload, Integer.class);
             getDevice().setVelocityPeriod(velocityPeriod);
         }
@@ -115,63 +115,63 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void PWMFrequencyChanged(Integer pwmFrequency) {
-        addStatus(getServiceContract().STATUS_PWM_FREQUENCY, pwmFrequency);
+        addStatus(getContract().STATUS_PWM_FREQUENCY, pwmFrequency);
     }
 
     @Override
     public void accelerationChanged(Integer acceleration) {
-        addStatus(getServiceContract().STATUS_ACCELERATION, acceleration);
+        addStatus(getContract().STATUS_ACCELERATION, acceleration);
     }
 
     @Override
     public void driveModeChanged(Short driverMode) {
-        addStatus(getServiceContract().STATUS_DRIVER_MODE, driverMode);
+        addStatus(getContract().STATUS_DRIVER_MODE, driverMode);
     }
 
     @Override
     public void minimumVoltageChanged(Integer minimumVoltage) {
-        addStatus(getServiceContract().STATUS_MINIMUM_VOLTAGE, minimumVoltage);
+        addStatus(getContract().STATUS_MINIMUM_VOLTAGE, minimumVoltage);
 
     }
 
     @Override
     public void velocityPeriodChanged(Integer velocityPeriod) {
-        addStatus(getServiceContract().STATUS_VELOCITY_CALLBACK_PERIOD, velocityPeriod);
+        addStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, velocityPeriod);
     }
 
     @Override
     public void velocityChanged(Short velocity) {
-        addStatus(getServiceContract().STATUS_VELOCITY_VELOCITY, velocity);
+        addStatus(getContract().STATUS_VELOCITY_VELOCITY, velocity);
     }
 
     @Override
     public void currentVelocity(short s) {
-        addEvent(getServiceContract().EVENT_VELOCITY, new VelocityEvent(s));
+        addEvent(getContract().EVENT_VELOCITY, new VelocityEvent(s));
     }
 
     @Override
     public void emergencyShutdown() {
-        addEvent(getServiceContract().EVENT_EMERGENCY_SHUTDOWN, System.currentTimeMillis());
+        addEvent(getContract().EVENT_EMERGENCY_SHUTDOWN, System.currentTimeMillis());
     }
 
     @Override
     public void underVoltage(int i) {
-        addEvent(getServiceContract().EVENT_UNDERVOLTAGE, new UnderVoltageEvent(i));
+        addEvent(getContract().EVENT_UNDERVOLTAGE, new UnderVoltageEvent(i));
     }
 
     @Override
     public void velocityReached(short s) {
-        addEvent(getServiceContract().EVENT_VELOCITY_REACHED, new VelocityEvent(s));
+        addEvent(getContract().EVENT_VELOCITY_REACHED, new VelocityEvent(s));
     }
 
     @Override
     public void enabledChanged(Boolean isEnabled) {
-        addStatus(getServiceContract().STATUS_ENABLED, isEnabled);
+        addStatus(getContract().STATUS_ENABLED, isEnabled);
     }
 
     @Override
     public void fullBrake() {
-        addEvent(getServiceContract().EVENT_FULL_BRAKE, System.currentTimeMillis());
+        addEvent(getContract().EVENT_FULL_BRAKE, System.currentTimeMillis());
     }
 
     public static class VelocityEvent {

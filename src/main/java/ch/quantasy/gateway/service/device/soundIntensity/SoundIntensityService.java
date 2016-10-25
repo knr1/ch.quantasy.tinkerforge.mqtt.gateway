@@ -58,33 +58,33 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
     public SoundIntensityService(SoundIntensityDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new SoundIntensityServiceContract(device));
-        addDescription(getServiceContract().INTENT_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().INTENT_SOUND_INTENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
+        addDescription(getContract().INTENT_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_SOUND_INTENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
 
-        addDescription(getServiceContract().EVENT_INTENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
-        addDescription(getServiceContract().EVENT_INTENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
-        addDescription(getServiceContract().STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().STATUS_SOUND_INTENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
-        addDescription(getServiceContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_INTENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
+        addDescription(getContract().EVENT_INTENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
+        addDescription(getContract().STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().STATUS_SOUND_INTENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
+        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
 
-        if (string.startsWith(getServiceContract().INTENT_DEBOUNCE_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setDebouncePeriod(period);
         }
-        if (string.startsWith(getServiceContract().INTENT_SOUND_INTENSITY_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_SOUND_INTENSITY_CALLBACK_PERIOD)) {
 
             Long period = getMapper().readValue(payload, Long.class);
             getDevice().setSoundIntensityCallbackPeriod(period);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_SOUND_INTENSITY_THRESHOLD)) {
+        if (string.startsWith(getContract().INTENT_SOUND_INTENSITY_THRESHOLD)) {
 
             DeviceSoundIntensityCallbackThreshold threshold = getMapper().readValue(payload, DeviceSoundIntensityCallbackThreshold.class);
             getDevice().setSoundIntensityCallbackThreshold(threshold);
@@ -94,27 +94,27 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_DEBOUNCE_PERIOD, period);
+        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void soundIntensityCallbackPeriodChanged(long period) {
-        addStatus(getServiceContract().STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, period);
+        addStatus(getContract().STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void soundIntensityCallbackThresholdChanged(DeviceSoundIntensityCallbackThreshold threshold) {
-        addStatus(getServiceContract().STATUS_SOUND_INTENSITY_THRESHOLD, threshold);
+        addStatus(getContract().STATUS_SOUND_INTENSITY_THRESHOLD, threshold);
     }
 
     @Override
     public void intensity(int i) {
-        addEvent(getServiceContract().EVENT_INTENSITY, new SoundIntensityEvent(i));
+        addEvent(getContract().EVENT_INTENSITY, new SoundIntensityEvent(i));
     }
 
     @Override
     public void intensityReached(int i) {
-        addEvent(getServiceContract().EVENT_INTENSITY_REACHED, new SoundIntensityEvent(i));
+        addEvent(getContract().EVENT_INTENSITY_REACHED, new SoundIntensityEvent(i));
     }
 
     public static class SoundIntensityEvent {

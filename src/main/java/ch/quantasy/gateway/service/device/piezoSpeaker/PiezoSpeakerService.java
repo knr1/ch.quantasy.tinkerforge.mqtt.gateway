@@ -58,30 +58,30 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
 
     public PiezoSpeakerService(PiezoSpeakerDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new PiezoSpeakerServiceContract(device));
-        addDescription(getServiceContract().INTENT_BEEP, "duration: [0..4294967295]\n frequency: [585..7100]");
-        addDescription(getServiceContract().INTENT_MORSE, "string: [.|-| |]_60\n frequency: [585..7100]");
-        addDescription(getServiceContract().INTENT_CALIBRATE, "[true|false]");
-        addDescription(getServiceContract().EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_BEEP_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_BEEP_STARTED, "timestamp: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_MORSE_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getServiceContract().EVENT_MORSE_STARTED, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().INTENT_BEEP, "duration: [0..4294967295]\n frequency: [585..7100]");
+        addDescription(getContract().INTENT_MORSE, "string: [.|-| |]_60\n frequency: [585..7100]");
+        addDescription(getContract().INTENT_CALIBRATE, "[true|false]");
+        addDescription(getContract().EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_BEEP_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_BEEP_STARTED, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_MORSE_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_MORSE_STARTED, "timestamp: [0.." + Long.MAX_VALUE + "]");
     }
 
     @Override
     public void messageArrived(String string, byte[] payload) throws Exception {
-        if (string.startsWith(getServiceContract().INTENT_BEEP)) {
+        if (string.startsWith(getContract().INTENT_BEEP)) {
             BeepParameter beepParameter = getMapper().readValue(payload, BeepParameter.class);
             getDevice().beep(beepParameter);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_MORSE)) {
+        if (string.startsWith(getContract().INTENT_MORSE)) {
             MorseCodeParameter morseCodeParameter = getMapper().readValue(payload, MorseCodeParameter.class);
             getDevice().morse(morseCodeParameter);
         }
 
-        if (string.startsWith(getServiceContract().INTENT_CALIBRATE)) {
+        if (string.startsWith(getContract().INTENT_CALIBRATE)) {
             Boolean calibrate = getMapper().readValue(payload, Boolean.class);
             getDevice().calibrate(calibrate);
         }
@@ -89,27 +89,27 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
 
     @Override
     public void beepInvoked(BeepParameter beepParameter) {
-        addEvent(getServiceContract().EVENT_BEEP_STARTED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_BEEP_STARTED, System.currentTimeMillis());
     }
 
     @Override
     public void morseCodeInvoked(MorseCodeParameter morseCodeParameter) {
-        addEvent(getServiceContract().EVENT_MORSE_STARTED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_MORSE_STARTED, System.currentTimeMillis());
     }
 
     @Override
     public void calibrationInvoked() {
-        addEvent(getServiceContract().EVENT_CALIBRATED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_CALIBRATED, System.currentTimeMillis());
     }
 
     @Override
     public void beepFinished() {
-        addEvent(getServiceContract().EVENT_BEEP_FINISHED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_BEEP_FINISHED, System.currentTimeMillis());
     }
 
     @Override
     public void morseCodeFinished() {
-        addEvent(getServiceContract().EVENT_MORSE_FINISHED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_MORSE_FINISHED, System.currentTimeMillis());
     }
 
 }
