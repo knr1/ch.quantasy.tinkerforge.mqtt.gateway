@@ -49,7 +49,6 @@ import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderServiceCont
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
@@ -60,6 +59,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
@@ -94,9 +94,9 @@ public class AmbientLEDLightAgent1 {
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
         gatewayClient.addIntent(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
         gatewayClient.subscribe(rotaryEncoderServiceContract.EVENT_COUNT, new Brightness());
-        gatewayClient.subscribe(rotaryEncoderServiceContract.EVENT_PRESSED, new MessageConsumer() {
+        gatewayClient.subscribe(rotaryEncoderServiceContract.EVENT_PRESSED, new MessageReceiver() {
             @Override
-            public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
+            public void messageReceived(String topic, byte[] mm) throws Exception {
                 for (Wave wave : waveList) {
                     if (wave.getTargetBrightness() > 0) {
                         wave.clearFrames();
@@ -117,9 +117,9 @@ public class AmbientLEDLightAgent1 {
             new Thread(wave).start();
         }
 
-        gatewayClient.subscribe(motionDetectorServiceContract.EVENT_MOTION_DETECTED, new MessageConsumer() {
+        gatewayClient.subscribe(motionDetectorServiceContract.EVENT_MOTION_DETECTED, new MessageReceiver() {
             @Override
-            public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
+            public void messageReceived(String topic, byte[] mm) throws Exception {
                 if (timerThread != null) {
                     timerThread.interrupt();
                 }
@@ -129,9 +129,9 @@ public class AmbientLEDLightAgent1 {
                 }
             }
         });
-        gatewayClient.subscribe(motionDetectorServiceContract.EVENT_DETECTION_CYCLE_ENDED, new MessageConsumer() {
+        gatewayClient.subscribe(motionDetectorServiceContract.EVENT_DETECTION_CYCLE_ENDED, new MessageReceiver() {
             @Override
-            public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
+            public void messageReceived(String topic, byte[] mm) throws Exception {
                 timerThread = new Thread() {
                     @Override
                     public void run() {
@@ -167,12 +167,12 @@ public class AmbientLEDLightAgent1 {
         }
     }
 
-    public class Brightness implements MessageConsumer {
+    public class Brightness implements MessageReceiver {
 
         private Integer latestCount;
 
         @Override
-        public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
+        public void messageReceived(String topic, byte[] mm) throws Exception {
             RotaryEncoderService.CountEvent[] countEvents = gatewayClient.getMapper().readValue(mm, RotaryEncoderService.CountEvent[].class);
             if (latestCount == null) {
                 latestCount = countEvents[0].getValue();

@@ -65,7 +65,7 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
 
         if (string.startsWith(getContract().INTENT_MONOFLOP)) {
             DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);

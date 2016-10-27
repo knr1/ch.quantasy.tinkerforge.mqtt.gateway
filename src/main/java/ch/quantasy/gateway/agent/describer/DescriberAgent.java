@@ -45,16 +45,16 @@ package ch.quantasy.gateway.agent.describer;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
  * @author reto
  */
-public class DescriberAgent implements MessageConsumer {
+public class DescriberAgent implements MessageReceiver {
 
     private final ManagerServiceContract managerServiceContract;
     private GatewayClient<ClientContract> gatewayClient;
@@ -75,7 +75,7 @@ public class DescriberAgent implements MessageConsumer {
     }
 
     @Override
-    public void messageArrived(GatewayClient client, String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
         string = string.replaceAll("description", "<serviceUID>").replaceAll("intent", "intent/<agentID>");
         System.out.println(string);
 

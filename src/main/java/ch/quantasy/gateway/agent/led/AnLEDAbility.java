@@ -44,17 +44,17 @@ package ch.quantasy.gateway.agent.led;
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripService;
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import java.util.ArrayList;
 import java.util.List;
+import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
  * @author reto
  */
-public abstract class AnLEDAbility implements Runnable, MessageConsumer {
+public abstract class AnLEDAbility implements Runnable, MessageReceiver {
 
     private final LEDStripServiceContract ledServiceContract;
     private final LEDStripDeviceConfig config;
@@ -98,7 +98,7 @@ public abstract class AnLEDAbility implements Runnable, MessageConsumer {
     }
 
     @Override
-    public void messageArrived(GatewayClient gatewayClient, String topic, byte[] payload) throws Exception {
+    public void messageReceived(String topic, byte[] payload) throws Exception {
         synchronized (this) {
             LEDStripService.FrameRenderedEvent[] framesRendered = gatewayClient.getMapper().readValue(payload, LEDStripService.FrameRenderedEvent[].class);
             if (framesRendered.length > 0) {

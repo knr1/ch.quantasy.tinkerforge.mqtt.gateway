@@ -94,7 +94,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
 
         if (string.startsWith(getContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
 

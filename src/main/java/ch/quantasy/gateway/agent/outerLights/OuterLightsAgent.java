@@ -49,13 +49,13 @@ import ch.quantasy.gateway.service.device.linearPoti.LinearPotiServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
@@ -86,9 +86,9 @@ public class OuterLightsAgent {
         gatewayClient.addIntent(dcServiceContract.INTENT_ENABLED, true);
 
         
-        gatewayClient.subscribe(linearPotiServiceContract.EVENT_POSITION, new MessageConsumer() {
+        gatewayClient.subscribe(linearPotiServiceContract.EVENT_POSITION, new MessageReceiver() {
             @Override
-            public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
+            public void messageReceived(String topic, byte[] mm) throws Exception {
                 LinearPotiService.PositionEvent[] positionEvents=gatewayClient.getMapper().readValue(mm,LinearPotiService.PositionEvent[].class);
                 int position=positionEvents[positionEvents.length-1].getValue();
                 gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY,(32767/100)*position);

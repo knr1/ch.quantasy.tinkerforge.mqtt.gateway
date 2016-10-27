@@ -46,7 +46,6 @@ import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchServiceContra
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.DimSocketBParameters;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketBParameters;
@@ -55,6 +54,7 @@ import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
@@ -82,9 +82,9 @@ public class RemoteSwitchAgent {
         connectRemoteServices(new TinkerforgeStackAddress("untergeschoss"));
         connectRemoteServices(new TinkerforgeStackAddress("localhost"));
 
-        gatewayClient.subscribe("WebView/RemoteSwitch/event/touched/#", new MessageConsumer() {
+        gatewayClient.subscribe("WebView/RemoteSwitch/event/touched/#", new MessageReceiver() {
             @Override
-            public void messageArrived(GatewayClient gatewayClient, String topic, byte[] mm) throws Exception {
+            public void messageReceived(String topic, byte[] mm) throws Exception {
 
                 Switcher[] switchers = gatewayClient.getMapper().readValue(mm, Switcher[].class);
                 Switcher switcher = switchers[switchers.length - 1];

@@ -69,7 +69,7 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
         if (string.startsWith(getContract().INTENT_SELECTED_LED_STATE)) {
             DeviceSelectedLEDStateParameters parameters = getMapper().readValue(payload, DeviceSelectedLEDStateParameters.class);
             getDevice().setSelectedLEDState(parameters);

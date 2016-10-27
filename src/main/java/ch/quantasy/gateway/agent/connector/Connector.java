@@ -45,17 +45,17 @@ package ch.quantasy.gateway.agent.connector;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
  * @author reto
  */
-public class Connector implements MessageConsumer {
+public class Connector implements MessageReceiver {
 
     private final ManagerServiceContract managerServiceContract;
     private GatewayClient<ClientContract> gatewayClient;
@@ -74,7 +74,7 @@ public class Connector implements MessageConsumer {
     }
 
     @Override
-    public void messageArrived(GatewayClient client, String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
 
     }
 

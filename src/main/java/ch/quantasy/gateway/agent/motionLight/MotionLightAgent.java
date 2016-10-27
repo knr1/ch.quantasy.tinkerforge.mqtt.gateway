@@ -46,17 +46,17 @@ import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceCo
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
  * @author reto
  */
-public class MotionLightAgent implements MessageConsumer{
+public class MotionLightAgent implements MessageReceiver{
 
     private final RemoteSwitchServiceContract remoteSwitchServiceContract;
     private final MotionDetectorServiceContract motionDetectorServiceContract;
@@ -78,7 +78,7 @@ public class MotionLightAgent implements MessageConsumer{
     }
 
     @Override
-    public void messageArrived(GatewayClient gatewayClient, String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
         if (string.equals(motionDetectorServiceContract.EVENT_MOTION_DETECTED)) {
             synchronized (this) {
                 switchLight(SwitchSocketCParameters.SwitchTo.switchOn);

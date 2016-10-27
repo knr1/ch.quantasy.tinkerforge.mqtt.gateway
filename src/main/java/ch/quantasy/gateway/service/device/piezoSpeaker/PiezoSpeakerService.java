@@ -70,7 +70,7 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
         if (string.startsWith(getContract().INTENT_BEEP)) {
             BeepParameter beepParameter = getMapper().readValue(payload, BeepParameter.class);
             getDevice().beep(beepParameter);

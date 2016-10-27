@@ -61,7 +61,7 @@ public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device,
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
 
         if (string.startsWith(getContract().INTENT_OUTPUT_VOLTAGE)) {
             Integer outputVoltage = getMapper().readValue(payload, Integer.class);

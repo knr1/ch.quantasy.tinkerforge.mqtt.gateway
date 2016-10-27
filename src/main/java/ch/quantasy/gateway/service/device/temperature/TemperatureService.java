@@ -73,7 +73,7 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
 
         if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
 

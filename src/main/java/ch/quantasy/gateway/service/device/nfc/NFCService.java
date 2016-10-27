@@ -73,7 +73,7 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
 
         if (string.startsWith(getContract().INTENT_SCANNING_CALLBACK_PERIOD)) {
             Long period = getMapper().readValue(payload, Long.class);

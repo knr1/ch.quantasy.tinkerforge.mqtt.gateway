@@ -79,7 +79,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
         if (string.startsWith(getContract().INTENT_STACK_ADDRESS_ADD)) {
 
             String payloadString = new String(payload);

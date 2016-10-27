@@ -45,7 +45,6 @@ package ch.quantasy.gateway.agent.TimedSwitch;
 import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.MessageConsumer;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
@@ -55,12 +54,13 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
  * @author reto
  */ 
-public class TimedSwitch implements MessageConsumer{
+public class TimedSwitch implements MessageReceiver{
 
     private final RemoteSwitchServiceContract remoteSwitchServiceContract;
     private final GatewayClient<ClientContract> gatewayClient;
@@ -100,7 +100,7 @@ public class TimedSwitch implements MessageConsumer{
     }
 
     @Override
-    public void messageArrived(GatewayClient agent,String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
 
     }
 

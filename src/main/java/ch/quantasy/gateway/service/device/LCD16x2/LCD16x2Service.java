@@ -70,7 +70,7 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
 
         if (string.startsWith(getContract().INTENT_BACKLIGHT)) {
             Boolean backlight = getMapper().readValue(payload, Boolean.class);

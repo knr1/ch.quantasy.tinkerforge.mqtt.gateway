@@ -63,7 +63,7 @@ public class MotionDetectorService extends AbstractDeviceService<MotionDetectorD
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
         //There are no intents that can be handled
     }
 

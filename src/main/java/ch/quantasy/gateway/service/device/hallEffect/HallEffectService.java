@@ -72,7 +72,7 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
 
         if (string.startsWith(getContract().INTENT_EDGE_COUNT_INTERRUPT)) {
 

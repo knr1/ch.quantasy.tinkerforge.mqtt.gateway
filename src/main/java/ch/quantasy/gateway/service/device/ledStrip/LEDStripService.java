@@ -75,7 +75,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
     }
 
     @Override
-    public void messageArrived(String string, byte[] payload) throws Exception {
+    public void messageReceived(String string, byte[] payload) throws Exception {
 
         if (string.startsWith(getContract().INTENT_CONFIG)) {
             LEDStripDeviceConfig config = getMapper().readValue(payload, LEDStripDeviceConfig.class);
