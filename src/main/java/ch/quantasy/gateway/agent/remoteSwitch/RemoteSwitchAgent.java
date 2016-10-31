@@ -82,12 +82,12 @@ public class RemoteSwitchAgent {
         connectRemoteServices(new TinkerforgeStackAddress("untergeschoss"));
         connectRemoteServices(new TinkerforgeStackAddress("localhost"));
 
-        gatewayClient.subscribe("WebView/RemoteSwitch/event/touched/#", new MessageReceiver() {
+        gatewayClient.subscribe("WebView/RemoteSwitch/event/touched/remoteSwitch/#", new MessageReceiver() {
             @Override
             public void messageReceived(String topic, byte[] mm) throws Exception {
 
                 Switcher[] switchers = gatewayClient.getMapper().readValue(mm, Switcher[].class);
-                Switcher switcher = switchers[switchers.length - 1];
+                Switcher switcher = switchers[0];
                 RemoteSwitchServiceContract contract = null;
                 switch (switcher.getFloor()) {
                     case "UG":
@@ -106,11 +106,11 @@ public class RemoteSwitchAgent {
                 }
                 if (switcher.getType().equals("switchSocketB")) {
                     SwitchSocketBParameters[] bs = gatewayClient.getMapper().readValue(mm, SwitchSocketBParameters[].class);
-                    gatewayClient.addIntent(contract.INTENT_SWITCH_SOCKET_B, bs[bs.length - 1]);
+                    gatewayClient.addIntent(contract.INTENT_SWITCH_SOCKET_B, bs[0]);
                 }
                 if (switcher.getType().equals("dimSocketB")) {
                     DimSocketBParameters[] bs = gatewayClient.getMapper().readValue(mm, DimSocketBParameters[].class);
-                    gatewayClient.addIntent(contract.INTENT_DIM_SOCKET_B, bs[bs.length - 1]);
+                    gatewayClient.addIntent(contract.INTENT_DIM_SOCKET_B, bs[0]);
                 }
             }
         }
@@ -148,7 +148,7 @@ public class RemoteSwitchAgent {
     }
 
     public static void main(String[] args) throws Throwable {
-        URI mqttURI = URI.create("tcp://smarthome01:1883");
+        URI mqttURI = URI.create("tcp://127.0.0.1:1883");
         if (args.length > 0) {
             mqttURI = URI.create(args[0]);
         } else {

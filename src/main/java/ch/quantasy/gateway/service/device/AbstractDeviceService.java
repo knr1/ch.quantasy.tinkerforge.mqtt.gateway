@@ -60,7 +60,7 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
     private final G device;
 
     public AbstractDeviceService(URI mqttURI, G device, S serviceContract) throws MqttException {
-        super(mqttURI, device.getUid(), serviceContract);
+        super(mqttURI, serviceContract.ID_TOPIC, serviceContract);
         this.device = device;
         device.setCallback(this);
         addDescription(getContract().STATUS_POSITION, "[0|1|2|3|4|5|6|7|8|a|b|c|d]");

@@ -90,7 +90,7 @@ public class OuterLightsAgent {
             @Override
             public void messageReceived(String topic, byte[] mm) throws Exception {
                 LinearPotiService.PositionEvent[] positionEvents=gatewayClient.getMapper().readValue(mm,LinearPotiService.PositionEvent[].class);
-                int position=positionEvents[positionEvents.length-1].getValue();
+                int position=positionEvents[0].getValue();
                 gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY,(32767/100)*position);
             }
         });

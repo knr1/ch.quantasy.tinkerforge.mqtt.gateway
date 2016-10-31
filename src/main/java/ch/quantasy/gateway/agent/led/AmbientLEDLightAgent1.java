@@ -178,7 +178,7 @@ public class AmbientLEDLightAgent1 {
                 latestCount = countEvents[0].getValue();
             }
             int difference = latestCount;
-            latestCount = countEvents[countEvents.length - 1].getValue();
+            latestCount = countEvents[0].getValue();
             changeAmbientBrithness((difference - latestCount) / 100.0);
         }
 

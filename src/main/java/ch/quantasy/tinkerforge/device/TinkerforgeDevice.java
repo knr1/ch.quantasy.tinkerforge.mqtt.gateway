@@ -112,8 +112,9 @@ public class TinkerforgeDevice<D extends Device> {
         }
 
         try {
-            device.getIdentity();
-            return true;
+            if (device.getIdentity() != null) {
+                return true;
+            }
         } catch (TimeoutException | NotConnectedException ex) {
             // Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -124,24 +125,22 @@ public class TinkerforgeDevice<D extends Device> {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.connected(this);
         }
-       
+
     }
 
     public void disconnected() {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.disconnected(this);
         }
-        
+
     }
 
     public void reconnected() {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.reConnected(this);
         }
-       
-    }
 
-    
+    }
 
     @Override
     public int hashCode() {

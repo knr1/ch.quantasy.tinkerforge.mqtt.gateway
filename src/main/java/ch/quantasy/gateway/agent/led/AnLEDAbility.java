@@ -102,7 +102,7 @@ public abstract class AnLEDAbility implements Runnable, MessageReceiver {
         synchronized (this) {
             LEDStripService.FrameRenderedEvent[] framesRendered = gatewayClient.getMapper().readValue(payload, LEDStripService.FrameRenderedEvent[].class);
             if (framesRendered.length > 0) {
-                counter = framesRendered[framesRendered.length - 1].getFramesBuffered();
+                counter = framesRendered[0].getFramesBuffered();
                 this.notifyAll();
             }
         }

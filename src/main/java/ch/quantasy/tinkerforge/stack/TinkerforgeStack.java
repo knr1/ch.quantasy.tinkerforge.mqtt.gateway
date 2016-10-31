@@ -52,6 +52,7 @@ import com.tinkerforge.IPConnection;
 import com.tinkerforge.IPConnection.ConnectedListener;
 import com.tinkerforge.IPConnection.DisconnectedListener;
 import com.tinkerforge.IPConnection.EnumerateListener;
+import com.tinkerforge.IPConnectionBase;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 import java.io.IOException;
@@ -181,7 +182,7 @@ public class TinkerforgeStack {
                     }
                     actualConnectionException = null;
                     timer.cancel();
-                    timer=null;
+                    timer = null;
                 } catch (final UnknownHostException e) {
                     actualConnectionException = e;
                 } catch (final IOException e) {
@@ -199,7 +200,7 @@ public class TinkerforgeStack {
     public synchronized void disconnect() {
         if (this.timer != null) {
             this.timer.cancel();
-            this.timer=null;
+            this.timer = null;
         }
         try {
             this.ipConnection.disconnect();
@@ -273,6 +274,14 @@ public class TinkerforgeStack {
             for (TinkerforgeStackListener listener : listeners) {
                 listener.disconnected(TinkerforgeStack.this);
             }
+            System.out.println("Disconnected due to: " + disconnectReason);
+            if(disconnectReason==IPConnectionBase.DISCONNECT_REASON_ERROR){
+                connect();
+            }
+            //IPConnectionBase.java
+            //DISCONNECT_REASON_REQUEST = 0;
+            //DISCONNECT_REASON_ERROR = 1;
+            //DISCONNECT_REASON_SHUTDOWN = 2;
 
         }
 
