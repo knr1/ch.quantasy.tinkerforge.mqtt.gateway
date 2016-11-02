@@ -123,22 +123,22 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
 
     @Override
     public void distance(int i) {
-        addEvent(getContract().EVENT_DISTANCE, new DistanceEvent(i));
+        addEvent(getContract().EVENT_DISTANCE, i);
     }
 
     @Override
     public void distanceReached(int i) {
-        addEvent(getContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
+        addEvent(getContract().EVENT_DISTANCE_REACHED, i);
     }
 
     @Override
     public void velocity(short i) {
-        addEvent(getContract().EVENT_VELOCITY, new VelocityEvent(i));
+        addEvent(getContract().EVENT_VELOCITY, i);
     }
 
     @Override
     public void velocityReached(short i) {
-        addEvent(getContract().EVENT_VELOCITY_REACHED, new VelocityEvent(i));
+        addEvent(getContract().EVENT_VELOCITY_REACHED, i);
     }
 
     @Override
@@ -180,53 +180,5 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
     public void deviceModeChanged(DeviceMode deviceMode) {
         addStatus(getContract().STATUS_DEVICE_MODE, deviceMode);
     }
-
-    public static class DistanceEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        public DistanceEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public DistanceEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
-    public static class VelocityEvent {
-
-        long timestamp;
-        int value;
-
-        public VelocityEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public VelocityEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
+    
 }

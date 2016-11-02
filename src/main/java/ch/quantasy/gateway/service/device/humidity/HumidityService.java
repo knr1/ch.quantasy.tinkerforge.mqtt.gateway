@@ -107,22 +107,22 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
 
     @Override
     public void analogValue(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
+        addEvent(getContract().EVENT_ANALOG_VALUE, i);
     }
 
     @Override
     public void analogValueReached(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
+        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
     }
 
     @Override
     public void humidity(int i) {
-        addEvent(getContract().EVENT_HUMIDITY, new HumidityEvent(i));
+        addEvent(getContract().EVENT_HUMIDITY, i);
     }
 
     @Override
     public void humidityReached(int i) {
-        addEvent(getContract().EVENT_HUMIDITY_REACHED, new HumidityEvent(i));
+        addEvent(getContract().EVENT_HUMIDITY_REACHED, i);
     }
 
     @Override
@@ -148,54 +148,6 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
     @Override
     public void humidityCallbackThresholdChanged(DeviceHumidityCallbackThreshold threshold) {
         addStatus(getContract().STATUS_HUMIDITY_THRESHOLD, threshold);
-    }
-
-    public static class AnalogValueEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        public AnalogValueEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public AnalogValueEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
-    public static class HumidityEvent {
-
-        long timestamp;
-        int value;
-
-        public HumidityEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public HumidityEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
     }
 
 }

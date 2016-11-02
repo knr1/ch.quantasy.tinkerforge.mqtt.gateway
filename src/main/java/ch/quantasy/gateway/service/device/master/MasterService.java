@@ -173,112 +173,32 @@ public class MasterService extends AbstractDeviceService<MasterDevice, MasterSer
 
     @Override
     public void stackCurrent(int i) {
-        addEvent(getContract().EVENT_STACK_CURRENT, new StackCurrentEvent(i));
+        addEvent(getContract().EVENT_STACK_CURRENT, i);
     }
 
     @Override
     public void stackCurrentReached(int i) {
-        addEvent(getContract().EVENT_STACK_CURRENT_REACHED, new StackCurrentEvent(i));
+        addEvent(getContract().EVENT_STACK_CURRENT_REACHED, i);
     }
 
     @Override
     public void stackVoltage(int i) {
-        addEvent(getContract().EVENT_STACK_VOLTAGE, new StackVoltageEvent(i));
+        addEvent(getContract().EVENT_STACK_VOLTAGE, i);
     }
 
     @Override
     public void stackVoltageReached(int i) {
-        addEvent(getContract().EVENT_STACK_VOLTAGE_REACHED, new StackVoltageEvent(i));
+        addEvent(getContract().EVENT_STACK_VOLTAGE_REACHED, i);
     }
 
     @Override
     public void usbVoltage(int i) {
-        addEvent(getContract().EVENT_USB_VOLTAGE, new USBVoltageEvent(i));
+        addEvent(getContract().EVENT_USB_VOLTAGE, i);
     }
 
     @Override
     public void usbVoltageReached(int i) {
-        addEvent(getContract().EVENT_USB_VOLTAGE_REACHED, new USBVoltageEvent(i));
+        addEvent(getContract().EVENT_USB_VOLTAGE_REACHED, i);
     }
 
-    public static class StackCurrentEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        private StackCurrentEvent() {
-        }
-
-        public StackCurrentEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public StackCurrentEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
-    public static class StackVoltageEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        private StackVoltageEvent() {
-        }
-
-        public StackVoltageEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public StackVoltageEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
-    public static class USBVoltageEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        private USBVoltageEvent() {
-        }
-
-        public USBVoltageEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public USBVoltageEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
 }

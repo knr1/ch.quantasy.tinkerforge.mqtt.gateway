@@ -107,31 +107,7 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
 
     @Override
     public void switchingDone(SocketParameters socketParameters) {
-        addEvent(getContract().EVENT_SWITCHING_DONE, new SwitchedEvent(socketParameters));
-    }
-
-    public static class SwitchedEvent {
-
-        protected long timestamp;
-        protected SocketParameters value;
-
-        public SwitchedEvent(SocketParameters value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public SwitchedEvent(SocketParameters value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public SocketParameters getValue() {
-            return value;
-        }
-
+        addEvent(getContract().EVENT_SWITCHING_DONE, socketParameters);
     }
 
 }

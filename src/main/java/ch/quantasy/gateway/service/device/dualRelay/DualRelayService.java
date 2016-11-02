@@ -62,7 +62,7 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
         addDescription(getContract().INTENT_MONOFLOP, "relay: [1|2]\n state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().INTENT_SELECTED_STATE, "relay: [1|2]\n state: [true|false]\n");
         addDescription(getContract().INTENT_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
-        addDescription(getContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n relay: [1|2]\n state: [true|false]\n");
+        addDescription(getContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  relay: [1|2]\n   state: [true|false]\n");
         addDescription(getContract().STATUS_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
 
     }
@@ -92,31 +92,21 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     @Override
     public void monoflopDone(short relay, boolean state) {
-        addEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(relay, state));
+        addEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDone(relay, state));
 
     }
 
-    public static class MonoflopDoneEvent {
+    public static class MonoflopDone {
 
-        protected long timestamp;
         protected short relay;
         protected boolean state;
 
-        private MonoflopDoneEvent() {
+        private MonoflopDone() {
         }
 
-        public MonoflopDoneEvent(short relay, boolean state) {
-            this(relay, state, System.currentTimeMillis());
-        }
-
-        public MonoflopDoneEvent(short relay, boolean state, long timeStamp) {
+        public MonoflopDone(short relay, boolean state) {
             this.relay = relay;
             this.state = state;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
         }
 
         public short getRelay() {

@@ -109,36 +109,14 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
 
     @Override
     public void co2Concentration(int i) {
-        addEvent(getContract().EVENT_CO2_CONCENTRATION, new CO2ConcentrationEvent(i));
+        addEvent(getContract().EVENT_CO2_CONCENTRATION, i);
     }
 
     @Override
     public void co2ConcentrationReached(int i) {
-        addEvent(getContract().EVENT_CO2_CONCENTRATION_REACHED, new CO2ConcentrationEvent(i));
+        addEvent(getContract().EVENT_CO2_CONCENTRATION_REACHED, i);
     }
 
-    public static class CO2ConcentrationEvent {
-
-        protected long timestamp;
-        protected long value;
-
-        public CO2ConcentrationEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public CO2ConcentrationEvent(long value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getValue() {
-            return value;
-        }
-
-    }
+    
 
 }

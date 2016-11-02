@@ -43,6 +43,7 @@
 package ch.quantasy.gateway.service.device.IMU;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
+import ch.quantasy.mqtt.gateway.client.GatewayClientEvent;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.imu.IMUDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -88,45 +89,45 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     @Override
     public void messageReceived(String string, byte[] payload) throws Exception {
-            if (string.startsWith(getContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
+        if (string.startsWith(getContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
 
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAccelerationPeriod(period);
-            }
-            if (string.startsWith(getContract().INTENT_ALL_DATA_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAllDataPeriod(period);
-            }
-            if (string.startsWith(getContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setAngularVelocityPeriod(period);
-            }
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAccelerationPeriod(period);
+        }
+        if (string.startsWith(getContract().INTENT_ALL_DATA_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAllDataPeriod(period);
+        }
+        if (string.startsWith(getContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setAngularVelocityPeriod(period);
+        }
 
-            if (string.startsWith(getContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setMagneticFieldPeriod(period);
-            }
-            if (string.startsWith(getContract().INTENT_ORIENTATION_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setOrientationPeriod(period);
-            }
-            if (string.startsWith(getContract().INTENT_QUATERNION_CALLBACK_PERIOD)) {
-                Long period = getMapper().readValue(payload, Long.class);
-                getDevice().setQuaternionPeriod(period);
-            }
+        if (string.startsWith(getContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setMagneticFieldPeriod(period);
+        }
+        if (string.startsWith(getContract().INTENT_ORIENTATION_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setOrientationPeriod(period);
+        }
+        if (string.startsWith(getContract().INTENT_QUATERNION_CALLBACK_PERIOD)) {
+            Long period = getMapper().readValue(payload, Long.class);
+            getDevice().setQuaternionPeriod(period);
+        }
 
-            if (string.startsWith(getContract().INTENT_LEDS)) {
-                Boolean enabled = getMapper().readValue(payload, Boolean.class);
-                getDevice().setLEDs(enabled);
-            }
-            if (string.startsWith(getContract().INTENT_STATUS_LED)) {
-                Boolean enabled = getMapper().readValue(payload, Boolean.class);
-                getDevice().setStatusLED(enabled);
-            }
-            if (string.startsWith(getContract().INTENT_ORIENTATION_CALCULATION)) {
-                Boolean enabled = getMapper().readValue(payload, Boolean.class);
-                getDevice().setOrientationCalculation(enabled);
-            }
+        if (string.startsWith(getContract().INTENT_LEDS)) {
+            Boolean enabled = getMapper().readValue(payload, Boolean.class);
+            getDevice().setLEDs(enabled);
+        }
+        if (string.startsWith(getContract().INTENT_STATUS_LED)) {
+            Boolean enabled = getMapper().readValue(payload, Boolean.class);
+            getDevice().setStatusLED(enabled);
+        }
+        if (string.startsWith(getContract().INTENT_ORIENTATION_CALCULATION)) {
+            Boolean enabled = getMapper().readValue(payload, Boolean.class);
+            getDevice().setOrientationCalculation(enabled);
+        }
     }
 
     @Override
@@ -177,57 +178,50 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     @Override
     public void acceleration(short s, short s1, short s2) {
-        addEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(s, s1, s2));
+        addEvent(getContract().EVENT_ACCELERATION, new Acceleration(s, s1, s2));
     }
 
     @Override
     public void allData(short shorts, short shorts1, short shorts2, short shorts3, short shorts4, short shorts5, short shorts6, short short7, short s8, short s9) {
-        addEvent(getContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts, shorts1, shorts2),
-                new MagneticFieldEvent(shorts3, shorts4, shorts5),
-                new AngularVelocityEvent(shorts6, short7, s8),
-                new TemperatureEvent(s9)));
+        addEvent(getContract().EVENT_ALL_DATA, new AllDataEvent(new Acceleration(shorts, shorts1, shorts2),
+                new MagneticField(shorts3, shorts4, shorts5),
+                new AngularVelocity(shorts6, short7, s8),
+                s9));
     }
 
     @Override
     public void angularVelocity(short s, short s1, short s2) {
-        addEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocityEvent(s, s1, s2));
+        addEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocity(s, s1, s2));
     }
 
     @Override
     public void magneticField(short s, short s1, short s2) {
-        addEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticFieldEvent(s, s1, s2));
+        addEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticField(s, s1, s2));
     }
 
     @Override
     public void orientation(short s, short s1, short s2) {
-        addEvent(getContract().EVENT_ORIENTATION, new OrientationEvent(s, s1, s2));
+        addEvent(getContract().EVENT_ORIENTATION, new Orientation(s, s1, s2));
     }
 
     @Override
     public void quaternion(float s, float s1, float s2, float s3) {
-        addEvent(getContract().EVENT_QUATERNION, new QuaternionEvent(s, s1, s2, s3));
+        addEvent(getContract().EVENT_QUATERNION, new Quaternion(s, s1, s2, s3));
     }
 
-    public static class AccelerationEvent {
+    public static class Acceleration {
 
-        private long timestamp;
         private short x;
         private short y;
         private short z;
 
-        public AccelerationEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
+        private Acceleration() {
         }
 
-        public AccelerationEvent(short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
+        public Acceleration(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
         }
 
         public short getX() {
@@ -244,26 +238,19 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     }
 
-    public static class AngularVelocityEvent {
+    public static class AngularVelocity {
 
-        private long timestamp;
         private short x;
         private short y;
         private short z;
 
-        public AngularVelocityEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
+        private AngularVelocity() {
         }
 
-        public AngularVelocityEvent(short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
+        public AngularVelocity(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
         }
 
         public short getX() {
@@ -280,26 +267,19 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     }
 
-    public static class GravityVectorEvent {
+    public static class GravityVector {
 
-        private long timestamp;
         private short x;
         private short y;
         private short z;
 
-        public GravityVectorEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
+        private GravityVector() {
         }
 
-        public GravityVectorEvent(short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
+        public GravityVector(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
         }
 
         public short getX() {
@@ -316,26 +296,19 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     }
 
-    public static class LinearAccelerationEvent {
+    public static class LinearAcceleration {
 
-        private long timestamp;
         private short x;
         private short y;
         private short z;
 
-        public LinearAccelerationEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
+        private LinearAcceleration() {
         }
 
-        public LinearAccelerationEvent(short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
+        public LinearAcceleration(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
         }
 
         public short getX() {
@@ -352,26 +325,19 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     }
 
-    public static class MagneticFieldEvent {
+    public static class MagneticField {
 
-        private long timestamp;
         private short x;
         private short y;
         private short z;
 
-        public MagneticFieldEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
+        private MagneticField() {
         }
 
-        public MagneticFieldEvent(short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
+        public MagneticField(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
         }
 
         public short getX() {
@@ -388,28 +354,24 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     }
 
-    public static class OrientationEvent {
+    public static class Orientation {
 
-        private long timestamp;
         private short heading;
         private short roll;
         private short pitch;
 
-        public OrientationEvent(short heading, short roll, short pitch) {
-            this(heading, roll, pitch, System.currentTimeMillis());
+        private Orientation() {
         }
 
-        public OrientationEvent(short heading, short roll, short pitch, long timestamp) {
-            this.timestamp = timestamp;
+       
+
+        public Orientation(short heading, short roll, short pitch) {
             this.heading = heading;
             this.roll = roll;
             this.pitch = pitch;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
-
+       
         public short getHeading() {
             return heading;
         }
@@ -424,30 +386,26 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     }
 
-    public static class QuaternionEvent {
+    public static class Quaternion {
 
-        private long timestamp;
         private float w;
         private float x;
         private float y;
         private float z;
 
-        public QuaternionEvent(float w, float x, float y, float z) {
-            this(w, x, y, z, System.currentTimeMillis());
+        private Quaternion() {
         }
 
-        public QuaternionEvent(float w, float x, float y, float z, long timestamp) {
-            this.timestamp = timestamp;
+        
+        
+        public Quaternion(float w, float x, float y, float z) {
             this.w = w;
             this.x = x;
             this.y = y;
             this.z = z;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
-
+       
         public float getW() {
             return w;
         }
@@ -466,67 +424,43 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     }
 
-    public static class TemperatureEvent {
-
-        private long timestamp;
-        private short value;
-
-        public TemperatureEvent(short value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public TemperatureEvent(short value, long timestamp) {
-            this.timestamp = timestamp;
-            this.value = value;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public short getValue() {
-            return value;
-        }
-    }
+    
 
     public static class AllDataEvent {
 
-        private long timestamp;
 
-        private AccelerationEvent acceleration;
-        private MagneticFieldEvent magneticField;
-        private AngularVelocityEvent angularVelocity;
-        private TemperatureEvent temperature;
+        private Acceleration acceleration;
+        private MagneticField magneticField;
+        private AngularVelocity angularVelocity;
+        private Short temperature;
 
-        public AllDataEvent(AccelerationEvent acceleration, MagneticFieldEvent magneticField, AngularVelocityEvent angularVelocity, TemperatureEvent temperature) {
-            this(acceleration, magneticField, angularVelocity, temperature, System.currentTimeMillis());
+        private AllDataEvent() {
         }
 
-        public AllDataEvent(AccelerationEvent acceleration, MagneticFieldEvent magneticField, AngularVelocityEvent angularVelocity, TemperatureEvent temperature, long timestamp) {
-            this.timestamp = timestamp;
+        
+
+        public AllDataEvent(Acceleration acceleration, MagneticField magneticField, AngularVelocity angularVelocity, Short temperature) {
             this.acceleration = acceleration;
             this.magneticField = magneticField;
             this.angularVelocity = angularVelocity;
             this.temperature = temperature;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
+        
 
-        public AccelerationEvent getAcceleration() {
+        public Acceleration getAcceleration() {
             return acceleration;
         }
 
-        public MagneticFieldEvent getMagneticField() {
+        public MagneticField getMagneticField() {
             return magneticField;
         }
 
-        public AngularVelocityEvent getAngularVelocity() {
+        public AngularVelocity getAngularVelocity() {
             return angularVelocity;
         }
 
-        public TemperatureEvent getTemperature() {
+        public Short getTemperature() {
             return temperature;
         }
 

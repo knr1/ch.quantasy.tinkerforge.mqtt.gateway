@@ -123,35 +123,30 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
 
     @Override
     public void acceleration(short x, short y, short z) {
-        addEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(x, y, z));
+        addEvent(getContract().EVENT_ACCELERATION, new Acceleration(x, y, z));
     }
 
     @Override
     public void accelerationReached(short x, short y, short z) {
-        addEvent(getContract().EVENT_ACCELERATION_REACHED, new AccelerationEvent(x, y, z));
+        addEvent(getContract().EVENT_ACCELERATION_REACHED, new Acceleration(x, y, z));
     }
 
-    public static class AccelerationEvent {
+    public static class Acceleration {
 
-        protected long timestamp;
         protected short x;
         protected short y;
         protected short z;
 
-        public AccelerationEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
+        private Acceleration() {
         }
 
-        public AccelerationEvent(short x, short y, short z, long timeStamp) {
+        
+        public Acceleration(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
-            this.timestamp = timeStamp;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
 
         public short getX() {
             return x;

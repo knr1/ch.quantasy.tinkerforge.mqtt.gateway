@@ -202,45 +202,45 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     @Override
     public void acceleration(short s, short s1, short s2) {
-        addEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(s, s1, s2));
+        addEvent(getContract().EVENT_ACCELERATION, new Acceleration(s, s1, s2));
     }
 
     @Override
     public void allData(short[] shorts, short[] shorts1, short[] shorts2, short[] shorts3, short[] shorts4, short[] shorts5, short[] shorts6, byte b, short s) {
-        addEvent(getContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts[0], shorts[1], shorts[2]),
-                new MagneticFieldEvent(shorts1[0], shorts1[1], shorts1[2]),
-                new AngularVelocityEvent(shorts2[0], shorts2[1], shorts2[2]),
-                new OrientationEvent(shorts3[0], shorts3[1], shorts3[2]),
+        addEvent(getContract().EVENT_ALL_DATA, new AllData(new Acceleration(shorts[0], shorts[1], shorts[2]),
+                new MagneticField(shorts1[0], shorts1[1], shorts1[2]),
+                new AngularVelocity(shorts2[0], shorts2[1], shorts2[2]),
+                new Orientation(shorts3[0], shorts3[1], shorts3[2]),
                 new QuaternionEvent(shorts4[0], shorts4[1], shorts4[2], shorts4[3]),
-                new LinearAccelerationEvent(shorts5[0], shorts5[1], shorts5[2]),
-                new GravityVectorEvent(shorts6[0], shorts6[1], shorts6[2]),
-                new TemperatureEvent(b),
+                new LinearAcceleration(shorts5[0], shorts5[1], shorts5[2]),
+                new GravityVector(shorts6[0], shorts6[1], shorts6[2]),
+                b,
                 s));
     }
 
     @Override
     public void angularVelocity(short s, short s1, short s2) {
-        addEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocityEvent(s, s1, s2));
+        addEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocity(s, s1, s2));
     }
 
     @Override
     public void gravityVector(short s, short s1, short s2) {
-        addEvent(getContract().EVENT_GRAVITY_VECTOR, new GravityVectorEvent(s, s1, s2));
+        addEvent(getContract().EVENT_GRAVITY_VECTOR, new GravityVector(s, s1, s2));
     }
 
     @Override
     public void linearAcceleration(short s, short s1, short s2) {
-        addEvent(getContract().EVENT_LINEAR_ACCELERATION, new LinearAccelerationEvent(s, s1, s2));
+        addEvent(getContract().EVENT_LINEAR_ACCELERATION, new LinearAcceleration(s, s1, s2));
     }
 
     @Override
     public void magneticField(short s, short s1, short s2) {
-        addEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticFieldEvent(s, s1, s2));
+        addEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticField(s, s1, s2));
     }
 
     @Override
     public void orientation(short s, short s1, short s2) {
-        addEvent(getContract().EVENT_ORIENTATION, new OrientationEvent(s, s1, s2));
+        addEvent(getContract().EVENT_ORIENTATION, new Orientation(s, s1, s2));
     }
 
     @Override
@@ -250,30 +250,27 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     @Override
     public void temperature(byte b) {
-        addEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(b));
+        addEvent(getContract().EVENT_TEMPERATURE, b);
     }
 
-    public static class AccelerationEvent {
+    public static class Acceleration {
 
-        private long timestamp;
         private short x;
         private short y;
         private short z;
 
-        public AccelerationEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
+        private Acceleration() {
         }
 
-        public AccelerationEvent(short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
+        
+
+        public Acceleration(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
+      
 
         public short getX() {
             return x;
@@ -289,27 +286,56 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    public static class AngularVelocityEvent {
+    public static class AngularVelocity {
 
-        private long timestamp;
         private short x;
         private short y;
         private short z;
 
-        public AngularVelocityEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
+        private AngularVelocity() {
         }
 
-        public AngularVelocityEvent(short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
+     
+
+        public AngularVelocity(short x, short y, short z) {
+            
             this.x = x;
             this.y = y;
             this.z = z;
         }
 
-        public long getTimestamp() {
-            return timestamp;
+        
+        public short getX() {
+            return x;
         }
+
+        public short getY() {
+            return y;
+        }
+
+        public short getZ() {
+            return z;
+        }
+
+    }
+
+    public static class GravityVector {
+
+        private short x;
+        private short y;
+        private short z;
+
+        private GravityVector() {
+        }
+
+      
+
+        public GravityVector(short x, short y, short z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
 
         public short getX() {
             return x;
@@ -325,27 +351,23 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    public static class GravityVectorEvent {
+    public static class LinearAcceleration {
 
-        private long timestamp;
         private short x;
         private short y;
         private short z;
 
-        public GravityVectorEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
+        private LinearAcceleration() {
         }
 
-        public GravityVectorEvent(short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
+       
+
+        public LinearAcceleration(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
 
         public short getX() {
             return x;
@@ -361,27 +383,23 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    public static class LinearAccelerationEvent {
+    public static class MagneticField {
 
-        private long timestamp;
         private short x;
         private short y;
         private short z;
 
-        public LinearAccelerationEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
+        private MagneticField() {
         }
 
-        public LinearAccelerationEvent(short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
+       
+
+        public MagneticField(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
 
         public short getX() {
             return x;
@@ -397,63 +415,22 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    public static class MagneticFieldEvent {
+    public static class Orientation {
 
-        private long timestamp;
-        private short x;
-        private short y;
-        private short z;
-
-        public MagneticFieldEvent(short x, short y, short z) {
-            this(x, y, z, System.currentTimeMillis());
-        }
-
-        public MagneticFieldEvent(short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public short getX() {
-            return x;
-        }
-
-        public short getY() {
-            return y;
-        }
-
-        public short getZ() {
-            return z;
-        }
-
-    }
-
-    public static class OrientationEvent {
-
-        private long timestamp;
         private short heading;
         private short roll;
         private short pitch;
 
-        public OrientationEvent(short heading, short roll, short pitch) {
-            this(heading, roll, pitch, System.currentTimeMillis());
+        private Orientation() {
         }
 
-        public OrientationEvent(short heading, short roll, short pitch, long timestamp) {
-            this.timestamp = timestamp;
+       
+        public Orientation(short heading, short roll, short pitch) {
             this.heading = heading;
             this.roll = roll;
             this.pitch = pitch;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
 
         public short getHeading() {
             return heading;
@@ -471,27 +448,22 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     public static class QuaternionEvent {
 
-        private long timestamp;
         private short w;
         private short x;
         private short y;
         private short z;
 
-        public QuaternionEvent(short w, short x, short y, short z) {
-            this(w, x, y, z, System.currentTimeMillis());
+        private QuaternionEvent() {
         }
 
-        public QuaternionEvent(short w, short x, short y, short z, long timestamp) {
-            this.timestamp = timestamp;
+       
+        public QuaternionEvent(short w, short x, short y, short z) {
             this.w = w;
             this.x = x;
             this.y = y;
             this.z = z;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
 
         public short getW() {
             return w;
@@ -511,49 +483,24 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-    public static class TemperatureEvent {
 
-        private long timestamp;
-        private byte value;
+    public static class AllData {
 
-        public TemperatureEvent(byte value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public TemperatureEvent(byte value, long timestamp) {
-            this.timestamp = timestamp;
-            this.value = value;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public byte getValue() {
-            return value;
-        }
-    }
-
-    public static class AllDataEvent {
-
-        private long timestamp;
-
-        private AccelerationEvent acceleration;
-        private MagneticFieldEvent magneticField;
-        private AngularVelocityEvent angularVelocity;
-        private OrientationEvent orientation;
+        private Acceleration acceleration;
+        private MagneticField magneticField;
+        private AngularVelocity angularVelocity;
+        private Orientation orientation;
         private QuaternionEvent quaternion;
-        private LinearAccelerationEvent linearAcceleration;
-        private GravityVectorEvent gravityVector;
-        private TemperatureEvent temperature;
+        private LinearAcceleration linearAcceleration;
+        private GravityVector gravityVector;
+        private byte temperature;
         private short calibrationStatus;
 
-        public AllDataEvent(AccelerationEvent acceleration, MagneticFieldEvent magneticField, AngularVelocityEvent angularVelocity, OrientationEvent orientation, QuaternionEvent quaternion, LinearAccelerationEvent linearAcceleration, GravityVectorEvent gravityVector, TemperatureEvent temperature, short calibrationStatus) {
-            this(acceleration, magneticField, angularVelocity, orientation, quaternion, linearAcceleration, gravityVector, temperature, calibrationStatus, System.currentTimeMillis());
+        private AllData() {
         }
 
-        public AllDataEvent(AccelerationEvent acceleration, MagneticFieldEvent magneticField, AngularVelocityEvent angularVelocity, OrientationEvent orientation, QuaternionEvent quaternion, LinearAccelerationEvent linearAcceleration, GravityVectorEvent gravityVector, TemperatureEvent temperature, short calibrationStatus, long timestamp) {
-            this.timestamp = timestamp;
+       
+        public AllData(Acceleration acceleration, MagneticField magneticField, AngularVelocity angularVelocity, Orientation orientation, QuaternionEvent quaternion, LinearAcceleration linearAcceleration, GravityVector gravityVector, byte temperature, short calibrationStatus) {
             this.acceleration = acceleration;
             this.magneticField = magneticField;
             this.angularVelocity = angularVelocity;
@@ -565,23 +512,19 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
             this.calibrationStatus = calibrationStatus;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public AccelerationEvent getAcceleration() {
+        public Acceleration getAcceleration() {
             return acceleration;
         }
 
-        public MagneticFieldEvent getMagneticField() {
+        public MagneticField getMagneticField() {
             return magneticField;
         }
 
-        public AngularVelocityEvent getAngularVelocity() {
+        public AngularVelocity getAngularVelocity() {
             return angularVelocity;
         }
 
-        public OrientationEvent getOrientation() {
+        public Orientation getOrientation() {
             return orientation;
         }
 
@@ -589,15 +532,15 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
             return quaternion;
         }
 
-        public LinearAccelerationEvent getLinearAcceleration() {
+        public LinearAcceleration getLinearAcceleration() {
             return linearAcceleration;
         }
 
-        public GravityVectorEvent getGravityVector() {
+        public GravityVector getGravityVector() {
             return gravityVector;
         }
 
-        public TemperatureEvent getTemperature() {
+        public byte getTemperature() {
             return temperature;
         }
 

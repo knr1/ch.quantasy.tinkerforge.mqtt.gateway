@@ -146,7 +146,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void currentVelocity(short s) {
-        addEvent(getContract().EVENT_VELOCITY, new VelocityEvent(s));
+        addEvent(getContract().EVENT_VELOCITY, s);
     }
 
     @Override
@@ -156,12 +156,12 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void underVoltage(int i) {
-        addEvent(getContract().EVENT_UNDERVOLTAGE, new UnderVoltageEvent(i));
+        addEvent(getContract().EVENT_UNDERVOLTAGE, i);
     }
 
     @Override
     public void velocityReached(short s) {
-        addEvent(getContract().EVENT_VELOCITY_REACHED, new VelocityEvent(s));
+        addEvent(getContract().EVENT_VELOCITY_REACHED, s);
     }
 
     @Override
@@ -174,57 +174,6 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
         addEvent(getContract().EVENT_FULL_BRAKE, System.currentTimeMillis());
     }
 
-    public static class VelocityEvent {
-
-        protected long timestamp;
-        protected short value;
-
-        private VelocityEvent() {
-        }
-
-        public VelocityEvent(short value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public VelocityEvent(short value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public short getValue() {
-            return value;
-        }
-
-    }
-
-    public static class UnderVoltageEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        private UnderVoltageEvent() {
-        }
-
-        public UnderVoltageEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public UnderVoltageEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
+    
+    
 }

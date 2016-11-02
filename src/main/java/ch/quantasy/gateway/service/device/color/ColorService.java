@@ -64,7 +64,7 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
         addDescription(getContract().INTENT_IllUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().INTENT_COLOR_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
         addDescription(getContract().INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_COLOR, "timestamp: [0.." + Long.MAX_VALUE + "]\n red: [0..65535]\n green: [0..65535]\n blue: [0..65535]\n clear: [0..65535]\n");
+        addDescription(getContract().EVENT_COLOR, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: \n   red: [0..65535]\n   green: [0..65535]\n   blue: [0..65535]\n   clear: [0..65535]\n");
         addDescription(getContract().EVENT_ILLUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..65535]\n");
         addDescription(getContract().EVENT_COLOR_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n red: [0..65535]\n green: [0..65535]\n blue: [0..65535]\n clear: [0..65535]\n");
         addDescription(getContract().EVENT_COLOR_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..65535]\n");
@@ -110,22 +110,22 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
     @Override
     public void color(int i, int i1, int i2, int i3) {
-        addEvent(getContract().EVENT_COLOR, new ColorEvent(i, i1, i2, i3));
+        addEvent(getContract().EVENT_COLOR, new Color(i, i1, i2, i3));
     }
 
     @Override
     public void colorReached(int i, int i1, int i2, int i3) {
-        addEvent(getContract().EVENT_COLOR_REACHED, new ColorEvent(i, i1, i2, i3));
+        addEvent(getContract().EVENT_COLOR_REACHED, new Color(i, i1, i2, i3));
     }
 
     @Override
     public void illuminance(long i) {
-        addEvent(getContract().EVENT_ILLUMINANCE, new IlluminanceEvent(i));
+        addEvent(getContract().EVENT_ILLUMINANCE, i);
     }
 
     @Override
     public void colorTemperature(int i) {
-        addEvent(getContract().EVENT_COLOR_TEMPERATURE_REACHED, new ColorTemperatureEvent(i));
+        addEvent(getContract().EVENT_COLOR_TEMPERATURE_REACHED, i);
     }
 
     @Override
@@ -163,19 +163,20 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
         addStatus(getContract().STATUS_COLOR_THRESHOLD, threshold);
     }
 
-    public static class ColorEvent {
+    public static class Color {
 
-        protected long timestamp;
-        protected int red;
-        protected int green;
-        protected int blue;
-        protected int clear;
+        private long timestamp;
+        private int red;
+        private int green;
+        private int blue;
+        private int clear;
 
-        public ColorEvent(int red, int green, int blue, int clear) {
-            this(red, green, blue, clear, System.currentTimeMillis());
+        private Color() {
         }
 
-        public ColorEvent(int red, int green, int blue, int clear, long timestamp) {
+        
+
+        public Color(int red, int green, int blue, int clear) {
             this.timestamp = timestamp;
             this.red = red;
             this.green = green;
@@ -204,53 +205,4 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
         }
 
     }
-
-    public static class ColorTemperatureEvent {
-
-        long timestamp;
-        long value;
-
-        public ColorTemperatureEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public ColorTemperatureEvent(long value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getValue() {
-            return value;
-        }
-
-    }
-
-    public static class IlluminanceEvent {
-
-        long timestamp;
-        long value;
-
-        public IlluminanceEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public IlluminanceEvent(long value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getValue() {
-            return value;
-        }
-
-    }
-
 }

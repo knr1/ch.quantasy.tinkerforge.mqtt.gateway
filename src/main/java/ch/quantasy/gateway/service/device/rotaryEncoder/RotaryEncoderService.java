@@ -61,8 +61,8 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
         addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().INTENT_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().INTENT_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
-        addDescription(getContract().EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]\n value: true");
+        addDescription(getContract().EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]\n value: true");
         addDescription(getContract().EVENT_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [" + Long.MIN_VALUE + "0.." + Long.MAX_VALUE + "]\n");
 
         addDescription(getContract().EVENT_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
@@ -100,12 +100,12 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     @Override
     public void count(int i) {
-        addEvent(getContract().EVENT_COUNT, new CountEvent(i));
+        addEvent(getContract().EVENT_COUNT, i);
     }
 
     @Override
     public void countReached(int i) {
-        addEvent(getContract().EVENT_COUNT_REACHED, new CountEvent(i));
+        addEvent(getContract().EVENT_COUNT_REACHED,i);
     }
 
     @Override
@@ -126,68 +126,20 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     @Override
     public void countReset(long latestCount) {
-        addEvent(getContract().EVENT_COUNT_RESET, new CountResetEvent(latestCount));
+        addEvent(getContract().EVENT_COUNT_RESET, latestCount);
     }
 
     @Override
     public void pressed() {
-        addEvent(getContract().EVENT_PRESSED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_PRESSED, true);
     }
 
     @Override
     public void released() {
-        addEvent(getContract().EVENT_RELEASED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_RELEASED, true);
     }
 
-    public static class CountEvent {
-
-        long timestamp;
-        int value;
-
-        public CountEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public CountEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-        
-        private CountEvent(){
-            
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
-    public static class CountResetEvent {
-
-        protected long timestamp;
-        protected long count;
-
-        public CountResetEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public CountResetEvent(long value, long timeStamp) {
-            this.count = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getCount() {
-            return count;
-        }
-    }
+    
+    
 
 }

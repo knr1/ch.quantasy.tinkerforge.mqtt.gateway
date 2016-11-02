@@ -143,22 +143,22 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
 
     @Override
     public void temperature(int i) {
-        addEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
+        addEvent(getContract().EVENT_TEMPERATURE, i);
     }
 
     @Override
     public void temperatureReached(int i) {
-        addEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
+        addEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
     }
 
     @Override
     public void resistance(int i) {
-        addEvent(getContract().EVENT_RESISTANCE, new ResistanceEvent(i));
+        addEvent(getContract().EVENT_RESISTANCE, i);
     }
 
     @Override
     public void resistanceReached(int i) {
-        addEvent(getContract().EVENT_RESISTANCE_REACHED, new ResistanceEvent(i));
+        addEvent(getContract().EVENT_RESISTANCE_REACHED, i);
     }
 
     @Override
@@ -176,52 +176,5 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
         addStatus(getContract().STATUS_WIRE_MODE, wireMode);
     }
 
-    public static class TemperatureEvent {
-
-        protected long timestamp;
-        protected long value;
-
-        public TemperatureEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public TemperatureEvent(long value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getValue() {
-            return value;
-        }
-
-    }
-
-    public static class ResistanceEvent {
-
-        protected long timestamp;
-        protected long value;
-
-        public ResistanceEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public ResistanceEvent(long value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getValue() {
-            return value;
-        }
-
-    }
-
+    
 }

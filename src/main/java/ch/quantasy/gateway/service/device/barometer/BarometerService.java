@@ -127,22 +127,22 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
     @Override
     public void airPressure(int i) {
 
-        addEvent(getContract().EVENT_AIR_PRESSURE, new AirPressureEvent(i));
+        addEvent(getContract().EVENT_AIR_PRESSURE, i);
     }
 
     @Override
     public void airPressureReached(int i) {
-        addEvent(getContract().EVENT_AIR_PRESSURE_REACHED, new AirPressureEvent(i));
+        addEvent(getContract().EVENT_AIR_PRESSURE_REACHED, i);
     }
 
     @Override
     public void altitude(int i) {
-        addEvent(getContract().EVENT_ALTITUDE, new AltitudeEvent(i));
+        addEvent(getContract().EVENT_ALTITUDE, i);
     }
 
     @Override
     public void altitudeReached(int i) {
-        addEvent(getContract().EVENT_ALTITUDE_REACHED, new AltitudeEvent(i));
+        addEvent(getContract().EVENT_ALTITUDE_REACHED, i);
     }
 
     @Override
@@ -180,52 +180,6 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
         addStatus(getContract().STATUS_REFERENCE_AIR_PRESSURE, referenceAirPressure);
     }
 
-    public static class AirPressureEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        public AirPressureEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public AirPressureEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
-    public static class AltitudeEvent {
-
-        long timestamp;
-        int value;
-
-        public AltitudeEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public AltitudeEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
+    
+    
 }

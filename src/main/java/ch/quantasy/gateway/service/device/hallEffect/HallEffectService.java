@@ -63,8 +63,8 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
         addDescription(getContract().INTENT_EDGE_COUNT_RESET, "[true|false]");
         addDescription(getContract().INTENT_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
 
-        addDescription(getContract().EVENT_EDGE_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [0.." + Long.MAX_VALUE + "]\n greater35Gauss: [true|false]");
-        addDescription(getContract().EVENT_EDGE_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [0.." + Long.MAX_VALUE + "]\n");
+        addDescription(getContract().EVENT_EDGE_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  count: [0.." + Long.MAX_VALUE + "]\n   greater35Gauss: [true|false]");
+        addDescription(getContract().EVENT_EDGE_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Long.MAX_VALUE + "]\n");
 
         addDescription(getContract().STATUS_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -115,33 +115,30 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
 
     @Override
     public void edgeCountReset(long latestEdgeCount) {
-        addEvent(getContract().EVENT_EDGE_COUNT_RESET, new EdgeCountResetEvent(latestEdgeCount));
+        addEvent(getContract().EVENT_EDGE_COUNT_RESET, latestEdgeCount);
     }
 
     @Override
     public void edgeCount(long l, boolean bln) {
-        addEvent(getContract().EVENT_EDGE_COUNT, new EdgeCountEvent(l, bln));
+        addEvent(getContract().EVENT_EDGE_COUNT, new EdgeCount(l, bln));
     }
 
-    public static class EdgeCountEvent {
+    public static class EdgeCount {
 
-        protected long timestamp;
-        protected long count;
-        protected boolean greater35Gauss;
+        private long count;
+        private boolean greater35Gauss;
 
-        public EdgeCountEvent(long count, boolean greater35Gauss) {
-            this(count, greater35Gauss, System.currentTimeMillis());
+        private EdgeCount() {
         }
 
-        public EdgeCountEvent(long value, boolean greater35Gauss, long timeStamp) {
+        
+
+        public EdgeCount(long value, boolean greater35Gauss) {
             this.count = value;
             this.greater35Gauss = greater35Gauss;
-            this.timestamp = timeStamp;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
+       
 
         public long getCount() {
             return count;
@@ -151,29 +148,6 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
             return greater35Gauss;
         }
 
-    }
-
-    public static class EdgeCountResetEvent {
-
-        protected long timestamp;
-        protected long count;
-
-        public EdgeCountResetEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public EdgeCountResetEvent(long value, long timeStamp) {
-            this.count = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getCount() {
-            return count;
-        }
     }
 
 }

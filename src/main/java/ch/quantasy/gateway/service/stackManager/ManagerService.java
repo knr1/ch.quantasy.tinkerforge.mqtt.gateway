@@ -68,10 +68,10 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
         this.manager = manager;
         addDescription(getContract().INTENT_STACK_ADDRESS_ADD, "hostName: <String>\n prot: [0..4223..65536]");
         addDescription(getContract().INTENT_STACK_ADDRESS_REMOVE, "hostName: <String>\n prot: [0..4223..65536]");
-        addDescription(getContract().EVENT_ADDRESS_CONNECTED, "hostName: <String>\n prot: [0..4223..65536]");
-        addDescription(getContract().EVENT_ADDRESS_DISCONNECTED, "hostName: <String>\n prot: [0..4223..65536]");
-        addDescription(getContract().EVENT_STACK_ADDRESS_ADDED, "hostName: <String>\n prot: [0..4223..65536]");
-        addDescription(getContract().EVENT_STACK_ADDRESS_REMOVED, "hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getContract().EVENT_ADDRESS_CONNECTED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getContract().EVENT_ADDRESS_DISCONNECTED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getContract().EVENT_STACK_ADDRESS_ADDED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   hostName: <String>\n prot: [0..4223..65536]");
+        addDescription(getContract().EVENT_STACK_ADDRESS_REMOVED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   hostName: <String>\n prot: [0..4223..65536]");
         addDescription(getContract().STATUS_STACK_ADDRESS + "/<address>/connected", "[true|false]");
 
         manager.addListener(this);
@@ -104,6 +104,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
 
     }
 
+    @Override
     public void connected(TinkerforgeStack stack) {
         TinkerforgeStackAddress address = stack.getStackAddress();
         String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();

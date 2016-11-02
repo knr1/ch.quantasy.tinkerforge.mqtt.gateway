@@ -49,6 +49,7 @@ import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderServiceCont
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.GatewayClientEvent;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
@@ -173,7 +174,7 @@ public class AmbientLEDLightAgent1 {
 
         @Override
         public void messageReceived(String topic, byte[] mm) throws Exception {
-            RotaryEncoderService.CountEvent[] countEvents = gatewayClient.getMapper().readValue(mm, RotaryEncoderService.CountEvent[].class);
+            GatewayClientEvent<Integer>[] countEvents = gatewayClient.toEventArray(mm, Integer.class);
             if (latestCount == null) {
                 latestCount = countEvents[0].getValue();
             }

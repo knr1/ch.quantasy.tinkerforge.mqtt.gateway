@@ -275,7 +275,7 @@ public class TinkerforgeStack {
                 listener.disconnected(TinkerforgeStack.this);
             }
             System.out.println("Disconnected due to: " + disconnectReason);
-            if(disconnectReason==IPConnectionBase.DISCONNECT_REASON_ERROR){
+            if (disconnectReason == IPConnectionBase.DISCONNECT_REASON_ERROR) {
                 connect();
             }
             //IPConnectionBase.java

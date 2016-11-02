@@ -67,30 +67,6 @@ public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceCo
 
     @Override
     public void tiltState(short s) {
-        addEvent(getContract().EVENT_TILT_STATE, new TiltEvent(s));
-    }
-
-    public static class TiltEvent {
-
-        long timestamp;
-        short value;
-
-        public TiltEvent(short value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public TiltEvent(short value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public short getValue() {
-            return value;
-        }
-
+        addEvent(getContract().EVENT_TILT_STATE, s);
     }
 }

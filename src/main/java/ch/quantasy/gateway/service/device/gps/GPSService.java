@@ -68,11 +68,11 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
         addDescription(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getContract().EVENT_ALTITUDE, "timestamp: [0.." + Long.MAX_VALUE + "]\n altitude: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n geoidalSeparation: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n date: [[d|dd]mmyy]\n time: [hhmmssxxx]");
-        addDescription(getContract().EVENT_MOTION, "timestamp: [0.." + Long.MAX_VALUE + "]\n course: [0..36000]\n speed: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n fix: [1|2|3]]\n satellitesView: [0.." + Short.MAX_VALUE + "]\n satellitesUsed: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_COORDINATES, "timestamp: [0.." + Long.MAX_VALUE + "]\n latitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n ns: ['N'|'S']\n longitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n ew: ['E'|'W']\n pdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n hdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n vdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n epe: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
+        addDescription(getContract().EVENT_ALTITUDE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   altitude: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   geoidalSeparation: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  date: [[d|dd]mmyy]\n   time: [hhmmssxxx]");
+        addDescription(getContract().EVENT_MOTION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  course: [0..36000]\n   speed: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  fix: [1|2|3]]\n   satellitesView: [0.." + Short.MAX_VALUE + "]\n   satellitesUsed: [0.." + Short.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_COORDINATES, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  latitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n   ns: ['N'|'S']\n   longitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n ew: ['E'|'W']\n pdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n hdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   vdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   epe: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
     }
 
     @Override
@@ -143,12 +143,12 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
 
     @Override
     public void coordinates(long latitude, char ns, long longitude, char ew, int pdop, int hdop, int vdop, int epe) {
-        super.addEvent(getContract().EVENT_COORDINATES, new CoordinatesEvent(latitude, ns, longitude, ew, pdop, hdop, vdop, epe));
+        super.addEvent(getContract().EVENT_COORDINATES, new Coordinates(latitude, ns, longitude, ew, pdop, hdop, vdop, epe));
     }
 
     @Override
     public void dateTime(long date, long time) {
-        super.addEvent(getContract().EVENT_DATE_TIME, new DateTimeEvent(date, time));
+        super.addEvent(getContract().EVENT_DATE_TIME, new DateTime(date, time));
     }
 
     @Override
@@ -255,25 +255,22 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
         }
     }
 
-    public static class DateTimeEvent {
+    public static class DateTime {
 
-        protected long timestamp;
         protected long date;
         protected long time;
 
-        public DateTimeEvent(long date, long time) {
-            this(date, time, System.currentTimeMillis());
+        private DateTime() {
         }
 
-        public DateTimeEvent(long date, long time, long timeStamp) {
+        
+
+        public DateTime(long date, long time) {
             this.date = date;
             this.time = time;
-            this.timestamp = timeStamp;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
+        
 
         public long getDate() {
             return date;
@@ -284,9 +281,8 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
         }
     }
 
-    public static class CoordinatesEvent {
+    public static class Coordinates {
 
-        protected long timestamp;
         protected long latitude;
         protected char ns;
         protected long longitude;
@@ -296,11 +292,12 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
         protected int vdop;
         protected int epe;
 
-        public CoordinatesEvent(long latitude, char ns, long longitude, char ew, int pdop, int hdop, int vdop, int epe) {
-            this(latitude, ns, longitude, ew, pdop, hdop, vdop, epe, System.currentTimeMillis());
+        private Coordinates() {
         }
 
-        public CoordinatesEvent(long latitude, char ns, long longitude, char ew, int pdop, int hdop, int vdop, int epe, long timeStamp) {
+        
+
+        public Coordinates(long latitude, char ns, long longitude, char ew, int pdop, int hdop, int vdop, int epe) {
             this.latitude = latitude;
             this.ns = ns;
             this.longitude = longitude;
@@ -309,12 +306,8 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
             this.hdop = hdop;
             this.vdop = vdop;
             this.epe = epe;
-            this.timestamp = timeStamp;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
 
         public int getEpe() {
             return epe;

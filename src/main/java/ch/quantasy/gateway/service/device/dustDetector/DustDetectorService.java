@@ -122,36 +122,13 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
     @Override
     public void dustDensity(int i) {
-        addEvent(getContract().EVENT_DUST_DENSITY, new DustDensityEvent(i));
+        addEvent(getContract().EVENT_DUST_DENSITY, i);
     }
 
     @Override
     public void dustDensityReached(int i) {
-        addEvent(getContract().EVENT_DUST_DENSITY_REACHED, new DustDensityEvent(i));
+        addEvent(getContract().EVENT_DUST_DENSITY_REACHED, i);
     }
 
-    public static class DustDensityEvent {
-
-        protected long timestamp;
-        protected long value;
-
-        public DustDensityEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public DustDensityEvent(long value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getValue() {
-            return value;
-        }
-
-    }
-
+    
 }

@@ -68,7 +68,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
         addDescription(getContract().INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
         addDescription(getContract().INTENT_FRAME, "channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels");
         addDescription(getContract().INTENT_FRAMES, "{ channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels }_*");
-        addDescription(getContract().EVENT_LEDs_RENDERED, "timestamp: [0.." + Long.MAX_VALUE + "]\n framesBuffered: [0.." + Integer.MAX_VALUE + "]\n");
+        addDescription(getContract().EVENT_LEDs_RENDERED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]\n");
         addDescription(getContract().EVENT_LAGING, "timestamp: [0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().STATUS_CONFIG, "chipType: [WS2801|WS2811|WS2812|WS2812RGBW|LPD8806|APA102]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
 
@@ -121,42 +121,15 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     @Override
     public void frameRendered() {
-        addEvent(getContract().EVENT_LEDs_RENDERED, new FrameRenderedEvent(frames.size()));
+        addEvent(getContract().EVENT_LEDs_RENDERED, frames.size());
 
     }
 
     @Override
     public void isLaging() {
-        addEvent(getContract().EVENT_LAGING, System.currentTimeMillis());
+        addEvent(getContract().EVENT_LAGING, true);
 
     }
 
-    public static class FrameRenderedEvent {
-
-        long timestamp;
-        int framesBuffered;
-
-        private FrameRenderedEvent() {
-
-        }
-
-        public FrameRenderedEvent(int framesBuffered) {
-            this(framesBuffered, System.currentTimeMillis());
-        }
-
-        public FrameRenderedEvent(int framesBuffered, long timeStamp) {
-            this.framesBuffered = framesBuffered;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getFramesBuffered() {
-            return framesBuffered;
-        }
-
-    }
 
 }

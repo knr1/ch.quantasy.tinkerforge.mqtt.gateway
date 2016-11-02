@@ -109,36 +109,12 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
 
     @Override
     public void uvLight(long i) {
-        addEvent(getContract().EVENT_UV_LIGHT, new UVLightEvent(i));
+        addEvent(getContract().EVENT_UV_LIGHT, i);
     }
 
     @Override
     public void uvLightReached(long i) {
-        addEvent(getContract().EVENT_UV_LIGHT_REACHED, new UVLightEvent(i));
-    }
-
-    public static class UVLightEvent {
-
-        protected long timestamp;
-        protected long value;
-
-        public UVLightEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public UVLightEvent(long value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getValue() {
-            return value;
-        }
-
+        addEvent(getContract().EVENT_UV_LIGHT_REACHED, i);
     }
 
 }

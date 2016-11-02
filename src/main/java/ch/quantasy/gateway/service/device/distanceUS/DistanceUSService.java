@@ -122,36 +122,13 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
 
     @Override
     public void distance(int i) {
-        addEvent(getContract().EVENT_DISTANCE, new DisntanceEvent(i));
+        addEvent(getContract().EVENT_DISTANCE, i);
     }
 
     @Override
     public void distanceReached(int i) {
-        addEvent(getContract().EVENT_DISTANCE_REACHED, new DisntanceEvent(i));
+        addEvent(getContract().EVENT_DISTANCE_REACHED, i);
     }
 
-    public static class DisntanceEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        public DisntanceEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public DisntanceEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
+    
 }

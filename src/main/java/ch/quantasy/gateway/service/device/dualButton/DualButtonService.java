@@ -63,7 +63,7 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
         addDescription(getContract().INTENT_LED_STATE, "leftLED: [AutoToggleOn|AutoToggleOff|On|Off]\n rightLED: [AutoToggleOn|AutoToggleOff|On|Off] ");
         addDescription(getContract().INTENT_SELECTED_LED_STATE, "led: [AutoToggleOn|AutoToggleOff|On|Off]");
 
-        addDescription(getContract().EVENT_STATE_CHANGED, "timestamp: [0.." + Long.MAX_VALUE + "]\n led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]\n \n led2: [AutoToggleOn|AutoToggleOff|On|Off]\n  switch1: [0|1]\n switch2: [0|1]");
+        addDescription(getContract().EVENT_STATE_CHANGED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  led1: [AutoToggleOn|AutoToggleOff|On|Off]\n   led2: [AutoToggleOn|AutoToggleOff|On|Off]\n   switch1: [0|1]\n   switch2: [0|1]");
         addDescription(getContract().STATUS_LED_STATE, "led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]");
 
     }
@@ -87,39 +87,31 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
     @Override
     public void stateChanged(short s, short s1, short s2, short s3) {
-        addEvent(getContract().EVENT_STATE_CHANGED, new StateChangedEvent(s, s1, s2, s3));
+        addEvent(getContract().EVENT_STATE_CHANGED, new StateChanged(s, s1, s2, s3));
     }
 
-    public static class StateChangedEvent {
+    public static class StateChanged {
 
-        protected long timestamp;
         protected LEDState led1;
         protected LEDState led2;
         protected short switch1;
         protected short swicht2;
 
-        private StateChangedEvent() {
+        private StateChanged() {
         }
 
-        public StateChangedEvent(short switch1, short switch2, short led1, short led2) {
-            this(LEDState.getLEDStateFor(led1), LEDState.getLEDStateFor(led1), switch1, switch2, System.currentTimeMillis());
+        public StateChanged(short switch1, short switch2, short led1, short led2) {
+            this(switch1, switch2, LEDState.getLEDStateFor(led1), LEDState.getLEDStateFor(led1));
         }
 
-        public StateChangedEvent(short switch1, short switch2, LEDState led1, LEDState led2) {
-            this(led1, led2, switch1, switch2, System.currentTimeMillis());
-        }
-
-        public StateChangedEvent(LEDState led1, LEDState led2, short switch1, short switch2, long timeStamp) {
+        public StateChanged(short switch1, short switch2, LEDState led1, LEDState led2) {
             this.led1 = led1;
             this.led2 = led2;
             this.switch1 = switch1;
             this.swicht2 = switch2;
-            this.timestamp = timeStamp;
         }
 
-        public long getTimestamp() {
-            return timestamp;
-        }
+       
 
         public LEDState getLed1() {
             return led1;

@@ -104,22 +104,22 @@ public class RotaryPotiService extends AbstractDeviceService<RotaryPotiDevice, R
 
     @Override
     public void analogValue(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
+        addEvent(getContract().EVENT_ANALOG_VALUE, i);
     }
 
     @Override
     public void analogValueReached(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
+        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
     }
 
     @Override
     public void position(short i) {
-        addEvent(getContract().EVENT_POSITION, new PositionEvent(i));
+        addEvent(getContract().EVENT_POSITION, i);
     }
 
     @Override
     public void positionReached(short i) {
-        addEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(i));
+        addEvent(getContract().EVENT_POSITION_REACHED, i);
     }
 
     @Override
@@ -148,52 +148,5 @@ public class RotaryPotiService extends AbstractDeviceService<RotaryPotiDevice, R
 
     }
 
-    public static class AnalogValueEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        public AnalogValueEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public AnalogValueEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
-    public static class PositionEvent {
-
-        long timestamp;
-        short value;
-
-        public PositionEvent(short value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public PositionEvent(short value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public short getValue() {
-            return value;
-        }
-
-    }
-
+   
 }

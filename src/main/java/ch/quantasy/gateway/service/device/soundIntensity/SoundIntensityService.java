@@ -109,36 +109,13 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
 
     @Override
     public void intensity(int i) {
-        addEvent(getContract().EVENT_INTENSITY, new SoundIntensityEvent(i));
+        addEvent(getContract().EVENT_INTENSITY, i);
     }
 
     @Override
     public void intensityReached(int i) {
-        addEvent(getContract().EVENT_INTENSITY_REACHED, new SoundIntensityEvent(i));
+        addEvent(getContract().EVENT_INTENSITY_REACHED, i);
     }
 
-    public static class SoundIntensityEvent {
-
-        protected long timestamp;
-        protected long value;
-
-        public SoundIntensityEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public SoundIntensityEvent(long value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getValue() {
-            return value;
-        }
-
-    }
 
 }

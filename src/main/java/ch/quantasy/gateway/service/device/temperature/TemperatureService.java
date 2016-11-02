@@ -121,36 +121,12 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
 
     @Override
     public void temperature(short i) {
-        addEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
+        addEvent(getContract().EVENT_TEMPERATURE, i);
     }
 
     @Override
     public void temperatureReached(short i) {
-        addEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
-    }
-
-    public static class TemperatureEvent {
-
-        protected long timestamp;
-        protected short value;
-
-        public TemperatureEvent(short value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public TemperatureEvent(short value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public short getValue() {
-            return value;
-        }
-
+        addEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
     }
 
 }

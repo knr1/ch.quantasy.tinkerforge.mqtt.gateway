@@ -44,11 +44,11 @@ package ch.quantasy.gateway.agent.outerLights;
 
 import ch.quantasy.gateway.agent.led.AmbientLEDLightAgent;
 import ch.quantasy.gateway.service.device.dc.DCServiceContract;
-import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
 import ch.quantasy.gateway.service.device.linearPoti.LinearPotiServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.GatewayClientEvent;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
@@ -89,7 +89,7 @@ public class OuterLightsAgent {
         gatewayClient.subscribe(linearPotiServiceContract.EVENT_POSITION, new MessageReceiver() {
             @Override
             public void messageReceived(String topic, byte[] mm) throws Exception {
-                LinearPotiService.PositionEvent[] positionEvents=gatewayClient.getMapper().readValue(mm,LinearPotiService.PositionEvent[].class);
+                GatewayClientEvent<Integer>[] positionEvents=gatewayClient.toEventArray(mm, Integer.class);
                 int position=positionEvents[0].getValue();
                 gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY,(32767/100)*position);
             }

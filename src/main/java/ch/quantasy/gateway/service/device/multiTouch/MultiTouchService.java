@@ -62,7 +62,7 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
         addDescription(getContract().INTENT_RECALIBRATE, "[true|false]");
 
         addDescription(getContract().EVENT_TOUCH_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..8191]\n");
-        addDescription(getContract().EVENT_RECALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        addDescription(getContract().EVENT_RECALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
 
         addDescription(getContract().STATUS_ELECTRODE_SENSITIVITY, "[5..201]");
         addDescription(getContract().STATUS_ELECTRODE_CONFIG, "[0..8191]");
@@ -98,36 +98,12 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
 
     @Override
     public void recalibrated() {
-        addEvent(getContract().EVENT_RECALIBRATED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_RECALIBRATED, true);
     }
 
     @Override
     public void touchState(int i) {
-        addEvent(getContract().EVENT_TOUCH_STATE, new TouchStateEvent(i));
-    }
-
-    public static class TouchStateEvent {
-
-        long timestamp;
-        int value;
-
-        public TouchStateEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public TouchStateEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
+        addEvent(getContract().EVENT_TOUCH_STATE, i);
     }
 
 }

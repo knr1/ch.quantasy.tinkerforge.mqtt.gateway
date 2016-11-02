@@ -43,10 +43,12 @@
 package ch.quantasy.gateway.service.device.moisture;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
+import ch.quantasy.mqtt.gateway.client.GatewayClientEvent;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDeviceCallback;
 import ch.quantasy.tinkerforge.device.moisture.DeviceMoistureCallbackThreshold;
+import com.fasterxml.jackson.core.type.TypeReference;
 import java.net.URI;
 
 /**
@@ -116,36 +118,12 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
 
     @Override
     public void moisture(int i) {
-        addEvent(getContract().EVENT_MOISTURE, new MoistureEvent(i));
+        addEvent(getContract().EVENT_MOISTURE, i);
     }
 
     @Override
     public void moistureReached(int i) {
-        addEvent(getContract().EVENT_MOISTURE_REACHED, new MoistureEvent(i));
-    }
-
-    public static class MoistureEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        public MoistureEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public MoistureEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
+        addEvent(getContract().EVENT_MOISTURE_REACHED, i);
     }
 
 }

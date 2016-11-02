@@ -121,36 +121,13 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
 
     @Override
     public void illuminance(long i) {
-        addEvent(getContract().EVENT_IllUMINANCE, new IlluminanceEvent(i));
+        addEvent(getContract().EVENT_IllUMINANCE, i);
     }
 
     @Override
     public void illuminanceReached(long i) {
-        addEvent(getContract().EVENT_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
+        addEvent(getContract().EVENT_ILLUMINANCE_REACHED, i);
     }
 
-    public static class IlluminanceEvent {
-
-        protected long timestamp;
-        protected long value;
-
-        public IlluminanceEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public IlluminanceEvent(long value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getValue() {
-            return value;
-        }
-
-    }
-
+    
 }

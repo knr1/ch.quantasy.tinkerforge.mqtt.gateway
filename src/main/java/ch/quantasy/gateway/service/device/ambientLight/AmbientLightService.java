@@ -104,22 +104,22 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
 
     @Override
     public void analogValue(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
+        addEvent(getContract().EVENT_ANALOG_VALUE, i);
     }
 
     @Override
     public void analogValueReached(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
+        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
     }
 
     @Override
     public void illuminance(int i) {
-        addEvent(getContract().EVENT_ILLUMINANCE, new IlluminanceEvent(i));
+        addEvent(getContract().EVENT_ILLUMINANCE, i);
     }
 
     @Override
     public void illuminanceReached(int i) {
-        addEvent(getContract().EVENT_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
+        addEvent(getContract().EVENT_ILLUMINANCE_REACHED, i);
     }
 
     @Override
@@ -145,54 +145,6 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
     @Override
     public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold) {
         addStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, threshold);
-
-    }
-
-    public static class AnalogValueEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        public AnalogValueEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public AnalogValueEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
-    public static class IlluminanceEvent {
-
-        long timestamp;
-        int value;
-
-        public IlluminanceEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public IlluminanceEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
 
     }
 

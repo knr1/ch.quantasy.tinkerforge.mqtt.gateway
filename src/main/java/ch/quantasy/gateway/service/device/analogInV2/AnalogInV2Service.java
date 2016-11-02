@@ -119,22 +119,22 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
     @Override
     public void analogValue(int i) {
 
-        addEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
+        addEvent(getContract().EVENT_ANALOG_VALUE, i);
     }
 
     @Override
     public void analogValueReached(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
+        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
     }
 
     @Override
     public void voltage(int i) {
-        addEvent(getContract().EVENT_VOLTAGE, new VoltageEvent(i));
+        addEvent(getContract().EVENT_VOLTAGE, i);
     }
 
     @Override
     public void voltageReached(int i) {
-        addEvent(getContract().EVENT_VOLTAGE_REACHED, new VoltageEvent(i));
+        addEvent(getContract().EVENT_VOLTAGE_REACHED, i);
     }
 
     @Override
@@ -165,54 +165,6 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
     @Override
     public void movingAverageChanged(Short averaging) {
         addStatus(getContract().STATUS_MOVING_AVERAGE, averaging);
-    }
-
-    public static class AnalogValueEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        public AnalogValueEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public AnalogValueEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
-
-    public static class VoltageEvent {
-
-        long timestamp;
-        int value;
-
-        public VoltageEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public VoltageEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
     }
 
 }

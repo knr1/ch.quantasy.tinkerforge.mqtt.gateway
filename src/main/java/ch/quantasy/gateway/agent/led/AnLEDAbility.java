@@ -41,9 +41,9 @@
  */
 package ch.quantasy.gateway.agent.led;
 
-import ch.quantasy.gateway.service.device.ledStrip.LEDStripService;
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.GatewayClientEvent;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import java.util.ArrayList;
@@ -100,9 +100,9 @@ public abstract class AnLEDAbility implements Runnable, MessageReceiver {
     @Override
     public void messageReceived(String topic, byte[] payload) throws Exception {
         synchronized (this) {
-            LEDStripService.FrameRenderedEvent[] framesRendered = gatewayClient.getMapper().readValue(payload, LEDStripService.FrameRenderedEvent[].class);
+            GatewayClientEvent<Integer>[] framesRendered = (GatewayClientEvent<Integer>[])gatewayClient.toEventArray(payload, Integer.class);
             if (framesRendered.length > 0) {
-                counter = framesRendered[0].getFramesBuffered();
+                counter = framesRendered[0].getValue();
                 this.notifyAll();
             }
         }

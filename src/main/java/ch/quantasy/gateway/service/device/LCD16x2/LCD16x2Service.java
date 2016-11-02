@@ -101,35 +101,13 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     @Override
     public void buttonPressed(short s) {
-        addEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s));
+        addEvent(getContract().EVENT_BUTTON_PRESSED, s);
     }
 
     @Override
     public void buttonReleased(short s) {
-        addEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s));
+        addEvent(getContract().EVENT_BUTTON_RELEASED, s);
     }
 
-    public static class ButtonEvent {
-
-        private long timestamp;
-        private short value;
-
-        public ButtonEvent(short value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public ButtonEvent(short value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public short getValue() {
-            return value;
-        }
-
-    }
+    
 }

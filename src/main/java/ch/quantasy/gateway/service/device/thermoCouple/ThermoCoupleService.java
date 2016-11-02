@@ -122,37 +122,27 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
 
     @Override
     public void temperature(int i) {
-        addEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
+        addEvent(getContract().EVENT_TEMPERATURE, i);
     }
 
     @Override
     public void temperatureReached(int i) {
-        addEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
+        addEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
     }
 
     @Override
     public void errorState(boolean bln, boolean bln1) {
-        addEvent(getContract().EVENT_ERROR, new ErrorEvent(bln, bln1));
+        addEvent(getContract().EVENT_ERROR, new Error(bln, bln1));
     }
 
-    public static class ErrorEvent {
+    public static class Error {
 
-        protected long timestamp;
         protected boolean voltage;
         protected boolean openCircuit;
 
-        public ErrorEvent(boolean voltage, boolean openCircuit) {
-            this(voltage, openCircuit, System.currentTimeMillis());
-        }
-
-        public ErrorEvent(boolean voltage, boolean openCircuit, long timeStamp) {
+        public Error(boolean voltage, boolean openCircuit) {
             this.voltage = voltage;
             this.openCircuit = openCircuit;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
         }
 
         public boolean getVoltage() {
@@ -161,30 +151,6 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
 
         public boolean getOpenCircuit() {
             return openCircuit;
-        }
-
-    }
-
-    public static class TemperatureEvent {
-
-        protected long timestamp;
-        protected long value;
-
-        public TemperatureEvent(long value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public TemperatureEvent(long value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getValue() {
-            return value;
         }
 
     }

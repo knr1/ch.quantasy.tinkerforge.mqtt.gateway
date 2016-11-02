@@ -103,22 +103,22 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
 
     @Override
     public void ambientTemperature(short s) {
-        addEvent(getContract().EVENT_AMBIENT_TEMPERATURE, new AmbientTemperatureEvent(s));
+        addEvent(getContract().EVENT_AMBIENT_TEMPERATURE, s);
     }
 
     @Override
     public void ambientTemperatureReached(short s) {
-        addEvent(getContract().EVENT_AMBIENT_TEMPERATURE_REACHED, new AmbientTemperatureEvent(s));
+        addEvent(getContract().EVENT_AMBIENT_TEMPERATURE_REACHED, s);
     }
 
     @Override
     public void objectTemperature(short s) {
-        addEvent(getContract().EVENT_OBJECT_TEMPERATURE, new ObjectTemperatureEvent(s));
+        addEvent(getContract().EVENT_OBJECT_TEMPERATURE, s);
     }
 
     @Override
     public void objectTemperatureReached(short s) {
-        addEvent(getContract().EVENT_OBJECT_TEMPERATURE_REACHED, new ObjectTemperatureEvent(s));
+        addEvent(getContract().EVENT_OBJECT_TEMPERATURE_REACHED, s);
     }
 
     @Override
@@ -147,52 +147,5 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
 
     }
 
-    public static class AmbientTemperatureEvent {
-
-        protected long timestamp;
-        protected short value;
-
-        public AmbientTemperatureEvent(short value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public AmbientTemperatureEvent(short value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public short getValue() {
-            return value;
-        }
-
-    }
-
-    public static class ObjectTemperatureEvent {
-
-        long timestamp;
-        short value;
-
-        public ObjectTemperatureEvent(short value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public ObjectTemperatureEvent(short value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public short getHumidity() {
-            return value;
-        }
-
-    }
-
+   
 }

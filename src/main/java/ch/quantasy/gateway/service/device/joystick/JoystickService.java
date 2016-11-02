@@ -70,10 +70,10 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
         addDescription(getContract().EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getContract().EVENT_POSITION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
-        addDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [0..4095]\n y: [0..4095]");
-        addDescription(getContract().EVENT_POSITION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [-100..100]\n y: [-100..100]");
+        addDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n x: [0..4095]\n y: [0..4095]");
+        addDescription(getContract().EVENT_POSITION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  x: [-100..100]\n y: [-100..100]");
+        addDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  x: [0..4095]\n   y: [0..4095]");
+        addDescription(getContract().EVENT_POSITION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   x: [-100..100]\n   y: [-100..100]");
         addDescription(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().STATUS_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");
@@ -140,57 +140,50 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
 
     @Override
     public void calibrated() {
-        addEvent(getContract().EVENT_CALIBRATE, System.currentTimeMillis());
+        addEvent(getContract().EVENT_CALIBRATE, true);
     }
 
     @Override
     public void analogValue(int i, int i1) {
-        addEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i, i1));
+        addEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValue(i, i1));
     }
 
     @Override
     public void analogValueReached(int i, int i1) {
-        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i, i1));
+        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValue(i, i1));
     }
 
     @Override
     public void position(short s, short s1) {
-        addEvent(getContract().EVENT_POSITION, new PositionEvent(s, s1));
+        addEvent(getContract().EVENT_POSITION, new Position(s, s1));
     }
 
     @Override
     public void positionReached(short s, short s1) {
-        addEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(s, s1));
+        addEvent(getContract().EVENT_POSITION_REACHED, new Position(s, s1));
     }
 
     @Override
     public void pressed() {
-        addEvent(getContract().EVENT_PRESSED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_PRESSED, true);
     }
 
     @Override
     public void released() {
-        addEvent(getContract().EVENT_RELEASED, System.currentTimeMillis());
+        addEvent(getContract().EVENT_RELEASED, true);
     }
 
-    public static class AnalogValueEvent {
+    public static class AnalogValue {
 
-        protected long timestamp;
-        protected int x;
-        protected int y;
+        private int x;
+        private int y;
 
-        public AnalogValueEvent(int x, int y) {
-            this(x, y, System.currentTimeMillis());
+        private AnalogValue() {
         }
 
-        public AnalogValueEvent(int x, int y, long timeStamp) {
+        public AnalogValue(int x, int y) {
             this.x = x;
             this.y = y;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
         }
 
         public int getX() {
@@ -203,24 +196,17 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
 
     }
 
-    public static class PositionEvent {
+    public static class Position {
 
-        protected long timestamp;
-        protected short x;
-        protected short y;
+        private short x;
+        private short y;
 
-        public PositionEvent(short x, short y) {
-            this(x, y, System.currentTimeMillis());
+        private Position() {
         }
 
-        public PositionEvent(short x, short y, long timeStamp) {
+        public Position(short x, short y) {
             this.x = x;
             this.y = y;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
         }
 
         public short getX() {

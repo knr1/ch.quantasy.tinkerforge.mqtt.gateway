@@ -151,36 +151,14 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
 
     @Override
     public void weight(int i) {
-        addEvent(getContract().EVENT_WEIGHT, new WeightEvent(i));
+        addEvent(getContract().EVENT_WEIGHT, i);
     }
 
     @Override
     public void weightReached(int i) {
-        addEvent(getContract().EVENT_WEIGHT_REACHED, new WeightEvent(i));
+        addEvent(getContract().EVENT_WEIGHT_REACHED, i);
     }
 
-    public static class WeightEvent {
-
-        protected long timestamp;
-        protected int value;
-
-        public WeightEvent(int value) {
-            this(value, System.currentTimeMillis());
-        }
-
-        public WeightEvent(int value, long timeStamp) {
-            this.value = value;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-    }
+    
 
 }

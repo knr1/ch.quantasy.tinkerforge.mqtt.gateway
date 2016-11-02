@@ -59,7 +59,7 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
         super(mqttURI, device, new SolidStateRelayServiceContract(device));
         addDescription(getContract().INTENT_MONOFLOP, "state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
         addDescription(getContract().INTENT_STATE, "[true|false]");
-        addDescription(getContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n state: [true|false]");
+        addDescription(getContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [true|false]");
         addDescription(getContract().STATUS_STATE, "[true|false]");
 
     }
@@ -85,34 +85,9 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
 
     @Override
     public void monoflopDone(boolean state) {
-        addEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(state));
+        addEvent(getContract().EVENT_MONOFLOP_DONE, state);
     }
 
-    public static class MonoflopDoneEvent {
-
-        protected long timestamp;
-        protected boolean state;
-
-        private MonoflopDoneEvent() {
-        }
-
-        public MonoflopDoneEvent(boolean state) {
-            this(state, System.currentTimeMillis());
-        }
-
-        public MonoflopDoneEvent(boolean state, long timeStamp) {
-            this.state = state;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public boolean getState() {
-            return state;
-        }
-
-    }
+    
 
 }
