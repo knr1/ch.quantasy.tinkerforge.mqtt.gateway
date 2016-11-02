@@ -43,7 +43,7 @@
 package ch.quantasy.gateway.service.device.IMU;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.mqtt.gateway.client.GatewayClientEvent;
+import ch.quantasy.mqtt.gateway.client.GCEvent;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.imu.IMUDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;

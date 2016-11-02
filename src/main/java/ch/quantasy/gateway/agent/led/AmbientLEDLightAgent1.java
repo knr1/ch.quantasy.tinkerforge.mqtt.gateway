@@ -49,7 +49,7 @@ import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderServiceCont
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.GatewayClientEvent;
+import ch.quantasy.mqtt.gateway.client.GCEvent;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
@@ -68,7 +68,7 @@ import ch.quantasy.mqtt.gateway.client.MessageReceiver;
  */
 public class AmbientLEDLightAgent1 {
 
-   private final ManagerServiceContract managerServiceContract;
+    private final ManagerServiceContract managerServiceContract;
     private final List<Wave> waveList;
     private Thread timerThread;
     private final int frameDurationInMillis;
@@ -76,10 +76,7 @@ public class AmbientLEDLightAgent1 {
     private final GatewayClient<ClientContract> gatewayClient;
     private int delayInMinutes;
 
-    
-        
-     
-        public AmbientLEDLightAgent1(URI mqttURI) throws MqttException {
+    public AmbientLEDLightAgent1(URI mqttURI) throws MqttException {
         frameDurationInMillis = 55;
         amountOfLEDs = 120;
         delayInMinutes = 1;
@@ -87,6 +84,7 @@ public class AmbientLEDLightAgent1 {
         managerServiceContract = new ManagerServiceContract("Manager");
         gatewayClient = new GatewayClient(mqttURI, "433407hfra", new ClientContract("Agent", "AmbientLEDLight", "lulu"));
         gatewayClient.connect();
+
         connectRemoteServices(new TinkerforgeStackAddress("lights01"));
 
         RotaryEncoderServiceContract rotaryEncoderServiceContract = new RotaryEncoderServiceContract("je3", TinkerforgeDeviceClass.RotaryEncoder.toString());
@@ -108,12 +106,12 @@ public class AmbientLEDLightAgent1 {
                 }
             }
         });
-           LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("oZU", TinkerforgeDeviceClass.LEDStrip.toString());
+        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("oZU", TinkerforgeDeviceClass.LEDStrip.toString());
         LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
 
         waveList.add(new Wave(ledServiceContract1, config));
         waveList.add(new Wave(ledServiceContract2, config));
-        
+
         for (Wave wave : waveList) {
             new Thread(wave).start();
         }
@@ -149,6 +147,7 @@ public class AmbientLEDLightAgent1 {
                 timerThread.start();
             }
         });
+
     }
 
     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
@@ -174,7 +173,7 @@ public class AmbientLEDLightAgent1 {
 
         @Override
         public void messageReceived(String topic, byte[] mm) throws Exception {
-            GatewayClientEvent<Integer>[] countEvents = gatewayClient.toEventArray(mm, Integer.class);
+            GCEvent<Integer>[] countEvents = gatewayClient.toEventArray(mm, Integer.class);
             if (latestCount == null) {
                 latestCount = countEvents[0].getValue();
             }
@@ -288,8 +287,8 @@ public class AmbientLEDLightAgent1 {
                             double brightness = getBrightness();
                             double ambientBrightness = getAmbientBrightness();
                             double step = getStep();
-                            if (brightness+ambientBrightness > targetBrightness) {
-                                brightness = Math.max(brightness - step, targetBrightness-ambientBrightness);
+                            if (brightness + ambientBrightness > targetBrightness) {
+                                brightness = Math.max(brightness - step, targetBrightness - ambientBrightness);
                                 this.setBrightness(brightness);
                             } else if (brightness < targetBrightness) {
                                 brightness = Math.min(brightness + step, targetBrightness);

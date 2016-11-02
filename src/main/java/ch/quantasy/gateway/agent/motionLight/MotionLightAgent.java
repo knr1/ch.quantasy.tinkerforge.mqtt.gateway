@@ -56,7 +56,7 @@ import ch.quantasy.mqtt.gateway.client.MessageReceiver;
  *
  * @author reto
  */
-public class MotionLightAgent implements MessageReceiver{
+public class MotionLightAgent implements MessageReceiver {
 
     private final RemoteSwitchServiceContract remoteSwitchServiceContract;
     private final MotionDetectorServiceContract motionDetectorServiceContract;
@@ -66,15 +66,16 @@ public class MotionLightAgent implements MessageReceiver{
     public MotionLightAgent(URI mqttURI) throws MqttException {
         remoteSwitchServiceContract = new RemoteSwitchServiceContract("jKQ", TinkerforgeDeviceClass.RemoteSwitch.toString());
         motionDetectorServiceContract = new MotionDetectorServiceContract("kfT", TinkerforgeDeviceClass.MotionDetector.toString());
-       
-        gatewayClient=new GatewayClient(mqttURI, "2408h40h4", new ClientContract("Agent","MotionLight","e48"));
+
+        gatewayClient = new GatewayClient(mqttURI, "2408h40h4", new ClientContract("Agent", "MotionLight", "e48"));
+        gatewayClient.connect();
+
         gatewayClient.subscribe(motionDetectorServiceContract.EVENT_DETECTION_CYCLE_ENDED, this);
         gatewayClient.subscribe(motionDetectorServiceContract.EVENT_MOTION_DETECTED, this);
-        
-        gatewayClient.connect();
-        t=new Thread(new switcher());
+
+        t = new Thread(new switcher());
         t.start();
-        
+
     }
 
     @Override
@@ -111,15 +112,15 @@ public class MotionLightAgent implements MessageReceiver{
                         }
                     }
                     if (delayStart != null) {
-                        long delay=Math.max(0, 10000-(System.currentTimeMillis()-delayStart));
+                        long delay = Math.max(0, 10000 - (System.currentTimeMillis() - delayStart));
                         try {
                             MotionLightAgent.this.wait(delay);
                         } catch (InterruptedException ex) {
                         }
                     }
-                    if(delayStart!=null){
+                    if (delayStart != null) {
                         switchLight(SwitchSocketCParameters.SwitchTo.switchOff);
-                        delayStart=null;
+                        delayStart = null;
                     }
                 }
             }

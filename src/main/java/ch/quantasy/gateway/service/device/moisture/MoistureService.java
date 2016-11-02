@@ -43,7 +43,7 @@
 package ch.quantasy.gateway.service.device.moisture;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.mqtt.gateway.client.GatewayClientEvent;
+import ch.quantasy.mqtt.gateway.client.GCEvent;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDeviceCallback;

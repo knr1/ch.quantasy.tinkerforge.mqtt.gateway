@@ -43,7 +43,6 @@
 package ch.quantasy.gateway.service.stackManager;
 
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
-import ch.quantasy.mqtt.gateway.service.ServiceContract;
 
 /**
  *

@@ -1,8 +1,8 @@
 /*
  * /*
- *  *   "TiMqWay"
+ *  *   "SeMqWay"
  *  *
- *  *    TiMqWay(tm): A gateway to provide an MQTT-View for the Tinkerforge(tm) world (Tinkerforge-MQTT-Gateway).
+ *  *    SeMqWay(tm): A gateway to provide an MQTT-View for any micro-service (Service MQTT-Gateway).
  *  *
  *  *    Copyright (c) 2016 Bern University of Applied Sciences (BFH),
  *  *    Research Institute for Security in the Information Society (RISIS), Wireless Communications & Secure Internet of Things (WiCom & SIoT),
@@ -40,41 +40,38 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.service.device;
+package ch.quantasy.gateway.service;
 
-import ch.quantasy.gateway.service.AbstractService;
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-import ch.quantasy.tinkerforge.device.generic.GenericDevice;
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
 import java.net.URI;
-
 import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
  * @author reto
- * @param <G>
  * @param <S>
  */
-public abstract class AbstractDeviceService<G extends GenericDevice, S extends DeviceServiceContract> extends AbstractService<S> implements DeviceCallback {
+public abstract class AbstractService<S extends ServiceContract> extends GatewayClient<S>implements MessageReceiver {
 
-    private final G device;
 
-    public AbstractDeviceService(URI mqttURI, G device, S serviceContract) throws MqttException {
-        super(mqttURI, serviceContract.ID_TOPIC, serviceContract);
-        this.device = device;
-        device.setCallback(this);
-        addDescription(getContract().STATUS_POSITION, "[0|1|2|3|4|5|6|7|8|a|b|c|d]");
-        addDescription(getContract().STATUS_FIRMWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
-        addDescription(getContract().STATUS_HARDWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
-
-        addStatus(getContract().STATUS_POSITION, device.getPosition());
-        addStatus(getContract().STATUS_FIRMWARE, device.getFirmwareVersion());
-        addStatus(getContract().STATUS_HARDWARE, device.getHardwareVersion());
-
+    public AbstractService(URI mqttURI, String clientID, S contract) throws MqttException {
+        super(mqttURI, clientID, contract);
+        connect();
+        subscribe(contract.INTENT + "/#", this);
     }
 
-    public G getDevice() {
-        return device;
-    }
 
+    /**
+     * This is called within a new runnable! Be sure this method is programmed
+     * thread safe!
+     *
+     * @param topic This String is never null and contains the topic of the mqtt
+     * message.
+     * @param payload This byte[] shall never be null and contains the payload of the
+     * mqtt message.
+     * @throws Exception Any exception is handled 'gracefully' within
+     * AbstractService.
+     */
+    public abstract void messageReceived(String topic, byte[] payload) throws Exception;
 }

@@ -48,7 +48,7 @@ import ch.quantasy.gateway.service.device.linearPoti.LinearPotiServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.GatewayClientEvent;
+import ch.quantasy.mqtt.gateway.client.GCEvent;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
@@ -77,7 +77,8 @@ public class OuterLightsAgent {
 
         gatewayClient = new GatewayClient(mqttURI, "wrth563g", new ClientContract("Agent", "OuterLights", "01"));
         gatewayClient.connect();
-        connectRemoteServices("controller01","localhost");
+
+        connectRemoteServices("controller01", "localhost");
 
         gatewayClient.addIntent(linearPotiServiceContract.INTENT_POSITION_CALLBACK_PERIOD, 100);
         gatewayClient.addIntent(dcServiceContract.INTENT_ACCELERATION, 20000);
@@ -85,13 +86,12 @@ public class OuterLightsAgent {
         gatewayClient.addIntent(dcServiceContract.INTENT_PWM_FREQUENCY, 20000);
         gatewayClient.addIntent(dcServiceContract.INTENT_ENABLED, true);
 
-        
         gatewayClient.subscribe(linearPotiServiceContract.EVENT_POSITION, new MessageReceiver() {
             @Override
             public void messageReceived(String topic, byte[] mm) throws Exception {
-                GatewayClientEvent<Integer>[] positionEvents=gatewayClient.toEventArray(mm, Integer.class);
-                int position=positionEvents[0].getValue();
-                gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY,(32767/100)*position);
+                GCEvent<Integer>[] positionEvents = gatewayClient.toEventArray(mm, Integer.class);
+                int position = positionEvents[0].getValue();
+                gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * position);
             }
         });
 

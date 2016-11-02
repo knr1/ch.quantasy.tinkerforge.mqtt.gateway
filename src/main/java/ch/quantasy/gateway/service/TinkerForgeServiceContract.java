@@ -42,7 +42,6 @@
  */
 package ch.quantasy.gateway.service;
 
-import ch.quantasy.mqtt.gateway.service.ServiceContract;
 
 /**
  *

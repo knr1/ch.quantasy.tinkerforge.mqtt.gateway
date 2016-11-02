@@ -1,8 +1,8 @@
 /*
  * /*
- *  *   "TiMqWay"
+ *  *   "SeMqWay"
  *  *
- *  *    TiMqWay(tm): A gateway to provide an MQTT-View for the Tinkerforge(tm) world (Tinkerforge-MQTT-Gateway).
+ *  *    SeMqWay(tm): A gateway to provide an MQTT-View for any micro-service (Service MQTT-Gateway).
  *  *
  *  *    Copyright (c) 2016 Bern University of Applied Sciences (BFH),
  *  *    Research Institute for Security in the Information Society (RISIS), Wireless Communications & Secure Internet of Things (WiCom & SIoT),
@@ -40,41 +40,19 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.service.device;
+package ch.quantasy.gateway.service;
 
-import ch.quantasy.gateway.service.AbstractService;
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import java.net.URI;
-
-import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.mqtt.gateway.client.ClientContract;
 
 /**
  *
  * @author reto
- * @param <G>
- * @param <S>
  */
-public abstract class AbstractDeviceService<G extends GenericDevice, S extends DeviceServiceContract> extends AbstractService<S> implements DeviceCallback {
+public class ServiceContract extends ClientContract{
 
-    private final G device;
-
-    public AbstractDeviceService(URI mqttURI, G device, S serviceContract) throws MqttException {
-        super(mqttURI, serviceContract.ID_TOPIC, serviceContract);
-        this.device = device;
-        device.setCallback(this);
-        addDescription(getContract().STATUS_POSITION, "[0|1|2|3|4|5|6|7|8|a|b|c|d]");
-        addDescription(getContract().STATUS_FIRMWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
-        addDescription(getContract().STATUS_HARDWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
-
-        addStatus(getContract().STATUS_POSITION, device.getPosition());
-        addStatus(getContract().STATUS_FIRMWARE, device.getFirmwareVersion());
-        addStatus(getContract().STATUS_HARDWARE, device.getHardwareVersion());
-
+    public ServiceContract(String rootTopic, String baseClass, String instance) {
+        super(rootTopic, baseClass, instance);
     }
 
-    public G getDevice() {
-        return device;
-    }
-
+    
 }

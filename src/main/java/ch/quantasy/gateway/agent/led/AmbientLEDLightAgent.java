@@ -48,7 +48,7 @@ import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderServiceCont
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.GatewayClientEvent;
+import ch.quantasy.mqtt.gateway.client.GCEvent;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
@@ -83,7 +83,7 @@ public class AmbientLEDLightAgent {
         managerServiceContract = new ManagerServiceContract("Manager");
         gatewayClient = new GatewayClient(mqttURI, "349h3fdh", new ClientContract("Agent", "AmbientLEDLight", "test01"));
         gatewayClient.connect();
-        connectRemoteServices("lights02","localhost");
+        connectRemoteServices("lights02", "localhost");
 
         RotaryEncoderServiceContract rotaryEncoderServiceContract = new RotaryEncoderServiceContract("je3", TinkerforgeDeviceClass.RotaryEncoder.toString());
 
@@ -166,7 +166,7 @@ public class AmbientLEDLightAgent {
 
         @Override
         public void messageReceived(String topic, byte[] mm) throws Exception {
-            GatewayClientEvent<Integer>[] countEvents = gatewayClient.toEventArray(mm, Integer.class);
+            GCEvent<Integer>[] countEvents = gatewayClient.toEventArray(mm, Integer.class);
             if (latestCount == null) {
                 latestCount = countEvents[0].getValue();
             }
@@ -245,13 +245,13 @@ public class AmbientLEDLightAgent {
             double sineRed = 0;
             double sineBlue = 0;
             double sineGreen = 0;
-            double sineWhite=0;
+            double sineWhite = 0;
             prototypeLEDFrame = super.getNewLEDFrame();
             for (int i = 0; i < prototypeLEDFrame.getNumberOfLEDs(); i++) {
                 sineRed = Math.sin((i / 120.0) * Math.PI * 2);
                 sineBlue = Math.sin((i / 60.0) * Math.PI * 2);
                 sineGreen = Math.sin((i / 30.0) * Math.PI * 2);
-                sineWhite= Math.sin((i / 90.0) * Math.PI * 2);;
+                sineWhite = Math.sin((i / 90.0) * Math.PI * 2);;
 
                 prototypeLEDFrame.setColor(0, i, (short) (127.0 + (sineRed * 127.0)));
                 prototypeLEDFrame.setColor(1, i, (short) (127.0 + (sineBlue * 127.0)));
@@ -283,8 +283,8 @@ public class AmbientLEDLightAgent {
                             double brightness = getBrightness();
                             double ambientBrightness = getAmbientBrightness();
                             double step = getStep();
-                            if (brightness+ambientBrightness > targetBrightness) {
-                                brightness = Math.max(brightness - step, targetBrightness-ambientBrightness);
+                            if (brightness + ambientBrightness > targetBrightness) {
+                                brightness = Math.max(brightness - step, targetBrightness - ambientBrightness);
                                 this.setBrightness(brightness);
                             } else if (brightness < targetBrightness) {
                                 brightness = Math.min(brightness + step, targetBrightness);

@@ -78,6 +78,7 @@ public class RemoteSwitchAgent {
 
         gatewayClient = new GatewayClient(mqttURI, "5pq34in", new ClientContract("Agent", "RemoteSwitcher", "remoteSwitcher01"));
         gatewayClient.connect();
+
         connectRemoteServices(new TinkerforgeStackAddress("obergeschoss"));
         connectRemoteServices(new TinkerforgeStackAddress("untergeschoss"));
         connectRemoteServices(new TinkerforgeStackAddress("localhost"));
@@ -115,7 +116,6 @@ public class RemoteSwitchAgent {
             }
         }
         );
-
     }
 
     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
