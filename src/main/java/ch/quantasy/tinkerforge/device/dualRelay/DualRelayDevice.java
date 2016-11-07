@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.dualRelay;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDualRelay;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -61,8 +61,8 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
     private Map<Short, DeviceMonoflopParameters> monoflopParametersMap;
     private DeviceState state;
 
-    public DualRelayDevice(TinkerforgeStackAddress address, BrickletDualRelay device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public DualRelayDevice(TinkerforgeStack stack, BrickletDualRelay device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
         this.monoflopParametersMap = new HashMap<>();
     }
 

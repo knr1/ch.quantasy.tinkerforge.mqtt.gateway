@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.distanceUS;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDistanceUS;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -61,8 +61,8 @@ public class DistanceUSDevice extends GenericDevice<BrickletDistanceUS, Distance
     private Short movingAverage;
     private DeviceDistanceCallbackThreshold distanceThreshold;
 
-    public DistanceUSDevice(TinkerforgeStackAddress address, BrickletDistanceUS device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public DistanceUSDevice(TinkerforgeStack stack, BrickletDistanceUS device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

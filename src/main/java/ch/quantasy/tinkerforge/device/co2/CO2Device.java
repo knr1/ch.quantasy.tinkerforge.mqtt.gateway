@@ -44,7 +44,7 @@ package ch.quantasy.tinkerforge.device.co2;
 
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletCO2;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -61,8 +61,8 @@ public class CO2Device extends GenericDevice<BrickletCO2, CO2DeviceCallback> {
     private Long co2ConcentrationCallbackPeriod;
     private DeviceCO2ConcentrationCallbackThreshold threshold;
     
-    public CO2Device(TinkerforgeStackAddress address, BrickletCO2 device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public CO2Device(TinkerforgeStack stack, BrickletCO2 device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

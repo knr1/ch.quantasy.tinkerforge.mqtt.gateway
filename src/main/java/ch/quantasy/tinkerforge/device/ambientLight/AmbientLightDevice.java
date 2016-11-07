@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.ambientLight;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -62,8 +62,8 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
     private DeviceAnalogValueCallbackThreshold analogValueThreshold;
     private DeviceIlluminanceCallbackThreshold illuminanceThreshold;
 
-    public AmbientLightDevice(TinkerforgeStackAddress address, BrickletAmbientLight device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public AmbientLightDevice(TinkerforgeStack stack, BrickletAmbientLight device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

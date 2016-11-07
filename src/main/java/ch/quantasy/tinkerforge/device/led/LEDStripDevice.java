@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.led;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLEDStrip;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -81,8 +81,8 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
     private boolean readyToSend;
     private boolean sent;
 
-    public LEDStripDevice(TinkerforgeStackAddress address, BrickletLEDStrip device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public LEDStripDevice(TinkerforgeStack stack, BrickletLEDStrip device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
         this.publisher = new Publisher();
         System.out.println("Concurrent");
         config = new LEDStripDeviceConfig(LEDStripDevice.DEFAULT_CHIP_TYPE, LEDStripDevice.DEFAULT_CLOCK_FREQUENCY_OF_ICS_IN_HZ, LEDStripDevice.DEFAULT_FRAME_DURATION_IN_MILLISECONDS, LEDStripDevice.DEFAULT_NUMBER_OF_LEDS, LEDStripDevice.DEFAULT_CHANNEL_MAPPING);

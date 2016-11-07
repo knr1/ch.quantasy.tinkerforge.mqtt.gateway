@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.piezoSpeaker;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletPiezoSpeaker;
 
 import com.tinkerforge.NotConnectedException;
@@ -58,8 +58,8 @@ import java.util.logging.Logger;
  */
 public class PiezoSpeakerDevice extends GenericDevice<BrickletPiezoSpeaker, PiezoSpeakerDeviceCallback> {
 
-    public PiezoSpeakerDevice(TinkerforgeStackAddress address, BrickletPiezoSpeaker device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public PiezoSpeakerDevice(TinkerforgeStack stack, BrickletPiezoSpeaker device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

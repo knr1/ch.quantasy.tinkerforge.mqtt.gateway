@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.tilt;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletTilt;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -56,8 +56,8 @@ public class TiltDevice extends GenericDevice<BrickletTilt, TiltDeviceCallback> 
 
     
 
-    public TiltDevice(TinkerforgeStackAddress address, BrickletTilt device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public TiltDevice(TinkerforgeStack stack, BrickletTilt device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.imuV2;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickIMUV2;
 
 import com.tinkerforge.NotConnectedException;
@@ -70,8 +70,8 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
     private Boolean isStatusLEDEnabled;
     private Boolean areLEDsEnabled;
 
-    public IMUV2Device(TinkerforgeStackAddress address, BrickIMUV2 device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public IMUV2Device(TinkerforgeStack stack, BrickIMUV2 device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

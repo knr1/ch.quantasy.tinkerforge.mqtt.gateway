@@ -44,7 +44,7 @@ package ch.quantasy.tinkerforge.device.dustDetector;
 
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDustDetector;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -62,8 +62,8 @@ public class DustDetectorDevice extends GenericDevice<BrickletDustDetector, Dust
     private DeviceDustDensityCallbackThreshold threshold;
     private Short average;
     
-    public DustDetectorDevice(TinkerforgeStackAddress address, BrickletDustDetector device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public DustDetectorDevice(TinkerforgeStack stack, BrickletDustDetector device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

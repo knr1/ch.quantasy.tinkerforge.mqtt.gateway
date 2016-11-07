@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.joystick;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletJoystick;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -62,8 +62,8 @@ public class JoystickDevice extends GenericDevice<BrickletJoystick, JoystickDevi
     private DeviceAnalogValueCallbackThreshold analogValueThreshold;
     private DevicePositionCallbackThreshold positionThreshold;
 
-    public JoystickDevice(TinkerforgeStackAddress address, BrickletJoystick device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public JoystickDevice(TinkerforgeStack stack, BrickletJoystick device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

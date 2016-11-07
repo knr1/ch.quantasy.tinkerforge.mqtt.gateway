@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.rotaryEncoder;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletRotaryEncoder;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -60,8 +60,8 @@ public class RotaryEncoderDevice extends GenericDevice<BrickletRotaryEncoder, Ro
     private Long debouncePeriod;
     private DeviceCountCallbackThreshold countThreshold;
 
-    public RotaryEncoderDevice(TinkerforgeStackAddress address, BrickletRotaryEncoder device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public RotaryEncoderDevice(TinkerforgeStack stack, BrickletRotaryEncoder device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

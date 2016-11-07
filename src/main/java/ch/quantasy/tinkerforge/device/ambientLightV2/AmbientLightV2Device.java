@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.ambientLightV2;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAmbientLightV2;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -61,8 +61,8 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
     private Long debouncePeriod;
     private DeviceIlluminanceCallbackThreshold illuminanceThreshold;
 
-    public AmbientLightV2Device(TinkerforgeStackAddress address, BrickletAmbientLightV2 device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public AmbientLightV2Device(TinkerforgeStack stack, BrickletAmbientLightV2 device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

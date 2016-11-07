@@ -44,7 +44,7 @@ package ch.quantasy.tinkerforge.device.soundIntensity;
 
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletSoundIntensity;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -61,8 +61,8 @@ public class SoundIntensityDevice extends GenericDevice<BrickletSoundIntensity, 
     private Long intensityCallbackPeriod;
     private DeviceSoundIntensityCallbackThreshold threshold;
     
-    public SoundIntensityDevice(TinkerforgeStackAddress address, BrickletSoundIntensity device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public SoundIntensityDevice(TinkerforgeStack stack, BrickletSoundIntensity device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

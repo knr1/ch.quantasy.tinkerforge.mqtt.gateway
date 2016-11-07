@@ -43,8 +43,7 @@
 package ch.quantasy.tinkerforge.device.realTimeClock;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
-import com.tinkerforge.BrickletPiezoSpeaker;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletRealTimeClock;
 
 import com.tinkerforge.NotConnectedException;
@@ -64,8 +63,8 @@ public class RealTimeClockDevice extends GenericDevice<BrickletRealTimeClock, Re
     private Long period;
     private AlarmParamter alarmParameter;
 
-    public RealTimeClockDevice(TinkerforgeStackAddress address, BrickletRealTimeClock device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public RealTimeClockDevice(TinkerforgeStack stack, BrickletRealTimeClock device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

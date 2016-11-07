@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.accelerometer;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAccelerometer;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -61,8 +61,8 @@ public class AccelerometerDevice extends GenericDevice<BrickletAccelerometer, Ac
     private Long debouncePeriod;
     private DeviceAccelerationCallbackThreshold accelerationThreshold;
 
-    public AccelerometerDevice(TinkerforgeStackAddress address, BrickletAccelerometer device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public AccelerometerDevice(TinkerforgeStack stack, BrickletAccelerometer device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

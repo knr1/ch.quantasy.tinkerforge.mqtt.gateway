@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.motionDetector;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletMotionDetector;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -56,8 +56,8 @@ public class MotionDetectorDevice extends GenericDevice<BrickletMotionDetector, 
 
     
 
-    public MotionDetectorDevice(TinkerforgeStackAddress address, BrickletMotionDetector device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public MotionDetectorDevice(TinkerforgeStack stack, BrickletMotionDetector device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

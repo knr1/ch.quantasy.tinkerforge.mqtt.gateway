@@ -352,9 +352,17 @@ public class TinkerforgeStack {
         private boolean createTinkerforgeDevice(final int deviceIdentifier, final String uid) {
             TinkerforgeDevice tinkerforgeDevice = TinkerforgeStack.this.deviceMap.get(uid);
             if (tinkerforgeDevice != null) {
-                if (tinkerforgeDevice.isConnected()) {
-                    return false;
+                boolean isConnectd = false;
+                try {
+                    isConnectd = tinkerforgeDevice.isConnected();
+                    if (isConnectd) {
+                        return false; //Device already known.
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
+                    return false; // There is a device, but the connection to it is broken.
                 }
+
             }
             try {
                 TinkerforgeDeviceClass tinkerforgeDeviceClass = TinkerforgeDeviceClass.getDevice(deviceIdentifier);
@@ -368,7 +376,7 @@ public class TinkerforgeStack {
                     tinkerforgeDevice.setDevice(device);
                     return false;
                 }
-                tinkerforgeDevice = TinkerforgeDeviceMapper.getTinkerforgeDevice(stackAddress, device);
+                tinkerforgeDevice = TinkerforgeDeviceMapper.getTinkerforgeDevice(TinkerforgeStack.this, device);
                 TinkerforgeStack.this.deviceMap.put(tinkerforgeDevice.getUid(), tinkerforgeDevice);
                 return true;
             } catch (final NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NotConnectedException | TimeoutException ex) {

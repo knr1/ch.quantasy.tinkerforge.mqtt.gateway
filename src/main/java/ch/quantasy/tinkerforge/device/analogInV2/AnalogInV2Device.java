@@ -44,7 +44,7 @@ package ch.quantasy.tinkerforge.device.analogInV2;
 
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAnalogInV2;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -64,8 +64,8 @@ public class AnalogInV2Device extends GenericDevice<BrickletAnalogInV2, AnalogIn
     private DeviceVoltageCallbackThreshold altitudeThreshold;
     private Short movingAverage;
 
-    public AnalogInV2Device(TinkerforgeStackAddress address, BrickletAnalogInV2 device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public AnalogInV2Device(TinkerforgeStack stack, BrickletAnalogInV2 device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

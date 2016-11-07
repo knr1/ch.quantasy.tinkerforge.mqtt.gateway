@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.linearPoti;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLinearPoti;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -62,8 +62,8 @@ public class LinearPotiDevice extends GenericDevice<BrickletLinearPoti, LinearPo
     private DeviceAnalogValueCallbackThreshold analogValueThreshold;
     private DevicePositionCallbackThreshold positionThreshold;
 
-    public LinearPotiDevice(TinkerforgeStackAddress address, BrickletLinearPoti device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public LinearPotiDevice(TinkerforgeStack stack, BrickletLinearPoti device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

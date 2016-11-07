@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.imu;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickIMU;
 
 import com.tinkerforge.NotConnectedException;
@@ -68,8 +68,8 @@ public class IMUDevice extends GenericDevice<BrickIMU, IMUDeviceCallback> {
     private Boolean isStatusLEDEnabled;
     private Boolean areLEDsEnabled;
 
-    public IMUDevice(TinkerforgeStackAddress address, BrickIMU device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public IMUDevice(TinkerforgeStack stack, BrickIMU device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

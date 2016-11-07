@@ -44,7 +44,7 @@ package ch.quantasy.tinkerforge.device.segment4x7;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletSegmentDisplay4x7;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -60,8 +60,8 @@ public class Segment4x7Device extends GenericDevice<BrickletSegmentDisplay4x7, S
     private DeviceSegments segments;
     private DeviceCounterParameters counterParameter;
 
-    public Segment4x7Device(TinkerforgeStackAddress address, BrickletSegmentDisplay4x7 device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public Segment4x7Device(TinkerforgeStack stack, BrickletSegmentDisplay4x7 device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

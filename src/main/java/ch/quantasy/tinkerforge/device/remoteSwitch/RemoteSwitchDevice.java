@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.remoteSwitch;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletRemoteSwitch;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -60,8 +60,8 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
     private boolean isSwitching;
     private transient SocketParameters socketParameters;
 
-    public RemoteSwitchDevice(TinkerforgeStackAddress address, BrickletRemoteSwitch device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public RemoteSwitchDevice(TinkerforgeStack stack, BrickletRemoteSwitch device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

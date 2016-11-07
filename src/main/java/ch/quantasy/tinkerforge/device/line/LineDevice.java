@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.line;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLine;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -60,8 +60,8 @@ public class LineDevice extends GenericDevice<BrickletLine, LineDeviceCallback> 
     private Long debouncePeriod;
     private DeviceReflectivityCallbackThreshold reflectivityThreshold;
 
-    public LineDevice(TinkerforgeStackAddress address, BrickletLine device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public LineDevice(TinkerforgeStack stack, BrickletLine device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

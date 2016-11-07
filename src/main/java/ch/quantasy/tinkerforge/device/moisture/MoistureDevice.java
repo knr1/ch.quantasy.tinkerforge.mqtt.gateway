@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.moisture;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -61,8 +61,8 @@ public class MoistureDevice extends GenericDevice<BrickletMoisture, MoistureDevi
     private Long debouncePeriod;
     private DeviceMoistureCallbackThreshold moistureThreshold;
 
-    public MoistureDevice(TinkerforgeStackAddress address, BrickletMoisture device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public MoistureDevice(TinkerforgeStack stack, BrickletMoisture device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

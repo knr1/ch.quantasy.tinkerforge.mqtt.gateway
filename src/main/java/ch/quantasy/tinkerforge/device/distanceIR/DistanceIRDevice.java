@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.distanceIR;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDistanceIR;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -62,8 +62,8 @@ public class DistanceIRDevice extends GenericDevice<BrickletDistanceIR, Distance
     private DeviceAnalogValueCallbackThreshold analogValueThreshold;
     private DeviceDistanceCallbackThreshold distanceThreshold;
 
-    public DistanceIRDevice(TinkerforgeStackAddress address, BrickletDistanceIR device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public DistanceIRDevice(TinkerforgeStack stack, BrickletDistanceIR device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

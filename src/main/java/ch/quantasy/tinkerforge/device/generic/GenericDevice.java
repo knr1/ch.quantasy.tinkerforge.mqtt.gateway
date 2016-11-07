@@ -43,6 +43,7 @@
 package ch.quantasy.tinkerforge.device.generic;
 
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.Device;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -56,7 +57,7 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
     private C callback;
     private boolean areListenerAdded;
 
-    public GenericDevice(ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress address, D device) throws NotConnectedException, TimeoutException {
+    public GenericDevice(TinkerforgeStack address, D device) throws NotConnectedException, TimeoutException {
         super(address, device);
     }
 
@@ -78,6 +79,7 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
         }
     }
 
+    @Override
     public void connected() {
         super.connected();
         if (super.getDevice() != null && !areListenerAdded) {
@@ -86,6 +88,7 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
         }
     }
 
+    @Override
     public void disconnected() {
         super.disconnected();
         if (super.getDevice() != null && areListenerAdded) {
@@ -94,6 +97,7 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
         }
     }
 
+    @Override
     public void reconnected() {
         super.reconnected();
         if (super.getDevice() != null && !areListenerAdded) {

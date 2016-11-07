@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.analogOutV2;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAnalogOutV2;
 
 import com.tinkerforge.NotConnectedException;
@@ -60,8 +60,8 @@ public class AnalogOutV2Device extends GenericDevice<BrickletAnalogOutV2, Analog
 
     private Integer outputVoltage;
 
-    public AnalogOutV2Device(TinkerforgeStackAddress address, BrickletAnalogOutV2 device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public AnalogOutV2Device(TinkerforgeStack stack, BrickletAnalogOutV2 device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

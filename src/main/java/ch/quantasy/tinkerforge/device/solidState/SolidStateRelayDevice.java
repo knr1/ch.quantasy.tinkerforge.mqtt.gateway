@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.solidState;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletSolidStateRelay;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -59,8 +59,8 @@ public class SolidStateRelayDevice extends GenericDevice<BrickletSolidStateRelay
     private DeviceMonoflopParameters monoflopParameters;
     private Boolean state;
 
-    public SolidStateRelayDevice(TinkerforgeStackAddress address, BrickletSolidStateRelay device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public SolidStateRelayDevice(TinkerforgeStack stack, BrickletSolidStateRelay device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

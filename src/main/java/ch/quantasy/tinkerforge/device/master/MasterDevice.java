@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.master;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickMaster;
 
 import com.tinkerforge.NotConnectedException;
@@ -66,8 +66,8 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
     private Long usbVoltageCallbackPeriod;
     private USBVoltageCallbackThreshold usbVoltageCallbackThreshold;
 
-    public MasterDevice(TinkerforgeStackAddress address, BrickMaster device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public MasterDevice(TinkerforgeStack stack, BrickMaster device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

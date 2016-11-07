@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.LCD20x4;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -69,8 +69,8 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
     private Thread writerThread;
     private final Writer writer;
 
-    public LCD20x4Device(TinkerforgeStackAddress address, BrickletLCD20x4 device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public LCD20x4Device(TinkerforgeStack stack, BrickletLCD20x4 device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
         writer = new Writer();
 
         this.customCharacters = new HashSet<>();

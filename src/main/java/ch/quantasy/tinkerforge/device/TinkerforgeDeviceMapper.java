@@ -88,6 +88,7 @@ import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickIMU;
@@ -145,146 +146,146 @@ import com.tinkerforge.TimeoutException;
  */
 public class TinkerforgeDeviceMapper {
 
-    public static TinkerforgeDevice getTinkerforgeDevice(TinkerforgeStackAddress address, Device device) throws NotConnectedException, TimeoutException {
+    public static TinkerforgeDevice getTinkerforgeDevice(TinkerforgeStack stack, Device device) throws NotConnectedException, TimeoutException {
         if (TinkerforgeDeviceClass.Humidity == TinkerforgeDeviceClass.getDevice(device)) {
-            return new HumidityDevice(address, (BrickletHumidity) device);
+            return new HumidityDevice(stack, (BrickletHumidity) device);
         }
         if (TinkerforgeDeviceClass.Moisture == TinkerforgeDeviceClass.getDevice(device)) {
-            return new MoistureDevice(address, (BrickletMoisture) device);
+            return new MoistureDevice(stack, (BrickletMoisture) device);
         }
         if (TinkerforgeDeviceClass.LEDStrip == TinkerforgeDeviceClass.getDevice(device)) {
-            return new LEDStripDevice(address, (BrickletLEDStrip) device);
+            return new LEDStripDevice(stack, (BrickletLEDStrip) device);
         }
         if (TinkerforgeDeviceClass.MotionDetector == TinkerforgeDeviceClass.getDevice(device)) {
-            return new MotionDetectorDevice(address, (BrickletMotionDetector) device);
+            return new MotionDetectorDevice(stack, (BrickletMotionDetector) device);
         }
         if (TinkerforgeDeviceClass.AmbientLight == TinkerforgeDeviceClass.getDevice(device)) {
-            return new AmbientLightDevice(address, (BrickletAmbientLight) device);
+            return new AmbientLightDevice(stack, (BrickletAmbientLight) device);
         }
         if (TinkerforgeDeviceClass.AmbientLightV2 == TinkerforgeDeviceClass.getDevice(device)) {
-            return new AmbientLightV2Device(address, (BrickletAmbientLightV2) device);
+            return new AmbientLightV2Device(stack, (BrickletAmbientLightV2) device);
         }
         if (TinkerforgeDeviceClass.RemoteSwitch == TinkerforgeDeviceClass.getDevice(device)) {
-            return new RemoteSwitchDevice(address, (BrickletRemoteSwitch) device);
+            return new RemoteSwitchDevice(stack, (BrickletRemoteSwitch) device);
         }
         if (TinkerforgeDeviceClass.DualRelay == TinkerforgeDeviceClass.getDevice(device)) {
-            return new DualRelayDevice(address, (BrickletDualRelay) device);
+            return new DualRelayDevice(stack, (BrickletDualRelay) device);
         }
         if (TinkerforgeDeviceClass.Barometer == TinkerforgeDeviceClass.getDevice(device)) {
-            return new BarometerDevice(address, (BrickletBarometer) device);
+            return new BarometerDevice(stack, (BrickletBarometer) device);
         }
         if (TinkerforgeDeviceClass.DualButton == TinkerforgeDeviceClass.getDevice(device)) {
-            return new DualButtonDevice(address, (BrickletDualButton) device);
+            return new DualButtonDevice(stack, (BrickletDualButton) device);
         }
         if (TinkerforgeDeviceClass.CO2 == TinkerforgeDeviceClass.getDevice(device)) {
-            return new CO2Device(address, (BrickletCO2) device);
+            return new CO2Device(stack, (BrickletCO2) device);
         }
         if (TinkerforgeDeviceClass.DC == TinkerforgeDeviceClass.getDevice(device)) {
-            return new DCDevice(address, (BrickDC) device);
+            return new DCDevice(stack, (BrickDC) device);
         }
         if (TinkerforgeDeviceClass.DistanceUS == TinkerforgeDeviceClass.getDevice(device)) {
-            return new DistanceUSDevice(address, (BrickletDistanceUS) device);
+            return new DistanceUSDevice(stack, (BrickletDistanceUS) device);
         }
         if (TinkerforgeDeviceClass.TemperatureIR == TinkerforgeDeviceClass.getDevice(device)) {
-            return new TemperatureIRDevice(address, (BrickletTemperatureIR) device);
+            return new TemperatureIRDevice(stack, (BrickletTemperatureIR) device);
         }
         if (TinkerforgeDeviceClass.UVLight == TinkerforgeDeviceClass.getDevice(device)) {
-            return new UVLightDevice(address, (BrickletUVLight) device);
+            return new UVLightDevice(stack, (BrickletUVLight) device);
         }
         if (TinkerforgeDeviceClass.DistanceIR == TinkerforgeDeviceClass.getDevice(device)) {
-            return new DistanceIRDevice(address, (BrickletDistanceIR) device);
+            return new DistanceIRDevice(stack, (BrickletDistanceIR) device);
         }
         if (TinkerforgeDeviceClass.DustDetector == TinkerforgeDeviceClass.getDevice(device)) {
-            return new DustDetectorDevice(address, (BrickletDustDetector) device);
+            return new DustDetectorDevice(stack, (BrickletDustDetector) device);
         }
         if (TinkerforgeDeviceClass.Tilt == TinkerforgeDeviceClass.getDevice(device)) {
-            return new TiltDevice(address, (BrickletTilt) device);
+            return new TiltDevice(stack, (BrickletTilt) device);
         }
         if (TinkerforgeDeviceClass.Accelerometer == TinkerforgeDeviceClass.getDevice(device)) {
-            return new AccelerometerDevice(address, (BrickletAccelerometer) device);
+            return new AccelerometerDevice(stack, (BrickletAccelerometer) device);
         }
         if (TinkerforgeDeviceClass.Color == TinkerforgeDeviceClass.getDevice(device)) {
-            return new ColorDevice(address, (BrickletColor) device);
+            return new ColorDevice(stack, (BrickletColor) device);
         }
         if (TinkerforgeDeviceClass.SegmentDisplay4x7 == TinkerforgeDeviceClass.getDevice(device)) {
-            return new Segment4x7Device(address, (BrickletSegmentDisplay4x7) device);
+            return new Segment4x7Device(stack, (BrickletSegmentDisplay4x7) device);
         }
         if (TinkerforgeDeviceClass.LaserRangeFinder == TinkerforgeDeviceClass.getDevice(device)) {
-            return new LaserRangeFinderDevice(address, (BrickletLaserRangeFinder) device);
+            return new LaserRangeFinderDevice(stack, (BrickletLaserRangeFinder) device);
         }
         if (TinkerforgeDeviceClass.HallEffect == TinkerforgeDeviceClass.getDevice(device)) {
-            return new HallEffectDevice(address, (BrickletHallEffect) device);
+            return new HallEffectDevice(stack, (BrickletHallEffect) device);
         }
         if (TinkerforgeDeviceClass.Joystick == TinkerforgeDeviceClass.getDevice(device)) {
-            return new JoystickDevice(address, (BrickletJoystick) device);
+            return new JoystickDevice(stack, (BrickletJoystick) device);
         }
         if (TinkerforgeDeviceClass.LinearPoti == TinkerforgeDeviceClass.getDevice(device)) {
-            return new LinearPotiDevice(address, (BrickletLinearPoti) device);
+            return new LinearPotiDevice(stack, (BrickletLinearPoti) device);
         }
         if (TinkerforgeDeviceClass.RotaryPoti == TinkerforgeDeviceClass.getDevice(device)) {
-            return new RotaryPotiDevice(address, (BrickletRotaryPoti) device);
+            return new RotaryPotiDevice(stack, (BrickletRotaryPoti) device);
         }
         if (TinkerforgeDeviceClass.RotaryEncoder == TinkerforgeDeviceClass.getDevice(device)) {
-            return new RotaryEncoderDevice(address, (BrickletRotaryEncoder) device);
+            return new RotaryEncoderDevice(stack, (BrickletRotaryEncoder) device);
         }
         if (TinkerforgeDeviceClass.SolidState == TinkerforgeDeviceClass.getDevice(device)) {
-            return new SolidStateRelayDevice(address, (BrickletSolidStateRelay) device);
+            return new SolidStateRelayDevice(stack, (BrickletSolidStateRelay) device);
         }
         if (TinkerforgeDeviceClass.MultiTouch == TinkerforgeDeviceClass.getDevice(device)) {
-            return new MultiTouchDevice(address, (BrickletMultiTouch) device);
+            return new MultiTouchDevice(stack, (BrickletMultiTouch) device);
         }
         if (TinkerforgeDeviceClass.AnalogInV2 == TinkerforgeDeviceClass.getDevice(device)) {
-            return new AnalogInV2Device(address, (BrickletAnalogInV2) device);
+            return new AnalogInV2Device(stack, (BrickletAnalogInV2) device);
         }
         if (TinkerforgeDeviceClass.AnalogOutV2 == TinkerforgeDeviceClass.getDevice(device)) {
-            return new AnalogOutV2Device(address, (BrickletAnalogOutV2) device);
+            return new AnalogOutV2Device(stack, (BrickletAnalogOutV2) device);
         }
         if (TinkerforgeDeviceClass.PiezoSpeaker == TinkerforgeDeviceClass.getDevice(device)) {
-            return new PiezoSpeakerDevice(address, (BrickletPiezoSpeaker) device);
+            return new PiezoSpeakerDevice(stack, (BrickletPiezoSpeaker) device);
         }
         if (TinkerforgeDeviceClass.SoundIntensity == TinkerforgeDeviceClass.getDevice(device)) {
-            return new SoundIntensityDevice(address, (BrickletSoundIntensity) device);
+            return new SoundIntensityDevice(stack, (BrickletSoundIntensity) device);
         }
         if (TinkerforgeDeviceClass.IMUV2 == TinkerforgeDeviceClass.getDevice(device)) {
-            return new IMUV2Device(address, (BrickIMUV2) device);
+            return new IMUV2Device(stack, (BrickIMUV2) device);
         }
         if (TinkerforgeDeviceClass.IMU == TinkerforgeDeviceClass.getDevice(device)) {
-            return new IMUDevice(address, (BrickIMU) device);
+            return new IMUDevice(stack, (BrickIMU) device);
         }
         if (TinkerforgeDeviceClass.Line == TinkerforgeDeviceClass.getDevice(device)) {
-            return new LineDevice(address, (BrickletLine) device);
+            return new LineDevice(stack, (BrickletLine) device);
         }
         if (TinkerforgeDeviceClass.LCD20x4 == TinkerforgeDeviceClass.getDevice(device)) {
-            return new LCD20x4Device(address, (BrickletLCD20x4) device);
+            return new LCD20x4Device(stack, (BrickletLCD20x4) device);
         }
         if (TinkerforgeDeviceClass.LCD16x2 == TinkerforgeDeviceClass.getDevice(device)) {
-            return new LCD16x2Device(address, (BrickletLCD16x2) device);
+            return new LCD16x2Device(stack, (BrickletLCD16x2) device);
         }
         if (TinkerforgeDeviceClass.Temperature == TinkerforgeDeviceClass.getDevice(device)) {
-            return new TemperatureDevice(address, (BrickletTemperature) device);
+            return new TemperatureDevice(stack, (BrickletTemperature) device);
         }
         if (TinkerforgeDeviceClass.LoadCell == TinkerforgeDeviceClass.getDevice(device)) {
-            return new LoadCellDevice(address, (BrickletLoadCell) device);
+            return new LoadCellDevice(stack, (BrickletLoadCell) device);
         }
         if (TinkerforgeDeviceClass.RealTimeClock == TinkerforgeDeviceClass.getDevice(device)) {
-            return new RealTimeClockDevice(address, (BrickletRealTimeClock) device);
+            return new RealTimeClockDevice(stack, (BrickletRealTimeClock) device);
         }
         if (TinkerforgeDeviceClass.ThermoCouple == TinkerforgeDeviceClass.getDevice(device)) {
-            return new ThermoCoupleDevice(address, (BrickletThermocouple) device);
+            return new ThermoCoupleDevice(stack, (BrickletThermocouple) device);
         }
         if (TinkerforgeDeviceClass.PTC == TinkerforgeDeviceClass.getDevice(device)) {
-            return new PTCDevice(address, (BrickletPTC) device);
+            return new PTCDevice(stack, (BrickletPTC) device);
         }
         if (TinkerforgeDeviceClass.GPS == TinkerforgeDeviceClass.getDevice(device)) {
-            return new GPSDevice(address, (BrickletGPS) device);
+            return new GPSDevice(stack, (BrickletGPS) device);
         }
         if (TinkerforgeDeviceClass.Master == TinkerforgeDeviceClass.getDevice(device)) {
-            return new MasterDevice(address, (BrickMaster) device);
+            return new MasterDevice(stack, (BrickMaster) device);
         }
         
         if(TinkerforgeDeviceClass.NfcRfid == TinkerforgeDeviceClass.getDevice(device)){
-            return new NFCRFIDDevice(address, (BrickletNFCRFID)device);
+            return new NFCRFIDDevice(stack, (BrickletNFCRFID)device);
         }
-        return new TinkerforgeDevice(address, device);
+        return new TinkerforgeDevice(stack, device);
     }
 }

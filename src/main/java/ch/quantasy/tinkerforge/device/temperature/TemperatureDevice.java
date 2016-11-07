@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.temperature;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletTemperature;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -61,8 +61,8 @@ public class TemperatureDevice extends GenericDevice<BrickletTemperature, Temper
     private Long debouncePeriod;
     private DeviceTemperatureCallbackThreshold illuminanceThreshold;
 
-    public TemperatureDevice(TinkerforgeStackAddress address, BrickletTemperature device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public TemperatureDevice(TinkerforgeStack stack, BrickletTemperature device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

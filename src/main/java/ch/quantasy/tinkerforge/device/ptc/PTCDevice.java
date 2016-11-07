@@ -43,9 +43,8 @@
 package ch.quantasy.tinkerforge.device.ptc;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletPTC;
-import com.tinkerforge.BrickletThermocouple;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 import java.util.logging.Level;
@@ -65,8 +64,8 @@ public class PTCDevice extends GenericDevice<BrickletPTC, PTCDeviceCallback> {
     private DeviceResistanceCallbackThreshold resistanceThreshold;
     private DeviceNoiseReductionFilter filter;
 
-    public PTCDevice(TinkerforgeStackAddress address, BrickletPTC device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public PTCDevice(TinkerforgeStack stack, BrickletPTC device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

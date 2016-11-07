@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.gps;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletGPS;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -62,8 +62,8 @@ public class GPSDevice extends GenericDevice<BrickletGPS, GPSDeviceCallback> {
     private Long dateTimeCallbackPeriod;
     private Long coordinatesCallbackPeriod;
 
-    public GPSDevice(TinkerforgeStackAddress address, BrickletGPS device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public GPSDevice(TinkerforgeStack stack, BrickletGPS device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

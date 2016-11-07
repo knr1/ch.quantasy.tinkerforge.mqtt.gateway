@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.laserRangeFinder;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLaserRangeFinder;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -65,8 +65,8 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
     private DeviceAveraging averaging;
     private DeviceMode mode;
 
-    public LaserRangeFinderDevice(TinkerforgeStackAddress address, BrickletLaserRangeFinder device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public LaserRangeFinderDevice(TinkerforgeStack stack, BrickletLaserRangeFinder device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

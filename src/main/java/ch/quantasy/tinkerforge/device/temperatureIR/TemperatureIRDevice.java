@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.temperatureIR;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletTemperatureIR;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -62,8 +62,8 @@ public class TemperatureIRDevice extends GenericDevice<BrickletTemperatureIR, Te
     private DeviceObjectTemperatureCallbackThreshold objectTemperatureThreshold;
     private DeviceAmbientTemperatureCallbackThreshold ambientTemperatureThreshold;
 
-    public TemperatureIRDevice(TinkerforgeStackAddress address, BrickletTemperatureIR device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public TemperatureIRDevice(TinkerforgeStack stack, BrickletTemperatureIR device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.hallEffect;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletHallEffect;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -60,8 +60,8 @@ public class HallEffectDevice extends GenericDevice<BrickletHallEffect, HallEffe
     private DeviceConfiguration configuration;
     private Long edges;
 
-    public HallEffectDevice(TinkerforgeStackAddress address, BrickletHallEffect device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public HallEffectDevice(TinkerforgeStack stack, BrickletHallEffect device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.barometer;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -64,8 +64,8 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
     private DeviceAltitudeCallbackThreshold altitudeThreshold;
     private DeviceAveraging averaging;
 
-    public BarometerDevice(TinkerforgeStackAddress address, BrickletBarometer device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public BarometerDevice(TinkerforgeStack stack, BrickletBarometer device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

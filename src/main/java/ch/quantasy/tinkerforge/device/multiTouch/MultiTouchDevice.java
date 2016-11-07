@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.multiTouch;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletMultiTouch;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -59,8 +59,8 @@ public class MultiTouchDevice extends GenericDevice<BrickletMultiTouch, MultiTou
     private Integer electrodeConfig;
     private Short sensitivity;
 
-    public MultiTouchDevice(TinkerforgeStackAddress address, BrickletMultiTouch device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public MultiTouchDevice(TinkerforgeStack stack, BrickletMultiTouch device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

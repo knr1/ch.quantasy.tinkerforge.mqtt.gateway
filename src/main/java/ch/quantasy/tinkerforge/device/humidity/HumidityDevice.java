@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.humidity;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -62,8 +62,8 @@ public class HumidityDevice extends GenericDevice<BrickletHumidity, HumidityDevi
     private DeviceAnalogValueCallbackThreshold analogValueThreshold;
     private DeviceHumidityCallbackThreshold humidityThreshold;
 
-    public HumidityDevice(TinkerforgeStackAddress address, BrickletHumidity device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public HumidityDevice(TinkerforgeStack stack, BrickletHumidity device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

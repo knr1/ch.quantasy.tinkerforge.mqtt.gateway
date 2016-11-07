@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.dualButton;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDualButton;
 
 import com.tinkerforge.NotConnectedException;
@@ -59,8 +59,8 @@ public class DualButtonDevice extends GenericDevice<BrickletDualButton, DualButt
 
     private DeviceLEDState LEDState;
 
-    public DualButtonDevice(TinkerforgeStackAddress address, BrickletDualButton device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public DualButtonDevice(TinkerforgeStack stack, BrickletDualButton device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

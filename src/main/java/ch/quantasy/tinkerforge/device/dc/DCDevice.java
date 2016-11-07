@@ -43,6 +43,7 @@
 package ch.quantasy.tinkerforge.device.dc;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
 
@@ -65,8 +66,8 @@ public class DCDevice extends GenericDevice<BrickDC, DCDeviceCallback> implement
     private Short velocity;
     private Boolean isEnabled;
 
-    public DCDevice(TinkerforgeStackAddress address, BrickDC device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public DCDevice(TinkerforgeStack stack, BrickDC device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

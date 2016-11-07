@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.uvLight;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletUVLight;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -60,8 +60,8 @@ public class UVLightDevice extends GenericDevice<BrickletUVLight, UVLightDeviceC
     private Long debouncePeriod;
     private DeviceUVLightCallbackThreshold uvLightThreshold;
 
-    public UVLightDevice(TinkerforgeStackAddress address, BrickletUVLight device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public UVLightDevice(TinkerforgeStack stack, BrickletUVLight device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

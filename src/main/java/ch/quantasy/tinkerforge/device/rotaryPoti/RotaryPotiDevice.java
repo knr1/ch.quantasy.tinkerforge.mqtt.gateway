@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.rotaryPoti;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletRotaryPoti;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -62,8 +62,8 @@ public class RotaryPotiDevice extends GenericDevice<BrickletRotaryPoti, RotaryPo
     private DeviceAnalogValueCallbackThreshold analogValueThreshold;
     private DevicePositionCallbackThreshold positionThreshold;
 
-    public RotaryPotiDevice(TinkerforgeStackAddress address, BrickletRotaryPoti device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public RotaryPotiDevice(TinkerforgeStack stack, BrickletRotaryPoti device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

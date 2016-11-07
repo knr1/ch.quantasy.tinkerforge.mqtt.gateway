@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.color;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletColor;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -64,8 +64,8 @@ public class ColorDevice extends GenericDevice<BrickletColor, ColorDeviceCallbac
     private DeviceConfiguration config;
     private Boolean isLight;
 
-    public ColorDevice(TinkerforgeStackAddress address, BrickletColor device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public ColorDevice(TinkerforgeStack stack, BrickletColor device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override

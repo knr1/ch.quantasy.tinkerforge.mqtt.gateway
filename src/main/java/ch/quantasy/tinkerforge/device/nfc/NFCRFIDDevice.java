@@ -44,11 +44,10 @@ package ch.quantasy.tinkerforge.device.nfc;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCTag.NFCType;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletNFCRFID;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -71,8 +70,8 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
 
     private Long period;
 
-    public NFCRFIDDevice(TinkerforgeStackAddress address, BrickletNFCRFID device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public NFCRFIDDevice(TinkerforgeStack stack, BrickletNFCRFID device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
         nfcReader = new NFCReader();
     }
 

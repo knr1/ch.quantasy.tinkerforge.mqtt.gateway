@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.device.loadCell;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLoadCell;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -64,8 +64,8 @@ public class LoadCellDevice extends GenericDevice<BrickletLoadCell, LoadCellDevi
         private Boolean isStatusLEDEnabled;
 
 
-    public LoadCellDevice(TinkerforgeStackAddress address, BrickletLoadCell device) throws NotConnectedException, TimeoutException {
-        super(address, device);
+    public LoadCellDevice(TinkerforgeStack stack, BrickletLoadCell device) throws NotConnectedException, TimeoutException {
+        super(stack, device);
     }
 
     @Override
