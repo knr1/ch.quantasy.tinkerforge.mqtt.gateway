@@ -71,13 +71,13 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addStackCurrentListener(super.getCallback());
-        getDevice().addStackCurrentReachedListener(super.getCallback());
-        getDevice().addStackVoltageListener(super.getCallback());
-        getDevice().addStackVoltageReachedListener(super.getCallback());
-        getDevice().addUSBVoltageListener(super.getCallback());
-        getDevice().addUSBVoltageReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickMaster device) {
+        device.addStackCurrentListener(super.getCallback());
+        device.addStackCurrentReachedListener(super.getCallback());
+        device.addStackVoltageListener(super.getCallback());
+        device.addStackVoltageReachedListener(super.getCallback());
+        device.addUSBVoltageListener(super.getCallback());
+        device.addUSBVoltageReachedListener(super.getCallback());
 
         if (debouncePeriod != null) {
             setDebouncePeriod(debouncePeriod);
@@ -107,13 +107,13 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeStackCurrentListener(super.getCallback());
-        getDevice().removeStackCurrentReachedListener(super.getCallback());
-        getDevice().removeStackVoltageListener(super.getCallback());
-        getDevice().removeStackVoltageReachedListener(super.getCallback());
-        getDevice().removeUSBVoltageListener(super.getCallback());
-        getDevice().removeUSBVoltageReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickMaster device) {
+        device.removeStackCurrentListener(super.getCallback());
+        device.removeStackCurrentReachedListener(super.getCallback());
+        device.removeStackVoltageListener(super.getCallback());
+        device.removeStackVoltageReachedListener(super.getCallback());
+        device.removeUSBVoltageListener(super.getCallback());
+        device.removeUSBVoltageReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long debouncePeriod) {

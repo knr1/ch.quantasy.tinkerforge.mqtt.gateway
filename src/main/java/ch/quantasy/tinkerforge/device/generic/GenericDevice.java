@@ -61,34 +61,28 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
         super(address, device);
     }
 
-    protected abstract void addDeviceListeners();
+    protected abstract void addDeviceListeners(D device);
 
-    protected abstract void removeDeviceListeners();
+    protected abstract void removeDeviceListeners(D device);
 
     @Override
-    public void updateDevice(D device) throws TimeoutException, NotConnectedException {
-        //TODO: Check if updateDevice returns the 'old' device... and should throw IllegalArgument if check fails.
-        //removeDeviceListeners would carry old device as argument
-        //addDeviceListeners would carry new device as argument
-        //redundant check could be omitted.... And it would be just nicer!
-        if (device == null || !device.getIdentity().uid.equals(super.getUid())) {
-            return;
-        }
-        removeDeviceListeners();
+    public D updateDevice(D device) throws TimeoutException, NotConnectedException, IllegalArgumentException {
+        D oldDevice = super.updateDevice(device);
+
+        removeDeviceListeners(oldDevice);
         areListenerAdded = false;
-        super.updateDevice(device);
-        if (areListenerAdded == false) {
-            addDeviceListeners();
-            areListenerAdded = true;
-        }
+
+        addDeviceListeners(device);
+        areListenerAdded = true;
+        return device;
     }
 
     @Override
     public void connected() {
         super.connected();
         if (super.getDevice() != null && !areListenerAdded) {
-            addDeviceListeners();
-            areListenerAdded=true;
+            addDeviceListeners(getDevice());
+            areListenerAdded = true;
         }
     }
 
@@ -96,8 +90,8 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
     public void disconnected() {
         super.disconnected();
         if (super.getDevice() != null && areListenerAdded) {
-            removeDeviceListeners();
-            areListenerAdded=false;
+            removeDeviceListeners(getDevice());
+            areListenerAdded = false;
         }
     }
 
@@ -105,20 +99,20 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
     public void reconnected() {
         super.reconnected();
         if (super.getDevice() != null && !areListenerAdded) {
-            addDeviceListeners();
-            areListenerAdded=true;
+            addDeviceListeners(getDevice());
+            areListenerAdded = true;
         }
     }
 
     public void setCallback(C callback) {
         if (super.getDevice() != null && this.callback != null && areListenerAdded) {
-            removeDeviceListeners();
-            areListenerAdded=false;
+            removeDeviceListeners(getDevice());
+            areListenerAdded = false;
         }
         this.callback = callback;
         if (super.getDevice() != null && this.callback != null && !areListenerAdded) {
-            addDeviceListeners();
-            areListenerAdded=true;
+            addDeviceListeners(getDevice());
+            areListenerAdded = true;
         }
     }
 

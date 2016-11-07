@@ -67,11 +67,11 @@ public class HumidityDevice extends GenericDevice<BrickletHumidity, HumidityDevi
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAnalogValueListener(super.getCallback());
-        getDevice().addAnalogValueReachedListener(super.getCallback());
-        getDevice().addHumidityListener(super.getCallback());
-        getDevice().addHumidityReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletHumidity device) {
+        device.addAnalogValueListener(super.getCallback());
+        device.addAnalogValueReachedListener(super.getCallback());
+        device.addHumidityListener(super.getCallback());
+        device.addHumidityReachedListener(super.getCallback());
         if (analogCallbackPeriod != null) {
             setAnalogValueCallbackPeriod(analogCallbackPeriod);
         }
@@ -90,11 +90,11 @@ public class HumidityDevice extends GenericDevice<BrickletHumidity, HumidityDevi
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAnalogValueListener(super.getCallback());
-        getDevice().removeAnalogValueReachedListener(super.getCallback());
-        getDevice().removeHumidityListener(super.getCallback());
-        getDevice().removeHumidityReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletHumidity device) {
+        device.removeAnalogValueListener(super.getCallback());
+        device.removeAnalogValueReachedListener(super.getCallback());
+        device.removeHumidityListener(super.getCallback());
+        device.removeHumidityReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

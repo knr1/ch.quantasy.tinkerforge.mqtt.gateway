@@ -70,11 +70,11 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addDistanceListener(super.getCallback());
-        getDevice().addDistanceReachedListener(super.getCallback());
-        getDevice().addVelocityListener(super.getCallback());
-        getDevice().addVelocityReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletLaserRangeFinder device) {
+        device.addDistanceListener(super.getCallback());
+        device.addDistanceReachedListener(super.getCallback());
+        device.addVelocityListener(super.getCallback());
+        device.addVelocityReachedListener(super.getCallback());
         if (distanceCallbackPeriod != null) {
             setDistanceCallbackPeriod(distanceCallbackPeriod);
         }
@@ -99,11 +99,11 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeDistanceListener(super.getCallback());
-        getDevice().removeDistanceReachedListener(super.getCallback());
-        getDevice().removeVelocityListener(super.getCallback());
-        getDevice().removeVelocityReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletLaserRangeFinder device) {
+        device.removeDistanceListener(super.getCallback());
+        device.removeDistanceReachedListener(super.getCallback());
+        device.removeVelocityListener(super.getCallback());
+        device.removeVelocityReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

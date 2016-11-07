@@ -64,8 +64,8 @@ public class MultiTouchDevice extends GenericDevice<BrickletMultiTouch, MultiTou
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addTouchStateListener(super.getCallback());
+    protected void addDeviceListeners(BrickletMultiTouch device) {
+        device.addTouchStateListener(super.getCallback());
         if (electrodeConfig != null) {
             setElectrodeConfig(electrodeConfig);
         }
@@ -75,8 +75,8 @@ public class MultiTouchDevice extends GenericDevice<BrickletMultiTouch, MultiTou
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeTouchStateListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletMultiTouch device) {
+        device.removeTouchStateListener(super.getCallback());
     }
 
     public void recalibrate(Boolean recalibration) {

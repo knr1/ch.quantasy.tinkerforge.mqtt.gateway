@@ -90,8 +90,8 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addFrameRenderedListener(this);
+    protected void addDeviceListeners(BrickletLEDStrip device) {
+        device.addFrameRenderedListener(this);
         try {
             this.setup();
         } catch (TimeoutException | NotConnectedException ex) {
@@ -101,9 +101,9 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
     }
 
     @Override
-    protected void removeDeviceListeners() {
+    protected void removeDeviceListeners(BrickletLEDStrip device) {
         this.readyToSend = false;
-        getDevice().removeFrameRenderedListener(this);
+        device.removeFrameRenderedListener(this);
     }
 
     private void setup() throws TimeoutException, NotConnectedException {

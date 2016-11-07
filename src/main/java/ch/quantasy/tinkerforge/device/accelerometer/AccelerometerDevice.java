@@ -66,9 +66,9 @@ public class AccelerometerDevice extends GenericDevice<BrickletAccelerometer, Ac
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAccelerationListener(super.getCallback());
-        getDevice().addAccelerationReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletAccelerometer device) {
+        device.addAccelerationListener(super.getCallback());
+        device.addAccelerationReachedListener(super.getCallback());
 
         if (configuration != null) {
             setConfiguration(configuration);
@@ -86,9 +86,9 @@ public class AccelerometerDevice extends GenericDevice<BrickletAccelerometer, Ac
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAccelerationListener(super.getCallback());
-        getDevice().removeAccelerationReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletAccelerometer device) {
+        device.removeAccelerationListener(super.getCallback());
+        device.removeAccelerationReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

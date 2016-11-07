@@ -69,9 +69,9 @@ public class LoadCellDevice extends GenericDevice<BrickletLoadCell, LoadCellDevi
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addWeightListener(super.getCallback());
-        getDevice().addWeightReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletLoadCell device) {
+        device.addWeightListener(super.getCallback());
+        device.addWeightReachedListener(super.getCallback());
         if (average != null) {
             setMovingAverage(average);
         }
@@ -94,9 +94,9 @@ public class LoadCellDevice extends GenericDevice<BrickletLoadCell, LoadCellDevi
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeWeightListener(super.getCallback());
-        getDevice().removeWeightReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletLoadCell device) {
+        device.removeWeightListener(super.getCallback());
+        device.removeWeightReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

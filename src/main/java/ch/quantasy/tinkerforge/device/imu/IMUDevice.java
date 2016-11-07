@@ -73,13 +73,13 @@ public class IMUDevice extends GenericDevice<BrickIMU, IMUDeviceCallback> {
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAccelerationListener(super.getCallback());
-        getDevice().addAllDataListener(super.getCallback());
-        getDevice().addAngularVelocityListener(super.getCallback());
-        getDevice().addMagneticFieldListener(super.getCallback());
-        getDevice().addOrientationListener(super.getCallback());
-        getDevice().addQuaternionListener(super.getCallback());
+    protected void addDeviceListeners(BrickIMU device) {
+        device.addAccelerationListener(super.getCallback());
+        device.addAllDataListener(super.getCallback());
+        device.addAngularVelocityListener(super.getCallback());
+        device.addMagneticFieldListener(super.getCallback());
+        device.addOrientationListener(super.getCallback());
+        device.addQuaternionListener(super.getCallback());
 
         if (accelerationPeriod != null) {
             setAccelerationPeriod(accelerationPeriod);
@@ -113,12 +113,12 @@ public class IMUDevice extends GenericDevice<BrickIMU, IMUDeviceCallback> {
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAllDataListener(super.getCallback());
-        getDevice().removeAngularVelocityListener(super.getCallback());
-        getDevice().removeMagneticFieldListener(super.getCallback());
-        getDevice().removeOrientationListener(super.getCallback());
-        getDevice().removeQuaternionListener(super.getCallback());
+    protected void removeDeviceListeners(BrickIMU device) {
+        device.removeAllDataListener(super.getCallback());
+        device.removeAngularVelocityListener(super.getCallback());
+        device.removeMagneticFieldListener(super.getCallback());
+        device.removeOrientationListener(super.getCallback());
+        device.removeQuaternionListener(super.getCallback());
     }
 
     public void setAccelerationPeriod(Long accelerationPeriod) {

@@ -69,11 +69,11 @@ public class AnalogInV2Device extends GenericDevice<BrickletAnalogInV2, AnalogIn
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAnalogValueListener(super.getCallback());
-        getDevice().addAnalogValueReachedListener(super.getCallback());
-        getDevice().addVoltageListener(super.getCallback());
-        getDevice().addVoltageReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletAnalogInV2 device) {
+        device.addAnalogValueListener(super.getCallback());
+        device.addAnalogValueReachedListener(super.getCallback());
+        device.addVoltageListener(super.getCallback());
+        device.addVoltageReachedListener(super.getCallback());
         if (analogValueCallbackPeriod != null) {
             setAnalogValueCallbackPeriod(analogValueCallbackPeriod);
         }
@@ -96,11 +96,11 @@ public class AnalogInV2Device extends GenericDevice<BrickletAnalogInV2, AnalogIn
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAnalogValueListener(super.getCallback());
-        getDevice().removeAnalogValueReachedListener(super.getCallback());
-        getDevice().removeVoltageListener(super.getCallback());
-        getDevice().removeVoltageReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletAnalogInV2 device) {
+        device.removeAnalogValueListener(super.getCallback());
+        device.removeAnalogValueReachedListener(super.getCallback());
+        device.removeVoltageListener(super.getCallback());
+        device.removeVoltageReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

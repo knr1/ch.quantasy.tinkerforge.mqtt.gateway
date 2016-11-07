@@ -76,8 +76,8 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addStateChangedListener(nfcReader);
+    protected void addDeviceListeners(BrickletNFCRFID device) {
+        device.addStateChangedListener(nfcReader);
         nfcThread = new Thread(nfcReader);
         nfcThread.start();
         if (period != null) {
@@ -86,8 +86,8 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeStateChangedListener(nfcReader);
+    protected void removeDeviceListeners(BrickletNFCRFID device) {
+        device.removeStateChangedListener(nfcReader);
         nfcThread.interrupt();
         nfcThread = null;
     }

@@ -61,15 +61,15 @@ public class TiltDevice extends GenericDevice<BrickletTilt, TiltDeviceCallback> 
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addTiltStateListener(super.getCallback());
+    protected void addDeviceListeners(BrickletTilt device) {
+        device.addTiltStateListener(super.getCallback());
        
        
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeTiltStateListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletTilt device) {
+        device.removeTiltStateListener(super.getCallback());
     }
 
     

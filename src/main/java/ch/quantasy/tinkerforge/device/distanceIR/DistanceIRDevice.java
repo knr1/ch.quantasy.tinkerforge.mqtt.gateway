@@ -67,11 +67,11 @@ public class DistanceIRDevice extends GenericDevice<BrickletDistanceIR, Distance
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAnalogValueListener(super.getCallback());
-        getDevice().addAnalogValueReachedListener(super.getCallback());
-        getDevice().addDistanceListener(super.getCallback());
-        getDevice().addDistanceReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletDistanceIR device) {
+        device.addAnalogValueListener(super.getCallback());
+        device.addAnalogValueReachedListener(super.getCallback());
+        device.addDistanceListener(super.getCallback());
+        device.addDistanceReachedListener(super.getCallback());
         if (analogCallbackPeriod != null) {
             setAnalogValueCallbackPeriod(analogCallbackPeriod);
         }
@@ -90,11 +90,11 @@ public class DistanceIRDevice extends GenericDevice<BrickletDistanceIR, Distance
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAnalogValueListener(super.getCallback());
-        getDevice().removeAnalogValueReachedListener(super.getCallback());
-        getDevice().removeDistanceListener(super.getCallback());
-        getDevice().removeDistanceReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletDistanceIR device) {
+        device.removeAnalogValueListener(super.getCallback());
+        device.removeAnalogValueReachedListener(super.getCallback());
+        device.removeDistanceListener(super.getCallback());
+        device.removeDistanceReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

@@ -65,7 +65,7 @@ public class AnalogOutV2Device extends GenericDevice<BrickletAnalogOutV2, Analog
     }
 
     @Override
-    protected void addDeviceListeners() {
+    protected void addDeviceListeners(BrickletAnalogOutV2 device) {
        //None existing
         if (outputVoltage != null) {
             setOutputVoltage(outputVoltage);
@@ -75,7 +75,7 @@ public class AnalogOutV2Device extends GenericDevice<BrickletAnalogOutV2, Analog
     }
 
     @Override
-    protected void removeDeviceListeners() {
+    protected void removeDeviceListeners(BrickletAnalogOutV2 device) {
         //None existing
 
     }

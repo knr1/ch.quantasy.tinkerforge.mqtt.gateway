@@ -44,7 +44,6 @@ package ch.quantasy.tinkerforge.device.dc;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
 
 import com.tinkerforge.NotConnectedException;
@@ -71,12 +70,12 @@ public class DCDevice extends GenericDevice<BrickDC, DCDeviceCallback> implement
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addCurrentVelocityListener(super.getCallback());
-        getDevice().addEmergencyShutdownListener(super.getCallback());
-        getDevice().addEmergencyShutdownListener(this);
-        getDevice().addUnderVoltageListener(super.getCallback());
-        getDevice().addVelocityReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickDC device) {
+        device.addCurrentVelocityListener(super.getCallback());
+        device.addEmergencyShutdownListener(super.getCallback());
+        device.addEmergencyShutdownListener(this);
+        device.addUnderVoltageListener(super.getCallback());
+        device.addVelocityReachedListener(super.getCallback());
 
         if (acceleration != null) {
             setAcceleration(acceleration);
@@ -103,13 +102,13 @@ public class DCDevice extends GenericDevice<BrickDC, DCDeviceCallback> implement
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeCurrentVelocityListener(super.getCallback());
-        getDevice().removeEmergencyShutdownListener(super.getCallback());
-        getDevice().removeEmergencyShutdownListener(this);
+    protected void removeDeviceListeners(BrickDC device) {
+        device.removeCurrentVelocityListener(super.getCallback());
+        device.removeEmergencyShutdownListener(super.getCallback());
+        device.removeEmergencyShutdownListener(this);
 
-        getDevice().removeUnderVoltageListener(super.getCallback());
-        getDevice().removeVelocityReachedListener(super.getCallback());
+        device.removeUnderVoltageListener(super.getCallback());
+        device.removeVelocityReachedListener(super.getCallback());
     }
 
     public void setAcceleration(Integer acceleration) {

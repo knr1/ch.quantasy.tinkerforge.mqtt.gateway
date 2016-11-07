@@ -64,8 +64,8 @@ public class DualButtonDevice extends GenericDevice<BrickletDualButton, DualButt
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addStateChangedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletDualButton device) {
+        device.addStateChangedListener(super.getCallback());
         if (LEDState != null) {
             setLEDState(LEDState);
         }
@@ -73,8 +73,8 @@ public class DualButtonDevice extends GenericDevice<BrickletDualButton, DualButt
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeStateChangedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletDualButton device) {
+        device.removeStateChangedListener(super.getCallback());
     }
 
     public void setLEDState(DeviceLEDState ledState) {

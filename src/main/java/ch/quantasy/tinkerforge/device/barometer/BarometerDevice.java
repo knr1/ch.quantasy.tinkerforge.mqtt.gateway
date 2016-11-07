@@ -69,11 +69,11 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAirPressureListener(super.getCallback());
-        getDevice().addAirPressureReachedListener(super.getCallback());
-        getDevice().addAltitudeListener(super.getCallback());
-        getDevice().addAltitudeReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletBarometer device) {
+        device.addAirPressureListener(super.getCallback());
+        device.addAirPressureReachedListener(super.getCallback());
+        device.addAltitudeListener(super.getCallback());
+        device.addAltitudeReachedListener(super.getCallback());
         if (airPressureCallbackPeriod != null) {
             setAirPressureCallbackPeriod(airPressureCallbackPeriod);
         }
@@ -98,11 +98,11 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAltitudeListener(super.getCallback());
-        getDevice().removeAltitudeReachedListener(super.getCallback());
-        getDevice().removeAirPressureListener(super.getCallback());
-        getDevice().removeAirPressureReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletBarometer device) {
+        device.removeAltitudeListener(super.getCallback());
+        device.removeAltitudeReachedListener(super.getCallback());
+        device.removeAirPressureListener(super.getCallback());
+        device.removeAirPressureReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

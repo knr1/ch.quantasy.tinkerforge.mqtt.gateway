@@ -65,8 +65,8 @@ public class HallEffectDevice extends GenericDevice<BrickletHallEffect, HallEffe
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addEdgeCountListener(super.getCallback());
+    protected void addDeviceListeners(BrickletHallEffect device) {
+        device.addEdgeCountListener(super.getCallback());
         
         if (edgeCountCallbackPeriod != null) {
             setEdgeCountCallbackPeriod(edgeCountCallbackPeriod);
@@ -80,8 +80,8 @@ public class HallEffectDevice extends GenericDevice<BrickletHallEffect, HallEffe
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeEdgeCountListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletHallEffect device) {
+        device.removeEdgeCountListener(super.getCallback());
     }
 
     public void setEdgeInterrupt(Long edges) {

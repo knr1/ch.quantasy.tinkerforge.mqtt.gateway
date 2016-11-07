@@ -68,9 +68,9 @@ public class RealTimeClockDevice extends GenericDevice<BrickletRealTimeClock, Re
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAlarmListener(super.getCallback());
-        getDevice().addDateTimeListener(super.getCallback());
+    protected void addDeviceListeners(BrickletRealTimeClock device) {
+        device.addAlarmListener(super.getCallback());
+        device.addDateTimeListener(super.getCallback());
         if (dateTimeParameter != null) {
             this.setDateTime(dateTimeParameter);
         }
@@ -87,9 +87,9 @@ public class RealTimeClockDevice extends GenericDevice<BrickletRealTimeClock, Re
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAlarmListener(super.getCallback());
-        getDevice().removeDateTimeListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletRealTimeClock device) {
+        device.removeAlarmListener(super.getCallback());
+        device.removeDateTimeListener(super.getCallback());
     }
 
     public void setDateTime(DateTimeParameter dateTimeParameter) {

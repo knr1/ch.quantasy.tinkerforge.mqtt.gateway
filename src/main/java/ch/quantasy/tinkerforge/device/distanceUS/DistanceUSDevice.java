@@ -66,9 +66,9 @@ public class DistanceUSDevice extends GenericDevice<BrickletDistanceUS, Distance
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addDistanceListener(super.getCallback());
-        getDevice().addDistanceReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletDistanceUS device) {
+        device.addDistanceListener(super.getCallback());
+        device.addDistanceReachedListener(super.getCallback());
 
         if (this.movingAverage != null) {
             setMovingAverage(movingAverage);
@@ -86,9 +86,9 @@ public class DistanceUSDevice extends GenericDevice<BrickletDistanceUS, Distance
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeDistanceListener(super.getCallback());
-        getDevice().removeDistanceReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletDistanceUS device) {
+        device.removeDistanceListener(super.getCallback());
+        device.removeDistanceReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

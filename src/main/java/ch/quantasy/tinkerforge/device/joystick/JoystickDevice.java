@@ -67,13 +67,13 @@ public class JoystickDevice extends GenericDevice<BrickletJoystick, JoystickDevi
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAnalogValueListener(super.getCallback());
-        getDevice().addAnalogValueReachedListener(super.getCallback());
-        getDevice().addPositionListener(super.getCallback());
-        getDevice().addPositionReachedListener(super.getCallback());
-        getDevice().addPressedListener(super.getCallback());
-        getDevice().addReleasedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletJoystick device) {
+        device.addAnalogValueListener(super.getCallback());
+        device.addAnalogValueReachedListener(super.getCallback());
+        device.addPositionListener(super.getCallback());
+        device.addPositionReachedListener(super.getCallback());
+        device.addPressedListener(super.getCallback());
+        device.addReleasedListener(super.getCallback());
         if (analogCallbackPeriod != null) {
             setAnalogValueCallbackPeriod(analogCallbackPeriod);
         }
@@ -92,13 +92,13 @@ public class JoystickDevice extends GenericDevice<BrickletJoystick, JoystickDevi
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAnalogValueListener(super.getCallback());
-        getDevice().removeAnalogValueReachedListener(super.getCallback());
-        getDevice().removePositionListener(super.getCallback());
-        getDevice().removePositionReachedListener(super.getCallback());
-        getDevice().removePressedListener(super.getCallback());
-        getDevice().removeReleasedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletJoystick device) {
+        device.removeAnalogValueListener(super.getCallback());
+        device.removeAnalogValueReachedListener(super.getCallback());
+        device.removePositionListener(super.getCallback());
+        device.removePositionReachedListener(super.getCallback());
+        device.removePressedListener(super.getCallback());
+        device.removeReleasedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

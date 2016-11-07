@@ -66,9 +66,9 @@ public class MoistureDevice extends GenericDevice<BrickletMoisture, MoistureDevi
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addMoistureListener(super.getCallback());
-        getDevice().addMoistureReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletMoisture device) {
+        device.addMoistureListener(super.getCallback());
+        device.addMoistureReachedListener(super.getCallback());
 
         if (average != null) {
             setMovingAverage(average);
@@ -86,9 +86,9 @@ public class MoistureDevice extends GenericDevice<BrickletMoisture, MoistureDevi
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeMoistureListener(super.getCallback());
-        getDevice().removeMoistureReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletMoisture device) {
+        device.removeMoistureListener(super.getCallback());
+        device.removeMoistureReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

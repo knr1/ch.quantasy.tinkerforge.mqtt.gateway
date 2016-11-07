@@ -67,11 +67,11 @@ public class TemperatureIRDevice extends GenericDevice<BrickletTemperatureIR, Te
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAmbientTemperatureListener(super.getCallback());
-        getDevice().addAmbientTemperatureReachedListener(super.getCallback());
-        getDevice().addObjectTemperatureListener(super.getCallback());
-        getDevice().addObjectTemperatureReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletTemperatureIR device) {
+        device.addAmbientTemperatureListener(super.getCallback());
+        device.addAmbientTemperatureReachedListener(super.getCallback());
+        device.addObjectTemperatureListener(super.getCallback());
+        device.addObjectTemperatureReachedListener(super.getCallback());
         if (analogCallbackPeriod != null) {
             setAmbientTemperatureCallbackPeriod(analogCallbackPeriod);
         }
@@ -90,11 +90,11 @@ public class TemperatureIRDevice extends GenericDevice<BrickletTemperatureIR, Te
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAmbientTemperatureListener(super.getCallback());
-        getDevice().removeAmbientTemperatureReachedListener(super.getCallback());
-        getDevice().removeObjectTemperatureListener(super.getCallback());
-        getDevice().removeObjectTemperatureReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletTemperatureIR device) {
+        device.removeAmbientTemperatureListener(super.getCallback());
+        device.removeAmbientTemperatureReachedListener(super.getCallback());
+        device.removeObjectTemperatureListener(super.getCallback());
+        device.removeObjectTemperatureReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

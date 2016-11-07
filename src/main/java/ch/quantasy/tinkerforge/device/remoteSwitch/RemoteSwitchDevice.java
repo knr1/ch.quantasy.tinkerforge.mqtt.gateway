@@ -65,8 +65,8 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addSwitchingDoneListener(this);
+    protected void addDeviceListeners(BrickletRemoteSwitch device) {
+        device.addSwitchingDoneListener(this);
         if (repeats != null) {
             setRepeats(repeats);
         }
@@ -74,8 +74,8 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeSwitchingDoneListener(this);
+    protected void removeDeviceListeners(BrickletRemoteSwitch device) {
+        device.removeSwitchingDoneListener(this);
         this.switchingDone();
     }
 

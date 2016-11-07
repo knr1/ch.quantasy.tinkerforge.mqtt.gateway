@@ -65,11 +65,11 @@ public class RotaryEncoderDevice extends GenericDevice<BrickletRotaryEncoder, Ro
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addPressedListener(super.getCallback());
-        getDevice().addReleasedListener(super.getCallback());
-        getDevice().addCountListener(super.getCallback());
-        getDevice().addCountReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletRotaryEncoder device) {
+        device.addPressedListener(super.getCallback());
+        device.addReleasedListener(super.getCallback());
+        device.addCountListener(super.getCallback());
+        device.addCountReachedListener(super.getCallback());
 
         if (countCallbackPeriod != null) {
             setCountCallbackPeriod(this.countCallbackPeriod);
@@ -84,11 +84,11 @@ public class RotaryEncoderDevice extends GenericDevice<BrickletRotaryEncoder, Ro
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removePressedListener(super.getCallback());
-        getDevice().removeReleasedListener(super.getCallback());
-        getDevice().removeCountListener(super.getCallback());
-        getDevice().removeCountReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletRotaryEncoder device) {
+        device.removePressedListener(super.getCallback());
+        device.removeReleasedListener(super.getCallback());
+        device.removeCountListener(super.getCallback());
+        device.removeCountReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

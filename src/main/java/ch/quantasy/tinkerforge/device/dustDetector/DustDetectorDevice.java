@@ -67,9 +67,9 @@ public class DustDetectorDevice extends GenericDevice<BrickletDustDetector, Dust
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addDustDensityListener(getCallback());
-        getDevice().addDustDensityReachedListener(getCallback());
+    protected void addDeviceListeners(BrickletDustDetector device) {
+        device.addDustDensityListener(getCallback());
+        device.addDustDensityReachedListener(getCallback());
         if(debouncePeriod!=null){
             setDebouncePeriod(debouncePeriod);
         }
@@ -85,9 +85,9 @@ public class DustDetectorDevice extends GenericDevice<BrickletDustDetector, Dust
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeDustDensityListener(getCallback());
-        getDevice().removeDustDensityReachedListener(getCallback());
+    protected void removeDeviceListeners(BrickletDustDetector device) {
+        device.removeDustDensityListener(getCallback());
+        device.removeDustDensityReachedListener(getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

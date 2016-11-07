@@ -65,14 +65,14 @@ public class Segment4x7Device extends GenericDevice<BrickletSegmentDisplay4x7, S
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addCounterFinishedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletSegmentDisplay4x7 device) {
+        device.addCounterFinishedListener(super.getCallback());
 
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeCounterFinishedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletSegmentDisplay4x7 device) {
+        device.removeCounterFinishedListener(super.getCallback());
     }
 
     public void setSegments(DeviceSegments segments) {

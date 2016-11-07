@@ -79,9 +79,9 @@ public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceC
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addButtonPressedListener(super.getCallback());
-        getDevice().addButtonReleasedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletLCD16x2 device) {
+        device.addButtonPressedListener(super.getCallback());
+        device.addButtonReleasedListener(super.getCallback());
         writerThread = new Thread(writer);
         writerThread.start();
         if (this.isBacklightEnabled != null) {
@@ -98,11 +98,11 @@ public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceC
     }
 
     @Override
-    protected void removeDeviceListeners() {
+    protected void removeDeviceListeners(BrickletLCD16x2 device) {
         writerThread.interrupt();
         writerThread = null;
-        getDevice().removeButtonPressedListener(super.getCallback());
-        getDevice().removeButtonReleasedListener(super.getCallback());
+        device.removeButtonPressedListener(super.getCallback());
+        device.removeButtonReleasedListener(super.getCallback());
     }
 
     public void setBacklight(Boolean isBacklightEnabled) {

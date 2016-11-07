@@ -66,10 +66,10 @@ public class ThermoCoupleDevice extends GenericDevice<BrickletThermocouple, Ther
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addTemperatureListener(super.getCallback());
-        getDevice().addTemperatureReachedListener(super.getCallback());
-        getDevice().addErrorStateListener(super.getCallback());
+    protected void addDeviceListeners(BrickletThermocouple device) {
+        device.addTemperatureListener(super.getCallback());
+        device.addTemperatureReachedListener(super.getCallback());
+        device.addErrorStateListener(super.getCallback());
 
         if (configuration != null) {
             setConfiguration(configuration);
@@ -87,10 +87,10 @@ public class ThermoCoupleDevice extends GenericDevice<BrickletThermocouple, Ther
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeTemperatureListener(super.getCallback());
-        getDevice().removeTemperatureReachedListener(super.getCallback());
-        getDevice().removeErrorStateListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletThermocouple device) {
+        device.removeTemperatureListener(super.getCallback());
+        device.removeTemperatureReachedListener(super.getCallback());
+        device.removeErrorStateListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

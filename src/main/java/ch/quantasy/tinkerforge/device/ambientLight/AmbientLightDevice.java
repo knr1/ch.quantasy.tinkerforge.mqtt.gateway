@@ -67,11 +67,11 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAnalogValueListener(super.getCallback());
-        getDevice().addAnalogValueReachedListener(super.getCallback());
-        getDevice().addIlluminanceListener(super.getCallback());
-        getDevice().addIlluminanceReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletAmbientLight device) {
+        device.addAnalogValueListener(super.getCallback());
+        device.addAnalogValueReachedListener(super.getCallback());
+        device.addIlluminanceListener(super.getCallback());
+        device.addIlluminanceReachedListener(super.getCallback());
         if (analogCallbackPeriod != null) {
             setAnalogValueCallbackPeriod(analogCallbackPeriod);
         }
@@ -90,11 +90,11 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAnalogValueListener(super.getCallback());
-        getDevice().removeAnalogValueReachedListener(super.getCallback());
-        getDevice().removeIlluminanceListener(super.getCallback());
-        getDevice().removeIlluminanceReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletAmbientLight device) {
+        device.removeAnalogValueListener(super.getCallback());
+        device.removeAnalogValueReachedListener(super.getCallback());
+        device.removeIlluminanceListener(super.getCallback());
+        device.removeIlluminanceReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

@@ -66,9 +66,9 @@ public class CO2Device extends GenericDevice<BrickletCO2, CO2DeviceCallback> {
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addCO2ConcentrationListener(getCallback());
-        getDevice().addCO2ConcentrationReachedListener(getCallback());
+    protected void addDeviceListeners(BrickletCO2 device) {
+        device.addCO2ConcentrationListener(getCallback());
+        device.addCO2ConcentrationReachedListener(getCallback());
         if(debouncePeriod!=null){
             setDebouncePeriod(debouncePeriod);
         }
@@ -81,9 +81,9 @@ public class CO2Device extends GenericDevice<BrickletCO2, CO2DeviceCallback> {
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeCO2ConcentrationListener(getCallback());
-        getDevice().removeCO2ConcentrationReachedListener(getCallback());
+    protected void removeDeviceListeners(BrickletCO2 device) {
+        device.removeCO2ConcentrationListener(getCallback());
+        device.removeCO2ConcentrationReachedListener(getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

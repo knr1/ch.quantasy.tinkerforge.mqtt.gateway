@@ -69,11 +69,11 @@ public class ColorDevice extends GenericDevice<BrickletColor, ColorDeviceCallbac
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addColorListener(super.getCallback());
-        getDevice().addColorReachedListener(super.getCallback());
-        getDevice().addColorTemperatureListener(super.getCallback());
-        getDevice().addIlluminanceListener(super.getCallback());
+    protected void addDeviceListeners(BrickletColor device) {
+        device.addColorListener(super.getCallback());
+        device.addColorReachedListener(super.getCallback());
+        device.addColorTemperatureListener(super.getCallback());
+        device.addIlluminanceListener(super.getCallback());
         if (colorCallbackPeriod != null) {
             setColorCallbackPeriod(colorCallbackPeriod);
         }
@@ -98,11 +98,11 @@ public class ColorDevice extends GenericDevice<BrickletColor, ColorDeviceCallbac
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeColorListener(super.getCallback());
-        getDevice().removeColorReachedListener(super.getCallback());
-        getDevice().addColorTemperatureListener(super.getCallback());
-        getDevice().addIlluminanceListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletColor device) {
+        device.removeColorListener(super.getCallback());
+        device.removeColorReachedListener(super.getCallback());
+        device.addColorTemperatureListener(super.getCallback());
+        device.addIlluminanceListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

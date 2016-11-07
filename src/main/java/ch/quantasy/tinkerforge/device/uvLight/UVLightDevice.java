@@ -65,9 +65,9 @@ public class UVLightDevice extends GenericDevice<BrickletUVLight, UVLightDeviceC
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addUVLightListener(super.getCallback());
-        getDevice().addUVLightReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletUVLight device) {
+        device.addUVLightListener(super.getCallback());
+        device.addUVLightReachedListener(super.getCallback());
 
         if (callbackPeriod != null) {
             setUVLightCallbackPeriod(this.callbackPeriod);
@@ -82,9 +82,9 @@ public class UVLightDevice extends GenericDevice<BrickletUVLight, UVLightDeviceC
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeUVLightListener(super.getCallback());
-        getDevice().removeUVLightReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletUVLight device) {
+        device.removeUVLightListener(super.getCallback());
+        device.removeUVLightReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

@@ -75,16 +75,16 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAccelerationListener(super.getCallback());
-        getDevice().addAllDataListener(super.getCallback());
-        getDevice().addAngularVelocityListener(super.getCallback());
-        getDevice().addGravityVectorListener(super.getCallback());
-        getDevice().addLinearAccelerationListener(super.getCallback());
-        getDevice().addMagneticFieldListener(super.getCallback());
-        getDevice().addOrientationListener(super.getCallback());
-        getDevice().addQuaternionListener(super.getCallback());
-        getDevice().addTemperatureListener(super.getCallback());
+    protected void addDeviceListeners(BrickIMUV2 device) {
+        device.addAccelerationListener(super.getCallback());
+        device.addAllDataListener(super.getCallback());
+        device.addAngularVelocityListener(super.getCallback());
+        device.addGravityVectorListener(super.getCallback());
+        device.addLinearAccelerationListener(super.getCallback());
+        device.addMagneticFieldListener(super.getCallback());
+        device.addOrientationListener(super.getCallback());
+        device.addQuaternionListener(super.getCallback());
+        device.addTemperatureListener(super.getCallback());
 
         if (accelerationPeriod != null) {
             setAccelerationPeriod(accelerationPeriod);
@@ -122,15 +122,15 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAllDataListener(super.getCallback());
-        getDevice().removeAngularVelocityListener(super.getCallback());
-        getDevice().removeGravityVectorListener(super.getCallback());
-        getDevice().removeLinearAccelerationListener(super.getCallback());
-        getDevice().removeMagneticFieldListener(super.getCallback());
-        getDevice().removeOrientationListener(super.getCallback());
-        getDevice().removeQuaternionListener(super.getCallback());
-        getDevice().removeTemperatureListener(super.getCallback());
+    protected void removeDeviceListeners(BrickIMUV2 device) {
+        device.removeAllDataListener(super.getCallback());
+        device.removeAngularVelocityListener(super.getCallback());
+        device.removeGravityVectorListener(super.getCallback());
+        device.removeLinearAccelerationListener(super.getCallback());
+        device.removeMagneticFieldListener(super.getCallback());
+        device.removeOrientationListener(super.getCallback());
+        device.removeQuaternionListener(super.getCallback());
+        device.removeTemperatureListener(super.getCallback());
     }
 
     public void setAccelerationPeriod(Long accelerationPeriod) {

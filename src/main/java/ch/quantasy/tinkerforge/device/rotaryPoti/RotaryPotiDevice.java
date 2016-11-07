@@ -67,11 +67,11 @@ public class RotaryPotiDevice extends GenericDevice<BrickletRotaryPoti, RotaryPo
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAnalogValueListener(super.getCallback());
-        getDevice().addAnalogValueReachedListener(super.getCallback());
-        getDevice().addPositionListener(super.getCallback());
-        getDevice().addPositionReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletRotaryPoti device) {
+        device.addAnalogValueListener(super.getCallback());
+        device.addAnalogValueReachedListener(super.getCallback());
+        device.addPositionListener(super.getCallback());
+        device.addPositionReachedListener(super.getCallback());
         if (analogCallbackPeriod != null) {
             setAnalogValueCallbackPeriod(analogCallbackPeriod);
         }
@@ -90,11 +90,11 @@ public class RotaryPotiDevice extends GenericDevice<BrickletRotaryPoti, RotaryPo
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAnalogValueListener(super.getCallback());
-        getDevice().removeAnalogValueReachedListener(super.getCallback());
-        getDevice().removePositionListener(super.getCallback());
-        getDevice().removePositionReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletRotaryPoti device) {
+        device.removeAnalogValueListener(super.getCallback());
+        device.removeAnalogValueReachedListener(super.getCallback());
+        device.removePositionListener(super.getCallback());
+        device.removePositionReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

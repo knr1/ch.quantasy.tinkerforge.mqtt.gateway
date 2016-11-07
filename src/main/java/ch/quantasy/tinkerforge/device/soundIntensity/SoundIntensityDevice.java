@@ -66,9 +66,9 @@ public class SoundIntensityDevice extends GenericDevice<BrickletSoundIntensity, 
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addIntensityListener(getCallback());
-        getDevice().addIntensityReachedListener(getCallback());
+    protected void addDeviceListeners(BrickletSoundIntensity device) {
+        device.addIntensityListener(getCallback());
+        device.addIntensityReachedListener(getCallback());
         if(debouncePeriod!=null){
             setDebouncePeriod(debouncePeriod);
         }
@@ -81,9 +81,9 @@ public class SoundIntensityDevice extends GenericDevice<BrickletSoundIntensity, 
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeIntensityListener(getCallback());
-        getDevice().removeIntensityReachedListener(getCallback());
+    protected void removeDeviceListeners(BrickletSoundIntensity device) {
+        device.removeIntensityListener(getCallback());
+        device.removeIntensityReachedListener(getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

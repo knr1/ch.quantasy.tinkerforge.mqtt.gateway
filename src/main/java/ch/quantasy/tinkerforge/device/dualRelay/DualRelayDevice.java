@@ -67,9 +67,9 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addMonoflopDoneListener(super.getCallback());
-        getDevice().addMonoflopDoneListener(this);
+    protected void addDeviceListeners(BrickletDualRelay device) {
+        device.addMonoflopDoneListener(super.getCallback());
+        device.addMonoflopDoneListener(this);
 
         for (DeviceMonoflopParameters parameters : monoflopParametersMap.values()) {
             setMonoflop(parameters);
@@ -81,9 +81,9 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeMonoflopDoneListener(super.getCallback());
-        getDevice().removeMonoflopDoneListener(this);
+    protected void removeDeviceListeners(BrickletDualRelay device) {
+        device.removeMonoflopDoneListener(super.getCallback());
+        device.removeMonoflopDoneListener(this);
 
     }
 

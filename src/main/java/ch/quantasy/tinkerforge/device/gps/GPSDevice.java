@@ -67,12 +67,12 @@ public class GPSDevice extends GenericDevice<BrickletGPS, GPSDeviceCallback> {
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addAltitudeListener(super.getCallback());
-        getDevice().addCoordinatesListener(super.getCallback());
-        getDevice().addDateTimeListener(super.getCallback());
-        getDevice().addMotionListener(super.getCallback());
-        getDevice().addStatusListener(super.getCallback());
+    protected void addDeviceListeners(BrickletGPS device) {
+        device.addAltitudeListener(super.getCallback());
+        device.addCoordinatesListener(super.getCallback());
+        device.addDateTimeListener(super.getCallback());
+        device.addMotionListener(super.getCallback());
+        device.addStatusListener(super.getCallback());
 
         if (altitudeCallbackPeriod != null) {
             setAltitudeCallbackPeriod(altitudeCallbackPeriod);
@@ -93,12 +93,12 @@ public class GPSDevice extends GenericDevice<BrickletGPS, GPSDeviceCallback> {
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeAltitudeListener(super.getCallback());
-        getDevice().removeCoordinatesListener(super.getCallback());
-        getDevice().removeDateTimeListener(super.getCallback());
-        getDevice().removeMotionListener(super.getCallback());
-        getDevice().removeStatusListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletGPS device) {
+        device.removeAltitudeListener(super.getCallback());
+        device.removeCoordinatesListener(super.getCallback());
+        device.removeDateTimeListener(super.getCallback());
+        device.removeMotionListener(super.getCallback());
+        device.removeStatusListener(super.getCallback());
     }
 
     public void restart(RestartType restartType) {

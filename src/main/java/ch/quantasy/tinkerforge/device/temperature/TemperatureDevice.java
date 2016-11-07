@@ -66,9 +66,9 @@ public class TemperatureDevice extends GenericDevice<BrickletTemperature, Temper
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addTemperatureListener(super.getCallback());
-        getDevice().addTemperatureReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletTemperature device) {
+        device.addTemperatureListener(super.getCallback());
+        device.addTemperatureReachedListener(super.getCallback());
 
         if (mode != null) {
             setI2CMode(mode);
@@ -86,9 +86,9 @@ public class TemperatureDevice extends GenericDevice<BrickletTemperature, Temper
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeTemperatureListener(super.getCallback());
-        getDevice().removeTemperatureReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletTemperature device) {
+        device.removeTemperatureListener(super.getCallback());
+        device.removeTemperatureReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

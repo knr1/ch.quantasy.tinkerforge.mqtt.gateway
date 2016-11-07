@@ -65,9 +65,9 @@ public class LineDevice extends GenericDevice<BrickletLine, LineDeviceCallback> 
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addReflectivityListener(super.getCallback());
-        getDevice().addReflectivityReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletLine device) {
+        device.addReflectivityListener(super.getCallback());
+        device.addReflectivityReachedListener(super.getCallback());
 
         if (this.debouncePeriod != null) {
             setDebouncePeriod(debouncePeriod);
@@ -82,9 +82,9 @@ public class LineDevice extends GenericDevice<BrickletLine, LineDeviceCallback> 
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeReflectivityListener(super.getCallback());
-        getDevice().removeReflectivityReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletLine device) {
+        device.removeReflectivityListener(super.getCallback());
+        device.removeReflectivityReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

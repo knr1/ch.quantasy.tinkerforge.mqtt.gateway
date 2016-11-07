@@ -63,16 +63,16 @@ public class PiezoSpeakerDevice extends GenericDevice<BrickletPiezoSpeaker, Piez
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addBeepFinishedListener(super.getCallback());
-        getDevice().addMorseCodeFinishedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletPiezoSpeaker device) {
+        device.addBeepFinishedListener(super.getCallback());
+        device.addMorseCodeFinishedListener(super.getCallback());
 
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeBeepFinishedListener(super.getCallback());
-        getDevice().removeMorseCodeFinishedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletPiezoSpeaker device) {
+        device.removeBeepFinishedListener(super.getCallback());
+        device.removeMorseCodeFinishedListener(super.getCallback());
     }
 
     public void beep(BeepParameter beepParameter) {

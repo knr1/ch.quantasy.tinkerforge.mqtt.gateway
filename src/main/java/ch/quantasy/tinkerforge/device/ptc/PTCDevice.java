@@ -69,11 +69,11 @@ public class PTCDevice extends GenericDevice<BrickletPTC, PTCDeviceCallback> {
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addTemperatureListener(super.getCallback());
-        getDevice().addTemperatureReachedListener(super.getCallback());
-        getDevice().addResistanceListener(super.getCallback());
-        getDevice().addResistanceReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletPTC device) {
+        device.addTemperatureListener(super.getCallback());
+        device.addTemperatureReachedListener(super.getCallback());
+        device.addResistanceListener(super.getCallback());
+        device.addResistanceReachedListener(super.getCallback());
 
         if (wireMode != null) {
             setWireMode(wireMode);
@@ -97,11 +97,11 @@ public class PTCDevice extends GenericDevice<BrickletPTC, PTCDeviceCallback> {
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeTemperatureListener(super.getCallback());
-        getDevice().removeTemperatureReachedListener(super.getCallback());
-        getDevice().removeResistanceListener(super.getCallback());
-        getDevice().removeResistanceReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletPTC device) {
+        device.removeTemperatureListener(super.getCallback());
+        device.removeTemperatureReachedListener(super.getCallback());
+        device.removeResistanceListener(super.getCallback());
+        device.removeResistanceReachedListener(super.getCallback());
 
     }
 

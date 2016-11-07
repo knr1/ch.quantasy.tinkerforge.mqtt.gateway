@@ -101,11 +101,21 @@ public class TinkerforgeDevice<D extends Device> {
         return hardwareVersion;
     }
 
-    public void updateDevice(D device) throws TimeoutException, NotConnectedException {
+    /**
+     * 
+     * @param device
+     * @return Old device which is no longer in use
+     * @throws IllegalArgumentException if new device is null or if new device does not carry the same uid
+     * @throws TimeoutException
+     * @throws NotConnectedException 
+     */
+    public D updateDevice(D device) throws IllegalArgumentException, TimeoutException, NotConnectedException {
         if (device == null || !device.getIdentity().uid.equals(this.uid)) {
-            return;
+            throw new IllegalArgumentException();
         }
+        D oldDevice=device;
         this.device = device;
+        return oldDevice;
     }
 
     public boolean isConnected() throws TimeoutException, NotConnectedException {

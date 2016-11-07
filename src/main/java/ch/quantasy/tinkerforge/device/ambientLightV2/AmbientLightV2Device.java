@@ -66,9 +66,9 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addIlluminanceListener(super.getCallback());
-        getDevice().addIlluminanceReachedListener(super.getCallback());
+    protected void addDeviceListeners(BrickletAmbientLightV2 device) {
+        device.addIlluminanceListener(super.getCallback());
+        device.addIlluminanceReachedListener(super.getCallback());
 
         if (configuration != null) {
             setConfiguration(configuration);
@@ -86,9 +86,9 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeIlluminanceListener(super.getCallback());
-        getDevice().removeIlluminanceReachedListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletAmbientLightV2 device) {
+        device.removeIlluminanceListener(super.getCallback());
+        device.removeIlluminanceReachedListener(super.getCallback());
     }
 
     public void setDebouncePeriod(Long period) {

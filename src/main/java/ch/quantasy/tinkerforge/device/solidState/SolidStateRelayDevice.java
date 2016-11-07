@@ -64,9 +64,9 @@ public class SolidStateRelayDevice extends GenericDevice<BrickletSolidStateRelay
     }
 
     @Override
-    protected void addDeviceListeners() {
-        getDevice().addMonoflopDoneListener(super.getCallback());
-        getDevice().addMonoflopDoneListener(this);
+    protected void addDeviceListeners(BrickletSolidStateRelay device) {
+        device.addMonoflopDoneListener(super.getCallback());
+        device.addMonoflopDoneListener(this);
 
         if(monoflopParameters!=null) {
             setMonoflop(monoflopParameters);
@@ -78,9 +78,9 @@ public class SolidStateRelayDevice extends GenericDevice<BrickletSolidStateRelay
     }
 
     @Override
-    protected void removeDeviceListeners() {
-        getDevice().removeMonoflopDoneListener(super.getCallback());
-        getDevice().removeMonoflopDoneListener(this);
+    protected void removeDeviceListeners(BrickletSolidStateRelay device) {
+        device.removeMonoflopDoneListener(super.getCallback());
+        device.removeMonoflopDoneListener(this);
 
     }
 
