@@ -102,6 +102,7 @@ You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Vi
  [YAML]: <https://en.wikipedia.org/wiki/YAML>
  [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]: <https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial>
  [https://github.com/knr1/ch.quantasy.mqtt.gateway]: <https://github.com/knr1/ch.quantasy.mqtt.gateway>
+ [Tinkerforge-Forum-entry-23169]<http://www.tinkerunity.org/forum/index.php/topic,3809.msg23169.html#msg23169>
 
  #<http://martinfowler.com/articles/microservices.html>
  
@@ -416,6 +417,7 @@ Message: - line: 0
 * BrickDC
 * BrickIMU
 * BrickIMUV2
+* BrickMaster (Including a WatchDog, that disconnects connects if callbacks vanish @see Tinkerforge-Forum-entry-23169)
 * BrickletAccelerometer
 * BrickletAmbientLight
 * BrickletAmbientLightV2
