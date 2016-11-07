@@ -373,14 +373,14 @@ public class TinkerforgeStack {
                         .getDeclaredConstructor(String.class, IPConnection.class).newInstance(uid,
                         TinkerforgeStack.this.ipConnection);
                 if (tinkerforgeDevice != null) {
-                    tinkerforgeDevice.setDevice(device);
+                    tinkerforgeDevice.updateDevice(device);
                     return false;
                 }
                 tinkerforgeDevice = TinkerforgeDeviceMapper.getTinkerforgeDevice(TinkerforgeStack.this, device);
                 TinkerforgeStack.this.deviceMap.put(tinkerforgeDevice.getUid(), tinkerforgeDevice);
                 return true;
-            } catch (final NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NotConnectedException | TimeoutException ex) {
-                ex.printStackTrace();
+            } catch (final Exception ex) {
+                Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
             }
             return false;
         }

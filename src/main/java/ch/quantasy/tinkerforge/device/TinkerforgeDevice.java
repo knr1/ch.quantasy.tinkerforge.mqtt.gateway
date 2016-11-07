@@ -101,7 +101,7 @@ public class TinkerforgeDevice<D extends Device> {
         return hardwareVersion;
     }
 
-    public void setDevice(D device) throws TimeoutException, NotConnectedException {
+    public void updateDevice(D device) throws TimeoutException, NotConnectedException {
         if (device == null || !device.getIdentity().uid.equals(this.uid)) {
             return;
         }
@@ -123,6 +123,9 @@ public class TinkerforgeDevice<D extends Device> {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.connected(this);
         }
+        //start watchdog... if not already running
+        //should run every minute... or so (?per Device? or only ?per MasterBrick?)
+        //if(isConnected) results in an exception... disconnect-connect the stack.
 
     }
 
@@ -130,6 +133,7 @@ public class TinkerforgeDevice<D extends Device> {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.disconnected(this);
         }
+        //pause watchdog.
 
     }
 
@@ -137,6 +141,7 @@ public class TinkerforgeDevice<D extends Device> {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.reConnected(this);
         }
+        //start watchdog... if not already running
 
     }
 

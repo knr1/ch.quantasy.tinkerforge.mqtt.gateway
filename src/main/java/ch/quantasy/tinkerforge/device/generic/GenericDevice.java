@@ -66,13 +66,17 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
     protected abstract void removeDeviceListeners();
 
     @Override
-    public void setDevice(D device) throws TimeoutException, NotConnectedException {
-        if (device == null || device.getIdentity().uid != super.getUid()) {
+    public void updateDevice(D device) throws TimeoutException, NotConnectedException {
+        //TODO: Check if updateDevice returns the 'old' device... and should throw IllegalArgument if check fails.
+        //removeDeviceListeners would carry old device as argument
+        //addDeviceListeners would carry new device as argument
+        //redundant check could be omitted.... And it would be just nicer!
+        if (device == null || !device.getIdentity().uid.equals(super.getUid())) {
             return;
         }
         removeDeviceListeners();
         areListenerAdded = false;
-        super.setDevice(device);
+        super.updateDevice(device);
         if (areListenerAdded == false) {
             addDeviceListeners();
             areListenerAdded = true;
