@@ -102,18 +102,19 @@ public class TinkerforgeDevice<D extends Device> {
     }
 
     /**
-     * 
+     *
      * @param device
      * @return Old device which is no longer in use
-     * @throws IllegalArgumentException if new device is null or if new device does not carry the same uid
+     * @throws IllegalArgumentException if new device is null or if new device
+     * does not carry the same uid
      * @throws TimeoutException
-     * @throws NotConnectedException 
+     * @throws NotConnectedException
      */
     public D updateDevice(D device) throws IllegalArgumentException, TimeoutException, NotConnectedException {
         if (device == null || !device.getIdentity().uid.equals(this.uid)) {
             throw new IllegalArgumentException();
         }
-        D oldDevice=device;
+        D oldDevice = device;
         this.device = device;
         return oldDevice;
     }
@@ -133,10 +134,6 @@ public class TinkerforgeDevice<D extends Device> {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.connected(this);
         }
-        //TODO:
-        //start watchdog... if not already running
-        //should run every minute... or so (?per Device? or only ?per MasterBrick?)
-        //if(isConnected) results in an exception... disconnect-connect the stack.
 
     }
 
@@ -144,8 +141,6 @@ public class TinkerforgeDevice<D extends Device> {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.disconnected(this);
         }
-        //TODO:
-        //pause watchdog.
 
     }
 
@@ -153,8 +148,6 @@ public class TinkerforgeDevice<D extends Device> {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.reConnected(this);
         }
-        //TODO:
-        //start watchdog... if not already running
 
     }
 
@@ -214,5 +207,5 @@ public class TinkerforgeDevice<D extends Device> {
                 + "hardware: " + hardwareVersion + "\n"
                 + "...";
     }
-   
+
 }
