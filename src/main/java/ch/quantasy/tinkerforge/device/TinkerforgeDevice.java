@@ -123,6 +123,7 @@ public class TinkerforgeDevice<D extends Device> {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.connected(this);
         }
+        //TODO:
         //start watchdog... if not already running
         //should run every minute... or so (?per Device? or only ?per MasterBrick?)
         //if(isConnected) results in an exception... disconnect-connect the stack.
@@ -133,6 +134,7 @@ public class TinkerforgeDevice<D extends Device> {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.disconnected(this);
         }
+        //TODO:
         //pause watchdog.
 
     }
@@ -141,6 +143,7 @@ public class TinkerforgeDevice<D extends Device> {
         for (TinkerforgeDeviceListener listener : deviceListeners) {
             listener.reConnected(this);
         }
+        //TODO:
         //start watchdog... if not already running
 
     }
