@@ -359,7 +359,7 @@ public class TinkerforgeStack {
                         return false; //Device already known.
                     }
                 } catch (Exception ex) {
-                    Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
+                    //Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
                     return false; // There is a device, but the connection to it is broken.
                 }
 

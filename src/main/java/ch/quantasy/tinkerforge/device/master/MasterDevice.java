@@ -42,12 +42,15 @@
  */
 package ch.quantasy.tinkerforge.device.master;
 
+import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickMaster;
 
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,6 +59,9 @@ import java.util.logging.Logger;
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
 public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallback> {
+
+    private Timer timer;
+    private TimerTask watchdog;
 
     private Long debouncePeriod;
     private Long currentCallbackPeriod;
@@ -165,6 +171,7 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
             Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void setUSBVoltageCallbackPeriod(Long usbVoltageCallbackPeriod) {
         try {
             getDevice().setUSBVoltageCallbackPeriod(usbVoltageCallbackPeriod);
@@ -184,7 +191,6 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
             Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-       
 
     public void setEnableStatusLED(Boolean isEnabled) {
         try {
@@ -208,5 +214,106 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
             Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    /**
+     * Required for the Watchdog-Hack
+     */
+    @Override
+    public void connected() {
+        super.connected();
+        if (timer == null) {
+            timer = new Timer();
+            timer.schedule(new WatchDog(10), 0, 1000 * 60);
+        }
+    }
+
+     /**
+     * Required for the Watchdog-Hack
+     */
+    @Override
+    public void reconnected() {
+        super.reconnected();
+        if (timer == null) {
+            timer = new Timer();
+            timer.schedule(new WatchDog(10), 0, 1000 * 60);
+        }
+    }
+
+     /**
+     * Required for the Watchdog-Hack
+     */
+    @Override
+    public void disconnected() {
+        super.disconnected();
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+    /**
+     * The purpose of this class is to check, if Tinkerforge lost the IP-Connection (Why is not known).
+     * http://www.tinkerunity.org/forum/index.php/topic,3809.msg23169.html#msg23169
+     * If the watchdog cannot get some value (via Tinkerforges IP-Connection), the IP-Connection must be 'dead'.
+     * Hence disconnect the stack and connect it again.
+     */
+    class WatchDog extends TimerTask {
+
+        private int failCount;
+        private final int maxFailCount;
+        private boolean canceled;
+
+        public WatchDog(int maxFailCount) {
+            this.maxFailCount = maxFailCount;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    if (!canceled) {
+                        MasterDevice.this.getDevice().getIdentity();
+                        failCount = 0;
+                    }
+                    break;
+                } catch (Exception ex) {
+                    Logger.getLogger(TinkerforgeDevice.class.getName()).log(Level.SEVERE, null, ex);
+                    failCount++;
+                    if (failCount > maxFailCount) {
+                        this.failCount = 0;
+                        timer.cancel();
+                        timer = null;
+                        getStack().disconnect();
+                        getStack().connect();
+                        break;
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex1) {
+                        //fine
+                    }
+                }
+            }
+        }
+
+        @Override
+        public boolean cancel() {
+            this.canceled = true;
+            return super.cancel();
+        }
+
+        public int getMaxFailCount() {
+            return maxFailCount;
+        }
+
+        public int getFailCount() {
+            return failCount;
+        }
+
+        public void resetFailCount() {
+            this.failCount = 0;
+        }
+
+    }
+
 }

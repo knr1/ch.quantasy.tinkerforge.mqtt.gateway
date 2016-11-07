@@ -214,5 +214,5 @@ public class TinkerforgeDevice<D extends Device> {
                 + "hardware: " + hardwareVersion + "\n"
                 + "...";
     }
-
+   
 }
