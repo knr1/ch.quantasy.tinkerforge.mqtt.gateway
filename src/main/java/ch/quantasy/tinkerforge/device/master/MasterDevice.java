@@ -227,7 +227,7 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
         }
     }
 
-     /**
+    /**
      * Required for the Watchdog-Hack
      */
     @Override
@@ -239,7 +239,7 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
         }
     }
 
-     /**
+    /**
      * Required for the Watchdog-Hack
      */
     @Override
@@ -252,10 +252,12 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
     }
 
     /**
-     * The purpose of this class is to check, if Tinkerforge lost the IP-Connection (Why is not known).
+     * The purpose of this class is to check, if Tinkerforge lost the
+     * IP-Connection (Why is not known).
      * http://www.tinkerunity.org/forum/index.php/topic,3809.msg23169.html#msg23169
-     * If the watchdog cannot get some value (via Tinkerforges IP-Connection), the IP-Connection must be 'dead'.
-     * Hence disconnect the stack and connect it again.
+     * If the watchdog cannot get some value (via Tinkerforges IP-Connection),
+     * the IP-Connection must be 'dead'. Hence disconnect the stack and connect
+     * it again.
      */
     class WatchDog extends TimerTask {
 
@@ -281,8 +283,15 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
                     failCount++;
                     if (failCount > maxFailCount) {
                         this.failCount = 0;
-                        timer.cancel();
-                        timer = null;
+                        try {
+                            if (timer != null) {
+                                timer.cancel();
+                                timer = null;
+
+                            }
+                        } catch (Exception ex1) {
+                            //timer was already null
+                        }
                         getStack().disconnect();
                         getStack().connect();
                         break;
