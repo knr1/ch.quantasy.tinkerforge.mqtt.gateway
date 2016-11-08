@@ -460,4 +460,5 @@ Message: - line: 0
 * BrickletThermoCouple
 * BrickletTilt
 * BrickletUVLight
+* BrickletVoltageCurrent
 
