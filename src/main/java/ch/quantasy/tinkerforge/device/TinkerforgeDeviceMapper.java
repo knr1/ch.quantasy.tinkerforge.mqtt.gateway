@@ -88,6 +88,7 @@ import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
+import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
@@ -136,6 +137,7 @@ import com.tinkerforge.BrickletTemperatureIR;
 import com.tinkerforge.BrickletThermocouple;
 import com.tinkerforge.BrickletTilt;
 import com.tinkerforge.BrickletUVLight;
+import com.tinkerforge.BrickletVoltageCurrent;
 import com.tinkerforge.Device;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -285,6 +287,9 @@ public class TinkerforgeDeviceMapper {
         
         if(TinkerforgeDeviceClass.NfcRfid == TinkerforgeDeviceClass.getDevice(device)){
             return new NFCRFIDDevice(stack, (BrickletNFCRFID)device);
+        }
+        if(TinkerforgeDeviceClass.VoltageCurrent == TinkerforgeDeviceClass.getDevice(device)){
+            return new VoltageCurrentDevice(stack, (BrickletVoltageCurrent)device);
         }
         return new TinkerforgeDevice(stack, device);
     }
