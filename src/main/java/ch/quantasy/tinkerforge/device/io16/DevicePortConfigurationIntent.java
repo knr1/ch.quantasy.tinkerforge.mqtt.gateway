@@ -40,90 +40,86 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.loadCell;
+package ch.quantasy.tinkerforge.device.io16;
 
-import com.tinkerforge.BrickletLoadCell;
-
+import com.tinkerforge.BrickletIO16;
 
 
 /**
  *
  * @author reto
  */
-public class DeviceConfiguration {
+public class DevicePortConfigurationIntent {
 
-    public static enum Gain {
-        gain128X((short) 0), gain64X((short) 1), gain32X((short) 2);
-        private short value;
+    private char port;
+    private short selectionMask;
+    private char direction;
+    private boolean value;
 
-        private Gain(short value) {
-            this.value = value;
+    private DevicePortConfigurationIntent() {
+    }
+
+    public DevicePortConfigurationIntent(char port, short selectionMask, char direction, boolean value) {
+        this.port = port;
+        this.selectionMask = selectionMask;
+        this.direction=direction;
+        this.value=value;
+    }
+
+    public char getDirection() {
+        return direction;
+    }
+
+    public char getPort() {
+        return port;
+    }
+
+    public short getSelectionMask() {
+        return selectionMask;
+    }
+
+    public boolean getValue() {
+        return value;
+    }
+    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + this.port;
+        hash = 53 * hash + this.selectionMask;
+        hash = 53 * hash + this.direction;
+        hash = 53 * hash + (this.value ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
-
-        public short getValue() {
-            return value;
+        if (obj == null) {
+            return false;
         }
-
-        public static Gain getGainFor(short s) throws IllegalArgumentException{
-            for (Gain range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            throw new IllegalArgumentException("Not supported: "+s);
+        if (getClass() != obj.getClass()) {
+            return false;
         }
-    }
-
-    public static enum Rate {
-        rate10Hz((short) 0), rate80Hz((short) 1);
-        private short value;
-
-        private Rate(short value) {
-            this.value = value;
+        final DevicePortConfigurationIntent other = (DevicePortConfigurationIntent) obj;
+        if (this.port != other.port) {
+            return false;
         }
-
-        public short getValue() {
-            return value;
+        if (this.selectionMask != other.selectionMask) {
+            return false;
         }
-
-        public static Rate getRateFor(short s) {
-            for (Rate range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            return null;
+        if (this.direction != other.direction) {
+            return false;
         }
-    }
-    private Gain gain;
-    private Rate rate;
-
-    public DeviceConfiguration() {
-    }
-
-    public DeviceConfiguration(String gain, String integrationTime) {
-        this(Gain.valueOf(gain),Rate.valueOf(integrationTime));
+        if (this.value != other.value) {
+            return false;
+        }
+        return true;
     }
 
-    public DeviceConfiguration(Gain gain, Rate rate) {
-        this.gain = gain;
-        this.rate = rate;
-    }
 
-    public DeviceConfiguration(short gain, short rate) throws IllegalArgumentException {
-        this(Gain.getGainFor(gain), Rate.getRateFor(rate));
-    }
-
-    public DeviceConfiguration(BrickletLoadCell.Configuration configuration) {
-        this(configuration.gain, configuration.rate);
-    }
-
-    public Gain getGain() {
-        return gain;
-    }
-
-    public Rate getRate() {
-        return rate;
-    }
-
+    
 }

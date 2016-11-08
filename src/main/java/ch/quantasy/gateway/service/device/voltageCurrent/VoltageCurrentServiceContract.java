@@ -40,17 +40,17 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.service.device.loadCell;
+package ch.quantasy.gateway.service.device.voltageCurrent;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
+import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 
 /**
  *
  * @author reto
  */
-public class LoadCellServiceContract extends DeviceServiceContract {
+public class VoltageCurrentServiceContract extends DeviceServiceContract {
 
     public final String REACHED;
     public final String PERIOD;
@@ -60,15 +60,33 @@ public class LoadCellServiceContract extends DeviceServiceContract {
     public final String TARE;
     public final String INTENT_TARE;
 
-    public final String WEIGHT;
-    public final String STATUS_WEIGHT;
-    public final String STATUS_WEIGHT_THRESHOLD;
-    public final String STATUS_WEIGHT_CALLBACK_PERIOD;
-    public final String EVENT_WEIGHT;
-    public final String EVENT_WEIGHT_REACHED;
-    private final String INTENT_WEIGHT;
-    public final String INTENT_WEIGHT_THRESHOLD;
-    public final String INTENT_WEIGHT_CALLBACK_PERIOD;
+    public final String VOLTAGE;
+    public final String STATUS_VOLTAGE;
+    public final String STATUS_VOLTAGE_THRESHOLD;
+    public final String STATUS_VOLTAGE_CALLBACK_PERIOD;
+    public final String EVENT_VOLTAGE;
+    public final String EVENT_VOLTAGE_REACHED;
+    private final String INTENT_VOLTAGE;
+    public final String INTENT_VOLTAGE_THRESHOLD;
+    public final String INTENT_VOLTAGE_CALLBACK_PERIOD;
+     public final String CURRENT;
+    public final String STATUS_CURRENT;
+    public final String STATUS_CURRENT_THRESHOLD;
+    public final String STATUS_CURRENT_CALLBACK_PERIOD;
+    public final String EVENT_CURRENT;
+    public final String EVENT_CURRENT_REACHED;
+    private final String INTENT_CURRENT;
+    public final String INTENT_CURRENT_THRESHOLD;
+    public final String INTENT_CURRENT_CALLBACK_PERIOD;
+    public final String POWER;
+    public final String STATUS_POWER;
+    public final String STATUS_POWER_THRESHOLD;
+    public final String STATUS_POWER_CALLBACK_PERIOD;
+    public final String EVENT_POWER;
+    public final String EVENT_POWER_REACHED;
+    private final String INTENT_POWER;
+    public final String INTENT_POWER_THRESHOLD;
+    public final String INTENT_POWER_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
@@ -81,19 +99,17 @@ public class LoadCellServiceContract extends DeviceServiceContract {
     public final String STATUS_CONFIGURATION;
     public final String INTENT_CONFIGURATION;
 
-    public final String MOVING_AVERAGE;
-    public final String STATUS_MOVING_AVERAGE;
-    public final String INTENT_MOVING_AVERAGE;
+    public final String CALIBRATION;
+    public final String STATUS_CALIBRATION;
+    public final String INTENT_CALIBRATION;
 
-    public final String LED;
-    public final String INTENT_LED;
-    public final String STATUS_LED;
+  
 
-    public LoadCellServiceContract(LoadCellDevice device) {
+    public VoltageCurrentServiceContract(VoltageCurrentDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
-    public LoadCellServiceContract(String id, String device) {
+    public VoltageCurrentServiceContract(String id, String device) {
         super(id, device);
 
         PERIOD = "period";
@@ -102,16 +118,37 @@ public class LoadCellServiceContract extends DeviceServiceContract {
 
         REACHED = "reached";
 
-        WEIGHT = "weight";
-        STATUS_WEIGHT = STATUS + "/" + WEIGHT;
-        STATUS_WEIGHT_THRESHOLD = STATUS_WEIGHT + "/" + THRESHOLD;
-        STATUS_WEIGHT_CALLBACK_PERIOD = STATUS_WEIGHT + "/" + CALLBACK_PERIOD;
-        EVENT_WEIGHT = EVENT + "/" + WEIGHT;
-        EVENT_WEIGHT_REACHED = EVENT_WEIGHT + "/" + REACHED;
-        INTENT_WEIGHT = INTENT + "/" + WEIGHT;
-        INTENT_WEIGHT_THRESHOLD = INTENT_WEIGHT + "/" + THRESHOLD;
-        INTENT_WEIGHT_CALLBACK_PERIOD = INTENT_WEIGHT + "/" + CALLBACK_PERIOD;
+        VOLTAGE = "voltage";
+        STATUS_VOLTAGE = STATUS + "/" + VOLTAGE;
+        STATUS_VOLTAGE_THRESHOLD = STATUS_VOLTAGE + "/" + THRESHOLD;
+        STATUS_VOLTAGE_CALLBACK_PERIOD = STATUS_VOLTAGE + "/" + CALLBACK_PERIOD;
+        EVENT_VOLTAGE = EVENT + "/" + VOLTAGE;
+        EVENT_VOLTAGE_REACHED = EVENT_VOLTAGE + "/" + REACHED;
+        INTENT_VOLTAGE = INTENT + "/" + VOLTAGE;
+        INTENT_VOLTAGE_THRESHOLD = INTENT_VOLTAGE + "/" + THRESHOLD;
+        INTENT_VOLTAGE_CALLBACK_PERIOD = INTENT_VOLTAGE + "/" + CALLBACK_PERIOD;
 
+        CURRENT = "current";
+        STATUS_CURRENT = STATUS + "/" + CURRENT;
+        STATUS_CURRENT_THRESHOLD = STATUS_CURRENT + "/" + THRESHOLD;
+        STATUS_CURRENT_CALLBACK_PERIOD = STATUS_CURRENT + "/" + CALLBACK_PERIOD;
+        EVENT_CURRENT = EVENT + "/" + CURRENT;
+        EVENT_CURRENT_REACHED = EVENT_CURRENT + "/" + REACHED;
+        INTENT_CURRENT = INTENT + "/" + CURRENT;
+        INTENT_CURRENT_THRESHOLD = INTENT_CURRENT + "/" + THRESHOLD;
+        INTENT_CURRENT_CALLBACK_PERIOD = INTENT_CURRENT + "/" + CALLBACK_PERIOD;
+        
+        POWER = "power";
+        STATUS_POWER = STATUS + "/" + POWER;
+        STATUS_POWER_THRESHOLD = STATUS_POWER + "/" + THRESHOLD;
+        STATUS_POWER_CALLBACK_PERIOD = STATUS_POWER + "/" + CALLBACK_PERIOD;
+        EVENT_POWER = EVENT + "/" + POWER;
+        EVENT_POWER_REACHED = EVENT_POWER + "/" + REACHED;
+        INTENT_POWER = INTENT + "/" + POWER;
+        INTENT_POWER_THRESHOLD = INTENT_POWER + "/" + THRESHOLD;
+        INTENT_POWER_CALLBACK_PERIOD = INTENT_POWER + "/" + CALLBACK_PERIOD;
+
+        
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
@@ -126,13 +163,11 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         TARE = "tare";
         INTENT_TARE = INTENT + "/" + TARE;
 
-        MOVING_AVERAGE = "movingAverage";
-        STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-        INTENT_MOVING_AVERAGE = INTENT + "/" + MOVING_AVERAGE;
+        CALIBRATION = "calibration";
+        STATUS_CALIBRATION = STATUS + "/" + CALIBRATION;
+        INTENT_CALIBRATION = INTENT + "/" + CALIBRATION;
 
-        LED = "LED";
-        INTENT_LED = INTENT + "/" + LED;
-        STATUS_LED = STATUS + "/" + LED;
+        
 
     }
 }

@@ -40,9 +40,10 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.loadCell;
+package ch.quantasy.tinkerforge.device.voltageCurrent;
 
 import com.tinkerforge.BrickletLoadCell;
+import com.tinkerforge.BrickletVoltageCurrent;
 
 
 
@@ -50,80 +51,44 @@ import com.tinkerforge.BrickletLoadCell;
  *
  * @author reto
  */
-public class DeviceConfiguration {
+public class DeviceVoltageCurrentCallbackThreshold {
+    
+    private char option;
+    private int min;
+    private int max;
 
-    public static enum Gain {
-        gain128X((short) 0), gain64X((short) 1), gain32X((short) 2);
-        private short value;
-
-        private Gain(short value) {
-            this.value = value;
-        }
-
-        public short getValue() {
-            return value;
-        }
-
-        public static Gain getGainFor(short s) throws IllegalArgumentException{
-            for (Gain range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            throw new IllegalArgumentException("Not supported: "+s);
-        }
+    public DeviceVoltageCurrentCallbackThreshold() {
     }
 
-    public static enum Rate {
-        rate10Hz((short) 0), rate80Hz((short) 1);
-        private short value;
-
-        private Rate(short value) {
-            this.value = value;
-        }
-
-        public short getValue() {
-            return value;
-        }
-
-        public static Rate getRateFor(short s) {
-            for (Rate range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            return null;
-        }
-    }
-    private Gain gain;
-    private Rate rate;
-
-    public DeviceConfiguration() {
+    public DeviceVoltageCurrentCallbackThreshold(char option, int min, int max) {
+        this.option = option;
+        this.min = min;
+        this.max = max;
     }
 
-    public DeviceConfiguration(String gain, String integrationTime) {
-        this(Gain.valueOf(gain),Rate.valueOf(integrationTime));
+    public DeviceVoltageCurrentCallbackThreshold(BrickletVoltageCurrent.CurrentCallbackThreshold threshold) {
+        this(threshold.option,threshold.min,threshold.max);
+    }
+    
+    public DeviceVoltageCurrentCallbackThreshold(BrickletVoltageCurrent.PowerCallbackThreshold threshold) {
+        this(threshold.option,threshold.min,threshold.max);
+    }
+    
+    public DeviceVoltageCurrentCallbackThreshold(BrickletVoltageCurrent.VoltageCallbackThreshold threshold) {
+        this(threshold.option,threshold.min,threshold.max);
     }
 
-    public DeviceConfiguration(Gain gain, Rate rate) {
-        this.gain = gain;
-        this.rate = rate;
+    public int getMax() {
+        return max;
     }
 
-    public DeviceConfiguration(short gain, short rate) throws IllegalArgumentException {
-        this(Gain.getGainFor(gain), Rate.getRateFor(rate));
+    public int getMin() {
+        return min;
     }
 
-    public DeviceConfiguration(BrickletLoadCell.Configuration configuration) {
-        this(configuration.gain, configuration.rate);
+    public char getOption() {
+        return option;
     }
-
-    public Gain getGain() {
-        return gain;
-    }
-
-    public Rate getRate() {
-        return rate;
-    }
-
+    
+    
 }

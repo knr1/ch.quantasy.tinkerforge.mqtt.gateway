@@ -40,90 +40,42 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.loadCell;
+package ch.quantasy.tinkerforge.device.voltageCurrent;
 
-import com.tinkerforge.BrickletLoadCell;
-
-
+import com.tinkerforge.BrickletVoltageCurrent;
 
 /**
  *
  * @author reto
  */
-public class DeviceConfiguration {
+public class DeviceCalibration {
 
-    public static enum Gain {
-        gain128X((short) 0), gain64X((short) 1), gain32X((short) 2);
-        private short value;
+    
 
-        private Gain(short value) {
-            this.value = value;
-        }
+    private int gainMultiplier;
+    private int gainDivisor;
 
-        public short getValue() {
-            return value;
-        }
-
-        public static Gain getGainFor(short s) throws IllegalArgumentException{
-            for (Gain range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            throw new IllegalArgumentException("Not supported: "+s);
-        }
+    public DeviceCalibration() {
     }
 
-    public static enum Rate {
-        rate10Hz((short) 0), rate80Hz((short) 1);
-        private short value;
-
-        private Rate(short value) {
-            this.value = value;
-        }
-
-        public short getValue() {
-            return value;
-        }
-
-        public static Rate getRateFor(short s) {
-            for (Rate range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            return null;
-        }
-    }
-    private Gain gain;
-    private Rate rate;
-
-    public DeviceConfiguration() {
+    public DeviceCalibration(int gainMultiplier, int gainDivisor) {
+        this.gainMultiplier = gainMultiplier;
+        this.gainDivisor = gainDivisor;
     }
 
-    public DeviceConfiguration(String gain, String integrationTime) {
-        this(Gain.valueOf(gain),Rate.valueOf(integrationTime));
+    public DeviceCalibration(BrickletVoltageCurrent.Calibration calibration) {
+        this(calibration.gainMultiplier,calibration.gainDivisor);
     }
 
-    public DeviceConfiguration(Gain gain, Rate rate) {
-        this.gain = gain;
-        this.rate = rate;
+    public int getGainDivisor() {
+        return gainDivisor;
     }
 
-    public DeviceConfiguration(short gain, short rate) throws IllegalArgumentException {
-        this(Gain.getGainFor(gain), Rate.getRateFor(rate));
+    public int getGainMultiplier() {
+        return gainMultiplier;
     }
 
-    public DeviceConfiguration(BrickletLoadCell.Configuration configuration) {
-        this(configuration.gain, configuration.rate);
-    }
-
-    public Gain getGain() {
-        return gain;
-    }
-
-    public Rate getRate() {
-        return rate;
-    }
+   
+    
 
 }

@@ -40,90 +40,32 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.loadCell;
+package ch.quantasy.tinkerforge.device.voltageCurrent;
 
-import com.tinkerforge.BrickletLoadCell;
-
-
+import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
+import com.tinkerforge.BrickletVoltageCurrent;
 
 /**
  *
  * @author reto
  */
-public class DeviceConfiguration {
+public interface VoltageCurrentDeviceCallback extends DeviceCallback, BrickletVoltageCurrent.CurrentListener, BrickletVoltageCurrent.CurrentReachedListener, BrickletVoltageCurrent.PowerListener, BrickletVoltageCurrent.PowerReachedListener, BrickletVoltageCurrent.VoltageListener, BrickletVoltageCurrent.VoltageReachedListener {
 
-    public static enum Gain {
-        gain128X((short) 0), gain64X((short) 1), gain32X((short) 2);
-        private short value;
+    public void debouncePeriodChanged(long period);
 
-        private Gain(short value) {
-            this.value = value;
-        }
+    public void configurationChanged(DeviceConfiguration average);
 
-        public short getValue() {
-            return value;
-        }
+    public void calibrationChanged(DeviceCalibration calibration);
 
-        public static Gain getGainFor(short s) throws IllegalArgumentException{
-            for (Gain range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            throw new IllegalArgumentException("Not supported: "+s);
-        }
-    }
+    public void currentCallbackPeriodChanged(long period);
 
-    public static enum Rate {
-        rate10Hz((short) 0), rate80Hz((short) 1);
-        private short value;
+    public void currentCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold threshold);
 
-        private Rate(short value) {
-            this.value = value;
-        }
+    public void voltageCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold voltageThreshold);
 
-        public short getValue() {
-            return value;
-        }
+    public void voltageCallbackPeriodChanged(long voltageCallbackPeriod);
 
-        public static Rate getRateFor(short s) {
-            for (Rate range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            return null;
-        }
-    }
-    private Gain gain;
-    private Rate rate;
+    public void powerCallbackPeriodChanged(long powerCallbackPeriod);
 
-    public DeviceConfiguration() {
-    }
-
-    public DeviceConfiguration(String gain, String integrationTime) {
-        this(Gain.valueOf(gain),Rate.valueOf(integrationTime));
-    }
-
-    public DeviceConfiguration(Gain gain, Rate rate) {
-        this.gain = gain;
-        this.rate = rate;
-    }
-
-    public DeviceConfiguration(short gain, short rate) throws IllegalArgumentException {
-        this(Gain.getGainFor(gain), Rate.getRateFor(rate));
-    }
-
-    public DeviceConfiguration(BrickletLoadCell.Configuration configuration) {
-        this(configuration.gain, configuration.rate);
-    }
-
-    public Gain getGain() {
-        return gain;
-    }
-
-    public Rate getRate() {
-        return rate;
-    }
-
+    public void powerCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold powerThreshold);
 }

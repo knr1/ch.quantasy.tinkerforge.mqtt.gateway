@@ -40,90 +40,70 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.loadCell;
-
-import com.tinkerforge.BrickletLoadCell;
-
-
+package ch.quantasy.tinkerforge.device.io16;
+import ch.quantasy.tinkerforge.device.dualRelay.*;
+import com.tinkerforge.BrickletDualRelay;
 
 /**
  *
  * @author reto
  */
-public class DeviceConfiguration {
+public class DeviceState {
+    
+    private boolean relay1;
+    private boolean relay2;
 
-    public static enum Gain {
-        gain128X((short) 0), gain64X((short) 1), gain32X((short) 2);
-        private short value;
+    private DeviceState() {
+    }
 
-        private Gain(short value) {
-            this.value = value;
+    public DeviceState(boolean relay1, boolean relay2) {
+       this.relay1=relay1;
+       this.relay2=relay2;
+    }
+    
+    public DeviceState(BrickletDualRelay.State state){
+        this(state.relay1,state.relay2);
+    }
+
+    public boolean getRelay1() {
+        return relay1;
+    }
+
+    public boolean getRelay2() {
+        return relay2;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + (this.relay1 ? 1 : 0);
+        hash = 79 * hash + (this.relay2 ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
-
-        public short getValue() {
-            return value;
+        if (obj == null) {
+            return false;
         }
-
-        public static Gain getGainFor(short s) throws IllegalArgumentException{
-            for (Gain range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            throw new IllegalArgumentException("Not supported: "+s);
+        if (getClass() != obj.getClass()) {
+            return false;
         }
-    }
-
-    public static enum Rate {
-        rate10Hz((short) 0), rate80Hz((short) 1);
-        private short value;
-
-        private Rate(short value) {
-            this.value = value;
+        final DeviceState other = (DeviceState) obj;
+        if (this.relay1 != other.relay1) {
+            return false;
         }
-
-        public short getValue() {
-            return value;
+        if (this.relay2 != other.relay2) {
+            return false;
         }
-
-        public static Rate getRateFor(short s) {
-            for (Rate range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            return null;
-        }
-    }
-    private Gain gain;
-    private Rate rate;
-
-    public DeviceConfiguration() {
+        return true;
     }
 
-    public DeviceConfiguration(String gain, String integrationTime) {
-        this(Gain.valueOf(gain),Rate.valueOf(integrationTime));
-    }
+    
 
-    public DeviceConfiguration(Gain gain, Rate rate) {
-        this.gain = gain;
-        this.rate = rate;
-    }
-
-    public DeviceConfiguration(short gain, short rate) throws IllegalArgumentException {
-        this(Gain.getGainFor(gain), Rate.getRateFor(rate));
-    }
-
-    public DeviceConfiguration(BrickletLoadCell.Configuration configuration) {
-        this(configuration.gain, configuration.rate);
-    }
-
-    public Gain getGain() {
-        return gain;
-    }
-
-    public Rate getRate() {
-        return rate;
-    }
-
+    
+    
 }

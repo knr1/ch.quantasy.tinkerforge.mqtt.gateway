@@ -40,90 +40,89 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.loadCell;
+package ch.quantasy.tinkerforge.device.io16;
 
-import com.tinkerforge.BrickletLoadCell;
-
+import com.tinkerforge.BrickletIO16;
 
 
 /**
  *
  * @author reto
  */
-public class DeviceConfiguration {
+public class DevicePortMonoflopParameters {
+    
+    private char port;
+    private short pin;
+    private short value;
+    private long period;
 
-    public static enum Gain {
-        gain128X((short) 0), gain64X((short) 1), gain32X((short) 2);
-        private short value;
+    private DevicePortMonoflopParameters() {
+    }
 
-        private Gain(short value) {
-            this.value = value;
+    public DevicePortMonoflopParameters(char port, short pin, short value,long period) {
+        this.port = port;
+        this.pin = pin;
+        this.value=value;
+        this.period = period;
+    }
+    
+    public DevicePortMonoflopParameters(BrickletIO16.PortMonoflop monoflop){
+        this.port=monoflop.port;
+        this.pin=monoflop.pin;
+        this.value=monoflop.value;
+        this.period=monoflop.timeRemaining;
+    }
+
+    public char getPort() {
+        return port;
+    }
+
+    
+
+    public long getPeriod() {
+        return period;
+    }
+
+    public short getPin() {
+        return pin;
+    }
+
+    public short getValue() {
+        return value;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + this.port;
+        hash = 89 * hash + this.pin;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
-
-        public short getValue() {
-            return value;
+        if (obj == null) {
+            return false;
         }
-
-        public static Gain getGainFor(short s) throws IllegalArgumentException{
-            for (Gain range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            throw new IllegalArgumentException("Not supported: "+s);
+        if (getClass() != obj.getClass()) {
+            return false;
         }
-    }
-
-    public static enum Rate {
-        rate10Hz((short) 0), rate80Hz((short) 1);
-        private short value;
-
-        private Rate(short value) {
-            this.value = value;
+        final DevicePortMonoflopParameters other = (DevicePortMonoflopParameters) obj;
+        if (this.port != other.port) {
+            return false;
         }
-
-        public short getValue() {
-            return value;
+        if (this.pin != other.pin) {
+            return false;
         }
-
-        public static Rate getRateFor(short s) {
-            for (Rate range : values()) {
-                if (range.value == s) {
-                    return range;
-                }
-            }
-            return null;
-        }
-    }
-    private Gain gain;
-    private Rate rate;
-
-    public DeviceConfiguration() {
+        return true;
     }
 
-    public DeviceConfiguration(String gain, String integrationTime) {
-        this(Gain.valueOf(gain),Rate.valueOf(integrationTime));
-    }
+   
+    
 
-    public DeviceConfiguration(Gain gain, Rate rate) {
-        this.gain = gain;
-        this.rate = rate;
-    }
-
-    public DeviceConfiguration(short gain, short rate) throws IllegalArgumentException {
-        this(Gain.getGainFor(gain), Rate.getRateFor(rate));
-    }
-
-    public DeviceConfiguration(BrickletLoadCell.Configuration configuration) {
-        this(configuration.gain, configuration.rate);
-    }
-
-    public Gain getGain() {
-        return gain;
-    }
-
-    public Rate getRate() {
-        return rate;
-    }
-
+   
+    
 }

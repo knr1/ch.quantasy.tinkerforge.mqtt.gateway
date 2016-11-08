@@ -40,11 +40,9 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.loadCell;
+package ch.quantasy.tinkerforge.device.voltageCurrent;
 
-import com.tinkerforge.BrickletLoadCell;
-
-
+import com.tinkerforge.BrickletVoltageCurrent;
 
 /**
  *
@@ -52,11 +50,11 @@ import com.tinkerforge.BrickletLoadCell;
  */
 public class DeviceConfiguration {
 
-    public static enum Gain {
-        gain128X((short) 0), gain64X((short) 1), gain32X((short) 2);
+    public static enum Averaging {
+        AVERAGING_1((short) 0), AVERAGING_4((short) 1), AVERAGING_16((short) 2), AVERAGING_64((short) 3), AVERAGING_128((short) 4), AVERAGING_256((short) 5), AVERAGING_512((short) 6), AVERAGING_1024((short) 7),;
         private short value;
 
-        private Gain(short value) {
+        private Averaging(short value) {
             this.value = value;
         }
 
@@ -64,21 +62,21 @@ public class DeviceConfiguration {
             return value;
         }
 
-        public static Gain getGainFor(short s) throws IllegalArgumentException{
-            for (Gain range : values()) {
+        public static Averaging getAveragingFor(short s) throws IllegalArgumentException {
+            for (Averaging range : values()) {
                 if (range.value == s) {
                     return range;
                 }
             }
-            throw new IllegalArgumentException("Not supported: "+s);
+            throw new IllegalArgumentException("Not supported: " + s);
         }
     }
 
-    public static enum Rate {
-        rate10Hz((short) 0), rate80Hz((short) 1);
+    public static enum Conversion {
+        CONVERSION_140us((short) 0), CONVERSION_204us((short) 1), CONVERSION_332us((short) 2), CONVERSION_588us((short) 3), CONVERSION_1100us((short) 4), CONVERSION_2116us((short) 5), CONVERSION_4156us((short) 6), CONVERSION_8244us((short) 7);
         private short value;
 
-        private Rate(short value) {
+        private Conversion(short value) {
             this.value = value;
         }
 
@@ -86,44 +84,53 @@ public class DeviceConfiguration {
             return value;
         }
 
-        public static Rate getRateFor(short s) {
-            for (Rate range : values()) {
+        public static Conversion getConversionFor(short s) throws IllegalArgumentException {
+            for (Conversion range : values()) {
                 if (range.value == s) {
                     return range;
                 }
             }
-            return null;
+            throw new IllegalArgumentException("Not supported: " + s);
         }
     }
-    private Gain gain;
-    private Rate rate;
+
+    private Averaging averaging;
+    private Conversion currentConversionTime;
+    private Conversion voltageConversionTime;
 
     public DeviceConfiguration() {
     }
 
-    public DeviceConfiguration(String gain, String integrationTime) {
-        this(Gain.valueOf(gain),Rate.valueOf(integrationTime));
+    public DeviceConfiguration(String averaging, String voltageConversionTime, String currentConversionTime) {
+        this(Averaging.valueOf(averaging), Conversion.valueOf(voltageConversionTime), Conversion.valueOf(currentConversionTime));
     }
 
-    public DeviceConfiguration(Gain gain, Rate rate) {
-        this.gain = gain;
-        this.rate = rate;
+    public DeviceConfiguration(Averaging gain, Conversion voltage, Conversion current) {
+        this.averaging = gain;
+        this.voltageConversionTime = voltage;
+        this.currentConversionTime = current;
     }
 
-    public DeviceConfiguration(short gain, short rate) throws IllegalArgumentException {
-        this(Gain.getGainFor(gain), Rate.getRateFor(rate));
+    public DeviceConfiguration(short average, short voltage, short current) throws IllegalArgumentException {
+        this(Averaging.getAveragingFor(average), Conversion.getConversionFor(voltage),Conversion.getConversionFor(current));
     }
 
-    public DeviceConfiguration(BrickletLoadCell.Configuration configuration) {
-        this(configuration.gain, configuration.rate);
+    public DeviceConfiguration(BrickletVoltageCurrent.Configuration configuration) {
+        this(configuration.averaging,configuration.voltageConversionTime,configuration.currentConversionTime);
     }
 
-    public Gain getGain() {
-        return gain;
+    public Averaging getAveraging() {
+        return averaging;
     }
 
-    public Rate getRate() {
-        return rate;
+    public Conversion getCurrentConversionTime() {
+        return currentConversionTime;
     }
+
+    public Conversion getVoltageConversionTime() {
+        return voltageConversionTime;
+    }
+
+    
 
 }

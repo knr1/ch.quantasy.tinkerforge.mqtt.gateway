@@ -42,10 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.dualRelay;
 
-import ch.quantasy.tinkerforge.device.remoteSwitch.*;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletDualRelay;
-import com.tinkerforge.BrickletRemoteSwitch;
 
 /**
  *
