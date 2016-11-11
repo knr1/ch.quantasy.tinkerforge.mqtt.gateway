@@ -47,6 +47,7 @@ import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLEDStrip;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
+import java.util.List;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.Level;
@@ -75,7 +76,8 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     private LEDStripDeviceConfig config;
 
-    private short[][][] frame;
+    private List<LEDFrame.Chunk> chunkList;
+    private LEDFrame currentLEDFrame;
     private Thread publisherThread;
     private final Publisher publisher;
     private boolean readyToSend;
@@ -142,7 +144,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     private synchronized void setNumberOfLEDs(final int numberOfLEDs, final int numberOfChannels, final int numberOfLEDsPerWrite) {
         this.numberOfWrites = (int) Math.ceil((double) numberOfLEDs / numberOfLEDsPerWrite);
-        this.frame = new short[numberOfChannels][this.numberOfWrites][numberOfLEDsPerWrite];
+        currentLEDFrame = new LEDFrame(numberOfChannels, numberOfLEDs);
     }
 
     private void setFrameDurationInMilliseconds(
@@ -189,11 +191,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
             return;
         }
 
-        for (int colorChannel = 0; colorChannel < localConfig.getChipType().getNumberOfChannels(); colorChannel++) {
-            for (int write = 0, remaining = localConfig.getNumberOfLEDs(); write < this.numberOfWrites; write++, remaining -= localConfig.getNumberOfLEDsPerWrite()) {
-                leds.copyFraction(colorChannel, write * localConfig.getNumberOfLEDsPerWrite(), this.frame[colorChannel][write]);
-            }
-        }
+        this.chunkList = leds.getDeltaChunks(currentLEDFrame, config.getNumberOfLEDsPerWrite());
         sendRGBLEDFrame();
     }
 
@@ -218,21 +216,17 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         }
         try {
             LEDStripDeviceConfig localConfig = this.config;
-            for (int write = 0; write < this.numberOfWrites; write++) {
-                if (this.frame.length == 3) {
+            for (LEDFrame.Chunk chunk : chunkList) {
+                if (chunk.leds.length == 3) {
                     getDevice()
-                            .setRGBValues(write
-                                    * localConfig.getNumberOfLEDsPerWrite(),
-                                    (short) localConfig.getNumberOfLEDsPerWrite(),
-                                    this.frame[0][write], this.frame[1][write],
-                                    this.frame[2][write]);
-                } else if (this.frame.length == 4) {
+                            .setRGBValues(chunk.position, (short)(Math.min(chunk.leds[0].length,localConfig.getNumberOfLEDs()-chunk.position)),
+                                    chunk.leds[0], chunk.leds[1],
+                                    chunk.leds[2]);
+                } else if (chunk.leds.length == 4) {
                     getDevice()
-                            .setRGBWValues(write
-                                    * localConfig.getNumberOfLEDsPerWrite(),
-                                    (short) localConfig.getNumberOfLEDsPerWrite(),
-                                    this.frame[0][write], this.frame[1][write],
-                                    this.frame[2][write], this.frame[3][write]);
+                            .setRGBWValues(chunk.position, (short)(Math.min(chunk.leds[0].length,localConfig.getNumberOfLEDs()-chunk.position)),
+                                    chunk.leds[0], chunk.leds[1],
+                                    chunk.leds[2], chunk.leds[3]);
                 }
             }
             sent = true;
@@ -261,6 +255,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     public void readyToPublish(LEDStripDeviceCallback callback) {
         publisher.readyToPublish(callback);
+
     }
 
     class Publisher implements Runnable {

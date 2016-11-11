@@ -42,6 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.led;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author reto
@@ -52,9 +56,9 @@ public class LEDFrame {
 
     private LEDFrame() {
     }
-    
-    public boolean isValid(){
-        return channels!=null;
+
+    public boolean isValid() {
+        return channels != null;
     }
 
     public LEDFrame(int amountOfChannels, int amountOfLEDs) {
@@ -76,23 +80,26 @@ public class LEDFrame {
             this.channels[i] = channels[i].clone();
         }
     }
-    
-    public short getMaxValue(){
-        short maxValue=Short.MIN_VALUE;
+
+    public short getMaxValue() {
+        short maxValue = Short.MIN_VALUE;
         for (int i = 0; i < channels.length; i++) {
             for (int j = 0; j < channels[i].length; j++) {
-                if(maxValue<channels[i][j])
-                    maxValue=channels[i][j];
+                if (maxValue < channels[i][j]) {
+                    maxValue = channels[i][j];
+                }
             }
         }
         return maxValue;
     }
-    public short getMinValue(){
-        short minValue=Short.MAX_VALUE;
+
+    public short getMinValue() {
+        short minValue = Short.MAX_VALUE;
         for (int i = 0; i < channels.length; i++) {
             for (int j = 0; j < channels[i].length; j++) {
-                if(minValue>channels[i][j])
-                    minValue=channels[i][j];
+                if (minValue > channels[i][j]) {
+                    minValue = channels[i][j];
+                }
             }
         }
         return minValue;
@@ -114,12 +121,16 @@ public class LEDFrame {
         channels[channel][position] = color;
     }
 
-    public void copyFraction(int channel, int startAtPosition, short[] target) {
-        System.arraycopy(channels[channel],
-                startAtPosition,
-                target,
-                0,
-                Math.min(channels[channel].length - startAtPosition, target.length));
+    public Chunk getChunk(int startPosition, int chunkLength) {
+        Chunk chunk = new Chunk(startPosition, new short[getNumberOfChannels()][chunkLength]);
+        for (int channel = 0; channel < getNumberOfChannels(); channel++) {
+            System.arraycopy(channels[channel],
+                    startPosition,
+                    chunk.leds[channel],
+                    0,
+                    Math.min(channels[channel].length - startPosition, chunk.leds[channel].length));
+        }
+        return chunk;
     }
 
     /**
@@ -139,6 +150,41 @@ public class LEDFrame {
                     System.out.println("Too big.");
                 }
             }
+        }
+    }
+
+    List<Chunk> getDeltaChunks(LEDFrame oldFrame, int chunkLength) {
+        List<Chunk> chunkList = new LinkedList<>();
+        if (oldFrame == null) {
+            return chunkList;
+        }
+        if (oldFrame.getNumberOfChannels() != this.getNumberOfChannels()) {
+            return chunkList;
+        }
+        if (oldFrame.getNumberOfLEDs() != this.getNumberOfLEDs()) {
+            return chunkList;
+        }
+
+        for (int position = 0; position < getNumberOfLEDs(); position++) {
+            for (int channel = 0; channel < getNumberOfChannels(); channel++) {
+                if (this.channels[channel][position] != oldFrame.channels[channel][position]) {
+                    chunkList.add(getChunk(position, chunkLength));
+                    position += chunkLength - 1;
+                    break;
+                }
+            }
+        }
+        return chunkList;
+    }
+
+    static class Chunk {
+
+        public int position;
+        public short[][] leds;
+
+        public Chunk(int position, short[][] leds) {
+            this.position = position;
+            this.leds = leds;
         }
     }
 }
