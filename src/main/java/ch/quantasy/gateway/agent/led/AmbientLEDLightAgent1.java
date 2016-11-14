@@ -333,55 +333,54 @@ public class AmbientLEDLightAgent1 {
             } catch (InterruptedException ex) {
                 System.out.printf("%s: Is interrupted: ", Thread.currentThread());
             }
+
+        }
+    }
+
+    class MovingDot extends AnLEDAbility {
+        private final List<LEDFrame> frames;
+
+        public MovingDot(LEDStripServiceContract ledServiceContract, LEDStripDeviceConfig config) {
+            super(gatewayClient, ledServiceContract, config);
+            frames=new ArrayList<>();
         }
 
-//    class MovingDot extends AnLEDAbility {
-//
-//        public MovingDot(LEDStripServiceContract ledServiceContract, LEDStripDeviceConfig config) {
-//            super(ledServiceContract, config);
-//        }
-//
-//        public void run() {
-//            leds.getColorChannel(0)[0] = 255;
-//            leds.getColorChannel(1)[0] = 255;
-//            leds.getColorChannel(2)[0] = 255;
-//
-//            LEDFrame newLEDs = new LEDFrame(amountOfChannels, amountOfLEDs);
-//            try {
-//                while (true) {
-//                    for (int frameCount = 0; frameCount < 100; frameCount++) {
-//                        for (int i = 1; i < leds.getColorChannel(0).length; i++) {
-//                            newLEDs.getColorChannel(0)[i] = leds.getColorChannel(0)[i - 1];
-//                            newLEDs.getColorChannel(1)[i] = leds.getColorChannel(1)[i - 1];
-//                            newLEDs.getColorChannel(2)[i] = leds.getColorChannel(2)[i - 1];
-//                        }
-//                        newLEDs.getColorChannel(0)[0] = leds.getColorChannel(0)[amountOfLEDs - 1];
-//                        newLEDs.getColorChannel(1)[0] = leds.getColorChannel(1)[amountOfLEDs - 1];
-//                        newLEDs.getColorChannel(2)[0] = leds.getColorChannel(2)[amountOfLEDs - 1];
-//                        LEDFrame tmpLEDs = leds;
-//                        leds = newLEDs;
-//                        newLEDs = tmpLEDs;
-//                        frames.add(new LEDFrame(leds));
-//                    }
-//                    System.out.println("FRAMES:" + frames.size());
-//                    agent.addIntent(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
-//
-//                    frames.clear();
-//
-//                    Thread.sleep(frameDurationInMillis * 50);
-//
-//                    synchronized (this) {
-//                        System.out.println(counter);
-//                        while (counter > 100) {
-//                            this.wait();
-//                        }
-//                    }
-//                }
-//            } catch (InterruptedException ex) {
-//                agent.addIntent(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfChannels, amountOfLEDs));
-//
-//            }
-//        }
+        public void run() {
+            LEDFrame leds = super.getNewLEDFrame();
+
+            for (int i = 0; i < leds.getNumberOfChannels(); i++) {
+                leds.setColor((short) i, (short) 0, (short) 255);
+            }
+            try {
+                LEDFrame newLEDs = super.getNewLEDFrame();
+                while (true) {
+                    while (frames.size() < 150) {
+                        for (int led = 1; led < leds.getNumberOfLEDs(); led++) {
+                            for (int channel = 0; channel < leds.getNumberOfChannels(); channel++) {
+                                newLEDs.setColor((short) channel, (short) led, leds.getColor(channel, led - 1));
+                            }
+                        }
+                        LEDFrame tmpLEDs = leds;
+                        leds = newLEDs;
+                        newLEDs = tmpLEDs;
+                        frames.add(new LEDFrame(leds));
+                    }
+                    super.setLEDFrames(frames);
+                    frames.clear();
+
+                    Thread.sleep(frameDurationInMillis * 50);
+
+                    synchronized (this) {
+                        while (getCounter() > 100) {
+                            this.wait(frameDurationInMillis * 1000);
+                        }
+                    }
+                }
+            } catch (InterruptedException ex) {
+                super.setLEDFrame(getNewLEDFrame());
+            }
+        }
+
     }
 
     public static void main(String[] args) throws Throwable {

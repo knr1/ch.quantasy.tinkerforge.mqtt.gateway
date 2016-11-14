@@ -192,6 +192,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         }
 
         this.chunkList = leds.getDeltaChunks(currentLEDFrame, config.getNumberOfLEDsPerWrite());
+        currentLEDFrame=leds;
         sendRGBLEDFrame();
     }
 
