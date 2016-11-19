@@ -44,7 +44,6 @@ package ch.quantasy.gateway.agent.led;
 
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceContract;
-import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderService;
 import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
@@ -77,7 +76,7 @@ public class AmbientLEDLightAgent1 {
     private int delayInMinutes;
 
     public AmbientLEDLightAgent1(URI mqttURI) throws MqttException {
-        frameDurationInMillis = 20;
+        frameDurationInMillis = 60;
         amountOfLEDs = 120;
         delayInMinutes = 1;
         waveList = new ArrayList<>();
@@ -85,13 +84,13 @@ public class AmbientLEDLightAgent1 {
         gatewayClient = new GatewayClient(mqttURI, "433407hfra", new ClientContract("Agent", "AmbientLEDLight", "lulu"));
         gatewayClient.connect();
 
-        //connectRemoteServices(new TinkerforgeStackAddress("lights01"));
-        connectRemoteServices(new TinkerforgeStackAddress("localhost"));
+        connectRemoteServices(new TinkerforgeStackAddress("ledline01"));
+        //connectRemoteServices(new TinkerforgeStackAddress("localhost"));
         RotaryEncoderServiceContract rotaryEncoderServiceContract = new RotaryEncoderServiceContract("je3", TinkerforgeDeviceClass.RotaryEncoder.toString());
 
-        MotionDetectorServiceContract motionDetectorServiceContract = new MotionDetectorServiceContract("kfP", TinkerforgeDeviceClass.MotionDetector.toString());
-        // LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
-        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2812RGBW, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRGW);
+        MotionDetectorServiceContract motionDetectorServiceContract = new MotionDetectorServiceContract("kgx", TinkerforgeDeviceClass.MotionDetector.toString());
+         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
+        // LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2812RGBW, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRGW);
 
         gatewayClient.addIntent(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
         gatewayClient.subscribe(rotaryEncoderServiceContract.EVENT_COUNT, new Brightness());
@@ -108,11 +107,11 @@ public class AmbientLEDLightAgent1 {
                 }
             }
         });
-        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("jJE", TinkerforgeDeviceClass.LEDStrip.toString());
-        // LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
+        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("oZU", TinkerforgeDeviceClass.LEDStrip.toString());
+        LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
 
         waveList.add(new Wave(ledServiceContract1, config));
-        //  waveList.add(new Wave(ledServiceContract2, config));
+        waveList.add(new Wave(ledServiceContract2, config));
 
         for (Wave wave : waveList) {
             new Thread(wave).start();
@@ -261,12 +260,12 @@ public class AmbientLEDLightAgent1 {
                 sineRed = Math.sin((i / 120.0) * Math.PI * 2);
                 sineGreen = Math.sin((i / 60.0) * Math.PI * 2);
                 sineBlue = Math.sin((i / 30.0) * Math.PI * 2);
-                sineWhite = Math.sin((i / 90.0) * Math.PI * 2);;
+                //sineWhite = Math.sin((i / 90.0) * Math.PI * 2);;
 
                 prototypeLEDFrame.setColor(0, i, (short) (127.0 + (sineRed * 127.0)));
                 prototypeLEDFrame.setColor(1, i, (short) (127.0 + (sineGreen * 127.0)));
                 prototypeLEDFrame.setColor(2, i, (short) (127.0 + (sineBlue * 127.0)));
-                prototypeLEDFrame.setColor(3, i, (short) (127.0 + (sineWhite * 127.0)));
+                //prototypeLEDFrame.setColor(3, i, (short) (127.0 + (sineWhite * 127.0)));
 
             }
             gatewayClient.subscribe(ledServiceContract.EVENT_LEDs_RENDERED, this);

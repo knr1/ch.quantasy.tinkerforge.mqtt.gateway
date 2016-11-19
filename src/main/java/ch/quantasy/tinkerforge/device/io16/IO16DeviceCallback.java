@@ -44,11 +44,22 @@ package ch.quantasy.tinkerforge.device.io16;
 
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletIO16;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  *
  * @author reto
  */
 public interface IO16DeviceCallback extends DeviceCallback, BrickletIO16.MonoflopDoneListener,BrickletIO16.InterruptListener {
-    public void stateChanged(DeviceState state);
+
+    public void debouncePeriodChanged(Long debouncePeriod);
+
+    public void portAEdgeCountConfigChanged(TreeSet portAEdgeCountConfigs);
+
+    public void deviceMonoflopParametersChanged(TreeSet deviceMonoflopParameters);
+
+    public void deviceConfigurationChanged(TreeSet deviceConfigurations);
+
+    public void interruptsChanged(TreeSet interrupts);
 }

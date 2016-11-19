@@ -49,47 +49,63 @@ import com.tinkerforge.BrickletIO16;
  *
  * @author reto
  */
-public class DevicePortConfigurationIntent {
-
+public class DeviceMonoflopParameters implements Comparable<DeviceMonoflopParameters>{
+    
     private char port;
-    private short selectionMask;
-    private char direction;
-    private boolean value;
+    private short pin;
+    private short value;
+    private long period;
+    private long timeRemaining;
 
-    private DevicePortConfigurationIntent() {
+    private DeviceMonoflopParameters() {
     }
 
-    public DevicePortConfigurationIntent(char port, short selectionMask, char direction, boolean value) {
+    public DeviceMonoflopParameters(char port, short pin, short value,long period) {
         this.port = port;
-        this.selectionMask = selectionMask;
-        this.direction=direction;
+        this.pin = pin;
         this.value=value;
+        this.period = period;
     }
-
-    public char getDirection() {
-        return direction;
+    
+    public DeviceMonoflopParameters(BrickletIO16.PortMonoflop monoflop){
+        this.port=monoflop.port;
+        this.pin=monoflop.pin;
+        this.value=monoflop.value;
+        this.period=monoflop.time;
+        this.timeRemaining=monoflop.timeRemaining;
+    }
+    
+    public String getPortPin(){
+        return ""+port+""+pin;
     }
 
     public char getPort() {
         return port;
     }
 
-    public short getSelectionMask() {
-        return selectionMask;
+
+    public long getPeriod() {
+        return period;
     }
 
-    public boolean getValue() {
-        return value;
+    public long getTimeRemaining() {
+        return timeRemaining;
     }
     
 
+    public short getPin() {
+        return pin;
+    }
+
+    public short getValue() {
+        return value;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + this.port;
-        hash = 53 * hash + this.selectionMask;
-        hash = 53 * hash + this.direction;
-        hash = 53 * hash + (this.value ? 1 : 0);
+        int hash = 7;
+        hash = 89 * hash + this.port;
+        hash = 89 * hash + this.pin;
         return hash;
     }
 
@@ -104,22 +120,22 @@ public class DevicePortConfigurationIntent {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DevicePortConfigurationIntent other = (DevicePortConfigurationIntent) obj;
+        final DeviceMonoflopParameters other = (DeviceMonoflopParameters) obj;
         if (this.port != other.port) {
             return false;
         }
-        if (this.selectionMask != other.selectionMask) {
-            return false;
-        }
-        if (this.direction != other.direction) {
-            return false;
-        }
-        if (this.value != other.value) {
+        if (this.pin != other.pin) {
             return false;
         }
         return true;
     }
 
+   @Override
+    public int compareTo(DeviceMonoflopParameters o) {
+        return ((port<<4)+pin)-((o.port<<4)+pin);
+    }
+    
 
+   
     
 }

@@ -41,43 +41,59 @@
  *  *
  */
 package ch.quantasy.tinkerforge.device.io16;
-import ch.quantasy.tinkerforge.device.dualRelay.*;
-import com.tinkerforge.BrickletDualRelay;
+
+import com.tinkerforge.BrickletIO16;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
  * @author reto
  */
-public class DeviceState {
-    
-    private boolean relay1;
-    private boolean relay2;
+public class DeviceConfiguration implements Comparable<DeviceConfiguration>{
 
-    private DeviceState() {
+    private char port;
+    private short pin;
+    private char direction;
+    private boolean value;
+
+    private DeviceConfiguration() {
     }
 
-    public DeviceState(boolean relay1, boolean relay2) {
-       this.relay1=relay1;
-       this.relay2=relay2;
-    }
-    
-    public DeviceState(BrickletDualRelay.State state){
-        this(state.relay1,state.relay2);
+    public DeviceConfiguration(char port, short pin, char direction, boolean value) {
+        this.port = port;
+        this.pin = pin;
+        this.direction = direction;
+        this.value = value;
     }
 
-    public boolean getRelay1() {
-        return relay1;
+    public char getDirection() {
+        return direction;
     }
 
-    public boolean getRelay2() {
-        return relay2;
+    public char getPort() {
+        return port;
+    }
+
+    public short getPin() {
+        return pin;
+    }
+
+    public boolean getValue() {
+        return value;
+    }
+
+    public String getPortPin() {
+        return "" + port + "" + pin;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + (this.relay1 ? 1 : 0);
-        hash = 79 * hash + (this.relay2 ? 1 : 0);
+        int hash = 7;
+        hash = 47 * hash + this.port;
+        hash = 47 * hash + this.pin;
         return hash;
     }
 
@@ -92,18 +108,27 @@ public class DeviceState {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DeviceState other = (DeviceState) obj;
-        if (this.relay1 != other.relay1) {
+        final DeviceConfiguration other = (DeviceConfiguration) obj;
+        if (this.port != other.port) {
             return false;
         }
-        if (this.relay2 != other.relay2) {
+        if (this.pin != other.pin) {
             return false;
         }
         return true;
     }
 
+    public static List<DeviceConfiguration> getDeviceConfiguration(BrickletIO16.PortConfiguration configuration) {
+        List<DeviceConfiguration> deviceConfigurationList=new LinkedList<>();
+        for(int i=0;i<8;i++){
+            deviceConfigurationList.add(new DeviceConfiguration(configuration.port, (short)i,(((configuration.directionMask&(1<<i))>>>i)==1?'i':'o') , ((configuration.valueMask&(1<<i))>>>i)==1));
+        }
+        return deviceConfigurationList;
+    }
     
+    @Override
+    public int compareTo(DeviceConfiguration o) {
+        return ((port<<4)+pin)-((o.port<<4)+pin);
+    }
 
-    
-    
 }

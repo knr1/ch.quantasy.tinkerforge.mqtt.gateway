@@ -116,7 +116,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     public void disconnected(TinkerforgeStack stack) {
         TinkerforgeStackAddress address = stack.getStackAddress();
         String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
-        addStatus(topic, stack.isConnected());
+        addStatus(topic, stack.isConnected()+"disconnected-stack");
     }
 
     public void updateStatus() {
@@ -165,7 +165,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
         } catch (Exception ex) {
             connection = ex.getMessage();
         }
-        addStatus(topic, connection);
+        addStatus(topic, connection+"updated");
     }
 
     @Override
@@ -183,6 +183,6 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     @Override
     public void disconnected(TinkerforgeDevice device) {
         String topic = getContract().STATUS_DEVICE + "/" + device.getStack().getStackAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
-        addStatus(topic, false);
+        addStatus(topic, false+"disconnected-device");
     }
 }

@@ -43,23 +43,21 @@
 package ch.quantasy.gateway.agent.led;
 
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
-import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceContract;
-import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
-import ch.quantasy.mqtt.gateway.client.GatewayClient;
 import ch.quantasy.mqtt.gateway.client.GCEvent;
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
@@ -82,7 +80,7 @@ public class AmbientLEDLightAgent2 {
         gatewayClient.connect();
 
         //connectRemoteServices(new TinkerforgeStackAddress("lights01"));
-        connectRemoteServices(new TinkerforgeStackAddress("localhost"));
+        connectRemoteServices(new TinkerforgeStackAddress("lights02"));
 
         // LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2812RGBW, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRGW);
@@ -92,6 +90,12 @@ public class AmbientLEDLightAgent2 {
 
         waveList.add(new MovingDot(ledServiceContract1, config));
         //  waveList.add(new Wave(ledServiceContract2, config));
+        
+        gatewayClient.subscribe(ledServiceContract1.EVENT_LAGING, (topic, payload) -> {
+                        GCEvent<Long>[] lag = (GCEvent<Long>[])gatewayClient.toEventArray(payload, Boolean.class);
+
+            System.out.println("Laging: "+Arrays.toString(lag));
+        });
 
         for (MovingDot wave : waveList) {
             new Thread(wave).start();
@@ -123,27 +127,40 @@ public class AmbientLEDLightAgent2 {
             super.setLEDFrame(getNewLEDFrame());
 
             LEDFrame leds = super.getNewLEDFrame();
+            LEDFrame flash= super.getNewLEDFrame();
+            
+            for(int position=0;position<flash.getNumberOfLEDs();position++){
+                for(int channel=0;channel<flash.getNumberOfChannels();channel++){
+                    flash.setColor(channel, position, (short)255);
+                }
+            }
 
             //for (int i = 0; i < leds.getNumberOfChannels(); i++) {
             int i = 0;
             leds.setColor((short) i, (short) 0, (short) 255);
+            leds.setColor(i + 1, (short) 0, (short) 255);
             //}
             try {
                 LEDFrame newLEDs = super.getNewLEDFrame();
                 while (true) {
-                    while (frames.size() < 150) {
+                    while (frames.size() < 300) {
                         //for (int channel = 0; channel < leds.getNumberOfChannels(); channel++) {
                         int channel = 0;
                         for (int position = 1; position < leds.getNumberOfLEDs(); position++) {
-                            newLEDs.setColor((short) channel, (short) position, leds.getColor(channel, position - 1));
+                            newLEDs.setColor((short) channel, position, leds.getColor(channel, position - 1));
+                            newLEDs.setColor((short) (channel+1), position-1, leds.getColor(channel+1, position));
                         }
-                        newLEDs.setColor((short) channel, (short) 0, leds.getColor(channel, leds.getNumberOfLEDs() - 1));
+                        newLEDs.setColor((short) channel, 0, leds.getColor(channel, leds.getNumberOfLEDs() - 1));
+                        newLEDs.setColor((short) (channel + 1), leds.getNumberOfLEDs()-1, leds.getColor(channel+1, 0));
 
                         //}
                         LEDFrame tmpLEDs = leds;
                         leds = newLEDs;
                         newLEDs = tmpLEDs;
                         frames.add(new LEDFrame(leds));
+                        if(leds.getColor(0, leds.getNumberOfLEDs()/2)!=0){
+                            frames.add(flash);
+                        }
                     }
                     super.setLEDFrames(frames);
                     frames.clear();

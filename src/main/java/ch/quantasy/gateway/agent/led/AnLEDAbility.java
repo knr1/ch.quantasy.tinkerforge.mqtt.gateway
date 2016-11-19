@@ -66,6 +66,7 @@ public abstract class AnLEDAbility implements Runnable, MessageReceiver {
         this.config = config;
         this.gatewayClient = gatewayClient;
         gatewayClient.subscribe(ledServiceContract.EVENT_LEDs_RENDERED, this);
+        gatewayClient.addIntent(ledServiceContract.INTENT_CONFIG, config);
     }
 
     public LEDStripServiceContract getLedServiceContract() {

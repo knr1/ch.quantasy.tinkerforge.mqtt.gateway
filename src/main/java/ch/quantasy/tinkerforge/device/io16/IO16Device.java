@@ -47,8 +47,12 @@ import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletIO16;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,86 +60,147 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class IO16Device extends GenericDevice<BrickletIO16, IO16DeviceCallback> implements BrickletIO16.InterruptListener, BrickletIO16.MonoflopDoneListener {
+public class IO16Device extends GenericDevice<BrickletIO16, IO16DeviceCallback> implements BrickletIO16.MonoflopDoneListener {
 
-    private Map<Short, DevicePortMonoflopParameters> monoflopParametersMap;
-    private DevicePortConfigurationEvent state;
+    private final SortedMap<String, DeviceMonoflopParameters> monoflopParametersMap;
+    private final SortedMap<Short, DevicePortAEdgeCountConfig> edgeCountConfigMap;
+    private final SortedMap<String, DeviceConfiguration> configurationMap;
+    private  SortedSet<DeviceInterrupt> deviceInterruptSet;
+    private Long debouncePeriod;
 
     public IO16Device(TinkerforgeStack stack, BrickletIO16 device) throws NotConnectedException, TimeoutException {
         super(stack, device);
-        this.monoflopParametersMap = new HashMap<>();
+        this.monoflopParametersMap = new TreeMap<>();
+        this.edgeCountConfigMap = new TreeMap<>();
+        this.configurationMap = new TreeMap<>();
+        this.deviceInterruptSet = new TreeSet<>();
     }
 
     @Override
     protected void addDeviceListeners(BrickletIO16 device) {
+        device.addInterruptListener(super.getCallback());
         device.addMonoflopDoneListener(super.getCallback());
         device.addMonoflopDoneListener(this);
 
-        for (DevicePortMonoflopParameters parameters : monoflopParametersMap.values()) {
-            setPortMonoflop(parameters);
+        setMonoflop(monoflopParametersMap.values());
+        setConfiguration(configurationMap.values());
+        addInterrupt(deviceInterruptSet);
+        for (DevicePortAEdgeCountConfig edgeCountConfig : edgeCountConfigMap.values()) {
+            setPortAEdgeCountConfig(edgeCountConfig);
         }
-        if (state != null) {
-//            setState(state);
+
+        if (debouncePeriod != null) {
+            setDebouncePeriod(this.debouncePeriod);
         }
 
     }
 
     @Override
     protected void removeDeviceListeners(BrickletIO16 device) {
+        device.removeInterruptListener(super.getCallback());
         device.removeMonoflopDoneListener(super.getCallback());
         device.removeMonoflopDoneListener(this);
 
     }
 
-    public void setPortMonoflop(DevicePortMonoflopParameters parameters) {
-//        try {
-//            getDevice().setPortMonoflop(0, 0, 0, 0);Monoflop(parameters.getRelay(), parameters.getState(), parameters.getPeriod());
-//            this.monoflopParametersMap.put(parameters.getRelay(),new DevicePortMonoflopParameters(getDevice().getMonoflop(parameters.getRelay())));
-//            this.state = new DeviceState(getDevice().getState());
-//            super.getCallback().stateChanged(this.state);
-//        } catch (TimeoutException | NotConnectedException ex) {
-//            Logger.getLogger(IO16Device.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+    public void setDebouncePeriod(Long period) {
+        try {
+            getDevice().setDebouncePeriod(period);
+            this.debouncePeriod = getDevice().getDebouncePeriod();
+            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(IO16Device.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public void setPortConfiguration(DevicePortConfigurationIntent parameters) {
-//        try {
-//            getDevice().setPortConfiguration(parameters.getPort(), parameters.getSelectionMask(),parameters.getDirection(),parameters.getValue());
-//            this.state = new DevicePortConfigurationEvent(getDevice().getPortConfiguration(parameters.getPort()));
-//            super.getCallback().stateChanged(this.state);
-//        } catch (TimeoutException | NotConnectedException ex) {
-//            Logger.getLogger(IO16Device.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+    public void setPortAEdgeCountConfig(DevicePortAEdgeCountConfig config) {
+        try {
+            getDevice().setEdgeCountConfig(config.getPin(), config.getEdgeType().getValue(), config.getDebounce());
+            this.edgeCountConfigMap.put(config.getPin(), new DevicePortAEdgeCountConfig(getDevice().getEdgeCountConfig(config.getPin())));
+            super.getCallback().portAEdgeCountConfigChanged(new TreeSet(this.edgeCountConfigMap.values()));
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(IO16Device.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public void setState(DeviceState state) {
-//        try {
-//            getDevice().setState(state.getRelay1(), state.getRelay2());
-//            this.state = new DeviceState(getDevice().getState());
-//            super.getCallback().stateChanged(this.state);
-//        } catch (TimeoutException | NotConnectedException ex) {
-//            Logger.getLogger(IO16Device.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+    public void setMonoflop(Collection<DeviceMonoflopParameters> parameters) {
+        try {
+            for (DeviceMonoflopParameters parameter : parameters) {
+                getDevice().setPortMonoflop(parameter.getPort(), (short) (1 << parameter.getPin()), (short) (parameter.getValue() << parameter.getPin()), parameter.getPeriod());
+                DeviceMonoflopParameters newParam = new DeviceMonoflopParameters(getDevice().getPortMonoflop(parameter.getPort(), parameter.getPin()));
+                this.monoflopParametersMap.put(parameter.getPortPin(), newParam);
+            }
+            super.getCallback().deviceMonoflopParametersChanged(new TreeSet(this.monoflopParametersMap.values()));
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(IO16Device.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-//    @Override
-//    public void monoflopDone(short s, boolean bln) {
-//        try {
-//            this.state = new DeviceState(getDevice().getState());
-//            super.getCallback().stateChanged(this.state);
-//        } catch (TimeoutException | NotConnectedException ex) {
-//            Logger.getLogger(IO16Device.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+    public void setConfiguration(Collection<DeviceConfiguration> parameters) {
+        try {
+            for (DeviceConfiguration parameter : parameters) {
+                getDevice().setPortConfiguration(parameter.getPort(), (short) (1 << parameter.getPin()), parameter.getDirection(), parameter.getValue());
+            }
 
-   
+            List<DeviceConfiguration> newConfigurations = DeviceConfiguration.getDeviceConfiguration(getDevice().getPortConfiguration('a'));
+            newConfigurations.addAll(DeviceConfiguration.getDeviceConfiguration(getDevice().getPortConfiguration('b')));
+            for (DeviceConfiguration newConfig : newConfigurations) {
+                this.configurationMap.put(newConfig.getPortPin(), newConfig);
+            }
+            super.getCallback().deviceConfigurationChanged(new TreeSet(this.configurationMap.values()));
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(IO16Device.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void addInterrupt(Collection<DeviceInterrupt> interrupts) {
+        try {
+
+            SortedSet<DeviceInterrupt> newInterrupts = new TreeSet(deviceInterruptSet);
+            newInterrupts.addAll(interrupts);
+            short[] portInterrupts = DeviceInterrupt.getDeviceInterrupt(interrupts);
+            getDevice().setPortInterrupt('a', portInterrupts[0]);
+            getDevice().setPortInterrupt('b', portInterrupts[1]);
+            newInterrupts.clear();
+            newInterrupts.addAll(DeviceInterrupt.getDeviceInterrupt('a', getDevice().getPortInterrupt('a')));
+            newInterrupts.addAll(DeviceInterrupt.getDeviceInterrupt('b', getDevice().getPortInterrupt('b')));
+            this.deviceInterruptSet = newInterrupts;
+            super.getCallback().interruptsChanged(new TreeSet(this.deviceInterruptSet));
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(IO16Device.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void removeInterrupt(Collection<DeviceInterrupt> interrupts) {
+        try {
+            for (DeviceInterrupt interrupt : interrupts) {
+                getDevice().setPortInterrupt(interrupt.getPort(), (short) (1 << interrupt.getPin()));
+            }
+
+            List<DeviceConfiguration> newConfigurations = DeviceConfiguration.getDeviceConfiguration(getDevice().getPortConfiguration('a'));
+            newConfigurations.addAll(DeviceConfiguration.getDeviceConfiguration(getDevice().getPortConfiguration('b')));
+            for (DeviceConfiguration newConfig : newConfigurations) {
+                this.configurationMap.put(newConfig.getPortPin(), newConfig);
+            }
+            super.getCallback().deviceConfigurationChanged(new TreeSet(this.configurationMap.values()));
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(IO16Device.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
-    public void interrupt(char c, short s, short s1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void monoflopDone(char port, short selectionMask, short valueMask) {
+        for (int i = 0; i < 8; i++) {
+            if ((selectionMask & (1 << i)) != 0) {
+                DeviceConfiguration configuration = configurationMap.get("" + port + "" + i);
+                if (configuration != null) {
+                    configuration = new DeviceConfiguration(port, (short) i, configuration.getDirection(), (valueMask & (1 >> i)) != 0);
+                    configurationMap.put(configuration.getPortPin(), configuration);
+                    super.getCallback().deviceConfigurationChanged(new TreeSet(configurationMap.values()));
 
-    @Override
-    public void monoflopDone(char c, short s, short s1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+            }
+        }
     }
 
 }
