@@ -43,8 +43,10 @@
 package ch.quantasy.gateway.agent.outerLights;
 
 import ch.quantasy.gateway.agent.led.AmbientLEDLightAgent;
+import ch.quantasy.gateway.service.device.ambientLight.AmbientLightServiceContract;
 import ch.quantasy.gateway.service.device.dc.DCServiceContract;
 import ch.quantasy.gateway.service.device.linearPoti.LinearPotiServiceContract;
+import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
@@ -56,6 +58,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.mqtt.gateway.client.MessageReceiver;
+import ch.quantasy.tinkerforge.device.ambientLight.DeviceIlluminanceCallbackThreshold;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -66,12 +71,26 @@ public class OuterLightsAgent {
     private final ManagerServiceContract managerServiceContract;
     private final DCServiceContract dcServiceContract;
     private final LinearPotiServiceContract linearPotiServiceContract;
+    private List<MotionDetectorServiceContract> motionDetectorServiceContracts;
+    private List<AmbientLightServiceContract> ambientLightServiceContracts;
 
     private final GatewayClient<ClientContract> gatewayClient;
 
-    public OuterLightsAgent(URI mqttURI) throws MqttException {
-        managerServiceContract = new ManagerServiceContract("Manager");
+    private final Thread t;
+    private final DelayedOff delayedOff;
+    private int powerInPercent;
 
+    public OuterLightsAgent(URI mqttURI) throws MqttException {
+        powerInPercent = 100;
+        delayedOff = new DelayedOff();
+        t = new Thread(delayedOff);
+        t.start();
+        managerServiceContract = new ManagerServiceContract("Manager");
+        motionDetectorServiceContracts = new ArrayList<>();
+        ambientLightServiceContracts = new ArrayList<>();
+        motionDetectorServiceContracts.add(new MotionDetectorServiceContract("kgB", TinkerforgeDeviceClass.MotionDetector.toString()));
+        motionDetectorServiceContracts.add(new MotionDetectorServiceContract("kfP", TinkerforgeDeviceClass.MotionDetector.toString()));
+        ambientLightServiceContracts.add(new AmbientLightServiceContract("jxr", TinkerforgeDeviceClass.AmbientLight.toString()));
         dcServiceContract = new DCServiceContract("6kP5Zh", TinkerforgeDeviceClass.DC.toString());
         linearPotiServiceContract = new LinearPotiServiceContract("bxJ", TinkerforgeDeviceClass.LinearPoti.toString());
 
@@ -81,7 +100,7 @@ public class OuterLightsAgent {
         connectRemoteServices("controller01", "localhost");
 
         gatewayClient.addIntent(linearPotiServiceContract.INTENT_POSITION_CALLBACK_PERIOD, 100);
-        gatewayClient.addIntent(dcServiceContract.INTENT_ACCELERATION, 20000);
+        gatewayClient.addIntent(dcServiceContract.INTENT_ACCELERATION, 10000);
         gatewayClient.addIntent(dcServiceContract.INTENT_DRIVER_MODE, 1);
         gatewayClient.addIntent(dcServiceContract.INTENT_PWM_FREQUENCY, 20000);
         gatewayClient.addIntent(dcServiceContract.INTENT_ENABLED, true);
@@ -91,10 +110,40 @@ public class OuterLightsAgent {
             public void messageReceived(String topic, byte[] mm) throws Exception {
                 GCEvent<Integer>[] positionEvents = gatewayClient.toEventArray(mm, Integer.class);
                 int position = positionEvents[0].getValue();
-                gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * position);
+                powerInPercent = position;
             }
         });
-
+        for (MotionDetectorServiceContract motionDetectorServiceContract : motionDetectorServiceContracts) {
+            gatewayClient.subscribe(motionDetectorServiceContract.EVENT_MOTION_DETECTED, new MessageReceiver() {
+                @Override
+                public void messageReceived(String topic, byte[] mm) throws Exception {
+                    delayedOff.delayUntil(System.currentTimeMillis() + (1000 * 60 * 60));
+                }
+            });
+            gatewayClient.subscribe(motionDetectorServiceContract.EVENT_DETECTION_CYCLE_ENDED, new MessageReceiver() {
+                @Override
+                public void messageReceived(String topic, byte[] mm) throws Exception {
+                    delayedOff.delayUntil(System.currentTimeMillis() + 20000);
+                }
+            });
+        }
+        for (AmbientLightServiceContract ambientLightServiceContract : ambientLightServiceContracts) {
+            gatewayClient.addIntent(ambientLightServiceContract.INTENT_DEBOUNCE_PERIOD, 5000);
+            gatewayClient.addIntent(ambientLightServiceContract.INTENT_ILLUMINANCE_THRESHOLD, new DeviceIlluminanceCallbackThreshold('o', 20, 100));
+            gatewayClient.subscribe(ambientLightServiceContract.EVENT_ILLUMINANCE_REACHED, new MessageReceiver() {
+                @Override
+                public void messageReceived(String topic, byte[] payload) throws Exception {
+                    GCEvent<Integer>[] illuminance = gatewayClient.toEventArray(payload, Integer.class);
+                    if (illuminance[0].getValue() < 100) {
+                        delayedOff.setPaused(false);
+                    } else if (illuminance[0].getValue() > 20) {
+                        delayedOff.setPaused(true);
+                    }
+                    System.out.println(illuminance[0]);
+                }
+            }
+            );
+        }
     }
 
     private void connectRemoteServices(String... addresses) {
@@ -107,6 +156,55 @@ public class OuterLightsAgent {
                 Logger.getLogger(AmbientLEDLightAgent.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    class DelayedOff implements Runnable {
+
+        private long delayUntil;
+        private int currentPowerInPercent;
+        private boolean isPaused;
+
+        public synchronized void delayUntil(long timeInFuture) {
+            if (timeInFuture < System.currentTimeMillis()) {
+                return;
+            }
+            this.delayUntil = timeInFuture;
+            this.notifyAll();
+        }
+
+        public synchronized void setPaused(boolean isPaused) {
+            this.isPaused = isPaused;
+            this.notifyAll();
+        }
+
+        
+        @Override
+        public void run() {
+            while (true) {
+                synchronized (this) {
+                    while (delayUntil < System.currentTimeMillis()||isPaused) {
+                        try {
+                            this.wait(10000);
+                        } catch (InterruptedException ex) {
+                        }
+                    }
+                    gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * powerInPercent);
+                    while (delayUntil > System.currentTimeMillis()) {
+                        if (currentPowerInPercent != powerInPercent) {
+                            currentPowerInPercent = powerInPercent;
+                            gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * currentPowerInPercent);
+                        }
+                        long delay = delayUntil - System.currentTimeMillis();
+                        try {
+                            this.wait(delay);
+                        } catch (InterruptedException ex) {
+                        }
+                    }
+                    gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * 0);
+                }
+            }
+        }
+
     }
 
     public static void main(String[] args) throws Throwable {
