@@ -173,10 +173,15 @@ public class TinkerforgeStack {
             public void run() {
                 try {
                     try {
+                        try {
+                            ipConnection.disconnect();
+                        } catch (NotConnectedException ex) {
+                           //Just wanted to make sure!
+                        }
                         ipConnection.connect(stackAddress.getHostName(), stackAddress.getPort());
                         Thread.sleep(3000);
                     } catch (final AlreadyConnectedException e) {
-                        // So what
+                        // Oh, great, that is what we want!
                     } catch (final InterruptedException e) {
                         // OK, we go on
                     }

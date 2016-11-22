@@ -215,6 +215,9 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
         }
     }
 
+    //Needed for induction-diruption problem
+    int connectionTries = 0;
+
     /**
      * Required for the Watchdog-Hack
      */
@@ -225,6 +228,7 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
             timer = new Timer();
             timer.schedule(new WatchDog(10), 0, 1000 * 60);
         }
+        connectionTries = 0;
     }
 
     /**
@@ -237,6 +241,7 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
             timer = new Timer();
             timer.schedule(new WatchDog(10), 0, 1000 * 60);
         }
+        connectionTries = 0;
     }
 
     /**
@@ -248,6 +253,11 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
         if (timer != null) {
             timer.cancel();
             timer = null;
+        }
+        //Needed for induction-disruption problem
+        if (connectionTries < 3) {
+            connectionTries++;
+            getStack().connect();
         }
     }
 
