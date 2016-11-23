@@ -83,7 +83,7 @@ public class RemoteSwitchAgent {
         connectRemoteServices(new TinkerforgeStackAddress("untergeschoss"));
         connectRemoteServices(new TinkerforgeStackAddress("localhost"));
 
-        gatewayClient.subscribe("WebView/RemoteSwitch/event/touched/remoteSwitch/#", new MessageReceiver() {
+        gatewayClient.subscribe("WebView/RemoteSwitch/E/touched/remoteSwitch/#", new MessageReceiver() {
             @Override
             public void messageReceived(String topic, byte[] mm) throws Exception {
 

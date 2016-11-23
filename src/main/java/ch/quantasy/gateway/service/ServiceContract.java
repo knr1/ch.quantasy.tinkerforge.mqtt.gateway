@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.ClientContract;
 public class ServiceContract extends ClientContract{
 
     public ServiceContract(String rootTopic, String baseClass, String instance) {
-        super(rootTopic, baseClass, instance);
+        super("TF", baseClass, instance);
     }
 
     
