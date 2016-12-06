@@ -86,7 +86,6 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
     public LEDStripDevice(TinkerforgeStack stack, BrickletLEDStrip device) throws NotConnectedException, TimeoutException {
         super(stack, device);
         this.publisher = new Publisher();
-        System.out.println("Concurrent");
         config = new LEDStripDeviceConfig(LEDStripDevice.DEFAULT_CHIP_TYPE, LEDStripDevice.DEFAULT_CLOCK_FREQUENCY_OF_ICS_IN_HZ, LEDStripDevice.DEFAULT_FRAME_DURATION_IN_MILLISECONDS, LEDStripDevice.DEFAULT_NUMBER_OF_LEDS, LEDStripDevice.DEFAULT_CHANNEL_MAPPING);
 
     }

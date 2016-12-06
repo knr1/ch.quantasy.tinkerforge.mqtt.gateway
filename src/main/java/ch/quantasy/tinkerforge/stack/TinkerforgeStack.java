@@ -77,7 +77,7 @@ import java.util.logging.Logger;
  */
 public class TinkerforgeStack {
 
-    public static final int DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS = 1000 * 60;
+    public static final int DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS = 1000 * 10;
     private int connectionTimeoutInMilliseconds;
     private Timer timer;
 
@@ -110,6 +110,7 @@ public class TinkerforgeStack {
         this.deviceMap = new HashMap<>();
         this.stackAddress = stackAddress;
         this.ipConnection = new IPConnection();
+        this.ipConnection.setAutoReconnect(true);
         this.ipConnectionHandler = new IPConnectionHandler(this.ipConnection);
         this.deviceEnumerationHandler = new DeviceEnumerationHandler(this.ipConnection);
     }
@@ -163,11 +164,12 @@ public class TinkerforgeStack {
      * @throws IOException
      */
     public synchronized void connect() {
+        System.out.println("Connecting");
         if (this.timer != null) {
             return;
         }
         this.timer = new Timer(true);
-        this.timer.scheduleAtFixedRate(new TimerTask() {
+        this.timer.schedule(new TimerTask() {
 
             @Override
             public void run() {
@@ -176,22 +178,42 @@ public class TinkerforgeStack {
                         try {
                             ipConnection.disconnect();
                         } catch (NotConnectedException ex) {
-                           //Just wanted to make sure!
+                            //Just wanted to make sure!
+                            Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         ipConnection.connect(stackAddress.getHostName(), stackAddress.getPort());
                         Thread.sleep(3000);
+                        if (!deviceEnumerationHandler.getResetEnumerated()) {
+                            actualConnectionException = new Exception("No enumeration");
+                            throw (actualConnectionException);
+                        }
+                        //Problem: If Connection cannot be established after breakdown, Tinkerforge will not realize that.
+                        //Enumeration simply will not return anything. So we check after 5 seconds... if there was an enumeration after the connection.
+                        //Sorry, is stupid... but I have to do it this way until Tinkerforge finds the bug :-(
+
                     } catch (final AlreadyConnectedException e) {
                         // Oh, great, that is what we want!
+                        Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
+
                     } catch (final InterruptedException e) {
                         // OK, we go on
+                        Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
+
                     }
                     actualConnectionException = null;
                     timer.cancel();
                     timer = null;
                 } catch (final UnknownHostException e) {
                     actualConnectionException = e;
+                    Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
+
                 } catch (final IOException e) {
                     actualConnectionException = e;
+                    Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
+
+                } catch (final Exception e) {
+                    actualConnectionException = e;
+                    Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
         }, 0, getConnectionTimeoutInMilliseconds());
@@ -211,6 +233,8 @@ public class TinkerforgeStack {
             this.ipConnection.disconnect();
         } catch (final NotConnectedException e) {
             // So what
+            Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
+
         }
     }
 
@@ -312,6 +336,13 @@ public class TinkerforgeStack {
     private class DeviceEnumerationHandler implements EnumerateListener {
 
         private final IPConnection connection;
+        private boolean enumerated;
+
+        public  boolean getResetEnumerated() {
+            boolean hasEnumerated = enumerated;
+            enumerated = false;
+            return hasEnumerated;
+        }
 
         public DeviceEnumerationHandler(final IPConnection connection) {
             this.connection = connection;
@@ -322,6 +353,9 @@ public class TinkerforgeStack {
         public void enumerate(final String uid, final String connectedUid, final char position,
                 final short[] hardwareVersion, final short[] firmwareVersion, final int deviceIdentifier,
                 final short enumerationType) {
+
+            enumerated = true;
+            System.out.println("Enumerated:" + uid);
             boolean isNewDevice = this.createTinkerforgeDevice(deviceIdentifier, uid);
             switch (enumerationType) {
                 case IPConnection.ENUMERATION_TYPE_AVAILABLE:
@@ -364,7 +398,7 @@ public class TinkerforgeStack {
                         return false; //Device already known.
                     }
                 } catch (Exception ex) {
-                    //Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
                     return false; // There is a device, but the connection to it is broken.
                 }
 

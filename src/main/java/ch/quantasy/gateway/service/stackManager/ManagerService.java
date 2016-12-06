@@ -116,7 +116,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     public void disconnected(TinkerforgeStack stack) {
         TinkerforgeStackAddress address = stack.getStackAddress();
         String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
-        addStatus(topic, stack.isConnected()+"disconnected-stack");
+        addStatus(topic, stack.isConnected());
     }
 
     public void updateStatus() {

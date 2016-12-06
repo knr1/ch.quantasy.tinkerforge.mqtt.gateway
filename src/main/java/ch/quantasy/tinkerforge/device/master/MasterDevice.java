@@ -42,7 +42,6 @@
  */
 package ch.quantasy.tinkerforge.device.master;
 
-import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickMaster;
@@ -223,10 +222,11 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
      */
     @Override
     public void connected() {
+        System.out.println("Connected");
         super.connected();
         if (timer == null) {
             timer = new Timer();
-            timer.schedule(new WatchDog(10), 0, 1000 * 60);
+            timer.schedule(new WatchDog(1), 0, 1000 * 10);
         }
         connectionTries = 0;
     }
@@ -237,9 +237,10 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
     @Override
     public void reconnected() {
         super.reconnected();
+        System.out.println("Reconnected");
         if (timer == null) {
             timer = new Timer();
-            timer.schedule(new WatchDog(10), 0, 1000 * 60);
+            timer.schedule(new WatchDog(1), 0, 1000 * 10);
         }
         connectionTries = 0;
     }
@@ -250,6 +251,7 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
     @Override
     public void disconnected() {
         super.disconnected();
+        System.out.println("Disconnected");
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -289,7 +291,8 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
                     }
                     break;
                 } catch (Exception ex) {
-                    Logger.getLogger(TinkerforgeDevice.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(failCount);
+                    Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
                     failCount++;
                     if (failCount > maxFailCount) {
                         this.failCount = 0;
@@ -302,8 +305,11 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
                         } catch (Exception ex1) {
                             //timer was already null
                         }
-                        getStack().disconnect();
-                        getStack().connect();
+                        reset();
+                        System.out.println("Resetted");
+                        //getStack().disconnect();
+                        //Thread.sleep(2000);
+                        //getStack().connect();
                         break;
                     }
                     try {
