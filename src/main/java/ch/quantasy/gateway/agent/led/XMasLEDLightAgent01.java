@@ -73,7 +73,7 @@ public class XMasLEDLightAgent01 {
     private final GatewayClient<ClientContract> gatewayClient;
 
     public XMasLEDLightAgent01(URI mqttURI) throws MqttException {
-        frameDurationInMillis = 111;
+        frameDurationInMillis = 100;
         amountOfLEDs = 200;
         waveList = new ArrayList<>();
         managerServiceContract = new ManagerServiceContract("Manager");
@@ -82,11 +82,14 @@ public class XMasLEDLightAgent01 {
 
         //connectRemoteServices(new TinkerforgeStackAddress("lights01"));
         connectRemoteServices(new TinkerforgeStackAddress("lights02"));
+        //connectRemoteServices(new TinkerforgeStackAddress("lights03"));
 
         // LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2801, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.RGB);
 
         LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("jGL", TinkerforgeDeviceClass.LEDStrip.toString());
+        //LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("p34", TinkerforgeDeviceClass.LEDStrip.toString());
+       
         // LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
 
         waveList.add(new MovingDot(ledServiceContract1, config));

@@ -257,10 +257,10 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
             timer = null;
         }
         //Needed for induction-disruption problem
-        if (connectionTries < 3) {
-            connectionTries++;
-            getStack().connect();
-        }
+        //if (connectionTries < 3) {
+        //    connectionTries++;
+        getStack().connect();
+        //}
     }
 
     /**
@@ -307,9 +307,13 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
                         }
                         reset();
                         System.out.println("Resetted");
-                        //getStack().disconnect();
-                        //Thread.sleep(2000);
-                        //getStack().connect();
+                        getStack().disconnect();
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ex1) {
+                            //fine
+                        }
+                        getStack().connect();
                         break;
                     }
                     try {

@@ -229,13 +229,18 @@ public class TinkerforgeStack {
             this.timer.cancel();
             this.timer = null;
         }
-        try {
-            this.ipConnection.disconnect();
-        } catch (final NotConnectedException e) {
+       // try {
+            //this.ipConnection.disconnect();
+       // } catch (final NotConnectedException e) {
             // So what
-            Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
+       //     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
 
-        }
+       // }
+    }
+
+    public synchronized void reconnect() {
+        disconnect();
+        connect();
     }
 
     public boolean isConnected() {
@@ -338,7 +343,7 @@ public class TinkerforgeStack {
         private final IPConnection connection;
         private boolean enumerated;
 
-        public  boolean getResetEnumerated() {
+        public boolean getResetEnumerated() {
             boolean hasEnumerated = enumerated;
             enumerated = false;
             return hasEnumerated;
