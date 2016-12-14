@@ -58,15 +58,15 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
     public CO2Service(CO2Device device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new CO2ServiceContract(device));
-        addDescription(getContract().INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_CO2_CONCENTRATION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
+        publishDescription(getContract().INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_CO2_CONCENTRATION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
 
-        addDescription(getContract().EVENT_CO2_CONCENTRATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
-        addDescription(getContract().EVENT_CO2_CONCENTRATION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
-        addDescription(getContract().STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_CO2_CONCENTRATION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_CO2_CONCENTRATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
+        publishDescription(getContract().EVENT_CO2_CONCENTRATION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
+        publishDescription(getContract().STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_CO2_CONCENTRATION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
     }
 
@@ -94,27 +94,27 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void co2ConcentrationCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void co2ConcentrationCallbackThresholdChanged(DeviceCO2ConcentrationCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_CO2_CONCENTRATION_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_CO2_CONCENTRATION_THRESHOLD, threshold);
     }
 
     @Override
     public void co2Concentration(int i) {
-        addEvent(getContract().EVENT_CO2_CONCENTRATION, i);
+        publishEvent(getContract().EVENT_CO2_CONCENTRATION, i);
     }
 
     @Override
     public void co2ConcentrationReached(int i) {
-        addEvent(getContract().EVENT_CO2_CONCENTRATION_REACHED, i);
+        publishEvent(getContract().EVENT_CO2_CONCENTRATION_REACHED, i);
     }
 
     

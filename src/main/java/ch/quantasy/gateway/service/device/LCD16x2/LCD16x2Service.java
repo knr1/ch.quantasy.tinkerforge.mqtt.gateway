@@ -59,14 +59,14 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     public LCD16x2Service(LCD16x2Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LCD16x2ServiceContract(device));
-        addDescription(getContract().INTENT_BACKLIGHT, "[true|false]");
-        addDescription(getContract().STATUS_BACKLIGHT, "[true|false]");
-        addDescription(getContract().INTENT_CLEAR_DISPLAY, "[true|false]");
-        addDescription(getContract().INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        addDescription(getContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        addDescription(getContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        addDescription(getContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        addDescription(getContract().INTENT_WRITE_LINES, "[line: [0..1]\n position: [0..15]\n text: [String]_[1..16]]");
+        publishDescription(getContract().INTENT_BACKLIGHT, "[true|false]");
+        publishDescription(getContract().STATUS_BACKLIGHT, "[true|false]");
+        publishDescription(getContract().INTENT_CLEAR_DISPLAY, "[true|false]");
+        publishDescription(getContract().INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
+        publishDescription(getContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
+        publishDescription(getContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
+        publishDescription(getContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
+        publishDescription(getContract().INTENT_WRITE_LINES, "[line: [0..1]\n position: [0..15]\n text: [String]_[1..16]]");
     }
 
     @Override
@@ -85,28 +85,28 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     @Override
     public void backlightChanged(Boolean isBacklightEnabled) {
-        addStatus(getContract().STATUS_BACKLIGHT, isBacklightEnabled);
+        publishStatus(getContract().STATUS_BACKLIGHT, isBacklightEnabled);
     }
 
     @Override
     public void configurationChanged(DeviceConfigParameters configParameters) {
-        addStatus(getContract().STATUS_CONFIG_PARAMETERS, configParameters);
+        publishStatus(getContract().STATUS_CONFIG_PARAMETERS, configParameters);
     }
 
     @Override
     public void customCharactersChanged(DeviceCustomCharacter... customCharacters) {
         Arrays.sort(customCharacters);
-        addStatus(getContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
+        publishStatus(getContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
     }
 
     @Override
     public void buttonPressed(short s) {
-        addEvent(getContract().EVENT_BUTTON_PRESSED, s);
+        publishEvent(getContract().EVENT_BUTTON_PRESSED, s);
     }
 
     @Override
     public void buttonReleased(short s) {
-        addEvent(getContract().EVENT_BUTTON_RELEASED, s);
+        publishEvent(getContract().EVENT_BUTTON_RELEASED, s);
     }
 
     

@@ -59,17 +59,17 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
     public TemperatureService(TemperatureDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new TemperatureServiceContract(device));
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]");
-        addDescription(getContract().INTENT_I2C_MODE, "mode:[Fast|Slow]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]");
+        publishDescription(getContract().INTENT_I2C_MODE, "mode:[Fast|Slow]");
 
-        addDescription(getContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-2500..8500]\n");
-        addDescription(getContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-2500..8500]\n");
-        addDescription(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_I2CMODE, "mode:[Slow|Fast]");
+        publishDescription(getContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-2500..8500]\n");
+        publishDescription(getContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-2500..8500]\n");
+        publishDescription(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_I2CMODE, "mode:[Slow|Fast]");
     }
 
     @Override
@@ -101,32 +101,32 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void temperatureCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
     }
 
     @Override
     public void i2CModeChanged(DeviceI2CMode mode) {
-        addStatus(getContract().STATUS_I2CMODE, mode);
+        publishStatus(getContract().STATUS_I2CMODE, mode);
     }
 
     @Override
     public void temperature(short i) {
-        addEvent(getContract().EVENT_TEMPERATURE, i);
+        publishEvent(getContract().EVENT_TEMPERATURE, i);
     }
 
     @Override
     public void temperatureReached(short i) {
-        addEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
+        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
     }
 
 }

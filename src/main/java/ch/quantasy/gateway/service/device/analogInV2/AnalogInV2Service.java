@@ -58,23 +58,23 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
 
     public AnalogInV2Service(AnalogInV2Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new AnalogInV2ServiceContract(device));
-        addDescription(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().INTENT_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..42000]\n max: [0..42000]");
-        addDescription(getContract().INTENT_MOVING_AVERAGE, "[1..50]");
+        publishDescription(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().INTENT_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..42000]\n max: [0..42000]");
+        publishDescription(getContract().INTENT_MOVING_AVERAGE, "[1..50]");
 
-        addDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getContract().EVENT_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
-        addDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getContract().EVENT_VOLTAGE_REACHED, "timestamp: [0..42000]\n value: [0..42000]\n");
-        addDescription(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..42000]\n max: [0..42000]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_MOVING_AVERAGE, "[1..50]");
+        publishDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        publishDescription(getContract().EVENT_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
+        publishDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        publishDescription(getContract().EVENT_VOLTAGE_REACHED, "timestamp: [0..42000]\n value: [0..42000]\n");
+        publishDescription(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..42000]\n max: [0..42000]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_MOVING_AVERAGE, "[1..50]");
 
     }
 
@@ -119,52 +119,52 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
     @Override
     public void analogValue(int i) {
 
-        addEvent(getContract().EVENT_ANALOG_VALUE, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE, i);
     }
 
     @Override
     public void analogValueReached(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
     }
 
     @Override
     public void voltage(int i) {
-        addEvent(getContract().EVENT_VOLTAGE, i);
+        publishEvent(getContract().EVENT_VOLTAGE, i);
     }
 
     @Override
     public void voltageReached(int i) {
-        addEvent(getContract().EVENT_VOLTAGE_REACHED, i);
+        publishEvent(getContract().EVENT_VOLTAGE_REACHED, i);
     }
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void voltageCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
     }
 
     @Override
     public void voltageCallbackThresholdChanged(DeviceVoltageCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_VOLTAGE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_VOLTAGE_THRESHOLD, threshold);
     }
 
     @Override
     public void movingAverageChanged(Short averaging) {
-        addStatus(getContract().STATUS_MOVING_AVERAGE, averaging);
+        publishStatus(getContract().STATUS_MOVING_AVERAGE, averaging);
     }
 
 }

@@ -61,18 +61,18 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     public LCD20x4Service(LCD20x4Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LCD20x4ServiceContract(device));
-        addDescription(getContract().INTENT_BACKLIGHT, "[true|false]");
-        addDescription(getContract().STATUS_BACKLIGHT, "[true|false]");
-        addDescription(getContract().INTENT_CLEAR_DISPLAY, "[true|false]");
-        addDescription(getContract().INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        addDescription(getContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        addDescription(getContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        addDescription(getContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        addDescription(getContract().INTENT_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
-        addDescription(getContract().STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
-        addDescription(getContract().INTENT_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_WRITE_LINES, "[line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]");
+        publishDescription(getContract().INTENT_BACKLIGHT, "[true|false]");
+        publishDescription(getContract().STATUS_BACKLIGHT, "[true|false]");
+        publishDescription(getContract().INTENT_CLEAR_DISPLAY, "[true|false]");
+        publishDescription(getContract().INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
+        publishDescription(getContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
+        publishDescription(getContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
+        publishDescription(getContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
+        publishDescription(getContract().INTENT_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
+        publishDescription(getContract().STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
+        publishDescription(getContract().INTENT_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_WRITE_LINES, "[line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]");
     }
 
     @Override
@@ -110,39 +110,39 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     @Override
     public void backlightChanged(Boolean isBacklightEnabled) {
-        addStatus(getContract().STATUS_BACKLIGHT, isBacklightEnabled);
+        publishStatus(getContract().STATUS_BACKLIGHT, isBacklightEnabled);
     }
 
     @Override
     public void configurationChanged(DeviceConfigParameters configParameters) {
-        addStatus(getContract().STATUS_CONFIG_PARAMETERS, configParameters);
+        publishStatus(getContract().STATUS_CONFIG_PARAMETERS, configParameters);
     }
 
     @Override
     public void customCharactersChanged(DeviceCustomCharacter... customCharacters) {
         Arrays.sort(customCharacters);
-        addStatus(getContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
+        publishStatus(getContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
     }
 
     @Override
     public void defaultTextsChanged(DeviceDefaultText... defaultTexts) {
         Arrays.sort(defaultTexts);
-        addStatus(getContract().STATUS_DEFAULT_TEXT_TEXTS, defaultTexts);
+        publishStatus(getContract().STATUS_DEFAULT_TEXT_TEXTS, defaultTexts);
     }
 
     @Override
     public void defaultTextCounterChanged(Integer defaultTextCounter) {
-        addStatus(getContract().STATUS_DEFAULT_TEXT_COUNTER, defaultTextCounter);
+        publishStatus(getContract().STATUS_DEFAULT_TEXT_COUNTER, defaultTextCounter);
     }
 
     @Override
     public void buttonPressed(short s) {
-        addEvent(getContract().EVENT_BUTTON_PRESSED, s);
+        publishEvent(getContract().EVENT_BUTTON_PRESSED, s);
     }
 
     @Override
     public void buttonReleased(short s) {
-        addEvent(getContract().EVENT_BUTTON_RELEASED, s);
+        publishEvent(getContract().EVENT_BUTTON_RELEASED, s);
     }
 
     

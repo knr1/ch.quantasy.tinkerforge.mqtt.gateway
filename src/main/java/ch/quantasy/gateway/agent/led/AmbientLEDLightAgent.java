@@ -89,7 +89,7 @@ public class AmbientLEDLightAgent {
 
         MotionDetectorServiceContract motionDetectorServiceContract = new MotionDetectorServiceContract("kfP", TinkerforgeDeviceClass.MotionDetector.toString());
         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2812RGBW, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRGW);
-        gatewayClient.addIntent(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
+        gatewayClient.publishIntent(rotaryEncoderServiceContract.INTENT_COUNT_CALLBACK_PERIOD, 100);
         gatewayClient.subscribe(rotaryEncoderServiceContract.EVENT_COUNT, new Brightness());
         gatewayClient.subscribe(rotaryEncoderServiceContract.EVENT_PRESSED, new MessageReceiver() {
             @Override
@@ -145,7 +145,7 @@ public class AmbientLEDLightAgent {
 
     private void connectRemoteServices(String... addresses) {
         for (String address : addresses) {
-            gatewayClient.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
+            gatewayClient.publishIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
@@ -238,7 +238,7 @@ public class AmbientLEDLightAgent {
 
         public Wave(LEDStripServiceContract ledServiceContract, LEDStripDeviceConfig config) {
             super(gatewayClient, ledServiceContract, config);
-            gatewayClient.addIntent(ledServiceContract.INTENT_CONFIG, config);
+            gatewayClient.publishIntent(ledServiceContract.INTENT_CONFIG, config);
 
             frames = new ArrayList<>();
 
@@ -352,7 +352,7 @@ public class AmbientLEDLightAgent {
 //                        frames.add(new LEDFrame(leds));
 //                    }
 //                    System.out.println("FRAMES:" + frames.size());
-//                    agent.addIntent(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
+//                    agent.publishIntent(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
 //
 //                    frames.clear();
 //
@@ -366,7 +366,7 @@ public class AmbientLEDLightAgent {
 //                    }
 //                }
 //            } catch (InterruptedException ex) {
-//                agent.addIntent(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfChannels, amountOfLEDs));
+//                agent.publishIntent(ledServiceContract.INTENT_FRAME, new LEDFrame(amountOfChannels, amountOfLEDs));
 //
 //            }
 //        }

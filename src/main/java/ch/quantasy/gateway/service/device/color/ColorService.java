@@ -59,19 +59,19 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
     public ColorService(ColorDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new ColorServiceContract(device));
-        addDescription(getContract().INTENT_COLOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_IllUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_COLOR_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
-        addDescription(getContract().INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_COLOR, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: \n   red: [0..65535]\n   green: [0..65535]\n   blue: [0..65535]\n   clear: [0..65535]\n");
-        addDescription(getContract().EVENT_ILLUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..65535]\n");
-        addDescription(getContract().EVENT_COLOR_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n red: [0..65535]\n green: [0..65535]\n blue: [0..65535]\n clear: [0..65535]\n");
-        addDescription(getContract().EVENT_COLOR_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..65535]\n");
-        addDescription(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_COLOR_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_COLOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_IllUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_COLOR_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
+        publishDescription(getContract().INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_COLOR, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: \n   red: [0..65535]\n   green: [0..65535]\n   blue: [0..65535]\n   clear: [0..65535]\n");
+        publishDescription(getContract().EVENT_ILLUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..65535]\n");
+        publishDescription(getContract().EVENT_COLOR_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n red: [0..65535]\n green: [0..65535]\n blue: [0..65535]\n clear: [0..65535]\n");
+        publishDescription(getContract().EVENT_COLOR_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..65535]\n");
+        publishDescription(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_COLOR_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 
     @Override
@@ -110,57 +110,57 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
     @Override
     public void color(int i, int i1, int i2, int i3) {
-        addEvent(getContract().EVENT_COLOR, new Color(i, i1, i2, i3));
+        publishEvent(getContract().EVENT_COLOR, new Color(i, i1, i2, i3));
     }
 
     @Override
     public void colorReached(int i, int i1, int i2, int i3) {
-        addEvent(getContract().EVENT_COLOR_REACHED, new Color(i, i1, i2, i3));
+        publishEvent(getContract().EVENT_COLOR_REACHED, new Color(i, i1, i2, i3));
     }
 
     @Override
     public void illuminance(long i) {
-        addEvent(getContract().EVENT_ILLUMINANCE, i);
+        publishEvent(getContract().EVENT_ILLUMINANCE, i);
     }
 
     @Override
     public void colorTemperature(int i) {
-        addEvent(getContract().EVENT_COLOR_TEMPERATURE_REACHED, i);
+        publishEvent(getContract().EVENT_COLOR_TEMPERATURE_REACHED, i);
     }
 
     @Override
     public void colorTemperatureCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration config) {
-        addStatus(getContract().STATUS_CONFIGURATION, config);
+        publishStatus(getContract().STATUS_CONFIGURATION, config);
     }
 
     @Override
     public void lightStatusChanged(boolean isLightOn) {
-        addStatus(getContract().STATUS_LIGHT_STATE, isLightOn);
+        publishStatus(getContract().STATUS_LIGHT_STATE, isLightOn);
     }
 
     @Override
     public void colorCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void colorCallbackThresholdChanged(DeviceColorCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_COLOR_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_COLOR_THRESHOLD, threshold);
     }
 
     public static class Color {

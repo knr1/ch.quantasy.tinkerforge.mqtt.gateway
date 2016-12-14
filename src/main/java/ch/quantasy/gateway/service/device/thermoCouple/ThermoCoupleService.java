@@ -59,17 +59,17 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
     public ThermoCoupleService(ThermoCoupleDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new ThermoCoupleServiceContract(device));
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-21000..180000]\n max: [-21000..180000]");
-        addDescription(getContract().INTENT_CONFIGURATION, "averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]\n type: [B|E|J|K|N|R|S|T|G8|G32]\n filter: [Hz_50|Hz_60]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-21000..180000]\n max: [-21000..180000]");
+        publishDescription(getContract().INTENT_CONFIGURATION, "averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]\n type: [B|E|J|K|N|R|S|T|G8|G32]\n filter: [Hz_50|Hz_60]");
 
-        addDescription(getContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-21000..180000]\n");
-        addDescription(getContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-21000..180000]\n");
-        addDescription(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-21000..180000]\n max: [-21000..180000]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_CONFIGURATION, "averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]\n type: [B|E|J|K|N|R|S|T|G8|G32]\n filter: [Hz_50|Hz_60]");
+        publishDescription(getContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-21000..180000]\n");
+        publishDescription(getContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-21000..180000]\n");
+        publishDescription(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-21000..180000]\n max: [-21000..180000]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_CONFIGURATION, "averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]\n type: [B|E|J|K|N|R|S|T|G8|G32]\n filter: [Hz_50|Hz_60]");
     }
 
     @Override
@@ -102,37 +102,37 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void temperatureCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        addStatus(getContract().STATUS_CONFIGURATION, configuration);
+        publishStatus(getContract().STATUS_CONFIGURATION, configuration);
     }
 
     @Override
     public void temperature(int i) {
-        addEvent(getContract().EVENT_TEMPERATURE, i);
+        publishEvent(getContract().EVENT_TEMPERATURE, i);
     }
 
     @Override
     public void temperatureReached(int i) {
-        addEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
+        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
     }
 
     @Override
     public void errorState(boolean bln, boolean bln1) {
-        addEvent(getContract().EVENT_ERROR, new Error(bln, bln1));
+        publishEvent(getContract().EVENT_ERROR, new Error(bln, bln1));
     }
 
     public static class Error {

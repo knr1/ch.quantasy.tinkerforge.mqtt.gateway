@@ -59,32 +59,32 @@ public class MasterService extends AbstractDeviceService<MasterDevice, MasterSer
 
     public MasterService(MasterDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new MasterServiceContract(device));
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_STACK_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_STATUS_LED_ENABLED, "[true|false]");
-        addDescription(getContract().INTENT_STACK_CURRENT_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().INTENT_STACK_VOLTAGE_CALLBACK_PERIOD, "[" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_STACK_VOLTAGE_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().INTENT_USB_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_STACK_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_STATUS_LED_ENABLED, "[true|false]");
+        publishDescription(getContract().INTENT_STACK_CURRENT_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().INTENT_STACK_VOLTAGE_CALLBACK_PERIOD, "[" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_STACK_VOLTAGE_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().INTENT_USB_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getContract().EVENT_RESET, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_STACK_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_STACK_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_RESET, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_STACK_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_STACK_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
 
-        addDescription(getContract().EVENT_USB_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_USB_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_USB_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_USB_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
 
-        addDescription(getContract().EVENT_STACK_CURRENT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_STACK_CURRENT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_STACK_CURRENT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_STACK_CURRENT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
 
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_STACK_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_STATUS_LED_ENABLED, "[true|false]");
-        addDescription(getContract().STATUS_CURRENT_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, "[" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_STACK_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_STATUS_LED_ENABLED, "[true|false]");
+        publishDescription(getContract().STATUS_CURRENT_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, "[" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
 
-        addDescription(getContract().STATUS_USB_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_USB_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
     }
 
@@ -128,77 +128,77 @@ public class MasterService extends AbstractDeviceService<MasterDevice, MasterSer
 
     @Override
     public void debouncePeriodChanged(Long debouncePeriod) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, debouncePeriod);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, debouncePeriod);
     }
 
     @Override
     public void stackCurrentCallbackThresholdChanged(StackCurrentCallbackThreshold stackCurrentCallbackThreshold) {
-        addStatus(getContract().STATUS_CURRENT_CALLBACK_THRESHOLD, stackCurrentCallbackThreshold);
+        publishStatus(getContract().STATUS_CURRENT_CALLBACK_THRESHOLD, stackCurrentCallbackThreshold);
     }
 
     @Override
     public void stackCurrentCallbackPeriodChanged(Long currentCallbackPeriod) {
-        addStatus(getContract().STATUS_STACK_CURRENT_CALLBACK_PERIOD, currentCallbackPeriod);
+        publishStatus(getContract().STATUS_STACK_CURRENT_CALLBACK_PERIOD, currentCallbackPeriod);
     }
 
     @Override
     public void stackVoltageCallbackPeriodChanged(long voltageCallbackPeriod) {
-        addStatus(getContract().STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, voltageCallbackPeriod);
+        publishStatus(getContract().STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, voltageCallbackPeriod);
     }
 
     @Override
     public void stackVoltageCallbackThresholdChanged(StackVoltageCallbackThreshold voltageCallbackThreshold) {
-        addStatus(getContract().STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, voltageCallbackThreshold);
+        publishStatus(getContract().STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, voltageCallbackThreshold);
     }
 
     @Override
     public void usbVoltageCallbackPeriodChanged(long usbVoltageCallbackPeriod) {
-        addStatus(getContract().STATUS_USB_VOLTAGE_CALLBACK_PERIOD, usbVoltageCallbackPeriod);
+        publishStatus(getContract().STATUS_USB_VOLTAGE_CALLBACK_PERIOD, usbVoltageCallbackPeriod);
     }
 
     @Override
     public void USBVoltageCallbackThresholdChanged(USBVoltageCallbackThreshold usbVoltageCallbackThreshold) {
-        addStatus(getContract().STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD, usbVoltageCallbackThreshold);
+        publishStatus(getContract().STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD, usbVoltageCallbackThreshold);
     }
 
     @Override
     public void reset() {
-        addEvent(getContract().EVENT_RESET, System.currentTimeMillis());
+        publishEvent(getContract().EVENT_RESET, System.currentTimeMillis());
     }
 
     @Override
     public void statusLEDEnabledChanged(Boolean statusLEDEnabled) {
-        addStatus(getContract().STATUS_LED_ENABLED, statusLEDEnabled);
+        publishStatus(getContract().STATUS_LED_ENABLED, statusLEDEnabled);
     }
 
     @Override
     public void stackCurrent(int i) {
-        addEvent(getContract().EVENT_STACK_CURRENT, i);
+        publishEvent(getContract().EVENT_STACK_CURRENT, i);
     }
 
     @Override
     public void stackCurrentReached(int i) {
-        addEvent(getContract().EVENT_STACK_CURRENT_REACHED, i);
+        publishEvent(getContract().EVENT_STACK_CURRENT_REACHED, i);
     }
 
     @Override
     public void stackVoltage(int i) {
-        addEvent(getContract().EVENT_STACK_VOLTAGE, i);
+        publishEvent(getContract().EVENT_STACK_VOLTAGE, i);
     }
 
     @Override
     public void stackVoltageReached(int i) {
-        addEvent(getContract().EVENT_STACK_VOLTAGE_REACHED, i);
+        publishEvent(getContract().EVENT_STACK_VOLTAGE_REACHED, i);
     }
 
     @Override
     public void usbVoltage(int i) {
-        addEvent(getContract().EVENT_USB_VOLTAGE, i);
+        publishEvent(getContract().EVENT_USB_VOLTAGE, i);
     }
 
     @Override
     public void usbVoltageReached(int i) {
-        addEvent(getContract().EVENT_USB_VOLTAGE_REACHED, i);
+        publishEvent(getContract().EVENT_USB_VOLTAGE_REACHED, i);
     }
 
 }

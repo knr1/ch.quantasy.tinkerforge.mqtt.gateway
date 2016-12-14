@@ -70,7 +70,7 @@ public class DescriberAgent implements MessageReceiver {
     
     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
         for (TinkerforgeStackAddress address : addresses) {
-            gatewayClient.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
+            gatewayClient.publishIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
         }
     }
 

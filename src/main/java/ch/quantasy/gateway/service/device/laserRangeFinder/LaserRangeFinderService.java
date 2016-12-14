@@ -60,27 +60,27 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
 
     public LaserRangeFinderService(LaserRangeFinderDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LaserRangeFinderServiceContract(device));
-        addDescription(getContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
-        addDescription(getContract().INTENT_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..127]\n max: [-127..127]");
-        addDescription(getContract().INTENT_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
-        addDescription(getContract().INTENT_LASER, "[true|false]");
-        addDescription(getContract().INTENT_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
+        publishDescription(getContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
+        publishDescription(getContract().INTENT_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..127]\n max: [-127..127]");
+        publishDescription(getContract().INTENT_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
+        publishDescription(getContract().INTENT_LASER, "[true|false]");
+        publishDescription(getContract().INTENT_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
 
-        addDescription(getContract().EVENT_DISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4000]\n");
-        addDescription(getContract().EVENT_VELOCITY, "timestamp: [-127.." + Long.MAX_VALUE + "]\n value: [0..127]\n");
-        addDescription(getContract().EVENT_DISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4000]\n");
-        addDescription(getContract().EVENT_VELOCITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-127..127]\n");
-        addDescription(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
-        addDescription(getContract().STATUS_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..-127]\n max: [-127..127]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
-        addDescription(getContract().STATUS_LASER, "[true|false]");
-        addDescription(getContract().STATUS_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
+        publishDescription(getContract().EVENT_DISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4000]\n");
+        publishDescription(getContract().EVENT_VELOCITY, "timestamp: [-127.." + Long.MAX_VALUE + "]\n value: [0..127]\n");
+        publishDescription(getContract().EVENT_DISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4000]\n");
+        publishDescription(getContract().EVENT_VELOCITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-127..127]\n");
+        publishDescription(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
+        publishDescription(getContract().STATUS_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..-127]\n max: [-127..127]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
+        publishDescription(getContract().STATUS_LASER, "[true|false]");
+        publishDescription(getContract().STATUS_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
 
     }
 
@@ -123,62 +123,62 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
 
     @Override
     public void distance(int i) {
-        addEvent(getContract().EVENT_DISTANCE, i);
+        publishEvent(getContract().EVENT_DISTANCE, i);
     }
 
     @Override
     public void distanceReached(int i) {
-        addEvent(getContract().EVENT_DISTANCE_REACHED, i);
+        publishEvent(getContract().EVENT_DISTANCE_REACHED, i);
     }
 
     @Override
     public void velocity(short i) {
-        addEvent(getContract().EVENT_VELOCITY, i);
+        publishEvent(getContract().EVENT_VELOCITY, i);
     }
 
     @Override
     public void velocityReached(short i) {
-        addEvent(getContract().EVENT_VELOCITY_REACHED, i);
+        publishEvent(getContract().EVENT_VELOCITY_REACHED, i);
     }
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void velocityCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_DISTANCE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, threshold);
     }
 
     @Override
     public void velocityCallbackThresholdChanged(DeviceVelocityCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_VELOCITY_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_VELOCITY_THRESHOLD, threshold);
     }
 
     @Override
     public void laserStatusChanged(boolean laserEnabled) {
-        addStatus(getContract().STATUS_LASER, laserEnabled);
+        publishStatus(getContract().STATUS_LASER, laserEnabled);
     }
 
     @Override
     public void movingAverageChanged(DeviceAveraging averaging) {
-        addStatus(getContract().STATUS_MOVING_AVERAGE, averaging);
+        publishStatus(getContract().STATUS_MOVING_AVERAGE, averaging);
     }
 
     @Override
     public void deviceModeChanged(DeviceMode deviceMode) {
-        addStatus(getContract().STATUS_DEVICE_MODE, deviceMode);
+        publishStatus(getContract().STATUS_DEVICE_MODE, deviceMode);
     }
     
 }

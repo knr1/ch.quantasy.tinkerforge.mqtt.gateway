@@ -58,21 +58,21 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
     public GPSService(GPSDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new GPSServiceContract(device));
-        addDescription(getContract().INTENT_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getContract().INTENT_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getContract().EVENT_ALTITUDE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   altitude: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   geoidalSeparation: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  date: [[d|dd]mmyy]\n   time: [hhmmssxxx]");
-        addDescription(getContract().EVENT_MOTION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  course: [0..36000]\n   speed: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  fix: [1|2|3]]\n   satellitesView: [0.." + Short.MAX_VALUE + "]\n   satellitesUsed: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_COORDINATES, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  latitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n   ns: ['N'|'S']\n   longitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n ew: ['E'|'W']\n pdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n hdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   vdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   epe: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
+        publishDescription(getContract().EVENT_ALTITUDE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   altitude: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   geoidalSeparation: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  date: [[d|dd]mmyy]\n   time: [hhmmssxxx]");
+        publishDescription(getContract().EVENT_MOTION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  course: [0..36000]\n   speed: [0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  fix: [1|2|3]]\n   satellitesView: [0.." + Short.MAX_VALUE + "]\n   satellitesUsed: [0.." + Short.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_COORDINATES, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  latitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n   ns: ['N'|'S']\n   longitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n ew: ['E'|'W']\n pdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n hdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   vdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   epe: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
     }
 
     @Override
@@ -113,52 +113,52 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
 
     @Override
     public void altitudeCallbackPeriodChanged(long period) {
-        super.addStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, period);
+        super.publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void coordinatesCallbackPeriodChanged(Long coordinatesCallbackPeriod) {
-        super.addStatus(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, coordinatesCallbackPeriod);
+        super.publishStatus(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, coordinatesCallbackPeriod);
     }
 
     @Override
     public void dateTimeCallbackPeriodChanged(Long dateTimeCallbackPeriod) {
-        super.addStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, dateTimeCallbackPeriod);
+        super.publishStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, dateTimeCallbackPeriod);
     }
 
     @Override
     public void motionCallbackPeriodChanged(Long motionCallbackPeriod) {
-        super.addStatus(getContract().STATUS_MOTION_CALLBACK_PERIOD, motionCallbackPeriod);
+        super.publishStatus(getContract().STATUS_MOTION_CALLBACK_PERIOD, motionCallbackPeriod);
     }
 
     @Override
     public void statusCallbackPeriodChanged(Long statusCallbackPeriod) {
-        super.addStatus(getContract().STATUS_STATE_CALLBACK_PERIOD, statusCallbackPeriod);
+        super.publishStatus(getContract().STATUS_STATE_CALLBACK_PERIOD, statusCallbackPeriod);
     }
 
     @Override
     public void altitude(int altitude, int geoidalSeparation) {
-        super.addEvent(getContract().EVENT_ALTITUDE, new AltitudeEvent(altitude, geoidalSeparation));
+        super.publishEvent(getContract().EVENT_ALTITUDE, new AltitudeEvent(altitude, geoidalSeparation));
     }
 
     @Override
     public void coordinates(long latitude, char ns, long longitude, char ew, int pdop, int hdop, int vdop, int epe) {
-        super.addEvent(getContract().EVENT_COORDINATES, new Coordinates(latitude, ns, longitude, ew, pdop, hdop, vdop, epe));
+        super.publishEvent(getContract().EVENT_COORDINATES, new Coordinates(latitude, ns, longitude, ew, pdop, hdop, vdop, epe));
     }
 
     @Override
     public void dateTime(long date, long time) {
-        super.addEvent(getContract().EVENT_DATE_TIME, new DateTime(date, time));
+        super.publishEvent(getContract().EVENT_DATE_TIME, new DateTime(date, time));
     }
 
     @Override
     public void motion(long course, long speed) {
-        super.addEvent(getContract().EVENT_MOTION, new MotionEvent(course, speed));
+        super.publishEvent(getContract().EVENT_MOTION, new MotionEvent(course, speed));
     }
 
     @Override
     public void status(short fix, short satellitesView, short satellitesUsed) {
-        super.addEvent(getContract().EVENT_STATE, new StatusEvent(fix, satellitesView, satellitesUsed));
+        super.publishEvent(getContract().EVENT_STATE, new StatusEvent(fix, satellitesView, satellitesUsed));
     }
 
     public static class StatusEvent {

@@ -135,7 +135,7 @@ public class MotionLightAgent implements MessageReceiver {
         this.state = state;
         SwitchSocketCParameters config = new SwitchSocketCParameters('D', (short) 3, state);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
-        gatewayClient.addIntent(topic, config);
+        gatewayClient.publishIntent(topic, config);
         System.out.println("Switching: " + state);
     }
 

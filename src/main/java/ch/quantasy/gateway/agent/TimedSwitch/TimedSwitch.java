@@ -113,14 +113,14 @@ public class TimedSwitch implements MessageReceiver{
         this.state = state;
         SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 2, state);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
-        gatewayClient.addIntent(topic, config);
+        gatewayClient.publishIntent(topic, config);
         System.out.println("Switching: " + state);
     }
     
     private void switchAlwaysOn() { 
         SwitchSocketCParameters config = new SwitchSocketCParameters('L', (short) 1, SwitchSocketCParameters.SwitchTo.switchOn);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
-        gatewayClient.addIntent(topic, config);
+        gatewayClient.publishIntent(topic, config);
     }
 
     public static void main(String[] args) throws Throwable {

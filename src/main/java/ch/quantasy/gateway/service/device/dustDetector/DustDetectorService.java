@@ -58,18 +58,18 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
     public DustDetectorService(DustDetectorDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new DustDetectorServiceContract(device));
-        addDescription(getContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_MOVING_AVERAGE, "[0..100]");
+        publishDescription(getContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_MOVING_AVERAGE, "[0..100]");
 
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
 
-        addDescription(getContract().EVENT_DUST_DENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
-        addDescription(getContract().EVENT_DUST_DENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
-        addDescription(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_MOVING_AVERAGE, "[0..100]");
+        publishDescription(getContract().EVENT_DUST_DENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
+        publishDescription(getContract().EVENT_DUST_DENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
+        publishDescription(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_MOVING_AVERAGE, "[0..100]");
 
     }
 
@@ -102,32 +102,32 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void movingAverageChanged(short movingAverage) {
-        addStatus(getContract().STATUS_MOVING_AVERAGE, movingAverage);
+        publishStatus(getContract().STATUS_MOVING_AVERAGE, movingAverage);
     }
 
     @Override
     public void dustDensityCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void dustDensityCallbackThresholdChanged(DeviceDustDensityCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_DUST_DENSITY_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_DUST_DENSITY_THRESHOLD, threshold);
     }
 
     @Override
     public void dustDensity(int i) {
-        addEvent(getContract().EVENT_DUST_DENSITY, i);
+        publishEvent(getContract().EVENT_DUST_DENSITY, i);
     }
 
     @Override
     public void dustDensityReached(int i) {
-        addEvent(getContract().EVENT_DUST_DENSITY_REACHED, i);
+        publishEvent(getContract().EVENT_DUST_DENSITY_REACHED, i);
     }
 
     

@@ -59,17 +59,17 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
     public AmbientLightV2Service(AmbientLightV2Device device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new AmbientLightV2ServiceContract(device));
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
-        addDescription(getContract().INTENT_CONFIGURATION, "illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]\n integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]\n");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
+        publishDescription(getContract().INTENT_CONFIGURATION, "illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]\n integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]\n");
 
-        addDescription(getContract().EVENT_IllUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..100000]\n");
-        addDescription(getContract().EVENT_ILLUMINANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..100000]\n");
-        addDescription(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_CONFIGURATION, "illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]\n integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]\n");
+        publishDescription(getContract().EVENT_IllUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..100000]\n");
+        publishDescription(getContract().EVENT_ILLUMINANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..100000]\n");
+        publishDescription(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_CONFIGURATION, "illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]\n integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]\n");
     }
 
     @Override
@@ -101,32 +101,32 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, threshold);
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        addStatus(getContract().STATUS_CONFIGURATION, configuration);
+        publishStatus(getContract().STATUS_CONFIGURATION, configuration);
     }
 
     @Override
     public void illuminance(long i) {
-        addEvent(getContract().EVENT_IllUMINANCE, i);
+        publishEvent(getContract().EVENT_IllUMINANCE, i);
     }
 
     @Override
     public void illuminanceReached(long i) {
-        addEvent(getContract().EVENT_ILLUMINANCE_REACHED, i);
+        publishEvent(getContract().EVENT_ILLUMINANCE_REACHED, i);
     }
 
     

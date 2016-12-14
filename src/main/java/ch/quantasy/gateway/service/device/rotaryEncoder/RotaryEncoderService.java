@@ -58,18 +58,18 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     public RotaryEncoderService(RotaryEncoderDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new RotaryEncoderServiceContract(device));
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
-        addDescription(getContract().EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]\n value: true");
-        addDescription(getContract().EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]\n value: true");
-        addDescription(getContract().EVENT_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [" + Long.MIN_VALUE + "0.." + Long.MAX_VALUE + "]\n");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
+        publishDescription(getContract().EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().EVENT_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [" + Long.MIN_VALUE + "0.." + Long.MAX_VALUE + "]\n");
 
-        addDescription(getContract().EVENT_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
-        addDescription(getContract().EVENT_COUNT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-150..150]\n");
-        addDescription(getContract().STATUS_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
+        publishDescription(getContract().EVENT_COUNT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-150..150]\n");
+        publishDescription(getContract().STATUS_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 
     @Override
@@ -100,43 +100,43 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     @Override
     public void count(int i) {
-        addEvent(getContract().EVENT_COUNT, i);
+        publishEvent(getContract().EVENT_COUNT, i);
     }
 
     @Override
     public void countReached(int i) {
-        addEvent(getContract().EVENT_COUNT_REACHED,i);
+        publishEvent(getContract().EVENT_COUNT_REACHED,i);
     }
 
     @Override
     public void countCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_COUNT_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_COUNT_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void countCallbackThresholdChanged(DeviceCountCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_COUNT_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_COUNT_THRESHOLD, threshold);
 
     }
 
     @Override
     public void countReset(long latestCount) {
-        addEvent(getContract().EVENT_COUNT_RESET, latestCount);
+        publishEvent(getContract().EVENT_COUNT_RESET, latestCount);
     }
 
     @Override
     public void pressed() {
-        addEvent(getContract().EVENT_PRESSED, true);
+        publishEvent(getContract().EVENT_PRESSED, true);
     }
 
     @Override
     public void released() {
-        addEvent(getContract().EVENT_RELEASED, true);
+        publishEvent(getContract().EVENT_RELEASED, true);
     }
 
     

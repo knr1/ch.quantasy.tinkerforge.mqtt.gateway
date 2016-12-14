@@ -60,13 +60,13 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
     public Segment4x7Service(Segment4x7Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new Segment4x7ServiceContract(device));
 
-        addDescription(getContract().INTENT_COUNTER, "from: [-999..9999]\n to: [-999..9999]\n increment: [-999..9999]\n lenght: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
+        publishDescription(getContract().INTENT_COUNTER, "from: [-999..9999]\n to: [-999..9999]\n increment: [-999..9999]\n lenght: [0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
 
-        addDescription(getContract().EVENT_COUNTER_STARTED, "[0.." + Long.MAX_VALUE + "]\n value: true");
-        addDescription(getContract().EVENT_COUNTER_FINISHED, "[0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().EVENT_COUNTER_STARTED, "[0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().EVENT_COUNTER_FINISHED, "[0.." + Long.MAX_VALUE + "]\n value: true");
 
-        addDescription(getContract().STATUS_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
+        publishDescription(getContract().STATUS_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
 
     }
 
@@ -87,17 +87,17 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
 
     @Override
     public void counterStarted(DeviceCounterParameters counterParameters) {
-        addEvent(getContract().EVENT_COUNTER_STARTED,true);
+        publishEvent(getContract().EVENT_COUNTER_STARTED,true);
     }
 
     @Override
     public void segmentsChanged(DeviceSegments segments) {
-        addStatus(getContract().STATUS_SEGMENTS, segments);
+        publishStatus(getContract().STATUS_SEGMENTS, segments);
     }
 
     @Override
     public void counterFinished() {
-        addEvent(getContract().EVENT_COUNTER_FINISHED, true);
+        publishEvent(getContract().EVENT_COUNTER_FINISHED, true);
     }
 
 }

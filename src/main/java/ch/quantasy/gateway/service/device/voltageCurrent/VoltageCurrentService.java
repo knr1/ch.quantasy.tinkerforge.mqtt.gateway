@@ -61,33 +61,33 @@ public class VoltageCurrentService extends AbstractDeviceService<VoltageCurrentD
 
         super(mqttURI, device, new VoltageCurrentServiceContract(device));
 
-        addDescription(getContract().INTENT_CALIBRATION, "gainMultiplier: [1.."+Integer.MAX_VALUE+"]\n gainDivisor: [1.."+Integer.MAX_VALUE+"]");
-        addDescription(getContract().STATUS_CALIBRATION, "gainMultiplier: [1.."+Integer.MAX_VALUE+"]\n gainDivisor: [1.."+Integer.MAX_VALUE+"]");
+        publishDescription(getContract().INTENT_CALIBRATION, "gainMultiplier: [1.."+Integer.MAX_VALUE+"]\n gainDivisor: [1.."+Integer.MAX_VALUE+"]");
+        publishDescription(getContract().STATUS_CALIBRATION, "gainMultiplier: [1.."+Integer.MAX_VALUE+"]\n gainDivisor: [1.."+Integer.MAX_VALUE+"]");
 
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
-        addDescription(getContract().INTENT_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_CURRENT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..36000]\n max: [0..36000]");
-        addDescription(getContract().INTENT_POWER_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_POWER_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..720000]\n max: [0..720000]");
-        addDescription(getContract().INTENT_CONFIGURATION, "averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]\n"
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
+        publishDescription(getContract().INTENT_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_CURRENT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..36000]\n max: [0..36000]");
+        publishDescription(getContract().INTENT_POWER_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_POWER_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..720000]\n max: [0..720000]");
+        publishDescription(getContract().INTENT_CONFIGURATION, "averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]\n"
                 + " voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n"
                 + " currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n");
-        addDescription(getContract().EVENT_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]\n");
-        addDescription(getContract().EVENT_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]");
-        addDescription(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
-        addDescription(getContract().EVENT_CURRENT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..36000]\n");
-        addDescription(getContract().EVENT_CURRENT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..36000]");
-        addDescription(getContract().STATUS_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_CURRENT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..36000]\n max: [0..36000]");
-        addDescription(getContract().EVENT_POWER, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..720000]\n");
-        addDescription(getContract().EVENT_POWER_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..720000]");
-        addDescription(getContract().STATUS_POWER_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_POWER_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..720000]\n max: [0..720000]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_CONFIGURATION, "averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]\n"
+        publishDescription(getContract().EVENT_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]\n");
+        publishDescription(getContract().EVENT_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]");
+        publishDescription(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
+        publishDescription(getContract().EVENT_CURRENT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..36000]\n");
+        publishDescription(getContract().EVENT_CURRENT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..36000]");
+        publishDescription(getContract().STATUS_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_CURRENT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..36000]\n max: [0..36000]");
+        publishDescription(getContract().EVENT_POWER, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..720000]\n");
+        publishDescription(getContract().EVENT_POWER_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..720000]");
+        publishDescription(getContract().STATUS_POWER_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_POWER_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..720000]\n max: [0..720000]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_CONFIGURATION, "averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]\n"
                 + " voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n"
                 + " currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n");
         
@@ -150,77 +150,77 @@ public class VoltageCurrentService extends AbstractDeviceService<VoltageCurrentD
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        addStatus(getContract().STATUS_CONFIGURATION, configuration);
+        publishStatus(getContract().STATUS_CONFIGURATION, configuration);
     }
 
     @Override
     public void currentCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_CURRENT_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_CURRENT_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void currentCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_CURRENT_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_CURRENT_THRESHOLD, threshold);
     }
 
     @Override
     public void calibrationChanged(DeviceCalibration calibration) {
-        addStatus(getContract().STATUS_CALIBRATION, calibration);
+        publishStatus(getContract().STATUS_CALIBRATION, calibration);
     }
 
     @Override
     public void voltageCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold voltageThreshold) {
-        addStatus(getContract().STATUS_VOLTAGE_THRESHOLD, voltageThreshold);
+        publishStatus(getContract().STATUS_VOLTAGE_THRESHOLD, voltageThreshold);
     }
 
     @Override
     public void voltageCallbackPeriodChanged(long voltageCallbackPeriod) {
-        addStatus(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, voltageCallbackPeriod);
+        publishStatus(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, voltageCallbackPeriod);
     }
 
     @Override
     public void powerCallbackPeriodChanged(long powerCallbackPeriod) {
-        addStatus(getContract().STATUS_POWER_CALLBACK_PERIOD, powerCallbackPeriod);
+        publishStatus(getContract().STATUS_POWER_CALLBACK_PERIOD, powerCallbackPeriod);
     }
 
     @Override
     public void powerCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold powerThreshold) {
-        addStatus(getContract().STATUS_POWER_THRESHOLD, powerThreshold);
+        publishStatus(getContract().STATUS_POWER_THRESHOLD, powerThreshold);
     }
 
     @Override
     public void current(int i) {
-        addEvent(getContract().EVENT_CURRENT, i);
+        publishEvent(getContract().EVENT_CURRENT, i);
     }
 
     @Override
     public void currentReached(int i) {
-        addEvent(getContract().EVENT_CURRENT_REACHED, i);
+        publishEvent(getContract().EVENT_CURRENT_REACHED, i);
     }
 
     @Override
     public void power(int i) {
-        addEvent(getContract().EVENT_POWER, i);
+        publishEvent(getContract().EVENT_POWER, i);
     }
 
     @Override
     public void powerReached(int i) {
-        addEvent(getContract().EVENT_POWER_REACHED, i);
+        publishEvent(getContract().EVENT_POWER_REACHED, i);
     }
 
     @Override
     public void voltage(int i) {
-        addEvent(getContract().EVENT_VOLTAGE, i);
+        publishEvent(getContract().EVENT_VOLTAGE, i);
     }
 
     @Override
     public void voltageReached(int i) {
-        addEvent(getContract().EVENT_VOLTAGE_REACHED, i);
+        publishEvent(getContract().EVENT_VOLTAGE_REACHED, i);
     }
 
 }

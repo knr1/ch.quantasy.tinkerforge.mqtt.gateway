@@ -62,15 +62,15 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
     public RemoteSwitchService(RemoteSwitchDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new RemoteSwitchServiceContract(device));
 
-        addDescription(getContract().INTENT_REPEATS, "[0.." + Short.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_REPEATS, "[0.." + Short.MAX_VALUE + "]");
 
-        addDescription(getContract().INTENT_SWITCH_SOCKET_A, "houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [switchOn|switchOff]");
-        addDescription(getContract().INTENT_SWITCH_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n switchingValue: [switchOn|switchOff]");
-        addDescription(getContract().INTENT_SWITCH_SOCKET_C, "systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [switchOn|switchOff]");
-        addDescription(getContract().INTENT_DIM_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]");
+        publishDescription(getContract().INTENT_SWITCH_SOCKET_A, "houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [switchOn|switchOff]");
+        publishDescription(getContract().INTENT_SWITCH_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n switchingValue: [switchOn|switchOff]");
+        publishDescription(getContract().INTENT_SWITCH_SOCKET_C, "systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [switchOn|switchOff]");
+        publishDescription(getContract().INTENT_DIM_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]");
 
-        addDescription(getContract().EVENT_SWITCHING_DONE, "[0.." + Long.MAX_VALUE + "]\n value: [houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n switchingValue: [ON|OFF] | systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]]");
-        addDescription(getContract().STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_SWITCHING_DONE, "[0.." + Long.MAX_VALUE + "]\n value: [houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n switchingValue: [ON|OFF] | systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]]");
+        publishDescription(getContract().STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
 
     }
 
@@ -102,12 +102,12 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
 
     @Override
     public void repeatsChanged(short period) {
-        addStatus(getContract().STATUS_REPEATS, period);
+        publishStatus(getContract().STATUS_REPEATS, period);
     }
 
     @Override
     public void switchingDone(SocketParameters socketParameters) {
-        addEvent(getContract().EVENT_SWITCHING_DONE, socketParameters);
+        publishEvent(getContract().EVENT_SWITCHING_DONE, socketParameters);
     }
 
 }

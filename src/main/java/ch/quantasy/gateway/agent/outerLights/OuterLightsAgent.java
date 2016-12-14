@@ -99,11 +99,11 @@ public class OuterLightsAgent {
 
         connectRemoteServices("controller01", "localhost");
 
-        gatewayClient.addIntent(linearPotiServiceContract.INTENT_POSITION_CALLBACK_PERIOD, 100);
-        gatewayClient.addIntent(dcServiceContract.INTENT_ACCELERATION, 10000);
-        gatewayClient.addIntent(dcServiceContract.INTENT_DRIVER_MODE, 1);
-        gatewayClient.addIntent(dcServiceContract.INTENT_PWM_FREQUENCY, 20000);
-        gatewayClient.addIntent(dcServiceContract.INTENT_ENABLED, true);
+        gatewayClient.publishIntent(linearPotiServiceContract.INTENT_POSITION_CALLBACK_PERIOD, 100);
+        gatewayClient.publishIntent(dcServiceContract.INTENT_ACCELERATION, 10000);
+        gatewayClient.publishIntent(dcServiceContract.INTENT_DRIVER_MODE, 1);
+        gatewayClient.publishIntent(dcServiceContract.INTENT_PWM_FREQUENCY, 20000);
+        gatewayClient.publishIntent(dcServiceContract.INTENT_ENABLED, true);
 
         gatewayClient.subscribe(linearPotiServiceContract.EVENT_POSITION, new MessageReceiver() {
             @Override
@@ -128,8 +128,8 @@ public class OuterLightsAgent {
             });
         }
         for (AmbientLightServiceContract ambientLightServiceContract : ambientLightServiceContracts) {
-            gatewayClient.addIntent(ambientLightServiceContract.INTENT_DEBOUNCE_PERIOD, 5000);
-            gatewayClient.addIntent(ambientLightServiceContract.INTENT_ILLUMINANCE_THRESHOLD, new DeviceIlluminanceCallbackThreshold('o', 20, 100));
+            gatewayClient.publishIntent(ambientLightServiceContract.INTENT_DEBOUNCE_PERIOD, 5000);
+            gatewayClient.publishIntent(ambientLightServiceContract.INTENT_ILLUMINANCE_THRESHOLD, new DeviceIlluminanceCallbackThreshold('o', 20, 100));
             gatewayClient.subscribe(ambientLightServiceContract.EVENT_ILLUMINANCE_REACHED, new MessageReceiver() {
                 @Override
                 public void messageReceived(String topic, byte[] payload) throws Exception {
@@ -148,7 +148,7 @@ public class OuterLightsAgent {
 
     private void connectRemoteServices(String... addresses) {
         for (String address : addresses) {
-            gatewayClient.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
+            gatewayClient.publishIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
             try {
                 //Bad idea! Better wait for the event of the managerService... having accepted the stack(s).
                 Thread.sleep(1000);
@@ -188,11 +188,11 @@ public class OuterLightsAgent {
                         } catch (InterruptedException ex) {
                         }
                     }
-                    gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * powerInPercent);
+                    gatewayClient.publishIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * powerInPercent);
                     while (delayUntil > System.currentTimeMillis()) {
                         if (currentPowerInPercent != powerInPercent) {
                             currentPowerInPercent = powerInPercent;
-                            gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * currentPowerInPercent);
+                            gatewayClient.publishIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * currentPowerInPercent);
                         }
                         long delay = delayUntil - System.currentTimeMillis();
                         try {
@@ -200,7 +200,7 @@ public class OuterLightsAgent {
                         } catch (InterruptedException ex) {
                         }
                     }
-                    gatewayClient.addIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * 0);
+                    gatewayClient.publishIntent(dcServiceContract.INTENT_VELOCITY_VELOCITY, (32767 / 100) * 0);
                 }
             }
         }

@@ -114,7 +114,7 @@ public class XMasLEDLightAgent01 {
 
     private void connectRemoteServices(TinkerforgeStackAddress... addresses) {
         for (TinkerforgeStackAddress address : addresses) {
-            gatewayClient.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
+            gatewayClient.publishIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, address);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {

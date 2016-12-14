@@ -57,15 +57,15 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
 
     public MultiTouchService(MultiTouchDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new MultiTouchServiceContract(device));
-        addDescription(getContract().INTENT_ELECTRODE_CONFIG, "[0..8191]");
-        addDescription(getContract().INTENT_ELECTRODE_SENSITIVITY, "[0..8191]");
-        addDescription(getContract().INTENT_RECALIBRATE, "[true|false]");
+        publishDescription(getContract().INTENT_ELECTRODE_CONFIG, "[0..8191]");
+        publishDescription(getContract().INTENT_ELECTRODE_SENSITIVITY, "[0..8191]");
+        publishDescription(getContract().INTENT_RECALIBRATE, "[true|false]");
 
-        addDescription(getContract().EVENT_TOUCH_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..8191]\n");
-        addDescription(getContract().EVENT_RECALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().EVENT_TOUCH_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..8191]\n");
+        publishDescription(getContract().EVENT_RECALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
 
-        addDescription(getContract().STATUS_ELECTRODE_SENSITIVITY, "[5..201]");
-        addDescription(getContract().STATUS_ELECTRODE_CONFIG, "[0..8191]");
+        publishDescription(getContract().STATUS_ELECTRODE_SENSITIVITY, "[5..201]");
+        publishDescription(getContract().STATUS_ELECTRODE_CONFIG, "[0..8191]");
     }
 
     @Override
@@ -88,22 +88,22 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
 
     @Override
     public void electrodeConfigChanged(Integer electrodeConfig) {
-        addStatus(getContract().STATUS_ELECTRODE_CONFIG, electrodeConfig);
+        publishStatus(getContract().STATUS_ELECTRODE_CONFIG, electrodeConfig);
     }
 
     @Override
     public void electrodeSensitivityChanged(Short electrodeSensitivity) {
-        addStatus(getContract().STATUS_ELECTRODE_SENSITIVITY, electrodeSensitivity);
+        publishStatus(getContract().STATUS_ELECTRODE_SENSITIVITY, electrodeSensitivity);
     }
 
     @Override
     public void recalibrated() {
-        addEvent(getContract().EVENT_RECALIBRATED, true);
+        publishEvent(getContract().EVENT_RECALIBRATED, true);
     }
 
     @Override
     public void touchState(int i) {
-        addEvent(getContract().EVENT_TOUCH_STATE, i);
+        publishEvent(getContract().EVENT_TOUCH_STATE, i);
     }
 
 }

@@ -56,26 +56,26 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     public DCService(DCDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DCServiceContract(device));
-        addDescription(getContract().INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DRIVER_MODE, "[0|1]");
-        addDescription(getContract().INTENT_ENABLED, "[true|false]");
-        addDescription(getContract().INTENT_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_PWM_FREQUENCY, "[1..20000]");
-        addDescription(getContract().INTENT_VELOCITY_VELOCITY, "-32767..32767");
-        addDescription(getContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DRIVER_MODE, "[0|1]");
+        publishDescription(getContract().INTENT_ENABLED, "[true|false]");
+        publishDescription(getContract().INTENT_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_PWM_FREQUENCY, "[1..20000]");
+        publishDescription(getContract().INTENT_VELOCITY_VELOCITY, "-32767..32767");
+        publishDescription(getContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
 
-        addDescription(getContract().EVENT_FULL_BRAKE, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_EMERGENCY_SHUTDOWN, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_FULL_BRAKE, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_EMERGENCY_SHUTDOWN, "[0.." + Long.MAX_VALUE + "]");
 
-        addDescription(getContract().STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_DRIVER_MODE, "[0|1]");
-        addDescription(getContract().STATUS_ENABLED, "[true|false]");
-        addDescription(getContract().STATUS_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_PWM_FREQUENCY, "[1..20000]");
-        addDescription(getContract().STATUS_VELOCITY_VELOCITY, "-32767..32767");
-        addDescription(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_DRIVER_MODE, "[0|1]");
+        publishDescription(getContract().STATUS_ENABLED, "[true|false]");
+        publishDescription(getContract().STATUS_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_PWM_FREQUENCY, "[1..20000]");
+        publishDescription(getContract().STATUS_VELOCITY_VELOCITY, "-32767..32767");
+        publishDescription(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
 
     }
 
@@ -115,63 +115,63 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void PWMFrequencyChanged(Integer pwmFrequency) {
-        addStatus(getContract().STATUS_PWM_FREQUENCY, pwmFrequency);
+        publishStatus(getContract().STATUS_PWM_FREQUENCY, pwmFrequency);
     }
 
     @Override
     public void accelerationChanged(Integer acceleration) {
-        addStatus(getContract().STATUS_ACCELERATION, acceleration);
+        publishStatus(getContract().STATUS_ACCELERATION, acceleration);
     }
 
     @Override
     public void driveModeChanged(Short driverMode) {
-        addStatus(getContract().STATUS_DRIVER_MODE, driverMode);
+        publishStatus(getContract().STATUS_DRIVER_MODE, driverMode);
     }
 
     @Override
     public void minimumVoltageChanged(Integer minimumVoltage) {
-        addStatus(getContract().STATUS_MINIMUM_VOLTAGE, minimumVoltage);
+        publishStatus(getContract().STATUS_MINIMUM_VOLTAGE, minimumVoltage);
 
     }
 
     @Override
     public void velocityPeriodChanged(Integer velocityPeriod) {
-        addStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, velocityPeriod);
+        publishStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, velocityPeriod);
     }
 
     @Override
     public void velocityChanged(Short velocity) {
-        addStatus(getContract().STATUS_VELOCITY_VELOCITY, velocity);
+        publishStatus(getContract().STATUS_VELOCITY_VELOCITY, velocity);
     }
 
     @Override
     public void currentVelocity(short s) {
-        addEvent(getContract().EVENT_VELOCITY, s);
+        publishEvent(getContract().EVENT_VELOCITY, s);
     }
 
     @Override
     public void emergencyShutdown() {
-        addEvent(getContract().EVENT_EMERGENCY_SHUTDOWN, System.currentTimeMillis());
+        publishEvent(getContract().EVENT_EMERGENCY_SHUTDOWN, System.currentTimeMillis());
     }
 
     @Override
     public void underVoltage(int i) {
-        addEvent(getContract().EVENT_UNDERVOLTAGE, i);
+        publishEvent(getContract().EVENT_UNDERVOLTAGE, i);
     }
 
     @Override
     public void velocityReached(short s) {
-        addEvent(getContract().EVENT_VELOCITY_REACHED, s);
+        publishEvent(getContract().EVENT_VELOCITY_REACHED, s);
     }
 
     @Override
     public void enabledChanged(Boolean isEnabled) {
-        addStatus(getContract().STATUS_ENABLED, isEnabled);
+        publishStatus(getContract().STATUS_ENABLED, isEnabled);
     }
 
     @Override
     public void fullBrake() {
-        addEvent(getContract().EVENT_FULL_BRAKE, System.currentTimeMillis());
+        publishEvent(getContract().EVENT_FULL_BRAKE, System.currentTimeMillis());
     }
 
     

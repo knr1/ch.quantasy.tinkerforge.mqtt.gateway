@@ -58,20 +58,20 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
 
     public DistanceIRService(DistanceIRDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DistanceIRServiceContract(device));
-        addDescription(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [[40..300]|[100..800]|[200..1500]]\n max: [[40..300]|[100..800]|[200..1500]]");
-        addDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getContract().EVENT_DISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[40..300]|[100..800]|[200..1500]]\n");
-        addDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getContract().EVENT_DISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[40..300]|[100..800]|[200..1500]]\n");
-        addDescription(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [[40..300]|[100..800]|[200..1500]]\n max: [[40..300]|[100..800]|[200..1500]]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [[40..300]|[100..800]|[200..1500]]\n max: [[40..300]|[100..800]|[200..1500]]");
+        publishDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        publishDescription(getContract().EVENT_DISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[40..300]|[100..800]|[200..1500]]\n");
+        publishDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        publishDescription(getContract().EVENT_DISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[40..300]|[100..800]|[200..1500]]\n");
+        publishDescription(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [[40..300]|[100..800]|[200..1500]]\n max: [[40..300]|[100..800]|[200..1500]]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 
     @Override
@@ -103,47 +103,47 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
 
     @Override
     public void analogValue(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE, i);
     }
 
     @Override
     public void analogValueReached(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
     }
 
     @Override
     public void distance(int i) {
-        addEvent(getContract().EVENT_DISTANCE, i);
+        publishEvent(getContract().EVENT_DISTANCE, i);
     }
 
     @Override
     public void distanceReached(int i) {
-        addEvent(getContract().EVENT_DISTANCE_REACHED, i);
+        publishEvent(getContract().EVENT_DISTANCE_REACHED, i);
     }
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
     }
 
     @Override
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_DISTANCE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, threshold);
 
     }
 

@@ -59,11 +59,11 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     public DualRelayService(DualRelayDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DualRelayServiceContract(device));
-        addDescription(getContract().INTENT_MONOFLOP, "relay: [1|2]\n state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_SELECTED_STATE, "relay: [1|2]\n state: [true|false]\n");
-        addDescription(getContract().INTENT_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
-        addDescription(getContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  relay: [1|2]\n   state: [true|false]\n");
-        addDescription(getContract().STATUS_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
+        publishDescription(getContract().INTENT_MONOFLOP, "relay: [1|2]\n state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_SELECTED_STATE, "relay: [1|2]\n state: [true|false]\n");
+        publishDescription(getContract().INTENT_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
+        publishDescription(getContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  relay: [1|2]\n   state: [true|false]\n");
+        publishDescription(getContract().STATUS_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
 
     }
 
@@ -87,12 +87,12 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     @Override
     public void stateChanged(DeviceState state) {
-        addStatus(getContract().STATUS_STATE, state);
+        publishStatus(getContract().STATUS_STATE, state);
     }
 
     @Override
     public void monoflopDone(short relay, boolean state) {
-        addEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDone(relay, state));
+        publishEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDone(relay, state));
 
     }
 

@@ -57,10 +57,10 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
 
     public SolidStateRelayService(SolidStateRelayDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new SolidStateRelayServiceContract(device));
-        addDescription(getContract().INTENT_MONOFLOP, "state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_STATE, "[true|false]");
-        addDescription(getContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [true|false]");
-        addDescription(getContract().STATUS_STATE, "[true|false]");
+        publishDescription(getContract().INTENT_MONOFLOP, "state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_STATE, "[true|false]");
+        publishDescription(getContract().EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [true|false]");
+        publishDescription(getContract().STATUS_STATE, "[true|false]");
 
     }
 
@@ -80,12 +80,12 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
 
     @Override
     public void stateChanged(Boolean state) {
-        addStatus(getContract().STATUS_STATE, state);
+        publishStatus(getContract().STATUS_STATE, state);
     }
 
     @Override
     public void monoflopDone(boolean state) {
-        addEvent(getContract().EVENT_MONOFLOP_DONE, state);
+        publishEvent(getContract().EVENT_MONOFLOP_DONE, state);
     }
 
     

@@ -58,15 +58,15 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
     public LineService(LineDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new LineServiceContract(device));
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
 
-        addDescription(getContract().EVENT_REFLECTIVITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[0..4095]\n");
-        addDescription(getContract().EVENT_REFLECTIVITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_REFLECTIVITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[0..4095]\n");
+        publishDescription(getContract().EVENT_REFLECTIVITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        publishDescription(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
     }
 
@@ -93,27 +93,27 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void reflectivityCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void reflectivityThresholdChanged(DeviceReflectivityCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_REFLECTIVITY_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_REFLECTIVITY_THRESHOLD, threshold);
     }
 
     @Override
     public void reflectivity(int i) {
-        addEvent(getContract().EVENT_REFLECTIVITY, i);
+        publishEvent(getContract().EVENT_REFLECTIVITY, i);
     }
 
     @Override
     public void reflectivityReached(int i) {
-        addEvent(getContract().EVENT_REFLECTIVITY_REACHED, i);
+        publishEvent(getContract().EVENT_REFLECTIVITY_REACHED, i);
     }
 
     

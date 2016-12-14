@@ -58,16 +58,16 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
 
     public RealTimeClockService(RealTimeClockDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new RealTimeClockServiceContract(device));
-        addDescription(getContract().INTENT_DATE_TIME_SET, "year: [2000..2099]\n month: [1..12]\n day:b[1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        addDescription(getContract().STATUS_DATE_TIME, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        addDescription(getContract().INTENT_OFFSET, "[-128..127]");
-        addDescription(getContract().STATUS_OFFSET, "[-128..127]");
-        addDescription(getContract().INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        addDescription(getContract().INTENT_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_ALARM, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        publishDescription(getContract().INTENT_DATE_TIME_SET, "year: [2000..2099]\n month: [1..12]\n day:b[1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        publishDescription(getContract().STATUS_DATE_TIME, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        publishDescription(getContract().INTENT_OFFSET, "[-128..127]");
+        publishDescription(getContract().STATUS_OFFSET, "[-128..127]");
+        publishDescription(getContract().INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        publishDescription(getContract().INTENT_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_ALARM, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
 
     }
 
@@ -95,32 +95,32 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
 
     @Override
     public void dateTimeChanged(DateTimeParameter dateTimeParameter) {
-        addStatus(getContract().STATUS_DATE_TIME, dateTimeParameter);
+        publishStatus(getContract().STATUS_DATE_TIME, dateTimeParameter);
     }
 
     @Override
     public void offsetChanged(byte offset) {
-        addStatus(getContract().STATUS_OFFSET, offset);
+        publishStatus(getContract().STATUS_OFFSET, offset);
     }
 
     @Override
     public void dateTimeCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void alarmChanged(AlarmParamter alarmParameter) {
-        addStatus(getContract().STATUS_ALARM, alarmParameter);
+        publishStatus(getContract().STATUS_ALARM, alarmParameter);
     }
 
     @Override
     public void alarm(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-        addEvent(getContract().EVENT_ALARM, new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday), timestamp);
+        publishEvent(getContract().EVENT_ALARM, new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday), timestamp);
     }
 
     @Override
     public void dateTime(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-        addEvent(getContract().EVENT_DATE_TIME, new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday), timestamp);
+        publishEvent(getContract().EVENT_DATE_TIME, new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday), timestamp);
     }
 
 }

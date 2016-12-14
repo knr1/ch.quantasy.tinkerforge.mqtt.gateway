@@ -58,17 +58,17 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
     public DistanceUSService(DistanceUSDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new DistanceUSServiceContract(device));
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().INTENT_MOVING_AVERAGE, "[0..100]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().INTENT_MOVING_AVERAGE, "[0..100]");
 
-        addDescription(getContract().EVENT_DISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[0..4095]\n");
-        addDescription(getContract().EVENT_DISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_MOVING_AVERAGE, "[0..100]");
+        publishDescription(getContract().EVENT_DISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[0..4095]\n");
+        publishDescription(getContract().EVENT_DISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        publishDescription(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_MOVING_AVERAGE, "[0..100]");
 
     }
 
@@ -102,32 +102,32 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_DISTANCE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, threshold);
     }
 
     @Override
     public void movingAverageChanged(short movingAverage) {
-        addStatus(getContract().STATUS_MOVING_AVERAGE, movingAverage);
+        publishStatus(getContract().STATUS_MOVING_AVERAGE, movingAverage);
     }
 
     @Override
     public void distance(int i) {
-        addEvent(getContract().EVENT_DISTANCE, i);
+        publishEvent(getContract().EVENT_DISTANCE, i);
     }
 
     @Override
     public void distanceReached(int i) {
-        addEvent(getContract().EVENT_DISTANCE_REACHED, i);
+        publishEvent(getContract().EVENT_DISTANCE_REACHED, i);
     }
 
     

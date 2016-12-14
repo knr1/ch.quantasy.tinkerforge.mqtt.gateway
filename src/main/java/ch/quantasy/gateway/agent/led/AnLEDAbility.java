@@ -66,7 +66,7 @@ public abstract class AnLEDAbility implements Runnable, MessageReceiver {
         this.config = config;
         this.gatewayClient = gatewayClient;
         gatewayClient.subscribe(ledServiceContract.EVENT_LEDs_RENDERED, this);
-        gatewayClient.addIntent(ledServiceContract.INTENT_CONFIG, config);
+        gatewayClient.publishIntent(ledServiceContract.INTENT_CONFIG, config);
     }
 
     public LEDStripServiceContract getLedServiceContract() {
@@ -90,12 +90,12 @@ public abstract class AnLEDAbility implements Runnable, MessageReceiver {
     }
 
     public void setLEDFrame(LEDFrame ledFrame) {
-        gatewayClient.addIntent(ledServiceContract.INTENT_FRAME, new LEDFrame(ledFrame));
+        gatewayClient.publishIntent(ledServiceContract.INTENT_FRAME, new LEDFrame(ledFrame));
     }
 
     public void setLEDFrames(List<LEDFrame> ledFrames) {
         List<LEDFrame> frames = new ArrayList<>(ledFrames);
-        gatewayClient.addIntent(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
+        gatewayClient.publishIntent(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
     }
 
     @Override

@@ -65,12 +65,12 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
     public LEDStripService(LEDStripDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LEDStripServiceContract(device));
         frames = new ConcurrentLinkedDeque<>();
-        addDescription(getContract().INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
-        addDescription(getContract().INTENT_FRAME, "channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels");
-        addDescription(getContract().INTENT_FRAMES, "{ channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels }_*");
-        addDescription(getContract().EVENT_LEDs_RENDERED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]\n");
-        addDescription(getContract().EVENT_LAGING, "timestamp: [0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_CONFIG, "chipType: [WS2801|WS2811|WS2812|WS2812RGBW|LPD8806|APA102]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
+        publishDescription(getContract().INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
+        publishDescription(getContract().INTENT_FRAME, "channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels");
+        publishDescription(getContract().INTENT_FRAMES, "{ channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels }_*");
+        publishDescription(getContract().EVENT_LEDs_RENDERED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]\n");
+        publishDescription(getContract().EVENT_LAGING, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_CONFIG, "chipType: [WS2801|WS2811|WS2812|WS2812RGBW|LPD8806|APA102]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
 
     }
 
@@ -103,7 +103,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     @Override
     public void configurationChanged(LEDStripDeviceConfig config) {
-        addStatus(getContract().STATUS_CONFIG, config);
+        publishStatus(getContract().STATUS_CONFIG, config);
     }
 
     @Override
@@ -121,13 +121,13 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     @Override
     public void frameRendered() {
-        addEvent(getContract().EVENT_LEDs_RENDERED, frames.size());
+        publishEvent(getContract().EVENT_LEDs_RENDERED, frames.size());
 
     }
 
     @Override
     public void isLaging() {
-        addEvent(getContract().EVENT_LAGING, true);
+        publishEvent(getContract().EVENT_LAGING, true);
 
     }
 

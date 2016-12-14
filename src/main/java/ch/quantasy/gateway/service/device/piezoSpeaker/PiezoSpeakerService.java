@@ -58,15 +58,15 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
 
     public PiezoSpeakerService(PiezoSpeakerDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new PiezoSpeakerServiceContract(device));
-        addDescription(getContract().INTENT_BEEP, "duration: [0..4294967295]\n frequency: [585..7100]");
-        addDescription(getContract().INTENT_MORSE, "string: [.|-| |]_60\n frequency: [585..7100]");
-        addDescription(getContract().INTENT_CALIBRATE, "[true|false]");
-        addDescription(getContract().EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-        addDescription(getContract().EVENT_BEEP_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-        addDescription(getContract().EVENT_BEEP_STARTED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-        addDescription(getContract().EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-        addDescription(getContract().EVENT_MORSE_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-        addDescription(getContract().EVENT_MORSE_STARTED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().INTENT_BEEP, "duration: [0..4294967295]\n frequency: [585..7100]");
+        publishDescription(getContract().INTENT_MORSE, "string: [.|-| |]_60\n frequency: [585..7100]");
+        publishDescription(getContract().INTENT_CALIBRATE, "[true|false]");
+        publishDescription(getContract().EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().EVENT_BEEP_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().EVENT_BEEP_STARTED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().EVENT_MORSE_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
+        publishDescription(getContract().EVENT_MORSE_STARTED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
     }
 
     @Override
@@ -89,27 +89,27 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
 
     @Override
     public void beepInvoked(BeepParameter beepParameter) {
-        addEvent(getContract().EVENT_BEEP_STARTED, true);
+        publishEvent(getContract().EVENT_BEEP_STARTED, true);
     }
 
     @Override
     public void morseCodeInvoked(MorseCodeParameter morseCodeParameter) {
-        addEvent(getContract().EVENT_MORSE_STARTED, true);
+        publishEvent(getContract().EVENT_MORSE_STARTED, true);
     }
 
     @Override
     public void calibrationInvoked() {
-        addEvent(getContract().EVENT_CALIBRATED, true);
+        publishEvent(getContract().EVENT_CALIBRATED, true);
     }
 
     @Override
     public void beepFinished() {
-        addEvent(getContract().EVENT_BEEP_FINISHED, true);
+        publishEvent(getContract().EVENT_BEEP_FINISHED, true);
     }
 
     @Override
     public void morseCodeFinished() {
-        addEvent(getContract().EVENT_MORSE_FINISHED, true);
+        publishEvent(getContract().EVENT_MORSE_FINISHED, true);
     }
 
 }

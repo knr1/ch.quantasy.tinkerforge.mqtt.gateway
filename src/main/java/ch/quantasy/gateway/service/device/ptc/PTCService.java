@@ -60,24 +60,24 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
     public PTCService(PTCDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new PTCServiceContract(device));
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
-        addDescription(getContract().INTENT_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
-        addDescription(getContract().INTENT_WIRE_MODE, "[2|3|4]");
-        addDescription(getContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
-        addDescription(getContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
-        addDescription(getContract().EVENT_RESISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getContract().EVENT_RESISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
-        addDescription(getContract().STATUS_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
-        addDescription(getContract().STATUS_WIRE_MODE, "[2|3|4]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
+        publishDescription(getContract().INTENT_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
+        publishDescription(getContract().INTENT_WIRE_MODE, "[2|3|4]");
+        publishDescription(getContract().EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
+        publishDescription(getContract().EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
+        publishDescription(getContract().EVENT_RESISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_RESISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
+        publishDescription(getContract().STATUS_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
+        publishDescription(getContract().STATUS_WIRE_MODE, "[2|3|4]");
     }
 
     @Override
@@ -123,57 +123,57 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void temperatureCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
     }
 
     @Override
     public void noiseReductionFilterChanged(DeviceNoiseReductionFilter filter) {
-        addStatus(getContract().STATUS_NOISE_REDUCTION_FILTER, filter);
+        publishStatus(getContract().STATUS_NOISE_REDUCTION_FILTER, filter);
     }
 
     @Override
     public void temperature(int i) {
-        addEvent(getContract().EVENT_TEMPERATURE, i);
+        publishEvent(getContract().EVENT_TEMPERATURE, i);
     }
 
     @Override
     public void temperatureReached(int i) {
-        addEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
+        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
     }
 
     @Override
     public void resistance(int i) {
-        addEvent(getContract().EVENT_RESISTANCE, i);
+        publishEvent(getContract().EVENT_RESISTANCE, i);
     }
 
     @Override
     public void resistanceReached(int i) {
-        addEvent(getContract().EVENT_RESISTANCE_REACHED, i);
+        publishEvent(getContract().EVENT_RESISTANCE_REACHED, i);
     }
 
     @Override
     public void resistanceCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_RESISTANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_RESISTANCE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void resistanceCallbackThresholdChanged(DeviceResistanceCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_RESISTANCE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_RESISTANCE_THRESHOLD, threshold);
     }
 
     @Override
     public void wireModeChanged(short wireMode) {
-        addStatus(getContract().STATUS_WIRE_MODE, wireMode);
+        publishStatus(getContract().STATUS_WIRE_MODE, wireMode);
     }
 
     

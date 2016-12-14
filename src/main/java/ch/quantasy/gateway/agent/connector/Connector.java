@@ -69,7 +69,7 @@ public class Connector implements MessageReceiver {
     }
      private void connectRemoteServices(String... addresses) {
         for (String address : addresses) {
-            gatewayClient.addIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
+            gatewayClient.publishIntent(managerServiceContract.INTENT_STACK_ADDRESS_ADD, new TinkerforgeStackAddress(address));
         }
     }
 

@@ -60,20 +60,20 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
     public HumidityService(HumidityDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new HumidityServiceContract(device));
 
-        addDescription(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_HUMIDITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().INTENT_HUMIDITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..1000]\n max: [0..9000]");
-        addDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getContract().EVENT_HUMIDITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..1000]\n");
-        addDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        addDescription(getContract().EVENT_HUMIDITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..1000]\n");
-        addDescription(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_HUMIDITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        addDescription(getContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        addDescription(getContract().STATUS_HUMIDITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..1000]\n max: [0..1000]");
-        addDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_HUMIDITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().INTENT_HUMIDITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..1000]\n max: [0..9000]");
+        publishDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        publishDescription(getContract().EVENT_HUMIDITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..1000]\n");
+        publishDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        publishDescription(getContract().EVENT_HUMIDITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..1000]\n");
+        publishDescription(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_HUMIDITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().STATUS_HUMIDITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..1000]\n max: [0..1000]");
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 
     @Override
@@ -107,47 +107,47 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
 
     @Override
     public void analogValue(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE, i);
     }
 
     @Override
     public void analogValueReached(int i) {
-        addEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
     }
 
     @Override
     public void humidity(int i) {
-        addEvent(getContract().EVENT_HUMIDITY, i);
+        publishEvent(getContract().EVENT_HUMIDITY, i);
     }
 
     @Override
     public void humidityReached(int i) {
-        addEvent(getContract().EVENT_HUMIDITY_REACHED, i);
+        publishEvent(getContract().EVENT_HUMIDITY_REACHED, i);
     }
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void humidityCallbackPeriodChanged(long period) {
-        addStatus(getContract().STATUS_HUMIDITY_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_HUMIDITY_CALLBACK_PERIOD, period);
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        addStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
     }
 
     @Override
     public void humidityCallbackThresholdChanged(DeviceHumidityCallbackThreshold threshold) {
-        addStatus(getContract().STATUS_HUMIDITY_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_HUMIDITY_THRESHOLD, threshold);
     }
 
 }
