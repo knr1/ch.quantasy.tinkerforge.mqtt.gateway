@@ -81,6 +81,7 @@ import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
+import ch.quantasy.tinkerforge.device.servo.ServoDevice;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
@@ -95,6 +96,7 @@ import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickIMU;
 import com.tinkerforge.BrickIMUV2;
 import com.tinkerforge.BrickMaster;
+import com.tinkerforge.BrickServo;
 import com.tinkerforge.BrickletAccelerometer;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletAmbientLightV2;
@@ -290,6 +292,9 @@ public class TinkerforgeDeviceMapper {
         }
         if(TinkerforgeDeviceClass.VoltageCurrent == TinkerforgeDeviceClass.getDevice(device)){
             return new VoltageCurrentDevice(stack, (BrickletVoltageCurrent)device);
+        }
+        if(TinkerforgeDeviceClass.Servo == TinkerforgeDeviceClass.getDevice(device)){
+            return new ServoDevice(stack, (BrickServo)device);
         }
         return new TinkerforgeDevice(stack, device);
     }

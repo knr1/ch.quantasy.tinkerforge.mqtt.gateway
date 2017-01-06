@@ -59,7 +59,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
         publishDescription(getContract().INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
         publishDescription(getContract().INTENT_DRIVER_MODE, "[0|1]");
         publishDescription(getContract().INTENT_ENABLED, "[true|false]");
-        publishDescription(getContract().INTENT_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().INTENT_MINIMUM_VOLTAGE, "[6000.." + Integer.MAX_VALUE + "]");
         publishDescription(getContract().INTENT_PWM_FREQUENCY, "[1..20000]");
         publishDescription(getContract().INTENT_VELOCITY_VELOCITY, "-32767..32767");
         publishDescription(getContract().INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
@@ -67,6 +67,8 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
         publishDescription(getContract().EVENT_FULL_BRAKE, "[0.." + Long.MAX_VALUE + "]");
         publishDescription(getContract().EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
         publishDescription(getContract().EVENT_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_VELOCITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        
         publishDescription(getContract().EVENT_EMERGENCY_SHUTDOWN, "[0.." + Long.MAX_VALUE + "]");
 
         publishDescription(getContract().STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");

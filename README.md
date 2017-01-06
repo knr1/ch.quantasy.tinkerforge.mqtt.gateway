@@ -22,10 +22,10 @@ Each Tinkerforge micro-service provides the following minimal contract:
 <a href="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TiMqWayService.svg">
 <img src="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TiMqWayService.svg.png" alt="Service-Diagram" />
 </a>
-* **description** Each micro-service describes its abilities via the description topic.
-* **status** Each micro-service describes its actual status via its specialized status topics.
-* **event** Each micro-service provides all events via its specialized event topics. As there might be more events available than the mqtt broker is able to handle, all events are always covered within an array. Hence, there might be 0,1 or multiple events within one message.
-* **intent** Each micro-service accepts _intentions_ via the intent topic. It is equivalent to the setter methods but allows _parallel_ and _concurrent_ 'requests'.
+* **Description** Each micro-service describes its abilities via the description topic.
+* **Status** Each micro-service describes its actual status via its specialized status topics.
+* **Event** Each micro-service provides all events via its specialized event topics. As there might be more events available than the mqtt broker is able to handle, all events are always covered within an array. Hence, there might be 0,1 or multiple events within one message.
+* **Intent** Each micro-service accepts _intentions_ via the intent topic. It is equivalent to the setter methods but allows _parallel_ and _concurrent_ 'requests'.
 
 
 **Root topic** The root topic of TiMqWay, where all thinkerforge micro-services can be reached: **TF/**.
@@ -61,7 +61,7 @@ Then, if you subscribe to TF/# you will immediately get the description info for
 
 In order to interact with some specific Tinkerforge-Stack (e.g. localhost), the following message has to be sent to the following topic:
 ```sh
-Topic: TF/Manager/stack/address/add
+Topic: TF/Manager/I/stack/address/add
 Message: localhost
 ```
 or any other address IP or name will work, if there is an actual Tinkerforge stack accessible.
@@ -72,19 +72,19 @@ In order to see who is calling, the intent will always end with '/quickshot' as 
  
 **Setting backlight of LCD-Display (uid: lcd):**
 ```
-Topic: TF/LCD20x4/lcd/intent/backlight/quickshot
+Topic: TF/LCD20x4/lcd/I/backlight/quickshot
 Message: true
 ```
 
 **Measuring the temperature once per second on temperature bricklet (uid: red):**
 ```
-Topic: TF/Temperature/red/intent/temperature/callbackPeriod/quickshot
+Topic: TF/Temperature/red/I/temperature/callbackPeriod/quickshot
 Message: 1000
 ```
 
 **Detecting NFC-Tags once per second on NFCRFID bricklet (uid: ouu):**
 ```
-Topic: TF/NfcRfid/ouu/intent/scanning/callbackPeriod/quickshot
+Topic: TF/NfcRfid/ouu/I/scanning/callbackPeriod/quickshot
 Message: 1000
 ```
 
@@ -145,8 +145,8 @@ If you look into the provided topic within the MQTT-Broker, the Manager provides
 ```
 TF
    Manager
-     description
-       status
+     D
+       S
          connection ---[online|offline]         
          stack
            address
@@ -156,7 +156,7 @@ TF
            <address>
              <DeviceClass>
                <Instance> [true|false]
-       event
+       E
          device
            connected --- <address>
            disconnected --- <address>
@@ -164,12 +164,12 @@ TF
            address
              added --- <address>
              removed --- <removed>
-       intent 
+       I 
          stack
            address
              add --- <address>
              remove --- <address>
-     status
+     S
        connection --- online
 ```
 
@@ -178,7 +178,7 @@ TF
 As the description explains, we now have to tell TiMqWay where to look for the Master Bricks (Stacks). Hence, we want to attach Master-Brick-1 (say, its 
 network-name is master-brick-1). Therefore the following message has to be sent to the following topic:
 ```
-Topic: TF/Manager/intent/stack/address/add
+Topic: TF/Manager/I/stack/address/add
 Message: master-brick-1
 ```
 
@@ -187,9 +187,9 @@ Looking into the mqtt-broker, the following can be seen:
 ```
 TF
    Manager
-     description
+     D
        #omitted for better readability
-     status
+     S
        connection --- online
        device
          master-brick-1
@@ -197,28 +197,28 @@ TF
              blue --- true
            LCD20x4
              lcd --- true
-     event
+     E
        stack
          address
            added --- -hostname:"master-brick-1" port: 4223
-     intent
+     I
        stack
          address
            add --- master-brick-1
    Temperature
-     description
+     D
        #omitted for better readability
      blue
-       status
+       S
          connection --- online
          position --- "c"
          firmware --- 2-0-1
          hardware --- 1-1-0
    LCD20x4
-     description
+     D
        #omitted for better readability
      lcd
-       status
+       S
          connection --- online
          position --- "d"
          firmware --- 2-0-2
@@ -227,7 +227,7 @@ TF
 If you want to switch on the backlight of the device called 'lcd' which is an instance of the 20x4LCD class then you publish the following message to
 the following topic:
 ```
-Topic: TF/LCD20x4/lcd/intent/backlight
+Topic: TF/LCD20x4/lcd/I/backlight
 Message: true
 ```
 What happenes is that the backlight is now switched to on at the specific 20x4LCD device. In the mqtt-broker, some topics changed as well.
@@ -236,38 +236,40 @@ TF
    Manager
      #omitted for better readability 
    Temperature
+     D
+       #omitted for better readability 
      blue
-       status
+       S
          connection --- online
          position --- "c"
          firmware --- 2-0-1
          hardware --- 1-1-0
    LCD20x4
-     description
+     D
        #omitted for better readability 
      lcd
-       status
+       S
          connection --- online
          position --- "d"
          firmware --- 2-0-2
          hardware --- 1-2-0
          backlight --- true
-       intent
+       I
          backlight --- true
 ```
  
 Now, let us connect the second master-brick (stack). This one is connected via USB, hence, its address is `localhost`:
 ```
-Topic: TF/Manager/intent/stack/address/add
+Topic: TF/Manager/I/stack/address/add
 Message: localhost
 ```
 The TiMqWay-manager now knows two stacks and manages one temperature device more
 ```
 TF
    Manager
-     description
+     D
        #omitted for better readability
-     status
+     S
        connection --- online
        device
          master-brick-1
@@ -278,17 +280,17 @@ TF
          localhost
            Temperature
              red --- true
-     event
+     E
        stack
          address
            added --- -hostname:"localhost" port: 4223
-     intent
+     I
        stack
          address
            add --- localhost
    Temperature
-     description
-       status
+     D
+       S
          connection ---[online|offline]
          position --- [0|1|2|3|4|5|6|7|8|a|b|c|d]
          firmware --- [-32768..32767]_*
@@ -298,10 +300,10 @@ TF
            threshold --- option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]
            deounce --- [0..9223372036854775807]
            mode ---[Slow|Fast]
-       event
+       E
          temperature --- timestamp: [0..9223372036854775807]\n value: [-2500..8500]\n
            reached --- timestamp: [0..9223372036854775807]\n value: [-2500..8500]\n
-       intent
+       I
          debounce
            period --- [0..9223372036854775807]
          temperature
@@ -309,20 +311,20 @@ TF
            threshold --- option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]
          mode -- mode:[Slow|Fast]
      blue
-       status
+       S
          connection --- online
          position --- "c"
          firmware --- 2-0-1
          hardware --- 1-1-0
      red
-       status
+       S
          connection --- online
          position --- "a"
          firmware --- 2-0-1
          hardware --- 1-1-0
    LCD20x4
-     description
-       status
+     D
+       S
          connection ---[online|offline]
          position --- [0|1|2|3|4|5|6|7|8|a|b|c|d]
          firmware --- [-32768..32767]_*
@@ -331,7 +333,7 @@ TF
          defaultText
            texts --- [line: [0..3]\n text: [String]_[1..20]]
            counter --- [-1..2147483647]
-       intent
+       I
          backlight --- [true|false]
          clearDisplay --- [true|false]
          defaultText
@@ -339,7 +341,7 @@ TF
            counter --- [-1..2147483647]
          writeLines --- [line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]
      lcd
-       status
+       S
          connection --- online
          position --- "d"
          firmware --- 2-0-2
@@ -348,7 +350,7 @@ TF
 
 If we want to have a temperature reading every second for `red`, we provide the following message to the following topic:
 ```
-Topic: TF/Temperature/red/intent/temperature/callbackPeriod
+Topic: TF/Temperature/red/I/temperature/callbackPeriod
 Message: 1000
 ```
 Now, there is a reading every second, that will be promoted as an event to `TF/Temperature/red/event/temperature`
@@ -358,27 +360,27 @@ TF
    Manager
      #omitted for better readability
    Temperature
-     description
+     D
        #omitted for better readability
      blue
-       status
+       S
          connection --- online
          position --- "c"
          firmware --- 2-0-1
          hardware --- 1-1-0
      red
-       status
+       S
          connection --- online
          position --- "a"
          firmware --- 2-0-1
          hardware --- 1-1-0
          temperature
            callbackPeriod --- 1000
-       event
+       E
          temperature --- - timestamp: 1465398254115 value: 2668 
    LCD20x4
-     description
-       status
+     D
+       S
          connection ---[online|offline]
          position --- [0|1|2|3|4|5|6|7|8|a|b|c|d]
          firmware --- [-32768..32767]_*
@@ -387,7 +389,7 @@ TF
          defaultText
            texts --- [line: [0..3]\n text: [String]_[1..20]]
            counter --- [-1..2147483647]
-       intent
+       I
          backlight --- [true|false]
          clearDisplay --- [true|false]
          defaultText
@@ -395,17 +397,17 @@ TF
            counter --- [-1..2147483647]
          writeLines --- [line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]
      lcd
-       status
+       S
          connection --- online
          position --- "d"
          firmware --- 2-0-2
          hardware --- 1-2-0
 ```
 All that is left is to write a little agent, subscribing to the temperature of red and blue. Then process the values and write them to lcd... as a publish to
-`TF/LCD20x4/lcd/intent/writeLines`...
+`TF/LCD20x4/lcd/I/writeLines`...
 
 ```
-Topic: TF/LCD20x4/lcd/intent/writeLines
+Topic: TF/LCD20x4/lcd/I/writeLines
 Message: - line: 0
            position: 0
            text: "RED: 22°C"
@@ -417,7 +419,8 @@ Message: - line: 0
 * BrickDC
 * BrickIMU
 * BrickIMUV2
-* BrickMaster (Including a WatchDog, that disconnects connects if callbacks vanish @see Tinkerforge-Forum-entry-23169)
+* BrickMaster
+* BrickServo
 * BrickletAccelerometer
 * BrickletAmbientLight
 * BrickletAmbientLightV2

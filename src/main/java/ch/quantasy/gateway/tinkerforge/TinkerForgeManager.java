@@ -88,6 +88,7 @@ import ch.quantasy.gateway.service.device.thermoCouple.ThermoCoupleService;
 import ch.quantasy.gateway.service.device.tilt.TiltService;
 import ch.quantasy.gateway.service.device.uvLight.UVLightService;
 import ch.quantasy.gateway.service.AbstractService;
+import ch.quantasy.gateway.service.device.servo.ServoService;
 import ch.quantasy.gateway.service.device.voltageCurrent.VoltageCurrentService;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.imuV2.IMUV2Device;
@@ -129,6 +130,7 @@ import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
+import ch.quantasy.tinkerforge.device.servo.ServoDevice;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
@@ -408,6 +410,10 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             if (tinkerforgeDevice instanceof VoltageCurrentDevice) {
                 VoltageCurrentService service = new VoltageCurrentService((VoltageCurrentDevice) tinkerforgeDevice, mqttURI);
+                services.add(service);
+            }
+            if (tinkerforgeDevice instanceof ServoDevice) {
+                ServoService service = new ServoService((ServoDevice) tinkerforgeDevice, mqttURI);
                 services.add(service);
             }
 

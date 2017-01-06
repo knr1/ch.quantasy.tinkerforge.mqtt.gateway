@@ -179,7 +179,7 @@ public class TinkerforgeStack {
                             ipConnection.disconnect();
                         } catch (NotConnectedException ex) {
                             //Just wanted to make sure!
-                            Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
+                            //Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         ipConnection.connect(stackAddress.getHostName(), stackAddress.getPort());
                         Thread.sleep(3000);
