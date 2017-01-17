@@ -97,7 +97,7 @@ public class OuterLightsAgent {
         gatewayClient = new GatewayClient(mqttURI, "wrth563g", new ClientContract("Agent", "OuterLights", "01"));
         gatewayClient.connect();
 
-        connectRemoteServices("controller01", "localhost");
+        connectRemoteServices("controller01", "erdgeschoss");
 
         gatewayClient.publishIntent(linearPotiServiceContract.INTENT_POSITION_CALLBACK_PERIOD, 100);
         gatewayClient.publishIntent(dcServiceContract.INTENT_ACCELERATION, 10000);

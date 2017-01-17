@@ -64,7 +64,7 @@ public class Connector implements MessageReceiver {
         managerServiceContract = new ManagerServiceContract("Manager");
         gatewayClient = new GatewayClient(mqttURI, "f94kjf93d9", new ClientContract("Agent", "Connector", "euo"));
         gatewayClient.connect();
-        connectRemoteServices("localhost","untergeschoss","obergeschoss","lights01");
+        connectRemoteServices("erdgeschoss","untergeschoss","obergeschoss","lights01");
 
     }
      private void connectRemoteServices(String... addresses) {

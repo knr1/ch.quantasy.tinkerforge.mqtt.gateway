@@ -39,74 +39,61 @@
  *
  *
  */
-package ch.quantasy.gateway.agent.led;
+package ch.quantasy.gateway.agent.led.abilities;
 
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
-import ch.quantasy.mqtt.gateway.client.GCEvent;
 import ch.quantasy.tinkerforge.device.led.LEDFrame;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
 import java.util.ArrayList;
 import java.util.List;
-import ch.quantasy.mqtt.gateway.client.MessageReceiver;
 
 /**
  *
  * @author reto
  */
-public abstract class AnLEDAbility implements Runnable, MessageReceiver {
+class MovingDot extends AnLEDAbility {
+        private final List<LEDFrame> frames;
 
-    private final LEDStripServiceContract ledServiceContract;
-    private final LEDStripDeviceConfig config;
-    private int counter = 0;
-    private final GatewayClient gatewayClient;
+        public MovingDot(GatewayClient gatewayClient, LEDStripServiceContract ledServiceContract, LEDStripDeviceConfig config) {
+            super(gatewayClient, ledServiceContract, config);
+            frames=new ArrayList<>();
+        }
 
-    public AnLEDAbility(GatewayClient gatewayClient, LEDStripServiceContract ledServiceContract, LEDStripDeviceConfig config) {
-        this.ledServiceContract = ledServiceContract;
-        this.config = config;
-        this.gatewayClient = gatewayClient;
-        gatewayClient.subscribe(ledServiceContract.EVENT_LEDs_RENDERED, this);
-        gatewayClient.publishIntent(ledServiceContract.INTENT_CONFIG, config);
-    }
+        public void run() {
+            LEDFrame leds = super.getNewLEDFrame();
 
-    public LEDStripServiceContract getLedServiceContract() {
-        return ledServiceContract;
-    }
+            for (int i = 0; i < leds.getNumberOfChannels(); i++) {
+                leds.setColor((short) i, (short) 0, (short) 255);
+            }
+            try {
+                LEDFrame newLEDs = super.getNewLEDFrame();
+                while (true) {
+                    while (frames.size() < 150) {
+                        for (int led = 1; led < leds.getNumberOfLEDs(); led++) {
+                            for (int channel = 0; channel < leds.getNumberOfChannels(); channel++) {
+                                newLEDs.setColor((short) channel, (short) led, leds.getColor(channel, led - 1));
+                            }
+                        }
+                        LEDFrame tmpLEDs = leds;
+                        leds = newLEDs;
+                        newLEDs = tmpLEDs;
+                        frames.add(new LEDFrame(leds));
+                    }
+                    super.setLEDFrames(frames);
+                    frames.clear();
 
-    public LEDStripDeviceConfig getConfig() {
-        return config;
-    }
+                    Thread.sleep(super.getConfig().getFrameDurationInMilliseconds() * 50);
 
-    public int getCounter() {
-        return counter;
-    }
-
-    public GatewayClient getGatewayClient() {
-        return gatewayClient;
-    }
-
-    public LEDFrame getNewLEDFrame() {
-        return new LEDFrame(config.getChipType().getNumberOfChannels(), config.getNumberOfLEDs());
-    }
-
-    public void setLEDFrame(LEDFrame ledFrame) {
-        gatewayClient.publishIntent(ledServiceContract.INTENT_FRAME, new LEDFrame(ledFrame));
-    }
-
-    public void setLEDFrames(List<LEDFrame> ledFrames) {
-        List<LEDFrame> frames = new ArrayList<>(ledFrames);
-        gatewayClient.publishIntent(ledServiceContract.INTENT_FRAMES, frames.toArray(new LEDFrame[frames.size()]));
-    }
-
-    @Override
-    public void messageReceived(String topic, byte[] payload) throws Exception {
-        synchronized (this) {
-            GCEvent<Integer>[] framesRendered = (GCEvent<Integer>[])gatewayClient.toEventArray(payload, Integer.class);
-            if (framesRendered.length > 0) {
-                counter = framesRendered[0].getValue();
-                this.notifyAll();
+                    synchronized (this) {
+                        while (getCounter() > 100) {
+                            this.wait(super.getConfig().getFrameDurationInMilliseconds() * 1000);
+                        }
+                    }
+                }
+            } catch (InterruptedException ex) {
+                super.setLEDFrame(getNewLEDFrame());
             }
         }
-    }
 
-}
+    }

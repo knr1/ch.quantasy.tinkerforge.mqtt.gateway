@@ -64,7 +64,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author reto
  */
-public class XMasTreeJokeLEDLightAgent01 {
+public class SaunaLEDLightAgent011 {
 
     private final ManagerServiceContract managerServiceContract;
     private final List<AnLEDAbility> waveList;
@@ -72,7 +72,7 @@ public class XMasTreeJokeLEDLightAgent01 {
     private final int amountOfLEDs;
     private final GatewayClient<ClientContract> gatewayClient;
 
-    public XMasTreeJokeLEDLightAgent01(URI mqttURI) throws MqttException {
+    public SaunaLEDLightAgent011(URI mqttURI) throws MqttException {
         frameDurationInMillis = 10;
         amountOfLEDs = 120;
         waveList = new ArrayList<>();
@@ -80,11 +80,14 @@ public class XMasTreeJokeLEDLightAgent01 {
         gatewayClient = new GatewayClient(mqttURI, "433407hfraXMasTreeJoke", new ClientContract("Agent", "XmasTreeJoke", "Joke01"));
         gatewayClient.connect();
 
-        connectRemoteServices(new TinkerforgeStackAddress("xmastree"));
+        connectRemoteServices(new TinkerforgeStackAddress("sauna"));
+        //connectRemoteServices(new TinkerforgeStackAddress("xmastree"));
 
-        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2801, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRGW);
+         LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2812RGBW, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRGW);
+        //LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2801, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRGW);
 
-        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
+        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("oYY", TinkerforgeDeviceClass.LEDStrip.toString());
+        // LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
 
         waveList.add(new ColidingDots(gatewayClient,ledServiceContract1, config));
         //  waveList.add(new Wave(ledServiceContract2, config));
@@ -121,7 +124,7 @@ public class XMasTreeJokeLEDLightAgent01 {
             System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
         }
         System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-        XMasTreeJokeLEDLightAgent01 agent = new XMasTreeJokeLEDLightAgent01(mqttURI);
+        SaunaLEDLightAgent011 agent = new SaunaLEDLightAgent011(mqttURI);
         System.in.read();
     }
 }

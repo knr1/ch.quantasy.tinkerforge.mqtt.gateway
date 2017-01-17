@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.agent.led;
 
+import ch.quantasy.gateway.agent.led.abilities.AnLEDAbility;
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
 import ch.quantasy.mqtt.gateway.client.ClientContract;
