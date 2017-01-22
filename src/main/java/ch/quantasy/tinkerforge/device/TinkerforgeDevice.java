@@ -114,7 +114,7 @@ public class TinkerforgeDevice<D extends Device> {
         if (device == null || !device.getIdentity().uid.equals(this.uid)) {
             throw new IllegalArgumentException();
         }
-        D oldDevice = device;
+        D oldDevice = this.device;
         this.device = device;
         return oldDevice;
     }

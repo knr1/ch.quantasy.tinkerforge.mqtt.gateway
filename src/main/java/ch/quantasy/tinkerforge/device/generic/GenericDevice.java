@@ -98,10 +98,14 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
     @Override
     public void reconnected() {
         super.reconnected();
+        if (super.getDevice() != null && areListenerAdded) {
+            removeDeviceListeners(getDevice());
+            areListenerAdded = false;
+        }
         if (super.getDevice() != null && !areListenerAdded) {
-            addDeviceListeners(getDevice());
             areListenerAdded = true;
         }
+        System.out.println("New Reconnection of DeviceListeners done.");
     }
 
     public void setCallback(C callback) {

@@ -54,9 +54,7 @@ import com.tinkerforge.IPConnection.DisconnectedListener;
 import com.tinkerforge.IPConnection.EnumerateListener;
 import com.tinkerforge.IPConnectionBase;
 import com.tinkerforge.NotConnectedException;
-import com.tinkerforge.TimeoutException;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -110,7 +108,7 @@ public class TinkerforgeStack {
         this.deviceMap = new HashMap<>();
         this.stackAddress = stackAddress;
         this.ipConnection = new IPConnection();
-        this.ipConnection.setAutoReconnect(true);
+        this.ipConnection.setAutoReconnect(false);
         this.ipConnectionHandler = new IPConnectionHandler(this.ipConnection);
         this.deviceEnumerationHandler = new DeviceEnumerationHandler(this.ipConnection);
     }
@@ -183,7 +181,7 @@ public class TinkerforgeStack {
                         }
                         ipConnection.connect(stackAddress.getHostName(), stackAddress.getPort());
                         Thread.sleep(3000);
-                        if (!deviceEnumerationHandler.getResetEnumerated()) {
+                        if (!deviceEnumerationHandler.getAndResetEnumerated()) {
                             actualConnectionException = new Exception("No enumeration");
                             throw (actualConnectionException);
                         }
@@ -222,24 +220,29 @@ public class TinkerforgeStack {
 
     /**
      * Disconnects from a real Tinkerforge-Stack. If a connection-timer is still
-     * running, it is cancelled.
+     * running, it is canceled.
      */
     public synchronized void disconnect() {
         if (this.timer != null) {
             this.timer.cancel();
             this.timer = null;
         }
-       // try {
-            //this.ipConnection.disconnect();
-       // } catch (final NotConnectedException e) {
+        try {
+            this.ipConnection.disconnect();
+        } catch (final NotConnectedException e) {
             // So what
-       //     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
 
-       // }
+        }
     }
 
     public synchronized void reconnect() {
         disconnect();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
+        }
         connect();
     }
 
@@ -268,7 +271,11 @@ public class TinkerforgeStack {
      * @param device
      */
     protected void deviceReConnected(TinkerforgeDevice device) {
+        for (TinkerforgeDeviceListener listener : deviceListeners) {
+            device.addListener(listener);
+        }
         device.reconnected();
+        System.out.println("Reconnected @Stack:" + this.getStackAddress() + " Device: " + device.getUid());
     }
 
     /**
@@ -279,6 +286,8 @@ public class TinkerforgeStack {
      */
     protected void deviceDisconnected(TinkerforgeDevice device) {
         device.disconnected();
+        System.out.println("Disconnected @Stack:" + this.getStackAddress() + " Device: " + device.getUid());
+
     }
 
     /**
@@ -343,7 +352,7 @@ public class TinkerforgeStack {
         private final IPConnection connection;
         private boolean enumerated;
 
-        public boolean getResetEnumerated() {
+        public boolean getAndResetEnumerated() {
             boolean hasEnumerated = enumerated;
             enumerated = false;
             return hasEnumerated;
@@ -366,18 +375,25 @@ public class TinkerforgeStack {
                 case IPConnection.ENUMERATION_TYPE_AVAILABLE:
                     if (isNewDevice) {
                         TinkerforgeStack.this.deviceConnected(TinkerforgeStack.this.deviceMap.get(uid));
+                        System.out.println("Enumerated: available for new device" + uid);
                     }
+                    System.out.println("Enumerated: available for known device" + uid);
                     break;
                 case IPConnection.ENUMERATION_TYPE_CONNECTED:
                     if (isNewDevice) {
                         TinkerforgeStack.this.deviceConnected(TinkerforgeStack.this.deviceMap.get(uid));
+                        System.out.println("Enumerated: new" + uid);
+
                     } else {
                         TinkerforgeStack.this.deviceReConnected(TinkerforgeStack.this.deviceMap.get(uid));
+                        System.out.println("Enumerated: reconnect" + uid);
+
                     }
                     break;
                 case IPConnection.ENUMERATION_TYPE_DISCONNECTED:
                     if (isNewDevice) {
                         // That is strange!
+                        System.out.println("Strange:" + uid);
                         deviceMap.remove(uid);
                         return;
                     }
@@ -385,7 +401,11 @@ public class TinkerforgeStack {
                     if (device != null) {
                         TinkerforgeStack.this
                                 .deviceDisconnected(device);
+                        System.out.println("Enumerated: disconnected for non null device" + uid);
+
                     }
+                    System.out.println("Enumerated: disconnected for null device" + uid);
+
                     break;
                 default:
                     System.out.println("!!!Unknown cause: " + enumerationType);
@@ -400,6 +420,7 @@ public class TinkerforgeStack {
                 try {
                     isConnectd = tinkerforgeDevice.isConnected();
                     if (isConnectd) {
+                        System.out.println("Device already known "+uid);
                         return false; //Device already known.
                     }
                 } catch (Exception ex) {

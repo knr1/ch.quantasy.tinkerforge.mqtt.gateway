@@ -214,9 +214,6 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
         }
     }
 
-    //Needed for induction-diruption problem
-    int connectionTries = 0;
-
     /**
      * Required for the Watchdog-Hack
      */
@@ -224,11 +221,12 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
     public void connected() {
         System.out.println("Connected");
         super.connected();
-        if (timer == null) {
-            timer = new Timer();
-            timer.schedule(new WatchDog(1), 0, 1000 * 10);
+        if (timer != null) {
+            timer.cancel();
         }
-        connectionTries = 0;
+        timer = new Timer();
+        timer.schedule(new WatchDog(1), 1000, 1000 * 10);
+
     }
 
     /**
@@ -238,11 +236,12 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
     public void reconnected() {
         super.reconnected();
         System.out.println("Reconnected");
-        if (timer == null) {
-            timer = new Timer();
-            timer.schedule(new WatchDog(1), 0, 1000 * 10);
+        if (timer != null) {
+            timer.cancel();
         }
-        connectionTries = 0;
+        timer = new Timer();
+        timer.schedule(new WatchDog(1), 1000, 1000 * 10);
+
     }
 
     /**
@@ -254,13 +253,7 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
         System.out.println("Disconnected");
         if (timer != null) {
             timer.cancel();
-            timer = null;
         }
-        //Needed for induction-disruption problem
-        //if (connectionTries < 3) {
-        //    connectionTries++;
-        getStack().connect();
-        //}
     }
 
     /**
@@ -275,7 +268,6 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
 
         private int failCount;
         private final int maxFailCount;
-        private boolean canceled;
 
         public WatchDog(int maxFailCount) {
             this.maxFailCount = maxFailCount;
@@ -283,52 +275,24 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
 
         @Override
         public void run() {
-            while (true) {
-                try {
-                    if (!canceled) {
-                        MasterDevice.this.getDevice().getIdentity();
-                        failCount = 0;
-                    }
-                    break;
-                } catch (Exception ex) {
-                    System.out.println(failCount);
-                    Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
-                    failCount++;
-                    if (failCount > maxFailCount) {
-                        this.failCount = 0;
-                        try {
-                            if (timer != null) {
-                                timer.cancel();
-                                timer = null;
-
-                            }
-                        } catch (Exception ex1) {
-                            //timer was already null
-                        }
-                        reset();
-                        System.out.println("Resetted");
-                        getStack().disconnect();
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException ex1) {
-                            //fine
-                        }
-                        getStack().connect();
-                        break;
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex1) {
-                        //fine
-                    }
+            System.out.println("Watchdog"+getUid()+" in...");
+            try {
+                MasterDevice.this.getDevice().getIdentity();
+                failCount = 0;
+                System.out.println("Watchdog "+getUid()+" ok...");
+            } catch (Exception ex) {
+                System.out.println("Watchdog "+getUid()+" bad...");
+                System.out.println("Timeout "+getUid()+": " + failCount);
+                Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+                failCount++;
+                if (failCount > maxFailCount) {
+                    System.out.println("Watchdog"+getUid()+" reconnect...");
+                    getStack().reconnect();
+                    super.cancel();
                 }
             }
-        }
+            System.out.println("Watchdog"+getUid()+" out");
 
-        @Override
-        public boolean cancel() {
-            this.canceled = true;
-            return super.cancel();
         }
 
         public int getMaxFailCount() {
