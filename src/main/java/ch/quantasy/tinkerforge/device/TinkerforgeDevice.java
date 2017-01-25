@@ -44,6 +44,7 @@ package ch.quantasy.tinkerforge.device;
 
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.Device;
+import com.tinkerforge.IPConnection;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 import java.util.HashSet;
@@ -59,7 +60,7 @@ import java.util.logging.Logger;
 public class TinkerforgeDevice<D extends Device> {
 
     private final Set<TinkerforgeDeviceListener> deviceListeners;
-
+    private IPConnection connection;
     private final TinkerforgeStack stack;
     private transient D device;
     private final String uid;
@@ -70,11 +71,13 @@ public class TinkerforgeDevice<D extends Device> {
     public TinkerforgeDevice(TinkerforgeStack stack, D device) throws NotConnectedException, TimeoutException {
         this.deviceListeners = new HashSet<>();
         this.stack = stack;
+        this.connection=stack.getIpConnection();
         this.device = device;
         this.uid = device.getIdentity().uid;
         this.position = device.getIdentity().position;
         this.firmwareVersion = device.getIdentity().firmwareVersion;
         this.hardwareVersion = device.getIdentity().hardwareVersion;
+        //this.device.setResponseExpectedAll(true);
     }
 
     public TinkerforgeStack getStack() {
@@ -114,10 +117,18 @@ public class TinkerforgeDevice<D extends Device> {
         if (device == null || !device.getIdentity().uid.equals(this.uid)) {
             throw new IllegalArgumentException();
         }
+        this.connection=getStack().getIpConnection();
         D oldDevice = this.device;
         this.device = device;
+        //this.device.setResponseExpectedAll(true);
         return oldDevice;
     }
+
+    public IPConnection getIPConnection() {
+        return connection;
+    }
+    
+    
 
     public boolean isConnected() throws TimeoutException, NotConnectedException {
         if (device == null) {

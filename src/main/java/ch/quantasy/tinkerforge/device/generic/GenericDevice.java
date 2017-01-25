@@ -55,68 +55,81 @@ import com.tinkerforge.TimeoutException;
 public abstract class GenericDevice<D extends Device, C extends DeviceCallback> extends TinkerforgeDevice<D> {
 
     private C callback;
-    private boolean areListenerAdded;
+    private boolean areListenersAdded;
 
     public GenericDevice(TinkerforgeStack address, D device) throws NotConnectedException, TimeoutException {
         super(address, device);
     }
 
-    protected abstract void addDeviceListeners(D device);
+    protected  abstract void addDeviceListeners(D device);
 
-    protected abstract void removeDeviceListeners(D device);
+    protected  abstract void removeDeviceListeners(D device);
 
     @Override
     public D updateDevice(D device) throws TimeoutException, NotConnectedException, IllegalArgumentException {
         D oldDevice = super.updateDevice(device);
-
+        System.out.print(System.currentTimeMillis()+" Update Device...");
         removeDeviceListeners(oldDevice);
-        areListenerAdded = false;
+        areListenersAdded = false;
+        System.out.print("...DeviceListeners Removed...");
 
         addDeviceListeners(device);
-        areListenerAdded = true;
+        System.out.println("...DeviceListeners added.");
+
+        areListenersAdded = true;
         return device;
     }
 
     @Override
     public void connected() {
         super.connected();
-        if (super.getDevice() != null && !areListenerAdded) {
+        System.out.println(System.currentTimeMillis()+" Connected Device...");
+
+        if (super.getDevice() != null && !areListenersAdded) {
             addDeviceListeners(getDevice());
-            areListenerAdded = true;
+            System.out.println("...DeviceListeners added.");
+
+            areListenersAdded = true;
         }
     }
 
     @Override
     public void disconnected() {
         super.disconnected();
-        if (super.getDevice() != null && areListenerAdded) {
+                System.out.println(System.currentTimeMillis()+" Disconnected Device...");
+
+        if (super.getDevice() != null && areListenersAdded) {
             removeDeviceListeners(getDevice());
-            areListenerAdded = false;
+                        System.out.println("...DeviceListeners removed.");
+
+            areListenersAdded = false;
         }
     }
 
     @Override
     public void reconnected() {
         super.reconnected();
-        if (super.getDevice() != null && areListenerAdded) {
+        if (super.getDevice() != null && areListenersAdded) {
             removeDeviceListeners(getDevice());
-            areListenerAdded = false;
+            areListenersAdded = false;
         }
-        if (super.getDevice() != null && !areListenerAdded) {
-            areListenerAdded = true;
+        if (super.getDevice() != null && !areListenersAdded) {
+            addDeviceListeners(getDevice());
+            areListenersAdded = true;
         }
-        System.out.println("New Reconnection of DeviceListeners done.");
+        System.out.println(System.currentTimeMillis()+" Reconnection of DeviceListeners done.");
     }
 
     public void setCallback(C callback) {
-        if (super.getDevice() != null && this.callback != null && areListenerAdded) {
+        System.out.println(System.currentTimeMillis()+" Callback set: "+ callback);
+        if (super.getDevice() != null && this.callback != null && areListenersAdded) {
             removeDeviceListeners(getDevice());
-            areListenerAdded = false;
+            areListenersAdded = false;
         }
         this.callback = callback;
-        if (super.getDevice() != null && this.callback != null && !areListenerAdded) {
+        if (super.getDevice() != null && this.callback != null && !areListenersAdded) {
             addDeviceListeners(getDevice());
-            areListenerAdded = true;
+            areListenersAdded = true;
         }
     }
 

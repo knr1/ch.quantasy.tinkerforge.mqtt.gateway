@@ -46,16 +46,9 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceMapper;
-import com.tinkerforge.AlreadyConnectedException;
 import com.tinkerforge.Device;
 import com.tinkerforge.IPConnection;
-import com.tinkerforge.IPConnection.ConnectedListener;
-import com.tinkerforge.IPConnection.DisconnectedListener;
 import com.tinkerforge.IPConnection.EnumerateListener;
-import com.tinkerforge.IPConnectionBase;
-import com.tinkerforge.NotConnectedException;
-import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -73,23 +66,21 @@ import java.util.logging.Logger;
  * @author reto
  *
  */
-public class TinkerforgeStack {
+public class TinkerforgeStack implements EnumerateListener {
+
+    private int enumCount;
 
     public static final int DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS = 1000 * 10;
-    private int connectionTimeoutInMilliseconds;
-    private Timer timer;
 
     private final TinkerforgeStackAddress stackAddress;
-    private final Set<TinkerforgeStackListener> listeners;
-    private final Set<TinkerforgeDeviceListener> deviceListeners;
+    private final ConnectionHandler ipConnectionHandler;
 
-    private final IPConnection ipConnection;
+    private final Set<TinkerforgeStackListener> tinkerforgeStackListeners;
+    private final Set<TinkerforgeDeviceListener> tinkerforgeDeviceListeners;
+
     private final Map<String, TinkerforgeDevice> deviceMap;
 
-    private final IPConnectionHandler ipConnectionHandler;
-    private final DeviceEnumerationHandler deviceEnumerationHandler;
-
-    private Exception actualConnectionException;
+    Timer timer;
 
     /**
      * Creates a representation of a Tinkerforge-Stack. Either at 'localhost' or
@@ -101,33 +92,18 @@ public class TinkerforgeStack {
         if (stackAddress == null) {
             throw new IllegalArgumentException();
         }
-        this.connectionTimeoutInMilliseconds = TinkerforgeStack.DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS;
-        this.listeners = new HashSet<>();
-        this.deviceListeners = new HashSet<>();
-
+        this.ipConnectionHandler = new ConnectionHandler(this);
+        this.ipConnectionHandler.setConnectionTimeoutInMilliseconds(DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS);
+        this.tinkerforgeStackListeners = new HashSet<>();
+        this.tinkerforgeDeviceListeners = new HashSet<>();
         this.deviceMap = new HashMap<>();
         this.stackAddress = stackAddress;
-        this.ipConnection = new IPConnection();
-        this.ipConnection.setAutoReconnect(false);
-        this.ipConnectionHandler = new IPConnectionHandler(this.ipConnection);
-        this.deviceEnumerationHandler = new DeviceEnumerationHandler(this.ipConnection);
-    }
 
-    public int getConnectionTimeoutInMilliseconds() {
-        return this.connectionTimeoutInMilliseconds;
-    }
-
-    public void setConnectionTimeoutInMilliseconds(final int connectionTimeoutInMilliseconds) {
-        this.connectionTimeoutInMilliseconds = connectionTimeoutInMilliseconds;
-    }
-
-    public Exception getActualConnectionException() {
-        return this.actualConnectionException;
     }
 
     public void addListener(TinkerforgeStackListener listener) {
 
-        if (this.listeners.add(listener)) {
+        if (this.tinkerforgeStackListeners.add(listener)) {
             if (this.isConnected()) {
                 listener.connected(this);
             } else {
@@ -137,118 +113,27 @@ public class TinkerforgeStack {
     }
 
     public void removeListener(TinkerforgeStackListener listener) {
-        this.listeners.remove(listener);
+        this.tinkerforgeStackListeners.remove(listener);
     }
 
     public void addListener(TinkerforgeDeviceListener listener) {
-        this.deviceListeners.add(listener);
+        this.tinkerforgeDeviceListeners.add(listener);
     }
 
     public void removeListener(TinkerforgeDeviceListener listener) {
-        this.deviceListeners.remove(listener);
+        this.tinkerforgeDeviceListeners.remove(listener);
     }
 
     public TinkerforgeStackAddress getStackAddress() {
         return stackAddress;
     }
 
-    /**
-     * Keeps trying to connect to Tinkerforge-Stack. (After a first successful
-     * connect, the Tinkerforge IP-Connection will manage auto-connect) Then it
-     * connects to the real Tinkerforge-Stack. It then requests the connected
-     * {@link Device}s. Therefore it waits for some time (3-seconds)
-     *
-     * @throws UnknownHostException
-     * @throws IOException
-     */
-    public synchronized void connect() {
-        System.out.println("Connecting");
-        if (this.timer != null) {
-            return;
-        }
-        this.timer = new Timer(true);
-        this.timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                try {
-                    try {
-                        try {
-                            ipConnection.disconnect();
-                        } catch (NotConnectedException ex) {
-                            //Just wanted to make sure!
-                            //Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        ipConnection.connect(stackAddress.getHostName(), stackAddress.getPort());
-                        Thread.sleep(3000);
-                        if (!deviceEnumerationHandler.getAndResetEnumerated()) {
-                            actualConnectionException = new Exception("No enumeration");
-                            throw (actualConnectionException);
-                        }
-                        //Problem: If Connection cannot be established after breakdown, Tinkerforge will not realize that.
-                        //Enumeration simply will not return anything. So we check after 5 seconds... if there was an enumeration after the connection.
-                        //Sorry, is stupid... but I have to do it this way until Tinkerforge finds the bug :-(
-
-                    } catch (final AlreadyConnectedException e) {
-                        // Oh, great, that is what we want!
-                        Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
-
-                    } catch (final InterruptedException e) {
-                        // OK, we go on
-                        Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
-
-                    }
-                    actualConnectionException = null;
-                    timer.cancel();
-                    timer = null;
-                } catch (final UnknownHostException e) {
-                    actualConnectionException = e;
-                    Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
-
-                } catch (final IOException e) {
-                    actualConnectionException = e;
-                    Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
-
-                } catch (final Exception e) {
-                    actualConnectionException = e;
-                    Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
-                }
-            }
-        }, 0, getConnectionTimeoutInMilliseconds());
-
+    public void connect() {
+        ipConnectionHandler.connect();
     }
 
-    /**
-     * Disconnects from a real Tinkerforge-Stack. If a connection-timer is still
-     * running, it is canceled.
-     */
-    public synchronized void disconnect() {
-        if (this.timer != null) {
-            this.timer.cancel();
-            this.timer = null;
-        }
-        try {
-            this.ipConnection.disconnect();
-        } catch (final NotConnectedException e) {
-            // So what
-            Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
-
-        }
-    }
-
-    public synchronized void reconnect() {
-        disconnect();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        connect();
-    }
-
-    public boolean isConnected() {
-        return (this.ipConnection != null)
-                && (this.ipConnection.getConnectionState() == IPConnection.CONNECTION_STATE_CONNECTED);
+    public void disconnect() {
+        ipConnectionHandler.disconnect();
     }
 
     /**
@@ -257,10 +142,15 @@ public class TinkerforgeStack {
      * @param device
      */
     protected void deviceConnected(TinkerforgeDevice device) {
-        for (TinkerforgeDeviceListener listener : deviceListeners) {
+        for (TinkerforgeDeviceListener listener : tinkerforgeDeviceListeners) {
             device.addListener(listener);
         }
         device.connected();
+        System.out.println("Connected @Stack:" + this.getStackAddress() + " Device: " + device.getUid());
+    }
+
+    public boolean isConnected() {
+        return ipConnectionHandler.isConnected();
     }
 
     /**
@@ -271,7 +161,7 @@ public class TinkerforgeStack {
      * @param device
      */
     protected void deviceReConnected(TinkerforgeDevice device) {
-        for (TinkerforgeDeviceListener listener : deviceListeners) {
+        for (TinkerforgeDeviceListener listener : tinkerforgeDeviceListeners) {
             device.addListener(listener);
         }
         device.reconnected();
@@ -299,157 +189,128 @@ public class TinkerforgeStack {
         return new HashSet<>(this.deviceMap.values());
     }
 
-    private class IPConnectionHandler implements ConnectedListener, DisconnectedListener {
+    private IPConnection ipConnection;
 
-        private final IPConnection connection;
+    public synchronized IPConnection getIpConnection() {
+        return ipConnection;
+    }
 
-        public IPConnectionHandler(final IPConnection connection) {
-            this.connection = connection;
-            connection.addConnectedListener(this);
-            connection.addDisconnectedListener(this);
+    protected synchronized void connected(IPConnection ipConnection) throws Exception {
+        System.out.println("Connected at TinkerforgeStack");
+        this.ipConnection = ipConnection;
+        this.ipConnection.addEnumerateListener(this);
+        this.ipConnection.enumerate();
+        for (TinkerforgeStackListener listener : tinkerforgeStackListeners) {
+            listener.connected(TinkerforgeStack.this);
         }
-
-        @Override
-        public void disconnected(final short disconnectReason) {
-            for (TinkerforgeDevice device : getDevices()) {
-                deviceDisconnected(device);
-            }
-            for (TinkerforgeStackListener listener : listeners) {
-                listener.disconnected(TinkerforgeStack.this);
-            }
-            System.out.println("Disconnected due to: " + disconnectReason);
-            if (disconnectReason == IPConnectionBase.DISCONNECT_REASON_ERROR) {
-                connect();
-            }
-            //IPConnectionBase.java
-            //DISCONNECT_REASON_REQUEST = 0;
-            //DISCONNECT_REASON_ERROR = 1;
-            //DISCONNECT_REASON_SHUTDOWN = 2;
-
+        if (timer != null) {
+            timer.cancel();
         }
+        timer = new Timer();
+        this.timer.schedule(new WatchDog(1), 10000, 10000);
 
-        @Override
-        public void connected(final short connectReason) {
-            try {
-                this.connection.enumerate();
-                for (TinkerforgeStackListener listener : listeners) {
-                    listener.connected(TinkerforgeStack.this);
-                }
-                for (TinkerforgeDevice device : getDevices()) {
-                    deviceConnected(device);
-                }
+    }
 
-            } catch (final Exception ex) {
-                // Well, this should not happen?!
-                // But will treat it gracefully.
-                Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    protected void disconnected() {
+        this.ipConnection.removeEnumerateListener(this);
+        for (TinkerforgeDevice device : getDevices()) {
+            deviceDisconnected(device);
+        }
+        for (TinkerforgeStackListener listener : tinkerforgeStackListeners) {
+            listener.disconnected(TinkerforgeStack.this);
+        }
+        this.ipConnection = null;
+        if (timer != null) {
+            timer.cancel();
         }
     }
 
-    private class DeviceEnumerationHandler implements EnumerateListener {
-
-        private final IPConnection connection;
-        private boolean enumerated;
-
-        public boolean getAndResetEnumerated() {
-            boolean hasEnumerated = enumerated;
-            enumerated = false;
-            return hasEnumerated;
-        }
-
-        public DeviceEnumerationHandler(final IPConnection connection) {
-            this.connection = connection;
-            this.connection.addEnumerateListener(this);
-        }
-
-        @Override
-        public void enumerate(final String uid, final String connectedUid, final char position,
-                final short[] hardwareVersion, final short[] firmwareVersion, final int deviceIdentifier,
-                final short enumerationType) {
-
-            enumerated = true;
-            System.out.println("Enumerated:" + uid);
-            boolean isNewDevice = this.createTinkerforgeDevice(deviceIdentifier, uid);
-            switch (enumerationType) {
-                case IPConnection.ENUMERATION_TYPE_AVAILABLE:
-                    if (isNewDevice) {
-                        TinkerforgeStack.this.deviceConnected(TinkerforgeStack.this.deviceMap.get(uid));
-                        System.out.println("Enumerated: available for new device" + uid);
-                    }
+    @Override
+    public void enumerate(final String uid, final String connectedUid, final char position,
+            final short[] hardwareVersion, final short[] firmwareVersion, final int deviceIdentifier,
+            final short enumerationType) {
+        count--;
+        System.out.println("Enumerated: " + uid);
+        boolean isNewDevice = this.manageTinkerforgeDevice(deviceIdentifier, uid, ipConnection);
+        switch (enumerationType) {
+            case IPConnection.ENUMERATION_TYPE_AVAILABLE:
+                if (isNewDevice) {
+                    TinkerforgeStack.this.deviceConnected(TinkerforgeStack.this.deviceMap.get(uid));
+                    System.out.println("Enumerated: available for new device " + uid);
+                } else {
                     System.out.println("Enumerated: available for known device" + uid);
-                    break;
-                case IPConnection.ENUMERATION_TYPE_CONNECTED:
-                    if (isNewDevice) {
-                        TinkerforgeStack.this.deviceConnected(TinkerforgeStack.this.deviceMap.get(uid));
-                        System.out.println("Enumerated: new" + uid);
+                }
+                break;
+            case IPConnection.ENUMERATION_TYPE_CONNECTED:
+                if (isNewDevice) {
+                    TinkerforgeStack.this.deviceConnected(TinkerforgeStack.this.deviceMap.get(uid));
+                    System.out.println("Enumerated: new" + uid);
 
-                    } else {
-                        TinkerforgeStack.this.deviceReConnected(TinkerforgeStack.this.deviceMap.get(uid));
-                        System.out.println("Enumerated: reconnect" + uid);
+                } else {
+                    TinkerforgeStack.this.deviceReConnected(TinkerforgeStack.this.deviceMap.get(uid));
+                    System.out.println("Enumerated: reconnect" + uid);
 
-                    }
-                    break;
-                case IPConnection.ENUMERATION_TYPE_DISCONNECTED:
-                    if (isNewDevice) {
-                        // That is strange!
-                        System.out.println("Strange:" + uid);
-                        deviceMap.remove(uid);
-                        return;
-                    }
-                    TinkerforgeDevice device = TinkerforgeStack.this.deviceMap.get(uid);
-                    if (device != null) {
-                        TinkerforgeStack.this
-                                .deviceDisconnected(device);
-                        System.out.println("Enumerated: disconnected for non null device" + uid);
+                }
+                break;
+            case IPConnection.ENUMERATION_TYPE_DISCONNECTED:
+                if (isNewDevice) {
+                    // That is strange!
+                    System.out.println("Strange:" + uid);
+                    deviceMap.remove(uid);
+                    return;
+                }
+                TinkerforgeDevice device = TinkerforgeStack.this.deviceMap.get(uid);
+                if (device != null) {
+                    TinkerforgeStack.this
+                            .deviceDisconnected(device);
+                    System.out.println("Enumerated: disconnected for non null device" + uid);
 
-                    }
-                    System.out.println("Enumerated: disconnected for null device" + uid);
+                }
+                System.out.println("Enumerated: disconnected for null device" + uid);
 
-                    break;
-                default:
-                    System.out.println("!!!Unknown cause: " + enumerationType);
-            }
-
+                break;
+            default:
+                System.out.println("!!!Unknown cause: " + enumerationType);
         }
 
-        private boolean createTinkerforgeDevice(final int deviceIdentifier, final String uid) {
+    }
+
+    private boolean manageTinkerforgeDevice(final int deviceIdentifier, final String uid, final IPConnection connection) {
+        try {
             TinkerforgeDevice tinkerforgeDevice = TinkerforgeStack.this.deviceMap.get(uid);
             if (tinkerforgeDevice != null) {
-                boolean isConnectd = false;
                 try {
-                    isConnectd = tinkerforgeDevice.isConnected();
-                    if (isConnectd) {
-                        System.out.println("Device already known "+uid);
-                        return false; //Device already known.
+                    if (this.getIpConnection().equals(tinkerforgeDevice.getIPConnection())) {
+                        if (tinkerforgeDevice.isConnected()) {
+                            System.out.println("Device is running just fine " + uid);
+                            return false; //Device already known.
+                        }
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
-                    return false; // There is a device, but the connection to it is broken.
+                    // There is a device, but the connection to it is broken.
                 }
+            }
 
+            TinkerforgeDeviceClass tinkerforgeDeviceClass = TinkerforgeDeviceClass.getDevice(deviceIdentifier);
+            if (tinkerforgeDeviceClass == null) {
+                return false; //Device not (yet)supported
             }
-            try {
-                TinkerforgeDeviceClass tinkerforgeDeviceClass = TinkerforgeDeviceClass.getDevice(deviceIdentifier);
-                if (tinkerforgeDeviceClass == null) {
-                    return false; //Device not (yet)supported
-                }
-                final Device device = (Device) tinkerforgeDeviceClass.deviceClass
-                        .getDeclaredConstructor(String.class, IPConnection.class).newInstance(uid,
-                        TinkerforgeStack.this.ipConnection);
-                if (tinkerforgeDevice != null) {
-                    tinkerforgeDevice.updateDevice(device);
-                    return false;
-                }
-                tinkerforgeDevice = TinkerforgeDeviceMapper.getTinkerforgeDevice(TinkerforgeStack.this, device);
-                TinkerforgeStack.this.deviceMap.put(tinkerforgeDevice.getUid(), tinkerforgeDevice);
-                return true;
-            } catch (final Exception ex) {
-                Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
+            final Device device = (Device) tinkerforgeDeviceClass.deviceClass
+                    .getDeclaredConstructor(String.class, IPConnection.class).newInstance(uid,
+                    TinkerforgeStack.this.ipConnection);
+
+            if (tinkerforgeDevice != null) {
+                tinkerforgeDevice.updateDevice(device);
+                return false;
             }
-            return false;
+            tinkerforgeDevice = TinkerforgeDeviceMapper.getTinkerforgeDevice(TinkerforgeStack.this, device);
+            TinkerforgeStack.this.deviceMap.put(tinkerforgeDevice.getUid(), tinkerforgeDevice);
+            return true;
+        } catch (final Exception ex) {
+            Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return false;
     }
 
     @Override
@@ -477,6 +338,55 @@ public class TinkerforgeStack {
     @Override
     public String toString() {
         return getClass().getName() + "{" + "stackAddress=" + stackAddress + '}';
+
+    }
+    private int count;
+
+    /**
+     * The purpose of this class is to check, if Tinkerforge lost the
+     * IP-Connection (Why is not known).
+     * http://www.tinkerunity.org/forum/index.php/topic,3809.msg23169.html#msg23169
+     * If the watchdog cannot get some value (via Tinkerforges IP-Connection),
+     * the IP-Connection must be 'dead'. Hence disconnect the stack and connect
+     * it again.
+     */
+    class WatchDog extends TimerTask {
+
+        private int failCount;
+        private final int maxFailCount;
+
+        public WatchDog(int maxFailCount) {
+            this.maxFailCount = maxFailCount;
+        }
+
+        @Override
+        public void run() {
+            try {
+                System.out.println(System.currentTimeMillis() + " deviceMap: " + deviceMap.size());
+                count = deviceMap.size();
+                ipConnection.enumerate();
+                Thread.sleep(5000);
+                if (count > 0) {
+                    ipConnectionHandler.reconnect();
+                    this.cancel();
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        public int getMaxFailCount() {
+            return maxFailCount;
+        }
+
+        public int getFailCount() {
+            return failCount;
+        }
+
+        public void resetFailCount() {
+            this.failCount = 0;
+        }
+
     }
 
 }
