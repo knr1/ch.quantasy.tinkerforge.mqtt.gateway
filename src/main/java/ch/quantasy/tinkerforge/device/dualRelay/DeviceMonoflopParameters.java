@@ -57,16 +57,16 @@ public class DeviceMonoflopParameters {
     private DeviceMonoflopParameters() {
     }
 
-    public DeviceMonoflopParameters(short relay, boolean state, long period) {
+    public DeviceMonoflopParameters(short relay, boolean state, long period) throws IllegalArgumentException{
+        if(relay!=1&&relay!=2) throw new IllegalArgumentException("Relay should be 1 or 2 but requested: "+relay);
+        if(period<0) throw new IllegalArgumentException("Period must be positive or 0 but requested: "+period);
         this.relay = relay;
         this.state = state;
         this.period = period;
     }
     
-    public DeviceMonoflopParameters(BrickletDualRelay.Monoflop monoflop){
-        this.relay=monoflop.relay;
-        this.state=monoflop.state;
-        this.period=monoflop.timeRemaining;
+    public DeviceMonoflopParameters(short relay, BrickletDualRelay.Monoflop monoflop) throws IllegalArgumentException{
+        this(relay,monoflop.state,monoflop.timeRemaining);
     }
 
     public short getRelay() {
@@ -105,5 +105,11 @@ public class DeviceMonoflopParameters {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "DeviceMonoflopParameters{" + "relay=" + relay + ", state=" + state + ", period=" + period + '}';
+    }
+    
     
 }

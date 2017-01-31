@@ -41,12 +41,14 @@
  */
 package ch.quantasy.tinkerforge.stack;
 
+import static ch.quantasy.tinkerforge.stack.TinkerforgeStack.DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS;
 import com.tinkerforge.AlreadyConnectedException;
 import com.tinkerforge.Device;
 import com.tinkerforge.IPConnection;
 import com.tinkerforge.IPConnectionBase;
 import com.tinkerforge.NotConnectedException;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -67,6 +69,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
     private Exception actualConnectionException;
 
     public ConnectionHandler(TinkerforgeStack stack) {
+        this.connectionTimeoutInMilliseconds=DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS;
         this.stack = stack;
     }
 
@@ -135,6 +138,10 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
                             //Just wanted to make sure!
                             //Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        //Patch! Tinkerforge runs into a out of memory, as it allocates threads that are not removed...
+                        //@TODO: Remove, as soon as Tinkerforge has corrected that problem.
+                        Socket tmpSocket = new Socket(stack.getStackAddress().getHostName(), stack.getStackAddress().getPort());
+                        tmpSocket.close();
                         ipConnection = new IPConnection();
                         System.out.println("Got a new IP-Connection");
                         ipConnection.addConnectedListener(ConnectionHandler.this);

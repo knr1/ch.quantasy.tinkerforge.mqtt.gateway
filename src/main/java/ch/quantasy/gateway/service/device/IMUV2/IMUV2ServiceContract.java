@@ -87,6 +87,9 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
     public final String STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD;
     public final String STATUS_ALL_DATA_CALLBACK_PERIOD;
     public final String STATUS_ACCELERATION_CALLBACK_PERIOD;
+    public final String SENSOR_FUSION_MODE;
+    public final String STATUS_SENSOR_FUSION_MODE;
+    public final String INTENT_SENSOR_FUSION_MODE;
     public final String EVENT_ACCELERATION;
     public final String EVENT_ALL_DATA;
     public final String EVENT_ANGULAR_VELOCITY;
@@ -157,8 +160,12 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
         STATUS_LEDS = STATUS + "/" + LEDS + "/" + CALLBACK_PERIOD;
 
         STATUS_LED = "statusLED";
-        INTENT_STATUS_LED = INTENT + "/" + STATUS_LED + "/" + CALLBACK_PERIOD;
-        STATUS_STATUS_LED = STATUS + "/" + STATUS_LED + "/" + CALLBACK_PERIOD;
+        INTENT_STATUS_LED = INTENT + "/" + STATUS_LED;
+        STATUS_STATUS_LED = STATUS + "/" + STATUS_LED;
+        
+        SENSOR_FUSION_MODE="sensorFusionMode";
+        INTENT_SENSOR_FUSION_MODE = INTENT + "/" + SENSOR_FUSION_MODE;
+        STATUS_SENSOR_FUSION_MODE = STATUS + "/" + SENSOR_FUSION_MODE;
 
     }
 }

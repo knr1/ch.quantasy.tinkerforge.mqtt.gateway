@@ -72,4 +72,6 @@ public interface IMUV2DeviceCallback extends DeviceCallback, BrickIMUV2.Accelera
     public void statusLEDChanged(Boolean isEnabled);
 
     public void LEDsChanged(Boolean areEnabled);
+
+    public void sensorFusionModeChanged(Short sensorFusionMode);
 }

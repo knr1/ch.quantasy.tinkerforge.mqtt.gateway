@@ -67,9 +67,9 @@ public class DeviceMonoflopParameters implements Comparable<DeviceMonoflopParame
         this.period = period;
     }
     
-    public DeviceMonoflopParameters(BrickletIO16.PortMonoflop monoflop){
-        this.port=monoflop.port;
-        this.pin=monoflop.pin;
+    public DeviceMonoflopParameters(char port, short pin,BrickletIO16.PortMonoflop monoflop){
+        this.port=port;
+        this.pin=pin;
         this.value=monoflop.value;
         this.period=monoflop.time;
         this.timeRemaining=monoflop.timeRemaining;

@@ -69,7 +69,7 @@ public class TinkerforgeStackFactory {
     
 
     public boolean addStack(final TinkerforgeStackAddress address) {
-        if (this.tinkerforgeStacks.containsKey(this)) {
+        if (this.tinkerforgeStacks.containsKey(address)) {
             return false;
         }
         this.tinkerforgeStacks.put(address, new TinkerforgeStack(address));

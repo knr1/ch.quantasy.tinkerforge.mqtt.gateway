@@ -66,6 +66,8 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
     private Long orientationPeriod;
     private Long quaternionPeriod;
     private Long temperaturePeriod;
+    
+    private Short sensorFusionMode;
 
     private Boolean isStatusLEDEnabled;
     private Boolean areLEDsEnabled;
@@ -118,6 +120,9 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
         }
         if(areLEDsEnabled!=null){
             setLEDs(areLEDsEnabled);
+        }
+        if(sensorFusionMode!=null){
+            setSensorFusionMode(sensorFusionMode);
         }
     }
 
@@ -237,6 +242,15 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
         }
     }
 
+    public void setSensorFusionMode(Short sensorFusionMode) {
+        try {
+            this.getDevice().setSensorFusionMode(sensorFusionMode);
+            this.sensorFusionMode= getDevice().getSensorFusionMode();
+            super.getCallback().sensorFusionModeChanged(this.sensorFusionMode);
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void setLEDs(Boolean areLEDsEnabled) {
         try {
             if (areLEDsEnabled) {

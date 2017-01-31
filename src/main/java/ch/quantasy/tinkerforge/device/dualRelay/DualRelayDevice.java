@@ -71,12 +71,12 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
         device.addMonoflopDoneListener(super.getCallback());
         device.addMonoflopDoneListener(this);
 
-        for (DeviceMonoflopParameters parameters : monoflopParametersMap.values()) {
-            setMonoflop(parameters);
-        }
-        if (state != null) {
-            setState(state);
-        }
+        //for (DeviceMonoflopParameters parameters : monoflopParametersMap.values()) {
+        //    setMonoflop(parameters);
+        //}
+        //if (state != null) {
+        //    setState(state);
+        //}
 
     }
 
@@ -89,8 +89,15 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
 
     public void setMonoflop(DeviceMonoflopParameters parameters) {
         try {
+            System.out.println("Monoflop setting parameters: "+parameters);
             getDevice().setMonoflop(parameters.getRelay(), parameters.getState(), parameters.getPeriod());
-            this.monoflopParametersMap.put(parameters.getRelay(),new DeviceMonoflopParameters(getDevice().getMonoflop(parameters.getRelay())));
+            System.out.println("Monoflop parameters set.");
+            System.out.println("Reading parameters back from device...");
+            BrickletDualRelay.Monoflop monoflop=getDevice().getMonoflop(parameters.getRelay());
+            // This is a patch, as Tinkerforge has forgotten to fill in the relay.
+            // TODO: Take out that patch, as soon as Tinkerforge corrected the bug.
+            this.monoflopParametersMap.put(parameters.getRelay(),new DeviceMonoflopParameters(parameters.getRelay(),monoflop));
+            
             this.state = new DeviceState(getDevice().getState());
             super.getCallback().stateChanged(this.state);
         } catch (TimeoutException | NotConnectedException ex) {
@@ -121,6 +128,7 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
     @Override
     public void monoflopDone(short s, boolean bln) {
         try {
+            
             this.state = new DeviceState(getDevice().getState());
             super.getCallback().stateChanged(this.state);
         } catch (TimeoutException | NotConnectedException ex) {
