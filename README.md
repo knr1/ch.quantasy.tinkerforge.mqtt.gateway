@@ -415,8 +415,140 @@ Message: - line: 0
            position: 0
            text: "BLUE: 18°C"
 ```
-### Supported Device so far...
-* BrickDC
+## API
+### ManagerService
+This service allows a user to add or remove a true tinkerforge stack.
+```  
+     TF/ManagerService/I/stack/address/add
+       hostName: <String>
+       prot: [0..4223..65535]
+```
+```  
+     TF/ManagerService/I/stack/address/remove
+       hostName: <String>
+       prot: [0..4223..65535]
+```
+```
+     TF/ManagerService/S/stack/<hostName>/connected
+        timestamp: <UNSIGNED_NUMBER_63>
+        value: [true|false]
+```
+```
+     TF/ManagerService/E/stack/address/connected
+        timestamp: <UNSIGNED_NUMBER_63>
+        value:
+          hostName: <String>
+          prot: [0..4223..65535]
+```
+```
+     TF/ManagerService/E/stack/address/disconnected
+        timestamp: <UNSIGNED_NUMBER_63>
+        value:
+          hostName: <String>
+          prot: [0..4223..65536]
+```
+```
+     TF/ManagerService/E/stack/address/added
+        timestamp: <UNSIGNED_NUMBER_63>
+        value:
+          hostName: <String>
+          prot: [0..4223..65536]
+```
+```
+     TF/ManagerService/E/stack/address/removed
+        timestamp: <UNSIGNED_NUMBER_63>
+        value:
+          hostName: <String>
+          prot: [0..4223..65536]
+```
+
+### BrickDC
+```
+    TF/DC/<uid>/I/acceleration
+        [0..2147483647]
+```
+```
+    TF/DC/<uid>/I/driverMode
+        [0|1]
+```
+```
+    TF/DC/<uid>/I/enabled
+        [true|false]
+```
+```
+    TF/DC/<uid>/I/fullBrake
+        [true|false]
+```
+```
+    TF/DC/<uid>/I/minimumVoltage
+        [6000..2147483647]
+```
+```
+    TF/DC/<uid>/I/pwmFrequency
+        [1..20000]
+```
+```
+    TF/DC/<uid>/I/velocity/velocity
+         [-32767..32767]
+```
+```
+    TF/DC/<uid>/I/velocity/callbackPeriod
+        [0..2147483647]
+```
+```     
+    TF/DC/<uid>/S/acceleration
+         [0..2147483647]
+```
+```     
+    TF/DC/<uid>/S/driverMode
+         [0|1]
+```
+```     
+    TF/DC/<uid>/S/enabled
+         [true|false]
+```
+```     
+    TF/DC/<uid>/S/minimumVoltage
+         [6..2147483647]
+```
+```     
+    TF/DC/<uid>/S/pwmFrequency
+         [1..20000]
+```
+```     
+    TF/DC/<uid>/S/velocity/velocity
+         [-32767..32767]
+```
+```     
+    TF/DC/<uid>/S/velocityCallbackPeriod
+         [0..2147483647]
+```
+```
+     TF/DC/<uid>/E/fullBrake
+        timestamp: <UNSIGNED_NUMBER_63>
+        value: <UNSIGNED_NUMBER_63>
+```
+```
+    TF/DC/<uid>/E/underVoltage 
+        timestamp: <UNSIGNED_NUMBER_63>
+        value: [0..2147483647]
+```
+```
+    TF/DC/<uid>/E/velocity
+        timestamp: <UNSIGNED_NUMBER_63>
+        value: [0..32767]
+```
+```
+    TF/DC/<uid>/E/velocity/reached
+         timestamp: <UNSIGNED_NUMBER_63>
+         value: [0..32767]
+```
+```     
+    TF/DC/<uid>/E/emergencyShutdown
+         timestamp: <UNSIGNED_NUMBER64>
+         value: <UNSIGNED_NUMBER_63>
+```
+
 * BrickIMU
 * BrickIMUV2
 * BrickMaster

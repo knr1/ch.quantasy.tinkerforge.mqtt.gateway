@@ -83,6 +83,7 @@ public class DCServiceContract extends DeviceServiceContract {
     public final String STATUS_PWM_FREQUENCY;
 
     public final String FULL_BRAKE;
+    public final String INTENT_FULL_BRAKE;
     public final String EVENT_FULL_BRAKE;
 
     public final String ACCELERATION;
@@ -114,14 +115,15 @@ public class DCServiceContract extends DeviceServiceContract {
         STATUS_VELOCITY_VELOCITY = STATUS_VELOCITY + "/" + VELOCITY;
         EVENT_VELOCITY_VELOCITY = EVENT_VELOCITY + "/" + VELOCITY;
         INTENT_VELOCITY_VELOCITY = INTENT_VELOCITY + "/" + VELOCITY;
-        REACHED="reached";
-        EVENT_VELOCITY_REACHED = EVENT_VELOCITY  + "/" +REACHED;
+        REACHED = "reached";
+        EVENT_VELOCITY_REACHED = EVENT_VELOCITY + "/" + REACHED;
 
         CALLBACK_PERIOD = "callbackPeriod";
         STATUS_VELOCITY_CALLBACK_PERIOD = STATUS_VELOCITY + "/" + CALLBACK_PERIOD;
         INTENT_VELOCITY_CALLBACK_PERIOD = INTENT_VELOCITY + "/" + CALLBACK_PERIOD;
 
         FULL_BRAKE = "fullBrake";
+        INTENT_FULL_BRAKE = INTENT + "/" + FULL_BRAKE;
         EVENT_FULL_BRAKE = EVENT + "/" + FULL_BRAKE;
 
         ACCELERATION = "acceleration";
