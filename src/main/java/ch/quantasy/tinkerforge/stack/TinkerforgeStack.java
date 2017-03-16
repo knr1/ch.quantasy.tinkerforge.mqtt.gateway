@@ -237,7 +237,7 @@ public class TinkerforgeStack implements EnumerateListener {
                     TinkerforgeStack.this.deviceConnected(TinkerforgeStack.this.deviceMap.get(uid));
                      Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Enumerated: available for new device " + uid);
                 } else {
-                     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Enumerated: available for known device" + uid);
+                     //Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Enumerated: available for known device" + uid);
                 }
                 break;
             case IPConnection.ENUMERATION_TYPE_CONNECTED:
