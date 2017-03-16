@@ -42,7 +42,6 @@
  */
 package ch.quantasy.gateway.agent.led;
 
-import ch.quantasy.gateway.agent.led.abilities.AnLEDAbility;
 import ch.quantasy.gateway.agent.led.abilities.WaveAdjustableBrightness;
 import ch.quantasy.gateway.service.device.ledStrip.LEDStripServiceContract;
 import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorServiceContract;
@@ -53,7 +52,6 @@ import ch.quantasy.mqtt.gateway.client.GatewayClient;
 import ch.quantasy.mqtt.gateway.client.GCEvent;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
-import ch.quantasy.tinkerforge.device.led.LEDFrame;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import java.util.ArrayList;

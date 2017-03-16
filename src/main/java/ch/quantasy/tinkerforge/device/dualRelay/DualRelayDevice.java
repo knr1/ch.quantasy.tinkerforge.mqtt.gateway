@@ -89,10 +89,7 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
 
     public void setMonoflop(DeviceMonoflopParameters parameters) {
         try {
-            System.out.println("Monoflop setting parameters: "+parameters);
             getDevice().setMonoflop(parameters.getRelay(), parameters.getState(), parameters.getPeriod());
-            System.out.println("Monoflop parameters set.");
-            System.out.println("Reading parameters back from device...");
             BrickletDualRelay.Monoflop monoflop=getDevice().getMonoflop(parameters.getRelay());
             // This is a patch, as Tinkerforge has forgotten to fill in the relay.
             // TODO: Take out that patch, as soon as Tinkerforge corrected the bug.

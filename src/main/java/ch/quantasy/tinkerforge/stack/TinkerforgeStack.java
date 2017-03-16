@@ -146,7 +146,7 @@ public class TinkerforgeStack implements EnumerateListener {
             device.addListener(listener);
         }
         device.connected();
-        System.out.println("Connected @Stack:" + this.getStackAddress() + " Device: " + device.getUid());
+                Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Connected @Stack:" + this.getStackAddress() + " Device: " + device.getUid());
     }
 
     public boolean isConnected() {
@@ -165,7 +165,7 @@ public class TinkerforgeStack implements EnumerateListener {
             device.addListener(listener);
         }
         device.reconnected();
-        System.out.println("Reconnected @Stack:" + this.getStackAddress() + " Device: " + device.getUid());
+                Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Reconnected @Stack:" + this.getStackAddress() + " Device: " + device.getUid());
     }
 
     /**
@@ -176,7 +176,7 @@ public class TinkerforgeStack implements EnumerateListener {
      */
     protected void deviceDisconnected(TinkerforgeDevice device) {
         device.disconnected();
-        System.out.println("Disconnected @Stack:" + this.getStackAddress() + " Device: " + device.getUid());
+         Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Disconnected @Stack:" + this.getStackAddress() + " Device: " + device.getUid());
 
     }
 
@@ -230,32 +230,31 @@ public class TinkerforgeStack implements EnumerateListener {
             final short[] hardwareVersion, final short[] firmwareVersion, final int deviceIdentifier,
             final short enumerationType) {
         count--;
-        System.out.println("Enumerated: " + uid);
         boolean isNewDevice = this.manageTinkerforgeDevice(deviceIdentifier, uid, ipConnection);
         switch (enumerationType) {
             case IPConnection.ENUMERATION_TYPE_AVAILABLE:
                 if (isNewDevice) {
                     TinkerforgeStack.this.deviceConnected(TinkerforgeStack.this.deviceMap.get(uid));
-                    System.out.println("Enumerated: available for new device " + uid);
+                     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Enumerated: available for new device " + uid);
                 } else {
-                    System.out.println("Enumerated: available for known device" + uid);
+                     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Enumerated: available for known device" + uid);
                 }
                 break;
             case IPConnection.ENUMERATION_TYPE_CONNECTED:
                 if (isNewDevice) {
                     TinkerforgeStack.this.deviceConnected(TinkerforgeStack.this.deviceMap.get(uid));
-                    System.out.println("Enumerated: new" + uid);
+                     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Enumerated: new" + uid);
 
                 } else {
                     TinkerforgeStack.this.deviceReConnected(TinkerforgeStack.this.deviceMap.get(uid));
-                    System.out.println("Enumerated: reconnect" + uid);
+                     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Enumerated: reconnect" + uid);
 
                 }
                 break;
             case IPConnection.ENUMERATION_TYPE_DISCONNECTED:
                 if (isNewDevice) {
                     // That is strange!
-                    System.out.println("Strange:" + uid);
+                     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.WARNING, "Strange:" + uid);
                     deviceMap.remove(uid);
                     return;
                 }
@@ -263,14 +262,14 @@ public class TinkerforgeStack implements EnumerateListener {
                 if (device != null) {
                     TinkerforgeStack.this
                             .deviceDisconnected(device);
-                    System.out.println("Enumerated: disconnected for non null device" + uid);
+                     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Enumerated: disconnected for non null device" + uid);
 
                 }
-                System.out.println("Enumerated: disconnected for null device" + uid);
+                 Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.INFO, "Enumerated: disconnected for null device" + uid);
 
                 break;
             default:
-                System.out.println("!!!Unknown cause: " + enumerationType);
+                 Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.WARNING, "!!!Unknown cause: " + enumerationType);
         }
 
     }
@@ -282,7 +281,6 @@ public class TinkerforgeStack implements EnumerateListener {
                 try {
                     if (this.getIpConnection().equals(tinkerforgeDevice.getIPConnection())) {
                         if (tinkerforgeDevice.isConnected()) {
-                            System.out.println("Device is running just fine " + uid);
                             return false; //Device already known.
                         }
                     }

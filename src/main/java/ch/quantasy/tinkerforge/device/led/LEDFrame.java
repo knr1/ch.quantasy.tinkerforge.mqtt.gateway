@@ -45,6 +45,8 @@ package ch.quantasy.tinkerforge.device.led;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -147,7 +149,7 @@ public class LEDFrame {
                 channels[i][j] = (short) Math.min(255, (short) ((channels[i][j] * brightnessFactor) + 0.5));
                 channels[i][j] = (short) Math.max(0, channels[i][j]);
                 if (channels[i][j] < 0 || channels[i][j] > 255) {
-                    System.out.println("Too big.");
+                                    Logger.getLogger(LEDFrame.class.getName()).log(Level.SEVERE, "Illegal Argument in frame: "+channels[i][j]);
                 }
             }
         }

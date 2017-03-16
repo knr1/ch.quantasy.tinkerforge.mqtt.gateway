@@ -139,7 +139,7 @@ public class OuterLightsAgent {
                     } else if (illuminance[0].getValue() > 20) {
                         delayedOff.setPaused(true);
                     }
-                    System.out.println(illuminance[0]);
+                                    Logger.getLogger(OuterLightsAgent.class.getName()).log(Level.INFO, "Illuminance: ", illuminance[0]);
                 }
             }
             );

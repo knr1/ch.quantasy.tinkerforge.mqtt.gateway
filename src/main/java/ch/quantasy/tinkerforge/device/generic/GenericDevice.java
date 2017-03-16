@@ -68,13 +68,10 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
     @Override
     public D updateDevice(D device) throws TimeoutException, NotConnectedException, IllegalArgumentException {
         D oldDevice = super.updateDevice(device);
-        System.out.print(System.currentTimeMillis()+" Update Device...");
         removeDeviceListeners(oldDevice);
         areListenersAdded = false;
-        System.out.print("...DeviceListeners Removed...");
 
         addDeviceListeners(device);
-        System.out.println("...DeviceListeners added.");
 
         areListenersAdded = true;
         return device;
@@ -83,11 +80,9 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
     @Override
     public void connected() {
         super.connected();
-        System.out.println(System.currentTimeMillis()+" Connected Device...");
 
         if (super.getDevice() != null && !areListenersAdded) {
             addDeviceListeners(getDevice());
-            System.out.println("...DeviceListeners added.");
 
             areListenersAdded = true;
         }
@@ -96,11 +91,9 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
     @Override
     public void disconnected() {
         super.disconnected();
-                System.out.println(System.currentTimeMillis()+" Disconnected Device...");
 
         if (super.getDevice() != null && areListenersAdded) {
             removeDeviceListeners(getDevice());
-                        System.out.println("...DeviceListeners removed.");
 
             areListenersAdded = false;
         }
@@ -117,11 +110,9 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
             addDeviceListeners(getDevice());
             areListenersAdded = true;
         }
-        System.out.println(System.currentTimeMillis()+" Reconnection of DeviceListeners done.");
     }
 
     public void setCallback(C callback) {
-        System.out.println(System.currentTimeMillis()+" Callback set: "+ callback);
         if (super.getDevice() != null && this.callback != null && areListenersAdded) {
             removeDeviceListeners(getDevice());
             areListenersAdded = false;

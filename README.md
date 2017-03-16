@@ -417,7 +417,8 @@ Message: - line: 0
 ```
 ## API
 ### ManagerService
-This service allows a user to add or remove a true tinkerforge stack.
+This logical service allows a user to add or remove a true tinkerforge stack. As soon a a stack is connected, the service takes care of the 
+connected Bricks and Bricklets.
 ```  
      TF/ManagerService/I/stack/address/add
        hostName: <String>
@@ -430,36 +431,36 @@ This service allows a user to add or remove a true tinkerforge stack.
 ```
 ```
      TF/ManagerService/S/stack/<hostName>/connected
-        timestamp: <UNSIGNED_NUMBER_63>
+        timestamp: [0..9223372036854775807]
         value: [true|false]
 ```
 ```
      TF/ManagerService/E/stack/address/connected
-        timestamp: <UNSIGNED_NUMBER_63>
-        value:
-          hostName: <String>
-          prot: [0..4223..65535]
+        - timestamp: [0..9223372036854775807]
+          value:
+            hostName: <String>
+            prot: [0..4223..65535]
 ```
 ```
      TF/ManagerService/E/stack/address/disconnected
-        timestamp: <UNSIGNED_NUMBER_63>
-        value:
-          hostName: <String>
-          prot: [0..4223..65536]
+        - timestamp: [0..9223372036854775807]
+          value:
+            hostName: <String>
+            prot: [0..4223..65536]
 ```
 ```
      TF/ManagerService/E/stack/address/added
-        timestamp: <UNSIGNED_NUMBER_63>
-        value:
-          hostName: <String>
-          prot: [0..4223..65536]
+        - timestamp: [0..9223372036854775807]
+          value:
+            hostName: <String>
+            prot: [0..4223..65536]
 ```
 ```
      TF/ManagerService/E/stack/address/removed
-        timestamp: <UNSIGNED_NUMBER_63>
-        value:
-          hostName: <String>
-          prot: [0..4223..65536]
+        - timestamp: [0..9223372036854775807]
+          value:
+            hostName: <String>
+            prot: [0..4223..65536]
 ```
 
 ### BrickDC
@@ -525,33 +526,358 @@ This service allows a user to add or remove a true tinkerforge stack.
 ```
 ```
      TF/DC/<uid>/E/fullBrake
-        timestamp: <UNSIGNED_NUMBER_63>
-        value: <UNSIGNED_NUMBER_63>
+        - timestamp: [0..9223372036854775807]
+          value: [0..9223372036854775807]
 ```
 ```
     TF/DC/<uid>/E/underVoltage 
-        timestamp: <UNSIGNED_NUMBER_63>
-        value: [0..2147483647]
+        - timestamp: [0..9223372036854775807]
+          value: [0..2147483647]
 ```
 ```
     TF/DC/<uid>/E/velocity
-        timestamp: <UNSIGNED_NUMBER_63>
-        value: [0..32767]
+        - timestamp: [0..9223372036854775807]
+          value: [0..32767]
 ```
 ```
     TF/DC/<uid>/E/velocity/reached
-         timestamp: <UNSIGNED_NUMBER_63>
-         value: [0..32767]
+         - timestamp: [0..9223372036854775807]
+           value: [0..32767]
 ```
 ```     
     TF/DC/<uid>/E/emergencyShutdown
-         timestamp: <UNSIGNED_NUMBER64>
-         value: <UNSIGNED_NUMBER_63>
+         - timestamp: [0..9223372036854775807]
+           value: [0..9223372036854775807]
 ```
 
-* BrickIMU
-* BrickIMUV2
-* BrickMaster
+### BrickIMU
+```
+    TF/IMU/<uid>/I/acceleration/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/allData/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/angularVelocity/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/magneticField/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/orientation/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/quaternion/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/LEDs
+        [true|false]
+```
+```
+    TF/IMU/<uid>/I/statusLED
+        [true|false]
+```
+```
+    TF/IMU/<uid>/I/orientationCalculation
+        [true|false]
+```
+```
+    TF/IMU/<uid>/S/acceleration/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/allData/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/angularVelocity/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/magneticField/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/orientation/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/quaternion/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/LEDs
+        [true|false]
+```
+```
+    TF/IMU/<uid>/S/statusLED
+        [true|false]
+```
+```
+    TF/IMU/<uid>/S/orientationCalculation
+        [true|false]
+```
+```
+    TF/IMU/<uid>/E/acceleration
+        - timestamp: <UNSIGNED_NUMBER_63>
+          x: [-32768..32767]
+          y: [-32768..32767]
+          z: [-32768..32767]
+```
+```
+    TF/IMU/<uid>/E/angularVelocity
+        - timestamp: [0..9223372036854775807]
+          x: [-32768..32767]
+          y: [-32768..32767]
+          z: [-32768..32767]
+```
+```
+    TF/IMU/<uid>/E/magneticField
+        - timestamp: [0..9223372036854775807]
+          x: [-32768..32767]
+          y: [-32768..32767]
+          z: [-32768..32767]
+```
+```
+    TF/IMU/<uid>/E/angularVelocity
+        - timestamp: [0..9223372036854775807]
+          heading: [-32768..32767]
+          roll: [-32768..32767]
+          pitch: [-32768..32767]
+```
+```
+    TF/IMU/<uid>/E/quaternion
+        - timestamp: [0..9223372036854775807]
+          w: [-32768..32767]
+          x: [-32768..32767]
+          y: [-32768..32767]
+          z: [-32768..32767]
+```
+```
+    TF/IMU/<uid>/E/allData
+        - timestamp: [0..9223372036854775807]
+          acceleration:
+              x: [-32768..32767]
+              y: [-32768..32767]
+              z: [-32768..32767]
+          angularVelocity:
+              x: [-32768..32767]
+              y: [-32768..32767]
+              z: [-32768..32767]
+          magneticField:
+              x: [-32768..32767]
+              y: [-32768..32767]
+              z: [-32768..32767]
+          angularVelocity:
+              heading: [-32768..32767]
+              roll: [-32768..32767]
+              pitch: [-32768..32767]
+          quaternion:
+              w: [-32768..32767]
+              x: [-32768..32767]
+              y: [-32768..32767]
+              z: [-32768..32767]
+```
+### BrickIMUV2
+```
+    TF/IMU/<uid>/I/acceleration/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/allData/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/angularVelocity/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/magneticField/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/orientation/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/quaternion/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/I/LEDs
+        [true|false]
+```
+```
+    TF/IMU/<uid>/I/statusLED
+        [true|false]
+```
+```
+    TF/IMU/<uid>/I/sensorFusionMode
+        [0..1]
+```
+```
+    TF/IMU/<uid>/S/acceleration/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/allData/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/angularVelocity/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/magneticField/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/orientation/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/quaternion/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/temperature/callbackPeriod
+        [0..9223372036854775807]
+```
+```
+    TF/IMU/<uid>/S/LEDs
+        [true|false]
+```
+```
+    TF/IMU/<uid>/S/statusLED
+        [true|false]
+```
+```
+    TF/IMU/<uid>/S/sensorFustionMode
+        [0..1]
+```
+```
+    TF/IMU/<uid>/E/acceleration
+        - timestamp: [0..9223372036854775807]
+          x: [-32768..32767]
+          y: [-32768..32767]
+          z: [-32768..32767]
+```
+```
+    TF/IMU/<uid>/E/angularVelocity
+        - timestamp: [0..9223372036854775807]
+          x: [-32768..32767]
+          y: [-32768..32767]
+          z: [-32768..32767]
+```
+```
+    TF/IMU/<uid>/E/magneticField
+        - timestamp: [0..9223372036854775807]
+          x: [-32768..32767]
+          y: [-32768..32767]
+          z: [-32768..32767]
+```
+```
+    TF/IMU/<uid>/E/angularVelocity
+        - timestamp: [0..9223372036854775807]
+          heading: [-32768..32767]
+          roll: [-32768..32767]
+          pitch: [-32768..32767]
+```
+```
+    TF/IMU/<uid>/E/quaternion
+        - timestamp: [0..9223372036854775807]
+          w: [-32768..32767]
+          x: [-32768..32767]
+          y: [-32768..32767]
+          z: [-32768..32767]
+```
+```
+    TF/IMU/<uid>/E/temperature
+        - timestamp: [0..9223372036854775807]
+          value: [-128..127]
+```
+```
+    TF/IMU/<uid>/E/allData
+        - timestamp: [0..9223372036854775807]
+          acceleration:
+              x: [-32768..32767]
+              y: [-32768..32767]
+              z: [-32768..32767]
+          angularVelocity:
+              x: [-32768..32767]
+              y: [-32768..32767]
+              z: [-32768..32767]
+          magneticField:
+              x: [-32768..32767]
+              y: [-32768..32767]
+              z: [-32768..32767]
+          angularVelocity:
+              heading: [-32768..32767]
+              roll: [-32768..32767]
+              pitch: [-32768..32767]
+          quaternion:
+              w: [-32768..32767]
+              x: [-32768..32767]
+              y: [-32768..32767]
+              z: [-32768..32767]
+          temperature: [-128..127]
+          calibrationStatus: [0..255]    
+```
+### BrickMaster
+```
+TF/Master/<uid>/I/debounce/period
+    [0..9223372036854775807]
+```
+```
+TF/Master/<uid>/I/stack/current/callbackPeriod
+    [0..9223372036854775807]
+```
+```
+TF/Master/<uid>/I/stack/current/callbackThreshold
+    [0..9223372036854775807]
+```
+```
+TF/Master/<uid>/I/stack/voltage/callbackPeriod
+    [0..9223372036854775807]
+```
+```
+TF/Master/<uid>/I/stack/voltage/callbackThreshold
+    [0..9223372036854775807]
+```
+```
+TF/Master/<uid>/I/usb/voltage/callbackPeriod
+    [0..9223372036854775807]
+```
+```
+TF/Master/<uid>/I/statusLED/enabled
+    [true|false]
+```
+
+        publishDescription(getContract().EVENT_RESET, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_STACK_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_STACK_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+
+        publishDescription(getContract().EVENT_USB_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_USB_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+
+        publishDescription(getContract().EVENT_STACK_CURRENT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
+        publishDescription(getContract().EVENT_STACK_CURRENT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
+
+        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_STACK_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_STATUS_LED_ENABLED, "[true|false]");
+        publishDescription(getContract().STATUS_CURRENT_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        publishDescription(getContract().STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, "[" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]");
+        publishDescription(getContract().STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+
+        publishDescription(getContract().STATUS_USB_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+
 * BrickServo
 * BrickletAccelerometer
 * BrickletAmbientLight

@@ -68,7 +68,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         publishDescription(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         publishDescription(getContract().INTENT_LEDS, "true|false]");
         publishDescription(getContract().INTENT_STATUS_LED, "true|false]");
-        publishDescription(getContract().INTENT_SENSOR_FUSION_MODE, "[0..1]");
+        publishDescription(getContract().INTENT_SENSOR_FUSION_MODE, "[0..2]");
 
 
         publishDescription(getContract().STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -82,7 +82,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         publishDescription(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         publishDescription(getContract().STATUS_STATUS_LED, "[true|false]");
         publishDescription(getContract().STATUS_LEDS, "[true|false]");
-        publishDescription(getContract().STATUS_SENSOR_FUSION_MODE, "[0..1]");
+        publishDescription(getContract().STATUS_SENSOR_FUSION_MODE, "[0..2]");
 
         publishDescription(getContract().EVENT_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
         publishDescription(getContract().EVENT_ANGULAR_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");

@@ -99,7 +99,7 @@ public class XMasLEDLightAgent01 {
         gatewayClient.subscribe(ledServiceContract1.EVENT_LAGING, (topic, payload) -> {
             GCEvent<Long>[] lag = (GCEvent<Long>[]) gatewayClient.toEventArray(payload, Boolean.class);
 
-            System.out.println("Laging: " + Arrays.toString(lag));
+                            Logger.getLogger(XMasLEDLightAgent01.class.getName()).log(Level.INFO, "Laging:", Arrays.toString(lag));
         });
         try {
             Thread.sleep(3000);

@@ -69,14 +69,14 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
     private Exception actualConnectionException;
 
     public ConnectionHandler(TinkerforgeStack stack) {
-        this.connectionTimeoutInMilliseconds=DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS;
+        this.connectionTimeoutInMilliseconds = DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS;
         this.stack = stack;
     }
 
     @Override
     public void disconnected(final short disconnectReason) {
         this.stack.disconnected();
-        System.out.println(System.currentTimeMillis() + " Disconnected due to: " + disconnectReason);
+        Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, " Disconnected due to: " + disconnectReason);
         if (disconnectReason == IPConnectionBase.DISCONNECT_REASON_ERROR) {
             connect();
         }
@@ -104,8 +104,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
         } catch (final Exception ex) {
             // Well, this should not happen?!
             // But will treat it gracefully.
-            System.out.println("Exception during connected....");
-            Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnectionHandler.class.getName()).log(Level.SEVERE, "Exception during connected...", ex);
         }
     }
 
@@ -117,7 +116,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
      * @throws IOException
      */
     public void connect() {
-        System.out.println("Connection requested...");
+        Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Connection requested...");
         if (this.timer != null) {
             return;
         }
@@ -125,9 +124,10 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
         this.timer.schedule(new TimerTask() {
 
             private int count;
+
             @Override
             public void run() {
-                System.out.println("Attempt: "+ count++);
+                Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Attempt: ", count++);
                 try {
                     try {
                         try {
@@ -143,11 +143,11 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
                         Socket tmpSocket = new Socket(stack.getStackAddress().getHostName(), stack.getStackAddress().getPort());
                         tmpSocket.close();
                         ipConnection = new IPConnection();
-                        System.out.println("Got a new IP-Connection");
+                        Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Got a new IP-Connection");
                         ipConnection.addConnectedListener(ConnectionHandler.this);
                         ipConnection.addDisconnectedListener(ConnectionHandler.this);
                         ipConnection.connect(stack.getStackAddress().getHostName(), stack.getStackAddress().getPort());
-                        System.out.println("New IP-Connection connected");
+                        Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "New IP-Connection connected");
                         this.cancel();
 
                     } catch (final AlreadyConnectedException e) {
@@ -187,10 +187,10 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
             this.timer = null;
         }
         try {
-            System.out.println("IP will be disconnected");
+            Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "IP will be disconnected");
             this.ipConnection.disconnect();
             this.ipConnection = null;
-            System.out.println("IP is disconnected");
+            Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "IP is disconnected");
 
         } catch (final NotConnectedException e) {
             // So what
@@ -201,21 +201,20 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
     private boolean isReconnecting = false;
 
     public void reconnect() {
-        System.out.println("Reconnecting:...");
+        Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Reconnecting:...");
         if (isReconnecting) {
             return;
         }
         isReconnecting = true;
-        System.out.println("Disconnect...");
+        Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Disconnect...");
         disconnect();
         try {
-            System.out.println("Will sleep for 2 Secs...");
-
+            Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Will sleep for 2 Secs...");
             Thread.sleep(2000);
         } catch (InterruptedException ex) {
             Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("Connect...");
+                Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Connect...");
         connect();
         isReconnecting = false;
     }

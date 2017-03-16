@@ -75,31 +75,29 @@ public class XMasTreeLEDLightAgent01 {
 
     public XMasTreeLEDLightAgent01(URI mqttURI) throws MqttException {
         frameDurationInMillis = 100;
-        amountOfLEDs = 200;
+        amountOfLEDs = 2;
         waveList = new ArrayList<>();
         managerServiceContract = new ManagerServiceContract("Manager");
         gatewayClient = new GatewayClient(mqttURI, "xmastree4985", new ClientContract("Agent", "XMasTreeLED", "XMasTreeLed01"));
         gatewayClient.connect();
 
         //connectRemoteServices(new TinkerforgeStackAddress("lights01"));
-        connectRemoteServices(new TinkerforgeStackAddress("xmastree"));
+        connectRemoteServices(new TinkerforgeStackAddress("lights10"));
         //connectRemoteServices(new TinkerforgeStackAddress("lights03"));
 
-        // LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRG);
-        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2801, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.RGB);
+        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2811, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.GRB);
+        //LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2801, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.RGB);
 
-        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("iHn", TinkerforgeDeviceClass.LEDStrip.toString());
+        LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("xe9", TinkerforgeDeviceClass.LEDStrip.toString());
         //LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("p34", TinkerforgeDeviceClass.LEDStrip.toString());
-       
-        // LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
 
+        // LEDStripServiceContract ledServiceContract2 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
         waveList.add(new MovingDot(ledServiceContract1, config));
         //  waveList.add(new Wave(ledServiceContract2, config));
 
         gatewayClient.subscribe(ledServiceContract1.EVENT_LAGING, (topic, payload) -> {
             GCEvent<Long>[] lag = (GCEvent<Long>[]) gatewayClient.toEventArray(payload, Boolean.class);
-
-            System.out.println("Laging: " + Arrays.toString(lag));
+            Logger.getLogger(XMasTreeLEDLightAgent01.class.getName()).log(Level.INFO, "Laging:", Arrays.toString(lag));
         });
         try {
             Thread.sleep(3000);
@@ -151,6 +149,9 @@ public class XMasTreeLEDLightAgent01 {
             int RED = 255;
             int GREEN = 90;
             int BLUE = 10;
+//            int RED = 10;
+//            int GREEN = 90;
+//            int BLUE = 255;
             for (int position = 0; position < leds.getNumberOfLEDs(); position++) {
                 double damper = random.nextDouble();
                 leds.setColor((short) 0, (short) position, (short) Math.max(RED / 2, Math.min(RED, RED * damper)));
@@ -161,20 +162,20 @@ public class XMasTreeLEDLightAgent01 {
             try {
                 while (true) {
                     while (frames.size() < 150) {
-                        for (int position = 1; position < leds.getNumberOfLEDs(); position++) {
-                            double damper = random.nextDouble();
+                        for (int position = 0; position < leds.getNumberOfLEDs(); position++) {
+                            double damper = random.nextDouble() * 0.6;
                             leds.setColor((short) 0, (short) position, (short) Math.max(RED / 2, Math.min(RED, RED * damper)));
                             leds.setColor((short) 1, (short) position, (short) Math.max(GREEN / 2, Math.min(GREEN, GREEN * damper)));
                             leds.setColor((short) 2, (short) position, (short) Math.max(BLUE / 2, Math.min(BLUE, BLUE * damper)));
                         }
                         LEDFrame sparkly = new LEDFrame(leds);
-                        for (int position = 1; position < leds.getNumberOfLEDs(); position++) {
-                            if (random.nextInt(1000) == 0) {
-                                sparkly.setColor((short) 0, (short) position, (short) 255);
-                                sparkly.setColor((short) 1, (short) position, (short) 255);
-                                sparkly.setColor((short) 2, (short) position, (short) 255);
-                            }
-                        }
+//                        for (int position = 1; position < leds.getNumberOfLEDs(); position++) {
+//                            if (random.nextInt(1000) == 0) {
+//                                sparkly.setColor((short) 0, (short) position, (short) 255);
+//                                sparkly.setColor((short) 1, (short) position, (short) 255);
+//                                sparkly.setColor((short) 2, (short) position, (short) 255);
+//                            }
+//                        }
                         frames.add(new LEDFrame(sparkly));
                     }
                     super.setLEDFrames(frames);

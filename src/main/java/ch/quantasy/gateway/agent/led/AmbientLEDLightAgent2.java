@@ -91,11 +91,11 @@ public class AmbientLEDLightAgent2 {
 
         waveList.add(new MovingDot(ledServiceContract1, config));
         //  waveList.add(new Wave(ledServiceContract2, config));
-        
-        gatewayClient.subscribe(ledServiceContract1.EVENT_LAGING, (topic, payload) -> {
-                        GCEvent<Long>[] lag = (GCEvent<Long>[])gatewayClient.toEventArray(payload, Boolean.class);
 
-            System.out.println("Laging: "+Arrays.toString(lag));
+        gatewayClient.subscribe(ledServiceContract1.EVENT_LAGING, (topic, payload) -> {
+            GCEvent<Long>[] lag = (GCEvent<Long>[]) gatewayClient.toEventArray(payload, Boolean.class);
+
+            Logger.getLogger(AmbientLEDLightAgent.class.getName()).log(Level.INFO,"Laging", Arrays.toString(lag));
         });
 
         for (MovingDot wave : waveList) {
@@ -128,11 +128,11 @@ public class AmbientLEDLightAgent2 {
             super.setLEDFrame(getNewLEDFrame());
 
             LEDFrame leds = super.getNewLEDFrame();
-            LEDFrame flash= super.getNewLEDFrame();
-            
-            for(int position=0;position<flash.getNumberOfLEDs();position++){
-                for(int channel=0;channel<flash.getNumberOfChannels();channel++){
-                    flash.setColor(channel, position, (short)255);
+            LEDFrame flash = super.getNewLEDFrame();
+
+            for (int position = 0; position < flash.getNumberOfLEDs(); position++) {
+                for (int channel = 0; channel < flash.getNumberOfChannels(); channel++) {
+                    flash.setColor(channel, position, (short) 255);
                 }
             }
 
@@ -149,17 +149,17 @@ public class AmbientLEDLightAgent2 {
                         int channel = 0;
                         for (int position = 1; position < leds.getNumberOfLEDs(); position++) {
                             newLEDs.setColor((short) channel, position, leds.getColor(channel, position - 1));
-                            newLEDs.setColor((short) (channel+1), position-1, leds.getColor(channel+1, position));
+                            newLEDs.setColor((short) (channel + 1), position - 1, leds.getColor(channel + 1, position));
                         }
                         newLEDs.setColor((short) channel, 0, leds.getColor(channel, leds.getNumberOfLEDs() - 1));
-                        newLEDs.setColor((short) (channel + 1), leds.getNumberOfLEDs()-1, leds.getColor(channel+1, 0));
+                        newLEDs.setColor((short) (channel + 1), leds.getNumberOfLEDs() - 1, leds.getColor(channel + 1, 0));
 
                         //}
                         LEDFrame tmpLEDs = leds;
                         leds = newLEDs;
                         newLEDs = tmpLEDs;
                         frames.add(new LEDFrame(leds));
-                        if(leds.getColor(0, leds.getNumberOfLEDs()/2)!=0){
+                        if (leds.getColor(0, leds.getNumberOfLEDs() / 2) != 0) {
                             frames.add(flash);
                         }
                     }

@@ -51,6 +51,8 @@ import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.mqtt.gateway.client.MessageReceiver;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -136,7 +138,7 @@ public class MotionLightAgent implements MessageReceiver {
         SwitchSocketCParameters config = new SwitchSocketCParameters('D', (short) 3, state);
         String topic = remoteSwitchServiceContract.INTENT_SWITCH_SOCKET_C;
         gatewayClient.publishIntent(topic, config);
-        System.out.println("Switching: " + state);
+                        Logger.getLogger(MotionLightAgent.class.getName()).log(Level.INFO,"Switching:",state);
     }
 
     public static void main(String[] args) throws Throwable {
