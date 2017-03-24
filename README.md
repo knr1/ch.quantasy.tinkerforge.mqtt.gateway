@@ -1,10 +1,12 @@
 # TiMqWay
-[Data-driven] [micro-service]s for the bricks and bricklets of the [Tinkerforge](tm) world, using [MQTT] as transport and decoupling layer.
-
+[Data-driven] [micro-service]s for the bricks and bricklets of the [Tinkerforge](tm) world, based on ch.quantasy.mqtt.gateway.
 ch.quantasy.tinkerforge.mqtt.gateway
 
-The underlying idea of TiMqWay is a bunch of self-explaining micro-services, providing a data-driven interface to the known Tinkerforge devices. This way,
- the implementation is agnostic to the programming-language and paradigm used for orchestration. Any of which fits, as long as you master it.
+Please note, that this project depends on [https://github.com/knr1/ch.quantasy.mqtt.gateway]
+
+
+The underlying idea of TiMqWay is a set of self-explaining micro-services, providing a data-driven interface to the known Tinkerforge devices. This way,
+ the implementation is agnostic to the programming-language and paradigm used for orchestration. Any language will do, as long as you master it.
 
 What is left to do for the user of TiMqWay, is the orchestration and choreography of how these services in order to fit the needs.
 

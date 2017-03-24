@@ -74,15 +74,15 @@ public class XMasTreeJokeLEDLightAgent01 {
 
     public XMasTreeJokeLEDLightAgent01(URI mqttURI) throws MqttException {
         frameDurationInMillis = 10;
-        amountOfLEDs = 120;
+        amountOfLEDs = 16;
         waveList = new ArrayList<>();
         managerServiceContract = new ManagerServiceContract("Manager");
         gatewayClient = new GatewayClient(mqttURI, "433407hfraXMasTreeJoke", new ClientContract("Agent", "XmasTreeJoke", "Joke01"));
         gatewayClient.connect();
 
-        connectRemoteServices(new TinkerforgeStackAddress("xmastree"));
+        connectRemoteServices(new TinkerforgeStackAddress("localhost"));
 
-        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2801, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRGW);
+        LEDStripDeviceConfig config = new LEDStripDeviceConfig(LEDStripDeviceConfig.ChipType.WS2812, 2000000, frameDurationInMillis, amountOfLEDs, LEDStripDeviceConfig.ChannelMapping.BRGW);
 
         LEDStripServiceContract ledServiceContract1 = new LEDStripServiceContract("p5z", TinkerforgeDeviceClass.LEDStrip.toString());
 

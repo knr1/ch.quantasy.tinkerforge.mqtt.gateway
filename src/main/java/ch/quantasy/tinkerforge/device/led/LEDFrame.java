@@ -42,7 +42,6 @@
  */
 package ch.quantasy.tinkerforge.device.led;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -136,11 +135,41 @@ public class LEDFrame {
     }
 
     /**
-     * Returns a new LEDFrame with the specified brightness. 0 is true black,
-     * 512 is true white
+     * Returns a new LEDFrame with all input-Frames combined (Max-Value)...
      *
-     * @param brightnessFactor (something between 0 and infinity)
+     * @param ledFrames
      * @return
+     */
+    public LEDFrame combine(LEDFrame... ledFrames) {
+        short[][] leds = new short[channels.length][];
+
+        for (LEDFrame ledFrame : ledFrames) {
+            if (ledFrame.getNumberOfChannels() != this.getNumberOfChannels()) {
+                continue;
+            }
+            if (ledFrame.getNumberOfLEDs() != this.getNumberOfLEDs()) {
+                continue;
+            }
+            for (int c = 0; c < getNumberOfChannels(); c++) {
+                leds[c] = channels[c].clone();
+                for (int pos = 0; pos < getNumberOfLEDs(); pos++) {
+                    leds[c][pos] = (short) Math.max(leds[c][pos], ledFrame.channels[c][pos]);
+                }
+            }
+        }
+        if (leds[0] == null) {
+            return this;
+        } else {
+            return new LEDFrame(leds);
+        }
+    }
+
+    /**
+     * Returns a new LEDFrame with the specified brightness. 0 is true black,
+     * 255 is true white
+     *
+     * @param ledFrame
+     * @param brightnessFactor (something between 0.0 and Infinity)
      */
     public LEDFrame(LEDFrame ledFrame, double brightnessFactor) {
         this(ledFrame);
@@ -149,7 +178,7 @@ public class LEDFrame {
                 channels[i][j] = (short) Math.min(255, (short) ((channels[i][j] * brightnessFactor) + 0.5));
                 channels[i][j] = (short) Math.max(0, channels[i][j]);
                 if (channels[i][j] < 0 || channels[i][j] > 255) {
-                                    Logger.getLogger(LEDFrame.class.getName()).log(Level.SEVERE, "Illegal Argument in frame: "+channels[i][j]);
+                    Logger.getLogger(LEDFrame.class.getName()).log(Level.SEVERE, "Illegal Argument in frame: " + channels[i][j]);
                 }
             }
         }
