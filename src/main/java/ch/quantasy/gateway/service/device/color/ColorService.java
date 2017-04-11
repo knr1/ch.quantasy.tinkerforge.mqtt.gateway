@@ -59,19 +59,6 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
     public ColorService(ColorDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new ColorServiceContract(device));
-        publishDescription(getContract().INTENT_COLOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_IllUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_COLOR_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
-        publishDescription(getContract().INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().EVENT_COLOR, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: \n   red: [0..65535]\n   green: [0..65535]\n   blue: [0..65535]\n   clear: [0..65535]\n");
-        publishDescription(getContract().EVENT_ILLUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..65535]\n");
-        publishDescription(getContract().EVENT_COLOR_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n red: [0..65535]\n green: [0..65535]\n blue: [0..65535]\n clear: [0..65535]\n");
-        publishDescription(getContract().EVENT_COLOR_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..65535]\n");
-        publishDescription(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_COLOR_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
-        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 
     @Override
@@ -173,8 +160,6 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
         private Color() {
         }
-
-        
 
         public Color(int red, int green, int blue, int clear) {
             this.timestamp = timestamp;

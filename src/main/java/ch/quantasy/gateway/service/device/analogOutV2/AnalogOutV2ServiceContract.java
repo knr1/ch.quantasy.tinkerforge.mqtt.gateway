@@ -45,13 +45,13 @@ package ch.quantasy.gateway.service.device.analogOutV2;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
+import java.util.Map;
 
 /**
  *
  * @author reto
  */
 public class AnalogOutV2ServiceContract extends DeviceServiceContract {
-
 
     public final String OUTPUT_VOLTAGE;
     public final String STATUS_OUTPUT_VOLTAGE;
@@ -66,8 +66,11 @@ public class AnalogOutV2ServiceContract extends DeviceServiceContract {
         OUTPUT_VOLTAGE = "outputVoltage";
         STATUS_OUTPUT_VOLTAGE = STATUS + "/" + OUTPUT_VOLTAGE;
         INTENT_OUTPUT_VOLTAGE = INTENT + "/" + OUTPUT_VOLTAGE;
+    }
 
-       
-
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_OUTPUT_VOLTAGE, "[0..12000]");
+        descriptions.put(STATUS_OUTPUT_VOLTAGE, "[0..12000]");
     }
 }

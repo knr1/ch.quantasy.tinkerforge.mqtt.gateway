@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.ledStrip;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
+import java.util.Map;
 
 /**
  *
@@ -76,20 +77,29 @@ public class LEDStripServiceContract extends DeviceServiceContract {
         FRAME = "frame";
         EVENT_LEDs = EVENT + "/" + FRAME;
         INTENT_FRAME = INTENT + "/" + FRAME;
-        
-        FRAMES="multiFrames";
+
+        FRAMES = "multiFrames";
         INTENT_FRAMES = INTENT + "/" + FRAMES;
-        
 
         CONFIG = "config";
         STATUS_CONFIG = STATUS + "/" + CONFIG;
         EVENT_CONFIG = EVENT + "/" + CONFIG;
         INTENT_CONFIG = INTENT + "/" + CONFIG;
-        
-        RENDERED="rendered";
-        EVENT_LEDs_RENDERED= EVENT_LEDs+"/"+RENDERED;
-        
-        LAGING="laging";
-        EVENT_LAGING=EVENT+"/"+LAGING;
+
+        RENDERED = "rendered";
+        EVENT_LEDs_RENDERED = EVENT_LEDs + "/" + RENDERED;
+
+        LAGING = "laging";
+        EVENT_LAGING = EVENT + "/" + LAGING;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_CONFIG, "chipType: [WS2801|WS2811|WS2812]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
+        descriptions.put(INTENT_FRAME, "channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels");
+        descriptions.put(INTENT_FRAMES, "{ channels: {{[0..255],..,[0..255]}_numLEDs\n ...\n {[0..255],..,[0..255]}_numLEDs}_numChannels }_*");
+        descriptions.put(EVENT_LEDs_RENDERED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]\n");
+        descriptions.put(EVENT_LAGING, "timestamp: [0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_CONFIG, "chipType: [WS2801|WS2811|WS2812|WS2812RGBW|LPD8806|APA102]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
     }
 }

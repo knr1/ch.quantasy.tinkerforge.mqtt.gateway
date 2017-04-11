@@ -1,8 +1,8 @@
 /*
  * /*
- *  *   "TiMqWay"
+ *  *   "SeMqWay"
  *  *
- *  *    TiMqWay(tm): A gateway to provide an MQTT-View for the Tinkerforge(tm) world (Tinkerforge-MQTT-Gateway).
+ *  *    SeMqWay(tm): A gateway to provide an MQTT-View for any micro-service (Service MQTT-Gateway).
  *  *
  *  *    Copyright (c) 2016 Bern University of Applied Sciences (BFH),
  *  *    Research Institute for Security in the Information Society (RISIS), Wireless Communications & Secure Internet of Things (WiCom & SIoT),
@@ -42,13 +42,17 @@
  */
 package ch.quantasy.gateway.service;
 
+import ch.quantasy.mqtt.gateway.client.ClientContract;
 
 /**
  *
  * @author reto
  */
-public class TinkerForgeServiceContract extends ServiceContract{
-    public TinkerForgeServiceContract(String baseClass,String instance){
-        super("TF",baseClass,instance);
-    }        
+public abstract class TinkerForgeServiceContract extends ClientContract{
+
+    public TinkerForgeServiceContract(String baseClass, String instance) {
+        super("TF", baseClass, instance);
+    }
+
+    
 }

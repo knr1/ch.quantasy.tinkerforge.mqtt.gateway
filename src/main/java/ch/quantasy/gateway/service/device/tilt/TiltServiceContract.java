@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.tilt;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
+import java.util.Map;
 
 /**
  *
@@ -58,10 +59,16 @@ public class TiltServiceContract extends DeviceServiceContract {
     public TiltServiceContract(TiltDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
+
     public TiltServiceContract(String id, String device) {
         super(id, device);
 
         TILT_STATE = "tiltState";
         EVENT_TILT_STATE = EVENT + "/" + TILT_STATE;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(EVENT_TILT_STATE, "[0..2]");
     }
 }

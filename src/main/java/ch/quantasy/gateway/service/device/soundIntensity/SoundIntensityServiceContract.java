@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.soundIntensity;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
+import java.util.Map;
 
 /**
  *
@@ -73,7 +74,6 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
     private final String INTENT_DEBOUNCE;
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
-
 
     public SoundIntensityServiceContract(SoundIntensityDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -104,5 +104,18 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
         INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
         INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_SOUND_INTENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
+
+        descriptions.put(EVENT_INTENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
+        descriptions.put(EVENT_INTENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
+        descriptions.put(STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_SOUND_INTENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 }

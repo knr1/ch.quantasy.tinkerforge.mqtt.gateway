@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.analogInV2;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
+import java.util.Map;
 
 /**
  *
@@ -87,7 +88,7 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
     public final String MOVING_AVERAGE;
     public final String STATUS_MOVING_AVERAGE;
     public final String INTENT_MOVING_AVERAGE;
-  
+
     public AnalogInV2ServiceContract(AnalogInV2Device device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -130,6 +131,27 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
         INTENT_MOVING_AVERAGE = INTENT + "/" + MOVING_AVERAGE;
-       
+
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        descriptions.put(INTENT_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..42000]\n max: [0..42000]");
+        descriptions.put(INTENT_MOVING_AVERAGE, "[1..50]");
+
+        descriptions.put(EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        descriptions.put(EVENT_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
+        descriptions.put(EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        descriptions.put(EVENT_VOLTAGE_REACHED, "timestamp: [0..42000]\n value: [0..42000]\n");
+        descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        descriptions.put(STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..42000]\n max: [0..42000]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_MOVING_AVERAGE, "[1..50]");
     }
 }

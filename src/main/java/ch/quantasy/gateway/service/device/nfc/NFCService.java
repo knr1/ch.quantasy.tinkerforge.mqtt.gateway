@@ -58,18 +58,6 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
 
     public NFCService(NFCRFIDDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new NFCServiceContract(device));
-        publishDescription(getContract().INTENT_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_READ, "[00..FF]_9");
-
-        publishDescription(getContract().EVENT_TAG_DISCOVERD, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
-        publishDescription(getContract().EVENT_TAG_READ, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   id: [00..FF]_9\n  value: [00..FF]_*");
-
-        publishDescription(getContract().EVENT_TAG_VANISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
-        publishDescription(getContract().STATUS_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-
-        publishDescription(getContract().EVENT_TAG_WRITTEN, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   id: [00..FF]_9\n  state: [WritePageError|WritePageReady]\n value: [00..FF]_*");
-        publishDescription(getContract().INTENT_WRITE, "id: [00..FF]_9\n  value: [00..FF]_*");
-
     }
 
     @Override
@@ -97,17 +85,17 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
 
     @Override
     public void tagDiscovered(NFCTag nfcTag) {
-        publishEvent(getContract().EVENT_TAG_DISCOVERD, new TagID(nfcTag),nfcTag.getLatestDiscoveryTimeStamp());
+        publishEvent(getContract().EVENT_TAG_DISCOVERD, new TagID(nfcTag), nfcTag.getLatestDiscoveryTimeStamp());
     }
 
     @Override
     public void tagVanished(NFCTag nfcTag) {
-        publishEvent(getContract().EVENT_TAG_VANISHED, new TagID(nfcTag),nfcTag.getLatestDiscoveryTimeStamp());
+        publishEvent(getContract().EVENT_TAG_VANISHED, new TagID(nfcTag), nfcTag.getLatestDiscoveryTimeStamp());
     }
 
     @Override
     public void tagRead(NFCTag tag) {
-        publishEvent(getContract().EVENT_TAG_READ, new TagRead(tag),tag.getLatestDiscoveryTimeStamp());
+        publishEvent(getContract().EVENT_TAG_READ, new TagRead(tag), tag.getLatestDiscoveryTimeStamp());
     }
 
     @Override
@@ -128,7 +116,7 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
         private TagWritten() {
         }
 
-        public TagWritten( String id, NFCTag.NFCRFIDReaderState readerState, Short[] value) {
+        public TagWritten(String id, NFCTag.NFCRFIDReaderState readerState, Short[] value) {
             this.id = id;
             this.state = readerState;
             this.value = value;
@@ -169,8 +157,6 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
             return id;
         }
 
-        
-
         public Short[] getValue() {
             return value;
         }
@@ -183,9 +169,10 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
         private NFCTag.NFCType type;
 
         private TagID() {
-        } 
-        public TagID(NFCTag tag){
-            this(tag.getTidAsHexString(),tag.getType());
+        }
+
+        public TagID(NFCTag tag) {
+            this(tag.getTidAsHexString(), tag.getType());
         }
 
         public TagID(String id, NFCTag.NFCType type) {

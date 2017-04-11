@@ -59,13 +59,6 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
     public DualButtonService(DualButtonDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DualButtonServiceContract(device));
-
-        publishDescription(getContract().INTENT_LED_STATE, "leftLED: [AutoToggleOn|AutoToggleOff|On|Off]\n rightLED: [AutoToggleOn|AutoToggleOff|On|Off] ");
-        publishDescription(getContract().INTENT_SELECTED_LED_STATE, "led: [AutoToggleOn|AutoToggleOff|On|Off]");
-
-        publishDescription(getContract().EVENT_STATE_CHANGED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  led1: [AutoToggleOn|AutoToggleOff|On|Off]\n   led2: [AutoToggleOn|AutoToggleOff|On|Off]\n   switch1: [0|1]\n   switch2: [0|1]");
-        publishDescription(getContract().STATUS_LED_STATE, "led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]");
-
     }
 
     @Override

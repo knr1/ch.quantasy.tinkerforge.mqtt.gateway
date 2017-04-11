@@ -59,14 +59,6 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     public LCD16x2Service(LCD16x2Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LCD16x2ServiceContract(device));
-        publishDescription(getContract().INTENT_BACKLIGHT, "[true|false]");
-        publishDescription(getContract().STATUS_BACKLIGHT, "[true|false]");
-        publishDescription(getContract().INTENT_CLEAR_DISPLAY, "[true|false]");
-        publishDescription(getContract().INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        publishDescription(getContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        publishDescription(getContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        publishDescription(getContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        publishDescription(getContract().INTENT_WRITE_LINES, "[line: [0..1]\n position: [0..15]\n text: [String]_[1..16]]");
     }
 
     @Override
@@ -109,5 +101,4 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
         publishEvent(getContract().EVENT_BUTTON_RELEASED, s);
     }
 
-    
 }

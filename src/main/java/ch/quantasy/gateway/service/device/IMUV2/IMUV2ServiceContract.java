@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.IMUV2;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.imuV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import java.util.Map;
 
 /**
  *
@@ -167,5 +168,45 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
         INTENT_SENSOR_FUSION_MODE = INTENT + "/" + SENSOR_FUSION_MODE;
         STATUS_SENSOR_FUSION_MODE = STATUS + "/" + SENSOR_FUSION_MODE;
 
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+descriptions.put(INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_GRAVITY_VECTOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_LINEAR_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_LEDS, "true|false]");
+        descriptions.put(INTENT_STATUS_LED, "true|false]");
+        descriptions.put(INTENT_SENSOR_FUSION_MODE, "[0..2]");
+
+
+        descriptions.put(STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_GRAVITY_VECTOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_LINEAR_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_STATUS_LED, "[true|false]");
+        descriptions.put(STATUS_LEDS, "[true|false]");
+        descriptions.put(STATUS_SENSOR_FUSION_MODE, "[0..2]");
+
+        descriptions.put(EVENT_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_ANGULAR_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_GRAVITY_VECTOR, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_LINEAR_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_MAGNETIC_FIELD, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_ORIENTATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n heading: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n roll: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n pitch: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_QUATERNION, "timestamp: [0.." + Long.MAX_VALUE + "]\n w: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Byte.MIN_VALUE + ".." + Byte.MAX_VALUE + "]");
+        descriptions.put(EVENT_ALL_DATA, "timestamp: [0.." + Long.MAX_VALUE + "]\n @acceleration \n @magneticField \n @angularVelocity \n @orientation \n @quaternion \n @linearAcceleration \n @gravityVector \n @temperature \n calibrationStatus: [0..255]");
     }
 }

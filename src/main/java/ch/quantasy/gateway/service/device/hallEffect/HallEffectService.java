@@ -58,17 +58,6 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
     public HallEffectService(HallEffectDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new HallEffectServiceContract(device));
-        publishDescription(getContract().INTENT_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_EDGE_COUNT_RESET, "[true|false]");
-        publishDescription(getContract().INTENT_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
-
-        publishDescription(getContract().EVENT_EDGE_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  count: [0.." + Long.MAX_VALUE + "]\n   greater35Gauss: [true|false]");
-        publishDescription(getContract().EVENT_EDGE_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Long.MAX_VALUE + "]\n");
-
-        publishDescription(getContract().STATUS_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
     }
 
     @Override
@@ -131,14 +120,10 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
         private EdgeCount() {
         }
 
-        
-
         public EdgeCount(long value, boolean greater35Gauss) {
             this.count = value;
             this.greater35Gauss = greater35Gauss;
         }
-
-       
 
         public long getCount() {
             return count;

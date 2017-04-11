@@ -61,19 +61,7 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     public LCD20x4Service(LCD20x4Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LCD20x4ServiceContract(device));
-        publishDescription(getContract().INTENT_BACKLIGHT, "[true|false]");
-        publishDescription(getContract().STATUS_BACKLIGHT, "[true|false]");
-        publishDescription(getContract().INTENT_CLEAR_DISPLAY, "[true|false]");
-        publishDescription(getContract().INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        publishDescription(getContract().STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        publishDescription(getContract().INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        publishDescription(getContract().STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        publishDescription(getContract().INTENT_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
-        publishDescription(getContract().STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
-        publishDescription(getContract().INTENT_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_WRITE_LINES, "[line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]");
-    }
+     }
 
     @Override
     public void messageReceived(String string, byte[] payload) throws Exception {

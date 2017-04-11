@@ -58,21 +58,6 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
 
     public TemperatureIRService(TemperatureIRDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new TemperatureIRServiceContract(device));
-        publishDescription(getContract().INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_AMBIENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-400..1250]\n max: [-400..1250]");
-        publishDescription(getContract().INTENT_OBJECT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-700..3800]\n max: [-700..3800]");
-        publishDescription(getContract().EVENT_AMBIENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-400..1250]\n");
-        publishDescription(getContract().EVENT_OBJECT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-700..3800]\n");
-        publishDescription(getContract().EVENT_AMBIENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-400..1250]\n");
-        publishDescription(getContract().EVENT_OBJECT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-700..3800]\n");
-        publishDescription(getContract().STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_AMBIENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-400..1250]\n max: [-400..1250]");
-        publishDescription(getContract().STATUS_OBJECT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-700..3800]\n max: [-700..3800]");
-        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-
     }
 
     @Override
@@ -147,5 +132,4 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
 
     }
 
-   
 }

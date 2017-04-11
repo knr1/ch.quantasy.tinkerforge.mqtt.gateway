@@ -59,25 +59,6 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
     public LoadCellService(LoadCellDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new LoadCellServiceContract(device));
-        publishDescription(getContract().INTENT_TARE, "[true|false]");
-
-        publishDescription(getContract().INTENT_MOVING_AVERAGE, "[1..40]");
-        publishDescription(getContract().STATUS_MOVING_AVERAGE, "[1..40]");
-
-        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
-        publishDescription(getContract().INTENT_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
-        publishDescription(getContract().INTENT_LED, "true|false]");
-
-        publishDescription(getContract().EVENT_WEIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]\n");
-        publishDescription(getContract().EVENT_WEIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]");
-        publishDescription(getContract().STATUS_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
-        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
-        publishDescription(getContract().STATUS_LED, "[true|false]");
-
     }
 
     @Override
@@ -158,7 +139,5 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
     public void weightReached(int i) {
         publishEvent(getContract().EVENT_WEIGHT_REACHED, i);
     }
-
-    
 
 }

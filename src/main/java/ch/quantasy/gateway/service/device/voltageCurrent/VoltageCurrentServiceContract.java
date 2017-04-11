@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.voltageCurrent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
+import java.util.Map;
 
 /**
  *
@@ -69,7 +70,7 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
     private final String INTENT_VOLTAGE;
     public final String INTENT_VOLTAGE_THRESHOLD;
     public final String INTENT_VOLTAGE_CALLBACK_PERIOD;
-     public final String CURRENT;
+    public final String CURRENT;
     public final String STATUS_CURRENT;
     public final String STATUS_CURRENT_THRESHOLD;
     public final String STATUS_CURRENT_CALLBACK_PERIOD;
@@ -103,8 +104,6 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
     public final String STATUS_CALIBRATION;
     public final String INTENT_CALIBRATION;
 
-  
-
     public VoltageCurrentServiceContract(VoltageCurrentDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -137,7 +136,7 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
         INTENT_CURRENT = INTENT + "/" + CURRENT;
         INTENT_CURRENT_THRESHOLD = INTENT_CURRENT + "/" + THRESHOLD;
         INTENT_CURRENT_CALLBACK_PERIOD = INTENT_CURRENT + "/" + CALLBACK_PERIOD;
-        
+
         POWER = "power";
         STATUS_POWER = STATUS + "/" + POWER;
         STATUS_POWER_THRESHOLD = STATUS_POWER + "/" + THRESHOLD;
@@ -148,7 +147,6 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
         INTENT_POWER_THRESHOLD = INTENT_POWER + "/" + THRESHOLD;
         INTENT_POWER_CALLBACK_PERIOD = INTENT_POWER + "/" + CALLBACK_PERIOD;
 
-        
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
@@ -167,7 +165,39 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
         STATUS_CALIBRATION = STATUS + "/" + CALIBRATION;
         INTENT_CALIBRATION = INTENT + "/" + CALIBRATION;
 
-        
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_CALIBRATION, "gainMultiplier: [1.." + Integer.MAX_VALUE + "]\n gainDivisor: [1.." + Integer.MAX_VALUE + "]");
+        descriptions.put(STATUS_CALIBRATION, "gainMultiplier: [1.." + Integer.MAX_VALUE + "]\n gainDivisor: [1.." + Integer.MAX_VALUE + "]");
+
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
+        descriptions.put(INTENT_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_CURRENT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..36000]\n max: [0..36000]");
+        descriptions.put(INTENT_POWER_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_POWER_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..720000]\n max: [0..720000]");
+        descriptions.put(INTENT_CONFIGURATION, "averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]\n"
+                + " voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n"
+                + " currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n");
+        descriptions.put(EVENT_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]\n");
+        descriptions.put(EVENT_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]");
+        descriptions.put(STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
+        descriptions.put(EVENT_CURRENT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..36000]\n");
+        descriptions.put(EVENT_CURRENT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..36000]");
+        descriptions.put(STATUS_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_CURRENT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..36000]\n max: [0..36000]");
+        descriptions.put(EVENT_POWER, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..720000]\n");
+        descriptions.put(EVENT_POWER_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..720000]");
+        descriptions.put(STATUS_POWER_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_POWER_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..720000]\n max: [0..720000]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_CONFIGURATION, "averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]\n"
+                + " voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n"
+                + " currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n");
 
     }
 }

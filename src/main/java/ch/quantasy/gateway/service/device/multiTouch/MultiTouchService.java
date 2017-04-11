@@ -57,15 +57,6 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
 
     public MultiTouchService(MultiTouchDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new MultiTouchServiceContract(device));
-        publishDescription(getContract().INTENT_ELECTRODE_CONFIG, "[0..8191]");
-        publishDescription(getContract().INTENT_ELECTRODE_SENSITIVITY, "[0..8191]");
-        publishDescription(getContract().INTENT_RECALIBRATE, "[true|false]");
-
-        publishDescription(getContract().EVENT_TOUCH_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..8191]\n");
-        publishDescription(getContract().EVENT_RECALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-
-        publishDescription(getContract().STATUS_ELECTRODE_SENSITIVITY, "[5..201]");
-        publishDescription(getContract().STATUS_ELECTRODE_CONFIG, "[0..8191]");
     }
 
     @Override

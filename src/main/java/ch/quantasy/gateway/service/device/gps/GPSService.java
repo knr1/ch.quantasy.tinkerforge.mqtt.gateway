@@ -58,21 +58,6 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
     public GPSService(GPSDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new GPSServiceContract(device));
-        publishDescription(getContract().INTENT_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-
-        publishDescription(getContract().INTENT_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-
-        publishDescription(getContract().EVENT_ALTITUDE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   altitude: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   geoidalSeparation: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        publishDescription(getContract().EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  date: [[d|dd]mmyy]\n   time: [hhmmssxxx]");
-        publishDescription(getContract().EVENT_MOTION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  course: [0..36000]\n   speed: [0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().EVENT_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  fix: [1|2|3]]\n   satellitesView: [0.." + Short.MAX_VALUE + "]\n   satellitesUsed: [0.." + Short.MAX_VALUE + "]");
-        publishDescription(getContract().EVENT_COORDINATES, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  latitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n   ns: ['N'|'S']\n   longitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n ew: ['E'|'W']\n pdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n hdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   vdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   epe: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
     }
 
     @Override
@@ -263,14 +248,10 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
         private DateTime() {
         }
 
-        
-
         public DateTime(long date, long time) {
             this.date = date;
             this.time = time;
         }
-
-        
 
         public long getDate() {
             return date;
@@ -295,8 +276,6 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
         private Coordinates() {
         }
 
-        
-
         public Coordinates(long latitude, char ns, long longitude, char ew, int pdop, int hdop, int vdop, int epe) {
             this.latitude = latitude;
             this.ns = ns;
@@ -307,7 +286,6 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
             this.vdop = vdop;
             this.epe = epe;
         }
-
 
         public int getEpe() {
             return epe;

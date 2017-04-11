@@ -58,16 +58,6 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
     public LineService(LineDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new LineServiceContract(device));
-        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-
-        publishDescription(getContract().EVENT_REFLECTIVITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [[0..4095]\n");
-        publishDescription(getContract().EVENT_REFLECTIVITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        publishDescription(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-
     }
 
     @Override
@@ -116,5 +106,4 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
         publishEvent(getContract().EVENT_REFLECTIVITY_REACHED, i);
     }
 
-    
 }

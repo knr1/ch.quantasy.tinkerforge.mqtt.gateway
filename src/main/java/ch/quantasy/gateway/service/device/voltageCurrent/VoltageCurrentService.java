@@ -60,38 +60,6 @@ public class VoltageCurrentService extends AbstractDeviceService<VoltageCurrentD
     public VoltageCurrentService(VoltageCurrentDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new VoltageCurrentServiceContract(device));
-
-        publishDescription(getContract().INTENT_CALIBRATION, "gainMultiplier: [1.."+Integer.MAX_VALUE+"]\n gainDivisor: [1.."+Integer.MAX_VALUE+"]");
-        publishDescription(getContract().STATUS_CALIBRATION, "gainMultiplier: [1.."+Integer.MAX_VALUE+"]\n gainDivisor: [1.."+Integer.MAX_VALUE+"]");
-
-        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
-        publishDescription(getContract().INTENT_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_CURRENT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..36000]\n max: [0..36000]");
-        publishDescription(getContract().INTENT_POWER_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_POWER_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..720000]\n max: [0..720000]");
-        publishDescription(getContract().INTENT_CONFIGURATION, "averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]\n"
-                + " voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n"
-                + " currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n");
-        publishDescription(getContract().EVENT_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]\n");
-        publishDescription(getContract().EVENT_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]");
-        publishDescription(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
-        publishDescription(getContract().EVENT_CURRENT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..36000]\n");
-        publishDescription(getContract().EVENT_CURRENT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..36000]");
-        publishDescription(getContract().STATUS_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_CURRENT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..36000]\n max: [0..36000]");
-        publishDescription(getContract().EVENT_POWER, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..720000]\n");
-        publishDescription(getContract().EVENT_POWER_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..720000]");
-        publishDescription(getContract().STATUS_POWER_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_POWER_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..720000]\n max: [0..720000]");
-        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_CONFIGURATION, "averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]\n"
-                + " voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n"
-                + " currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n");
-        
-
     }
 
     @Override

@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.gps;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
+import java.util.Map;
 
 /**
  *
@@ -88,37 +89,55 @@ public class GPSServiceContract extends DeviceServiceContract {
     public GPSServiceContract(String id, String device) {
         super(id, device);
 
-
         CALLBACK_PERIOD = "callbackPeriod";
-        
-        COORDINATES="coordinates";
-        STATUS_COORDINATES_CALLBACK_PERIOD = STATUS+"/"+COORDINATES + "/" + CALLBACK_PERIOD;
-        INTENT_COORDINATES_CALLBACK_PERIOD = INTENT+"/"+COORDINATES + "/" + CALLBACK_PERIOD;
-        EVENT_COORDINATES=EVENT+"/"+COORDINATES;
+
+        COORDINATES = "coordinates";
+        STATUS_COORDINATES_CALLBACK_PERIOD = STATUS + "/" + COORDINATES + "/" + CALLBACK_PERIOD;
+        INTENT_COORDINATES_CALLBACK_PERIOD = INTENT + "/" + COORDINATES + "/" + CALLBACK_PERIOD;
+        EVENT_COORDINATES = EVENT + "/" + COORDINATES;
 
         ALTITUDE = "altitude";
-        STATUS_ALTITUDE_CALLBACK_PERIOD = STATUS + "/" + ALTITUDE +"/"+CALLBACK_PERIOD;
-        INTENT_ALTITUDE_CALLBACK_PERIOD = INTENT + "/" + ALTITUDE +"/"+CALLBACK_PERIOD;
-        EVENT_ALTITUDE=EVENT+"/"+ALTITUDE;
+        STATUS_ALTITUDE_CALLBACK_PERIOD = STATUS + "/" + ALTITUDE + "/" + CALLBACK_PERIOD;
+        INTENT_ALTITUDE_CALLBACK_PERIOD = INTENT + "/" + ALTITUDE + "/" + CALLBACK_PERIOD;
+        EVENT_ALTITUDE = EVENT + "/" + ALTITUDE;
 
         RESTART = "restart";
-        INTENT_RESTART=INTENT +"/"+RESTART;
-        EVENT_RESTART=EVENT+"/"+RESTART;
-        
-        DATE_TIME="dateTime";
-        INTENT_DATE_TIME_CALLBACK_PERIOD = INTENT + "/" + DATE_TIME+"/"+CALLBACK_PERIOD;
-        STATUS_DATE_TIME_CALLBACK_PERIOD= STATUS +"/"+DATE_TIME+"/"+CALLBACK_PERIOD;
+        INTENT_RESTART = INTENT + "/" + RESTART;
+        EVENT_RESTART = EVENT + "/" + RESTART;
+
+        DATE_TIME = "dateTime";
+        INTENT_DATE_TIME_CALLBACK_PERIOD = INTENT + "/" + DATE_TIME + "/" + CALLBACK_PERIOD;
+        STATUS_DATE_TIME_CALLBACK_PERIOD = STATUS + "/" + DATE_TIME + "/" + CALLBACK_PERIOD;
         EVENT_DATE_TIME = EVENT + "/" + DATE_TIME;
-        
-        MOTION="motion";
-        INTENT_MOTION_CALLBACK_PERIOD = INTENT + "/" + MOTION+"/"+CALLBACK_PERIOD;
-        STATUS_MOTION_CALLBACK_PERIOD= STATUS +"/"+MOTION+"/"+CALLBACK_PERIOD;
-        EVENT_MOTION = EVENT + "/" +MOTION;
-        
-        STATE="status";
-        INTENT_STATE_CALLBACK_PERIOD=INTENT+"/"+STATE+"/"+CALLBACK_PERIOD;
-        STATUS_STATE_CALLBACK_PERIOD=STATUS+"/"+STATE+"/"+CALLBACK_PERIOD;
-        EVENT_STATE=EVENT+"/"+STATE;
-      
+
+        MOTION = "motion";
+        INTENT_MOTION_CALLBACK_PERIOD = INTENT + "/" + MOTION + "/" + CALLBACK_PERIOD;
+        STATUS_MOTION_CALLBACK_PERIOD = STATUS + "/" + MOTION + "/" + CALLBACK_PERIOD;
+        EVENT_MOTION = EVENT + "/" + MOTION;
+
+        STATE = "status";
+        INTENT_STATE_CALLBACK_PERIOD = INTENT + "/" + STATE + "/" + CALLBACK_PERIOD;
+        STATUS_STATE_CALLBACK_PERIOD = STATUS + "/" + STATE + "/" + CALLBACK_PERIOD;
+        EVENT_STATE = EVENT + "/" + STATE;
+
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+
+        descriptions.put(INTENT_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+
+        descriptions.put(EVENT_ALTITUDE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   altitude: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   geoidalSeparation: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        descriptions.put(EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  date: [[d|dd]mmyy]\n   time: [hhmmssxxx]");
+        descriptions.put(EVENT_MOTION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  course: [0..36000]\n   speed: [0.." + Long.MAX_VALUE + "]");
+        descriptions.put(EVENT_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  fix: [1|2|3]]\n   satellitesView: [0.." + Short.MAX_VALUE + "]\n   satellitesUsed: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_COORDINATES, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  latitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n   ns: ['N'|'S']\n   longitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n ew: ['E'|'W']\n pdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n hdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   vdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   epe: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
     }
 }

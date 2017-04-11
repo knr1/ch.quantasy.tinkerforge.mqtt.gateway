@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.laserRangeFinder;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
+import java.util.Map;
 
 /**
  *
@@ -102,7 +103,6 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
     public LaserRangeFinderServiceContract(String id, String device) {
         super(id, device);
 
-
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";
@@ -145,5 +145,30 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
         DEVICE_MODE = "deviceMode";
         INTENT_DEVICE_MODE = INTENT + "/" + DEVICE_MODE;
         STATUS_DEVICE_MODE = STATUS + "/" + DEVICE_MODE;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
+        descriptions.put(INTENT_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..127]\n max: [-127..127]");
+        descriptions.put(INTENT_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
+        descriptions.put(INTENT_LASER, "[true|false]");
+        descriptions.put(INTENT_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
+
+        descriptions.put(EVENT_DISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4000]\n");
+        descriptions.put(EVENT_VELOCITY, "timestamp: [-127.." + Long.MAX_VALUE + "]\n value: [0..127]\n");
+        descriptions.put(EVENT_DISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4000]\n");
+        descriptions.put(EVENT_VELOCITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-127..127]\n");
+        descriptions.put(STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
+        descriptions.put(STATUS_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..-127]\n max: [-127..127]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
+        descriptions.put(STATUS_LASER, "[true|false]");
+        descriptions.put(STATUS_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
     }
 }

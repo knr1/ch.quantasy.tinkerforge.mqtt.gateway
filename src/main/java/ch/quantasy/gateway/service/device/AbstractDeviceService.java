@@ -63,10 +63,7 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
         super(mqttURI, serviceContract.CANONICAL_TOPIC, serviceContract);
         this.device = device;
         device.setCallback(this);
-        publishDescription(getContract().STATUS_POSITION, "[0|1|2|3|4|5|6|7|8|a|b|c|d]");
-        publishDescription(getContract().STATUS_FIRMWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
-        publishDescription(getContract().STATUS_HARDWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
-
+        
         publishStatus(getContract().STATUS_POSITION, device.getPosition());
         publishStatus(getContract().STATUS_FIRMWARE, device.getFirmwareVersion());
         publishStatus(getContract().STATUS_HARDWARE, device.getHardwareVersion());

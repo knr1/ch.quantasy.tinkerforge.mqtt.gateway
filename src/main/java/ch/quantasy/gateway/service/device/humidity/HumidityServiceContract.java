@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.humidity;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
+import java.util.Map;
 
 /**
  *
@@ -121,5 +122,23 @@ public class HumidityServiceContract extends DeviceServiceContract {
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
         INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
         INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_HUMIDITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        descriptions.put(INTENT_HUMIDITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..1000]\n max: [0..9000]");
+        descriptions.put(EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        descriptions.put(EVENT_HUMIDITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..1000]\n");
+        descriptions.put(EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        descriptions.put(EVENT_HUMIDITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..1000]\n");
+        descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_HUMIDITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        descriptions.put(STATUS_HUMIDITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..1000]\n max: [0..1000]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 }

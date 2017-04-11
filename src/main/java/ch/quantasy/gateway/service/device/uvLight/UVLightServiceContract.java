@@ -44,6 +44,7 @@ package ch.quantasy.gateway.service.device.uvLight;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
+import java.util.Map;
 
 /**
  *
@@ -73,7 +74,6 @@ public class UVLightServiceContract extends DeviceServiceContract {
     public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
-
     public UVLightServiceContract(UVLightDevice device) {
         super(device);
         PERIOD = "period";
@@ -99,5 +99,18 @@ public class UVLightServiceContract extends DeviceServiceContract {
         INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
         INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
 
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
+
+        descriptions.put(EVENT_UV_LIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..328000]\n");
+        descriptions.put(EVENT_UV_LIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..328000]\n");
+        descriptions.put(STATUS_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 }

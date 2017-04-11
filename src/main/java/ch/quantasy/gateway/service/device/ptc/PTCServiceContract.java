@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.ptc;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
+import java.util.Map;
 
 /**
  *
@@ -78,7 +79,6 @@ public class PTCServiceContract extends DeviceServiceContract {
     public final String STATUS_NOISE_REDUCTION_FILTER;
     public final String INTENT_NOISE_REDUCTION_FILTER;
 
-   
     private final String RESISTANCE;
     public final String STATUS_RESISTANCE;
     public final String STATUS_RESISTANCE_THRESHOLD;
@@ -125,7 +125,6 @@ public class PTCServiceContract extends DeviceServiceContract {
         INTENT_RESISTANCE_THRESHOLD = INTENT_RESISTANCE + "/" + THRESHOLD;
         INTENT_RESISTANCE_CALLBACK_PERIOD = INTENT_RESISTANCE + "/" + CALLBACK_PERIOD;
 
-        
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
@@ -137,9 +136,31 @@ public class PTCServiceContract extends DeviceServiceContract {
         STATUS_NOISE_REDUCTION_FILTER = STATUS + "/" + NOISE_REDUCTION_FILTER;
         INTENT_NOISE_REDUCTION_FILTER = INTENT + "/" + NOISE_REDUCTION_FILTER;
 
-        WIRE_MODE="wireMode";
-        STATUS_WIRE_MODE=STATUS+"/"+WIRE_MODE;
-        INTENT_WIRE_MODE=INTENT+"/"+WIRE_MODE;
-       
+        WIRE_MODE = "wireMode";
+        STATUS_WIRE_MODE = STATUS + "/" + WIRE_MODE;
+        INTENT_WIRE_MODE = INTENT + "/" + WIRE_MODE;
+
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
+        descriptions.put(INTENT_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(INTENT_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
+        descriptions.put(INTENT_WIRE_MODE, "[2|3|4]");
+        descriptions.put(EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
+        descriptions.put(EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
+        descriptions.put(EVENT_RESISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_RESISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
+        descriptions.put(STATUS_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
+        descriptions.put(STATUS_WIRE_MODE, "[2|3|4]");
     }
 }

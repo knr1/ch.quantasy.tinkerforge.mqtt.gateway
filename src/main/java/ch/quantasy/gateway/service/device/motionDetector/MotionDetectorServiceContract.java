@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.motionDetector;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
+import java.util.Map;
 
 /**
  *
@@ -61,6 +62,7 @@ public class MotionDetectorServiceContract extends DeviceServiceContract {
     public MotionDetectorServiceContract(MotionDetectorDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
+
     public MotionDetectorServiceContract(String id, String device) {
         super(id, device);
 
@@ -69,5 +71,12 @@ public class MotionDetectorServiceContract extends DeviceServiceContract {
 
         MOTION_DETECTED = "motionDetected";
         EVENT_MOTION_DETECTED = EVENT + "/" + MOTION_DETECTED;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+
+        descriptions.put(EVENT_DETECTION_CYCLE_ENDED, "[0.." + Long.MAX_VALUE + "]\n value: true");
+        descriptions.put(EVENT_MOTION_DETECTED, "[0.." + Long.MAX_VALUE + "]\n value: true");
     }
 }

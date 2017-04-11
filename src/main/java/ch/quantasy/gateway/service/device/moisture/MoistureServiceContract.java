@@ -44,8 +44,8 @@ package ch.quantasy.gateway.service.device.moisture;
 
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
+import java.util.Map;
 
 /**
  *
@@ -83,6 +83,7 @@ public class MoistureServiceContract extends DeviceServiceContract {
     public MoistureServiceContract(MoistureDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
+
     public MoistureServiceContract(String id, String device) {
         super(id, device);
         PERIOD = "period";
@@ -111,6 +112,21 @@ public class MoistureServiceContract extends DeviceServiceContract {
 
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-        INTENT_MOVING_AVERAGE = INTENT + "/"+ MOVING_AVERAGE;
+        INTENT_MOVING_AVERAGE = INTENT + "/" + MOVING_AVERAGE;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        descriptions.put(INTENT_MOVING_AVERAGE, "[0..100]");
+
+        descriptions.put(EVENT_MOISTURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
+        descriptions.put(EVENT_MOISTURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]");
+        descriptions.put(STATUS_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_MOVING_AVERAGE, "[0..100]");
     }
 }

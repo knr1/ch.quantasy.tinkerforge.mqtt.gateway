@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.master;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.master.MasterDevice;
+import java.util.Map;
 
 /**
  *
@@ -133,7 +134,7 @@ public class MasterServiceContract extends DeviceServiceContract {
         EVENT_STACK_CURRENT_REACHED = EVENT_STACK_CURRENT + "/" + REACHED;
         STATUS_STACK_CURRENT = STATUS + "/" + STACK_CURRENT;
         STATUS_STACK_CURRENT_CALLBACK_PERIOD = STATUS_STACK_CURRENT + "/" + CALLBACK_PERIOD;
-        INTENT_STACK_CURRENT = INTENT+"/"+STACK_CURRENT;
+        INTENT_STACK_CURRENT = INTENT + "/" + STACK_CURRENT;
         INTENT_STACK_CURRENT_CALLBACK_PERIOD = INTENT_STACK_CURRENT + "/" + CALLBACK_PERIOD;
 
         CALLBACK_THRESHOLD = "callbackThreshold";
@@ -165,5 +166,35 @@ public class MasterServiceContract extends DeviceServiceContract {
         INTENT_USB_VOLTAGE_CALLBACK_THRESHOLD = INTENT_USB_VOLTAGE + "/" + CALLBACK_THRESHOLD;
         STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD = STATUS_USB_VOLTAGE + "/" + CALLBACK_THRESHOLD;
 
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_STACK_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_STATUS_LED_ENABLED, "[true|false]");
+        descriptions.put(INTENT_STACK_CURRENT_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        descriptions.put(INTENT_STACK_VOLTAGE_CALLBACK_PERIOD, "[" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_STACK_VOLTAGE_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        descriptions.put(INTENT_USB_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+
+        descriptions.put(EVENT_RESET, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(EVENT_STACK_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        descriptions.put(EVENT_STACK_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+
+        descriptions.put(EVENT_USB_VOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        descriptions.put(EVENT_USB_VOLTAGE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+
+        descriptions.put(EVENT_STACK_CURRENT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
+        descriptions.put(EVENT_STACK_CURRENT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
+
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_STACK_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_STATUS_LED_ENABLED, "[true|false]");
+        descriptions.put(STATUS_CURRENT_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+        descriptions.put(STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, "[" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
+
+        descriptions.put(STATUS_USB_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 }

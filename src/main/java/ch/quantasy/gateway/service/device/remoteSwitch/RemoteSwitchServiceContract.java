@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.remoteSwitch;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
+import java.util.Map;
 
 /**
  *
@@ -94,5 +95,19 @@ public class RemoteSwitchServiceContract extends DeviceServiceContract {
         DIM_SOCKET_B = "dimSocketB";
         INTENT_DIM_SOCKET_B = INTENT + "/" + DIM_SOCKET_B;
 
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+
+        descriptions.put(INTENT_REPEATS, "[0.." + Short.MAX_VALUE + "]");
+
+        descriptions.put(INTENT_SWITCH_SOCKET_A, "houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [switchOn|switchOff]");
+        descriptions.put(INTENT_SWITCH_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n switchingValue: [switchOn|switchOff]");
+        descriptions.put(INTENT_SWITCH_SOCKET_C, "systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [switchOn|switchOff]");
+        descriptions.put(INTENT_DIM_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]");
+
+        descriptions.put(EVENT_SWITCHING_DONE, "[0.." + Long.MAX_VALUE + "]\n value: [houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n switchingValue: [ON|OFF] | systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [ON|OFF] | address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]]");
+        descriptions.put(STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
     }
 }

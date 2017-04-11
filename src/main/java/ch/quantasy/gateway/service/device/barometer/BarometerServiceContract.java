@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.barometer;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
+import java.util.Map;
 
 /**
  *
@@ -87,7 +88,7 @@ public class BarometerServiceContract extends DeviceServiceContract {
     public final String AVERAGING;
     public final String STATUS_AVERAGING;
     public final String INTENT_AVERAGING;
-    
+
     public final String REFERENCE_AIR_PRESSURE;
     public final String STATUS_REFERENCE_AIR_PRESSURE;
     public final String INTENT_REFERENCE_AIR_PRESSURE;
@@ -134,9 +135,32 @@ public class BarometerServiceContract extends DeviceServiceContract {
         AVERAGING = "averaging";
         STATUS_AVERAGING = STATUS + "/" + AVERAGING;
         INTENT_AVERAGING = INTENT + "/" + AVERAGING;
-        
-        REFERENCE_AIR_PRESSURE="referenceAirPressure";
-        INTENT_REFERENCE_AIR_PRESSURE=INTENT+"/"+REFERENCE_AIR_PRESSURE;
-        STATUS_REFERENCE_AIR_PRESSURE=STATUS+"/"+REFERENCE_AIR_PRESSURE;
+
+        REFERENCE_AIR_PRESSURE = "referenceAirPressure";
+        INTENT_REFERENCE_AIR_PRESSURE = INTENT + "/" + REFERENCE_AIR_PRESSURE;
+        STATUS_REFERENCE_AIR_PRESSURE = STATUS + "/" + REFERENCE_AIR_PRESSURE;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_AIR_PRESSURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_AIR_PRESSURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [10000..1200000]\n max: [10000..1200000]");
+        descriptions.put(INTENT_ALTITUDE_THRESHOLD, "option: [x|o|i|<|>]\n min: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n max: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        descriptions.put(INTENT_AVERAGING, "averagingPressure: [0..10]\n averagingTemperature: [0..255]\n movingAveragePressure: [0..25]");
+        descriptions.put(INTENT_REFERENCE_AIR_PRESSURE, "[" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+
+        descriptions.put(EVENT_AIR_PRESSURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [10000..1200000]\n");
+        descriptions.put(EVENT_ALTITUDE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
+        descriptions.put(EVENT_AIR_PRESSURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [10000..1200000]\n");
+        descriptions.put(EVENT_ALTITUDE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
+        descriptions.put(STATUS_AIR_PRESSURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_AIR_PRESSURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [10000..1200000]\n max: [10000..1200000]");
+        descriptions.put(STATUS_ALTITUDE_THRESHOLD, "option: [x|o|i|<|>]\n min: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n max: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_AVERAGING, "averagingPressure: [0..10]\n averagingTemperature: [0..255]\n movingAveragePressure: [0..25]");
+        descriptions.put(STATUS_REFERENCE_AIR_PRESSURE, "[" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
     }
 }

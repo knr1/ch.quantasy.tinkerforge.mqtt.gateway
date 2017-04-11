@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.LCD20x4;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import java.util.Map;
 
 /**
  *
@@ -117,5 +118,21 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
         RELEASED = "released";
         EVENT_BUTTON_RELEASED = EVENT + "/" + BUTTON + "/" + RELEASED;
         EVENT_BUTTON_PRESSED = EVENT + "/" + BUTTON + "/" + PRESSED;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_BACKLIGHT, "[true|false]");
+        descriptions.put(STATUS_BACKLIGHT, "[true|false]");
+        descriptions.put(INTENT_CLEAR_DISPLAY, "[true|false]");
+        descriptions.put(INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
+        descriptions.put(STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
+        descriptions.put(INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
+        descriptions.put(STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
+        descriptions.put(INTENT_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
+        descriptions.put(STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
+        descriptions.put(INTENT_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
+        descriptions.put(STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
+        descriptions.put(INTENT_WRITE_LINES, "[line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]");
     }
 }

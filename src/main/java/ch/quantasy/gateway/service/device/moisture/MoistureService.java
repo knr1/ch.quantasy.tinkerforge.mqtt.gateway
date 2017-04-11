@@ -43,12 +43,10 @@
 package ch.quantasy.gateway.service.device.moisture;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.mqtt.gateway.client.GCEvent;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDeviceCallback;
 import ch.quantasy.tinkerforge.device.moisture.DeviceMoistureCallbackThreshold;
-import com.fasterxml.jackson.core.type.TypeReference;
 import java.net.URI;
 
 /**
@@ -59,17 +57,6 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
 
     public MoistureService(MoistureDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new MoistureServiceContract(device));
-        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        publishDescription(getContract().INTENT_MOVING_AVERAGE, "[0..100]");
-
-        publishDescription(getContract().EVENT_MOISTURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        publishDescription(getContract().EVENT_MOISTURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]");
-        publishDescription(getContract().STATUS_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_MOVING_AVERAGE, "[0..100]");
 
     }
 

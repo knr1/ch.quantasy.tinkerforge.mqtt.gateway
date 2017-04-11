@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.hallEffect;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
+import java.util.Map;
 
 /**
  *
@@ -101,5 +102,20 @@ public class HallEffectServiceContract extends DeviceServiceContract {
         RESET = "reset";
         INTENT_EDGE_COUNT_RESET = INTENT_EDGE_COUNT + "/" + RESET;
         EVENT_EDGE_COUNT_RESET = EVENT_EDGE_COUNT + "/" + RESET;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_EDGE_COUNT_RESET, "[true|false]");
+        descriptions.put(INTENT_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
+
+        descriptions.put(EVENT_EDGE_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  count: [0.." + Long.MAX_VALUE + "]\n   greater35Gauss: [true|false]");
+        descriptions.put(EVENT_EDGE_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Long.MAX_VALUE + "]\n");
+
+        descriptions.put(STATUS_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
     }
 }

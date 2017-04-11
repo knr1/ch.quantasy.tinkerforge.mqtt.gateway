@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.color;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
+import java.util.Map;
 
 /**
  *
@@ -97,7 +98,6 @@ public class ColorServiceContract extends DeviceServiceContract {
     public ColorServiceContract(String id, String device) {
         super(id, device);
 
-
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";
@@ -135,5 +135,22 @@ public class ColorServiceContract extends DeviceServiceContract {
         LED_STATE = "ledState";
         STATUS_LIGHT_STATE = STATUS + "/" + LED_STATE;
         INTENT_LIGHT_STATE = INTENT + "/" + LED_STATE;
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_COLOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_IllUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_COLOR_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
+        descriptions.put(INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(EVENT_COLOR, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: \n   red: [0..65535]\n   green: [0..65535]\n   blue: [0..65535]\n   clear: [0..65535]\n");
+        descriptions.put(EVENT_ILLUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..65535]\n");
+        descriptions.put(EVENT_COLOR_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n red: [0..65535]\n green: [0..65535]\n blue: [0..65535]\n clear: [0..65535]\n");
+        descriptions.put(EVENT_COLOR_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..65535]\n");
+        descriptions.put(STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_COLOR_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 }

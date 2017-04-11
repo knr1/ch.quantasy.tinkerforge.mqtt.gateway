@@ -56,8 +56,7 @@ public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device,
 
     public AnalogOutV2Service(AnalogOutV2Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new AnalogOutV2ServiceContract(device));
-        publishDescription(getContract().INTENT_OUTPUT_VOLTAGE, "[0..12000]");
-        publishDescription(getContract().STATUS_OUTPUT_VOLTAGE, "[0..12000]");
+     
     }
 
     @Override

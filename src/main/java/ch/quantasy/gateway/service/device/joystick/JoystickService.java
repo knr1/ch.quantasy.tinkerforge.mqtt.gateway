@@ -59,27 +59,6 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
 
     public JoystickService(JoystickDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new JoystickServiceContract(device));
-        publishDescription(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");
-        publishDescription(getContract().INTENT_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [-100..100]\n maxX: [-100..100]\n minY: [-100..100]\n maxY: [-100..100]");
-        publishDescription(getContract().INTENT_CALIBRATE, "[true|false]");
-
-        publishDescription(getContract().EVENT_CALIBRATE, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]");
-
-        publishDescription(getContract().EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n x: [0..4095]\n y: [0..4095]");
-        publishDescription(getContract().EVENT_POSITION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  x: [-100..100]\n y: [-100..100]");
-        publishDescription(getContract().EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  x: [0..4095]\n   y: [0..4095]");
-        publishDescription(getContract().EVENT_POSITION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   x: [-100..100]\n   y: [-100..100]");
-        publishDescription(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");
-        publishDescription(getContract().STATUS_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [-100..100]\n maxX: [-100..100]\n minY: [-100..100]\n maxY: [-100..100]");
-        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-
     }
 
     @Override

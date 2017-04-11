@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.joystick;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
+import java.util.Map;
 
 /**
  *
@@ -141,5 +142,29 @@ public class JoystickServiceContract extends DeviceServiceContract {
         RELEASED = "released";
         EVENT_RELEASED = EVENT + "/" + RELEASED;
 
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");
+        descriptions.put(INTENT_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [-100..100]\n maxX: [-100..100]\n minY: [-100..100]\n maxY: [-100..100]");
+        descriptions.put(INTENT_CALIBRATE, "[true|false]");
+
+        descriptions.put(EVENT_CALIBRATE, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]");
+
+        descriptions.put(EVENT_ANALOG_VALUE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n x: [0..4095]\n y: [0..4095]");
+        descriptions.put(EVENT_POSITION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  x: [-100..100]\n y: [-100..100]");
+        descriptions.put(EVENT_ANALOG_VALUE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  x: [0..4095]\n   y: [0..4095]");
+        descriptions.put(EVENT_POSITION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   x: [-100..100]\n   y: [-100..100]");
+        descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");
+        descriptions.put(STATUS_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [-100..100]\n maxX: [-100..100]\n minY: [-100..100]\n maxY: [-100..100]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 }

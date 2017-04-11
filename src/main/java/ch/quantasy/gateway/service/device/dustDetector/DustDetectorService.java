@@ -56,21 +56,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class DustDetectorService extends AbstractDeviceService<DustDetectorDevice, DustDetectorServiceContract> implements DustDetectorDeviceCallback {
 
     public DustDetectorService(DustDetectorDevice device, URI mqttURI) throws MqttException {
-
         super(mqttURI, device, new DustDetectorServiceContract(device));
-        publishDescription(getContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_MOVING_AVERAGE, "[0..100]");
-
-        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
-
-        publishDescription(getContract().EVENT_DUST_DENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
-        publishDescription(getContract().EVENT_DUST_DENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
-        publishDescription(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
-        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_MOVING_AVERAGE, "[0..100]");
-
     }
 
     @Override
@@ -130,5 +116,4 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
         publishEvent(getContract().EVENT_DUST_DENSITY_REACHED, i);
     }
 
-    
 }

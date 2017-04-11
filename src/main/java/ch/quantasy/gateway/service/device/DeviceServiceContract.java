@@ -45,12 +45,13 @@ package ch.quantasy.gateway.service.device;
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
+import java.util.Map;
 
 /**
  *
  * @author reto
  */
-public class DeviceServiceContract extends TinkerForgeServiceContract {
+public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
 
     public final String STATUS_POSITION;
     public final String STATUS_FIRMWARE;
@@ -65,6 +66,16 @@ public class DeviceServiceContract extends TinkerForgeServiceContract {
         STATUS_POSITION = STATUS + "/position";
         STATUS_FIRMWARE = STATUS + "/firmware";
         STATUS_HARDWARE = STATUS + "/hardware";
-
     }
+
+    @Override
+    protected void describe(Map<String, String> descriptions) {
+        descriptions.put(STATUS_POSITION, "[0|1|2|3|4|5|6|7|8|a|b|c|d]");
+        descriptions.put(STATUS_FIRMWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
+        descriptions.put(STATUS_HARDWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
+        descirbeMore(descriptions);
+    }
+    
+    protected abstract void descirbeMore(Map<String, String> descriptions);
+
 }

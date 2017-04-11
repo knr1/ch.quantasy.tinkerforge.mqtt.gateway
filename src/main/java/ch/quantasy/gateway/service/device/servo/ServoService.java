@@ -48,7 +48,6 @@ import ch.quantasy.tinkerforge.device.servo.ServoDevice;
 import ch.quantasy.tinkerforge.device.servo.ServoDeviceCallback;
 import java.net.URI;
 import java.util.Collection;
-import java.util.List;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
@@ -59,20 +58,6 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
 
     public ServoService(ServoDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new ServoServiceContract(device));
-        publishDescription(getContract().INTENT_SERVOS, "--- \n  {- \n  id: [0..6]\n  [enabled: [true|false]\n|]  [position: [-32767..32767]\n|]  [acceleration: [0..65536]\n|]  [velocity: [0..65535]\n|]  [degree:\n    min: [-32767..32767]\n    max: [-32767..32767]\n|]  [period: [1..65535]\n|]  [pulseWidth:\n    min: [1..65535]\n    max: [1..65535]|]}_7");
-        publishDescription(getContract().INTENT_STATUS_LED, "[true|false]");
-        publishDescription(getContract().INTENT_MINIMUM_VOLTAGE, "[5000.." + Integer.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_OUTPUT_VOLTAGE, "[2000..9000]");
-
-        publishDescription(getContract().EVENT_POSITION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [0..6]\n position: [-32767..32767]");
-        publishDescription(getContract().EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
-        publishDescription(getContract().EVENT_VELOCITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [0..6]\n value: [0.." + Short.MAX_VALUE + "]");
-
-        publishDescription(getContract().STATUS_SERVOS, "--- \n  {- \n  id: [0..6]\n  enabled: [true|false|null]\n  position: [-32767..32767|null]\n  acceleration: [0..65536|null]\n  velocity: [0..65535|null]\n  degree: [[\n    min: [-32767..32767]\n    max: [-32767..32767]\n]|null]\n  period: [1..65535|null]\n  pulseWidth: [[\n    min: [1..65535]\n    max: [1..65535]]|null]}_7");
-        publishDescription(getContract().STATUS_STATUS_LED, "[true|false]");
-        publishDescription(getContract().STATUS_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_OUTPUT_VOLTAGE, "[1..20000]");
-
     }
 
     @Override
@@ -132,7 +117,7 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
 
     @Override
     public void servosChanged(Collection<Servo> values) {
-        publishStatus(getContract().STATUS_SERVOS,values);
+        publishStatus(getContract().STATUS_SERVOS, values);
     }
 
     public static class Position {

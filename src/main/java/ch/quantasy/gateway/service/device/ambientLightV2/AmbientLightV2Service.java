@@ -59,17 +59,6 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
     public AmbientLightV2Service(AmbientLightV2Device device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new AmbientLightV2ServiceContract(device));
-        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
-        publishDescription(getContract().INTENT_CONFIGURATION, "illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]\n integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]\n");
-
-        publishDescription(getContract().EVENT_IllUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..100000]\n");
-        publishDescription(getContract().EVENT_ILLUMINANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..100000]\n");
-        publishDescription(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
-        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_CONFIGURATION, "illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]\n integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]\n");
     }
 
     @Override
@@ -129,5 +118,4 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
         publishEvent(getContract().EVENT_ILLUMINANCE_REACHED, i);
     }
 
-    
 }

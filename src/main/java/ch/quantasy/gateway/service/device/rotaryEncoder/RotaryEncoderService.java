@@ -58,18 +58,6 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     public RotaryEncoderService(RotaryEncoderDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new RotaryEncoderServiceContract(device));
-        publishDescription(getContract().INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().INTENT_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
-        publishDescription(getContract().EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]\n value: true");
-        publishDescription(getContract().EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]\n value: true");
-        publishDescription(getContract().EVENT_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [" + Long.MIN_VALUE + "0.." + Long.MAX_VALUE + "]\n");
-
-        publishDescription(getContract().EVENT_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
-        publishDescription(getContract().EVENT_COUNT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-150..150]\n");
-        publishDescription(getContract().STATUS_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        publishDescription(getContract().STATUS_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
-        publishDescription(getContract().STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 
     @Override
@@ -105,7 +93,7 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     @Override
     public void countReached(int i) {
-        publishEvent(getContract().EVENT_COUNT_REACHED,i);
+        publishEvent(getContract().EVENT_COUNT_REACHED, i);
     }
 
     @Override
@@ -138,8 +126,5 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
     public void released() {
         publishEvent(getContract().EVENT_RELEASED, true);
     }
-
-    
-    
 
 }

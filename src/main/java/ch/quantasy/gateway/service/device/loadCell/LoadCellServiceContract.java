@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.loadCell;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
+import java.util.Map;
 
 /**
  *
@@ -133,6 +134,29 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         LED = "LED";
         INTENT_LED = INTENT + "/" + LED;
         STATUS_LED = STATUS + "/" + LED;
+
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+        descriptions.put(INTENT_TARE, "[true|false]");
+
+        descriptions.put(INTENT_MOVING_AVERAGE, "[1..40]");
+        descriptions.put(STATUS_MOVING_AVERAGE, "[1..40]");
+
+        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
+        descriptions.put(INTENT_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
+        descriptions.put(INTENT_LED, "true|false]");
+
+        descriptions.put(EVENT_WEIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]\n");
+        descriptions.put(EVENT_WEIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]");
+        descriptions.put(STATUS_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
+        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(STATUS_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
+        descriptions.put(STATUS_LED, "[true|false]");
 
     }
 }
