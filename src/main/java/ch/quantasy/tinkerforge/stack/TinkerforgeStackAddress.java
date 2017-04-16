@@ -42,8 +42,6 @@
  */
 package ch.quantasy.tinkerforge.stack;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 /**
@@ -56,7 +54,7 @@ public class TinkerforgeStackAddress {
     private String hostName;
     private int port = DEFAULT_PORT;
 
-    public TinkerforgeStackAddress( String hostName, int port) {
+    public TinkerforgeStackAddress(String hostName, int port) {
         if ((hostName == null) || hostName.equals("")) {
             throw new IllegalArgumentException();
         }

@@ -160,7 +160,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
 
                 } catch (final NoRouteToHostException e) {
                     // This Host is not up! try again in some seconds...
-                    Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Host not up, try again in about "+getConnectionTimeoutInMilliseconds()+"ms.");
+                    Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Host not up, try again in about " + getConnectionTimeoutInMilliseconds() + "ms.");
 
                 } catch (final Exception e) {
                     actualConnectionException = e;
