@@ -48,6 +48,7 @@ import com.tinkerforge.IPConnection;
 import com.tinkerforge.IPConnectionBase;
 import com.tinkerforge.NotConnectedException;
 import java.io.IOException;
+import java.net.NoRouteToHostException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Timer;
@@ -156,6 +157,11 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
 
                     }
                     actualConnectionException = null;
+
+                } catch (final NoRouteToHostException e) {
+                    // This Host is not up! try again in some seconds...
+                    Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Host not up, try again in about "+getConnectionTimeoutInMilliseconds()+"ms.");
+
                 } catch (final Exception e) {
                     actualConnectionException = e;
                     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
@@ -214,7 +220,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
         } catch (InterruptedException ex) {
             Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
         }
-                Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Connect...");
+        Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Connect...");
         connect();
         isReconnecting = false;
     }
