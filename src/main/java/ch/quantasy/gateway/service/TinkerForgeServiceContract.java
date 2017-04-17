@@ -42,13 +42,13 @@
  */
 package ch.quantasy.gateway.service;
 
-import ch.quantasy.mqtt.gateway.client.ClientContract;
+import ch.quantasy.mqtt.gateway.client.AyamlClientContract;
 
 /**
  *
  * @author reto
  */
-public abstract class TinkerForgeServiceContract extends ClientContract{
+public abstract class TinkerForgeServiceContract extends AyamlClientContract{
 
     public TinkerForgeServiceContract(String baseClass, String instance) {
         super("TF", baseClass, instance);
