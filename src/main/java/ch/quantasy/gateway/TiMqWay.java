@@ -57,13 +57,14 @@ public class TiMqWay {
 
     public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
         URI mqttURI = URI.create("tcp://127.0.0.1:1883");
+        //URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+
         if (args.length > 0) {
             mqttURI = URI.create(args[0]);
         } else {
             System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
         }
         System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-        
 
         TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
         ManagerService managerService = new ManagerService(manager, mqttURI);
