@@ -95,6 +95,13 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
     public final String DEVICE_MODE;
     public final String INTENT_DEVICE_MODE;
     public final String STATUS_DEVICE_MODE;
+    
+    public final String DEVICE_CONFIGURATION;
+    public final String INTENT_DEVICE_CONFIGURATION;
+    public final String STATUS_DEVICE_CONFIGURATION;
+    
+    public final String SENSOR_HARDWARE_VERSION;
+    public final String STATUS_SENSOR_HARDWARE_VERSION;
 
     public LaserRangeFinderServiceContract(LaserRangeFinderDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -145,6 +152,13 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
         DEVICE_MODE = "deviceMode";
         INTENT_DEVICE_MODE = INTENT + "/" + DEVICE_MODE;
         STATUS_DEVICE_MODE = STATUS + "/" + DEVICE_MODE;
+        
+        DEVICE_CONFIGURATION = "deviceConfiguration";
+        INTENT_DEVICE_CONFIGURATION = INTENT + "/" + DEVICE_CONFIGURATION;
+        STATUS_DEVICE_CONFIGURATION = STATUS + "/" + DEVICE_CONFIGURATION;
+        
+        SENSOR_HARDWARE_VERSION="sensorHardwareVersion";
+        STATUS_SENSOR_HARDWARE_VERSION= STATUS+"/"+SENSOR_HARDWARE_VERSION;
     }
 
     @Override
@@ -155,6 +169,8 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
         descriptions.put(INTENT_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..127]\n max: [-127..127]");
         descriptions.put(INTENT_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
+        descriptions.put(INTENT_DEVICE_CONFIGURATION, "acquisition: [1..255]\n quickTermination: [true|false]\n thresholdValue: [0..255]\n measurementFrequency: [0|10..500]");
+
         descriptions.put(INTENT_LASER, "[true|false]");
         descriptions.put(INTENT_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
 
@@ -168,6 +184,8 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..-127]\n max: [-127..127]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
+        descriptions.put(STATUS_DEVICE_CONFIGURATION, "acquisition: [1..255]\n quickTermination: [true|false]\n thresholdValue: [0..255]\n measurementFrequency: [0|10..500]");
+        descriptions.put(STATUS_SENSOR_HARDWARE_VERSION, "[v1|v3]");
         descriptions.put(STATUS_LASER, "[true|false]");
         descriptions.put(STATUS_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
     }

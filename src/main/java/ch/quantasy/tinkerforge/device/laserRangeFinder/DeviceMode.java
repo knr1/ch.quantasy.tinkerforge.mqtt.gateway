@@ -42,8 +42,6 @@
  */
 package ch.quantasy.tinkerforge.device.laserRangeFinder;
 
-import com.tinkerforge.BrickletLaserRangeFinder;
-
 /**
  *
  * @author reto

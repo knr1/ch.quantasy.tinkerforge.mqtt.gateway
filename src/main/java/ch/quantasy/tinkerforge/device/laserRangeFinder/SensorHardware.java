@@ -42,23 +42,51 @@
  */
 package ch.quantasy.tinkerforge.device.laserRangeFinder;
 
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
-import com.tinkerforge.BrickletLaserRangeFinder;
-
 /**
  *
  * @author reto
  */
-public interface LaserRangeFinderDeviceCallback extends DeviceCallback, BrickletLaserRangeFinder.DistanceListener, BrickletLaserRangeFinder.DistanceReachedListener,BrickletLaserRangeFinder.VelocityListener,BrickletLaserRangeFinder.VelocityReachedListener {
-    public void distanceCallbackPeriodChanged(long period);
-    public void velocityCallbackPeriodChanged(long period);
-    public void debouncePeriodChanged(long period);
-    public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold);
-    public void velocityCallbackThresholdChanged(DeviceVelocityCallbackThreshold threshold);
-    public void laserStatusChanged(boolean laserEnabled);
-    public void movingAverageChanged(DeviceAveraging averaging);
-    public void deviceModeChanged(DeviceMode deviceMode);
-    public void deviceConfigurationChanged(DeviceConfiguration configuration);
+public class SensorHardware {
+    public static enum Version {
+        v1((short) 1), v3((short) 3);
+        private short value;
 
-    public void sensorHardwareVersion(SensorHardware.Version version);
+        private Version(short value) {
+            this.value = value;
+        }
+
+        public short getValue() {
+            return value;
+        }
+
+        public static Version getVersionFor(short s) throws IllegalArgumentException{
+            for (Version range : values()) {
+                if (range.value == s) {
+                    return range;
+                }
+            }
+            throw new IllegalArgumentException("Not supported: "+s);
+        }
+    }
+    
+    private Version version;
+    
+    public SensorHardware() {
+    }
+
+    public SensorHardware(String mode){
+        this(Version.valueOf(mode));
+    }
+    public SensorHardware(Version version) {
+        this.version = version;
+    }
+
+    public SensorHardware(short value) throws IllegalArgumentException {
+        this(Version.getVersionFor(value));
+    }
+
+    public Version getVersion() {
+        return version;
+    }
+
 }

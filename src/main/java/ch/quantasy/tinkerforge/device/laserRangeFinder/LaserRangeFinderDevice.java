@@ -64,6 +64,8 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
     private Boolean laserEnabled;
     private DeviceAveraging averaging;
     private DeviceMode mode;
+    private DeviceConfiguration configuration;
+    private SensorHardware.Version sensorHardwareVersion;
 
     public LaserRangeFinderDevice(TinkerforgeStack stack, BrickletLaserRangeFinder device) throws NotConnectedException, TimeoutException {
         super(stack, device);
@@ -90,11 +92,17 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
         if (velocityCallbackThreshold != null) {
             setVelocityCallbackThreshold(velocityCallbackThreshold);
         }
-        if(laserEnabled!=null){
+        if (laserEnabled != null) {
             setLaser(laserEnabled);
         }
-        if(averaging!=null){
+        if (averaging != null) {
             setMovingAverage(averaging);
+        }
+        if (configuration != null) {
+            setConfiguration(configuration);
+        }
+        if (sensorHardwareVersion == null) {
+            updateSensorHardwareVersion();
         }
     }
 
@@ -104,6 +112,16 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
         device.removeDistanceReachedListener(super.getCallback());
         device.removeVelocityListener(super.getCallback());
         device.removeVelocityReachedListener(super.getCallback());
+    }
+
+    private void updateSensorHardwareVersion() {
+        try {
+            this.sensorHardwareVersion = SensorHardware.Version.getVersionFor(getDevice().getSensorHardwareVersion());
+            super.getCallback().sensorHardwareVersion(this.sensorHardwareVersion);
+
+        } catch (NotConnectedException | TimeoutException ex) {
+            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void setDebouncePeriod(Long period) {
@@ -155,23 +173,24 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
             Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void setLaser(Boolean laserEnabled){
-        try{
-            if(laserEnabled){
+
+    public void setLaser(Boolean laserEnabled) {
+        try {
+            if (laserEnabled) {
                 getDevice().enableLaser();
-            }else{
+            } else {
                 getDevice().disableLaser();
             }
-            this.laserEnabled=getDevice().isLaserEnabled();
+            this.laserEnabled = getDevice().isLaserEnabled();
             super.getCallback().laserStatusChanged(laserEnabled);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }  
+        }
     }
+
     public void setMovingAverage(DeviceAveraging movingAverage) {
         try {
-            getDevice().setMovingAverage(movingAverage.getAveragingDistance(),movingAverage.getAveragingVelocity());
+            getDevice().setMovingAverage(movingAverage.getAveragingDistance(), movingAverage.getAveragingVelocity());
             this.averaging = new DeviceAveraging(getDevice().getMovingAverage());
             super.getCallback().movingAverageChanged(movingAverage);
 
@@ -179,12 +198,23 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
             Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void setMode(DeviceMode deviceMode){
+
+    public void setMode(DeviceMode deviceMode) {
         try {
             getDevice().setMode(deviceMode.getMode().getValue());
             this.mode = new DeviceMode(getDevice().getMode());
             super.getCallback().deviceModeChanged(mode);
+
+        } catch (TimeoutException | NotConnectedException ex) {
+            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void setConfiguration(DeviceConfiguration configruation) {
+        try {
+            getDevice().setConfiguration(configruation.getAquisitionCount(), configruation.getQuickTermination(), configruation.getThresholdValue(), configruation.getMeasurementFrequency());
+            this.configuration = new DeviceConfiguration(getDevice().getConfiguration());
+            super.getCallback().deviceConfigurationChanged(configuration);
 
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);

@@ -44,11 +44,13 @@ package ch.quantasy.gateway.service.device.laserRangeFinder;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceAveraging;
+import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceDistanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceMode;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceVelocityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDeviceCallback;
+import ch.quantasy.tinkerforge.device.laserRangeFinder.SensorHardware;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -96,6 +98,9 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
         if (string.startsWith(getContract().INTENT_DEVICE_MODE)) {
             DeviceMode deviceMode = getMapper().readValue(payload, DeviceMode.class);
             getDevice().setMode(deviceMode);
+        }
+        if(string.startsWith(getContract().INTENT_DEVICE_CONFIGURATION)){
+            DeviceConfiguration configuration=getMapper().readValue(payload, DeviceConfiguration.class);
         }
     }
 
@@ -157,6 +162,16 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
     @Override
     public void deviceModeChanged(DeviceMode deviceMode) {
         publishStatus(getContract().STATUS_DEVICE_MODE, deviceMode);
+    }
+
+    @Override
+    public void deviceConfigurationChanged(DeviceConfiguration configuration) {
+        publishStatus(getContract().STATUS_DEVICE_CONFIGURATION, configuration);
+    }
+
+    @Override
+    public void sensorHardwareVersion(SensorHardware.Version version) {
+        publishStatus(getContract().STATUS_SENSOR_HARDWARE_VERSION, version);
     }
 
 }
