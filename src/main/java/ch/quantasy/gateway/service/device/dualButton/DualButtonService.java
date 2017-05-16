@@ -88,7 +88,7 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
         protected LEDState led1;
         protected LEDState led2;
         protected short switch1;
-        protected short swicht2;
+        protected short switch2;
 
         private StateChanged() {
         }
@@ -101,7 +101,7 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
             this.led1 = led1;
             this.led2 = led2;
             this.switch1 = switch1;
-            this.swicht2 = switch2;
+            this.switch2 = switch2;
         }
 
        
@@ -118,8 +118,8 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
             return switch1;
         }
 
-        public short getSwicht2() {
-            return swicht2;
+        public short getSwitch2() {
+            return switch2;
         }
 
     }
