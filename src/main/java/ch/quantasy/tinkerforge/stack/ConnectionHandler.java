@@ -46,9 +46,9 @@ import com.tinkerforge.AlreadyConnectedException;
 import com.tinkerforge.Device;
 import com.tinkerforge.IPConnection;
 import com.tinkerforge.IPConnectionBase;
+import com.tinkerforge.NetworkException;
 import com.tinkerforge.NotConnectedException;
 import java.io.IOException;
-import java.net.NoRouteToHostException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Timer;
@@ -143,6 +143,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
                         //@TODO: Remove, as soon as Tinkerforge has corrected that problem.
                         Socket tmpSocket = new Socket(stack.getStackAddress().getHostName(), stack.getStackAddress().getPort());
                         tmpSocket.close();
+                        // End of Patch!
                         ipConnection = new IPConnection();
                         Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Got a new IP-Connection");
                         ipConnection.addConnectedListener(ConnectionHandler.this);
@@ -157,10 +158,10 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
 
                     }
                     actualConnectionException = null;
-
-                } catch (final NoRouteToHostException e) {
+                    //} catch (final NetworkException e) {
+                } catch (final UnknownHostException e) {  //Patch-catch
                     // This Host is not up! try again in some seconds...
-                    Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Host not up, try again in about " + getConnectionTimeoutInMilliseconds() + "ms.");
+                    Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Host not up or not reachable, I try again in about " + getConnectionTimeoutInMilliseconds() + "ms.");
 
                 } catch (final Exception e) {
                     actualConnectionException = e;
@@ -172,7 +173,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
     }
 
     public long getConnectionTimeoutInMilliseconds() {
-        return this.connectionTimeoutInMilliseconds;
+        return 1;//this.connectionTimeoutInMilliseconds;
     }
 
     public void setConnectionTimeoutInMilliseconds(long connectionTimeoutInMilliseconds) {

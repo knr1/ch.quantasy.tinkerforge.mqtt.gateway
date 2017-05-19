@@ -74,19 +74,15 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     public void messageReceived(String string, byte[] payload) throws Exception {
         if (string.startsWith(getContract().INTENT_STACK_ADDRESS_ADD)) {
 
-            String payloadString = new String(payload);
-            TinkerforgeStackAddress address = getMapper().readValue(payloadString, TinkerforgeStackAddress.class);
+            TinkerforgeStackAddress address = getMapper().readValue(payload, TinkerforgeStackAddress.class);
             if (manager.containsStack(address)) {
                 return;
             }
             manager.addStack(address);
-
-            //System.out.println(">>" + getMapper().readValue(payload, String.class));
         }
         if (string.startsWith(getContract().INTENT_STACK_ADDRESS_REMOVE)) {
 
-            String payloadString = new String(payload);
-            TinkerforgeStackAddress address = getMapper().readValue(payloadString, TinkerforgeStackAddress.class);
+            TinkerforgeStackAddress address = getMapper().readValue(payload, TinkerforgeStackAddress.class);
             if (!manager.containsStack(address)) {
                 return;
             }

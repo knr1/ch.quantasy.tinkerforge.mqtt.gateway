@@ -127,8 +127,8 @@ public class IO16Device extends GenericDevice<BrickletIO16, IO16DeviceCallback> 
         try {
             for (DeviceMonoflopParameters parameter : parameters) {
                 getDevice().setPortMonoflop(parameter.getPort(), (short) (1 << parameter.getPin()), (short) (parameter.getValue() << parameter.getPin()), parameter.getPeriod());
-                DeviceMonoflopParameters newParam = new DeviceMonoflopParameters(getDevice().getPortMonoflop(parameter.getPort(), parameter.getPin()));
-                this.monoflopParametersMap.put(parameter.getPortPin(), newParam);
+//                DeviceMonoflopParameters newParam = new DeviceMonoflopParameters(getDevice().getPortMonoflop(parameter.getPort(), parameter.getPin()));
+//                this.monoflopParametersMap.put(parameter.getPortPin(), newParam);
             }
             super.getCallback().deviceMonoflopParametersChanged(new TreeSet(this.monoflopParametersMap.values()));
         } catch (TimeoutException | NotConnectedException ex) {

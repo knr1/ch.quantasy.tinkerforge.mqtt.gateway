@@ -121,7 +121,7 @@ public class DeviceConfiguration implements Comparable<DeviceConfiguration>{
     public static List<DeviceConfiguration> getDeviceConfiguration(BrickletIO16.PortConfiguration configuration) {
         List<DeviceConfiguration> deviceConfigurationList=new LinkedList<>();
         for(int i=0;i<8;i++){
-            deviceConfigurationList.add(new DeviceConfiguration(configuration.getPort(), (short)i,(((configuration.directionMask&(1<<i))>>>i)==1?'i':'o') , ((configuration.valueMask&(1<<i))>>>i)==1));
+   //         deviceConfigurationList.add(new DeviceConfiguration(configuration.getPort(), (short)i,(((configuration.directionMask&(1<<i))>>>i)==1?'i':'o') , ((configuration.valueMask&(1<<i))>>>i)==1));
         }
         return deviceConfigurationList;
     }

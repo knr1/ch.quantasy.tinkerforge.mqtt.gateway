@@ -81,7 +81,7 @@ public class DevicePortAEdgeCountConfig {
     public DevicePortAEdgeCountConfig(BrickletIO16.EdgeCountConfig edgeCountConfig){
         debounce=edgeCountConfig.debounce;
         edgeType=EdgeType.getEdgeTypeFor(edgeCountConfig.edgeType);
-        pin=edgeCountConfig.pin;
+      //  pin=edgeCountConfig.pin;
     }
 
     public DevicePortAEdgeCountConfig(short pin,EdgeType edgeType, short debounce) {
