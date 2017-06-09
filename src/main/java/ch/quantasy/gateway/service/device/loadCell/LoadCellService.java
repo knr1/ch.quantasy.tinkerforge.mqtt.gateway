@@ -47,7 +47,9 @@ import ch.quantasy.tinkerforge.device.loadCell.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.loadCell.DeviceWeightCallbackThreshold;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDeviceCallback;
+
 import org.eclipse.paho.client.mqttv3.MqttException;
+
 import java.net.URI;
 
 /**
@@ -97,7 +99,10 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
             Boolean LED = getMapper().readValue(payload, Boolean.class);
             getDevice().setLED(LED);
         }
-
+        if (string.startsWith(getContract().INTENT_CALIBRATE)) {
+        	Long value = getMapper().readValue(payload, Long.class);
+        	getDevice().calibrate(value);
+        }
     }
 
     @Override

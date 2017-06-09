@@ -44,9 +44,11 @@ package ch.quantasy.tinkerforge.device.loadCell;
 
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
+
 import com.tinkerforge.BrickletLoadCell;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -172,5 +174,14 @@ public class LoadCellDevice extends GenericDevice<BrickletLoadCell, LoadCellDevi
             Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+	public void calibrate(long value) {
+		try {
+			getDevice().calibrate(value);
+		}catch(TimeoutException | NotConnectedException ex){
+            Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+	}
 
 }

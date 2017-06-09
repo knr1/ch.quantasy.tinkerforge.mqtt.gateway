@@ -89,6 +89,9 @@ public class LoadCellServiceContract extends DeviceServiceContract {
     public final String LED;
     public final String INTENT_LED;
     public final String STATUS_LED;
+    
+    public final String CALIBRATE;
+    public final String INTENT_CALIBRATE;
 
     public LoadCellServiceContract(LoadCellDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -135,6 +138,8 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         INTENT_LED = INTENT + "/" + LED;
         STATUS_LED = STATUS + "/" + LED;
 
+        CALIBRATE = "calibrate";
+        INTENT_CALIBRATE = INTENT + "/" + CALIBRATE;
     }
 
     @Override
@@ -149,6 +154,7 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
         descriptions.put(INTENT_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
         descriptions.put(INTENT_LED, "true|false]");
+        descriptions.put(INTENT_CALIBRATE, "[0..50001]"); // Max depends on bricklet
 
         descriptions.put(EVENT_WEIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]\n");
         descriptions.put(EVENT_WEIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]");
@@ -157,6 +163,7 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
         descriptions.put(STATUS_LED, "[true|false]");
+        
 
     }
 }
