@@ -61,6 +61,7 @@ import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
+import ch.quantasy.tinkerforge.device.gpsV2.GPSv2Device;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
@@ -111,6 +112,7 @@ import com.tinkerforge.BrickletDualButton;
 import com.tinkerforge.BrickletDualRelay;
 import com.tinkerforge.BrickletDustDetector;
 import com.tinkerforge.BrickletGPS;
+import com.tinkerforge.BrickletGPSV2;
 import com.tinkerforge.BrickletHallEffect;
 import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletJoystick;
@@ -282,6 +284,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.GPS == TinkerforgeDeviceClass.getDevice(device)) {
             return new GPSDevice(stack, (BrickletGPS) device);
+        }
+        if (TinkerforgeDeviceClass.GPSv2 == TinkerforgeDeviceClass.getDevice(device)) {
+            return new GPSv2Device(stack, (BrickletGPSV2) device);
         }
         if (TinkerforgeDeviceClass.Master == TinkerforgeDeviceClass.getDevice(device)) {
             return new MasterDevice(stack, (BrickMaster) device);

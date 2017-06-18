@@ -760,7 +760,7 @@ connected Bricks and Bricklets.
         [true|false]
 ```
 ```
-    TF/IMU/<uid>/S/sensorFustionMode
+    TF/IMU/<uid>/S/sensorFusionMode
         [0..1]
 ```
 ```
@@ -895,6 +895,7 @@ TF/Master/<uid>/I/statusLED/enabled
 * BrickletDualRelay
 * BrickletDustDetector
 * BrickletGPS
+* BrickletGPSv2
 * BrickletHallEffect
 * BrickletHumidity
 * BrickletJoystick

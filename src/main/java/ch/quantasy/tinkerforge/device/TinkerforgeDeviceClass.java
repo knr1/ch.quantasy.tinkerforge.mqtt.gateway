@@ -66,6 +66,7 @@ import com.tinkerforge.BrickletDualButton;
 import com.tinkerforge.BrickletDualRelay;
 import com.tinkerforge.BrickletDustDetector;
 import com.tinkerforge.BrickletGPS;
+import com.tinkerforge.BrickletGPSV2;
 import com.tinkerforge.BrickletHallEffect;
 import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletIO16;
@@ -123,7 +124,8 @@ public enum TinkerforgeDeviceClass {
             BrickletAnalogOut.class), AnalogOutV2(BrickletAnalogOutV2.class), Barometer(BrickletBarometer.class), CO2(BrickletCO2.class), Color(
             BrickletColor.class), Current12(BrickletCurrent12.class), Current25(
             BrickletCurrent25.class), DistanceIR(BrickletDistanceIR.class), DistanceUS(BrickletDistanceUS.class), DualButton(
-            BrickletDualButton.class), DualRelay(BrickletDualRelay.class), DustDetector(BrickletDustDetector.class), GPS(BrickletGPS.class), HallEffect(
+            BrickletDualButton.class), DualRelay(BrickletDualRelay.class), DustDetector(BrickletDustDetector.class), GPS(BrickletGPS.class), GPSv2(BrickletGPSV2.class),
+    HallEffect(
             BrickletHallEffect.class), Humidity(BrickletHumidity.class), IndustrialDigitalIn4(
             BrickletIndustrialDigitalIn4.class), IndustrialDigitalOut4(BrickletIndustrialDigitalOut4.class), IndustrialDual020mA(
             BrickletIndustrialDual020mA.class), IndustrialQuadRelay(BrickletIndustrialQuadRelay.class), IO16(
