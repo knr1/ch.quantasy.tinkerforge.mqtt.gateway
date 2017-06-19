@@ -99,7 +99,7 @@ You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Vi
  [micro-service]:<https://en.wikipedia.org/wiki/Microservices>
  [tinkerforge]:<http://www.tinkerforge.com/en>
  [MQTT]: <http://mqtt.org/>
- [TiMqWay.jar]: <https://drive.google.com/open?id=0B9adEExqrkwQRHZqanpfOS1JYVU>
+ [TiMqWay.jar]: <https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/dist/TiMqWay.jar>
  [d3Viewer]: <https://github.com/hardillb/d3-MQTT-Topic-Tree>
  [YAML]: <https://en.wikipedia.org/wiki/YAML>
  [https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial]: <https://github.com/knr1/ch.bfh.mobicomp.iot.mqtt.tutorial>
@@ -116,11 +116,11 @@ The following real-world example shall help to understand how to work with this 
 </a>
 
 
-##Common Hardware
+## Common Hardware
 Our setup runs at home. We have a local (wlan-)network and a connected computer (could be a PC, Notebook, RaspberryPi,...)
 
 
-##Tinkerforge Hardware
+## Tinkerforge Hardware
 In our setup, we are in possession of two Master-Bricks and three bricklets (2x TemperatureBricklet and 1x 20x4LCDBricklet).
 They are connected in the following way:
 * **Master-Brick-1** TemperatureBricklet (UID: blue), 20x4LCDBricklet (UID: lcd)
