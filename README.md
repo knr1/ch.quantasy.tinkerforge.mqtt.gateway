@@ -64,7 +64,7 @@ Then, if you subscribe to TF/# you will immediately get the description info for
 In order to interact with some specific Tinkerforge-Stack (e.g. localhost), the following message has to be sent to the following topic:
 ```sh
 Topic: TF/Manager/I/stack/address/add
-Message: localhost
+Message: hostName: localhost
 ```
 or any other address IP or name will work, if there is an actual Tinkerforge stack accessible.
 
@@ -181,7 +181,7 @@ As the description explains, we now have to tell TiMqWay where to look for the M
 network-name is master-brick-1). Therefore the following message has to be sent to the following topic:
 ```
 Topic: TF/Manager/I/stack/address/add
-Message: master-brick-1
+Message: hostName: master-brick-1
 ```
 
 Looking into the mqtt-broker, the following can be seen:
@@ -303,8 +303,8 @@ TF
            deounce --- [0..9223372036854775807]
            mode ---[Slow|Fast]
        E
-         temperature --- - timestamp: [0..9223372036854775807]\n value: [-2500..8500]\n
-           reached --- - timestamp: [0..9223372036854775807]\n value: [-2500..8500]\n
+         temperature --- - timestamp: [0..9223372036854775807]\n  value: [-2500..8500]\n
+           reached --- - timestamp: [0..9223372036854775807]\n  value: [-2500..8500]\n
        I
          debounce
            period --- [0..9223372036854775807]
@@ -379,7 +379,7 @@ TF
          temperature
            callbackPeriod --- 1000
        E
-         temperature --- - timestamp: 1465398254115 value: 2668 
+         temperature --- - timestamp: 1465398254115  value: 2668 
    LCD20x4
      D
        S
