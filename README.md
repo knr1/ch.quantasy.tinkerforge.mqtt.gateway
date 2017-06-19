@@ -303,8 +303,8 @@ TF
            deounce --- [0..9223372036854775807]
            mode ---[Slow|Fast]
        E
-         temperature --- timestamp: [0..9223372036854775807]\n value: [-2500..8500]\n
-           reached --- timestamp: [0..9223372036854775807]\n value: [-2500..8500]\n
+         temperature --- - timestamp: [0..9223372036854775807]\n value: [-2500..8500]\n
+           reached --- - timestamp: [0..9223372036854775807]\n value: [-2500..8500]\n
        I
          debounce
            period --- [0..9223372036854775807]
@@ -424,28 +424,28 @@ connected Bricks and Bricklets.
 ### <id>
 ```
 TF/<id>/E/device/connected
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
      hostName: <String>
    port: [0..4223..65536]
 ```
 ```
 TF/<id>/E/device/disconnected
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     hostName: <String>
    port: [0..4223..65536]
 ```
 ```
 TF/<id>/E/stack/address/added
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
      hostName: <String>
    port: [0..4223..65536]
 ```
 ```
 TF/<id>/E/stack/address/removed
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
      hostName: <String>
    port: [0..4223..65536]
@@ -468,14 +468,14 @@ TF/<id>/S/stack/address/<address>/connected
 ### IMU
 ```
 TF/IMU/<id>/E/acceleration
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    x: [-32768..32767]
    y: [-32768..32767]
    z: [-32768..32767]
 ```
 ```
 TF/IMU/<id>/E/allData
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    @acceleration 
    @magneticField 
    @angularVelocity 
@@ -488,28 +488,28 @@ TF/IMU/<id>/E/allData
 ```
 ```
 TF/IMU/<id>/E/angularVelocity
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    x: [-32768..32767]
    y: [-32768..32767]
    z: [-32768..32767]
 ```
 ```
 TF/IMU/<id>/E/magneticField
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    x: [-32768..32767]
    y: [-32768..32767]
    z: [-32768..32767]
 ```
 ```
 TF/IMU/<id>/E/orientation
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    heading: [-32768..32767]
    roll: [-32768..32767]
    pitch: [-32768..32767]
 ```
 ```
 TF/IMU/<id>/E/quaternion
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    w: [-32768..32767]
    x: [-32768..32767]
    y: [-32768..32767]
@@ -603,14 +603,14 @@ TF/IMU/<id>/S/statusLED/callbackPeriod
 ### IMUV2
 ```
 TF/IMUV2/<id>/E/acceleration
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    x: [-32768..32767]
    y: [-32768..32767]
    z: [-32768..32767]
 ```
 ```
 TF/IMUV2/<id>/E/allData
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    @acceleration 
    @magneticField 
    @angularVelocity 
@@ -623,42 +623,42 @@ TF/IMUV2/<id>/E/allData
 ```
 ```
 TF/IMUV2/<id>/E/angularVelocity
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    x: [-32768..32767]
    y: [-32768..32767]
    z: [-32768..32767]
 ```
 ```
 TF/IMUV2/<id>/E/gravityVector
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    x: [-32768..32767]
    y: [-32768..32767]
    z: [-32768..32767]
 ```
 ```
 TF/IMUV2/<id>/E/linearAcceleration
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    x: [-32768..32767]
    y: [-32768..32767]
    z: [-32768..32767]
 ```
 ```
 TF/IMUV2/<id>/E/magneticField
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    x: [-32768..32767]
    y: [-32768..32767]
    z: [-32768..32767]
 ```
 ```
 TF/IMUV2/<id>/E/orientation
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    heading: [-32768..32767]
    roll: [-32768..32767]
    pitch: [-32768..32767]
 ```
 ```
 TF/IMUV2/<id>/E/quaternion
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    w: [-32768..32767]
    x: [-32768..32767]
    y: [-32768..32767]
@@ -666,7 +666,7 @@ TF/IMUV2/<id>/E/quaternion
 ```
 ```
 TF/IMUV2/<id>/E/temperature
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-128..127]
 ```
 ```
@@ -903,7 +903,7 @@ TF/LCD20x4/<id>/S/position
 ### Accelerometer
 ```
 TF/Accelerometer/<id>/E/acceleration
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    x: [-32768..32767]
    y: [-32768..32767]
    z: [-32768..32767]
@@ -911,7 +911,7 @@ TF/Accelerometer/<id>/E/acceleration
 ```
 ```
 TF/Accelerometer/<id>/E/acceleration/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    x: [-32768..32767]
    y: [-32768..32767]
    z: [-32768..32767]
@@ -980,25 +980,25 @@ TF/Accelerometer/<id>/S/position
 ### AmbientLight
 ```
 TF/AmbientLight/<id>/E/analogValue
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/AmbientLight/<id>/E/analogValue/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/AmbientLight/<id>/E/illuminance
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..9000]
   
 ```
 ```
 TF/AmbientLight/<id>/E/illuminance/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..9000]
   
 ```
@@ -1066,13 +1066,13 @@ TF/AmbientLight/<id>/S/position
 ### AmbientLightV2
 ```
 TF/AmbientLightV2/<id>/E/illuminance
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..100000]
   
 ```
 ```
 TF/AmbientLightV2/<id>/E/illuminance/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..100000]
   
 ```
@@ -1132,25 +1132,25 @@ TF/AmbientLightV2/<id>/S/position
 ### AnalogInV2
 ```
 TF/AnalogInV2/<id>/E/analogValue
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/AnalogInV2/<id>/E/analogValue/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/AnalogInV2/<id>/E/voltage
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-2147483648..2147483647]
   
 ```
 ```
 TF/AnalogInV2/<id>/E/voltage/reached
-   timestamp: [0..42000]
+   - timestamp: [0..42000]
    value: [0..42000]
   
 ```
@@ -1248,25 +1248,25 @@ TF/AnalogOutV2/<id>/S/position
 ### Barometer
 ```
 TF/Barometer/<id>/E/airPressure
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [10000..1200000]
   
 ```
 ```
 TF/Barometer/<id>/E/airPressure/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [10000..1200000]
   
 ```
 ```
 TF/Barometer/<id>/E/altitude
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-2147483648..2147483647]
   
 ```
 ```
 TF/Barometer/<id>/E/altitude/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-2147483648..2147483647]
   
 ```
@@ -1354,13 +1354,13 @@ TF/Barometer/<id>/S/referenceAirPressure
 ### CO2
 ```
 TF/CO2/<id>/E/CO2Concentration
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..10000]
   
 ```
 ```
 TF/CO2/<id>/E/CO2Concentration/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..10000]
   
 ```
@@ -1408,7 +1408,7 @@ TF/CO2/<id>/S/position
 ### Color
 ```
 TF/Color/<id>/E/color
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: 
      red: [0..65535]
      green: [0..65535]
@@ -1418,7 +1418,7 @@ TF/Color/<id>/E/color
 ```
 ```
 TF/Color/<id>/E/color/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    red: [0..65535]
    green: [0..65535]
    blue: [0..65535]
@@ -1427,13 +1427,13 @@ TF/Color/<id>/E/color/reached
 ```
 ```
 TF/Color/<id>/E/illuminance
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..65535]
   
 ```
 ```
 TF/Color/<id>/E/illuminance/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..65535]
   
 ```
@@ -1501,27 +1501,27 @@ TF/Color/<id>/S/position
 ### DC
 ```
 TF/DC/<id>/E/emergencyShutdown
-   timestamp: [0..9223372036854775807] 
+   - timestamp: [0..9223372036854775807] 
    value: [0..9223372036854775807]
 ```
 ```
 TF/DC/<id>/E/fullBrake
-   timestamp: [0..9223372036854775807] 
+   - timestamp: [0..9223372036854775807] 
    value: [0..9223372036854775807]
 ```
 ```
 TF/DC/<id>/E/undervoltage
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..2147483647]
 ```
 ```
 TF/DC/<id>/E/velocity
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..32767]
 ```
 ```
 TF/DC/<id>/E/velocity/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..32767]
 ```
 ```
@@ -1600,25 +1600,25 @@ TF/DC/<id>/S/velocity/velocity
 ### DistanceIR
 ```
 TF/DistanceIR/<id>/E/analogValue
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/DistanceIR/<id>/E/analogValue/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/DistanceIR/<id>/E/distance
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [[40..300]|[100..800]|[200..1500]]
   
 ```
 ```
 TF/DistanceIR/<id>/E/distance/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [[40..300]|[100..800]|[200..1500]]
   
 ```
@@ -1686,13 +1686,13 @@ TF/DistanceIR/<id>/S/position
 ### DistanceUS
 ```
 TF/DistanceUS/<id>/E/distance
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [[0..4095]
   
 ```
 ```
 TF/DistanceUS/<id>/E/distance/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
@@ -1748,7 +1748,7 @@ TF/DistanceUS/<id>/S/position
 ### DualButton
 ```
 TF/DualButton/<id>/E/stateChanged
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     led1: [AutoToggleOn|AutoToggleOff|On|Off]
      led2: [AutoToggleOn|AutoToggleOff|On|Off]
@@ -1785,13 +1785,13 @@ TF/DualButton/<id>/S/position
 ### DustDetector
 ```
 TF/DustDetector/<id>/E/dustDensity
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..500]
   
 ```
 ```
 TF/DustDetector/<id>/E/dustDensity/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..500]
   
 ```
@@ -1847,14 +1847,14 @@ TF/DustDetector/<id>/S/position
 ### GPS
 ```
 TF/GPS/<id>/E/altitude
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
      altitude: [-2147483648..2147483647]
      geoidalSeparation: [-2147483648..2147483647]
 ```
 ```
 TF/GPS/<id>/E/coordinates
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     latitude: [-9223372036854775808..9223372036854775807]
      ns: ['N'|'S']
@@ -1868,21 +1868,21 @@ TF/GPS/<id>/E/coordinates
 ```
 ```
 TF/GPS/<id>/E/dateTime
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     date: [[d|dd]mmyy]
      time: [hhmmssxxx]
 ```
 ```
 TF/GPS/<id>/E/motion
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     course: [0..36000]
      speed: [0..9223372036854775807]
 ```
 ```
 TF/GPS/<id>/E/status
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     fix: [1|2|3]]
      satellitesView: [0..32767]
@@ -1936,14 +1936,14 @@ TF/GPS/<id>/S/position
 ### GPSv2
 ```
 TF/GPSv2/<id>/E/altitude
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
      altitude: [-2147483648..2147483647]
      geoidalSeparation: [-2147483648..2147483647]
 ```
 ```
 TF/GPSv2/<id>/E/coordinates
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     latitude: [-9223372036854775808..9223372036854775807]
      ns: ['N'|'S']
@@ -1952,21 +1952,21 @@ TF/GPSv2/<id>/E/coordinates
 ```
 ```
 TF/GPSv2/<id>/E/dateTime
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     date: [[d|dd]mmyy]
      time: [hhmmssxxx]
 ```
 ```
 TF/GPSv2/<id>/E/motion
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     course: [0..36000]
      speed: [0..9223372036854775807]
 ```
 ```
 TF/GPSv2/<id>/E/status
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     fix: [true|false]]
      satellitesView: [0..32767]
@@ -2035,14 +2035,14 @@ TF/GPSv2/<id>/S/status/led
 ### HallEffect
 ```
 TF/HallEffect/<id>/E/edgeCount
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     count: [0..9223372036854775807]
      greater35Gauss: [true|false]
 ```
 ```
 TF/HallEffect/<id>/E/edgeCount/reset
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..9223372036854775807]
   
 ```
@@ -2094,25 +2094,25 @@ TF/HallEffect/<id>/S/position
 ### Humidity
 ```
 TF/Humidity/<id>/E/analogValue
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/Humidity/<id>/E/analogValue/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/Humidity/<id>/E/humidity
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..1000]
   
 ```
 ```
 TF/Humidity/<id>/E/humidity/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..1000]
   
 ```
@@ -2180,14 +2180,14 @@ TF/Humidity/<id>/S/position
 ### Joystick
 ```
 TF/Joystick/<id>/E/analogValue
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
    x: [0..4095]
    y: [0..4095]
 ```
 ```
 TF/Joystick/<id>/E/analogValue/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     x: [0..4095]
      y: [0..4095]
@@ -2198,14 +2198,14 @@ TF/Joystick/<id>/E/calibrate
 ```
 ```
 TF/Joystick/<id>/E/position
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     x: [-100..100]
    y: [-100..100]
 ```
 ```
 TF/Joystick/<id>/E/position/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
      x: [-100..100]
      y: [-100..100]
@@ -2294,25 +2294,25 @@ TF/Joystick/<id>/S/position/threshold
 ### LaserRangeFinder
 ```
 TF/LaserRangeFinder/<id>/E/distance
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4000]
   
 ```
 ```
 TF/LaserRangeFinder/<id>/E/distance/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4000]
   
 ```
 ```
 TF/LaserRangeFinder/<id>/E/velocity
-   timestamp: [-127..9223372036854775807]
+   - timestamp: [-127..9223372036854775807]
    value: [0..127]
   
 ```
 ```
 TF/LaserRangeFinder/<id>/E/velocity/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-127..127]
   
 ```
@@ -2424,13 +2424,13 @@ TF/LaserRangeFinder/<id>/S/velocity/threshold
 ### LEDStrip
 ```
 TF/LEDStrip/<id>/E/frame/rendered
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..2147483647]
   
 ```
 ```
 TF/LEDStrip/<id>/E/laging
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
 ```
 ```
 TF/LEDStrip/<id>/I/config
@@ -2476,13 +2476,13 @@ TF/LEDStrip/<id>/S/position
 ### Line
 ```
 TF/Line/<id>/E/reflectivity
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [[0..4095]
   
 ```
 ```
 TF/Line/<id>/E/reflectivity/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
@@ -2530,25 +2530,25 @@ TF/Line/<id>/S/reflectivity/threshold
 ### LinearPoti
 ```
 TF/LinearPoti/<id>/E/analogValue
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/LinearPoti/<id>/E/analogValue/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/LinearPoti/<id>/E/position
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..100]
   
 ```
 ```
 TF/LinearPoti/<id>/E/position/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..100]
   
 ```
@@ -2616,13 +2616,13 @@ TF/LinearPoti/<id>/S/position/threshold
 ### LoadCell
 ```
 TF/LoadCell/<id>/E/weight
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-50001..50001]
   
 ```
 ```
 TF/LoadCell/<id>/E/weight/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-50001..50001]
 ```
 ```
@@ -2703,12 +2703,12 @@ TF/LoadCell/<id>/S/weight/threshold
 ### Master
 ```
 TF/Master/<id>/E/USB/voltage
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-2147483648..2147483647]
 ```
 ```
 TF/Master/<id>/E/USB/voltage/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-2147483648..2147483647]
 ```
 ```
@@ -2717,22 +2717,22 @@ TF/Master/<id>/E/reset
 ```
 ```
 TF/Master/<id>/E/stack/current
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..2147483647]
 ```
 ```
 TF/Master/<id>/E/stack/current/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..2147483647]
 ```
 ```
 TF/Master/<id>/E/stack/voltage
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-2147483648..2147483647]
 ```
 ```
 TF/Master/<id>/E/stack/voltage/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-2147483648..2147483647]
 ```
 ```
@@ -2815,13 +2815,13 @@ TF/Master/<id>/S/statusLED/enabled
 ### Moisture
 ```
 TF/Moisture/<id>/E/moisture
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/Moisture/<id>/E/moisture/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
 ```
 ```
@@ -2900,12 +2900,12 @@ TF/MotionDetector/<id>/S/position
 ### MultiTouch
 ```
 TF/MultiTouch/<id>/E/recalibrated
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: true
 ```
 ```
 TF/MultiTouch/<id>/E/touchState
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..8191]
   
 ```
@@ -2945,28 +2945,28 @@ TF/MultiTouch/<id>/S/position
 ### NfcRfid
 ```
 TF/NfcRfid/<id>/E/tag/discovered
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     id: [00..FF]_9
     type: [MifareClassic|Type1|Type2]
 ```
 ```
 TF/NfcRfid/<id>/E/tag/read
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
      id: [00..FF]_9
     value: [00..FF]_*
 ```
 ```
 TF/NfcRfid/<id>/E/tag/vanished
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
      id: [00..FF]_9
     type: [MifareClassic|Type1|Type2]
 ```
 ```
 TF/NfcRfid/<id>/E/tag/written
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
      id: [00..FF]_9
     state: [WritePageError|WritePageReady]
@@ -3005,17 +3005,17 @@ TF/NfcRfid/<id>/S/scanning/callbackPeriod
 ### PiezoSpeaker
 ```
 TF/PiezoSpeaker/<id>/E/calibrated
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: true
 ```
 ```
 TF/PiezoSpeaker/<id>/E/finished
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: true
 ```
 ```
 TF/PiezoSpeaker/<id>/E/started
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: true
 ```
 ```
@@ -3048,22 +3048,22 @@ TF/PiezoSpeaker/<id>/S/position
 ### PTC
 ```
 TF/PTC/<id>/E/resistance
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..32767]
 ```
 ```
 TF/PTC/<id>/E/resistance/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..32767]
 ```
 ```
 TF/PTC/<id>/E/temperature
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-24600..84900]
 ```
 ```
 TF/PTC/<id>/E/temperature/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-24600..84900]
 ```
 ```
@@ -3146,7 +3146,7 @@ TF/PTC/<id>/S/wireMode
 ### RealTimeClock
 ```
 TF/RealTimeClock/<id>/E/alarm
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
      year: [2000..2099]
    month: [1..12]
@@ -3159,7 +3159,7 @@ TF/RealTimeClock/<id>/E/alarm
 ```
 ```
 TF/RealTimeClock/<id>/E/dateTime
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value:
     year: [2000..2099]
    month: [1..12]
@@ -3303,19 +3303,19 @@ TF/RemoteSwitch/<id>/S/repeats
 ### RotaryEncoder
 ```
 TF/RotaryEncoder/<id>/E/count
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..9000]
   
 ```
 ```
 TF/RotaryEncoder/<id>/E/count/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-150..150]
   
 ```
 ```
 TF/RotaryEncoder/<id>/E/count/reset
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    count: [-92233720368547758080..9223372036854775807]
   
 ```
@@ -3373,25 +3373,25 @@ TF/RotaryEncoder/<id>/S/position
 ### RotaryPoti
 ```
 TF/RotaryPoti/<id>/E/analogValue
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/RotaryPoti/<id>/E/analogValue/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..4095]
   
 ```
 ```
 TF/RotaryPoti/<id>/E/position
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..9000]
   
 ```
 ```
 TF/RotaryPoti/<id>/E/position/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-150..150]
   
 ```
@@ -3502,18 +3502,18 @@ TF/SegmentDisplay4x7/<id>/S/segments
 ### Servo
 ```
 TF/Servo/<id>/E/positionReached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    id: [0..6]
    position: [-32767..32767]
 ```
 ```
 TF/Servo/<id>/E/undervoltage
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..2147483647]
 ```
 ```
 TF/Servo/<id>/E/velocityReached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    id: [0..6]
    value: [0..32767]
 ```
@@ -3592,7 +3592,7 @@ TF/Servo/<id>/S/statusLED
 ### SolidState
 ```
 TF/SolidState/<id>/E/monoflopDone
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [true|false]
 ```
 ```
@@ -3624,13 +3624,13 @@ TF/SolidState/<id>/S/state
 ### SoundIntensity
 ```
 TF/SoundIntensity/<id>/E/soundIntensity
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..10000]
   
 ```
 ```
 TF/SoundIntensity/<id>/E/soundIntensity/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..10000]
   
 ```
@@ -3678,13 +3678,13 @@ TF/SoundIntensity/<id>/S/soundIntensity/threshold
 ### Temperature
 ```
 TF/Temperature/<id>/E/temperature
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-2500..8500]
   
 ```
 ```
 TF/Temperature/<id>/E/temperature/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-2500..8500]
   
 ```
@@ -3740,25 +3740,25 @@ TF/Temperature/<id>/S/temperature/threshold
 ### TemperatureIR
 ```
 TF/TemperatureIR/<id>/E/ambientTemperature
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-400..1250]
   
 ```
 ```
 TF/TemperatureIR/<id>/E/ambientTemperature/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-400..1250]
   
 ```
 ```
 TF/TemperatureIR/<id>/E/objectTemperature
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-700..3800]
   
 ```
 ```
 TF/TemperatureIR/<id>/E/objectTemperature/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-700..3800]
   
 ```
@@ -3826,13 +3826,13 @@ TF/TemperatureIR/<id>/S/position
 ### ThermoCouple
 ```
 TF/ThermoCouple/<id>/E/temperature
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-21000..180000]
   
 ```
 ```
 TF/ThermoCouple/<id>/E/temperature/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-21000..180000]
   
 ```
@@ -3910,13 +3910,13 @@ TF/Tilt/<id>/S/position
 ### UVLight
 ```
 TF/UVLight/<id>/E/uvLight
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..328000]
   
 ```
 ```
 TF/UVLight/<id>/E/uvLight/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..328000]
   
 ```
@@ -3964,35 +3964,35 @@ TF/UVLight/<id>/S/uvLight/threshold
 ### VoltageCurrent
 ```
 TF/VoltageCurrent/<id>/E/current
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..36000]
   
 ```
 ```
 TF/VoltageCurrent/<id>/E/current/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..36000]
 ```
 ```
 TF/VoltageCurrent/<id>/E/power
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..720000]
   
 ```
 ```
 TF/VoltageCurrent/<id>/E/power/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [0..720000]
 ```
 ```
 TF/VoltageCurrent/<id>/E/voltage
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-50001..50001]
   
 ```
 ```
 TF/VoltageCurrent/<id>/E/voltage/reached
-   timestamp: [0..9223372036854775807]
+   - timestamp: [0..9223372036854775807]
    value: [-50001..50001]
 ```
 ```
