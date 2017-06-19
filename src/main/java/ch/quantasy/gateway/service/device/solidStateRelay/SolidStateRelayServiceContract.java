@@ -89,7 +89,7 @@ public class SolidStateRelayServiceContract extends DeviceServiceContract {
     protected void descirbeMore(Map<String, String> descriptions) {
         descriptions.put(INTENT_MONOFLOP, "state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_STATE, "[true|false]");
-        descriptions.put(EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [true|false]");
+        descriptions.put(EVENT_MONOFLOP_DONE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [true|false]");
         descriptions.put(STATUS_STATE, "[true|false]");
     }
 }

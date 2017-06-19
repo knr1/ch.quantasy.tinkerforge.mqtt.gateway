@@ -126,8 +126,8 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
 
-        descriptions.put(EVENT_DUST_DENSITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
-        descriptions.put(EVENT_DUST_DENSITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..500]\n");
+        descriptions.put(EVENT_DUST_DENSITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..500]");
+        descriptions.put(EVENT_DUST_DENSITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..500]");
         descriptions.put(STATUS_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

@@ -111,9 +111,9 @@ public class RealTimeClockServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_OFFSET, "[-128..127]");
         descriptions.put(INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        descriptions.put(EVENT_DATE_TIME, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    year: [2000..2099]\n    month: [1..12]\n    day: [1..31]\n    hour: [0..23]\n    minute: [0..59]\n    second: [0..59]\n    centisecond: [0..9]\n    weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
         descriptions.put(INTENT_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
         descriptions.put(STATUS_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_ALARM, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        descriptions.put(EVENT_ALARM, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    year: [2000..2099]\n    month: [1..12]\n    day: [1..31]\n    hour: [0..23]\n    minute: [0..59]\n    second: [0..59]\n    centisecond: [0..9]\n    weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
     }
 }

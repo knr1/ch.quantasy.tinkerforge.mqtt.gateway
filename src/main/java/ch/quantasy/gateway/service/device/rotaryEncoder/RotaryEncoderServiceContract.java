@@ -131,12 +131,12 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
-        descriptions.put(EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]\n value: true");
-        descriptions.put(EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]\n value: true");
-        descriptions.put(EVENT_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n count: [" + Long.MIN_VALUE + "0.." + Long.MAX_VALUE + "]\n");
+        descriptions.put(EVENT_PRESSED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
+        descriptions.put(EVENT_RELEASED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
+        descriptions.put(EVENT_COUNT_RESET, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Long.MIN_VALUE + "0.." + Long.MAX_VALUE + "]");
 
-        descriptions.put(EVENT_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..9000]\n");
-        descriptions.put(EVENT_COUNT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-150..150]\n");
+        descriptions.put(EVENT_COUNT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..9000]");
+        descriptions.put(EVENT_COUNT_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-150..150]");
         descriptions.put(STATUS_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

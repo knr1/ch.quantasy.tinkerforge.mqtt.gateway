@@ -160,8 +160,8 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_LED, "true|false]");
         descriptions.put(INTENT_CALIBRATE, "[0..50001]"); // Max depends on bricklet
 
-        descriptions.put(EVENT_WEIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]\n");
-        descriptions.put(EVENT_WEIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-50001..50001]");
+        descriptions.put(EVENT_WEIGHT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-50001..50001]");
+        descriptions.put(EVENT_WEIGHT_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-50001..50001]");
         descriptions.put(STATUS_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

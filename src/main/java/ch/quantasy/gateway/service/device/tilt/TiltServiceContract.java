@@ -73,6 +73,6 @@ public class TiltServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_TILT_STATE, "[0..2]");
+        descriptions.put(EVENT_TILT_STATE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:  [0..2]");
     }
 }

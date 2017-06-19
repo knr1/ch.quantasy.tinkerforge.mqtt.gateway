@@ -115,8 +115,8 @@ public class HallEffectServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_EDGE_COUNT_RESET, "[true|false]");
         descriptions.put(INTENT_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
 
-        descriptions.put(EVENT_EDGE_COUNT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  count: [0.." + Long.MAX_VALUE + "]\n   greater35Gauss: [true|false]");
-        descriptions.put(EVENT_EDGE_COUNT_RESET, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Long.MAX_VALUE + "]\n");
+        descriptions.put(EVENT_EDGE_COUNT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    count: [0.." + Long.MAX_VALUE + "]\n    greater35Gauss: [true|false]");
+        descriptions.put(EVENT_EDGE_COUNT_RESET, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:    [0.." + Long.MAX_VALUE + "]");
 
         descriptions.put(STATUS_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

@@ -96,7 +96,7 @@ public class DualRelayServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_MONOFLOP, "relay: [1|2]\n state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_SELECTED_STATE, "relay: [1|2]\n state: [true|false]\n");
         descriptions.put(INTENT_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
-        descriptions.put(EVENT_MONOFLOP_DONE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  relay: [1|2]\n   state: [true|false]\n");
+        descriptions.put(EVENT_MONOFLOP_DONE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    relay: [1|2]\n    state: [true|false]");
         descriptions.put(STATUS_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
     }
 }

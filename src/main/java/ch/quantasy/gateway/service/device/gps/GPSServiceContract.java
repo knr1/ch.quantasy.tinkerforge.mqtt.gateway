@@ -138,10 +138,10 @@ public class GPSServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
-        descriptions.put(EVENT_ALTITUDE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   altitude: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   geoidalSeparation: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_DATE_TIME, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  date: [[d|dd]mmyy]\n   time: [hhmmssxxx]");
-        descriptions.put(EVENT_MOTION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  course: [0..36000]\n   speed: [0.." + Long.MAX_VALUE + "]");
-        descriptions.put(EVENT_STATE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  fix: [1|2|3]]\n   satellitesView: [0.." + Short.MAX_VALUE + "]\n   satellitesUsed: [0.." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_COORDINATES, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  latitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n   ns: ['N'|'S']\n   longitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n ew: ['E'|'W']\n pdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n hdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   vdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   epe: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
+        descriptions.put(EVENT_ALTITUDE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    altitude: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n    geoidalSeparation: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
+        descriptions.put(EVENT_DATE_TIME, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    date: [[d|dd]mmyy]\n    time: [hhmmssxxx]");
+        descriptions.put(EVENT_MOTION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    course: [0..36000]\n    speed: [0.." + Long.MAX_VALUE + "]");
+        descriptions.put(EVENT_STATE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    fix: [1|2|3]]\n    satellitesView: [0.." + Short.MAX_VALUE + "]\n    satellitesUsed: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_COORDINATES, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    latitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n    ns: ['N'|'S']\n    longitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n ew: ['E'|'W']\n pdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n hdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n    vdop: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n     epe: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
     }
 }

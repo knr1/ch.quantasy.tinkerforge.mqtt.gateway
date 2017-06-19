@@ -169,12 +169,12 @@ public class IMUServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_LEDS, "[true|false]");
         descriptions.put(STATUS_ORIENTATION_CALCULATION, "[true|false]");
 
-        descriptions.put(EVENT_ACCELERATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_ANGULAR_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_MAGNETIC_FIELD, "timestamp: [0.." + Long.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_ORIENTATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n heading: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n roll: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n pitch: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_QUATERNION, "timestamp: [0.." + Long.MAX_VALUE + "]\n w: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_ALL_DATA, "timestamp: [0.." + Long.MAX_VALUE + "]\n @acceleration \n @magneticField \n @angularVelocity \n @orientation \n @quaternion \n @linearAcceleration \n @gravityVector \n @temperature \n calibrationStatus: [0..255]");
+        descriptions.put(EVENT_ACCELERATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_ANGULAR_VELOCITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_MAGNETIC_FIELD, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_ORIENTATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     heading: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     roll: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     pitch: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_QUATERNION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     w: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_ALL_DATA, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     @acceleration\n     @magneticField\n     @angularVelocity\n     @orientation\n     @quaternion\n     @linearAcceleration\n     @gravityVector\n     @temperature\n     calibrationStatus: [0..255]");
 
     }
 }

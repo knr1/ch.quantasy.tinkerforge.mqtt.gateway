@@ -116,8 +116,8 @@ public class CO2ServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_CO2_CONCENTRATION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
 
-        descriptions.put(EVENT_CO2_CONCENTRATION, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
-        descriptions.put(EVENT_CO2_CONCENTRATION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..10000]\n");
+        descriptions.put(EVENT_CO2_CONCENTRATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
+        descriptions.put(EVENT_CO2_CONCENTRATION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
         descriptions.put(STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_CO2_CONCENTRATION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

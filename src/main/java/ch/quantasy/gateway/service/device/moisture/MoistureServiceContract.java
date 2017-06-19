@@ -126,8 +126,8 @@ public class MoistureServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
         descriptions.put(INTENT_MOVING_AVERAGE, "[0..100]");
 
-        descriptions.put(EVENT_MOISTURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]\n");
-        descriptions.put(EVENT_MOISTURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..4095]");
+        descriptions.put(EVENT_MOISTURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
+        descriptions.put(EVENT_MOISTURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(STATUS_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

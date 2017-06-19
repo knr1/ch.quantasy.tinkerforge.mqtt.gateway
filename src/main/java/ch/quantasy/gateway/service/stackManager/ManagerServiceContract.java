@@ -121,10 +121,10 @@ public class ManagerServiceContract extends TinkerForgeServiceContract {
     protected void describe(Map<String, String> descriptions) {
         descriptions.put(INTENT_STACK_ADDRESS_ADD, "hostName: <String>\n port: [0..4223..65536]");
         descriptions.put(INTENT_STACK_ADDRESS_REMOVE, "hostName: <String>\n port: [0..4223..65536]");
-        descriptions.put(EVENT_ADDRESS_CONNECTED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   hostName: <String>\n port: [0..4223..65536]");
-        descriptions.put(EVENT_ADDRESS_DISCONNECTED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  hostName: <String>\n port: [0..4223..65536]");
-        descriptions.put(EVENT_STACK_ADDRESS_ADDED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   hostName: <String>\n port: [0..4223..65536]");
-        descriptions.put(EVENT_STACK_ADDRESS_REMOVED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   hostName: <String>\n port: [0..4223..65536]");
+        descriptions.put(EVENT_ADDRESS_CONNECTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    hostName: <String>\n    port: [0..4223..65536]");
+        descriptions.put(EVENT_ADDRESS_DISCONNECTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    hostName: <String>\n    port: [0..4223..65536]");
+        descriptions.put(EVENT_STACK_ADDRESS_ADDED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    hostName: <String>\n    port: [0..4223..65536]");
+        descriptions.put(EVENT_STACK_ADDRESS_REMOVED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    hostName: <String>\n    port: [0..4223..65536]");
         descriptions.put(STATUS_STACK_ADDRESS + "/<address>/connected", "[true|false]");
 
     }

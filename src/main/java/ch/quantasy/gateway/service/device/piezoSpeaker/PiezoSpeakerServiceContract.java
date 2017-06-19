@@ -100,11 +100,11 @@ public class PiezoSpeakerServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_BEEP, "duration: [0..4294967295]\n frequency: [585..7100]");
         descriptions.put(INTENT_MORSE, "string: [.|-| |]_60\n frequency: [585..7100]");
         descriptions.put(INTENT_CALIBRATE, "[true|false]");
-        descriptions.put(EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-        descriptions.put(EVENT_BEEP_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-        descriptions.put(EVENT_BEEP_STARTED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-        descriptions.put(EVENT_CALIBRATED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-        descriptions.put(EVENT_MORSE_FINISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
-        descriptions.put(EVENT_MORSE_STARTED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: true");
+        descriptions.put(EVENT_CALIBRATED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
+        descriptions.put(EVENT_BEEP_FINISHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
+        descriptions.put(EVENT_BEEP_STARTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
+        descriptions.put(EVENT_CALIBRATED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
+        descriptions.put(EVENT_MORSE_FINISHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
+        descriptions.put(EVENT_MORSE_STARTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
     }
 }

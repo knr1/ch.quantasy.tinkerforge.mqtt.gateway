@@ -155,10 +155,10 @@ public class PTCServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
         descriptions.put(INTENT_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
         descriptions.put(INTENT_WIRE_MODE, "[2|3|4]");
-        descriptions.put(EVENT_TEMPERATURE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
-        descriptions.put(EVENT_TEMPERATURE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [-24600..84900]");
-        descriptions.put(EVENT_RESISTANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_RESISTANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_TEMPERATURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-24600..84900]");
+        descriptions.put(EVENT_TEMPERATURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-24600..84900]");
+        descriptions.put(EVENT_RESISTANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_RESISTANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");
         descriptions.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
         descriptions.put(STATUS_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

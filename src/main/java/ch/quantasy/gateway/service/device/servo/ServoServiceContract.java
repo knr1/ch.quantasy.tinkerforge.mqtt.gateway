@@ -125,14 +125,14 @@ public class ServoServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_SERVOS, "--- \n  {- \n  id: [0..6]\n  [enabled: [true|false]\n|]  [position: [-32767..32767]\n|]  [acceleration: [0..65536]\n|]  [velocity: [0..65535]\n|]  [degree:\n    min: [-32767..32767]\n    max: [-32767..32767]\n|]  [period: [1..65535]\n|]  [pulseWidth:\n    min: [1..65535]\n    max: [1..65535]|]}_7");
+        descriptions.put(INTENT_SERVOS, "--- \n  {- \n  id: [0..6]\n  [enabled: [true|false]|]\n  [position: [-32767..32767]|]\n  [acceleration: [0..65536]|]\n  [velocity: [0..65535]|]\n  [degree:\n    min: [-32767..32767]\n    max: [-32767..32767]|]\n  [period: [1..65535]|]\n  [pulseWidth:\n    min: [1..65535]\n    max: [1..65535]|]}_7");
         descriptions.put(INTENT_STATUS_LED, "[true|false]");
         descriptions.put(INTENT_MINIMUM_VOLTAGE, "[5000.." + Integer.MAX_VALUE + "]");
         descriptions.put(INTENT_OUTPUT_VOLTAGE, "[2000..9000]");
 
-        descriptions.put(EVENT_POSITION_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [0..6]\n position: [-32767..32767]");
-        descriptions.put(EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_VELOCITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n id: [0..6]\n value: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_POSITION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [0..6]\n    position: [-32767..32767]");
+        descriptions.put(EVENT_UNDERVOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Integer.MAX_VALUE + "]");
+        descriptions.put(EVENT_VELOCITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [0..6]\n    value: [0.." + Short.MAX_VALUE + "]");
 
         descriptions.put(STATUS_SERVOS, "--- \n  {- \n  id: [0..6]\n  enabled: [true|false|null]\n  position: [-32767..32767|null]\n  acceleration: [0..65536|null]\n  velocity: [0..65535|null]\n  degree: [[\n    min: [-32767..32767]\n    max: [-32767..32767]\n]|null]\n  period: [1..65535|null]\n  pulseWidth: [[\n    min: [1..65535]\n    max: [1..65535]]|null]}_7");
         descriptions.put(STATUS_STATUS_LED, "[true|false]");

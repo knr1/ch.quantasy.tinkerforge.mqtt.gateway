@@ -166,12 +166,12 @@ public class DCServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_VELOCITY_VELOCITY, "-32767..32767");
         descriptions.put(INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
 
-        descriptions.put(EVENT_FULL_BRAKE, "timestamp: [0.." + Long.MAX_VALUE + "] \n value: [0.." + Long.MAX_VALUE + "]");
-        descriptions.put(EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_VELOCITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_FULL_BRAKE, "- timestamp: [0.." + Long.MAX_VALUE + "] \n  value: [0.." + Long.MAX_VALUE + "]");
+        descriptions.put(EVENT_UNDERVOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Integer.MAX_VALUE + "]");
+        descriptions.put(EVENT_VELOCITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");
+        descriptions.put(EVENT_VELOCITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");
 
-        descriptions.put(EVENT_EMERGENCY_SHUTDOWN, "timestamp: [0.." + Long.MAX_VALUE + "] \n value: [0.." + Long.MAX_VALUE + "]");
+        descriptions.put(EVENT_EMERGENCY_SHUTDOWN, "- timestamp: [0.." + Long.MAX_VALUE + "] \n  value: [0.." + Long.MAX_VALUE + "]");
 
         descriptions.put(STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
         descriptions.put(STATUS_DRIVER_MODE, "[0|1]");

@@ -116,8 +116,8 @@ public class UVLightServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
 
-        descriptions.put(EVENT_UV_LIGHT, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..328000]\n");
-        descriptions.put(EVENT_UV_LIGHT_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..328000]\n");
+        descriptions.put(EVENT_UV_LIGHT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..328000]");
+        descriptions.put(EVENT_UV_LIGHT_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..328000]");
         descriptions.put(STATUS_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

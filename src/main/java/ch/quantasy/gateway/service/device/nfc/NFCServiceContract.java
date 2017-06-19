@@ -98,13 +98,13 @@ public class NFCServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_READ, "[00..FF]_9");
 
-        descriptions.put(EVENT_TAG_DISCOVERD, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
-        descriptions.put(EVENT_TAG_READ, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   id: [00..FF]_9\n  value: [00..FF]_*");
+        descriptions.put(EVENT_TAG_DISCOVERD, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    type: [MifareClassic|Type1|Type2]");
+        descriptions.put(EVENT_TAG_READ, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    value: [00..FF]_*");
 
-        descriptions.put(EVENT_TAG_VANISHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   id: [00..FF]_9\n  type: [MifareClassic|Type1|Type2]");
+        descriptions.put(EVENT_TAG_VANISHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    type: [MifareClassic|Type1|Type2]");
         descriptions.put(STATUS_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
-        descriptions.put(EVENT_TAG_WRITTEN, "timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   id: [00..FF]_9\n  state: [WritePageError|WritePageReady]\n value: [00..FF]_*");
+        descriptions.put(EVENT_TAG_WRITTEN, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    state: [WritePageError|WritePageReady]\n    value: [00..FF]_*");
         descriptions.put(INTENT_WRITE, "id: [00..FF]_9\n  value: [00..FF]_*");
 
     }

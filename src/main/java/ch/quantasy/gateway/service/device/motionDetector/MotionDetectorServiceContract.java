@@ -80,7 +80,7 @@ public class MotionDetectorServiceContract extends DeviceServiceContract {
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_DETECTION_CYCLE_ENDED, "[0.." + Long.MAX_VALUE + "]\n value: true");
-        descriptions.put(EVENT_MOTION_DETECTED, "[0.." + Long.MAX_VALUE + "]\n value: true");
+        descriptions.put(EVENT_DETECTION_CYCLE_ENDED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
+        descriptions.put(EVENT_MOTION_DETECTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
     }
 }

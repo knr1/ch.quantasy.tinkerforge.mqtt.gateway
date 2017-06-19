@@ -126,8 +126,8 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
         descriptions.put(INTENT_CONFIGURATION, "illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]\n integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]\n");
 
-        descriptions.put(EVENT_IllUMINANCE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..100000]\n");
-        descriptions.put(EVENT_ILLUMINANCE_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0..100000]\n");
+        descriptions.put(EVENT_IllUMINANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..100000]\n");
+        descriptions.put(EVENT_ILLUMINANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..100000]\n");
         descriptions.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

@@ -64,7 +64,7 @@ public abstract class TinkerForgeServiceContract extends AyamlClientContract {
         for (Map.Entry<String, String> entry : descriptions.entrySet()) {
             String key = entry.getKey();
             String value = "   "+entry.getValue();
-            value=value.replaceAll("\n", "\n  ");
+            value=value.replaceAll("\n", "\n   ");
             toMD += "```\n";
             toMD += key + "\n" + value + "\n";
             toMD += "```\n";

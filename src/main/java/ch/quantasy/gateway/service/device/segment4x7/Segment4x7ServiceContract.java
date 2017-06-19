@@ -98,8 +98,8 @@ public class Segment4x7ServiceContract extends DeviceServiceContract {
         descriptions.put(INTENT_COUNTER, "from: [-999..9999]\n to: [-999..9999]\n increment: [-999..9999]\n lenght: [0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
 
-        descriptions.put(EVENT_COUNTER_STARTED, "[0.." + Long.MAX_VALUE + "]\n value: true");
-        descriptions.put(EVENT_COUNTER_FINISHED, "[0.." + Long.MAX_VALUE + "]\n value: true");
+        descriptions.put(EVENT_COUNTER_STARTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
+        descriptions.put(EVENT_COUNTER_FINISHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
 
         descriptions.put(STATUS_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
     }
