@@ -46,6 +46,7 @@ import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -91,6 +92,10 @@ public class IMUServiceContract extends DeviceServiceContract {
 
     public IMUServiceContract(IMUDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public IMUServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.IMU.toString());
     }
 
     public IMUServiceContract(String id, String device) {

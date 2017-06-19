@@ -95,6 +95,10 @@ public class ColorServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public ColorServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Color.toString());
+    }
+
     public ColorServiceContract(String id, String device) {
         super(id, device);
 

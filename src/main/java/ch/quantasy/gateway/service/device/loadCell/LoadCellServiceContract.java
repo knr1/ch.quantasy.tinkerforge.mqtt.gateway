@@ -89,12 +89,16 @@ public class LoadCellServiceContract extends DeviceServiceContract {
     public final String LED;
     public final String INTENT_LED;
     public final String STATUS_LED;
-    
+
     public final String CALIBRATE;
     public final String INTENT_CALIBRATE;
 
     public LoadCellServiceContract(LoadCellDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public LoadCellServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.LoadCell.toString());
     }
 
     public LoadCellServiceContract(String id, String device) {
@@ -163,7 +167,6 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
         descriptions.put(STATUS_LED, "[true|false]");
-        
 
     }
 }

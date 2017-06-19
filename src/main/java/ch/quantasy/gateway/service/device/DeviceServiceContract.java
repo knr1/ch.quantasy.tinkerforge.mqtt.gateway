@@ -69,13 +69,12 @@ public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
     }
 
     @Override
-    protected void describe(Map<String, String> descriptions) {
+    public void describe(Map<String, String> descriptions) {
         descriptions.put(STATUS_POSITION, "[0|1|2|3|4|5|6|7|8|a|b|c|d]");
         descriptions.put(STATUS_FIRMWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
         descriptions.put(STATUS_HARDWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
         descirbeMore(descriptions);
     }
-    
-    protected abstract void descirbeMore(Map<String, String> descriptions);
 
+    protected abstract void descirbeMore(Map<String, String> descriptions);
 }

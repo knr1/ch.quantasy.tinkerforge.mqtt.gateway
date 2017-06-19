@@ -91,6 +91,10 @@ public class GPSv2ServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public GPSv2ServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.GPSv2.toString());
+    }
+
     public GPSv2ServiceContract(String id, String device) {
         super(id, device);
 

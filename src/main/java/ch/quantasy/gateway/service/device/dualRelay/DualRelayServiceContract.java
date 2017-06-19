@@ -70,6 +70,10 @@ public class DualRelayServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public DualRelayServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.DualRelay.toString());
+    }
+
     public DualRelayServiceContract(String id, String device) {
         super(id, device);
         MONOFLOP_DONE = "monoflopDone";

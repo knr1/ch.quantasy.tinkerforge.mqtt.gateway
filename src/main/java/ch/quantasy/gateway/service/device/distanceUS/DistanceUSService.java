@@ -118,5 +118,4 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
         publishEvent(getContract().EVENT_DISTANCE_REACHED, i);
     }
 
-    
 }

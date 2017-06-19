@@ -95,16 +95,20 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
     public final String DEVICE_MODE;
     public final String INTENT_DEVICE_MODE;
     public final String STATUS_DEVICE_MODE;
-    
+
     public final String DEVICE_CONFIGURATION;
     public final String INTENT_DEVICE_CONFIGURATION;
     public final String STATUS_DEVICE_CONFIGURATION;
-    
+
     public final String SENSOR_HARDWARE_VERSION;
     public final String STATUS_SENSOR_HARDWARE_VERSION;
 
     public LaserRangeFinderServiceContract(LaserRangeFinderDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public LaserRangeFinderServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.LaserRangeFinder.toString());
     }
 
     public LaserRangeFinderServiceContract(String id, String device) {
@@ -152,13 +156,13 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
         DEVICE_MODE = "deviceMode";
         INTENT_DEVICE_MODE = INTENT + "/" + DEVICE_MODE;
         STATUS_DEVICE_MODE = STATUS + "/" + DEVICE_MODE;
-        
+
         DEVICE_CONFIGURATION = "deviceConfiguration";
         INTENT_DEVICE_CONFIGURATION = INTENT + "/" + DEVICE_CONFIGURATION;
         STATUS_DEVICE_CONFIGURATION = STATUS + "/" + DEVICE_CONFIGURATION;
-        
-        SENSOR_HARDWARE_VERSION="sensorHardwareVersion";
-        STATUS_SENSOR_HARDWARE_VERSION= STATUS+"/"+SENSOR_HARDWARE_VERSION;
+
+        SENSOR_HARDWARE_VERSION = "sensorHardwareVersion";
+        STATUS_SENSOR_HARDWARE_VERSION = STATUS + "/" + SENSOR_HARDWARE_VERSION;
     }
 
     @Override

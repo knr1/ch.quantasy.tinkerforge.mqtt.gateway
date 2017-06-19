@@ -60,6 +60,10 @@ public class TiltServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public TiltServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Tilt.toString());
+    }
+
     public TiltServiceContract(String id, String device) {
         super(id, device);
 

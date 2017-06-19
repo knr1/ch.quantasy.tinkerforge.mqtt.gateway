@@ -89,6 +89,10 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public TemperatureIRServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.TemperatureIR.toString());
+    }
+
     public TemperatureIRServiceContract(String id, String device) {
         super(id, device);
 

@@ -46,6 +46,7 @@ import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.master.MasterDevice;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -110,6 +111,10 @@ public class MasterServiceContract extends DeviceServiceContract {
 
     public MasterServiceContract(MasterDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    }
+
+    public MasterServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Master.toString());
     }
 
     public MasterServiceContract(String id, String device) {

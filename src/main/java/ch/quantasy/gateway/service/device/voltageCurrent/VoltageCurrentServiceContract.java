@@ -108,6 +108,10 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public VoltageCurrentServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.VoltageCurrent.toString());
+    }
+
     public VoltageCurrentServiceContract(String id, String device) {
         super(id, device);
 

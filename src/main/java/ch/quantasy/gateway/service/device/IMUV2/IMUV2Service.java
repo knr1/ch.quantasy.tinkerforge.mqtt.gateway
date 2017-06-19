@@ -57,7 +57,7 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
     public IMUV2Service(IMUV2Device device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new IMUV2ServiceContract(device));
-        
+
     }
 
     @Override
@@ -234,15 +234,11 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         private Acceleration() {
         }
 
-        
-
         public Acceleration(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
         }
-
-      
 
         public short getX() {
             return x;
@@ -267,16 +263,13 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         private AngularVelocity() {
         }
 
-     
-
         public AngularVelocity(short x, short y, short z) {
-            
+
             this.x = x;
             this.y = y;
             this.z = z;
         }
 
-        
         public short getX() {
             return x;
         }
@@ -300,14 +293,11 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         private GravityVector() {
         }
 
-      
-
         public GravityVector(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
         }
-
 
         public short getX() {
             return x;
@@ -332,14 +322,11 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         private LinearAcceleration() {
         }
 
-       
-
         public LinearAcceleration(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
         }
-
 
         public short getX() {
             return x;
@@ -364,14 +351,11 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         private MagneticField() {
         }
 
-       
-
         public MagneticField(short x, short y, short z) {
             this.x = x;
             this.y = y;
             this.z = z;
         }
-
 
         public short getX() {
             return x;
@@ -396,13 +380,11 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         private Orientation() {
         }
 
-       
         public Orientation(short heading, short roll, short pitch) {
             this.heading = heading;
             this.roll = roll;
             this.pitch = pitch;
         }
-
 
         public short getHeading() {
             return heading;
@@ -428,14 +410,12 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         private QuaternionEvent() {
         }
 
-       
         public QuaternionEvent(short w, short x, short y, short z) {
             this.w = w;
             this.x = x;
             this.y = y;
             this.z = z;
         }
-
 
         public short getW() {
             return w;
@@ -455,7 +435,6 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     }
 
-
     public static class AllData {
 
         private Acceleration acceleration;
@@ -471,7 +450,6 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
         private AllData() {
         }
 
-       
         public AllData(Acceleration acceleration, MagneticField magneticField, AngularVelocity angularVelocity, Orientation orientation, QuaternionEvent quaternion, LinearAcceleration linearAcceleration, GravityVector gravityVector, byte temperature, short calibrationStatus) {
             this.acceleration = acceleration;
             this.magneticField = magneticField;

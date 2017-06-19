@@ -70,6 +70,10 @@ public class Segment4x7ServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public Segment4x7ServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.SegmentDisplay4x7.toString());
+    }
+
     public Segment4x7ServiceContract(String id, String device) {
         super(id, device);
 

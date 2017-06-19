@@ -101,6 +101,10 @@ public class DCServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public DCServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.DC.toString());
+    }
+
     public DCServiceContract(String id, String device) {
         super(id, device);
 
@@ -152,7 +156,7 @@ public class DCServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-    descriptions.put(INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
+        descriptions.put(INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
         descriptions.put(INTENT_DRIVER_MODE, "[0|1]");
         descriptions.put(INTENT_ENABLED, "[true|false]");
         descriptions.put(INTENT_FULL_BRAKE, "[true|false]");
@@ -166,7 +170,7 @@ public class DCServiceContract extends DeviceServiceContract {
         descriptions.put(EVENT_UNDERVOLTAGE, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Integer.MAX_VALUE + "]");
         descriptions.put(EVENT_VELOCITY, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
         descriptions.put(EVENT_VELOCITY_REACHED, "timestamp: [0.." + Long.MAX_VALUE + "]\n value: [0.." + Short.MAX_VALUE + "]");
-        
+
         descriptions.put(EVENT_EMERGENCY_SHUTDOWN, "timestamp: [0.." + Long.MAX_VALUE + "] \n value: [0.." + Long.MAX_VALUE + "]");
 
         descriptions.put(STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");

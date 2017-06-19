@@ -71,6 +71,10 @@ public class NFCServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public NFCServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.NfcRfid.toString());
+    }
+
     public NFCServiceContract(String id, String device) {
         super(id, device);
         SCANNING = "scanning";

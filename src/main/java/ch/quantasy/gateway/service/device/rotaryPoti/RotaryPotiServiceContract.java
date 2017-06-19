@@ -88,6 +88,10 @@ public class RotaryPotiServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public RotaryPotiServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.RotaryPoti.toString());
+    }
+
     public RotaryPotiServiceContract(String id, String device) {
         super(id, device);
 

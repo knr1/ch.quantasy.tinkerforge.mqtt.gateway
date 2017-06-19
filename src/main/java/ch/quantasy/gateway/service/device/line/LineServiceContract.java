@@ -79,6 +79,10 @@ public class LineServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public LineServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Line.toString());
+    }
+
     public LineServiceContract(String id, String device) {
         super(id, device);
 

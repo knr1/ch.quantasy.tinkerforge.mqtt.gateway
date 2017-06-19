@@ -90,10 +90,11 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
             Integer velocityPeriod = getMapper().readValue(payload, Integer.class);
             getDevice().setVelocityPeriod(velocityPeriod);
         }
-        if(string.startsWith(getContract().INTENT_FULL_BRAKE)){
-            Boolean value=getMapper().readValue(payload,Boolean.class);
-            if(value)
+        if (string.startsWith(getContract().INTENT_FULL_BRAKE)) {
+            Boolean value = getMapper().readValue(payload, Boolean.class);
+            if (value) {
                 getDevice().fullBrake();
+            }
         }
     }
 
@@ -158,6 +159,4 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
         publishEvent(getContract().EVENT_FULL_BRAKE, System.currentTimeMillis());
     }
 
-    
-    
 }

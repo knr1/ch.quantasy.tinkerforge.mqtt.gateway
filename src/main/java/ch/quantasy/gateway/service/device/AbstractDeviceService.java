@@ -63,7 +63,7 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
         super(mqttURI, serviceContract.CANONICAL_TOPIC, serviceContract);
         this.device = device;
         device.setCallback(this);
-        
+
         publishStatus(getContract().STATUS_POSITION, device.getPosition());
         publishStatus(getContract().STATUS_FIRMWARE, device.getFirmwareVersion());
         publishStatus(getContract().STATUS_HARDWARE, device.getHardwareVersion());

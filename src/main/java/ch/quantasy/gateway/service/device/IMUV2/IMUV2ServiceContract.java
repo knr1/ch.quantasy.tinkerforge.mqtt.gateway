@@ -105,6 +105,10 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public IMUV2ServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.IMUV2.toString());
+    }
+
     public IMUV2ServiceContract(String id, String device) {
         super(id, device);
 
@@ -163,8 +167,8 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
         STATUS_LED = "statusLED";
         INTENT_STATUS_LED = INTENT + "/" + STATUS_LED;
         STATUS_STATUS_LED = STATUS + "/" + STATUS_LED;
-        
-        SENSOR_FUSION_MODE="sensorFusionMode";
+
+        SENSOR_FUSION_MODE = "sensorFusionMode";
         INTENT_SENSOR_FUSION_MODE = INTENT + "/" + SENSOR_FUSION_MODE;
         STATUS_SENSOR_FUSION_MODE = STATUS + "/" + SENSOR_FUSION_MODE;
 
@@ -172,7 +176,7 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-descriptions.put(INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        descriptions.put(INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(INTENT_GRAVITY_VECTOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -184,7 +188,6 @@ descriptions.put(INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + 
         descriptions.put(INTENT_LEDS, "true|false]");
         descriptions.put(INTENT_STATUS_LED, "true|false]");
         descriptions.put(INTENT_SENSOR_FUSION_MODE, "[0..2]");
-
 
         descriptions.put(STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

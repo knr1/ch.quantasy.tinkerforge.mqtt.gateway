@@ -96,12 +96,12 @@ public class GPSv2Service extends AbstractDeviceService<GPSv2Device, GPSv2Servic
             RestartType type = getMapper().readValue(payload, RestartType.class);
             getDevice().restart(type);
         }
-        if(string.startsWith(getContract().INTENT_FIX_LED_CONFIG)){
-            FixLEDConfig config=getMapper().readValue(payload, FixLEDConfig.class);
+        if (string.startsWith(getContract().INTENT_FIX_LED_CONFIG)) {
+            FixLEDConfig config = getMapper().readValue(payload, FixLEDConfig.class);
             getDevice().setLEDConfig(config);
         }
-        if(string.startsWith(getContract().INTENT_STATE_LED_CONFIG)){
-            StatusLEDConfig config=getMapper().readValue(payload, StatusLEDConfig.class);
+        if (string.startsWith(getContract().INTENT_STATE_LED_CONFIG)) {
+            StatusLEDConfig config = getMapper().readValue(payload, StatusLEDConfig.class);
             getDevice().setLEDConfig(config);
         }
 

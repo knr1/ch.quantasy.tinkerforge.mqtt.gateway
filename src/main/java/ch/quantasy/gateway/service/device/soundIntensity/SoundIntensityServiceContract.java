@@ -79,6 +79,10 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public SoundIntensityServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.SoundIntensity.toString());
+    }
+
     public SoundIntensityServiceContract(String id, String device) {
         super(id, device);
 

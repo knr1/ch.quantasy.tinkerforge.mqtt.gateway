@@ -99,8 +99,8 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
             DeviceMode deviceMode = getMapper().readValue(payload, DeviceMode.class);
             getDevice().setMode(deviceMode);
         }
-        if(string.startsWith(getContract().INTENT_DEVICE_CONFIGURATION)){
-            DeviceConfiguration configuration=getMapper().readValue(payload, DeviceConfiguration.class);
+        if (string.startsWith(getContract().INTENT_DEVICE_CONFIGURATION)) {
+            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
         }
     }
 

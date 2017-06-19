@@ -88,6 +88,10 @@ public class LinearPotiServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public LinearPotiServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.LinearPoti.toString());
+    }
+
     public LinearPotiServiceContract(String id, String device) {
         super(id, device);
 

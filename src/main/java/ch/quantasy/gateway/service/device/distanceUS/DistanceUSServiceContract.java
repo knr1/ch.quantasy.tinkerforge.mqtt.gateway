@@ -83,6 +83,10 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public DistanceUSServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.DistanceUS.toString());
+    }
+
     public DistanceUSServiceContract(String id, String device) {
         super(id, device);
 

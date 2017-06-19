@@ -61,7 +61,7 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     public LCD20x4Service(LCD20x4Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LCD20x4ServiceContract(device));
-     }
+    }
 
     @Override
     public void messageReceived(String string, byte[] payload) throws Exception {
@@ -133,5 +133,4 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
         publishEvent(getContract().EVENT_BUTTON_RELEASED, s);
     }
 
-    
 }

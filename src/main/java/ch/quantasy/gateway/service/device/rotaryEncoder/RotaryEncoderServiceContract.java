@@ -88,6 +88,10 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public RotaryEncoderServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.RotaryEncoder.toString());
+    }
+
     public RotaryEncoderServiceContract(String id, String device) {
         super(id, device);
 

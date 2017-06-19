@@ -83,6 +83,10 @@ public class TemperatureServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public TemperatureServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Temperature.toString());
+    }
+
     public TemperatureServiceContract(String id, String device) {
         super(id, device);
 

@@ -83,6 +83,10 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public AmbientLightV2ServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.AmbientLightV2.toString());
+    }
+
     public AmbientLightV2ServiceContract(String id, String device) {
         super(id, device);
 

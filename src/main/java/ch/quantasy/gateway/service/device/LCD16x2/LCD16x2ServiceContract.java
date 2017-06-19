@@ -76,6 +76,10 @@ public class LCD16x2ServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public LCD16x2ServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.LCD16x2.toString());
+    }
+
     public LCD16x2ServiceContract(String id, String device) {
         super(id, device);
 

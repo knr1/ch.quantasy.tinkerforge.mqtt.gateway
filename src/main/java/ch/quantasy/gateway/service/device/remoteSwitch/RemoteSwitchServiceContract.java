@@ -76,6 +76,10 @@ public class RemoteSwitchServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public RemoteSwitchServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.RemoteSwitch.toString());
+    }
+
     public RemoteSwitchServiceContract(String id, String device) {
         super(id, device);
 

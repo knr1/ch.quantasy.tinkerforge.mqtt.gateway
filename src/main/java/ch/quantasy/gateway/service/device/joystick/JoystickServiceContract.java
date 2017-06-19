@@ -98,6 +98,10 @@ public class JoystickServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public JoystickServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Joystick.toString());
+    }
+
     public JoystickServiceContract(String id, String device) {
         super(id, device);
 

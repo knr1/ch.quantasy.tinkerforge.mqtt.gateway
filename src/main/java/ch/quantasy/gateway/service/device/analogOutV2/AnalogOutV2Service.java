@@ -56,7 +56,7 @@ public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device,
 
     public AnalogOutV2Service(AnalogOutV2Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new AnalogOutV2ServiceContract(device));
-     
+
     }
 
     @Override

@@ -74,6 +74,10 @@ public class MultiTouchServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public MultiTouchServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.MultiTouch.toString());
+    }
+
     public MultiTouchServiceContract(String id, String device) {
         super(id, device);
 

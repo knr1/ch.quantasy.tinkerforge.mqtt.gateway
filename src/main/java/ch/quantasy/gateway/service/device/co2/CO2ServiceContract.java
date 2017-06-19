@@ -79,6 +79,10 @@ public class CO2ServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public CO2ServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.CO2.toString());
+    }
+
     public CO2ServiceContract(String id, String device) {
         super(id, device);
 

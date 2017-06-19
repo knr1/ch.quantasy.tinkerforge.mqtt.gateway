@@ -96,6 +96,10 @@ public class PTCServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public PTCServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.PTC.toString());
+    }
+
     public PTCServiceContract(String id, String device) {
         super(id, device);
 

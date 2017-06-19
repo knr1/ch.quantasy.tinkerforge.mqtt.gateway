@@ -59,7 +59,7 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
 
     public AmbientLightService(AmbientLightDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new AmbientLightServiceContract(device));
-      }
+    }
 
     @Override
     public void messageReceived(String string, byte[] payload) throws Exception {

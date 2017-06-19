@@ -100,8 +100,8 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
             getDevice().setLED(LED);
         }
         if (string.startsWith(getContract().INTENT_CALIBRATE)) {
-        	Long value = getMapper().readValue(payload, Long.class);
-        	getDevice().calibrate(value);
+            Long value = getMapper().readValue(payload, Long.class);
+            getDevice().calibrate(value);
         }
     }
 

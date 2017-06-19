@@ -97,6 +97,10 @@ public class BarometerServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public BarometerServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Barometer.toString());
+    }
+
     public BarometerServiceContract(String id, String device) {
         super(id, device);
 

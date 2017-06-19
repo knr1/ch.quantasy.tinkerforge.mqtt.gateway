@@ -89,6 +89,10 @@ public class DistanceIRServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public DistanceIRServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.DistanceIR.toString());
+    }
+
     public DistanceIRServiceContract(String id, String device) {
         super(id, device);
 

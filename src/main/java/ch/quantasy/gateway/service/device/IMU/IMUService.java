@@ -57,7 +57,7 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
     public IMUService(IMUDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new IMUServiceContract(device));
-        
+
     }
 
     @Override
@@ -336,15 +336,12 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
         private Orientation() {
         }
 
-       
-
         public Orientation(short heading, short roll, short pitch) {
             this.heading = heading;
             this.roll = roll;
             this.pitch = pitch;
         }
 
-       
         public short getHeading() {
             return heading;
         }
@@ -369,8 +366,6 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
         private Quaternion() {
         }
 
-        
-        
         public Quaternion(float w, float x, float y, float z) {
             this.w = w;
             this.x = x;
@@ -378,7 +373,6 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
             this.z = z;
         }
 
-       
         public float getW() {
             return w;
         }
@@ -397,10 +391,7 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     }
 
-    
-
     public static class AllDataEvent {
-
 
         private Acceleration acceleration;
         private MagneticField magneticField;
@@ -410,16 +401,12 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
         private AllDataEvent() {
         }
 
-        
-
         public AllDataEvent(Acceleration acceleration, MagneticField magneticField, AngularVelocity angularVelocity, Short temperature) {
             this.acceleration = acceleration;
             this.magneticField = magneticField;
             this.angularVelocity = angularVelocity;
             this.temperature = temperature;
         }
-
-        
 
         public Acceleration getAcceleration() {
             return acceleration;

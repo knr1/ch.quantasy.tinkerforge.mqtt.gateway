@@ -72,6 +72,10 @@ public class LEDStripServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public LEDStripServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.LEDStrip.toString());
+    }
+
     public LEDStripServiceContract(String id, String device) {
         super(id, device);
         FRAME = "frame";

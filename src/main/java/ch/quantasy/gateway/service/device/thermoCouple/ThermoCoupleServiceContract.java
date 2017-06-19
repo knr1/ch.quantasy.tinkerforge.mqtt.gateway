@@ -86,6 +86,10 @@ public class ThermoCoupleServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public ThermoCoupleServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.ThermoCouple.toString());
+    }
+
     public ThermoCoupleServiceContract(String id, String device) {
         super(id, device);
 

@@ -74,6 +74,10 @@ public class RealTimeClockServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public RealTimeClockServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.RealTimeClock.toString());
+    }
+
     public RealTimeClockServiceContract(String id, String device) {
         super(id, device);
         DATE_TIME = "dateTime";

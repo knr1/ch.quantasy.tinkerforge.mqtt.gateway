@@ -93,6 +93,10 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public AnalogInV2ServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.AnalogInV2.toString());
+    }
+
     public AnalogInV2ServiceContract(String id, String device) {
         super(id, device);
 

@@ -67,6 +67,10 @@ public class SolidStateRelayServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public SolidStateRelayServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.SolidState.toString());
+    }
+
     public SolidStateRelayServiceContract(String id, String device) {
         super(id, device);
         MONOFLOP_DONE = "monoflopDone";

@@ -79,6 +79,10 @@ public class HallEffectServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public HallEffectServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.HallEffect.toString());
+    }
+
     public HallEffectServiceContract(String id, String device) {
         super(id, device);
 

@@ -72,6 +72,10 @@ public class PiezoSpeakerServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public PiezoSpeakerServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.PiezoSpeaker.toString());
+    }
+
     public PiezoSpeakerServiceContract(String id, String device) {
         super(id, device);
         BEEP = "beep";

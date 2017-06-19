@@ -61,6 +61,10 @@ public class AnalogOutV2ServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public AnalogOutV2ServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.AnalogOutV2.toString());
+    }
+
     public AnalogOutV2ServiceContract(String id, String device) {
         super(id, device);
         OUTPUT_VOLTAGE = "outputVoltage";

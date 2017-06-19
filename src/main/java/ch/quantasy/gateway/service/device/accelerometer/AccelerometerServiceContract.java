@@ -83,6 +83,10 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public AccelerometerServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Accelerometer.toString());
+    }
+
     public AccelerometerServiceContract(String id, String device) {
         super(id, device);
 

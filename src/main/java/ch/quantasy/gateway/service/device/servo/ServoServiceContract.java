@@ -86,6 +86,10 @@ public class ServoServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public ServoServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Servo.toString());
+    }
+
     public ServoServiceContract(String id, String device) {
         super(id, device);
 

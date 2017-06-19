@@ -83,6 +83,10 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public DustDetectorServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.DustDetector.toString());
+    }
+
     public DustDetectorServiceContract(String id, String device) {
         super(id, device);
 

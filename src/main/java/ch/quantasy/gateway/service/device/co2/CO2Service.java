@@ -106,6 +106,4 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
         publishEvent(getContract().EVENT_CO2_CONCENTRATION_REACHED, i);
     }
 
-    
-
 }

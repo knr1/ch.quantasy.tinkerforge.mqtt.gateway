@@ -84,6 +84,10 @@ public class MoistureServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public MoistureServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Moisture.toString());
+    }
+
     public MoistureServiceContract(String id, String device) {
         super(id, device);
         PERIOD = "period";

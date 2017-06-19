@@ -104,8 +104,6 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
             this.switch2 = switch2;
         }
 
-       
-
         public LEDState getLed1() {
             return led1;
         }

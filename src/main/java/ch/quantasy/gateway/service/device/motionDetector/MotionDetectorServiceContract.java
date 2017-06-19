@@ -63,6 +63,10 @@ public class MotionDetectorServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public MotionDetectorServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.MotionDetector.toString());
+    }
+
     public MotionDetectorServiceContract(String id, String device) {
         super(id, device);
 

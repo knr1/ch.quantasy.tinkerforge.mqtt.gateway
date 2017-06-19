@@ -70,6 +70,10 @@ public class DualButtonServiceContract extends DeviceServiceContract {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
+    public DualButtonServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.DualButton.toString());
+    }
+
     public DualButtonServiceContract(String id, String device) {
         super(id, device);
 

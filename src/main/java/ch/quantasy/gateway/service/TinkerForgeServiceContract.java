@@ -43,16 +43,33 @@
 package ch.quantasy.gateway.service;
 
 import ch.quantasy.mqtt.gateway.client.AyamlClientContract;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
  * @author reto
  */
-public abstract class TinkerForgeServiceContract extends AyamlClientContract{
+public abstract class TinkerForgeServiceContract extends AyamlClientContract {
 
     public TinkerForgeServiceContract(String baseClass, String instance) {
         super("TF", baseClass, instance);
     }
 
-    
+    public String toMD() {
+        String toMD = "";
+        Map<String, String> descriptions = new TreeMap<>();
+        describe(descriptions);
+        toMD += "### " + BASE_CLASS + "\n";
+        for (Map.Entry<String, String> entry : descriptions.entrySet()) {
+            String key = entry.getKey();
+            String value = "   "+entry.getValue();
+            value=value.replaceAll("\n", "\n  ");
+            toMD += "```\n";
+            toMD += key + "\n" + value + "\n";
+            toMD += "```\n";
+        }
+        return toMD;
+    }
+
 }
