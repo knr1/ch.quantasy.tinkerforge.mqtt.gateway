@@ -52,7 +52,10 @@ import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackListener;
 import java.net.URI;
+import java.net.UnknownHostException;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
@@ -63,8 +66,19 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
 
     private TinkerForgeManager manager;
 
+    private static String computerName;
+
+    static {
+        try {
+            computerName = java.net.InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ManagerServiceContract.class.getName()).log(Level.SEVERE, null, ex);
+            computerName = "undefined";
+        }
+    }
+
     public ManagerService(TinkerForgeManager manager, URI mqttURI) throws MqttException {
-        super(mqttURI, "TinkerforgeStackManager", new ManagerServiceContract("Manager"));
+        super(mqttURI, "TinkerforgeStackManager", new ManagerServiceContract(computerName,"Manager"));
         this.manager = manager;
         manager.addListener(this);
         updateStatus();
@@ -153,7 +167,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
         } catch (Exception ex) {
             connection = ex.getMessage();
         }
-        publishStatus(topic, connection+"updated");
+        publishStatus(topic, connection + "updated");
     }
 
     @Override
@@ -171,6 +185,6 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     @Override
     public void disconnected(TinkerforgeDevice device) {
         String topic = getContract().STATUS_DEVICE + "/" + device.getStack().getStackAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
-        publishStatus(topic, false+"disconnected-device");
+        publishStatus(topic, false + "disconnected-device");
     }
 }

@@ -82,8 +82,12 @@ public class ManagerServiceContract extends TinkerForgeServiceContract {
 
     public String EVENT_ADDRESS_DISCONNECTED;
 
-    public ManagerServiceContract(String base) {
-        super(base, null);
+    public ManagerServiceContract(String id) {
+        this(id, "Manager");
+    }
+
+    public ManagerServiceContract(String id, String device) {
+        super(device, id);
 
         STACK = "stack";
 

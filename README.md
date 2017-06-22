@@ -117,7 +117,7 @@ The following real-world example shall help to understand how to work with this 
 
 
 ## Common Hardware
-Our setup runs at home. We have a local (wlan-)network and a connected computer (could be a PC, Notebook, RaspberryPi,...)
+Our setup runs at home. We have a local (wlan-)network and a connected computer called (UID: pc) (could be a PC, Notebook, RaspberryPi,...)
 
 
 ## Tinkerforge Hardware
@@ -142,7 +142,7 @@ Again, we put TiMqWay on our existing PC. It is a Java-program, hence a JVM must
  
 ## Working with TiMqWay
 
-TiMqWay itself is presented as a micro-service. It is called 'Manager' and is provided as 'singleton'. Hence, no instance of a Manager is needed.
+TiMqWay itself is presented as a micro-service. It is called 'Manager' and is provided per computer. Hence, the instance of a Manager is represented as the computer-name.
 If you look into the provided topic within the MQTT-Broker, the Manager provides the following interface:
 ```
 TF
@@ -171,8 +171,10 @@ TF
            address
              add --- <address>
              remove --- <address>
-     S
-       connection --- online
+     U
+       pc
+          S
+            connection --- online
 ```
 
 ### Connecting Master-Brick-1
@@ -180,7 +182,7 @@ TF
 As the description explains, we now have to tell TiMqWay where to look for the Master Bricks (Stacks). Hence, we want to attach Master-Brick-1 (say, its 
 network-name is master-brick-1). Therefore the following message has to be sent to the following topic:
 ```
-Topic: TF/Manager/I/stack/address/add
+Topic: TF/Manager/U/pc/I/stack/address/add
 Message: hostName: master-brick-1
 ```
 
@@ -191,45 +193,48 @@ TF
    Manager
      D
        #omitted for better readability
-     S
-       connection --- online
-       device
-         master-brick-1
-           Temperature
-             blue --- true
-           LCD20x4
-             lcd --- true
-     E
-       stack
-         address
-           added --- -hostname:"master-brick-1" port: 4223
-     I
-       stack
-         address
-           add --- master-brick-1
+     U
+       pc
+          S
+            connection --- online
+            device
+              master-brick-1
+              Temperature
+                blue --- true
+              LCD20x4
+                lcd --- true
+          E
+            stack
+              address
+                added --- -hostname:"master-brick-1" port: 4223
+          I
+            stack
+              address
+                add --- master-brick-1
    Temperature
      D
        #omitted for better readability
-     blue
-       S
-         connection --- online
-         position --- "c"
-         firmware --- 2-0-1
-         hardware --- 1-1-0
+     U  blue
+         S
+           connection --- online
+           position --- "c"
+           firmware --- 2-0-1
+           hardware --- 1-1-0
    LCD20x4
      D
        #omitted for better readability
-     lcd
-       S
-         connection --- online
-         position --- "d"
-         firmware --- 2-0-2
-         hardware --- 1-2-0
+     U
+       lcd
+         S
+           connection --- online
+           position --- "d"
+           firmware --- 2-0-2
+           hardware --- 1-2-0
 ```
 If you want to switch on the backlight of the device called 'lcd' which is an instance of the 20x4LCD class then you publish the following message to
 the following topic:
 ```
-Topic: TF/LCD20x4/lcd/I/backlight
+Topic: TF/LCD20x4/U/lcd/I/backlight
 Message: true
 ```
 What happenes is that the backlight is now switched to on at the specific 20x4LCD device. In the mqtt-broker, some topics changed as well.
@@ -240,30 +245,32 @@ TF
    Temperature
      D
        #omitted for better readability 
-     blue
-       S
-         connection --- online
-         position --- "c"
-         firmware --- 2-0-1
-         hardware --- 1-1-0
+     U
+       blue
+         S
+           connection --- online
+           position --- "c"
+           firmware --- 2-0-1
+           hardware --- 1-1-0
    LCD20x4
      D
        #omitted for better readability 
-     lcd
-       S
-         connection --- online
-         position --- "d"
-         firmware --- 2-0-2
-         hardware --- 1-2-0
-         backlight --- true
-       I
-         backlight --- true
+     U
+       lcd
+         S
+           connection --- online
+           position --- "d"
+           firmware --- 2-0-2
+           hardware --- 1-2-0
+           backlight --- true
+         I
+           backlight --- true
 ```
  
 Now, let us connect the second master-brick (stack). This one is connected via USB, hence, its address is `localhost`:
 ```
-Topic: TF/Manager/I/stack/address/add
-Message: localhost
+Topic: TF/Manager/U/pc/I/stack/address/add
+Message: hostName: localhost
 ```
 The TiMqWay-manager now knows two stacks and manages one temperature device more
 ```
@@ -271,25 +278,27 @@ TF
    Manager
      D
        #omitted for better readability
-     S
-       connection --- online
-       device
-         master-brick-1
-           Temperature
-             blue --- true
-           LCD20x4
-             lcd --- true
-         localhost
-           Temperature
-             red --- true
-     E
-       stack
-         address
-           added --- -hostname:"localhost" port: 4223
-     I
-       stack
-         address
-           add --- localhost
+     U
+       pc
+           S
+             connection --- online
+             device
+               master-brick-1
+                 Temperature
+                   blue --- true
+                 LCD20x4
+                   lcd --- true
+               localhost
+                 Temperature
+                   red --- true
+           E
+             stack
+               address
+                 added --- -hostname:"localhost" port: 4223
+           I
+             stack
+               address
+                 add --- localhost
    Temperature
      D
        S
@@ -312,18 +321,19 @@ TF
            callbackPeriod --- [0..9223372036854775807]
            threshold --- option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]
          mode -- mode:[Slow|Fast]
-     blue
-       S
-         connection --- online
-         position --- "c"
-         firmware --- 2-0-1
-         hardware --- 1-1-0
-     red
-       S
-         connection --- online
-         position --- "a"
-         firmware --- 2-0-1
-         hardware --- 1-1-0
+     U
+       blue
+         S
+           connection --- online
+           position --- "c"
+           firmware --- 2-0-1
+           hardware --- 1-1-0
+       red
+         S
+           connection --- online
+           position --- "a"
+           firmware --- 2-0-1
+           hardware --- 1-1-0
    LCD20x4
      D
        S
@@ -342,17 +352,18 @@ TF
            texts --- [line: [0..3]\n text: [String]_[1..20]]
            counter --- [-1..2147483647]
          writeLines --- [line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]
-     lcd
-       S
-         connection --- online
-         position --- "d"
-         firmware --- 2-0-2
-         hardware --- 1-2-0
+     U
+       lcd
+         S
+           connection --- online
+           position --- "d"
+           firmware --- 2-0-2
+           hardware --- 1-2-0
 ```
 
 If we want to have a temperature reading every second for `red`, we provide the following message to the following topic:
 ```
-Topic: TF/Temperature/red/I/temperature/callbackPeriod
+Topic: TF/Temperature/U/red/I/temperature/callbackPeriod
 Message: 1000
 ```
 Now, there is a reading every second, that will be promoted as an event to `TF/Temperature/red/event/temperature`
@@ -364,52 +375,40 @@ TF
    Temperature
      D
        #omitted for better readability
-     blue
-       S
-         connection --- online
-         position --- "c"
-         firmware --- 2-0-1
-         hardware --- 1-1-0
-     red
-       S
-         connection --- online
-         position --- "a"
-         firmware --- 2-0-1
-         hardware --- 1-1-0
-         temperature
-           callbackPeriod --- 1000
-       E
-         temperature --- - timestamp: 1465398254115  value: 2668 
+     U
+       blue
+         S
+           connection --- online
+           position --- "c"
+           firmware --- 2-0-1
+           hardware --- 1-1-0
+     U
+       red
+         S
+           connection --- online
+           position --- "a"
+           firmware --- 2-0-1
+           hardware --- 1-1-0
+           temperature
+             callbackPeriod --- 1000
+         E
+           temperature --- - timestamp: 1465398254115  value: 2668 
    LCD20x4
      D
-       S
-         connection ---[online|offline]
-         position --- [0|1|2|3|4|5|6|7|8|a|b|c|d]
-         firmware --- [-32768..32767]_*
-         hardware --- [-32768..32767]_*
-         backlight --- [true|false]
-         defaultText
-           texts --- [line: [0..3]\n text: [String]_[1..20]]
-           counter --- [-1..2147483647]
-       I
-         backlight --- [true|false]
-         clearDisplay --- [true|false]
-         defaultText
-           texts --- [line: [0..3]\n text: [String]_[1..20]]
-           counter --- [-1..2147483647]
-         writeLines --- [line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]
-     lcd
-       S
-         connection --- online
-         position --- "d"
-         firmware --- 2-0-2
-         hardware --- 1-2-0
+       #omitted for better readability
+     U
+       lcd
+         S
+           connection --- online
+           position --- "d"
+           firmware --- 2-0-2
+           hardware --- 1-2-0
 ```
 All that is left is to write a little agent, subscribing to the temperature of red and blue. Then process the values and write them to lcd... as a publish to
-`TF/LCD20x4/lcd/I/writeLines`...
+`TF/LCD20x4/U/lcd/I/writeLines`...
 
 ```
-Topic: TF/LCD20x4/lcd/I/writeLines
+Topic: TF/LCD20x4/U/lcd/I/writeLines
 Message: - line: 0
            position: 0
            text: "RED: 22°C"
@@ -418,55 +417,55 @@ Message: - line: 0
            text: "BLUE: 18°C"
 ```
 ## API
-### ManagerService
+### Manager
 This logical service allows a user to add or remove a true tinkerforge stack. As soon as a stack is connected, the service takes care of the 
 connected Bricks and Bricklets.
 ```
-TF/Manager/E/device/connected
+TF/Manager/U/<id>/E/device/connected
    - timestamp: [0..9223372036854775807]
      value:
        hostName: <String>
        port: [0..4223..65536]
 ```
 ```
-TF/Manager/E/device/disconnected
+TF/Manager/U/<id>/E/device/disconnected
    - timestamp: [0..9223372036854775807]
      value:
        hostName: <String>
        port: [0..4223..65536]
 ```
 ```
-TF/Manager/E/stack/address/added
+TF/Manager/U/<id>/E/stack/address/added
    - timestamp: [0..9223372036854775807]
      value:
        hostName: <String>
        port: [0..4223..65536]
 ```
 ```
-TF/Manager/E/stack/address/removed
+TF/Manager/U/<id>/E/stack/address/removed
    - timestamp: [0..9223372036854775807]
      value:
        hostName: <String>
        port: [0..4223..65536]
 ```
 ```
-TF/Manager/I/stack/address/add
+TF/Manager/U/<id>/I/stack/address/add
    hostName: <String>
     port: [0..4223..65536]
 ```
 ```
-TF/Manager/I/stack/address/remove
+TF/Manager/U/<id>/I/stack/address/remove
    hostName: <String>
     port: [0..4223..65536]
 ```
 ```
-TF/Manager/S/stack/address/<address>/connected
+TF/Manager/U/<id>/S/stack/address/<address>/connected
    [true|false]
 ```
 
 ### IMU
 ```
-TF/IMU/<id>/E/acceleration
+TF/IMU/U/<id>/E/acceleration
    - timestamp: [0..9223372036854775807]
      value:
         x: [-32768..32767]
@@ -474,7 +473,7 @@ TF/IMU/<id>/E/acceleration
         z: [-32768..32767]
 ```
 ```
-TF/IMU/<id>/E/allData
+TF/IMU/U/<id>/E/allData
    - timestamp: [0..9223372036854775807]
      value:
         @acceleration
@@ -488,7 +487,7 @@ TF/IMU/<id>/E/allData
         calibrationStatus: [0..255]
 ```
 ```
-TF/IMU/<id>/E/angularVelocity
+TF/IMU/U/<id>/E/angularVelocity
    - timestamp: [0..9223372036854775807]
      value:
         x: [-32768..32767]
@@ -496,7 +495,7 @@ TF/IMU/<id>/E/angularVelocity
         z: [-32768..32767]
 ```
 ```
-TF/IMU/<id>/E/magneticField
+TF/IMU/U/<id>/E/magneticField
    - timestamp: [0..9223372036854775807]
      value:
         x: [-32768..32767]
@@ -504,7 +503,7 @@ TF/IMU/<id>/E/magneticField
         z: [-32768..32767]
 ```
 ```
-TF/IMU/<id>/E/orientation
+TF/IMU/U/<id>/E/orientation
    - timestamp: [0..9223372036854775807]
      value:
         heading: [-32768..32767]
@@ -512,7 +511,7 @@ TF/IMU/<id>/E/orientation
         pitch: [-32768..32767]
 ```
 ```
-TF/IMU/<id>/E/quaternion
+TF/IMU/U/<id>/E/quaternion
    - timestamp: [0..9223372036854775807]
      value:
         w: [-32768..32767]
@@ -521,93 +520,93 @@ TF/IMU/<id>/E/quaternion
         z: [-32768..32767]
 ```
 ```
-TF/IMU/<id>/I/LEDs/callbackPeriod
+TF/IMU/U/<id>/I/LEDs/callbackPeriod
    true|false]
 ```
 ```
-TF/IMU/<id>/I/acceleration/callbackPeriod
+TF/IMU/U/<id>/I/acceleration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/I/allData/callbackPeriod
+TF/IMU/U/<id>/I/allData/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/I/angularVelocity/callbackPeriod
+TF/IMU/U/<id>/I/angularVelocity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/I/magneticField/callbackPeriod
+TF/IMU/U/<id>/I/magneticField/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/I/orientation/calculation
+TF/IMU/U/<id>/I/orientation/calculation
    true|false]
 ```
 ```
-TF/IMU/<id>/I/orientation/callbackPeriod
+TF/IMU/U/<id>/I/orientation/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/I/quaternion/callbackPeriod
+TF/IMU/U/<id>/I/quaternion/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/I/statusLED/callbackPeriod
+TF/IMU/U/<id>/I/statusLED/callbackPeriod
    true|false]
 ```
 ```
-TF/IMU/<id>/S/LEDs/callbackPeriod
+TF/IMU/U/<id>/S/LEDs/callbackPeriod
    [true|false]
 ```
 ```
-TF/IMU/<id>/S/acceleration/callbackPeriod
+TF/IMU/U/<id>/S/acceleration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/S/allData/callbackPeriod
+TF/IMU/U/<id>/S/allData/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/S/angularVelocity/callbackPeriod
+TF/IMU/U/<id>/S/angularVelocity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/S/firmware
+TF/IMU/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/IMU/<id>/S/hardware
+TF/IMU/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/IMU/<id>/S/magneticField/callbackPeriod
+TF/IMU/U/<id>/S/magneticField/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/S/orientation/calculation
+TF/IMU/U/<id>/S/orientation/calculation
    [true|false]
 ```
 ```
-TF/IMU/<id>/S/orientation/callbackPeriod
+TF/IMU/U/<id>/S/orientation/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/S/position
+TF/IMU/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/IMU/<id>/S/quaternion/callbackPeriod
+TF/IMU/U/<id>/S/quaternion/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMU/<id>/S/statusLED/callbackPeriod
+TF/IMU/U/<id>/S/statusLED/callbackPeriod
    [true|false]
 ```
 
 ### IMUV2
 ```
-TF/IMUV2/<id>/E/acceleration
+TF/IMUV2/U/<id>/E/acceleration
    - timestamp: [0..9223372036854775807]
      value:
        x: [-32768..32767]
@@ -615,7 +614,7 @@ TF/IMUV2/<id>/E/acceleration
        z: [-32768..32767]
 ```
 ```
-TF/IMUV2/<id>/E/allData
+TF/IMUV2/U/<id>/E/allData
    - timestamp: [0..9223372036854775807]
      value:
        @acceleration
@@ -629,7 +628,7 @@ TF/IMUV2/<id>/E/allData
        calibrationStatus: [0..255]
 ```
 ```
-TF/IMUV2/<id>/E/angularVelocity
+TF/IMUV2/U/<id>/E/angularVelocity
    - timestamp: [0..9223372036854775807]
      value:
        x: [-32768..32767]
@@ -637,7 +636,7 @@ TF/IMUV2/<id>/E/angularVelocity
        z: [-32768..32767]
 ```
 ```
-TF/IMUV2/<id>/E/gravityVector
+TF/IMUV2/U/<id>/E/gravityVector
    - timestamp: [0..9223372036854775807]
      value:
        x: [-32768..32767]
@@ -645,7 +644,7 @@ TF/IMUV2/<id>/E/gravityVector
        z: [-32768..32767]
 ```
 ```
-TF/IMUV2/<id>/E/linearAcceleration
+TF/IMUV2/U/<id>/E/linearAcceleration
    - timestamp: [0..9223372036854775807]
      value:
        x: [-32768..32767]
@@ -653,7 +652,7 @@ TF/IMUV2/<id>/E/linearAcceleration
        z: [-32768..32767]
 ```
 ```
-TF/IMUV2/<id>/E/magneticField
+TF/IMUV2/U/<id>/E/magneticField
    - timestamp: [0..9223372036854775807]
      value:
        x: [-32768..32767]
@@ -661,7 +660,7 @@ TF/IMUV2/<id>/E/magneticField
        z: [-32768..32767]
 ```
 ```
-TF/IMUV2/<id>/E/orientation
+TF/IMUV2/U/<id>/E/orientation
    - timestamp: [0..9223372036854775807]
      value:
        heading: [-32768..32767]
@@ -669,7 +668,7 @@ TF/IMUV2/<id>/E/orientation
        pitch: [-32768..32767]
 ```
 ```
-TF/IMUV2/<id>/E/quaternion
+TF/IMUV2/U/<id>/E/quaternion
    - timestamp: [0..9223372036854775807]
      value:
        w: [-32768..32767]
@@ -678,244 +677,244 @@ TF/IMUV2/<id>/E/quaternion
        z: [-32768..32767]
 ```
 ```
-TF/IMUV2/<id>/E/temperature
+TF/IMUV2/U/<id>/E/temperature
    - timestamp: [0..9223372036854775807]
      value: [-128..127]
 ```
 ```
-TF/IMUV2/<id>/I/LEDs/callbackPeriod
+TF/IMUV2/U/<id>/I/LEDs/callbackPeriod
    true|false]
 ```
 ```
-TF/IMUV2/<id>/I/acceleration/callbackPeriod
+TF/IMUV2/U/<id>/I/acceleration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/I/allData/callbackPeriod
+TF/IMUV2/U/<id>/I/allData/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/I/angularVelocity/callbackPeriod
+TF/IMUV2/U/<id>/I/angularVelocity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/I/gravityVector/callbackPeriod
+TF/IMUV2/U/<id>/I/gravityVector/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/I/linearAcceleration/callbackPeriod
+TF/IMUV2/U/<id>/I/linearAcceleration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/I/magneticField/callbackPeriod
+TF/IMUV2/U/<id>/I/magneticField/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/I/orientation/callbackPeriod
+TF/IMUV2/U/<id>/I/orientation/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/I/quaternion/callbackPeriod
+TF/IMUV2/U/<id>/I/quaternion/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/I/sensorFusionMode
+TF/IMUV2/U/<id>/I/sensorFusionMode
    [0..2]
 ```
 ```
-TF/IMUV2/<id>/I/statusLED
+TF/IMUV2/U/<id>/I/statusLED
    true|false]
 ```
 ```
-TF/IMUV2/<id>/I/temperature/callbackPeriod
+TF/IMUV2/U/<id>/I/temperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/S/LEDs/callbackPeriod
+TF/IMUV2/U/<id>/S/LEDs/callbackPeriod
    [true|false]
 ```
 ```
-TF/IMUV2/<id>/S/acceleration/callbackPeriod
+TF/IMUV2/U/<id>/S/acceleration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/S/allData/callbackPeriod
+TF/IMUV2/U/<id>/S/allData/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/S/angularVelocity/callbackPeriod
+TF/IMUV2/U/<id>/S/angularVelocity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/S/firmware
+TF/IMUV2/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/IMUV2/<id>/S/gravityVector/callbackPeriod
+TF/IMUV2/U/<id>/S/gravityVector/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/S/hardware
+TF/IMUV2/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/IMUV2/<id>/S/linearAcceleration/callbackPeriod
+TF/IMUV2/U/<id>/S/linearAcceleration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/S/magneticField/callbackPeriod
+TF/IMUV2/U/<id>/S/magneticField/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/S/orientation/callbackPeriod
+TF/IMUV2/U/<id>/S/orientation/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/S/position
+TF/IMUV2/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/IMUV2/<id>/S/quaternion/callbackPeriod
+TF/IMUV2/U/<id>/S/quaternion/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/IMUV2/<id>/S/sensorFusionMode
+TF/IMUV2/U/<id>/S/sensorFusionMode
    [0..2]
 ```
 ```
-TF/IMUV2/<id>/S/statusLED
+TF/IMUV2/U/<id>/S/statusLED
    [true|false]
 ```
 ```
-TF/IMUV2/<id>/S/temperature/callbackPeriod
+TF/IMUV2/U/<id>/S/temperature/callbackPeriod
    [0..9223372036854775807]
 ```
 
 ### LCD16x2
 ```
-TF/LCD16x2/<id>/I/backlight
+TF/LCD16x2/U/<id>/I/backlight
    [true|false]
 ```
 ```
-TF/LCD16x2/<id>/I/clearDisplay
+TF/LCD16x2/U/<id>/I/clearDisplay
    [true|false]
 ```
 ```
-TF/LCD16x2/<id>/I/configParameters
+TF/LCD16x2/U/<id>/I/configParameters
    cursor: [true|false]
     blinking: [true|false]
 ```
 ```
-TF/LCD16x2/<id>/I/customCharacters
+TF/LCD16x2/U/<id>/I/customCharacters
    [index: [0..15]
     pixels: [[-32768..32767]]_[1..8]]
 ```
 ```
-TF/LCD16x2/<id>/I/writeLines
+TF/LCD16x2/U/<id>/I/writeLines
    [line: [0..1]
     position: [0..15]
     text: [String]_[1..16]]
 ```
 ```
-TF/LCD16x2/<id>/S/backlight
+TF/LCD16x2/U/<id>/S/backlight
    [true|false]
 ```
 ```
-TF/LCD16x2/<id>/S/configParameters
+TF/LCD16x2/U/<id>/S/configParameters
    cursor: [true|false]
     blinking: [true|false]
 ```
 ```
-TF/LCD16x2/<id>/S/customCharacters
+TF/LCD16x2/U/<id>/S/customCharacters
    [index: [0..15]
     pixels: [[-32768..32767]]_[1..8]]
 ```
 ```
-TF/LCD16x2/<id>/S/firmware
+TF/LCD16x2/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/LCD16x2/<id>/S/hardware
+TF/LCD16x2/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/LCD16x2/<id>/S/position
+TF/LCD16x2/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### LCD20x4
 ```
-TF/LCD20x4/<id>/I/backlight
+TF/LCD20x4/U/<id>/I/backlight
    [true|false]
 ```
 ```
-TF/LCD20x4/<id>/I/clearDisplay
+TF/LCD20x4/U/<id>/I/clearDisplay
    [true|false]
 ```
 ```
-TF/LCD20x4/<id>/I/configParameters
+TF/LCD20x4/U/<id>/I/configParameters
    cursor: [true|false]
     blinking: [true|false]
 ```
 ```
-TF/LCD20x4/<id>/I/customCharacters
+TF/LCD20x4/U/<id>/I/customCharacters
    [index: [0..15]
     pixels: [[-32768..32767]]_[1..8]]
 ```
 ```
-TF/LCD20x4/<id>/I/defaultText/counter
+TF/LCD20x4/U/<id>/I/defaultText/counter
    [-1..2147483647]
 ```
 ```
-TF/LCD20x4/<id>/I/defaultText/texts
+TF/LCD20x4/U/<id>/I/defaultText/texts
    [line: [0..3]
     text: [String]_[1..20]]
 ```
 ```
-TF/LCD20x4/<id>/I/writeLines
+TF/LCD20x4/U/<id>/I/writeLines
    [line: [0..3]
     position: [0..18]
     text: [String]_[1..20]]
 ```
 ```
-TF/LCD20x4/<id>/S/backlight
+TF/LCD20x4/U/<id>/S/backlight
    [true|false]
 ```
 ```
-TF/LCD20x4/<id>/S/configParameters
+TF/LCD20x4/U/<id>/S/configParameters
    cursor: [true|false]
     blinking: [true|false]
 ```
 ```
-TF/LCD20x4/<id>/S/customCharacters
+TF/LCD20x4/U/<id>/S/customCharacters
    [index: [0..15]
     pixels: [[-32768..32767]]_[1..8]]
 ```
 ```
-TF/LCD20x4/<id>/S/defaultText/counter
+TF/LCD20x4/U/<id>/S/defaultText/counter
    [-1..2147483647]
 ```
 ```
-TF/LCD20x4/<id>/S/defaultText/texts
+TF/LCD20x4/U/<id>/S/defaultText/texts
    [line: [0..3]
     text: [String]_[1..20]]
 ```
 ```
-TF/LCD20x4/<id>/S/firmware
+TF/LCD20x4/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/LCD20x4/<id>/S/hardware
+TF/LCD20x4/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/LCD20x4/<id>/S/position
+TF/LCD20x4/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### Accelerometer
 ```
-TF/Accelerometer/<id>/E/acceleration
+TF/Accelerometer/U/<id>/E/acceleration
    - timestamp: [0..9223372036854775807]
      value:
        x: [-32768..32767]
@@ -924,7 +923,7 @@ TF/Accelerometer/<id>/E/acceleration
    
 ```
 ```
-TF/Accelerometer/<id>/E/acceleration/reached
+TF/Accelerometer/U/<id>/E/acceleration/reached
    - timestamp: [0..9223372036854775807]
     value:
        x: [-32768..32767]
@@ -932,11 +931,11 @@ TF/Accelerometer/<id>/E/acceleration/reached
        z: [-32768..32767]
 ```
 ```
-TF/Accelerometer/<id>/I/acceleration/callbackPeriod
+TF/Accelerometer/U/<id>/I/acceleration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Accelerometer/<id>/I/acceleration/threshold
+TF/Accelerometer/U/<id>/I/acceleration/threshold
    option: [x|o|i|<|>]
     minX: [-32768..32767]
     minY: [-32768..32767]
@@ -946,21 +945,21 @@ TF/Accelerometer/<id>/I/acceleration/threshold
     maxZ: [-32768..32767]
 ```
 ```
-TF/Accelerometer/<id>/I/configuration
+TF/Accelerometer/U/<id>/I/configuration
    dataRate: [OFF|Hz3|Hz6|Hz12|Hz25|Hz50|Hz100|Hz400|Hz800|Hz1600]
     fullScale: [G2|G4|G6|G8|G16
     filterBandwidth: [Hz800|Hz400|Hz200|Hz50]
 ```
 ```
-TF/Accelerometer/<id>/I/debounce/period
+TF/Accelerometer/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Accelerometer/<id>/S/acceleration/callbackPeriod
+TF/Accelerometer/U/<id>/S/acceleration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Accelerometer/<id>/S/acceleration/threshold
+TF/Accelerometer/U/<id>/S/acceleration/threshold
    option: [x|o|i|<|>]
     minX: [-32768..32767]
     minY: [-32768..32767]
@@ -970,269 +969,269 @@ TF/Accelerometer/<id>/S/acceleration/threshold
     maxZ: [-32768..32767]
 ```
 ```
-TF/Accelerometer/<id>/S/configuration
+TF/Accelerometer/U/<id>/S/configuration
    dataRate: [OFF|Hz3|Hz6|Hz12|Hz25|Hz50|Hz100|Hz400|Hz800|Hz1600]
     fullScale: [G2|G4|G6|G8|G16
     filterBandwidth: [Hz800|Hz400|Hz200|Hz50]
 ```
 ```
-TF/Accelerometer/<id>/S/debounce/period
+TF/Accelerometer/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Accelerometer/<id>/S/firmware
+TF/Accelerometer/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Accelerometer/<id>/S/hardware
+TF/Accelerometer/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Accelerometer/<id>/S/position
+TF/Accelerometer/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### AmbientLight
 ```
-TF/AmbientLight/<id>/E/analogValue
+TF/AmbientLight/U/<id>/E/analogValue
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
    
 ```
 ```
-TF/AmbientLight/<id>/E/analogValue/reached
+TF/AmbientLight/U/<id>/E/analogValue/reached
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
    
 ```
 ```
-TF/AmbientLight/<id>/E/illuminance
+TF/AmbientLight/U/<id>/E/illuminance
    - timestamp: [0..9223372036854775807]
      value: [0..9000]
    
 ```
 ```
-TF/AmbientLight/<id>/E/illuminance/reached
+TF/AmbientLight/U/<id>/E/illuminance/reached
    - timestamp: [0..9223372036854775807]
      value: [0..9000]
    
 ```
 ```
-TF/AmbientLight/<id>/I/analogValue/callbackPeriod
+TF/AmbientLight/U/<id>/I/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/AmbientLight/<id>/I/analogValue/threshold
+TF/AmbientLight/U/<id>/I/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/AmbientLight/<id>/I/debounce/period
+TF/AmbientLight/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/AmbientLight/<id>/I/illuminance/callbackPeriod
+TF/AmbientLight/U/<id>/I/illuminance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/AmbientLight/<id>/I/illuminance/threshold
+TF/AmbientLight/U/<id>/I/illuminance/threshold
    option: [x|o|i|<|>]
     min: [0..9000]
     max: [0..9000]
 ```
 ```
-TF/AmbientLight/<id>/S/analogValue/callbackPeriod
+TF/AmbientLight/U/<id>/S/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/AmbientLight/<id>/S/analogValue/threshold
+TF/AmbientLight/U/<id>/S/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/AmbientLight/<id>/S/debounce/period
+TF/AmbientLight/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/AmbientLight/<id>/S/firmware
+TF/AmbientLight/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/AmbientLight/<id>/S/hardware
+TF/AmbientLight/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/AmbientLight/<id>/S/illuminance/callbackPeriod
+TF/AmbientLight/U/<id>/S/illuminance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/AmbientLight/<id>/S/illuminance/threshold
+TF/AmbientLight/U/<id>/S/illuminance/threshold
    option: [x|o|i|<|>]
     min: [0..9000]
     max: [0..9000]
 ```
 ```
-TF/AmbientLight/<id>/S/position
+TF/AmbientLight/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### AmbientLightV2
 ```
-TF/AmbientLightV2/<id>/E/illuminance
+TF/AmbientLightV2/U/<id>/E/illuminance
    - timestamp: [0..9223372036854775807]
      value: [0..100000]
    
 ```
 ```
-TF/AmbientLightV2/<id>/E/illuminance/reached
+TF/AmbientLightV2/U/<id>/E/illuminance/reached
    - timestamp: [0..9223372036854775807]
      value: [0..100000]
    
 ```
 ```
-TF/AmbientLightV2/<id>/I/configuration
+TF/AmbientLightV2/U/<id>/I/configuration
    illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]
     integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]
    
 ```
 ```
-TF/AmbientLightV2/<id>/I/debounce/period
+TF/AmbientLightV2/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/AmbientLightV2/<id>/I/illuminance/callbackPeriod
+TF/AmbientLightV2/U/<id>/I/illuminance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/AmbientLightV2/<id>/I/illuminance/threshold
+TF/AmbientLightV2/U/<id>/I/illuminance/threshold
    option: [x|o|i|<|>]
     min: [0..100000]
     max: [0..100000]
 ```
 ```
-TF/AmbientLightV2/<id>/S/configuration
+TF/AmbientLightV2/U/<id>/S/configuration
    illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]
     integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]
    
 ```
 ```
-TF/AmbientLightV2/<id>/S/debounce/period
+TF/AmbientLightV2/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/AmbientLightV2/<id>/S/firmware
+TF/AmbientLightV2/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/AmbientLightV2/<id>/S/hardware
+TF/AmbientLightV2/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/AmbientLightV2/<id>/S/illuminance/callbackPeriod
+TF/AmbientLightV2/U/<id>/S/illuminance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/AmbientLightV2/<id>/S/illuminance/threshold
+TF/AmbientLightV2/U/<id>/S/illuminance/threshold
    option: [x|o|i|<|>]
     min: [0..100000]
     max: [0..100000]
 ```
 ```
-TF/AmbientLightV2/<id>/S/position
+TF/AmbientLightV2/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### AnalogInV2
 ```
-TF/AnalogInV2/<id>/E/analogValue
+TF/AnalogInV2/U/<id>/E/analogValue
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
    
 ```
 ```
-TF/AnalogInV2/<id>/E/analogValue/reached
+TF/AnalogInV2/U/<id>/E/analogValue/reached
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
    
 ```
 ```
-TF/AnalogInV2/<id>/E/voltage
+TF/AnalogInV2/U/<id>/E/voltage
    - timestamp: [0..9223372036854775807]
      value: [-2147483648..2147483647]
    
 ```
 ```
-TF/AnalogInV2/<id>/E/voltage/reached
+TF/AnalogInV2/U/<id>/E/voltage/reached
    - timestamp: [0..42000]
      value: [0..42000]
    
 ```
 ```
-TF/AnalogInV2/<id>/I/analogValue/callbackPeriod
+TF/AnalogInV2/U/<id>/I/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/AnalogInV2/<id>/I/analogValue/threshold
+TF/AnalogInV2/U/<id>/I/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/AnalogInV2/<id>/I/debounce/period
+TF/AnalogInV2/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/AnalogInV2/<id>/I/movingAverage
+TF/AnalogInV2/U/<id>/I/movingAverage
    [1..50]
 ```
 ```
-TF/AnalogInV2/<id>/I/voltage/callbackPeriod
+TF/AnalogInV2/U/<id>/I/voltage/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/AnalogInV2/<id>/I/voltage/threshold
+TF/AnalogInV2/U/<id>/I/voltage/threshold
    option: [x|o|i|<|>]
     min: [0..42000]
     max: [0..42000]
 ```
 ```
-TF/AnalogInV2/<id>/S/analogValue/callbackPeriod
+TF/AnalogInV2/U/<id>/S/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/AnalogInV2/<id>/S/analogValue/threshold
+TF/AnalogInV2/U/<id>/S/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/AnalogInV2/<id>/S/debounce/period
+TF/AnalogInV2/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/AnalogInV2/<id>/S/firmware
+TF/AnalogInV2/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/AnalogInV2/<id>/S/hardware
+TF/AnalogInV2/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/AnalogInV2/<id>/S/movingAverage
+TF/AnalogInV2/U/<id>/S/movingAverage
    [1..50]
 ```
 ```
-TF/AnalogInV2/<id>/S/position
+TF/AnalogInV2/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/AnalogInV2/<id>/S/voltage/callbackPeriod
+TF/AnalogInV2/U/<id>/S/voltage/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/AnalogInV2/<id>/S/voltage/threshold
+TF/AnalogInV2/U/<id>/S/voltage/threshold
    option: [x|o|i|<|>]
     min: [0..42000]
     max: [0..42000]
@@ -1240,189 +1239,189 @@ TF/AnalogInV2/<id>/S/voltage/threshold
 
 ### AnalogOutV2
 ```
-TF/AnalogOutV2/<id>/I/outputVoltage
+TF/AnalogOutV2/U/<id>/I/outputVoltage
    [0..12000]
 ```
 ```
-TF/AnalogOutV2/<id>/S/firmware
+TF/AnalogOutV2/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/AnalogOutV2/<id>/S/hardware
+TF/AnalogOutV2/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/AnalogOutV2/<id>/S/outputVoltage
+TF/AnalogOutV2/U/<id>/S/outputVoltage
    [0..12000]
 ```
 ```
-TF/AnalogOutV2/<id>/S/position
+TF/AnalogOutV2/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### Barometer
 ```
-TF/Barometer/<id>/E/airPressure
+TF/Barometer/U/<id>/E/airPressure
    - timestamp: [0..9223372036854775807]
      value: [10000..1200000]
    
 ```
 ```
-TF/Barometer/<id>/E/airPressure/reached
+TF/Barometer/U/<id>/E/airPressure/reached
    - timestamp: [0..9223372036854775807]
      value: [10000..1200000]
    
 ```
 ```
-TF/Barometer/<id>/E/altitude
+TF/Barometer/U/<id>/E/altitude
    - timestamp: [0..9223372036854775807]
      value: [-2147483648..2147483647]
    
 ```
 ```
-TF/Barometer/<id>/E/altitude/reached
+TF/Barometer/U/<id>/E/altitude/reached
    - timestamp: [0..9223372036854775807]
      value: [-2147483648..2147483647]
    
 ```
 ```
-TF/Barometer/<id>/I/airPressure/callbackPeriod
+TF/Barometer/U/<id>/I/airPressure/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Barometer/<id>/I/airPressure/threshold
+TF/Barometer/U/<id>/I/airPressure/threshold
    option: [x|o|i|<|>]
     min: [10000..1200000]
     max: [10000..1200000]
 ```
 ```
-TF/Barometer/<id>/I/altitude/callbackPeriod
+TF/Barometer/U/<id>/I/altitude/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Barometer/<id>/I/altitude/threshold
+TF/Barometer/U/<id>/I/altitude/threshold
    option: [x|o|i|<|>]
     min: [-2147483648..2147483647]
     max: [-2147483648..2147483647]
 ```
 ```
-TF/Barometer/<id>/I/averaging
+TF/Barometer/U/<id>/I/averaging
    averagingPressure: [0..10]
     averagingTemperature: [0..255]
     movingAveragePressure: [0..25]
 ```
 ```
-TF/Barometer/<id>/I/debounce/period
+TF/Barometer/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Barometer/<id>/I/referenceAirPressure
+TF/Barometer/U/<id>/I/referenceAirPressure
    [-2147483648..2147483647]
 ```
 ```
-TF/Barometer/<id>/S/airPressure/callbackPeriod
+TF/Barometer/U/<id>/S/airPressure/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Barometer/<id>/S/airPressure/threshold
+TF/Barometer/U/<id>/S/airPressure/threshold
    option: [x|o|i|<|>]
     min: [10000..1200000]
     max: [10000..1200000]
 ```
 ```
-TF/Barometer/<id>/S/altitude/callbackPeriod
+TF/Barometer/U/<id>/S/altitude/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Barometer/<id>/S/altitude/threshold
+TF/Barometer/U/<id>/S/altitude/threshold
    option: [x|o|i|<|>]
     min: [-2147483648..2147483647]
     max: [-2147483648..2147483647]
 ```
 ```
-TF/Barometer/<id>/S/averaging
+TF/Barometer/U/<id>/S/averaging
    averagingPressure: [0..10]
     averagingTemperature: [0..255]
     movingAveragePressure: [0..25]
 ```
 ```
-TF/Barometer/<id>/S/debounce/period
+TF/Barometer/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Barometer/<id>/S/firmware
+TF/Barometer/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Barometer/<id>/S/hardware
+TF/Barometer/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Barometer/<id>/S/position
+TF/Barometer/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/Barometer/<id>/S/referenceAirPressure
+TF/Barometer/U/<id>/S/referenceAirPressure
    [-2147483648..2147483647]
 ```
 
 ### CO2
 ```
-TF/CO2/<id>/E/CO2Concentration
+TF/CO2/U/<id>/E/CO2Concentration
    - timestamp: [0..9223372036854775807]
      value: [0..10000]
    
 ```
 ```
-TF/CO2/<id>/E/CO2Concentration/reached
+TF/CO2/U/<id>/E/CO2Concentration/reached
    - timestamp: [0..9223372036854775807]
      value: [0..10000]
    
 ```
 ```
-TF/CO2/<id>/I/CO2Concentration/callbackPeriod
+TF/CO2/U/<id>/I/CO2Concentration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/CO2/<id>/I/CO2Concentration/threshold
+TF/CO2/U/<id>/I/CO2Concentration/threshold
    option: [x|o|i|<|>]
     min: [0..10000]
     max: [0..10000]
 ```
 ```
-TF/CO2/<id>/I/debounce/period
+TF/CO2/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/CO2/<id>/S/CO2Concentration/callbackPeriod
+TF/CO2/U/<id>/S/CO2Concentration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/CO2/<id>/S/CO2Concentration/threshold
+TF/CO2/U/<id>/S/CO2Concentration/threshold
    option: [x|o|i|<|>]
     min: [0..10000]
     max: [0..10000]
 ```
 ```
-TF/CO2/<id>/S/debounce/period
+TF/CO2/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/CO2/<id>/S/firmware
+TF/CO2/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/CO2/<id>/S/hardware
+TF/CO2/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/CO2/<id>/S/position
+TF/CO2/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### Color
 ```
-TF/Color/<id>/E/color
+TF/Color/U/<id>/E/color
    - timestamp: [0..9223372036854775807]
      value:
        red: [0..65535]
@@ -1431,7 +1430,7 @@ TF/Color/<id>/E/color
        clear: [0..65535]
 ```
 ```
-TF/Color/<id>/E/color/reached
+TF/Color/U/<id>/E/color/reached
    - timestamp: [0..9223372036854775807]
      value:
        red: [0..65535]
@@ -1440,22 +1439,22 @@ TF/Color/<id>/E/color/reached
        clear: [0..65535]
 ```
 ```
-TF/Color/<id>/E/illuminance
+TF/Color/U/<id>/E/illuminance
    - timestamp: [0..9223372036854775807]
      value: [0..65535]
 ```
 ```
-TF/Color/<id>/E/illuminance/reached
+TF/Color/U/<id>/E/illuminance/reached
    - timestamp: [0..9223372036854775807]
      value: [0..65535]
    
 ```
 ```
-TF/Color/<id>/I/color/callbackPeriod
+TF/Color/U/<id>/I/color/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Color/<id>/I/color/threshold
+TF/Color/U/<id>/I/color/threshold
    option: [x|o|i|<|>]
     minR: [0..65535]
     maxR: [0..65535]
@@ -1465,23 +1464,23 @@ TF/Color/<id>/I/color/threshold
     maxB: [0..65535]
 ```
 ```
-TF/Color/<id>/I/debounce/period
+TF/Color/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Color/<id>/I/illuminance/callbackPeriod
+TF/Color/U/<id>/I/illuminance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Color/<id>/I/illuminance/threshold
+TF/Color/U/<id>/I/illuminance/threshold
    [0..9223372036854775807]
 ```
 ```
-TF/Color/<id>/S/color/callbackPeriod
+TF/Color/U/<id>/S/color/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Color/<id>/S/color/threshold
+TF/Color/U/<id>/S/color/threshold
    option: [x|o|i|<|>]
     minR: [0..65535]
     maxR: [0..65535]
@@ -1491,270 +1490,270 @@ TF/Color/<id>/S/color/threshold
     maxB: [0..65535]
 ```
 ```
-TF/Color/<id>/S/debounce/period
+TF/Color/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Color/<id>/S/firmware
+TF/Color/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Color/<id>/S/hardware
+TF/Color/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Color/<id>/S/illuminance/callbackPeriod
+TF/Color/U/<id>/S/illuminance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Color/<id>/S/position
+TF/Color/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### DC
 ```
-TF/DC/<id>/E/emergencyShutdown
+TF/DC/U/<id>/E/emergencyShutdown
    - timestamp: [0..9223372036854775807] 
      value: [0..9223372036854775807]
 ```
 ```
-TF/DC/<id>/E/fullBrake
+TF/DC/U/<id>/E/fullBrake
    - timestamp: [0..9223372036854775807] 
      value: [0..9223372036854775807]
 ```
 ```
-TF/DC/<id>/E/undervoltage
+TF/DC/U/<id>/E/undervoltage
    - timestamp: [0..9223372036854775807]
      value: [0..2147483647]
 ```
 ```
-TF/DC/<id>/E/velocity
+TF/DC/U/<id>/E/velocity
    - timestamp: [0..9223372036854775807]
      value: [0..32767]
 ```
 ```
-TF/DC/<id>/E/velocity/reached
+TF/DC/U/<id>/E/velocity/reached
    - timestamp: [0..9223372036854775807]
      value: [0..32767]
 ```
 ```
-TF/DC/<id>/I/acceleration
+TF/DC/U/<id>/I/acceleration
    [0..2147483647]
 ```
 ```
-TF/DC/<id>/I/driverMode
+TF/DC/U/<id>/I/driverMode
    [0|1]
 ```
 ```
-TF/DC/<id>/I/enabled
+TF/DC/U/<id>/I/enabled
    [true|false]
 ```
 ```
-TF/DC/<id>/I/fullBrake
+TF/DC/U/<id>/I/fullBrake
    [true|false]
 ```
 ```
-TF/DC/<id>/I/minimumVoltage
+TF/DC/U/<id>/I/minimumVoltage
    [6000..2147483647]
 ```
 ```
-TF/DC/<id>/I/pwmFrequency
+TF/DC/U/<id>/I/pwmFrequency
    [1..20000]
 ```
 ```
-TF/DC/<id>/I/velocity/callbackPeriod
+TF/DC/U/<id>/I/velocity/callbackPeriod
    [0..2147483647]
 ```
 ```
-TF/DC/<id>/I/velocity/velocity
+TF/DC/U/<id>/I/velocity/velocity
    -32767..32767
 ```
 ```
-TF/DC/<id>/S/acceleration
+TF/DC/U/<id>/S/acceleration
    [0..2147483647]
 ```
 ```
-TF/DC/<id>/S/driverMode
+TF/DC/U/<id>/S/driverMode
    [0|1]
 ```
 ```
-TF/DC/<id>/S/enabled
+TF/DC/U/<id>/S/enabled
    [true|false]
 ```
 ```
-TF/DC/<id>/S/firmware
+TF/DC/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/DC/<id>/S/hardware
+TF/DC/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/DC/<id>/S/minimumVoltage
+TF/DC/U/<id>/S/minimumVoltage
    [6..2147483647]
 ```
 ```
-TF/DC/<id>/S/position
+TF/DC/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/DC/<id>/S/pwmFrequency
+TF/DC/U/<id>/S/pwmFrequency
    [1..20000]
 ```
 ```
-TF/DC/<id>/S/velocity/callbackPeriod
+TF/DC/U/<id>/S/velocity/callbackPeriod
    [0..2147483647]
 ```
 ```
-TF/DC/<id>/S/velocity/velocity
+TF/DC/U/<id>/S/velocity/velocity
    -32767..32767
 ```
 
 ### DistanceIR
 ```
-TF/DistanceIR/<id>/E/analogValue
+TF/DistanceIR/U/<id>/E/analogValue
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
 ```
 ```
-TF/DistanceIR/<id>/E/analogValue/reached
+TF/DistanceIR/U/<id>/E/analogValue/reached
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
 ```
 ```
-TF/DistanceIR/<id>/E/distance
+TF/DistanceIR/U/<id>/E/distance
    - timestamp: [0..9223372036854775807]
      value: [[40..300]|[100..800]|[200..1500]]
 ```
 ```
-TF/DistanceIR/<id>/E/distance/reached
+TF/DistanceIR/U/<id>/E/distance/reached
    - timestamp: [0..9223372036854775807]
      value: [[40..300]|[100..800]|[200..1500]]
 ```
 ```
-TF/DistanceIR/<id>/I/analogValue/callbackPeriod
+TF/DistanceIR/U/<id>/I/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/DistanceIR/<id>/I/analogValue/threshold
+TF/DistanceIR/U/<id>/I/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/DistanceIR/<id>/I/debounce/period
+TF/DistanceIR/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/DistanceIR/<id>/I/distance/callbackPeriod
+TF/DistanceIR/U/<id>/I/distance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/DistanceIR/<id>/I/distance/threshold
+TF/DistanceIR/U/<id>/I/distance/threshold
    option: [x|o|i|<|>]
     min: [[40..300]|[100..800]|[200..1500]]
     max: [[40..300]|[100..800]|[200..1500]]
 ```
 ```
-TF/DistanceIR/<id>/S/analogValue/callbackPeriod
+TF/DistanceIR/U/<id>/S/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/DistanceIR/<id>/S/analogValue/threshold
+TF/DistanceIR/U/<id>/S/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/DistanceIR/<id>/S/debounce/period
+TF/DistanceIR/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/DistanceIR/<id>/S/distance/callbackPeriod
+TF/DistanceIR/U/<id>/S/distance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/DistanceIR/<id>/S/distance/threshold
+TF/DistanceIR/U/<id>/S/distance/threshold
    option: [x|o|i|<|>]
     min: [[40..300]|[100..800]|[200..1500]]
     max: [[40..300]|[100..800]|[200..1500]]
 ```
 ```
-TF/DistanceIR/<id>/S/firmware
+TF/DistanceIR/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/DistanceIR/<id>/S/hardware
+TF/DistanceIR/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/DistanceIR/<id>/S/position
+TF/DistanceIR/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### DistanceUS
 ```
-TF/DistanceUS/<id>/E/distance
+TF/DistanceUS/U/<id>/E/distance
    - timestamp: [0..9223372036854775807]
      value: [[0..4095]
 ```
 ```
-TF/DistanceUS/<id>/E/distance/reached
+TF/DistanceUS/U/<id>/E/distance/reached
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
 ```
 ```
-TF/DistanceUS/<id>/I/debounce/period
+TF/DistanceUS/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/DistanceUS/<id>/I/distance/callbackPeriod
+TF/DistanceUS/U/<id>/I/distance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/DistanceUS/<id>/I/distance/threshold
+TF/DistanceUS/U/<id>/I/distance/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/DistanceUS/<id>/I/movingAverage
+TF/DistanceUS/U/<id>/I/movingAverage
    [0..100]
 ```
 ```
-TF/DistanceUS/<id>/S/debounce/period
+TF/DistanceUS/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/DistanceUS/<id>/S/distance/callbackPeriod
+TF/DistanceUS/U/<id>/S/distance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/DistanceUS/<id>/S/distance/threshold
+TF/DistanceUS/U/<id>/S/distance/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/DistanceUS/<id>/S/firmware
+TF/DistanceUS/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/DistanceUS/<id>/S/hardware
+TF/DistanceUS/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/DistanceUS/<id>/S/movingAverage
+TF/DistanceUS/U/<id>/S/movingAverage
    [0..100]
 ```
 ```
-TF/DistanceUS/<id>/S/position
+TF/DistanceUS/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### DualButton
 ```
-TF/DualButton/<id>/E/stateChanged
+TF/DualButton/U/<id>/E/stateChanged
    - timestamp: [0..9223372036854775807]
      value:
        led1: [AutoToggleOn|AutoToggleOff|On|Off]
@@ -1763,102 +1762,102 @@ TF/DualButton/<id>/E/stateChanged
       switch2: [0|1]
 ```
 ```
-TF/DualButton/<id>/I/LEDState
+TF/DualButton/U/<id>/I/LEDState
    leftLED: [AutoToggleOn|AutoToggleOff|On|Off]
     rightLED: [AutoToggleOn|AutoToggleOff|On|Off] 
 ```
 ```
-TF/DualButton/<id>/I/selectedLEDState
+TF/DualButton/U/<id>/I/selectedLEDState
    led: [AutoToggleOn|AutoToggleOff|On|Off]
 ```
 ```
-TF/DualButton/<id>/S/LEDState
+TF/DualButton/U/<id>/S/LEDState
    led1: [AutoToggleOn|AutoToggleOff|On|Off]
     led2: [AutoToggleOn|AutoToggleOff|On|Off]
 ```
 ```
-TF/DualButton/<id>/S/firmware
+TF/DualButton/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/DualButton/<id>/S/hardware
+TF/DualButton/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/DualButton/<id>/S/position
+TF/DualButton/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### DustDetector
 ```
-TF/DustDetector/<id>/E/dustDensity
+TF/DustDetector/U/<id>/E/dustDensity
    - timestamp: [0..9223372036854775807]
      value: [0..500]
 ```
 ```
-TF/DustDetector/<id>/E/dustDensity/reached
+TF/DustDetector/U/<id>/E/dustDensity/reached
    - timestamp: [0..9223372036854775807]
      value: [0..500]
 ```
 ```
-TF/DustDetector/<id>/I/debounce/period
+TF/DustDetector/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/DustDetector/<id>/I/dustDensity/callbackPeriod
+TF/DustDetector/U/<id>/I/dustDensity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/DustDetector/<id>/I/dustDensity/threshold
+TF/DustDetector/U/<id>/I/dustDensity/threshold
    option: [x|o|i|<|>]
     min: [0..500]
     max: [0..500]
 ```
 ```
-TF/DustDetector/<id>/I/movingAverage
+TF/DustDetector/U/<id>/I/movingAverage
    [0..100]
 ```
 ```
-TF/DustDetector/<id>/S/debounce/period
+TF/DustDetector/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/DustDetector/<id>/S/dustDensity/callbackPeriod
+TF/DustDetector/U/<id>/S/dustDensity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/DustDetector/<id>/S/dustDensity/threshold
+TF/DustDetector/U/<id>/S/dustDensity/threshold
    option: [x|o|i|<|>]
     min: [0..500]
     max: [0..500]
 ```
 ```
-TF/DustDetector/<id>/S/firmware
+TF/DustDetector/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/DustDetector/<id>/S/hardware
+TF/DustDetector/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/DustDetector/<id>/S/movingAverage
+TF/DustDetector/U/<id>/S/movingAverage
    [0..100]
 ```
 ```
-TF/DustDetector/<id>/S/position
+TF/DustDetector/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### GPS
 ```
-TF/GPS/<id>/E/altitude
+TF/GPS/U/<id>/E/altitude
    - timestamp: [0..9223372036854775807]
      value:
        altitude: [-2147483648..2147483647]
        geoidalSeparation: [-2147483648..2147483647]
 ```
 ```
-TF/GPS/<id>/E/coordinates
+TF/GPS/U/<id>/E/coordinates
    - timestamp: [0..9223372036854775807]
      value:
        latitude: [-9223372036854775808..9223372036854775807]
@@ -1871,21 +1870,21 @@ TF/GPS/<id>/E/coordinates
         epe: [-2147483648..2147483647]
 ```
 ```
-TF/GPS/<id>/E/dateTime
+TF/GPS/U/<id>/E/dateTime
    - timestamp: [0..9223372036854775807]
      value:
        date: [[d|dd]mmyy]
        time: [hhmmssxxx]
 ```
 ```
-TF/GPS/<id>/E/motion
+TF/GPS/U/<id>/E/motion
    - timestamp: [0..9223372036854775807]
      value:
        course: [0..36000]
        speed: [0..9223372036854775807]
 ```
 ```
-TF/GPS/<id>/E/status
+TF/GPS/U/<id>/E/status
    - timestamp: [0..9223372036854775807]
      value:
        fix: [1|2|3]]
@@ -1893,60 +1892,60 @@ TF/GPS/<id>/E/status
        satellitesUsed: [0..32767]
 ```
 ```
-TF/GPS/<id>/I/altitude/callbackPeriod
+TF/GPS/U/<id>/I/altitude/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPS/<id>/I/coordinates/callbackPeriod
+TF/GPS/U/<id>/I/coordinates/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPS/<id>/I/dateTime/callbackPeriod
+TF/GPS/U/<id>/I/dateTime/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPS/<id>/I/motion/callbackPeriod
+TF/GPS/U/<id>/I/motion/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPS/<id>/S/altitude/callbackPeriod
+TF/GPS/U/<id>/S/altitude/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPS/<id>/S/coordinates/callbackPeriod
+TF/GPS/U/<id>/S/coordinates/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPS/<id>/S/dateTime/callbackPeriod
+TF/GPS/U/<id>/S/dateTime/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPS/<id>/S/firmware
+TF/GPS/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/GPS/<id>/S/hardware
+TF/GPS/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/GPS/<id>/S/motion/callbackPeriod
+TF/GPS/U/<id>/S/motion/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPS/<id>/S/position
+TF/GPS/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### GPSv2
 ```
-TF/GPSv2/<id>/E/altitude
+TF/GPSv2/U/<id>/E/altitude
    - timestamp: [0..9223372036854775807]
     value:
       altitude: [-2147483648..2147483647]
       geoidalSeparation: [-2147483648..2147483647]
 ```
 ```
-TF/GPSv2/<id>/E/coordinates
+TF/GPSv2/U/<id>/E/coordinates
    - timestamp: [0..9223372036854775807]
     value:
      latitude: [-9223372036854775808..9223372036854775807]
@@ -1955,274 +1954,274 @@ TF/GPSv2/<id>/E/coordinates
     ew: ['E'|'W']
 ```
 ```
-TF/GPSv2/<id>/E/dateTime
+TF/GPSv2/U/<id>/E/dateTime
    - timestamp: [0..9223372036854775807]
     value:
      date: [[d|dd]mmyy]
      time: [hhmmssxxx]
 ```
 ```
-TF/GPSv2/<id>/E/motion
+TF/GPSv2/U/<id>/E/motion
    - timestamp: [0..9223372036854775807]
     value:
      course: [0..36000]
      speed: [0..9223372036854775807]
 ```
 ```
-TF/GPSv2/<id>/E/status
+TF/GPSv2/U/<id>/E/status
    - timestamp: [0..9223372036854775807]
     value:
      fix: [true|false]]
      satellitesView: [0..32767]
 ```
 ```
-TF/GPSv2/<id>/I/altitude/callbackPeriod
+TF/GPSv2/U/<id>/I/altitude/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPSv2/<id>/I/coordinates/callbackPeriod
+TF/GPSv2/U/<id>/I/coordinates/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPSv2/<id>/I/dateTime/callbackPeriod
+TF/GPSv2/U/<id>/I/dateTime/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPSv2/<id>/I/fix/led
+TF/GPSv2/U/<id>/I/fix/led
    [OFF|ON|HEARTBEAT|FIX|PPS]
 ```
 ```
-TF/GPSv2/<id>/I/motion/callbackPeriod
+TF/GPSv2/U/<id>/I/motion/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPSv2/<id>/I/status/led
+TF/GPSv2/U/<id>/I/status/led
    [OFF|ON|HEARTBEAT|STATUS]
 ```
 ```
-TF/GPSv2/<id>/S/altitude/callbackPeriod
+TF/GPSv2/U/<id>/S/altitude/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPSv2/<id>/S/coordinates/callbackPeriod
+TF/GPSv2/U/<id>/S/coordinates/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPSv2/<id>/S/dateTime/callbackPeriod
+TF/GPSv2/U/<id>/S/dateTime/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPSv2/<id>/S/firmware
+TF/GPSv2/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/GPSv2/<id>/S/fix/led
+TF/GPSv2/U/<id>/S/fix/led
    [OFF|ON|HEARTBEAT|FIX|PPS]
 ```
 ```
-TF/GPSv2/<id>/S/hardware
+TF/GPSv2/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/GPSv2/<id>/S/motion/callbackPeriod
+TF/GPSv2/U/<id>/S/motion/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/GPSv2/<id>/S/position
+TF/GPSv2/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/GPSv2/<id>/S/status/led
+TF/GPSv2/U/<id>/S/status/led
    [OFF|ON|HEARTBEAT|STATUS]
 ```
 
 ### HallEffect
 ```
-TF/HallEffect/<id>/E/edgeCount
+TF/HallEffect/U/<id>/E/edgeCount
    - timestamp: [0..9223372036854775807]
      value:
        count: [0..9223372036854775807]
        greater35Gauss: [true|false]
 ```
 ```
-TF/HallEffect/<id>/E/edgeCount/reset
+TF/HallEffect/U/<id>/E/edgeCount/reset
    - timestamp: [0..9223372036854775807]
      value:    [0..9223372036854775807]
 ```
 ```
-TF/HallEffect/<id>/I/configuration
+TF/HallEffect/U/<id>/I/configuration
    edgeType: [RISING|FALLING|BOTH]
     debounce: [0..100]
    
 ```
 ```
-TF/HallEffect/<id>/I/edgeCount/callbackPeriod
+TF/HallEffect/U/<id>/I/edgeCount/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/HallEffect/<id>/I/edgeCount/interrupt
+TF/HallEffect/U/<id>/I/edgeCount/interrupt
    [0..9223372036854775807]
 ```
 ```
-TF/HallEffect/<id>/I/edgeCount/reset
+TF/HallEffect/U/<id>/I/edgeCount/reset
    [true|false]
 ```
 ```
-TF/HallEffect/<id>/S/configuration
+TF/HallEffect/U/<id>/S/configuration
    edgeType: [RISING|FALLING|BOTH]
     debounce: [0..100]
    
 ```
 ```
-TF/HallEffect/<id>/S/edgeCount/callbackPeriod
+TF/HallEffect/U/<id>/S/edgeCount/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/HallEffect/<id>/S/edgeCount/interrupt
+TF/HallEffect/U/<id>/S/edgeCount/interrupt
    [0..9223372036854775807]
 ```
 ```
-TF/HallEffect/<id>/S/firmware
+TF/HallEffect/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/HallEffect/<id>/S/hardware
+TF/HallEffect/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/HallEffect/<id>/S/position
+TF/HallEffect/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### Humidity
 ```
-TF/Humidity/<id>/E/analogValue
+TF/Humidity/U/<id>/E/analogValue
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
 ```
 ```
-TF/Humidity/<id>/E/analogValue/reached
+TF/Humidity/U/<id>/E/analogValue/reached
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
 ```
 ```
-TF/Humidity/<id>/E/humidity
+TF/Humidity/U/<id>/E/humidity
    - timestamp: [0..9223372036854775807]
      value: [0..1000]
 ```
 ```
-TF/Humidity/<id>/E/humidity/reached
+TF/Humidity/U/<id>/E/humidity/reached
    - timestamp: [0..9223372036854775807]
      value: [0..1000]
 ```
 ```
-TF/Humidity/<id>/I/analogValue/callbackPeriod
+TF/Humidity/U/<id>/I/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Humidity/<id>/I/analogValue/threshold
+TF/Humidity/U/<id>/I/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/Humidity/<id>/I/debounce/period
+TF/Humidity/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Humidity/<id>/I/humidity/callbackPeriod
+TF/Humidity/U/<id>/I/humidity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Humidity/<id>/I/humidity/threshold
+TF/Humidity/U/<id>/I/humidity/threshold
    option: [x|o|i|<|>]
     min: [0..1000]
     max: [0..9000]
 ```
 ```
-TF/Humidity/<id>/S/analogValue/callbackPeriod
+TF/Humidity/U/<id>/S/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Humidity/<id>/S/analogValue/threshold
+TF/Humidity/U/<id>/S/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/Humidity/<id>/S/debounce/period
+TF/Humidity/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Humidity/<id>/S/firmware
+TF/Humidity/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Humidity/<id>/S/hardware
+TF/Humidity/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Humidity/<id>/S/humidity/callbackPeriod
+TF/Humidity/U/<id>/S/humidity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Humidity/<id>/S/humidity/threshold
+TF/Humidity/U/<id>/S/humidity/threshold
    option: [x|o|i|<|>]
     min: [0..1000]
     max: [0..1000]
 ```
 ```
-TF/Humidity/<id>/S/position
+TF/Humidity/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### Joystick
 ```
-TF/Joystick/<id>/E/analogValue
+TF/Joystick/U/<id>/E/analogValue
    - timestamp: [0..9223372036854775807]
      value:
        x: [0..4095]
        y: [0..4095]
 ```
 ```
-TF/Joystick/<id>/E/analogValue/reached
+TF/Joystick/U/<id>/E/analogValue/reached
    - timestamp: [0..9223372036854775807]
      value:
        x: [0..4095]
        y: [0..4095]
 ```
 ```
-TF/Joystick/<id>/E/calibrate
+TF/Joystick/U/<id>/E/calibrate
    [0..9223372036854775807]
 ```
 ```
-TF/Joystick/<id>/E/position
+TF/Joystick/U/<id>/E/position
    - timestamp: [0..9223372036854775807]
      value:
        x: [-100..100]
        y: [-100..100]
 ```
 ```
-TF/Joystick/<id>/E/position/reached
+TF/Joystick/U/<id>/E/position/reached
    - timestamp: [0..9223372036854775807]
      value:
        x: [-100..100]
        y: [-100..100]
 ```
 ```
-TF/Joystick/<id>/E/pressed
+TF/Joystick/U/<id>/E/pressed
    [0..9223372036854775807]
 ```
 ```
-TF/Joystick/<id>/E/released
+TF/Joystick/U/<id>/E/released
    [0..9223372036854775807]
 ```
 ```
-TF/Joystick/<id>/I/analogValue/callbackPeriod
+TF/Joystick/U/<id>/I/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Joystick/<id>/I/analogValue/threshold
+TF/Joystick/U/<id>/I/analogValue/threshold
    option: [x|o|i|<|>]
     minX: [0..4095]
     maxX: [0..4095]
@@ -2230,19 +2229,19 @@ TF/Joystick/<id>/I/analogValue/threshold
     maxY: [0..4095]
 ```
 ```
-TF/Joystick/<id>/I/calibrate
+TF/Joystick/U/<id>/I/calibrate
    [true|false]
 ```
 ```
-TF/Joystick/<id>/I/debounce/period
+TF/Joystick/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Joystick/<id>/I/position/callbackPeriod
+TF/Joystick/U/<id>/I/position/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Joystick/<id>/I/position/threshold
+TF/Joystick/U/<id>/I/position/threshold
    option: [x|o|i|<|>]
     minX: [-100..100]
     maxX: [-100..100]
@@ -2250,11 +2249,11 @@ TF/Joystick/<id>/I/position/threshold
     maxY: [-100..100]
 ```
 ```
-TF/Joystick/<id>/S/analogValue/callbackPeriod
+TF/Joystick/U/<id>/S/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Joystick/<id>/S/analogValue/threshold
+TF/Joystick/U/<id>/S/analogValue/threshold
    option: [x|o|i|<|>]
     minX: [0..4095]
     maxX: [0..4095]
@@ -2262,27 +2261,27 @@ TF/Joystick/<id>/S/analogValue/threshold
     maxY: [0..4095]
 ```
 ```
-TF/Joystick/<id>/S/debounce/period
+TF/Joystick/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Joystick/<id>/S/firmware
+TF/Joystick/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Joystick/<id>/S/hardware
+TF/Joystick/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Joystick/<id>/S/position
+TF/Joystick/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/Joystick/<id>/S/position/callbackPeriod
+TF/Joystick/U/<id>/S/position/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Joystick/<id>/S/position/threshold
+TF/Joystick/U/<id>/S/position/threshold
    option: [x|o|i|<|>]
     minX: [-100..100]
     maxX: [-100..100]
@@ -2292,125 +2291,125 @@ TF/Joystick/<id>/S/position/threshold
 
 ### LaserRangeFinder
 ```
-TF/LaserRangeFinder/<id>/E/distance
+TF/LaserRangeFinder/U/<id>/E/distance
    - timestamp: [0..9223372036854775807]
      value: [0..4000]
 ```
 ```
-TF/LaserRangeFinder/<id>/E/distance/reached
+TF/LaserRangeFinder/U/<id>/E/distance/reached
    - timestamp: [0..9223372036854775807]
      value: [0..4000]
 ```
 ```
-TF/LaserRangeFinder/<id>/E/velocity
+TF/LaserRangeFinder/U/<id>/E/velocity
    - timestamp: [-127..9223372036854775807]
      value: [0..127]
 ```
 ```
-TF/LaserRangeFinder/<id>/E/velocity/reached
+TF/LaserRangeFinder/U/<id>/E/velocity/reached
    - timestamp: [0..9223372036854775807]
      value: [-127..127]
 ```
 ```
-TF/LaserRangeFinder/<id>/I/debounce/period
+TF/LaserRangeFinder/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/LaserRangeFinder/<id>/I/deviceConfiguration
+TF/LaserRangeFinder/U/<id>/I/deviceConfiguration
    acquisition: [1..255]
     quickTermination: [true|false]
     thresholdValue: [0..255]
     measurementFrequency: [0|10..500]
 ```
 ```
-TF/LaserRangeFinder/<id>/I/deviceMode
+TF/LaserRangeFinder/U/<id>/I/deviceMode
    mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]
 ```
 ```
-TF/LaserRangeFinder/<id>/I/distance/callbackPeriod
+TF/LaserRangeFinder/U/<id>/I/distance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/LaserRangeFinder/<id>/I/distance/threshold
+TF/LaserRangeFinder/U/<id>/I/distance/threshold
    option: [x|o|i|<|>]
     min: [0..4000]
     max: [0..4000]
 ```
 ```
-TF/LaserRangeFinder/<id>/I/laser
+TF/LaserRangeFinder/U/<id>/I/laser
    [true|false]
 ```
 ```
-TF/LaserRangeFinder/<id>/I/movingAverage
+TF/LaserRangeFinder/U/<id>/I/movingAverage
    averagingDistance:[0..30]
     averagingVelocity:[0..30]
 ```
 ```
-TF/LaserRangeFinder/<id>/I/velocity/callbackPeriod
+TF/LaserRangeFinder/U/<id>/I/velocity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/LaserRangeFinder/<id>/I/velocity/threshold
+TF/LaserRangeFinder/U/<id>/I/velocity/threshold
    option: [x|o|i|<|>]
     min: [-127..127]
     max: [-127..127]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/debounce/period
+TF/LaserRangeFinder/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/deviceConfiguration
+TF/LaserRangeFinder/U/<id>/S/deviceConfiguration
    acquisition: [1..255]
     quickTermination: [true|false]
     thresholdValue: [0..255]
     measurementFrequency: [0|10..500]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/deviceMode
+TF/LaserRangeFinder/U/<id>/S/deviceMode
    mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/distance/callbackPeriod
+TF/LaserRangeFinder/U/<id>/S/distance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/distance/threshold
+TF/LaserRangeFinder/U/<id>/S/distance/threshold
    option: [x|o|i|<|>]
     min: [0..4000]
     max: [0..4000]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/firmware
+TF/LaserRangeFinder/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/LaserRangeFinder/<id>/S/hardware
+TF/LaserRangeFinder/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/LaserRangeFinder/<id>/S/laser
+TF/LaserRangeFinder/U/<id>/S/laser
    [true|false]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/movingAverage
+TF/LaserRangeFinder/U/<id>/S/movingAverage
    averagingDistance:[0..30]
     averagingVelocity:[0..30]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/position
+TF/LaserRangeFinder/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/sensorHardwareVersion
+TF/LaserRangeFinder/U/<id>/S/sensorHardwareVersion
    [v1|v3]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/velocity/callbackPeriod
+TF/LaserRangeFinder/U/<id>/S/velocity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/LaserRangeFinder/<id>/S/velocity/threshold
+TF/LaserRangeFinder/U/<id>/S/velocity/threshold
    option: [x|o|i|<|>]
     min: [-127..-127]
     max: [-127..127]
@@ -2418,17 +2417,17 @@ TF/LaserRangeFinder/<id>/S/velocity/threshold
 
 ### LEDStrip
 ```
-TF/LEDStrip/<id>/E/frame/rendered
+TF/LEDStrip/U/<id>/E/frame/rendered
    - timestamp: [0..9223372036854775807]
      value: [0..2147483647]
    
 ```
 ```
-TF/LEDStrip/<id>/E/laging
+TF/LEDStrip/U/<id>/E/laging
    - timestamp: [0..9223372036854775807]
 ```
 ```
-TF/LEDStrip/<id>/I/config
+TF/LEDStrip/U/<id>/I/config
    chipType: [WS2801|WS2811|WS2812]
     frameDurationInMilliseconds: [0..9223372036854775807]
     clockFrequencyOfICsInHz: [10000..2000000]
@@ -2436,19 +2435,19 @@ TF/LEDStrip/<id>/I/config
     channelMapping: [rgb|rbg|grb|gbr|brg|bgr]
 ```
 ```
-TF/LEDStrip/<id>/I/frame
+TF/LEDStrip/U/<id>/I/frame
    channels: {{[0..255],..,[0..255]}_numLEDs
     ...
     {[0..255],..,[0..255]}_numLEDs}_numChannels
 ```
 ```
-TF/LEDStrip/<id>/I/multiFrames
+TF/LEDStrip/U/<id>/I/multiFrames
    { channels: {{[0..255],..,[0..255]}_numLEDs
     ...
     {[0..255],..,[0..255]}_numLEDs}_numChannels }_*
 ```
 ```
-TF/LEDStrip/<id>/S/config
+TF/LEDStrip/U/<id>/S/config
    chipType: [WS2801|WS2811|WS2812|WS2812RGBW|LPD8806|APA102]
     frameDurationInMilliseconds: [0..9223372036854775807]
     clockFrequencyOfICsInHz: [10000..2000000]
@@ -2456,65 +2455,65 @@ TF/LEDStrip/<id>/S/config
     channelMapping: [rgb|rbg|grb|gbr|brg|bgr]
 ```
 ```
-TF/LEDStrip/<id>/S/firmware
+TF/LEDStrip/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/LEDStrip/<id>/S/hardware
+TF/LEDStrip/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/LEDStrip/<id>/S/position
+TF/LEDStrip/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### Line
 ```
-TF/Line/<id>/E/reflectivity
+TF/Line/U/<id>/E/reflectivity
    - timestamp: [0..9223372036854775807]
      value: [[0..4095]
 ```
 ```
-TF/Line/<id>/E/reflectivity/reached
+TF/Line/U/<id>/E/reflectivity/reached
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
 ```
 ```
-TF/Line/<id>/I/debounce/period
+TF/Line/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Line/<id>/I/reflectivity/callbackPeriod
+TF/Line/U/<id>/I/reflectivity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Line/<id>/I/reflectivity/threshold
+TF/Line/U/<id>/I/reflectivity/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/Line/<id>/S/debounce/period
+TF/Line/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Line/<id>/S/firmware
+TF/Line/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Line/<id>/S/hardware
+TF/Line/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Line/<id>/S/position
+TF/Line/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/Line/<id>/S/reflectivity/callbackPeriod
+TF/Line/U/<id>/S/reflectivity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Line/<id>/S/reflectivity/threshold
+TF/Line/U/<id>/S/reflectivity/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
@@ -2522,81 +2521,81 @@ TF/Line/<id>/S/reflectivity/threshold
 
 ### LinearPoti
 ```
-TF/LinearPoti/<id>/E/analogValue
+TF/LinearPoti/U/<id>/E/analogValue
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
 ```
 ```
-TF/LinearPoti/<id>/E/analogValue/reached
+TF/LinearPoti/U/<id>/E/analogValue/reached
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
 ```
 ```
-TF/LinearPoti/<id>/E/position
+TF/LinearPoti/U/<id>/E/position
    - timestamp: [0..9223372036854775807]
      value: [0..100]
 ```
 ```
-TF/LinearPoti/<id>/E/position/reached
+TF/LinearPoti/U/<id>/E/position/reached
    - timestamp: [0..9223372036854775807]
      value: [0..100]
 ```
 ```
-TF/LinearPoti/<id>/I/analogValue/callbackPeriod
+TF/LinearPoti/U/<id>/I/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/LinearPoti/<id>/I/analogValue/threshold
+TF/LinearPoti/U/<id>/I/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/LinearPoti/<id>/I/debounce/period
+TF/LinearPoti/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/LinearPoti/<id>/I/position/callbackPeriod
+TF/LinearPoti/U/<id>/I/position/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/LinearPoti/<id>/I/position/threshold
+TF/LinearPoti/U/<id>/I/position/threshold
    option: [x|o|i|<|>]
     min: [0..100]
     max: [0..100]
 ```
 ```
-TF/LinearPoti/<id>/S/analogValue/callbackPeriod
+TF/LinearPoti/U/<id>/S/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/LinearPoti/<id>/S/analogValue/threshold
+TF/LinearPoti/U/<id>/S/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/LinearPoti/<id>/S/debounce/period
+TF/LinearPoti/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/LinearPoti/<id>/S/firmware
+TF/LinearPoti/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/LinearPoti/<id>/S/hardware
+TF/LinearPoti/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/LinearPoti/<id>/S/position
+TF/LinearPoti/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/LinearPoti/<id>/S/position/callbackPeriod
+TF/LinearPoti/U/<id>/S/position/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/LinearPoti/<id>/S/position/threshold
+TF/LinearPoti/U/<id>/S/position/threshold
    option: [x|o|i|<|>]
     min: [0..100]
     max: [0..100]
@@ -2604,85 +2603,85 @@ TF/LinearPoti/<id>/S/position/threshold
 
 ### LoadCell
 ```
-TF/LoadCell/<id>/E/weight
+TF/LoadCell/U/<id>/E/weight
    - timestamp: [0..9223372036854775807]
      value: [-50001..50001]
 ```
 ```
-TF/LoadCell/<id>/E/weight/reached
+TF/LoadCell/U/<id>/E/weight/reached
    - timestamp: [0..9223372036854775807]
      value: [-50001..50001]
 ```
 ```
-TF/LoadCell/<id>/I/LED
+TF/LoadCell/U/<id>/I/LED
    true|false]
 ```
 ```
-TF/LoadCell/<id>/I/calibrate
+TF/LoadCell/U/<id>/I/calibrate
    [0..50001]
 ```
 ```
-TF/LoadCell/<id>/I/configuration
+TF/LoadCell/U/<id>/I/configuration
    gain:[gain128X|gain64X|gain32X]
     rate: [rate10Hz|rate80Hz]
 ```
 ```
-TF/LoadCell/<id>/I/debounce/period
+TF/LoadCell/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/LoadCell/<id>/I/movingAverage
+TF/LoadCell/U/<id>/I/movingAverage
    [1..40]
 ```
 ```
-TF/LoadCell/<id>/I/tare
+TF/LoadCell/U/<id>/I/tare
    [true|false]
 ```
 ```
-TF/LoadCell/<id>/I/weight/callbackPeriod
+TF/LoadCell/U/<id>/I/weight/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/LoadCell/<id>/I/weight/threshold
+TF/LoadCell/U/<id>/I/weight/threshold
    option: [x|o|i|<|>]
     min: [-50001..50001]
     max: [-50001..50001]
 ```
 ```
-TF/LoadCell/<id>/S/LED
+TF/LoadCell/U/<id>/S/LED
    [true|false]
 ```
 ```
-TF/LoadCell/<id>/S/configuration
+TF/LoadCell/U/<id>/S/configuration
    gain:[gain128X|gain64X|gain32X]
     rate: [rate10Hz|rate80Hz]
 ```
 ```
-TF/LoadCell/<id>/S/debounce/period
+TF/LoadCell/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/LoadCell/<id>/S/firmware
+TF/LoadCell/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/LoadCell/<id>/S/hardware
+TF/LoadCell/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/LoadCell/<id>/S/movingAverage
+TF/LoadCell/U/<id>/S/movingAverage
    [1..40]
 ```
 ```
-TF/LoadCell/<id>/S/position
+TF/LoadCell/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/LoadCell/<id>/S/weight/callbackPeriod
+TF/LoadCell/U/<id>/S/weight/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/LoadCell/<id>/S/weight/threshold
+TF/LoadCell/U/<id>/S/weight/threshold
    option: [x|o|i|<|>]
     min: [0..50001]
     max: [-50001..50001]
@@ -2690,268 +2689,268 @@ TF/LoadCell/<id>/S/weight/threshold
 
 ### Master
 ```
-TF/Master/<id>/E/USB/voltage
+TF/Master/U/<id>/E/USB/voltage
    - timestamp: [0..9223372036854775807]
      value: [-2147483648..2147483647]
 ```
 ```
-TF/Master/<id>/E/USB/voltage/reached
+TF/Master/U/<id>/E/USB/voltage/reached
    - timestamp: [0..9223372036854775807]
      value: [-2147483648..2147483647]
 ```
 ```
-TF/Master/<id>/E/reset
+TF/Master/U/<id>/E/reset
    - timestamp: [0..9223372036854775807]
 ```
 ```
-TF/Master/<id>/E/stack/current
+TF/Master/U/<id>/E/stack/current
    - timestamp: [0..9223372036854775807]
      value: [0..2147483647]
 ```
 ```
-TF/Master/<id>/E/stack/current/reached
+TF/Master/U/<id>/E/stack/current/reached
    - timestamp: [0..9223372036854775807]
      value: [0..2147483647]
 ```
 ```
-TF/Master/<id>/E/stack/voltage
+TF/Master/U/<id>/E/stack/voltage
    - timestamp: [0..9223372036854775807]
      value: [-2147483648..2147483647]
 ```
 ```
-TF/Master/<id>/E/stack/voltage/reached
+TF/Master/U/<id>/E/stack/voltage/reached
    - timestamp: [0..9223372036854775807]
      value: [-2147483648..2147483647]
 ```
 ```
-TF/Master/<id>/I/USB/voltage/callbackPeriod
+TF/Master/U/<id>/I/USB/voltage/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Master/<id>/I/debounce/period
+TF/Master/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Master/<id>/I/stack/current/callbackPeriod
+TF/Master/U/<id>/I/stack/current/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Master/<id>/I/stack/current/callbackThreshold
+TF/Master/U/<id>/I/stack/current/callbackThreshold
    [option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/Master/<id>/I/stack/voltage/callbackPeriod
+TF/Master/U/<id>/I/stack/voltage/callbackPeriod
    [-9223372036854775808..9223372036854775807]
 ```
 ```
-TF/Master/<id>/I/stack/voltage/callbackThreshold
+TF/Master/U/<id>/I/stack/voltage/callbackThreshold
    [option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/Master/<id>/I/statusLED/enabled
+TF/Master/U/<id>/I/statusLED/enabled
    [true|false]
 ```
 ```
-TF/Master/<id>/S/USB/voltage/callbackPeriod
+TF/Master/U/<id>/S/USB/voltage/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Master/<id>/S/debounce/period
+TF/Master/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Master/<id>/S/firmware
+TF/Master/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Master/<id>/S/hardware
+TF/Master/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Master/<id>/S/position
+TF/Master/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/Master/<id>/S/stack/current/callbackPeriod
+TF/Master/U/<id>/S/stack/current/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Master/<id>/S/stack/current/callbackThreshold
+TF/Master/U/<id>/S/stack/current/callbackThreshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/Master/<id>/S/stack/voltage/callbackPeriod
+TF/Master/U/<id>/S/stack/voltage/callbackPeriod
    [-9223372036854775808..9223372036854775807]
 ```
 ```
-TF/Master/<id>/S/stack/voltage/callbackThreshold
+TF/Master/U/<id>/S/stack/voltage/callbackThreshold
    [option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/Master/<id>/S/statusLED/enabled
+TF/Master/U/<id>/S/statusLED/enabled
    [true|false]
 ```
 
 ### Moisture
 ```
-TF/Moisture/<id>/E/moisture
+TF/Moisture/U/<id>/E/moisture
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
 ```
 ```
-TF/Moisture/<id>/E/moisture/reached
+TF/Moisture/U/<id>/E/moisture/reached
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
 ```
 ```
-TF/Moisture/<id>/I/debounce/period
+TF/Moisture/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Moisture/<id>/I/moisture/callbackPeriod
+TF/Moisture/U/<id>/I/moisture/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Moisture/<id>/I/moisture/threshold
+TF/Moisture/U/<id>/I/moisture/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/Moisture/<id>/I/movingAverage
+TF/Moisture/U/<id>/I/movingAverage
    [0..100]
 ```
 ```
-TF/Moisture/<id>/S/debounce/period
+TF/Moisture/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Moisture/<id>/S/firmware
+TF/Moisture/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Moisture/<id>/S/hardware
+TF/Moisture/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Moisture/<id>/S/moisture/callbackPeriod
+TF/Moisture/U/<id>/S/moisture/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Moisture/<id>/S/moisture/threshold
+TF/Moisture/U/<id>/S/moisture/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/Moisture/<id>/S/movingAverage
+TF/Moisture/U/<id>/S/movingAverage
    [0..100]
 ```
 ```
-TF/Moisture/<id>/S/position
+TF/Moisture/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### MotionDetector
 ```
-TF/MotionDetector/<id>/E/eventDetectionCycleEnded
+TF/MotionDetector/U/<id>/E/eventDetectionCycleEnded
    - timestamp: [0..9223372036854775807]
      value: true
 ```
 ```
-TF/MotionDetector/<id>/E/motionDetected
+TF/MotionDetector/U/<id>/E/motionDetected
    - timestamp: [0..9223372036854775807]
      value: true
 ```
 ```
-TF/MotionDetector/<id>/S/firmware
+TF/MotionDetector/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/MotionDetector/<id>/S/hardware
+TF/MotionDetector/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/MotionDetector/<id>/S/position
+TF/MotionDetector/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### MultiTouch
 ```
-TF/MultiTouch/<id>/E/recalibrated
+TF/MultiTouch/U/<id>/E/recalibrated
    - timestamp: [0..9223372036854775807]
      value: true
 ```
 ```
-TF/MultiTouch/<id>/E/touchState
+TF/MultiTouch/U/<id>/E/touchState
    - timestamp: [0..9223372036854775807]
      value: [0..8191]
 ```
 ```
-TF/MultiTouch/<id>/I/electrode/config
+TF/MultiTouch/U/<id>/I/electrode/config
    [0..8191]
 ```
 ```
-TF/MultiTouch/<id>/I/electrode/sensitivity
+TF/MultiTouch/U/<id>/I/electrode/sensitivity
    [0..8191]
 ```
 ```
-TF/MultiTouch/<id>/I/recalibrate
+TF/MultiTouch/U/<id>/I/recalibrate
    [true|false]
 ```
 ```
-TF/MultiTouch/<id>/S/electrode/config
+TF/MultiTouch/U/<id>/S/electrode/config
    [0..8191]
 ```
 ```
-TF/MultiTouch/<id>/S/electrode/sensitivity
+TF/MultiTouch/U/<id>/S/electrode/sensitivity
    [5..201]
 ```
 ```
-TF/MultiTouch/<id>/S/firmware
+TF/MultiTouch/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/MultiTouch/<id>/S/hardware
+TF/MultiTouch/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/MultiTouch/<id>/S/position
+TF/MultiTouch/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### NfcRfid
 ```
-TF/NfcRfid/<id>/E/tag/discovered
+TF/NfcRfid/U/<id>/E/tag/discovered
    - timestamp: [0..9223372036854775807]
      value:
        id: [00..FF]_9
        type: [MifareClassic|Type1|Type2]
 ```
 ```
-TF/NfcRfid/<id>/E/tag/read
+TF/NfcRfid/U/<id>/E/tag/read
    - timestamp: [0..9223372036854775807]
      value:
        id: [00..FF]_9
        value: [00..FF]_*
 ```
 ```
-TF/NfcRfid/<id>/E/tag/vanished
+TF/NfcRfid/U/<id>/E/tag/vanished
    - timestamp: [0..9223372036854775807]
      value:
        id: [00..FF]_9
        type: [MifareClassic|Type1|Type2]
 ```
 ```
-TF/NfcRfid/<id>/E/tag/written
+TF/NfcRfid/U/<id>/E/tag/written
    - timestamp: [0..9223372036854775807]
      value:
        id: [00..FF]_9
@@ -2959,179 +2958,179 @@ TF/NfcRfid/<id>/E/tag/written
        value: [00..FF]_*
 ```
 ```
-TF/NfcRfid/<id>/I/read
+TF/NfcRfid/U/<id>/I/read
    [00..FF]_9
 ```
 ```
-TF/NfcRfid/<id>/I/scanning/callbackPeriod
+TF/NfcRfid/U/<id>/I/scanning/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/NfcRfid/<id>/I/write
+TF/NfcRfid/U/<id>/I/write
    id: [00..FF]_9
      value: [00..FF]_*
 ```
 ```
-TF/NfcRfid/<id>/S/firmware
+TF/NfcRfid/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/NfcRfid/<id>/S/hardware
+TF/NfcRfid/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/NfcRfid/<id>/S/position
+TF/NfcRfid/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/NfcRfid/<id>/S/scanning/callbackPeriod
+TF/NfcRfid/U/<id>/S/scanning/callbackPeriod
    [0..9223372036854775807]
 ```
 
 ### PiezoSpeaker
 ```
-TF/PiezoSpeaker/<id>/E/calibrated
+TF/PiezoSpeaker/U/<id>/E/calibrated
    - timestamp: [0..9223372036854775807]
      value: true
 ```
 ```
-TF/PiezoSpeaker/<id>/E/finished
+TF/PiezoSpeaker/U/<id>/E/finished
    - timestamp: [0..9223372036854775807]
      value: true
 ```
 ```
-TF/PiezoSpeaker/<id>/E/started
+TF/PiezoSpeaker/U/<id>/E/started
    - timestamp: [0..9223372036854775807]
      value: true
 ```
 ```
-TF/PiezoSpeaker/<id>/I/beep
+TF/PiezoSpeaker/U/<id>/I/beep
    duration: [0..4294967295]
     frequency: [585..7100]
 ```
 ```
-TF/PiezoSpeaker/<id>/I/calibrate
+TF/PiezoSpeaker/U/<id>/I/calibrate
    [true|false]
 ```
 ```
-TF/PiezoSpeaker/<id>/I/morse
+TF/PiezoSpeaker/U/<id>/I/morse
    string: [.|-| |]_60
     frequency: [585..7100]
 ```
 ```
-TF/PiezoSpeaker/<id>/S/firmware
+TF/PiezoSpeaker/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/PiezoSpeaker/<id>/S/hardware
+TF/PiezoSpeaker/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/PiezoSpeaker/<id>/S/position
+TF/PiezoSpeaker/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### PTC
 ```
-TF/PTC/<id>/E/resistance
+TF/PTC/U/<id>/E/resistance
    - timestamp: [0..9223372036854775807]
      value: [0..32767]
 ```
 ```
-TF/PTC/<id>/E/resistance/reached
+TF/PTC/U/<id>/E/resistance/reached
    - timestamp: [0..9223372036854775807]
      value: [0..32767]
 ```
 ```
-TF/PTC/<id>/E/temperature
+TF/PTC/U/<id>/E/temperature
    - timestamp: [0..9223372036854775807]
      value: [-24600..84900]
 ```
 ```
-TF/PTC/<id>/E/temperature/reached
+TF/PTC/U/<id>/E/temperature/reached
    - timestamp: [0..9223372036854775807]
      value: [-24600..84900]
 ```
 ```
-TF/PTC/<id>/I/debounce/period
+TF/PTC/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/PTC/<id>/I/noiseReductionFilter
+TF/PTC/U/<id>/I/noiseReductionFilter
    filter: [Hz_50|Hz_60]
 ```
 ```
-TF/PTC/<id>/I/resistance/callbackPeriod
+TF/PTC/U/<id>/I/resistance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/PTC/<id>/I/resistance/threshold
+TF/PTC/U/<id>/I/resistance/threshold
    option: [x|o|i|<|>]
     min: [0..32767]
     max: [0..32767]
 ```
 ```
-TF/PTC/<id>/I/temperature/callbackPeriod
+TF/PTC/U/<id>/I/temperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/PTC/<id>/I/temperature/threshold
+TF/PTC/U/<id>/I/temperature/threshold
    option: [x|o|i|<|>]
     min: [-24600..84900]
     max: [-24600..84900]
 ```
 ```
-TF/PTC/<id>/I/wireMode
+TF/PTC/U/<id>/I/wireMode
    [2|3|4]
 ```
 ```
-TF/PTC/<id>/S/debounce/period
+TF/PTC/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/PTC/<id>/S/firmware
+TF/PTC/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/PTC/<id>/S/hardware
+TF/PTC/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/PTC/<id>/S/noiseReductionFilter
+TF/PTC/U/<id>/S/noiseReductionFilter
    filter: [Hz_50|Hz_60]
 ```
 ```
-TF/PTC/<id>/S/position
+TF/PTC/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/PTC/<id>/S/resistance/callbackPeriod
+TF/PTC/U/<id>/S/resistance/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/PTC/<id>/S/resistance/threshold
+TF/PTC/U/<id>/S/resistance/threshold
    option: [x|o|i|<|>]
     min: [0..32767]
     max: [0..32767]
 ```
 ```
-TF/PTC/<id>/S/temperature/callbackPeriod
+TF/PTC/U/<id>/S/temperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/PTC/<id>/S/temperature/threshold
+TF/PTC/U/<id>/S/temperature/threshold
    option: [x|o|i|<|>]
     min: [-24600..84900]
     max: [-24600..84900]
 ```
 ```
-TF/PTC/<id>/S/wireMode
+TF/PTC/U/<id>/S/wireMode
    [2|3|4]
 ```
 
 ### RealTimeClock
 ```
-TF/RealTimeClock/<id>/E/alarm
+TF/RealTimeClock/U/<id>/E/alarm
    - timestamp: [0..9223372036854775807]
      value:
        year: [2000..2099]
@@ -3144,7 +3143,7 @@ TF/RealTimeClock/<id>/E/alarm
        weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]
 ```
 ```
-TF/RealTimeClock/<id>/E/dateTime
+TF/RealTimeClock/U/<id>/E/dateTime
    - timestamp: [0..9223372036854775807]
      value:
        year: [2000..2099]
@@ -3157,7 +3156,7 @@ TF/RealTimeClock/<id>/E/dateTime
        weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]
 ```
 ```
-TF/RealTimeClock/<id>/I/alarm
+TF/RealTimeClock/U/<id>/I/alarm
    month: [-1|1..12]
     day: [-1|1..31]
     hour: [-1|0..23]
@@ -3167,11 +3166,11 @@ TF/RealTimeClock/<id>/I/alarm
     interval:[-1|0..2147483647]
 ```
 ```
-TF/RealTimeClock/<id>/I/dateTime/callbackPeriod
+TF/RealTimeClock/U/<id>/I/dateTime/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/RealTimeClock/<id>/I/dateTime/set
+TF/RealTimeClock/U/<id>/I/dateTime/set
    year: [2000..2099]
     month: [1..12]
     day:b[1..31]
@@ -3182,11 +3181,11 @@ TF/RealTimeClock/<id>/I/dateTime/set
     weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]
 ```
 ```
-TF/RealTimeClock/<id>/I/offset
+TF/RealTimeClock/U/<id>/I/offset
    [-128..127]
 ```
 ```
-TF/RealTimeClock/<id>/S/alarm
+TF/RealTimeClock/U/<id>/S/alarm
    month: [-1|1..12]
     day: [-1|1..31]
     hour: [-1|0..23]
@@ -3196,7 +3195,7 @@ TF/RealTimeClock/<id>/S/alarm
     interval:[-1|0..2147483647]
 ```
 ```
-TF/RealTimeClock/<id>/S/dateTime
+TF/RealTimeClock/U/<id>/S/dateTime
    year: [2000..2099]
     month: [1..12]
     day: [1..31]
@@ -3207,29 +3206,29 @@ TF/RealTimeClock/<id>/S/dateTime
     weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]
 ```
 ```
-TF/RealTimeClock/<id>/S/dateTime/callbackPeriod
+TF/RealTimeClock/U/<id>/S/dateTime/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/RealTimeClock/<id>/S/firmware
+TF/RealTimeClock/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/RealTimeClock/<id>/S/hardware
+TF/RealTimeClock/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/RealTimeClock/<id>/S/offset
+TF/RealTimeClock/U/<id>/S/offset
    [-128..127]
 ```
 ```
-TF/RealTimeClock/<id>/S/position
+TF/RealTimeClock/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### RemoteSwitch
 ```
-TF/RemoteSwitch/<id>/E/switchingDone
+TF/RemoteSwitch/U/<id>/E/switchingDone
    - timestamp: [0..9223372036854775807]
      value:
        [houseCode: [0..31]
@@ -3243,198 +3242,198 @@ TF/RemoteSwitch/<id>/E/switchingDone
        dimValue: [0..15]]
 ```
 ```
-TF/RemoteSwitch/<id>/I/dimSocketB
+TF/RemoteSwitch/U/<id>/I/dimSocketB
    address: [0..67108863]
     unit: [0..15]
     dimValue: [0..15]
 ```
 ```
-TF/RemoteSwitch/<id>/I/repeats
+TF/RemoteSwitch/U/<id>/I/repeats
    [0..32767]
 ```
 ```
-TF/RemoteSwitch/<id>/I/switchSocketA
+TF/RemoteSwitch/U/<id>/I/switchSocketA
    houseCode: [0..31]
     receiverCode: [0..31]
     switchingValue: [switchOn|switchOff]
 ```
 ```
-TF/RemoteSwitch/<id>/I/switchSocketB
+TF/RemoteSwitch/U/<id>/I/switchSocketB
    address: [0..67108863]
     unit: [0..15]
     switchingValue: [switchOn|switchOff]
 ```
 ```
-TF/RemoteSwitch/<id>/I/switchSocketC
+TF/RemoteSwitch/U/<id>/I/switchSocketC
    systemCode: ['A'..'P']
     deviceCode: [1..16]
     switchingValue: [switchOn|switchOff]
 ```
 ```
-TF/RemoteSwitch/<id>/S/firmware
+TF/RemoteSwitch/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/RemoteSwitch/<id>/S/hardware
+TF/RemoteSwitch/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/RemoteSwitch/<id>/S/position
+TF/RemoteSwitch/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/RemoteSwitch/<id>/S/repeats
+TF/RemoteSwitch/U/<id>/S/repeats
    [0..32767]
 ```
 
 ### RotaryEncoder
 ```
-TF/RotaryEncoder/<id>/E/count
+TF/RotaryEncoder/U/<id>/E/count
    - timestamp: [0..9223372036854775807]
      value: [0..9000]
 ```
 ```
-TF/RotaryEncoder/<id>/E/count/reached
+TF/RotaryEncoder/U/<id>/E/count/reached
    - timestamp: [0..9223372036854775807]
      value: [-150..150]
 ```
 ```
-TF/RotaryEncoder/<id>/E/count/reset
+TF/RotaryEncoder/U/<id>/E/count/reset
    - timestamp: [0..9223372036854775807]
      value: [-92233720368547758080..9223372036854775807]
 ```
 ```
-TF/RotaryEncoder/<id>/E/pressed
+TF/RotaryEncoder/U/<id>/E/pressed
    - timestamp: [0..9223372036854775807]
      value: true
 ```
 ```
-TF/RotaryEncoder/<id>/E/released
+TF/RotaryEncoder/U/<id>/E/released
    - timestamp: [0..9223372036854775807]
      value: true
 ```
 ```
-TF/RotaryEncoder/<id>/I/count/callbackPeriod
+TF/RotaryEncoder/U/<id>/I/count/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/RotaryEncoder/<id>/I/count/threshold
+TF/RotaryEncoder/U/<id>/I/count/threshold
    option: [x|o|i|<|>]
     min: [-150..150]
     max: [-150..150]
 ```
 ```
-TF/RotaryEncoder/<id>/I/debounce/period
+TF/RotaryEncoder/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/RotaryEncoder/<id>/S/count/callbackPeriod
+TF/RotaryEncoder/U/<id>/S/count/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/RotaryEncoder/<id>/S/count/threshold
+TF/RotaryEncoder/U/<id>/S/count/threshold
    option: [x|o|i|<|>]
     min: [-150..150]
     max: [-150..150]
 ```
 ```
-TF/RotaryEncoder/<id>/S/debounce/period
+TF/RotaryEncoder/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/RotaryEncoder/<id>/S/firmware
+TF/RotaryEncoder/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/RotaryEncoder/<id>/S/hardware
+TF/RotaryEncoder/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/RotaryEncoder/<id>/S/position
+TF/RotaryEncoder/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### RotaryPoti
 ```
-TF/RotaryPoti/<id>/E/analogValue
+TF/RotaryPoti/U/<id>/E/analogValue
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
    
 ```
 ```
-TF/RotaryPoti/<id>/E/analogValue/reached
+TF/RotaryPoti/U/<id>/E/analogValue/reached
    - timestamp: [0..9223372036854775807]
      value: [0..4095]
    
 ```
 ```
-TF/RotaryPoti/<id>/E/position
+TF/RotaryPoti/U/<id>/E/position
    - timestamp: [0..9223372036854775807]
      value: [0..9000]
    
 ```
 ```
-TF/RotaryPoti/<id>/E/position/reached
+TF/RotaryPoti/U/<id>/E/position/reached
    - timestamp: [0..9223372036854775807]
      value: [-150..150]
    
 ```
 ```
-TF/RotaryPoti/<id>/I/analogValue/callbackPeriod
+TF/RotaryPoti/U/<id>/I/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/RotaryPoti/<id>/I/analogValue/threshold
+TF/RotaryPoti/U/<id>/I/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/RotaryPoti/<id>/I/debounce/period
+TF/RotaryPoti/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/RotaryPoti/<id>/I/position/callbackPeriod
+TF/RotaryPoti/U/<id>/I/position/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/RotaryPoti/<id>/I/position/threshold
+TF/RotaryPoti/U/<id>/I/position/threshold
    option: [x|o|i|<|>]
     min: [-150..150]
     max: [-150..150]
 ```
 ```
-TF/RotaryPoti/<id>/S/analogValue/callbackPeriod
+TF/RotaryPoti/U/<id>/S/analogValue/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/RotaryPoti/<id>/S/analogValue/threshold
+TF/RotaryPoti/U/<id>/S/analogValue/threshold
    option: [x|o|i|<|>]
     min: [0..4095]
     max: [0..4095]
 ```
 ```
-TF/RotaryPoti/<id>/S/debounce/period
+TF/RotaryPoti/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/RotaryPoti/<id>/S/firmware
+TF/RotaryPoti/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/RotaryPoti/<id>/S/hardware
+TF/RotaryPoti/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/RotaryPoti/<id>/S/position
+TF/RotaryPoti/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/RotaryPoti/<id>/S/position/callbackPeriod
+TF/RotaryPoti/U/<id>/S/position/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/RotaryPoti/<id>/S/position/threshold
+TF/RotaryPoti/U/<id>/S/position/threshold
    option: [x|o|i|<|>]
     min: [-150..150]
     max: [-150..150]
@@ -3442,42 +3441,42 @@ TF/RotaryPoti/<id>/S/position/threshold
 
 ### SegmentDisplay4x7
 ```
-TF/SegmentDisplay4x7/<id>/E/counterFinished
+TF/SegmentDisplay4x7/U/<id>/E/counterFinished
    - timestamp: [0..9223372036854775807]
      value: true
 ```
 ```
-TF/SegmentDisplay4x7/<id>/E/counterStarted
+TF/SegmentDisplay4x7/U/<id>/E/counterStarted
    - timestamp: [0..9223372036854775807]
      value: true
 ```
 ```
-TF/SegmentDisplay4x7/<id>/I/counter
+TF/SegmentDisplay4x7/U/<id>/I/counter
    from: [-999..9999]
     to: [-999..9999]
     increment: [-999..9999]
     lenght: [0..9223372036854775807]
 ```
 ```
-TF/SegmentDisplay4x7/<id>/I/segments
+TF/SegmentDisplay4x7/U/<id>/I/segments
    bits:[[0..128][0..128][0..128][0..128]]
     brightness: [0..7]
     colon: [true|false]
 ```
 ```
-TF/SegmentDisplay4x7/<id>/S/firmware
+TF/SegmentDisplay4x7/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/SegmentDisplay4x7/<id>/S/hardware
+TF/SegmentDisplay4x7/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/SegmentDisplay4x7/<id>/S/position
+TF/SegmentDisplay4x7/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/SegmentDisplay4x7/<id>/S/segments
+TF/SegmentDisplay4x7/U/<id>/S/segments
    bits:[[0..128][0..128][0..128][0..128]]
     brightness: [0..7]
     colon: [true|false]
@@ -3485,34 +3484,34 @@ TF/SegmentDisplay4x7/<id>/S/segments
 
 ### Servo
 ```
-TF/Servo/<id>/E/positionReached
+TF/Servo/U/<id>/E/positionReached
    - timestamp: [0..9223372036854775807]
      value:
        id: [0..6]
        position: [-32767..32767]
 ```
 ```
-TF/Servo/<id>/E/undervoltage
+TF/Servo/U/<id>/E/undervoltage
    - timestamp: [0..9223372036854775807]
      value: [0..2147483647]
 ```
 ```
-TF/Servo/<id>/E/velocityReached
+TF/Servo/U/<id>/E/velocityReached
    - timestamp: [0..9223372036854775807]
      value:
        id: [0..6]
        value: [0..32767]
 ```
 ```
-TF/Servo/<id>/I/minimumVoltage
+TF/Servo/U/<id>/I/minimumVoltage
    [5000..2147483647]
 ```
 ```
-TF/Servo/<id>/I/outputVoltage
+TF/Servo/U/<id>/I/outputVoltage
    [2000..9000]
 ```
 ```
-TF/Servo/<id>/I/servos
+TF/Servo/U/<id>/I/servos
    --- 
      {- 
      id: [0..6]
@@ -3529,31 +3528,31 @@ TF/Servo/<id>/I/servos
        max: [1..65535]|]}_7
 ```
 ```
-TF/Servo/<id>/I/statusLED
+TF/Servo/U/<id>/I/statusLED
    [true|false]
 ```
 ```
-TF/Servo/<id>/S/firmware
+TF/Servo/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Servo/<id>/S/hardware
+TF/Servo/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Servo/<id>/S/minimumVoltage
+TF/Servo/U/<id>/S/minimumVoltage
    [6..2147483647]
 ```
 ```
-TF/Servo/<id>/S/outputVoltage
+TF/Servo/U/<id>/S/outputVoltage
    [1..20000]
 ```
 ```
-TF/Servo/<id>/S/position
+TF/Servo/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/Servo/<id>/S/servos
+TF/Servo/U/<id>/S/servos
    --- 
      {- 
      id: [0..6]
@@ -3571,91 +3570,91 @@ TF/Servo/<id>/S/servos
        max: [1..65535]]|null]}_7
 ```
 ```
-TF/Servo/<id>/S/statusLED
+TF/Servo/U/<id>/S/statusLED
    [true|false]
 ```
 
 ### SolidState
 ```
-TF/SolidState/<id>/E/monoflopDone
+TF/SolidState/U/<id>/E/monoflopDone
    - timestamp: [0..9223372036854775807]
      value: [true|false]
 ```
 ```
-TF/SolidState/<id>/I/monoflop
+TF/SolidState/U/<id>/I/monoflop
    state: [true|false]
     period: [0..9223372036854775807]
 ```
 ```
-TF/SolidState/<id>/I/state
+TF/SolidState/U/<id>/I/state
    [true|false]
 ```
 ```
-TF/SolidState/<id>/S/firmware
+TF/SolidState/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/SolidState/<id>/S/hardware
+TF/SolidState/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/SolidState/<id>/S/position
+TF/SolidState/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/SolidState/<id>/S/state
+TF/SolidState/U/<id>/S/state
    [true|false]
 ```
 
 ### SoundIntensity
 ```
-TF/SoundIntensity/<id>/E/soundIntensity
+TF/SoundIntensity/U/<id>/E/soundIntensity
    - timestamp: [0..9223372036854775807]
      value: [0..10000]
    
 ```
 ```
-TF/SoundIntensity/<id>/E/soundIntensity/reached
+TF/SoundIntensity/U/<id>/E/soundIntensity/reached
    - timestamp: [0..9223372036854775807]
      value: [0..10000]
    
 ```
 ```
-TF/SoundIntensity/<id>/I/debounce/period
+TF/SoundIntensity/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/SoundIntensity/<id>/I/soundIntensity/callbackPeriod
+TF/SoundIntensity/U/<id>/I/soundIntensity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/SoundIntensity/<id>/I/soundIntensity/threshold
+TF/SoundIntensity/U/<id>/I/soundIntensity/threshold
    option: [x|o|i|<|>]
     min: [0..10000]
     max: [0..10000]
 ```
 ```
-TF/SoundIntensity/<id>/S/debounce/period
+TF/SoundIntensity/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/SoundIntensity/<id>/S/firmware
+TF/SoundIntensity/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/SoundIntensity/<id>/S/hardware
+TF/SoundIntensity/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/SoundIntensity/<id>/S/position
+TF/SoundIntensity/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/SoundIntensity/<id>/S/soundIntensity/callbackPeriod
+TF/SoundIntensity/U/<id>/S/soundIntensity/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/SoundIntensity/<id>/S/soundIntensity/threshold
+TF/SoundIntensity/U/<id>/S/soundIntensity/threshold
    option: [x|o|i|<|>]
     min: [0..10000]
     max: [0..10000]
@@ -3663,59 +3662,59 @@ TF/SoundIntensity/<id>/S/soundIntensity/threshold
 
 ### Temperature
 ```
-TF/Temperature/<id>/E/temperature
+TF/Temperature/U/<id>/E/temperature
    - timestamp: [0..9223372036854775807]
      value: [-2500..8500]
 ```
 ```
-TF/Temperature/<id>/E/temperature/reached
+TF/Temperature/U/<id>/E/temperature/reached
    - timestamp: [0..9223372036854775807]
      value: [-2500..8500]
 ```
 ```
-TF/Temperature/<id>/I/debounce/period
+TF/Temperature/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Temperature/<id>/I/mode
+TF/Temperature/U/<id>/I/mode
    mode:[Fast|Slow]
 ```
 ```
-TF/Temperature/<id>/I/temperature/callbackPeriod
+TF/Temperature/U/<id>/I/temperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Temperature/<id>/I/temperature/threshold
+TF/Temperature/U/<id>/I/temperature/threshold
    option: [x|o|i|<|>]
     min: [-2500..8500]
     max: [-2500..8500]
 ```
 ```
-TF/Temperature/<id>/S/debounce/period
+TF/Temperature/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Temperature/<id>/S/firmware
+TF/Temperature/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Temperature/<id>/S/hardware
+TF/Temperature/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Temperature/<id>/S/mode
+TF/Temperature/U/<id>/S/mode
    mode:[Slow|Fast]
 ```
 ```
-TF/Temperature/<id>/S/position
+TF/Temperature/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/Temperature/<id>/S/temperature/callbackPeriod
+TF/Temperature/U/<id>/S/temperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Temperature/<id>/S/temperature/threshold
+TF/Temperature/U/<id>/S/temperature/threshold
    option: [x|o|i|<|>]
     min: [-2500..8500]
     max: [-2500..8500]
@@ -3723,145 +3722,145 @@ TF/Temperature/<id>/S/temperature/threshold
 
 ### TemperatureIR
 ```
-TF/TemperatureIR/<id>/E/ambientTemperature
+TF/TemperatureIR/U/<id>/E/ambientTemperature
    - timestamp: [0..9223372036854775807]
      value: [-400..1250]
 ```
 ```
-TF/TemperatureIR/<id>/E/ambientTemperature/reached
+TF/TemperatureIR/U/<id>/E/ambientTemperature/reached
    - timestamp: [0..9223372036854775807]
      value: [-400..1250]
 ```
 ```
-TF/TemperatureIR/<id>/E/objectTemperature
+TF/TemperatureIR/U/<id>/E/objectTemperature
    - timestamp: [0..9223372036854775807]
      value: [-700..3800]
 ```
 ```
-TF/TemperatureIR/<id>/E/objectTemperature/reached
+TF/TemperatureIR/U/<id>/E/objectTemperature/reached
    - timestamp: [0..9223372036854775807]
      value: [-700..3800]
 ```
 ```
-TF/TemperatureIR/<id>/I/ambientTemperature/callbackPeriod
+TF/TemperatureIR/U/<id>/I/ambientTemperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/TemperatureIR/<id>/I/ambientTemperature/threshold
+TF/TemperatureIR/U/<id>/I/ambientTemperature/threshold
    option: [x|o|i|<|>]
     min: [-400..1250]
     max: [-400..1250]
 ```
 ```
-TF/TemperatureIR/<id>/I/debounce/period
+TF/TemperatureIR/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/TemperatureIR/<id>/I/objectTemperature/callbackPeriod
+TF/TemperatureIR/U/<id>/I/objectTemperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/TemperatureIR/<id>/I/objectTemperature/threshold
+TF/TemperatureIR/U/<id>/I/objectTemperature/threshold
    option: [x|o|i|<|>]
     min: [-700..3800]
     max: [-700..3800]
 ```
 ```
-TF/TemperatureIR/<id>/S/ambientTemperature/callbackPeriod
+TF/TemperatureIR/U/<id>/S/ambientTemperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/TemperatureIR/<id>/S/ambientTemperature/threshold
+TF/TemperatureIR/U/<id>/S/ambientTemperature/threshold
    option: [x|o|i|<|>]
     min: [-400..1250]
     max: [-400..1250]
 ```
 ```
-TF/TemperatureIR/<id>/S/debounce/period
+TF/TemperatureIR/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/TemperatureIR/<id>/S/firmware
+TF/TemperatureIR/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/TemperatureIR/<id>/S/hardware
+TF/TemperatureIR/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/TemperatureIR/<id>/S/objectTemperature/callbackPeriod
+TF/TemperatureIR/U/<id>/S/objectTemperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/TemperatureIR/<id>/S/objectTemperature/threshold
+TF/TemperatureIR/U/<id>/S/objectTemperature/threshold
    option: [x|o|i|<|>]
     min: [-700..3800]
     max: [-700..3800]
 ```
 ```
-TF/TemperatureIR/<id>/S/position
+TF/TemperatureIR/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### ThermoCouple
 ```
-TF/ThermoCouple/<id>/E/temperature
+TF/ThermoCouple/U/<id>/E/temperature
    - timestamp: [0..9223372036854775807]
      value: [-21000..180000]
 ```
 ```
-TF/ThermoCouple/<id>/E/temperature/reached
+TF/ThermoCouple/U/<id>/E/temperature/reached
    - timestamp: [0..9223372036854775807]
      value: [-21000..180000]
 ```
 ```
-TF/ThermoCouple/<id>/I/configuration
+TF/ThermoCouple/U/<id>/I/configuration
    averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]
     type: [B|E|J|K|N|R|S|T|G8|G32]
     filter: [Hz_50|Hz_60]
 ```
 ```
-TF/ThermoCouple/<id>/I/debounce/period
+TF/ThermoCouple/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/ThermoCouple/<id>/I/temperature/callbackPeriod
+TF/ThermoCouple/U/<id>/I/temperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/ThermoCouple/<id>/I/temperature/threshold
+TF/ThermoCouple/U/<id>/I/temperature/threshold
    option: [x|o|i|<|>]
     min: [-21000..180000]
     max: [-21000..180000]
 ```
 ```
-TF/ThermoCouple/<id>/S/configuration
+TF/ThermoCouple/U/<id>/S/configuration
    averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]
     type: [B|E|J|K|N|R|S|T|G8|G32]
     filter: [Hz_50|Hz_60]
 ```
 ```
-TF/ThermoCouple/<id>/S/debounce/period
+TF/ThermoCouple/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/ThermoCouple/<id>/S/firmware
+TF/ThermoCouple/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/ThermoCouple/<id>/S/hardware
+TF/ThermoCouple/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/ThermoCouple/<id>/S/position
+TF/ThermoCouple/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/ThermoCouple/<id>/S/temperature/callbackPeriod
+TF/ThermoCouple/U/<id>/S/temperature/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/ThermoCouple/<id>/S/temperature/threshold
+TF/ThermoCouple/U/<id>/S/temperature/threshold
    option: [x|o|i|<|>]
     min: [-21000..180000]
     max: [-21000..180000]
@@ -3869,70 +3868,70 @@ TF/ThermoCouple/<id>/S/temperature/threshold
 
 ### Tilt
 ```
-TF/Tilt/<id>/E/tiltState
+TF/Tilt/U/<id>/E/tiltState
    - timestamp: [0..9223372036854775807]
      value:  [0..2]
 ```
 ```
-TF/Tilt/<id>/S/firmware
+TF/Tilt/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Tilt/<id>/S/hardware
+TF/Tilt/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Tilt/<id>/S/position
+TF/Tilt/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 
 ### UVLight
 ```
-TF/UVLight/<id>/E/uvLight
+TF/UVLight/U/<id>/E/uvLight
    - timestamp: [0..9223372036854775807]
      value: [0..328000]
 ```
 ```
-TF/UVLight/<id>/E/uvLight/reached
+TF/UVLight/U/<id>/E/uvLight/reached
    - timestamp: [0..9223372036854775807]
      value: [0..328000]
 ```
 ```
-TF/UVLight/<id>/I/debounce/period
+TF/UVLight/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/UVLight/<id>/I/uvLight/callbackPeriod
+TF/UVLight/U/<id>/I/uvLight/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/UVLight/<id>/I/uvLight/threshold
+TF/UVLight/U/<id>/I/uvLight/threshold
    option: [x|o|i|<|>]
     min: [0..328000]
     max: [0..328000]
 ```
 ```
-TF/UVLight/<id>/S/debounce/period
+TF/UVLight/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/UVLight/<id>/S/firmware
+TF/UVLight/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/UVLight/<id>/S/hardware
+TF/UVLight/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/UVLight/<id>/S/position
+TF/UVLight/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/UVLight/<id>/S/uvLight/callbackPeriod
+TF/UVLight/U/<id>/S/uvLight/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/UVLight/<id>/S/uvLight/threshold
+TF/UVLight/U/<id>/S/uvLight/threshold
    option: [x|o|i|<|>]
     min: [0..328000]
     max: [0..328000]
@@ -3940,136 +3939,137 @@ TF/UVLight/<id>/S/uvLight/threshold
 
 ### VoltageCurrent
 ```
-TF/VoltageCurrent/<id>/E/current
+TF/VoltageCurrent/U/<id>/E/current
    - timestamp: [0..9223372036854775807]
      value: [0..36000]
 ```
 ```
-TF/VoltageCurrent/<id>/E/current/reached
+TF/VoltageCurrent/U/<id>/E/current/reached
    - timestamp: [0..9223372036854775807]
      value: [0..36000]
 ```
 ```
-TF/VoltageCurrent/<id>/E/power
+TF/VoltageCurrent/U/<id>/E/power
    - timestamp: [0..9223372036854775807]
      value: [0..720000]
 ```
 ```
-TF/VoltageCurrent/<id>/E/power/reached
+TF/VoltageCurrent/U/<id>/E/power/reached
    - timestamp: [0..9223372036854775807]
      value: [0..720000]
 ```
 ```
-TF/VoltageCurrent/<id>/E/voltage
+TF/VoltageCurrent/U/<id>/E/voltage
    - timestamp: [0..9223372036854775807]
      value: [-50001..50001]
 ```
 ```
-TF/VoltageCurrent/<id>/E/voltage/reached
+TF/VoltageCurrent/U/<id>/E/voltage/reached
    - timestamp: [0..9223372036854775807]
      value: [-50001..50001]
 ```
 ```
-TF/VoltageCurrent/<id>/I/calibration
+TF/VoltageCurrent/U/<id>/I/calibration
    gainMultiplier: [1..2147483647]
     gainDivisor: [1..2147483647]
 ```
 ```
-TF/VoltageCurrent/<id>/I/configuration
+TF/VoltageCurrent/U/<id>/I/configuration
    averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]
     voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]
     currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]
    
 ```
 ```
-TF/VoltageCurrent/<id>/I/current/callbackPeriod
+TF/VoltageCurrent/U/<id>/I/current/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/VoltageCurrent/<id>/I/current/threshold
+TF/VoltageCurrent/U/<id>/I/current/threshold
    option: [x|o|i|<|>]
     min: [0..36000]
     max: [0..36000]
 ```
 ```
-TF/VoltageCurrent/<id>/I/debounce/period
+TF/VoltageCurrent/U/<id>/I/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/VoltageCurrent/<id>/I/power/callbackPeriod
+TF/VoltageCurrent/U/<id>/I/power/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/VoltageCurrent/<id>/I/power/threshold
+TF/VoltageCurrent/U/<id>/I/power/threshold
    option: [x|o|i|<|>]
     min: [0..720000]
     max: [0..720000]
 ```
 ```
-TF/VoltageCurrent/<id>/I/voltage/callbackPeriod
+TF/VoltageCurrent/U/<id>/I/voltage/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/VoltageCurrent/<id>/I/voltage/threshold
+TF/VoltageCurrent/U/<id>/I/voltage/threshold
    option: [x|o|i|<|>]
     min: [-50001..50001]
     max: [-50001..50001]
 ```
 ```
-TF/VoltageCurrent/<id>/S/calibration
+TF/VoltageCurrent/U/<id>/S/calibration
    gainMultiplier: [1..2147483647]
     gainDivisor: [1..2147483647]
 ```
 ```
-TF/VoltageCurrent/<id>/S/configuration
+TF/VoltageCurrent/U/<id>/S/configuration
    averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]
     voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]
     currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]
    
 ```
 ```
-TF/VoltageCurrent/<id>/S/current/callbackPeriod
+TF/VoltageCurrent/U/<id>/S/current/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/VoltageCurrent/<id>/S/current/threshold
+TF/VoltageCurrent/U/<id>/S/current/threshold
    option: [x|o|i|<|>]
     min: [0..36000]
     max: [0..36000]
 ```
 ```
-TF/VoltageCurrent/<id>/S/debounce/period
+TF/VoltageCurrent/U/<id>/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/VoltageCurrent/<id>/S/firmware
+TF/VoltageCurrent/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/VoltageCurrent/<id>/S/hardware
+TF/VoltageCurrent/U/<id>/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/VoltageCurrent/<id>/S/position
+TF/VoltageCurrent/U/<id>/S/position
    [0|1|2|3|4|5|6|7|8|a|b|c|d]
 ```
 ```
-TF/VoltageCurrent/<id>/S/power/callbackPeriod
+TF/VoltageCurrent/U/<id>/S/power/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/VoltageCurrent/<id>/S/power/threshold
+TF/VoltageCurrent/U/<id>/S/power/threshold
    option: [x|o|i|<|>]
     min: [0..720000]
     max: [0..720000]
 ```
 ```
-TF/VoltageCurrent/<id>/S/voltage/callbackPeriod
+TF/VoltageCurrent/U/<id>/S/voltage/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/VoltageCurrent/<id>/S/voltage/threshold
+TF/VoltageCurrent/U/<id>/S/voltage/threshold
    option: [x|o|i|<|>]
     min: [0..50001]
     max: [-50001..50001]
 ```
+
