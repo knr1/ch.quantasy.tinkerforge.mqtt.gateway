@@ -143,7 +143,9 @@ import ch.quantasy.tinkerforge.factory.TinkerforgeStackFactory;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -193,6 +195,9 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
         TinkerforgeStack stack = stackFactory.removeStack(address);
         if (stack != null) {
             stack.disconnect();
+            for (TinkerforgeDevice device : stack.getDevices()) {
+                this.managedServices.remove(device).quit();
+            }
             for (TinkerforgeFactoryListener listener : listeners) {
                 listener.stackRemoved(stack);
             }
@@ -217,204 +222,204 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
         return stackFactory;
     }
 
-    private Set<TinkerforgeDevice> managedDevices = new HashSet<>();
-    private Set<AbstractService> services = new HashSet<>();
+    //private Set<TinkerforgeDevice> managedDevices = new HashSet<>();
+    //private Set<AbstractService> services = new HashSet<>();
+    private Map<TinkerforgeDevice, AbstractService> managedServices = new HashMap<>();
 
     @Override
     public void connected(TinkerforgeDevice tinkerforgeDevice) {
-        if (managedDevices.contains(tinkerforgeDevice)) {
+        if (managedServices.containsKey(tinkerforgeDevice)) {
             return;
         }
-        managedDevices.add(tinkerforgeDevice);
         try {
 
             if (tinkerforgeDevice instanceof HumidityDevice) {
                 HumidityService service = new HumidityService((HumidityDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof LEDStripDevice) {
                 LEDStripService service = new LEDStripService((LEDStripDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof MotionDetectorDevice) {
                 MotionDetectorService service = new MotionDetectorService((MotionDetectorDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof MoistureDevice) {
                 MoistureService service = new MoistureService((MoistureDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof AmbientLightDevice) {
                 AmbientLightService service = new AmbientLightService((AmbientLightDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof AmbientLightV2Device) {
                 AmbientLightV2Service service = new AmbientLightV2Service((AmbientLightV2Device) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof RemoteSwitchDevice) {
                 RemoteSwitchService service = new RemoteSwitchService((RemoteSwitchDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof DualRelayDevice) {
                 DualRelayService service = new DualRelayService((DualRelayDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof BarometerDevice) {
                 BarometerService service = new BarometerService((BarometerDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof DualButtonDevice) {
                 DualButtonService service = new DualButtonService((DualButtonDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof CO2Device) {
                 CO2Service service = new CO2Service((CO2Device) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof DCDevice) {
                 DCService service = new DCService((DCDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof DistanceUSDevice) {
                 DistanceUSService service = new DistanceUSService((DistanceUSDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof TemperatureIRDevice) {
                 TemperatureIRService service = new TemperatureIRService((TemperatureIRDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof UVLightDevice) {
                 UVLightService service = new UVLightService((UVLightDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof DistanceIRDevice) {
                 DistanceIRService service = new DistanceIRService((DistanceIRDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof DustDetectorDevice) {
                 DustDetectorService service = new DustDetectorService((DustDetectorDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof TiltDevice) {
                 TiltService service = new TiltService((TiltDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof AccelerometerDevice) {
                 AccelerometerService service = new AccelerometerService((AccelerometerDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof ColorDevice) {
                 ColorService service = new ColorService((ColorDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof Segment4x7Device) {
                 Segment4x7Service service = new Segment4x7Service((Segment4x7Device) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof LaserRangeFinderDevice) {
                 LaserRangeFinderService service = new LaserRangeFinderService((LaserRangeFinderDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof HallEffectDevice) {
                 HallEffectService service = new HallEffectService((HallEffectDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof JoystickDevice) {
                 JoystickService service = new JoystickService((JoystickDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof LinearPotiDevice) {
                 LinearPotiService service = new LinearPotiService((LinearPotiDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof RotaryPotiDevice) {
                 RotaryPotiService service = new RotaryPotiService((RotaryPotiDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof RotaryEncoderDevice) {
                 RotaryEncoderService service = new RotaryEncoderService((RotaryEncoderDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof SolidStateRelayDevice) {
                 SolidStateRelayService service = new SolidStateRelayService((SolidStateRelayDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof MultiTouchDevice) {
                 MultiTouchService service = new MultiTouchService((MultiTouchDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof AnalogInV2Device) {
                 AnalogInV2Service service = new AnalogInV2Service((AnalogInV2Device) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof AnalogOutV2Device) {
                 AnalogOutV2Service service = new AnalogOutV2Service((AnalogOutV2Device) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof PiezoSpeakerDevice) {
                 PiezoSpeakerService service = new PiezoSpeakerService((PiezoSpeakerDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof SoundIntensityDevice) {
                 SoundIntensityService service = new SoundIntensityService((SoundIntensityDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof IMUV2Device) {
                 IMUV2Service service = new IMUV2Service((IMUV2Device) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof IMUDevice) {
                 IMUService service = new IMUService((IMUDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof LineDevice) {
                 LineService service = new LineService((LineDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof LCD20x4Device) {
                 LCD20x4Service service = new LCD20x4Service((LCD20x4Device) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof LCD16x2Device) {
                 LCD16x2Service service = new LCD16x2Service((LCD16x2Device) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof TemperatureDevice) {
                 TemperatureService service = new TemperatureService((TemperatureDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof LoadCellDevice) {
                 LoadCellService service = new LoadCellService((LoadCellDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof RealTimeClockDevice) {
                 RealTimeClockService service = new RealTimeClockService((RealTimeClockDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof ThermoCoupleDevice) {
                 ThermoCoupleService service = new ThermoCoupleService((ThermoCoupleDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof GPSv2Device) {
                 GPSv2Service service = new GPSv2Service((GPSv2Device) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof NFCRFIDDevice) {
                 NFCService service = new NFCService((NFCRFIDDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof MasterDevice) {
                 MasterService service = new MasterService((MasterDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof VoltageCurrentDevice) {
                 VoltageCurrentService service = new VoltageCurrentService((VoltageCurrentDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
             if (tinkerforgeDevice instanceof ServoDevice) {
                 ServoService service = new ServoService((ServoDevice) tinkerforgeDevice, mqttURI);
-                services.add(service);
+                managedServices.put(tinkerforgeDevice, service);
             }
 
         } catch (MqttException ex) {

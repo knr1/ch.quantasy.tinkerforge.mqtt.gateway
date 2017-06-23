@@ -212,6 +212,9 @@ public class TinkerforgeStack implements EnumerateListener {
     }
 
     protected void disconnected() {
+        if (timer != null) {
+            timer.cancel();
+        }
         this.ipConnection.removeEnumerateListener(this);
         for (TinkerforgeDevice device : getDevices()) {
             deviceDisconnected(device);
@@ -220,9 +223,7 @@ public class TinkerforgeStack implements EnumerateListener {
             listener.disconnected(TinkerforgeStack.this);
         }
         this.ipConnection = null;
-        if (timer != null) {
-            timer.cancel();
-        }
+
     }
 
     @Override
@@ -295,8 +296,8 @@ public class TinkerforgeStack implements EnumerateListener {
                 return false; //Device not (yet)supported
             }
             final Device device = (Device) tinkerforgeDeviceClass.deviceClass
-                    .getDeclaredConstructor(String.class, IPConnection.class).newInstance(uid,
-                    TinkerforgeStack.this.ipConnection);
+                    .getDeclaredConstructor(String.class, IPConnection.class).newInstance(uid,connection);
+                    //TinkerforgeStack.this.ipConnection);
 
             if (tinkerforgeDevice != null) {
                 tinkerforgeDevice.updateDevice(device);

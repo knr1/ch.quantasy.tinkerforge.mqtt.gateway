@@ -78,7 +78,7 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     }
 
     public ManagerService(TinkerForgeManager manager, URI mqttURI) throws MqttException {
-        super(mqttURI, "TinkerforgeStackManager", new ManagerServiceContract(computerName,"Manager"));
+        super(mqttURI, "TinkerforgeStackManager", new ManagerServiceContract(computerName));
         this.manager = manager;
         manager.addListener(this);
         updateStatus();
@@ -185,6 +185,6 @@ public class ManagerService extends AbstractService<ManagerServiceContract> impl
     @Override
     public void disconnected(TinkerforgeDevice device) {
         String topic = getContract().STATUS_DEVICE + "/" + device.getStack().getStackAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
-        publishStatus(topic, false + "disconnected-device");
+        publishStatus(topic, false);
     }
 }

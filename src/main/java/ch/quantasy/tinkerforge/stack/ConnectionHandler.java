@@ -46,7 +46,6 @@ import com.tinkerforge.AlreadyConnectedException;
 import com.tinkerforge.Device;
 import com.tinkerforge.IPConnection;
 import com.tinkerforge.IPConnectionBase;
-import com.tinkerforge.NetworkException;
 import com.tinkerforge.NotConnectedException;
 import java.io.IOException;
 import java.net.Socket;
@@ -145,6 +144,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
                         tmpSocket.close();
                         // End of Patch!
                         ipConnection = new IPConnection();
+                        ipConnection.setAutoReconnect(true);
                         Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Got a new IP-Connection");
                         ipConnection.addConnectedListener(ConnectionHandler.this);
                         ipConnection.addDisconnectedListener(ConnectionHandler.this);
