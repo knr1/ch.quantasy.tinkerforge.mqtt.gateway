@@ -48,8 +48,6 @@ import com.tinkerforge.BrickMaster;
 
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,9 +56,6 @@ import java.util.logging.Logger;
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
 public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallback> {
-
-    private Timer timer;
-    private TimerTask watchdog;
 
     private Long debouncePeriod;
     private Long currentCallbackPeriod;

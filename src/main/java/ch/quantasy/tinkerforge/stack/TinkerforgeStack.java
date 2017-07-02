@@ -56,6 +56,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -80,7 +85,7 @@ public class TinkerforgeStack implements EnumerateListener {
 
     private final Map<String, TinkerforgeDevice> deviceMap;
 
-    Timer timer;
+    private final ScheduledExecutorService timerService;
 
     /**
      * Creates a representation of a Tinkerforge-Stack. Either at 'localhost' or
@@ -98,6 +103,13 @@ public class TinkerforgeStack implements EnumerateListener {
         this.tinkerforgeDeviceListeners = new HashSet<>();
         this.deviceMap = new HashMap<>();
         this.stackAddress = stackAddress;
+        this.timerService = Executors.newScheduledThreadPool(1, new ThreadFactory() {
+            public Thread newThread(Runnable r) {
+                Thread t = Executors.defaultThreadFactory().newThread(r);
+                t.setDaemon(true);
+                return t;
+            }
+        });
 
     }
 
@@ -194,6 +206,7 @@ public class TinkerforgeStack implements EnumerateListener {
     public synchronized IPConnection getIpConnection() {
         return ipConnection;
     }
+    private Future timerFuture;
 
     protected synchronized void connected(IPConnection ipConnection) throws Exception {
         System.out.println("Connected at TinkerforgeStack");
@@ -203,17 +216,17 @@ public class TinkerforgeStack implements EnumerateListener {
         for (TinkerforgeStackListener listener : tinkerforgeStackListeners) {
             listener.connected(TinkerforgeStack.this);
         }
-        if (timer != null) {
-            timer.cancel();
+        if (timerFuture != null) {
+            timerFuture.cancel(false);
         }
-        timer = new Timer();
-        this.timer.schedule(new WatchDog(1), 10000, 10000);
+        timerFuture = this.timerService.scheduleAtFixedRate(new WatchDog(1), 10000, 10000, TimeUnit.MILLISECONDS);
 
     }
 
     protected void disconnected() {
-        if (timer != null) {
-            timer.cancel();
+        if (timerFuture != null) {
+            timerFuture.cancel(false);
+            timerFuture = null;
         }
         this.ipConnection.removeEnumerateListener(this);
         for (TinkerforgeDevice device : getDevices()) {
@@ -296,8 +309,8 @@ public class TinkerforgeStack implements EnumerateListener {
                 return false; //Device not (yet)supported
             }
             final Device device = (Device) tinkerforgeDeviceClass.deviceClass
-                    .getDeclaredConstructor(String.class, IPConnection.class).newInstance(uid,connection);
-                    //TinkerforgeStack.this.ipConnection);
+                    .getDeclaredConstructor(String.class, IPConnection.class).newInstance(uid, connection);
+            //TinkerforgeStack.this.ipConnection);
 
             if (tinkerforgeDevice != null) {
                 tinkerforgeDevice.updateDevice(device);
@@ -349,7 +362,7 @@ public class TinkerforgeStack implements EnumerateListener {
      * the IP-Connection must be 'dead'. Hence disconnect the stack and connect
      * it again.
      */
-    class WatchDog extends TimerTask {
+    class WatchDog implements Runnable {
 
         private int failCount;
         private final int maxFailCount;
@@ -367,7 +380,7 @@ public class TinkerforgeStack implements EnumerateListener {
                 Thread.sleep(5000);
                 if (count > 0) {
                     ipConnectionHandler.reconnect();
-                    this.cancel();
+                    timerFuture.cancel(false);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);

@@ -50,8 +50,11 @@ import com.tinkerforge.NotConnectedException;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -65,12 +68,20 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
     private long connectionTimeoutInMilliseconds;
 
     IPConnection ipConnection;
-    private Timer timer;
+    private final ScheduledExecutorService timerService;
+
     private Exception actualConnectionException;
 
     public ConnectionHandler(TinkerforgeStack stack) {
         this.connectionTimeoutInMilliseconds = DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS;
         this.stack = stack;
+        this.timerService = Executors.newScheduledThreadPool(1, new ThreadFactory() {
+            public Thread newThread(Runnable r) {
+                Thread t = Executors.defaultThreadFactory().newThread(r);
+                t.setDaemon(true);
+                return t;
+            }
+        });
     }
 
     @Override
@@ -96,10 +107,10 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
     @Override
     public void connected(final short connectReason) {
         try {
-            if (this.timer != null) {
-                this.timer.cancel();
+            if (this.timerFuture != null) {
+                this.timerFuture.cancel(false);
             }
-            this.timer = null;
+            this.timerFuture = null;
             this.stack.connected(ipConnection);
         } catch (final Exception ex) {
             // Well, this should not happen?!
@@ -115,13 +126,14 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
      * @throws UnknownHostException
      * @throws IOException
      */
+    private Future timerFuture;
+
     public void connect() {
         Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Connection requested...");
-        if (this.timer != null) {
+        if (this.timerFuture != null) {
             return;
         }
-        this.timer = new Timer(true);
-        this.timer.schedule(new TimerTask() {
+        this.timerService.scheduleAtFixedRate(new Runnable() {
 
             private int count;
 
@@ -150,7 +162,8 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
                         ipConnection.addDisconnectedListener(ConnectionHandler.this);
                         ipConnection.connect(stack.getStackAddress().getHostName(), stack.getStackAddress().getPort());
                         Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "New IP-Connection connected");
-                        this.cancel();
+                        timerFuture.cancel(false);
+                        timerFuture=null;
 
                     } catch (final AlreadyConnectedException e) {
                         // Oh, great, that is what we want!
@@ -168,7 +181,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
                     Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
-        }, 0, getConnectionTimeoutInMilliseconds());
+        }, 0, getConnectionTimeoutInMilliseconds(), TimeUnit.MILLISECONDS);
 
     }
 
@@ -189,9 +202,9 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
      * still running, it is canceled.
      */
     public void disconnect() {
-        if (this.timer != null) {
-            this.timer.cancel();
-            this.timer = null;
+        if (this.timerFuture != null) {
+            this.timerFuture.cancel(false);
+            this.timerFuture = null;
         }
         try {
             Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "IP will be disconnected");
