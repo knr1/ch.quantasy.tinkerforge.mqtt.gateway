@@ -420,7 +420,7 @@ Message: - line: 0
 ### Manager
 This logical service allows a user to add or remove a true tinkerforge stack. As soon as a stack is connected, the service takes care of the 
 connected Bricks and Bricklets.
-```
+
 TF/Manager/U/<id>/E/device/connected
    - timestamp: [0..9223372036854775807]
      value:
@@ -449,14 +449,13 @@ TF/Manager/U/<id>/E/stack/address/removed
        port: [0..4223..65536]
 ```
 ```
-TF/Manager/U/<id>/I/stack/address/add
-   hostName: <String>
-    port: [0..4223..65536]
-```
-```
-TF/Manager/U/<id>/I/stack/address/remove
-   hostName: <String>
-    port: [0..4223..65536]
+TF/Manager/U/<id>/I
+   address: 
+     hostName: String <min: 1 max: 255>
+     hostName: String <regEx: \w+(\.\w+){0,3}>
+     port: Number <from: 1024 to: 65535>
+   connect: Boolean <true,false> 
+   
 ```
 ```
 TF/Manager/U/<id>/S/stack/address/<address>/connected
@@ -520,40 +519,26 @@ TF/IMU/U/<id>/E/quaternion
         z: [-32768..32767]
 ```
 ```
-TF/IMU/U/<id>/I/LEDs/callbackPeriod
-   true|false]
-```
-```
-TF/IMU/U/<id>/I/acceleration/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMU/U/<id>/I/allData/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMU/U/<id>/I/angularVelocity/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMU/U/<id>/I/magneticField/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMU/U/<id>/I/orientation/calculation
-   true|false]
-```
-```
-TF/IMU/U/<id>/I/orientation/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMU/U/<id>/I/quaternion/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMU/U/<id>/I/statusLED/callbackPeriod
-   true|false]
+TF/IMU/U/<id>/I
+   accelerationCallbackPeriod: null
+   accelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   allDataCallbackPeriod: null
+   allDataCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   angularVelocityCallbackPeriod: null
+   angularVelocityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   leds: null
+   leds: Boolean <true,false> 
+   magneticFieldCallbackPeriod: null
+   magneticFieldCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   orientationCalculation: null
+   orientationCalculation: Boolean <true,false> 
+   orientationCallbackPeriod: null
+   orientationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   quaternionCallbackPeriod: null
+   quaternionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   statusLED: null
+   statusLED: Boolean <true,false> 
+   
 ```
 ```
 TF/IMU/U/<id>/S/LEDs/callbackPeriod
@@ -593,7 +578,7 @@ TF/IMU/U/<id>/S/orientation/callbackPeriod
 ```
 ```
 TF/IMU/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/IMU/U/<id>/S/quaternion/callbackPeriod
@@ -682,52 +667,30 @@ TF/IMUV2/U/<id>/E/temperature
      value: [-128..127]
 ```
 ```
-TF/IMUV2/U/<id>/I/LEDs/callbackPeriod
-   true|false]
-```
-```
-TF/IMUV2/U/<id>/I/acceleration/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMUV2/U/<id>/I/allData/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMUV2/U/<id>/I/angularVelocity/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMUV2/U/<id>/I/gravityVector/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMUV2/U/<id>/I/linearAcceleration/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMUV2/U/<id>/I/magneticField/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMUV2/U/<id>/I/orientation/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMUV2/U/<id>/I/quaternion/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/IMUV2/U/<id>/I/sensorFusionMode
-   [0..2]
-```
-```
-TF/IMUV2/U/<id>/I/statusLED
-   true|false]
-```
-```
-TF/IMUV2/U/<id>/I/temperature/callbackPeriod
-   [0..9223372036854775807]
+TF/IMUV2/U/<id>/I
+   accelerationCallbackPeriod: null
+   accelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   allDataCallbackPeriod: null
+   allDataCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   angularVelocityCallbackPeriod: null
+   angularVelocityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   gravityVectorCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   leds: null
+   leds: Boolean <true,false> 
+   linearAccelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   magneticFieldCallbackPeriod: null
+   magneticFieldCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   orientationCalculation: null
+   orientationCalculation: Boolean <true,false> 
+   orientationCallbackPeriod: null
+   orientationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   quaternionCallbackPeriod: null
+   quaternionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   sensorFusionMode: String <[0, 1, 2]>
+   statusLED: null
+   statusLED: Boolean <true,false> 
+   temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/IMUV2/U/<id>/S/LEDs/callbackPeriod
@@ -771,7 +734,7 @@ TF/IMUV2/U/<id>/S/orientation/callbackPeriod
 ```
 ```
 TF/IMUV2/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/IMUV2/U/<id>/S/quaternion/callbackPeriod
@@ -792,28 +755,12 @@ TF/IMUV2/U/<id>/S/temperature/callbackPeriod
 
 ### LCD16x2
 ```
-TF/LCD16x2/U/<id>/I/backlight
-   [true|false]
-```
-```
-TF/LCD16x2/U/<id>/I/clearDisplay
-   [true|false]
-```
-```
-TF/LCD16x2/U/<id>/I/configParameters
-   cursor: [true|false]
-    blinking: [true|false]
-```
-```
-TF/LCD16x2/U/<id>/I/customCharacters
-   [index: [0..15]
-    pixels: [[-32768..32767]]_[1..8]]
-```
-```
-TF/LCD16x2/U/<id>/I/writeLines
-   [line: [0..1]
-    position: [0..15]
-    text: [String]_[1..16]]
+TF/LCD16x2/U/<id>/I
+   backlight: Boolean <true,false> 
+   clearDisplay: Boolean <true,false> 
+   customCharacters: Set <min: 0 max: 8>
+   lines: Set <min: 0 max: 32>
+   
 ```
 ```
 TF/LCD16x2/U/<id>/S/backlight
@@ -839,42 +786,19 @@ TF/LCD16x2/U/<id>/S/hardware
 ```
 ```
 TF/LCD16x2/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### LCD20x4
 ```
-TF/LCD20x4/U/<id>/I/backlight
-   [true|false]
-```
-```
-TF/LCD20x4/U/<id>/I/clearDisplay
-   [true|false]
-```
-```
-TF/LCD20x4/U/<id>/I/configParameters
-   cursor: [true|false]
-    blinking: [true|false]
-```
-```
-TF/LCD20x4/U/<id>/I/customCharacters
-   [index: [0..15]
-    pixels: [[-32768..32767]]_[1..8]]
-```
-```
-TF/LCD20x4/U/<id>/I/defaultText/counter
-   [-1..2147483647]
-```
-```
-TF/LCD20x4/U/<id>/I/defaultText/texts
-   [line: [0..3]
-    text: [String]_[1..20]]
-```
-```
-TF/LCD20x4/U/<id>/I/writeLines
-   [line: [0..3]
-    position: [0..18]
-    text: [String]_[1..20]]
+TF/LCD20x4/U/<id>/I
+   backlight: Boolean <true,false> 
+   clearDisplay: Boolean <true,false> 
+   customCharacters: Set <min: 0 max: 8>
+   defaultTextCounter: Number <from: -1 to: 2147483647>
+   defaultTexts: Set <min: 0 max: 4>
+   lines: Set <min: 0 max: 80>
+   
 ```
 ```
 TF/LCD20x4/U/<id>/S/backlight
@@ -909,7 +833,7 @@ TF/LCD20x4/U/<id>/S/hardware
 ```
 ```
 TF/LCD20x4/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### Accelerometer
@@ -931,28 +855,16 @@ TF/Accelerometer/U/<id>/E/acceleration/reached
        z: [-32768..32767]
 ```
 ```
-TF/Accelerometer/U/<id>/I/acceleration/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Accelerometer/U/<id>/I/acceleration/threshold
-   option: [x|o|i|<|>]
-    minX: [-32768..32767]
-    minY: [-32768..32767]
-    minZ: [-32768..32767]
-    maxX: [-32768..32767]
-    maxY: [-32768..32767]
-    maxZ: [-32768..32767]
-```
-```
-TF/Accelerometer/U/<id>/I/configuration
-   dataRate: [OFF|Hz3|Hz6|Hz12|Hz25|Hz50|Hz100|Hz400|Hz800|Hz1600]
-    fullScale: [G2|G4|G6|G8|G16
-    filterBandwidth: [Hz800|Hz400|Hz200|Hz50]
-```
-```
-TF/Accelerometer/U/<id>/I/debounce/period
-   [0..9223372036854775807]
+TF/Accelerometer/U/<id>/I
+   accelerationThreshold: 
+     option: String <[x, o, i, <, >]>
+   callbackPeriod: Number <from: 0 to: 9223372036854775807>
+   configuration: 
+     DataRate: String <OFF,Hz3,Hz6,Hz12,Hz25,Hz50,Hz100,Hz400,Hz800,Hz1600>
+     FilterBandwidth: String <Hz800,Hz400,Hz200,Hz50>
+     FullScale: String <G2,G4,G6,G8,G16>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Accelerometer/U/<id>/S/acceleration/callbackPeriod
@@ -988,7 +900,7 @@ TF/Accelerometer/U/<id>/S/hardware
 ```
 ```
 TF/Accelerometer/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### AmbientLight
@@ -1017,28 +929,19 @@ TF/AmbientLight/U/<id>/E/illuminance/reached
    
 ```
 ```
-TF/AmbientLight/U/<id>/I/analogValue/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/AmbientLight/U/<id>/I/analogValue/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
-```
-```
-TF/AmbientLight/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/AmbientLight/U/<id>/I/illuminance/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/AmbientLight/U/<id>/I/illuminance/threshold
-   option: [x|o|i|<|>]
-    min: [0..9000]
-    max: [0..9000]
+TF/AmbientLight/U/<id>/I
+   analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   illuminanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   illuminanceThreshold: 
+     max: Number <from: 0 to: 9000>
+     min: Number <from: 0 to: 9000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/AmbientLight/U/<id>/S/analogValue/callbackPeriod
@@ -1074,7 +977,7 @@ TF/AmbientLight/U/<id>/S/illuminance/threshold
 ```
 ```
 TF/AmbientLight/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### AmbientLightV2
@@ -1091,24 +994,17 @@ TF/AmbientLightV2/U/<id>/E/illuminance/reached
    
 ```
 ```
-TF/AmbientLightV2/U/<id>/I/configuration
-   illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]
-    integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]
+TF/AmbientLightV2/U/<id>/I
+   analogValueThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   configuration: 
+     IlluminanceRange: String <lx_unlimitted,lx_64000,lx_32000,lx_16000,lx_8000,lx_1300,lx_600>
+     IntegrationTime: String <ms_50,ms_100,ms_150,ms_200,ms_250,ms_300,ms_350,ms_400>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   illuminanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    
-```
-```
-TF/AmbientLightV2/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/AmbientLightV2/U/<id>/I/illuminance/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/AmbientLightV2/U/<id>/I/illuminance/threshold
-   option: [x|o|i|<|>]
-    min: [0..100000]
-    max: [0..100000]
 ```
 ```
 TF/AmbientLightV2/U/<id>/S/configuration
@@ -1140,7 +1036,7 @@ TF/AmbientLightV2/U/<id>/S/illuminance/threshold
 ```
 ```
 TF/AmbientLightV2/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### AnalogInV2
@@ -1169,32 +1065,20 @@ TF/AnalogInV2/U/<id>/E/voltage/reached
    
 ```
 ```
-TF/AnalogInV2/U/<id>/I/analogValue/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/AnalogInV2/U/<id>/I/analogValue/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
-```
-```
-TF/AnalogInV2/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/AnalogInV2/U/<id>/I/movingAverage
-   [1..50]
-```
-```
-TF/AnalogInV2/U/<id>/I/voltage/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/AnalogInV2/U/<id>/I/voltage/threshold
-   option: [x|o|i|<|>]
-    min: [0..42000]
-    max: [0..42000]
+TF/AnalogInV2/U/<id>/I
+   analogValueCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   movingAverage: Number <from: 0 to: 9223372036854775807>
+   voltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   voltageCallbackThreshold: 
+     max: Number <from: 0 to: 42000>
+     min: Number <from: 0 to: 42000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/AnalogInV2/U/<id>/S/analogValue/callbackPeriod
@@ -1224,7 +1108,7 @@ TF/AnalogInV2/U/<id>/S/movingAverage
 ```
 ```
 TF/AnalogInV2/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/AnalogInV2/U/<id>/S/voltage/callbackPeriod
@@ -1239,8 +1123,9 @@ TF/AnalogInV2/U/<id>/S/voltage/threshold
 
 ### AnalogOutV2
 ```
-TF/AnalogOutV2/U/<id>/I/outputVoltage
-   [0..12000]
+TF/AnalogOutV2/U/<id>/I
+   outputVoltage: Number <from: 0 to: 12000>
+   
 ```
 ```
 TF/AnalogOutV2/U/<id>/S/firmware
@@ -1256,7 +1141,7 @@ TF/AnalogOutV2/U/<id>/S/outputVoltage
 ```
 ```
 TF/AnalogOutV2/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### Barometer
@@ -1285,38 +1170,21 @@ TF/Barometer/U/<id>/E/altitude/reached
    
 ```
 ```
-TF/Barometer/U/<id>/I/airPressure/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Barometer/U/<id>/I/airPressure/threshold
-   option: [x|o|i|<|>]
-    min: [10000..1200000]
-    max: [10000..1200000]
-```
-```
-TF/Barometer/U/<id>/I/altitude/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Barometer/U/<id>/I/altitude/threshold
-   option: [x|o|i|<|>]
-    min: [-2147483648..2147483647]
-    max: [-2147483648..2147483647]
-```
-```
-TF/Barometer/U/<id>/I/averaging
-   averagingPressure: [0..10]
-    averagingTemperature: [0..255]
-    movingAveragePressure: [0..25]
-```
-```
-TF/Barometer/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/Barometer/U/<id>/I/referenceAirPressure
-   [-2147483648..2147483647]
+TF/Barometer/U/<id>/I
+   airPressureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   airPressureCallbackThreshold: 
+     max: Number <from: 10000 to: 1200000>
+     min: Number <from: 10000 to: 1200000>
+     option: String <[x, o, i, <, >]>
+   altitudeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   altitudeCallbackThreshold: 
+     option: String <[x, o, i, <, >]>
+   averaging: 
+     averagingPressure: Number <from: 0 to: 10>
+     averagingTemperature: Number <from: 0 to: 255>
+     movingAveragePressure: Number <from: 0 to: 25>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Barometer/U/<id>/S/airPressure/callbackPeriod
@@ -1358,7 +1226,7 @@ TF/Barometer/U/<id>/S/hardware
 ```
 ```
 TF/Barometer/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/Barometer/U/<id>/S/referenceAirPressure
@@ -1379,18 +1247,14 @@ TF/CO2/U/<id>/E/CO2Concentration/reached
    
 ```
 ```
-TF/CO2/U/<id>/I/CO2Concentration/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/CO2/U/<id>/I/CO2Concentration/threshold
-   option: [x|o|i|<|>]
-    min: [0..10000]
-    max: [0..10000]
-```
-```
-TF/CO2/U/<id>/I/debounce/period
-   [0..9223372036854775807]
+TF/CO2/U/<id>/I
+   co2ConcentrationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   co2ConcentrationCallbackThreshold: 
+     max: Number <from: 0 to: 10000>
+     min: Number <from: 0 to: 10000>
+     option: String <[x, o, i, <, >]>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/CO2/U/<id>/S/CO2Concentration/callbackPeriod
@@ -1416,7 +1280,7 @@ TF/CO2/U/<id>/S/hardware
 ```
 ```
 TF/CO2/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### Color
@@ -1450,30 +1314,26 @@ TF/Color/U/<id>/E/illuminance/reached
    
 ```
 ```
-TF/Color/U/<id>/I/color/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Color/U/<id>/I/color/threshold
-   option: [x|o|i|<|>]
-    minR: [0..65535]
-    maxR: [0..65535]
-    minG: [0..65535]
-    maxG: [0..65535]
-    minB: [0..65535]
-    maxB: [0..65535]
-```
-```
-TF/Color/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/Color/U/<id>/I/illuminance/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Color/U/<id>/I/illuminance/threshold
-   [0..9223372036854775807]
+TF/Color/U/<id>/I
+   colorCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   colorCallbackThreshold: 
+     maxB: Number <from: 0 to: 65535>
+     maxC: Number <from: 0 to: 65535>
+     maxG: Number <from: 0 to: 65535>
+     maxR: Number <from: 0 to: 65535>
+     minB: Number <from: 0 to: 65535>
+     minC: Number <from: 0 to: 65535>
+     minG: Number <from: 0 to: 65535>
+     minR: Number <from: 0 to: 65535>
+     option: String <[x, o, i, <, >]>
+   colorTemperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   config: 
+     Gain: String <x1,x4,x16,Hz60>
+     IntegrationTime: String <ms2_4,ms24,ms101,ms154,ms700>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   illuminanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   light: Boolean <true,false> 
+   
 ```
 ```
 TF/Color/U/<id>/S/color/callbackPeriod
@@ -1507,7 +1367,7 @@ TF/Color/U/<id>/S/illuminance/callbackPeriod
 ```
 ```
 TF/Color/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### DC
@@ -1537,36 +1397,16 @@ TF/DC/U/<id>/E/velocity/reached
      value: [0..32767]
 ```
 ```
-TF/DC/U/<id>/I/acceleration
-   [0..2147483647]
-```
-```
-TF/DC/U/<id>/I/driverMode
-   [0|1]
-```
-```
-TF/DC/U/<id>/I/enabled
-   [true|false]
-```
-```
-TF/DC/U/<id>/I/fullBrake
-   [true|false]
-```
-```
-TF/DC/U/<id>/I/minimumVoltage
-   [6000..2147483647]
-```
-```
-TF/DC/U/<id>/I/pwmFrequency
-   [1..20000]
-```
-```
-TF/DC/U/<id>/I/velocity/callbackPeriod
-   [0..2147483647]
-```
-```
-TF/DC/U/<id>/I/velocity/velocity
-   -32767..32767
+TF/DC/U/<id>/I
+   acceleration: Number <from: 0 to: 2147483647>
+   driveMode: String <[1, 2]>
+   enable: Boolean <true,false> 
+   fullBrake: Boolean <true,false> 
+   minimumVoltage: Number <from: 6000 to: 2147483647>
+   pwmFrequency: Number <from: 1 to: 20000>
+   velocity: Number <from: -32767 to: 32767>
+   velocityPeriod: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/DC/U/<id>/S/acceleration
@@ -1594,7 +1434,7 @@ TF/DC/U/<id>/S/minimumVoltage
 ```
 ```
 TF/DC/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/DC/U/<id>/S/pwmFrequency
@@ -1631,28 +1471,19 @@ TF/DistanceIR/U/<id>/E/distance/reached
      value: [[40..300]|[100..800]|[200..1500]]
 ```
 ```
-TF/DistanceIR/U/<id>/I/analogValue/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/DistanceIR/U/<id>/I/analogValue/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
-```
-```
-TF/DistanceIR/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/DistanceIR/U/<id>/I/distance/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/DistanceIR/U/<id>/I/distance/threshold
-   option: [x|o|i|<|>]
-    min: [[40..300]|[100..800]|[200..1500]]
-    max: [[40..300]|[100..800]|[200..1500]]
+TF/DistanceIR/U/<id>/I
+   analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackThreshold: 
+     max: Number <[from: 0 to: 0,from: 40 to: 300,from: 100 to: 800,from: 200 to: 1500]>
+     min: Number <[from: 0 to: 0,from: 40 to: 300,from: 100 to: 800,from: 200 to: 1500]>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/DistanceIR/U/<id>/S/analogValue/callbackPeriod
@@ -1688,7 +1519,7 @@ TF/DistanceIR/U/<id>/S/hardware
 ```
 ```
 TF/DistanceIR/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### DistanceUS
@@ -1703,22 +1534,13 @@ TF/DistanceUS/U/<id>/E/distance/reached
      value: [0..4095]
 ```
 ```
-TF/DistanceUS/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/DistanceUS/U/<id>/I/distance/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/DistanceUS/U/<id>/I/distance/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
-```
-```
-TF/DistanceUS/U/<id>/I/movingAverage
-   [0..100]
+TF/DistanceUS/U/<id>/I
+   distanceCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   movingAverage: Number <from: 0 to: 100>
+   
 ```
 ```
 TF/DistanceUS/U/<id>/S/debounce/period
@@ -1748,7 +1570,7 @@ TF/DistanceUS/U/<id>/S/movingAverage
 ```
 ```
 TF/DistanceUS/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### DualButton
@@ -1762,13 +1584,12 @@ TF/DualButton/U/<id>/E/stateChanged
       switch2: [0|1]
 ```
 ```
-TF/DualButton/U/<id>/I/LEDState
-   leftLED: [AutoToggleOn|AutoToggleOff|On|Off]
-    rightLED: [AutoToggleOn|AutoToggleOff|On|Off] 
-```
-```
-TF/DualButton/U/<id>/I/selectedLEDState
-   led: [AutoToggleOn|AutoToggleOff|On|Off]
+TF/DualButton/U/<id>/I
+   ledState: 
+     LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+     LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+   selectedLEDStates: Set <min: 0 max: 2>
+   
 ```
 ```
 TF/DualButton/U/<id>/S/LEDState
@@ -1785,7 +1606,7 @@ TF/DualButton/U/<id>/S/hardware
 ```
 ```
 TF/DualButton/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### DustDetector
@@ -1800,22 +1621,15 @@ TF/DustDetector/U/<id>/E/dustDensity/reached
      value: [0..500]
 ```
 ```
-TF/DustDetector/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/DustDetector/U/<id>/I/dustDensity/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/DustDetector/U/<id>/I/dustDensity/threshold
-   option: [x|o|i|<|>]
-    min: [0..500]
-    max: [0..500]
-```
-```
-TF/DustDetector/U/<id>/I/movingAverage
-   [0..100]
+TF/DustDetector/U/<id>/I
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   dustDensityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   dustDensityCallbackThreshold: 
+     max: Number <from: 0 to: 500>
+     min: Number <from: 0 to: 500>
+     option: String <[x, o, i, <, >]>
+   movingAverage: Number <from: 0 to: 100>
+   
 ```
 ```
 TF/DustDetector/U/<id>/S/debounce/period
@@ -1845,7 +1659,7 @@ TF/DustDetector/U/<id>/S/movingAverage
 ```
 ```
 TF/DustDetector/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### GPS
@@ -1892,20 +1706,14 @@ TF/GPS/U/<id>/E/status
        satellitesUsed: [0..32767]
 ```
 ```
-TF/GPS/U/<id>/I/altitude/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/GPS/U/<id>/I/coordinates/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/GPS/U/<id>/I/dateTime/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/GPS/U/<id>/I/motion/callbackPeriod
-   [0..9223372036854775807]
+TF/GPS/U/<id>/I
+   altitudeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   coordinatesCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   dateTimeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   motionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   RestartType: String <hot,warm,cold,factoryReset>
+   statusCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/GPS/U/<id>/S/altitude/callbackPeriod
@@ -1933,7 +1741,7 @@ TF/GPS/U/<id>/S/motion/callbackPeriod
 ```
 ```
 TF/GPS/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### GPSv2
@@ -1975,28 +1783,16 @@ TF/GPSv2/U/<id>/E/status
      satellitesView: [0..32767]
 ```
 ```
-TF/GPSv2/U/<id>/I/altitude/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/GPSv2/U/<id>/I/coordinates/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/GPSv2/U/<id>/I/dateTime/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/GPSv2/U/<id>/I/fix/led
-   [OFF|ON|HEARTBEAT|FIX|PPS]
-```
-```
-TF/GPSv2/U/<id>/I/motion/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/GPSv2/U/<id>/I/status/led
-   [OFF|ON|HEARTBEAT|STATUS]
+TF/GPSv2/U/<id>/I
+   altitudeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   coordinatesCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   dateTimeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   FixLEDConfig: String <OFF,ON,HEARTBEAT,FIX,PPS>
+   motionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   RestartType: String <hot,warm,cold,factoryReset>
+   statusCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   StatusLEDConfig: String <OFF,ON,HEARTBEAT,STATUS>
+   
 ```
 ```
 TF/GPSv2/U/<id>/S/altitude/callbackPeriod
@@ -2028,7 +1824,7 @@ TF/GPSv2/U/<id>/S/motion/callbackPeriod
 ```
 ```
 TF/GPSv2/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/GPSv2/U/<id>/S/status/led
@@ -2049,22 +1845,11 @@ TF/HallEffect/U/<id>/E/edgeCount/reset
      value:    [0..9223372036854775807]
 ```
 ```
-TF/HallEffect/U/<id>/I/configuration
-   edgeType: [RISING|FALLING|BOTH]
-    debounce: [0..100]
+TF/HallEffect/U/<id>/I
+   edgeCountCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   edgeCountInterrupt: Number <from: 0 to: 9223372036854775807>
+   edgeCountReset: Boolean <true,false> 
    
-```
-```
-TF/HallEffect/U/<id>/I/edgeCount/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/HallEffect/U/<id>/I/edgeCount/interrupt
-   [0..9223372036854775807]
-```
-```
-TF/HallEffect/U/<id>/I/edgeCount/reset
-   [true|false]
 ```
 ```
 TF/HallEffect/U/<id>/S/configuration
@@ -2090,7 +1875,7 @@ TF/HallEffect/U/<id>/S/hardware
 ```
 ```
 TF/HallEffect/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### Humidity
@@ -2115,28 +1900,24 @@ TF/Humidity/U/<id>/E/humidity/reached
      value: [0..1000]
 ```
 ```
-TF/Humidity/U/<id>/I/analogValue/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Humidity/U/<id>/I/analogValue/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
-```
-```
-TF/Humidity/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/Humidity/U/<id>/I/humidity/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Humidity/U/<id>/I/humidity/threshold
-   option: [x|o|i|<|>]
-    min: [0..1000]
-    max: [0..9000]
+TF/Humidity/U/<id>/I
+   analogCallbackPeriod: null
+   analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: null
+   analogValueCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   debouncePeriod: null
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   humidityCallbackPeriod: null
+   humidityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   humidityCallbackThreshold: null
+   humidityCallbackThreshold: 
+     max: Number <from: 0 to: 1000>
+     min: Number <from: 0 to: 1000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/Humidity/U/<id>/S/analogValue/callbackPeriod
@@ -2172,7 +1953,7 @@ TF/Humidity/U/<id>/S/humidity/threshold
 ```
 ```
 TF/Humidity/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### Joystick
@@ -2217,36 +1998,12 @@ TF/Joystick/U/<id>/E/released
    [0..9223372036854775807]
 ```
 ```
-TF/Joystick/U/<id>/I/analogValue/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Joystick/U/<id>/I/analogValue/threshold
-   option: [x|o|i|<|>]
-    minX: [0..4095]
-    maxX: [0..4095]
-    minY: [0..4095]
-    maxY: [0..4095]
-```
-```
-TF/Joystick/U/<id>/I/calibrate
-   [true|false]
-```
-```
-TF/Joystick/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/Joystick/U/<id>/I/position/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Joystick/U/<id>/I/position/threshold
-   option: [x|o|i|<|>]
-    minX: [-100..100]
-    maxX: [-100..100]
-    minY: [-100..100]
-    maxY: [-100..100]
+TF/Joystick/U/<id>/I
+   analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   calibrate: Boolean <true,false> 
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Joystick/U/<id>/S/analogValue/callbackPeriod
@@ -2274,7 +2031,7 @@ TF/Joystick/U/<id>/S/hardware
 ```
 ```
 TF/Joystick/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/Joystick/U/<id>/S/position/callbackPeriod
@@ -2311,48 +2068,29 @@ TF/LaserRangeFinder/U/<id>/E/velocity/reached
      value: [-127..127]
 ```
 ```
-TF/LaserRangeFinder/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/LaserRangeFinder/U/<id>/I/deviceConfiguration
-   acquisition: [1..255]
-    quickTermination: [true|false]
-    thresholdValue: [0..255]
-    measurementFrequency: [0|10..500]
-```
-```
-TF/LaserRangeFinder/U/<id>/I/deviceMode
-   mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]
-```
-```
-TF/LaserRangeFinder/U/<id>/I/distance/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/LaserRangeFinder/U/<id>/I/distance/threshold
-   option: [x|o|i|<|>]
-    min: [0..4000]
-    max: [0..4000]
-```
-```
-TF/LaserRangeFinder/U/<id>/I/laser
-   [true|false]
-```
-```
-TF/LaserRangeFinder/U/<id>/I/movingAverage
-   averagingDistance:[0..30]
-    averagingVelocity:[0..30]
-```
-```
-TF/LaserRangeFinder/U/<id>/I/velocity/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/LaserRangeFinder/U/<id>/I/velocity/threshold
-   option: [x|o|i|<|>]
-    min: [-127..127]
-    max: [-127..127]
+TF/LaserRangeFinder/U/<id>/I
+   configuration: 
+     aquisitionCount: Number <from: 1 to: 255>
+     measurementFrequency: Number <[from: 0 to: 0,from: 10 to: 500]>
+     thresholdValue: Number <from: 0 to: 255>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackThreshold: 
+     max: Number <from: 0 to: 4000>
+     min: Number <from: 0 to: 4000>
+     option: String <[x, o, i, <, >]>
+   laserEnabled: Boolean <true,false> 
+   mode: 
+     Mode: String <distance,velocity_12_7,velocity_31_75,velocity_63_5,velocity_127>
+   movingAverage: 
+     averagingDistance: Number <from: 0 to: 30>
+     averagingVelocity: Number <from: 0 to: 30>
+   velocityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   velocityCallbackThreshold: 
+     max: Number <from: -127 to: 127>
+     min: Number <from: -127 to: 127>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/LaserRangeFinder/U/<id>/S/debounce/period
@@ -2398,7 +2136,7 @@ TF/LaserRangeFinder/U/<id>/S/movingAverage
 ```
 ```
 TF/LaserRangeFinder/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/LaserRangeFinder/U/<id>/S/sensorHardwareVersion
@@ -2427,24 +2165,25 @@ TF/LEDStrip/U/<id>/E/laging
    - timestamp: [0..9223372036854775807]
 ```
 ```
-TF/LEDStrip/U/<id>/I/config
-   chipType: [WS2801|WS2811|WS2812]
-    frameDurationInMilliseconds: [0..9223372036854775807]
-    clockFrequencyOfICsInHz: [10000..2000000]
-    numberOfLEDs: [1..320]
-    channelMapping: [rgb|rbg|grb|gbr|brg|bgr]
-```
-```
-TF/LEDStrip/U/<id>/I/frame
-   channels: {{[0..255],..,[0..255]}_numLEDs
-    ...
-    {[0..255],..,[0..255]}_numLEDs}_numChannels
-```
-```
-TF/LEDStrip/U/<id>/I/multiFrames
-   { channels: {{[0..255],..,[0..255]}_numLEDs
-    ...
-    {[0..255],..,[0..255]}_numLEDs}_numChannels }_*
+TF/LEDStrip/U/<id>/I
+   config: null
+   config: 
+     ChannelMapping: String <BGR,BGRW,BGWR,BRG,BRGW,BRWG,BWGR,BWRG,GBR,GBRW,GBWR,GRB,GRBW,GRWB,GWBR,GWRB,RBG,RBGW,RBWG,RGB,RGBW,RGWB,RWBG,RWGB>
+     ChipType: String <WS2801,WS2811,WS2812,WS2812RGBW,LPD8806,APA102>
+     clockFrequencyOfICsInHz: Number <from: 10000 to: 2000000>
+     frameDurationInMilliseconds: Number <from: 0 to: 9223372036854775807>
+     numberOfLEDs: Number <from: 0 to: 320>
+   LEDFrame: null
+   LEDFrame: 
+     channels: Arrays: <[min: 1 max: 4,min: 1 max: 320]>
+     channels: Number <from: 0 to: 255>
+   LEDFrames: null
+   LEDFrames: Array <min: 1 max: 2147483647>
+   LEDFrames: 
+     LEDFrame: 
+       channels: Arrays: <[min: 1 max: 4,min: 1 max: 320]>
+       channels: Number <from: 0 to: 255>
+   
 ```
 ```
 TF/LEDStrip/U/<id>/S/config
@@ -2464,7 +2203,7 @@ TF/LEDStrip/U/<id>/S/hardware
 ```
 ```
 TF/LEDStrip/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### Line
@@ -2479,18 +2218,14 @@ TF/Line/U/<id>/E/reflectivity/reached
      value: [0..4095]
 ```
 ```
-TF/Line/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/Line/U/<id>/I/reflectivity/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Line/U/<id>/I/reflectivity/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
+TF/Line/U/<id>/I
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   reflectivityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   reflectivityCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/Line/U/<id>/S/debounce/period
@@ -2506,7 +2241,7 @@ TF/Line/U/<id>/S/hardware
 ```
 ```
 TF/Line/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/Line/U/<id>/S/reflectivity/callbackPeriod
@@ -2541,28 +2276,19 @@ TF/LinearPoti/U/<id>/E/position/reached
      value: [0..100]
 ```
 ```
-TF/LinearPoti/U/<id>/I/analogValue/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/LinearPoti/U/<id>/I/analogValue/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
-```
-```
-TF/LinearPoti/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/LinearPoti/U/<id>/I/position/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/LinearPoti/U/<id>/I/position/threshold
-   option: [x|o|i|<|>]
-    min: [0..100]
-    max: [0..100]
+TF/LinearPoti/U/<id>/I
+   analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackThreshold: 
+     max: Number <from: 0 to: 100>
+     min: Number <from: 0 to: 100>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/LinearPoti/U/<id>/S/analogValue/callbackPeriod
@@ -2588,7 +2314,7 @@ TF/LinearPoti/U/<id>/S/hardware
 ```
 ```
 TF/LinearPoti/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/LinearPoti/U/<id>/S/position/callbackPeriod
@@ -2613,39 +2339,20 @@ TF/LoadCell/U/<id>/E/weight/reached
      value: [-50001..50001]
 ```
 ```
-TF/LoadCell/U/<id>/I/LED
-   true|false]
-```
-```
-TF/LoadCell/U/<id>/I/calibrate
-   [0..50001]
-```
-```
-TF/LoadCell/U/<id>/I/configuration
-   gain:[gain128X|gain64X|gain32X]
-    rate: [rate10Hz|rate80Hz]
-```
-```
-TF/LoadCell/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/LoadCell/U/<id>/I/movingAverage
-   [1..40]
-```
-```
-TF/LoadCell/U/<id>/I/tare
-   [true|false]
-```
-```
-TF/LoadCell/U/<id>/I/weight/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/LoadCell/U/<id>/I/weight/threshold
-   option: [x|o|i|<|>]
-    min: [-50001..50001]
-    max: [-50001..50001]
+TF/LoadCell/U/<id>/I
+   configuration: 
+     Gain: String <gain128X,gain64X,gain32X>
+     Rate: String <rate10Hz,rate80Hz>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   movingAverage: Number <from: 1 to: 40>
+   statusLED: Boolean <true,false> 
+   tare: Boolean <true,false> 
+   weightCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   weightCallbackThreshold: 
+     max: Number <from: -50001 to: 50001>
+     min: Number <from: -50001 to: 50001>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/LoadCell/U/<id>/S/LED
@@ -2674,7 +2381,7 @@ TF/LoadCell/U/<id>/S/movingAverage
 ```
 ```
 TF/LoadCell/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/LoadCell/U/<id>/S/weight/callbackPeriod
@@ -2723,36 +2430,26 @@ TF/Master/U/<id>/E/stack/voltage/reached
      value: [-2147483648..2147483647]
 ```
 ```
-TF/Master/U/<id>/I/USB/voltage/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Master/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/Master/U/<id>/I/stack/current/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Master/U/<id>/I/stack/current/callbackThreshold
-   [option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
-```
-```
-TF/Master/U/<id>/I/stack/voltage/callbackPeriod
-   [-9223372036854775808..9223372036854775807]
-```
-```
-TF/Master/U/<id>/I/stack/voltage/callbackThreshold
-   [option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
-```
-```
-TF/Master/U/<id>/I/statusLED/enabled
-   [true|false]
+TF/Master/U/<id>/I
+   currentCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   currentCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   reset: Boolean <true,false> 
+   stackVoltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   stackVoltageCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   statusLED: Boolean <true,false> 
+   usbVoltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   usbVoltageCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/Master/U/<id>/S/USB/voltage/callbackPeriod
@@ -2772,7 +2469,7 @@ TF/Master/U/<id>/S/hardware
 ```
 ```
 TF/Master/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/Master/U/<id>/S/stack/current/callbackPeriod
@@ -2811,22 +2508,15 @@ TF/Moisture/U/<id>/E/moisture/reached
      value: [0..4095]
 ```
 ```
-TF/Moisture/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/Moisture/U/<id>/I/moisture/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Moisture/U/<id>/I/moisture/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
-```
-```
-TF/Moisture/U/<id>/I/movingAverage
-   [0..100]
+TF/Moisture/U/<id>/I
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   moistureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   moistureCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   movingAverage: Number <from: 0 to: 100>
+   
 ```
 ```
 TF/Moisture/U/<id>/S/debounce/period
@@ -2856,7 +2546,7 @@ TF/Moisture/U/<id>/S/movingAverage
 ```
 ```
 TF/Moisture/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### MotionDetector
@@ -2871,6 +2561,10 @@ TF/MotionDetector/U/<id>/E/motionDetected
      value: true
 ```
 ```
+TF/MotionDetector/U/<id>/I
+   
+```
+```
 TF/MotionDetector/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
@@ -2880,7 +2574,7 @@ TF/MotionDetector/U/<id>/S/hardware
 ```
 ```
 TF/MotionDetector/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### MultiTouch
@@ -2895,16 +2589,11 @@ TF/MultiTouch/U/<id>/E/touchState
      value: [0..8191]
 ```
 ```
-TF/MultiTouch/U/<id>/I/electrode/config
-   [0..8191]
-```
-```
-TF/MultiTouch/U/<id>/I/electrode/sensitivity
-   [0..8191]
-```
-```
-TF/MultiTouch/U/<id>/I/recalibrate
-   [true|false]
+TF/MultiTouch/U/<id>/I
+   electrodeConfig: Number <from: 0 to: 8191>
+   recalibration: Boolean <true,false> 
+   sensitivity: Number <from: 5 to: 201>
+   
 ```
 ```
 TF/MultiTouch/U/<id>/S/electrode/config
@@ -2924,7 +2613,7 @@ TF/MultiTouch/U/<id>/S/hardware
 ```
 ```
 TF/MultiTouch/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### NfcRfid
@@ -2958,17 +2647,10 @@ TF/NfcRfid/U/<id>/E/tag/written
        value: [00..FF]_*
 ```
 ```
-TF/NfcRfid/U/<id>/I/read
-   [00..FF]_9
-```
-```
-TF/NfcRfid/U/<id>/I/scanning/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/NfcRfid/U/<id>/I/write
-   id: [00..FF]_9
-     value: [00..FF]_*
+TF/NfcRfid/U/<id>/I
+   nfcWrite: 
+   scanningInterval: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/NfcRfid/U/<id>/S/firmware
@@ -2980,7 +2662,7 @@ TF/NfcRfid/U/<id>/S/hardware
 ```
 ```
 TF/NfcRfid/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/NfcRfid/U/<id>/S/scanning/callbackPeriod
@@ -3004,18 +2686,15 @@ TF/PiezoSpeaker/U/<id>/E/started
      value: true
 ```
 ```
-TF/PiezoSpeaker/U/<id>/I/beep
-   duration: [0..4294967295]
-    frequency: [585..7100]
-```
-```
-TF/PiezoSpeaker/U/<id>/I/calibrate
-   [true|false]
-```
-```
-TF/PiezoSpeaker/U/<id>/I/morse
-   string: [.|-| |]_60
-    frequency: [585..7100]
+TF/PiezoSpeaker/U/<id>/I
+   beepParameter: 
+     duration: Number <from: 0 to: 2147483647>
+     frequency: Number <from: 585 to: 7100>
+   calibrate: Boolean <true,false> 
+   morseCodeParameter: 
+     frequency: Number <from: 585 to: 7100>
+     string: String <regEx: [\.\s-]{1,60}>
+   
 ```
 ```
 TF/PiezoSpeaker/U/<id>/S/firmware
@@ -3027,7 +2706,7 @@ TF/PiezoSpeaker/U/<id>/S/hardware
 ```
 ```
 TF/PiezoSpeaker/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### PTC
@@ -3052,36 +2731,14 @@ TF/PTC/U/<id>/E/temperature/reached
      value: [-24600..84900]
 ```
 ```
-TF/PTC/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/PTC/U/<id>/I/noiseReductionFilter
-   filter: [Hz_50|Hz_60]
-```
-```
-TF/PTC/U/<id>/I/resistance/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/PTC/U/<id>/I/resistance/threshold
-   option: [x|o|i|<|>]
-    min: [0..32767]
-    max: [0..32767]
-```
-```
-TF/PTC/U/<id>/I/temperature/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/PTC/U/<id>/I/temperature/threshold
-   option: [x|o|i|<|>]
-    min: [-24600..84900]
-    max: [-24600..84900]
-```
-```
-TF/PTC/U/<id>/I/wireMode
-   [2|3|4]
+TF/PTC/U/<id>/I
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   noiseReductionFilter: 
+     Filter: String <Hz_50,Hz_60>
+   resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   wireMode: String <[2, 3, 4]>
+   
 ```
 ```
 TF/PTC/U/<id>/S/debounce/period
@@ -3101,7 +2758,7 @@ TF/PTC/U/<id>/S/noiseReductionFilter
 ```
 ```
 TF/PTC/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/PTC/U/<id>/S/resistance/callbackPeriod
@@ -3156,6 +2813,29 @@ TF/RealTimeClock/U/<id>/E/dateTime
        weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]
 ```
 ```
+TF/RealTimeClock/U/<id>/I
+   alarmParameter: 
+     day: Number <from: 1 to: 31>
+     hour: Number <from: 0 to: 23>
+     interval: Number <from: -1 to: 2147483647>
+     minute: Number <from: 0 to: 59>
+     month: Number <from: 1 to: 12>
+     second: Number <from: 0 to: 59>
+     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday,disabled>
+   dateTimeParameter: 
+     centisecond: Number <from: 0 to: 10>
+     day: Number <from: 1 to: 31>
+     hour: Number <from: 0 to: 59>
+     minute: Number <from: 0 to: 59>
+     month: Number <from: 1 to: 12>
+     second: Number <from: 0 to: 59>
+     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
+     year: Number <from: 2000 to: 2099>
+   offset: Number <from: -128 to: 127>
+   period: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
 TF/RealTimeClock/U/<id>/I/alarm
    month: [-1|1..12]
     day: [-1|1..31]
@@ -3173,7 +2853,7 @@ TF/RealTimeClock/U/<id>/I/dateTime/callbackPeriod
 TF/RealTimeClock/U/<id>/I/dateTime/set
    year: [2000..2099]
     month: [1..12]
-    day:b[1..31]
+    day: [1..31]
     hour: [0..23]
     minute: [0..59]
     second: [0..59]
@@ -3223,7 +2903,7 @@ TF/RealTimeClock/U/<id>/S/offset
 ```
 ```
 TF/RealTimeClock/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### RemoteSwitch
@@ -3242,32 +2922,25 @@ TF/RemoteSwitch/U/<id>/E/switchingDone
        dimValue: [0..15]]
 ```
 ```
-TF/RemoteSwitch/U/<id>/I/dimSocketB
-   address: [0..67108863]
-    unit: [0..15]
-    dimValue: [0..15]
-```
-```
-TF/RemoteSwitch/U/<id>/I/repeats
-   [0..32767]
-```
-```
-TF/RemoteSwitch/U/<id>/I/switchSocketA
-   houseCode: [0..31]
-    receiverCode: [0..31]
-    switchingValue: [switchOn|switchOff]
-```
-```
-TF/RemoteSwitch/U/<id>/I/switchSocketB
-   address: [0..67108863]
-    unit: [0..15]
-    switchingValue: [switchOn|switchOff]
-```
-```
-TF/RemoteSwitch/U/<id>/I/switchSocketC
-   systemCode: ['A'..'P']
-    deviceCode: [1..16]
-    switchingValue: [switchOn|switchOff]
+TF/RemoteSwitch/U/<id>/I
+   dimSocketBParameters: 
+     address: Number <from: 0 to: 67108863>
+     dimValue: Number <from: 0 to: 15>
+     unit: Number <from: 0 to: 15>
+   repeats: Number <from: 0 to: 32767>
+   switchSocketAParameters: 
+     houseCode: Number <from: 0 to: 31>
+     receiverCode: Number <from: 0 to: 31>
+     SwitchTo: String <switchOn,switchOff>
+   switchSocketBParameters: 
+     address: Number <from: 0 to: 67108863>
+     SwitchTo: String <switchOn,switchOff>
+     unit: Number <from: 0 to: 15>
+   switchSocketCParameters: 
+     deviceCode: Number <from: 1 to: 16>
+     SwitchTo: String <switchOn,switchOff>
+     systemCode: Number <from: 65 to: 80>
+   
 ```
 ```
 TF/RemoteSwitch/U/<id>/S/firmware
@@ -3279,7 +2952,7 @@ TF/RemoteSwitch/U/<id>/S/hardware
 ```
 ```
 TF/RemoteSwitch/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/RemoteSwitch/U/<id>/S/repeats
@@ -3313,18 +2986,15 @@ TF/RotaryEncoder/U/<id>/E/released
      value: true
 ```
 ```
-TF/RotaryEncoder/U/<id>/I/count/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/RotaryEncoder/U/<id>/I/count/threshold
-   option: [x|o|i|<|>]
-    min: [-150..150]
-    max: [-150..150]
-```
-```
-TF/RotaryEncoder/U/<id>/I/debounce/period
-   [0..9223372036854775807]
+TF/RotaryEncoder/U/<id>/I
+   countCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   countReset: Boolean <true,false> 
+   countThreshold: 
+     max: Number <from: -150 to: 150>
+     min: Number <from: -150 to: 150>
+     option: String <[x, o, i, <, >]>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/S/count/callbackPeriod
@@ -3350,7 +3020,7 @@ TF/RotaryEncoder/U/<id>/S/hardware
 ```
 ```
 TF/RotaryEncoder/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### RotaryPoti
@@ -3379,28 +3049,19 @@ TF/RotaryPoti/U/<id>/E/position/reached
    
 ```
 ```
-TF/RotaryPoti/U/<id>/I/analogValue/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/RotaryPoti/U/<id>/I/analogValue/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
-```
-```
-TF/RotaryPoti/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/RotaryPoti/U/<id>/I/position/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/RotaryPoti/U/<id>/I/position/threshold
-   option: [x|o|i|<|>]
-    min: [-150..150]
-    max: [-150..150]
+TF/RotaryPoti/U/<id>/I
+   analogValueCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackThreshold: 
+     max: Number <from: -150 to: 150>
+     min: Number <from: -150 to: 150>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/RotaryPoti/U/<id>/S/analogValue/callbackPeriod
@@ -3426,7 +3087,7 @@ TF/RotaryPoti/U/<id>/S/hardware
 ```
 ```
 TF/RotaryPoti/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/RotaryPoti/U/<id>/S/position/callbackPeriod
@@ -3451,17 +3112,18 @@ TF/SegmentDisplay4x7/U/<id>/E/counterStarted
      value: true
 ```
 ```
-TF/SegmentDisplay4x7/U/<id>/I/counter
-   from: [-999..9999]
-    to: [-999..9999]
-    increment: [-999..9999]
-    lenght: [0..9223372036854775807]
-```
-```
-TF/SegmentDisplay4x7/U/<id>/I/segments
-   bits:[[0..128][0..128][0..128][0..128]]
-    brightness: [0..7]
-    colon: [true|false]
+TF/SegmentDisplay4x7/U/<id>/I
+   counterParameter: null
+   counterParameter: 
+     from: Number <from: -999 to: 9999>
+     increment: Number <from: -999 to: 9999>
+     length: Number <from: 0 to: 9223372036854775807>
+     to: Number <from: -999 to: 9999>
+   segments: null
+   segments: 
+     bits: Array <min: 4 max: 4>
+     brightness: Number <from: 0 to: 7>
+   
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/S/firmware
@@ -3473,7 +3135,7 @@ TF/SegmentDisplay4x7/U/<id>/S/hardware
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/S/segments
@@ -3503,33 +3165,12 @@ TF/Servo/U/<id>/E/velocityReached
        value: [0..32767]
 ```
 ```
-TF/Servo/U/<id>/I/minimumVoltage
-   [5000..2147483647]
-```
-```
-TF/Servo/U/<id>/I/outputVoltage
-   [2000..9000]
-```
-```
-TF/Servo/U/<id>/I/servos
-   --- 
-     {- 
-     id: [0..6]
-     [enabled: [true|false]|]
-     [position: [-32767..32767]|]
-     [acceleration: [0..65536]|]
-     [velocity: [0..65535]|]
-     [degree:
-       min: [-32767..32767]
-       max: [-32767..32767]|]
-     [period: [1..65535]|]
-     [pulseWidth:
-       min: [1..65535]
-       max: [1..65535]|]}_7
-```
-```
-TF/Servo/U/<id>/I/statusLED
-   [true|false]
+TF/Servo/U/<id>/I
+   minimumVoltage: Number <from: 5000 to: 2147483647>
+   outputVoltage: Number <from: 2000 to: 9000>
+   servos: Set <min: 0 max: 7>
+   statusLED: Boolean <true,false> 
+   
 ```
 ```
 TF/Servo/U/<id>/S/firmware
@@ -3549,7 +3190,7 @@ TF/Servo/U/<id>/S/outputVoltage
 ```
 ```
 TF/Servo/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/Servo/U/<id>/S/servos
@@ -3581,13 +3222,11 @@ TF/SolidState/U/<id>/E/monoflopDone
      value: [true|false]
 ```
 ```
-TF/SolidState/U/<id>/I/monoflop
-   state: [true|false]
-    period: [0..9223372036854775807]
-```
-```
-TF/SolidState/U/<id>/I/state
-   [true|false]
+TF/SolidState/U/<id>/I
+   monoflopParameters: 
+     period: Number <from: 0 to: 9223372036854775807>
+   state: Boolean <true,false> 
+   
 ```
 ```
 TF/SolidState/U/<id>/S/firmware
@@ -3599,7 +3238,7 @@ TF/SolidState/U/<id>/S/hardware
 ```
 ```
 TF/SolidState/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/SolidState/U/<id>/S/state
@@ -3620,18 +3259,14 @@ TF/SoundIntensity/U/<id>/E/soundIntensity/reached
    
 ```
 ```
-TF/SoundIntensity/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/SoundIntensity/U/<id>/I/soundIntensity/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/SoundIntensity/U/<id>/I/soundIntensity/threshold
-   option: [x|o|i|<|>]
-    min: [0..10000]
-    max: [0..10000]
+TF/SoundIntensity/U/<id>/I
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   intensityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   intensityCallbackThreshold: 
+     max: Number <from: 0 to: 10000>
+     min: Number <from: 0 to: 10000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/SoundIntensity/U/<id>/S/debounce/period
@@ -3647,7 +3282,7 @@ TF/SoundIntensity/U/<id>/S/hardware
 ```
 ```
 TF/SoundIntensity/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/SoundIntensity/U/<id>/S/soundIntensity/callbackPeriod
@@ -3672,22 +3307,17 @@ TF/Temperature/U/<id>/E/temperature/reached
      value: [-2500..8500]
 ```
 ```
-TF/Temperature/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/Temperature/U/<id>/I/mode
-   mode:[Fast|Slow]
-```
-```
-TF/Temperature/U/<id>/I/temperature/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/Temperature/U/<id>/I/temperature/threshold
-   option: [x|o|i|<|>]
-    min: [-2500..8500]
-    max: [-2500..8500]
+TF/Temperature/U/<id>/I
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   mode: 
+     Mode: String <Fast,Slow>
+   resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureThreshold: 
+     max: Number <from: -2500 to: 8500>
+     min: Number <from: -2500 to: 8500>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/Temperature/U/<id>/S/debounce/period
@@ -3707,7 +3337,7 @@ TF/Temperature/U/<id>/S/mode
 ```
 ```
 TF/Temperature/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/Temperature/U/<id>/S/temperature/callbackPeriod
@@ -3742,28 +3372,19 @@ TF/TemperatureIR/U/<id>/E/objectTemperature/reached
      value: [-700..3800]
 ```
 ```
-TF/TemperatureIR/U/<id>/I/ambientTemperature/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/TemperatureIR/U/<id>/I/ambientTemperature/threshold
-   option: [x|o|i|<|>]
-    min: [-400..1250]
-    max: [-400..1250]
-```
-```
-TF/TemperatureIR/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/TemperatureIR/U/<id>/I/objectTemperature/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/TemperatureIR/U/<id>/I/objectTemperature/threshold
-   option: [x|o|i|<|>]
-    min: [-700..3800]
-    max: [-700..3800]
+TF/TemperatureIR/U/<id>/I
+   ambientTemperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   ambientTemperatureCallbackThreshold: 
+     max: Number <from: -400 to: 1250>
+     min: Number <from: -400 to: 1250>
+     option: String <[x, o, i, <, >]>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   objectTemperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   objectTemperatureCallbackThreshold: 
+     max: Number <from: -700 to: 3800>
+     min: Number <from: -700 to: 3800>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/TemperatureIR/U/<id>/S/ambientTemperature/callbackPeriod
@@ -3799,7 +3420,7 @@ TF/TemperatureIR/U/<id>/S/objectTemperature/threshold
 ```
 ```
 TF/TemperatureIR/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### ThermoCouple
@@ -3814,24 +3435,18 @@ TF/ThermoCouple/U/<id>/E/temperature/reached
      value: [-21000..180000]
 ```
 ```
-TF/ThermoCouple/U/<id>/I/configuration
-   averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]
-    type: [B|E|J|K|N|R|S|T|G8|G32]
-    filter: [Hz_50|Hz_60]
-```
-```
-TF/ThermoCouple/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/ThermoCouple/U/<id>/I/temperature/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/ThermoCouple/U/<id>/I/temperature/threshold
-   option: [x|o|i|<|>]
-    min: [-21000..180000]
-    max: [-21000..180000]
+TF/ThermoCouple/U/<id>/I
+   configuration: 
+     Averaging: String <sample_1,sample_2,sample_4,sample_8,sample_16>
+     Filter: String <Hz_50,Hz_60>
+     Type: String <B,E,J,K,N,R,S,T,G8,G32>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureCallbackThreshold: 
+     max: Number <from: -21000 to: 180000>
+     min: Number <from: -21000 to: 180000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/ThermoCouple/U/<id>/S/configuration
@@ -3853,7 +3468,7 @@ TF/ThermoCouple/U/<id>/S/hardware
 ```
 ```
 TF/ThermoCouple/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/ThermoCouple/U/<id>/S/temperature/callbackPeriod
@@ -3873,6 +3488,10 @@ TF/Tilt/U/<id>/E/tiltState
      value:  [0..2]
 ```
 ```
+TF/Tilt/U/<id>/I
+   
+```
+```
 TF/Tilt/U/<id>/S/firmware
    [[-32768...32767]]_*
 ```
@@ -3882,7 +3501,7 @@ TF/Tilt/U/<id>/S/hardware
 ```
 ```
 TF/Tilt/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### UVLight
@@ -3897,18 +3516,15 @@ TF/UVLight/U/<id>/E/uvLight/reached
      value: [0..328000]
 ```
 ```
-TF/UVLight/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/UVLight/U/<id>/I/uvLight/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/UVLight/U/<id>/I/uvLight/threshold
-   option: [x|o|i|<|>]
-    min: [0..328000]
-    max: [0..328000]
+TF/UVLight/U/<id>/I
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   movingAverage: Number <from: 0 to: 100>
+   uvLightCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   uvLightCallbackThreshold: 
+     max: Number <from: 0 to: 328000>
+     min: Number <from: 0 to: 328000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/UVLight/U/<id>/S/debounce/period
@@ -3924,7 +3540,7 @@ TF/UVLight/U/<id>/S/hardware
 ```
 ```
 TF/UVLight/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/UVLight/U/<id>/S/uvLight/callbackPeriod
@@ -3967,6 +3583,33 @@ TF/VoltageCurrent/U/<id>/E/voltage
 TF/VoltageCurrent/U/<id>/E/voltage/reached
    - timestamp: [0..9223372036854775807]
      value: [-50001..50001]
+```
+```
+TF/VoltageCurrent/U/<id>/I
+   calibration: 
+     gainDivisor: Number <from: 1 to: 2147483647>
+     gainMultiplier: Number <from: 1 to: 2147483647>
+   configuration: 
+     Averaging: String <AVERAGING_1,AVERAGING_4,AVERAGING_16,AVERAGING_64,AVERAGING_128,AVERAGING_256,AVERAGING_512,AVERAGING_1024>
+     Conversion: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
+     Conversion: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
+   currentCalbackThreshold: 
+     max: Number <from: 0 to: 36000>
+     min: Number <from: 0 to: 36000>
+     option: String <[x, o, i, <, >]>
+   currentCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   powerCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   powerCallbackThreshold: 
+     max: Number <from: 0 to: 720000>
+     min: Number <from: 0 to: 720000>
+     option: String <[x, o, i, <, >]>
+   voltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   voltageCallbackThreshold: 
+     max: Number <from: -5001 to: 5001>
+     min: Number <from: -5001 to: 5001>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/I/calibration
@@ -4050,7 +3693,7 @@ TF/VoltageCurrent/U/<id>/S/hardware
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/position
-   [0|1|2|3|4|5|6|7|8|a|b|c|d]
+   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/power/callbackPeriod
@@ -4069,7 +3712,6 @@ TF/VoltageCurrent/U/<id>/S/voltage/callbackPeriod
 ```
 TF/VoltageCurrent/U/<id>/S/voltage/threshold
    option: [x|o|i|<|>]
-    min: [0..50001]
+    min: [-50001..50001]
     max: [-50001..50001]
 ```
-
