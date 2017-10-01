@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.accelerometer;
 
+import ch.quantasy.gateway.intent.accelerometer.AccelerometerIntent;
+import ch.quantasy.gateway.intent.accelerometer.DeviceConfiguration;
+import ch.quantasy.gateway.intent.accelerometer.DeviceAccelerationCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAccelerometer;
@@ -54,35 +57,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class AccelerometerDevice extends GenericDevice<BrickletAccelerometer, AccelerometerDeviceCallback> {
-
-    private DeviceConfiguration configuration;
-    private Long callbackPeriod;
-    private Long debouncePeriod;
-    private DeviceAccelerationCallbackThreshold accelerationThreshold;
+public class AccelerometerDevice extends GenericDevice<BrickletAccelerometer, AccelerometerDeviceCallback, AccelerometerIntent> {
 
     public AccelerometerDevice(TinkerforgeStack stack, BrickletAccelerometer device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new AccelerometerIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletAccelerometer device) {
         device.addAccelerationListener(super.getCallback());
         device.addAccelerationReachedListener(super.getCallback());
-
-        if (configuration != null) {
-            setConfiguration(configuration);
-        }
-        if (callbackPeriod != null) {
-            setAccelerationCallbackPeriod(this.callbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (accelerationThreshold != null) {
-            setAccelerationCallbackThreshold(accelerationThreshold);
-        }
-
     }
 
     @Override
@@ -91,44 +75,52 @@ public class AccelerometerDevice extends GenericDevice<BrickletAccelerometer, Ac
         device.removeAccelerationReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AccelerometerDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(AccelerometerIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AccelerometerDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.callbackPeriod != null) {
+            try {
+                getDevice().setAccelerationCallbackPeriod(intent.callbackPeriod);
+                getIntent().callbackPeriod = getDevice().getAccelerationCallbackPeriod();
+                super.getCallback().accelerationCallbackPeriodChanged(getIntent().callbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AccelerometerDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.accelerationThreshold != null) {
+            try {
+                getDevice().setAccelerationCallbackThreshold(intent.accelerationThreshold.getOption(), intent.accelerationThreshold.getMinX(), intent.accelerationThreshold.getMaxX(),
+                        intent.accelerationThreshold.getMinY(), intent.accelerationThreshold.getMaxY(), intent.accelerationThreshold.getMinZ(), intent.accelerationThreshold.getMaxZ());
+                getIntent().accelerationThreshold = new DeviceAccelerationCallbackThreshold(getDevice().getAccelerationCallbackThreshold());
+                super.getCallback().accelerationCallbackThresholdChanged(getIntent().accelerationThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AccelerometerDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.configuration != null) {
+            try {
+                getDevice().setConfiguration(intent.configuration.getDataRate().getValue(), intent.configuration.getFullScale().getValue(), intent.configuration.getFilterBandwidth().getValue());
+                getIntent().configuration = new DeviceConfiguration(getDevice().getConfiguration());
+                super.getCallback().configurationChanged(getIntent().configuration);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AccelerometerDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    public void setAccelerationCallbackPeriod(Long period) {
-        try {
-            getDevice().setAccelerationCallbackPeriod(period);
-            this.callbackPeriod = getDevice().getAccelerationCallbackPeriod();
-            super.getCallback().accelerationCallbackPeriodChanged(this.callbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AccelerometerDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setAccelerationCallbackThreshold(DeviceAccelerationCallbackThreshold threshold) {
-        try {
-            getDevice().setAccelerationCallbackThreshold(threshold.getOption(), threshold.getMinX(), threshold.getMaxX(),threshold.getMinY(), threshold.getMaxY(),threshold.getMinZ(), threshold.getMaxZ());
-            this.accelerationThreshold = new DeviceAccelerationCallbackThreshold(getDevice().getAccelerationCallbackThreshold());
-            super.getCallback().accelerationCallbackThresholdChanged(this.accelerationThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AccelerometerDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setConfiguration(DeviceConfiguration configuration) {
-        try {
-            getDevice().setConfiguration(configuration.getDataRate().getValue(), configuration.getFullScale().getValue(),configuration.getFilterBandwidth().getValue());
-            this.configuration = new DeviceConfiguration(getDevice().getConfiguration());
-            super.getCallback().configurationChanged(this.configuration);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AccelerometerDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

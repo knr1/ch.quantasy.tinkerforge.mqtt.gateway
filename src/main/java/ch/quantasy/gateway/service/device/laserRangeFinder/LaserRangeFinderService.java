@@ -43,14 +43,15 @@
 package ch.quantasy.gateway.service.device.laserRangeFinder;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceAveraging;
-import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceConfiguration;
-import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceDistanceCallbackThreshold;
-import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceMode;
-import ch.quantasy.tinkerforge.device.laserRangeFinder.DeviceVelocityCallbackThreshold;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceAveraging;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceConfiguration;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceMode;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceVelocityCallbackThreshold;
+import ch.quantasy.gateway.intent.laserRangeFinder.LaserRangeFinderIntent;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDeviceCallback;
-import ch.quantasy.tinkerforge.device.laserRangeFinder.SensorHardware;
+import ch.quantasy.gateway.intent.laserRangeFinder.SensorHardware;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -64,45 +65,6 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
         super(mqttURI, device, new LaserRangeFinderServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_DISTANCE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDistanceCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_VELOCITY_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setVelocityCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_DISTANCE_THRESHOLD)) {
-            DeviceDistanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceDistanceCallbackThreshold.class);
-            getDevice().setDistanceCallbackThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_VELOCITY_THRESHOLD)) {
-            DeviceVelocityCallbackThreshold threshold = getMapper().readValue(payload, DeviceVelocityCallbackThreshold.class);
-            getDevice().setVelocityCallbackThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_LASER)) {
-            Boolean laserEnabled = getMapper().readValue(payload, Boolean.class);
-            getDevice().setLaser(laserEnabled);
-        }
-        if (string.startsWith(getContract().INTENT_MOVING_AVERAGE)) {
-            DeviceAveraging movingAverage = getMapper().readValue(payload, DeviceAveraging.class);
-            getDevice().setMovingAverage(movingAverage);
-        }
-        if (string.startsWith(getContract().INTENT_DEVICE_MODE)) {
-            DeviceMode deviceMode = getMapper().readValue(payload, DeviceMode.class);
-            getDevice().setMode(deviceMode);
-        }
-        if (string.startsWith(getContract().INTENT_DEVICE_CONFIGURATION)) {
-            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-        }
-    }
 
     @Override
     public void distance(int i) {

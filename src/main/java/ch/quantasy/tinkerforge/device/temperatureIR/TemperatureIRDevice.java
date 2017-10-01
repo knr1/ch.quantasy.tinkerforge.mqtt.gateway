@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.temperatureIR;
 
+import ch.quantasy.gateway.intent.temperatureIR.DeviceAmbientTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.temperatureIR.DeviceObjectTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.temperatureIR.TemperatureIRIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletTemperatureIR;
@@ -54,16 +57,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class TemperatureIRDevice extends GenericDevice<BrickletTemperatureIR, TemperatureIRDeviceCallback> {
-
-    private Long analogCallbackPeriod;
-    private Long objectTemperatureCallbackPeriod;
-    private Long debouncePeriod;
-    private DeviceObjectTemperatureCallbackThreshold objectTemperatureThreshold;
-    private DeviceAmbientTemperatureCallbackThreshold ambientTemperatureThreshold;
+public class TemperatureIRDevice extends GenericDevice<BrickletTemperatureIR, TemperatureIRDeviceCallback, TemperatureIRIntent> {
 
     public TemperatureIRDevice(TinkerforgeStack stack, BrickletTemperatureIR device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new TemperatureIRIntent());
     }
 
     @Override
@@ -72,21 +69,6 @@ public class TemperatureIRDevice extends GenericDevice<BrickletTemperatureIR, Te
         device.addAmbientTemperatureReachedListener(super.getCallback());
         device.addObjectTemperatureListener(super.getCallback());
         device.addObjectTemperatureReachedListener(super.getCallback());
-        if (analogCallbackPeriod != null) {
-            setAmbientTemperatureCallbackPeriod(analogCallbackPeriod);
-        }
-        if (objectTemperatureCallbackPeriod != null) {
-            setObjectTemperatureCallbackPeriod(this.objectTemperatureCallbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (objectTemperatureThreshold != null) {
-            setObjectTemperatureThreshold(objectTemperatureThreshold);
-        }
-        if (ambientTemperatureThreshold != null) {
-            setAmbientTemperatureThreshold(ambientTemperatureThreshold);
-        }
     }
 
     @Override
@@ -97,55 +79,59 @@ public class TemperatureIRDevice extends GenericDevice<BrickletTemperatureIR, Te
         device.removeObjectTemperatureReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            super.getCallback().debouncePeriodChanged(getDevice().getDebouncePeriod());
-            this.debouncePeriod = period;
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(TemperatureIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(TemperatureIRIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void setAmbientTemperatureCallbackPeriod(Long period) {
-        try {
-            getDevice().setAmbientTemperatureCallbackPeriod(period);
-            this.analogCallbackPeriod = getDevice().getAmbientTemperatureCallbackPeriod();
-            super.getCallback().ambientTemperatureCallbackPeriodChanged(this.analogCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(TemperatureIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
-
-    public void setObjectTemperatureCallbackPeriod(Long period) {
-        try {
-            getDevice().setObjectTemperatureCallbackPeriod(period);
-            this.objectTemperatureCallbackPeriod = getDevice().getObjectTemperatureCallbackPeriod();
-            super.getCallback().objectTemperatureCallbackPeriodChanged(this.objectTemperatureCallbackPeriod);
-
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(TemperatureIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(TemperatureIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setObjectTemperatureThreshold(DeviceObjectTemperatureCallbackThreshold threshold) {
-        try {
-            getDevice().setObjectTemperatureCallbackThreshold(threshold.option, threshold.min, threshold.max);
-            this.objectTemperatureThreshold = new DeviceObjectTemperatureCallbackThreshold(getDevice().getObjectTemperatureCallbackThreshold());
-            super.getCallback().objectTemperatureCallbackThresholdChanged(this.objectTemperatureThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(TemperatureIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.ambientTemperatureCallbackPeriod != null) {
+            try {
+                getDevice().setAmbientTemperatureCallbackPeriod(intent.ambientTemperatureCallbackPeriod);
+                getIntent().ambientTemperatureCallbackPeriod = getDevice().getAmbientTemperatureCallbackPeriod();
+                super.getCallback().ambientTemperatureCallbackPeriodChanged(getIntent().ambientTemperatureCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(TemperatureIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setAmbientTemperatureThreshold(DeviceAmbientTemperatureCallbackThreshold threshold) {
-        try {
-            getDevice().setAmbientTemperatureCallbackThreshold(threshold.option, threshold.min, threshold.max);
-            this.ambientTemperatureThreshold = new DeviceAmbientTemperatureCallbackThreshold(getDevice().getAmbientTemperatureCallbackThreshold());
-            super.getCallback().ambientTemperatureCallbackThresholdChanged(this.ambientTemperatureThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(TemperatureIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.ambientTemperatureCallbackThreshold != null) {
+            try {
+                getDevice().setAmbientTemperatureCallbackThreshold(intent.ambientTemperatureCallbackThreshold.getOption(), intent.ambientTemperatureCallbackThreshold.getMin(), intent.ambientTemperatureCallbackThreshold.getMax());
+                getIntent().ambientTemperatureCallbackThreshold = new DeviceAmbientTemperatureCallbackThreshold(getDevice().getAmbientTemperatureCallbackThreshold());
+                super.getCallback().ambientTemperatureCallbackThresholdChanged(getIntent().ambientTemperatureCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(TemperatureIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
+        if (intent.objectTemperatureCallbackPeriod != null) {
+            try {
+                getDevice().setObjectTemperatureCallbackPeriod(intent.objectTemperatureCallbackPeriod);
+                getIntent().objectTemperatureCallbackPeriod = getDevice().getObjectTemperatureCallbackPeriod();
+                super.getCallback().objectTemperatureCallbackPeriodChanged(getIntent().objectTemperatureCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(TemperatureIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.objectTemperatureCallbackThreshold != null) {
+            try {
+                getDevice().setObjectTemperatureCallbackThreshold(intent.objectTemperatureCallbackThreshold.getOption(), intent.objectTemperatureCallbackThreshold.getMin(), intent.objectTemperatureCallbackThreshold.getMax());
+                getIntent().objectTemperatureCallbackThreshold = new DeviceObjectTemperatureCallbackThreshold(getDevice().getObjectTemperatureCallbackThreshold());
+                super.getCallback().objectTemperatureCallbackThresholdChanged(getIntent().objectTemperatureCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(TemperatureIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
+    }
 }

@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.nfc;
 
+import ch.quantasy.gateway.intent.nfc.NFCIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
@@ -55,18 +56,15 @@ public class NFCServiceContract extends DeviceServiceContract {
 
     public final String SCANNING;
     public final String CALLBACK_PERIOD;
-    public final String INTENT_SCANNING_CALLBACK_PERIOD;
     public final String STATUS_SCANNING_CALLBACK_PERIOD;
     public final String TAG;
     public final String EVENT_TAG_DISCOVERD;
     public final String EVENT_TAG_VANISHED;
     public final String READ;
     public final String EVENT_TAG_READ;
-    public final String INTENT_READ;
-    public final String WRITE;
+     public final String WRITE;
     public final String EVENT_TAG_WRITTEN;
-    public final String INTENT_WRITE;
-
+  
     public NFCServiceContract(NFCRFIDDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -76,28 +74,23 @@ public class NFCServiceContract extends DeviceServiceContract {
     }
 
     public NFCServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,NFCIntent.class);
         SCANNING = "scanning";
         CALLBACK_PERIOD = "callbackPeriod";
-        INTENT_SCANNING_CALLBACK_PERIOD = INTENT + "/" + SCANNING + "/" + CALLBACK_PERIOD;
-        STATUS_SCANNING_CALLBACK_PERIOD = STATUS + "/" + SCANNING + "/" + CALLBACK_PERIOD;
+         STATUS_SCANNING_CALLBACK_PERIOD = STATUS + "/" + SCANNING + "/" + CALLBACK_PERIOD;
         TAG = "tag";
         EVENT_TAG_DISCOVERD = EVENT + "/" + TAG + "/discovered";
         EVENT_TAG_VANISHED = EVENT + "/" + TAG + "/vanished";
         READ = "read";
-        INTENT_READ = INTENT + "/" + READ;
         EVENT_TAG_READ = EVENT + "/" + TAG + "/" + READ;
         WRITE = "write";
-        INTENT_WRITE = INTENT + "/" + WRITE;
-        EVENT_TAG_WRITTEN = EVENT + "/" + TAG + "/written";
+         EVENT_TAG_WRITTEN = EVENT + "/" + TAG + "/written";
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_READ, "[00..FF]_9");
-
+    
         descriptions.put(EVENT_TAG_DISCOVERD, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    type: [MifareClassic|Type1|Type2]");
         descriptions.put(EVENT_TAG_READ, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    value: [00..FF]_*");
 
@@ -105,7 +98,6 @@ public class NFCServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
         descriptions.put(EVENT_TAG_WRITTEN, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    state: [WritePageError|WritePageReady]\n    value: [00..FF]_*");
-        descriptions.put(INTENT_WRITE, "id: [00..FF]_9\n  value: [00..FF]_*");
-
+     
     }
 }

@@ -42,7 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.soundIntensity;
 
-
+import ch.quantasy.gateway.intent.soundIntensity.DeviceSoundIntensityCallbackThreshold;
+import ch.quantasy.gateway.intent.soundIntensity.SoundIntensityIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletSoundIntensity;
@@ -55,29 +56,19 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class SoundIntensityDevice extends GenericDevice<BrickletSoundIntensity, SoundIntensityDeviceCallback> {
+public class SoundIntensityDevice extends GenericDevice<BrickletSoundIntensity, SoundIntensityDeviceCallback,SoundIntensityIntent> {
 
-    private Long debouncePeriod;
-    private Long intensityCallbackPeriod;
-    private DeviceSoundIntensityCallbackThreshold threshold;
     
+
     public SoundIntensityDevice(TinkerforgeStack stack, BrickletSoundIntensity device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device,new SoundIntensityIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletSoundIntensity device) {
         device.addIntensityListener(getCallback());
         device.addIntensityReachedListener(getCallback());
-        if(debouncePeriod!=null){
-            setDebouncePeriod(debouncePeriod);
-        }
-        if(intensityCallbackPeriod!=null){
-            setSoundIntensityCallbackPeriod(intensityCallbackPeriod);
-        }
-        if(threshold!=null){
-            setSoundIntensityCallbackThreshold(threshold);
-        }
+        
     }
 
     @Override
@@ -86,34 +77,43 @@ public class SoundIntensityDevice extends GenericDevice<BrickletSoundIntensity, 
         device.removeIntensityReachedListener(getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(SoundIntensityDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(SoundIntensityIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(SoundIntensityDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.intensityCallbackPeriod != null) {
+            try {
+                getDevice().setIntensityCallbackPeriod(intent.intensityCallbackPeriod);
+                getIntent().intensityCallbackPeriod = getDevice().getIntensityCallbackPeriod();
+                super.getCallback().soundIntensityCallbackPeriodChanged(getIntent().intensityCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(SoundIntensityDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+      
+        if (intent.intensityCallbackThreshold != null) {
+            try {
+                getDevice().setIntensityCallbackThreshold(intent.intensityCallbackThreshold.getOption(), intent.intensityCallbackThreshold.getMin(), intent.intensityCallbackThreshold.getMax());
+                getIntent().intensityCallbackThreshold = new DeviceSoundIntensityCallbackThreshold(getDevice().getIntensityCallbackThreshold());
+                super.getCallback().soundIntensityCallbackThresholdChanged(getIntent().intensityCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(SoundIntensityDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    public void setSoundIntensityCallbackPeriod(Long period) {
-        try {
-            getDevice().setIntensityCallbackPeriod(period);
-            this.intensityCallbackPeriod = getDevice().getIntensityCallbackPeriod();
-            super.getCallback().soundIntensityCallbackPeriodChanged(this.intensityCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(SoundIntensityDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setSoundIntensityCallbackThreshold(DeviceSoundIntensityCallbackThreshold threshold) {
-        try {
-            getDevice().setIntensityCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.threshold = new DeviceSoundIntensityCallbackThreshold(getDevice().getIntensityCallbackThreshold());
-            super.getCallback().soundIntensityCallbackThresholdChanged(this.threshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(SoundIntensityDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

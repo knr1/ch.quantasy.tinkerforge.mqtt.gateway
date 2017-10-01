@@ -42,6 +42,12 @@
  */
 package ch.quantasy.tinkerforge.device.laserRangeFinder;
 
+import ch.quantasy.gateway.intent.laserRangeFinder.SensorHardware;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceMode;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceVelocityCallbackThreshold;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceAveraging;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceConfiguration;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceDistanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletLaserRangeFinder;
 
@@ -49,15 +55,24 @@ import com.tinkerforge.BrickletLaserRangeFinder;
  *
  * @author reto
  */
-public interface LaserRangeFinderDeviceCallback extends DeviceCallback, BrickletLaserRangeFinder.DistanceListener, BrickletLaserRangeFinder.DistanceReachedListener,BrickletLaserRangeFinder.VelocityListener,BrickletLaserRangeFinder.VelocityReachedListener {
+public interface LaserRangeFinderDeviceCallback extends DeviceCallback, BrickletLaserRangeFinder.DistanceListener, BrickletLaserRangeFinder.DistanceReachedListener, BrickletLaserRangeFinder.VelocityListener, BrickletLaserRangeFinder.VelocityReachedListener {
+
     public void distanceCallbackPeriodChanged(long period);
+
     public void velocityCallbackPeriodChanged(long period);
+
     public void debouncePeriodChanged(long period);
+
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold);
+
     public void velocityCallbackThresholdChanged(DeviceVelocityCallbackThreshold threshold);
+
     public void laserStatusChanged(boolean laserEnabled);
+
     public void movingAverageChanged(DeviceAveraging averaging);
+
     public void deviceModeChanged(DeviceMode deviceMode);
+
     public void deviceConfigurationChanged(DeviceConfiguration configuration);
 
     public void sensorHardwareVersion(SensorHardware.Version version);

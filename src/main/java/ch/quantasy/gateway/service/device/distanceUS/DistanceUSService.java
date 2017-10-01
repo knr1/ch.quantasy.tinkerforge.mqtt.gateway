@@ -43,7 +43,8 @@
 package ch.quantasy.gateway.service.device.distanceUS;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.distanceUS.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.intent.distanceUS.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.intent.distanceUS.DistanceUSIntent;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDeviceCallback;
 import java.net.URI;
@@ -58,34 +59,6 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
     public DistanceUSService(DistanceUSDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new DistanceUSServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_DISTANCE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDistanceCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_DISTANCE_THRESHOLD)) {
-
-            DeviceDistanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceDistanceCallbackThreshold.class);
-            getDevice().setDistanceCallbackThreshold(threshold);
-        }
-
-        if (string.startsWith(getContract().INTENT_MOVING_AVERAGE)) {
-
-            Short movingAverage = getMapper().readValue(payload, Short.class);
-            getDevice().setMovingAverage(movingAverage);
-        }
-
     }
 
     @Override

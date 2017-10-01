@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.rotaryEncoder;
 
+import ch.quantasy.gateway.intent.rotaryEncoder.DeviceCountCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletRotaryEncoder;
 
@@ -56,7 +57,7 @@ public interface RotaryEncoderDeviceCallback extends DeviceCallback, BrickletRot
     public void debouncePeriodChanged(long period);
 
     public void countCallbackThresholdChanged(DeviceCountCallbackThreshold threshold);
-    
+
     public void countReset(long latestCount);
 
 }

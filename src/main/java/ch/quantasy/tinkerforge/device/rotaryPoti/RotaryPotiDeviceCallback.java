@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.rotaryPoti;
 
+import ch.quantasy.gateway.intent.rotaryPoti.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.intent.rotaryPoti.DevicePositionCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletRotaryPoti;
 

@@ -42,7 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.co2;
 
-
+import ch.quantasy.gateway.intent.co2.CO2Intent;
+import ch.quantasy.gateway.intent.co2.DeviceCO2ConcentrationCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletCO2;
@@ -55,29 +56,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class CO2Device extends GenericDevice<BrickletCO2, CO2DeviceCallback> {
+public class CO2Device extends GenericDevice<BrickletCO2, CO2DeviceCallback, CO2Intent> {
 
-    private Long debouncePeriod;
-    private Long co2ConcentrationCallbackPeriod;
-    private DeviceCO2ConcentrationCallbackThreshold threshold;
-    
     public CO2Device(TinkerforgeStack stack, BrickletCO2 device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new CO2Intent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletCO2 device) {
         device.addCO2ConcentrationListener(getCallback());
         device.addCO2ConcentrationReachedListener(getCallback());
-        if(debouncePeriod!=null){
-            setDebouncePeriod(debouncePeriod);
-        }
-        if(co2ConcentrationCallbackPeriod!=null){
-            setCO2ConcentrationCallbackPeriod(co2ConcentrationCallbackPeriod);
-        }
-        if(threshold!=null){
-            setCO2ConcentrationCallbackThreshold(threshold);
-        }
     }
 
     @Override
@@ -86,34 +74,41 @@ public class CO2Device extends GenericDevice<BrickletCO2, CO2DeviceCallback> {
         device.removeCO2ConcentrationReachedListener(getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(CO2Device.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(CO2Intent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(CO2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.co2ConcentrationCallbackPeriod != null) {
+            try {
+                getDevice().setCO2ConcentrationCallbackPeriod(intent.co2ConcentrationCallbackPeriod);
+                getIntent().co2ConcentrationCallbackPeriod = getDevice().getCO2ConcentrationCallbackPeriod();
+                super.getCallback().co2ConcentrationCallbackPeriodChanged(getIntent().co2ConcentrationCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(CO2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.co2ConcentrationCallbackThreshold != null) {
+            try {
+                getDevice().setCO2ConcentrationCallbackThreshold(intent.co2ConcentrationCallbackThreshold.getOption(), intent.co2ConcentrationCallbackThreshold.getMin(), intent.co2ConcentrationCallbackThreshold.getMax());
+                getIntent().co2ConcentrationCallbackThreshold = new DeviceCO2ConcentrationCallbackThreshold(getDevice().getCO2ConcentrationCallbackThreshold());
+                super.getCallback().co2ConcentrationCallbackThresholdChanged(getIntent().co2ConcentrationCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(CO2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    public void setCO2ConcentrationCallbackPeriod(Long period) {
-        try {
-            getDevice().setCO2ConcentrationCallbackPeriod(period);
-            this.co2ConcentrationCallbackPeriod = getDevice().getCO2ConcentrationCallbackPeriod();
-            super.getCallback().co2ConcentrationCallbackPeriodChanged(this.co2ConcentrationCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(CO2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setCO2ConcentrationCallbackThreshold(DeviceCO2ConcentrationCallbackThreshold threshold) {
-        try {
-            getDevice().setCO2ConcentrationCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.threshold = new DeviceCO2ConcentrationCallbackThreshold(getDevice().getCO2ConcentrationCallbackThreshold());
-            super.getCallback().co2ConcentrationCallbackThresholdChanged(this.threshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(CO2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

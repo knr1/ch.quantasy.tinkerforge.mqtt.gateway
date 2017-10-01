@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.realTimeClock;
 
+import ch.quantasy.gateway.intent.realTimeClock.AlarmParamter;
+import ch.quantasy.gateway.intent.realTimeClock.DateTimeParameter;
+import ch.quantasy.gateway.intent.realTimeClock.RealTimeClockIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletRealTimeClock;
@@ -56,34 +59,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class RealTimeClockDevice extends GenericDevice<BrickletRealTimeClock, RealTimeClockDeviceCallback> {
-
-    private DateTimeParameter dateTimeParameter;
-    private Byte offset;
-    private Long period;
-    private AlarmParamter alarmParameter;
+public class RealTimeClockDevice extends GenericDevice<BrickletRealTimeClock, RealTimeClockDeviceCallback, RealTimeClockIntent> {
 
     public RealTimeClockDevice(TinkerforgeStack stack, BrickletRealTimeClock device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new RealTimeClockIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletRealTimeClock device) {
         device.addAlarmListener(super.getCallback());
         device.addDateTimeListener(super.getCallback());
-        if (dateTimeParameter != null) {
-            this.setDateTime(dateTimeParameter);
-        }
-        if (offset != null) {
-            this.setOffset(offset);
-        }
-        if(period!=null){
-            this.setDateTimeCallbackPeriod(period);
-        }
-        if(alarmParameter!=null){
-            this.setAlarm(alarmParameter);
-        }
-
     }
 
     @Override
@@ -92,42 +77,41 @@ public class RealTimeClockDevice extends GenericDevice<BrickletRealTimeClock, Re
         device.removeDateTimeListener(super.getCallback());
     }
 
-    public void setDateTime(DateTimeParameter dateTimeParameter) {
-        try {
-            getDevice().setDateTime(dateTimeParameter.getYear(), dateTimeParameter.getMonth(), dateTimeParameter.getDay(), dateTimeParameter.getHour(), dateTimeParameter.getMinute(), dateTimeParameter.getSecond(), dateTimeParameter.getCentisecond(), dateTimeParameter.getWeekday().getValue());
-            this.dateTimeParameter = new DateTimeParameter(getDevice().getDateTime());
-            super.getCallback().dateTimeChanged(this.dateTimeParameter);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(RealTimeClockIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-    public void setDateTimeCallbackPeriod(Long period){
-         try {
-            getDevice().setDateTimeCallbackPeriod(period);
-            this.period = getDevice().getDateTimeCallbackPeriod();
-            super.getCallback().dateTimeCallbackPeriodChanged(this.period);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
+        if (intent.dateTimeParameter != null) {
 
-    public void setAlarm(AlarmParamter alarmParameter) {
-        try {
-            getDevice().setAlarm(alarmParameter.getMonth(), alarmParameter.getDay(), alarmParameter.getHour(), alarmParameter.getMinute(), alarmParameter.getSecond(), alarmParameter.getWeekday().getValue(),alarmParameter.getInterval());
-            this.alarmParameter = new AlarmParamter(getDevice().getAlarm());
-            super.getCallback().alarmChanged(this.alarmParameter);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                getDevice().setDateTime(intent.dateTimeParameter.getYear(), intent.dateTimeParameter.getMonth(), intent.dateTimeParameter.getDay(), intent.dateTimeParameter.getHour(), intent.dateTimeParameter.getMinute(), intent.dateTimeParameter.getSecond(), intent.dateTimeParameter.getCentisecond(), intent.dateTimeParameter.getWeekday().getValue());
+                getIntent().dateTimeParameter = new DateTimeParameter(getDevice().getDateTime());
+                super.getCallback().dateTimeChanged(getIntent().dateTimeParameter);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.alarmParameter != null) {
+            try {
+                getDevice().setAlarm(intent.alarmParameter.getMonth(), intent.alarmParameter.getDay(), intent.alarmParameter.getHour(), intent.alarmParameter.getMinute(), intent.alarmParameter.getSecond(), intent.alarmParameter.getWeekday().getValue(), intent.alarmParameter.getInterval());
+                getIntent().alarmParameter = new AlarmParamter(getDevice().getAlarm());
+                super.getCallback().alarmChanged(getIntent().alarmParameter);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.offset != null) {
+            try {
+                getDevice().setOffset(intent.offset);
+                getIntent().offset = getDevice().getOffset();
+                super.getCallback().offsetChanged(getIntent().offset);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-    public void setOffset(Byte offset) {
-        try {
-            getDevice().setOffset(offset);
-            this.offset = getDevice().getOffset();
-            super.getCallback().offsetChanged(this.offset);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RealTimeClockDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

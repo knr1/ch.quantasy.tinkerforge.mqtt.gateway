@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.analogInV2;
 
+import ch.quantasy.gateway.intent.analogInV2.DeviceVoltageCallbackThreshold;
+import ch.quantasy.gateway.intent.analogInV2.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletAnalogInV2;
 
@@ -49,7 +51,7 @@ import com.tinkerforge.BrickletAnalogInV2;
  *
  * @author reto
  */
-public interface AnalogInV2DeviceCallback extends DeviceCallback, BrickletAnalogInV2.AnalogValueListener, BrickletAnalogInV2.AnalogValueReachedListener,BrickletAnalogInV2.VoltageListener,BrickletAnalogInV2.VoltageReachedListener{
+public interface AnalogInV2DeviceCallback extends DeviceCallback, BrickletAnalogInV2.AnalogValueListener, BrickletAnalogInV2.AnalogValueReachedListener, BrickletAnalogInV2.VoltageListener, BrickletAnalogInV2.VoltageReachedListener {
 
     public void analogValueCallbackPeriodChanged(long period);
 
@@ -62,5 +64,5 @@ public interface AnalogInV2DeviceCallback extends DeviceCallback, BrickletAnalog
     public void voltageCallbackThresholdChanged(DeviceVoltageCallbackThreshold threshold);
 
     public void movingAverageChanged(Short movingAverage);
-    
+
 }

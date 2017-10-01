@@ -42,6 +42,11 @@
  */
 package ch.quantasy.tinkerforge.device.distanceIR;
 
+import ch.quantasy.gateway.intent.barometer.BarometerIntent;
+import ch.quantasy.gateway.intent.distanceIR.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.intent.distanceIR.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.intent.distanceIR.DistanceIRIntent;
+import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDistanceIR;
@@ -54,16 +59,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class DistanceIRDevice extends GenericDevice<BrickletDistanceIR, DistanceIRDeviceCallback> {
-
-    private Long analogCallbackPeriod;
-    private Long distanceCallbackPeriod;
-    private Long debouncePeriod;
-    private DeviceAnalogValueCallbackThreshold analogValueThreshold;
-    private DeviceDistanceCallbackThreshold distanceThreshold;
+public class DistanceIRDevice extends GenericDevice<BrickletDistanceIR, DistanceIRDeviceCallback, DistanceIRIntent> {
 
     public DistanceIRDevice(TinkerforgeStack stack, BrickletDistanceIR device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new DistanceIRIntent());
     }
 
     @Override
@@ -72,21 +71,6 @@ public class DistanceIRDevice extends GenericDevice<BrickletDistanceIR, Distance
         device.addAnalogValueReachedListener(super.getCallback());
         device.addDistanceListener(super.getCallback());
         device.addDistanceReachedListener(super.getCallback());
-        if (analogCallbackPeriod != null) {
-            setAnalogValueCallbackPeriod(analogCallbackPeriod);
-        }
-        if (distanceCallbackPeriod != null) {
-            setDistanceCallbackPeriod(this.distanceCallbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (analogValueThreshold != null) {
-            setAnalogValueThreshold(analogValueThreshold);
-        }
-        if (distanceThreshold != null) {
-            setDistanceCallbackThreshold(distanceThreshold);
-        }
     }
 
     @Override
@@ -97,55 +81,61 @@ public class DistanceIRDevice extends GenericDevice<BrickletDistanceIR, Distance
         device.removeDistanceReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DistanceIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(DistanceIRIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(BarometerDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.analogCallbackPeriod != null) {
+            try {
+                getDevice().setAnalogValueCallbackPeriod(intent.analogCallbackPeriod);
+                getIntent().analogCallbackPeriod = getDevice().getAnalogValueCallbackPeriod();
+                super.getCallback().analogValueCallbackPeriodChanged(getIntent().analogCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DistanceIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.distanceCallbackPeriod != null) {
+            try {
+                getDevice().setDistanceCallbackPeriod(intent.distanceCallbackPeriod);
+                getIntent().distanceCallbackPeriod = getDevice().getDistanceCallbackPeriod();
+                super.getCallback().distanceCallbackPeriodChanged(getIntent().distanceCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DistanceIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.analogValueCallbackThreshold != null) {
+            try {
+                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.getOption(), intent.analogValueCallbackThreshold.getMin(), intent.analogValueCallbackThreshold.getMax());
+                getIntent().analogValueCallbackThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
+                super.getCallback().analogValueCallbackThresholdChanged(getIntent().analogValueCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DistanceIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.distanceCallbackThreshold != null) {
+            try {
+                getDevice().setDistanceCallbackThreshold(intent.distanceCallbackThreshold.getOption(), intent.distanceCallbackThreshold.getMin(), intent.distanceCallbackThreshold.getMax());
+                getIntent().distanceCallbackThreshold = new DeviceDistanceCallbackThreshold(getDevice().getDistanceCallbackThreshold());
+                super.getCallback().distanceCallbackThresholdChanged(getIntent().distanceCallbackThreshold);
+
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DistanceIRDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    public void setAnalogValueCallbackPeriod(Long period) {
-        try {
-            getDevice().setAnalogValueCallbackPeriod(period);
-            this.analogCallbackPeriod = getDevice().getAnalogValueCallbackPeriod();
-            super.getCallback().analogValueCallbackPeriodChanged(this.analogCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DistanceIRDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setDistanceCallbackPeriod(Long period) {
-        try {
-            getDevice().setDistanceCallbackPeriod(period);
-            this.distanceCallbackPeriod=getDevice().getDistanceCallbackPeriod();
-            super.getCallback().distanceCallbackPeriodChanged(this.distanceCallbackPeriod );
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DistanceIRDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setAnalogValueThreshold(DeviceAnalogValueCallbackThreshold threshold) {
-        try {
-            getDevice().setAnalogValueCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.analogValueThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
-            super.getCallback().analogValueCallbackThresholdChanged(this.analogValueThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DistanceIRDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setDistanceCallbackThreshold(DeviceDistanceCallbackThreshold threshold) {
-        try {
-            getDevice().setDistanceCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.distanceThreshold = new DeviceDistanceCallbackThreshold(getDevice().getDistanceCallbackThreshold());
-            super.getCallback().distanceCallbackThresholdChanged(this.distanceThreshold);
-            
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DistanceIRDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

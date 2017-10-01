@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.thermoCouple;
 
+import ch.quantasy.gateway.intent.thermoCouple.DeviceConfiguration;
+import ch.quantasy.gateway.intent.thermoCouple.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.thermoCouple.ThermoCoupleIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletThermocouple;
@@ -54,15 +57,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class ThermoCoupleDevice extends GenericDevice<BrickletThermocouple, ThermoCoupleDeviceCallback> {
-
-    private DeviceConfiguration configuration;
-    private Long callbackPeriod;
-    private Long debouncePeriod;
-    private DeviceTemperatureCallbackThreshold temperatureThreshold;
+public class ThermoCoupleDevice extends GenericDevice<BrickletThermocouple, ThermoCoupleDeviceCallback, ThermoCoupleIntent> {
 
     public ThermoCoupleDevice(TinkerforgeStack stack, BrickletThermocouple device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new ThermoCoupleIntent());
     }
 
     @Override
@@ -70,19 +68,6 @@ public class ThermoCoupleDevice extends GenericDevice<BrickletThermocouple, Ther
         device.addTemperatureListener(super.getCallback());
         device.addTemperatureReachedListener(super.getCallback());
         device.addErrorStateListener(super.getCallback());
-
-        if (configuration != null) {
-            setConfiguration(configuration);
-        }
-        if (callbackPeriod != null) {
-            setTemperatureCallbackPeriod(this.callbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (temperatureThreshold != null) {
-            setTemperatureCallbackThreshold(temperatureThreshold);
-        }
 
     }
 
@@ -93,43 +78,49 @@ public class ThermoCoupleDevice extends GenericDevice<BrickletThermocouple, Ther
         device.removeErrorStateListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ThermoCoupleDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(ThermoCoupleIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void setTemperatureCallbackPeriod(Long period) {
-        try {
-            getDevice().setTemperatureCallbackPeriod(period);
-            this.callbackPeriod = getDevice().getTemperatureCallbackPeriod();
-            super.getCallback().temperatureCallbackPeriodChanged(this.callbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ThermoCoupleDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
-
-    public void setTemperatureCallbackThreshold(DeviceTemperatureCallbackThreshold threshold) {
-        try {
-            getDevice().setTemperatureCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.temperatureThreshold = new DeviceTemperatureCallbackThreshold(getDevice().getTemperatureCallbackThreshold());
-            super.getCallback().temperatureCallbackThresholdChanged(this.temperatureThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ThermoCoupleDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ThermoCoupleDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setConfiguration(DeviceConfiguration configuration) {
-        try {
-            getDevice().setConfiguration(configuration.getAveraging().getValue(), configuration.getType().getValue(),configuration.getFilter().getValue());
-            this.configuration = new DeviceConfiguration(getDevice().getConfiguration());
-            super.getCallback().configurationChanged(this.configuration);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ThermoCoupleDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.temperatureCallbackPeriod != null) {
+            try {
+                getDevice().setTemperatureCallbackPeriod(intent.temperatureCallbackPeriod);
+                getIntent().temperatureCallbackPeriod = getDevice().getTemperatureCallbackPeriod();
+                super.getCallback().temperatureCallbackPeriodChanged(getIntent().temperatureCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ThermoCoupleDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.temperatureCallbackThreshold != null) {
+            try {
+                getDevice().setTemperatureCallbackThreshold(intent.temperatureCallbackThreshold.getOption(), intent.temperatureCallbackThreshold.getMin(), intent.temperatureCallbackThreshold.getMax());
+                getIntent().temperatureCallbackThreshold = new DeviceTemperatureCallbackThreshold(getDevice().getTemperatureCallbackThreshold());
+                super.getCallback().temperatureCallbackThresholdChanged(getIntent().temperatureCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ThermoCoupleDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.configuration != null) {
+            try {
+                getDevice().setConfiguration(intent.configuration.getAveraging().getValue(), intent.configuration.getType().getValue(), intent.configuration.getFilter().getValue());
+                getIntent().configuration = new DeviceConfiguration(getDevice().getConfiguration());
+                super.getCallback().configurationChanged(getIntent().configuration);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ThermoCoupleDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.remoteSwitch;
 
+import ch.quantasy.gateway.intent.remoteSwitch.RemoteSwitchIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
@@ -57,21 +58,16 @@ public class RemoteSwitchServiceContract extends DeviceServiceContract {
     public final String EVENT_SWITCHING_DONE;
 
     public final String REPEATS;
-    public final String INTENT_REPEATS;
     public final String STATUS_REPEATS;
 
     public final String SWITCH_SOCKET_A;
-    public final String INTENT_SWITCH_SOCKET_A;
-
+  
     public final String SWITCH_SOCKET_B;
-    public final String INTENT_SWITCH_SOCKET_B;
-
+ 
     public final String SWITCH_SOCKET_C;
-    public final String INTENT_SWITCH_SOCKET_C;
-
+  
     public final String DIM_SOCKET_B;
-    public final String INTENT_DIM_SOCKET_B;
-
+   
     public RemoteSwitchServiceContract(RemoteSwitchDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -81,36 +77,23 @@ public class RemoteSwitchServiceContract extends DeviceServiceContract {
     }
 
     public RemoteSwitchServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,RemoteSwitchIntent.class);
 
         SWITCHING_DONE = "switchingDone";
         EVENT_SWITCHING_DONE = EVENT + "/" + SWITCHING_DONE;
 
         REPEATS = "repeats";
-        INTENT_REPEATS = INTENT + "/" + REPEATS;
         STATUS_REPEATS = STATUS + "/" + REPEATS;
 
         SWITCH_SOCKET_A = "switchSocketA";
-        INTENT_SWITCH_SOCKET_A = INTENT + "/" + SWITCH_SOCKET_A;
         SWITCH_SOCKET_B = "switchSocketB";
-        INTENT_SWITCH_SOCKET_B = INTENT + "/" + SWITCH_SOCKET_B;
         SWITCH_SOCKET_C = "switchSocketC";
-        INTENT_SWITCH_SOCKET_C = INTENT + "/" + SWITCH_SOCKET_C;
         DIM_SOCKET_B = "dimSocketB";
-        INTENT_DIM_SOCKET_B = INTENT + "/" + DIM_SOCKET_B;
-
+      
     }
 
     @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(INTENT_REPEATS, "[0.." + Short.MAX_VALUE + "]");
-
-        descriptions.put(INTENT_SWITCH_SOCKET_A, "houseCode: [0..31]\n receiverCode: [0..31]\n switchingValue: [switchOn|switchOff]");
-        descriptions.put(INTENT_SWITCH_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n switchingValue: [switchOn|switchOff]");
-        descriptions.put(INTENT_SWITCH_SOCKET_C, "systemCode: ['A'..'P']\n deviceCode: [1..16]\n switchingValue: [switchOn|switchOff]");
-        descriptions.put(INTENT_DIM_SOCKET_B, "address: [0..67108863]\n unit: [0..15]\n dimValue: [0..15]");
-
+    protected void descirbeMore(Map<String, String> descriptions) {       
         descriptions.put(EVENT_SWITCHING_DONE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    [houseCode: [0..31]\n    receiverCode:    [0..31]\n    switchingValue: [ON|OFF] | address: [0..67108863]\n    unit: [0..15]\n    switchingValue: [ON|OFF] | systemCode: ['A'..'P']\n    deviceCode: [1..16]\n    switchingValue: [ON|OFF] | address:    [0..67108863]\n    unit: [0..15]\n    dimValue: [0..15]]");
         descriptions.put(STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
     }

@@ -50,33 +50,32 @@ import com.tinkerforge.BrickletNFCRFID;
  */
 public class NFCRFIDReaderState {
 
-        private long timeStamp;
-        private short state;
-        private boolean isIdle;
+    private long timeStamp;
+    private short state;
+    private boolean isIdle;
 
-        public NFCRFIDReaderState(BrickletNFCRFID.State state) {
-            this(state.state, state.idle);
-        }
-
-        public NFCRFIDReaderState(short state, boolean isIdle) {
-            this.state = state;
-            this.isIdle = isIdle;
-            this.timeStamp = System.currentTimeMillis();
-        }
-
-        public NFCRFIDReaderState() {
-        }
-
-        public short getState() {
-            return state;
-        }
-
-        public boolean getIsIdle() {
-            return isIdle;
-        }
-
-        public long getTimeStamp() {
-            return timeStamp;
-        }
+    public NFCRFIDReaderState(BrickletNFCRFID.State state) {
+        this(state.state, state.idle);
     }
 
+    public NFCRFIDReaderState(short state, boolean isIdle) {
+        this.state = state;
+        this.isIdle = isIdle;
+        this.timeStamp = System.currentTimeMillis();
+    }
+
+    public NFCRFIDReaderState() {
+    }
+
+    public short getState() {
+        return state;
+    }
+
+    public boolean getIsIdle() {
+        return isIdle;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+}

@@ -51,7 +51,7 @@ import java.util.TreeSet;
  *
  * @author reto
  */
-public interface IO16DeviceCallback extends DeviceCallback, BrickletIO16.MonoflopDoneListener,BrickletIO16.InterruptListener {
+public interface IO16DeviceCallback extends DeviceCallback, BrickletIO16.MonoflopDoneListener, BrickletIO16.InterruptListener {
 
     public void debouncePeriodChanged(Long debouncePeriod);
 

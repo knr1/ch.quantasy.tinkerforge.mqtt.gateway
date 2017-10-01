@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.voltageCurrent;
 
+import ch.quantasy.gateway.intent.voltageCurrent.VoltageCurrentIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
@@ -113,7 +114,7 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
     }
 
     public VoltageCurrentServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,VoltageCurrentIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -189,7 +190,7 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
         descriptions.put(EVENT_VOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-50001..50001]");
         descriptions.put(EVENT_VOLTAGE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-50001..50001]");
         descriptions.put(STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
+        descriptions.put(STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
         descriptions.put(EVENT_CURRENT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..36000]");
         descriptions.put(EVENT_CURRENT_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..36000]");
         descriptions.put(STATUS_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

@@ -50,5 +50,5 @@ import com.tinkerforge.BrickletTilt;
  * @author reto
  */
 public interface TiltDeviceCallback extends DeviceCallback, BrickletTilt.TiltStateListener {
-    
+
 }

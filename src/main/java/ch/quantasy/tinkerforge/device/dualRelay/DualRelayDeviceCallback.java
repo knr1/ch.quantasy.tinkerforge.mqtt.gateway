@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.dualRelay;
 
+import ch.quantasy.gateway.intent.dualRelay.DeviceRelayState;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletDualRelay;
 
@@ -50,5 +51,6 @@ import com.tinkerforge.BrickletDualRelay;
  * @author reto
  */
 public interface DualRelayDeviceCallback extends DeviceCallback, BrickletDualRelay.MonoflopDoneListener {
-    public void stateChanged(DeviceState state);
+
+    public void stateChanged(DeviceRelayState state);
 }

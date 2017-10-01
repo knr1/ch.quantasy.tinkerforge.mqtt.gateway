@@ -43,8 +43,9 @@
 package ch.quantasy.gateway.service.device.piezoSpeaker;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.piezoSpeaker.BeepParameter;
-import ch.quantasy.tinkerforge.device.piezoSpeaker.MorseCodeParameter;
+import ch.quantasy.gateway.intent.piezoSpeaker.BeepParameter;
+import ch.quantasy.gateway.intent.piezoSpeaker.MorseCodeParameter;
+import ch.quantasy.gateway.intent.piezoSpeaker.PiezoSpeakerIntent;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDeviceCallback;
 import java.net.URI;
@@ -60,23 +61,8 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
         super(mqttURI, device, new PiezoSpeakerServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-        if (string.startsWith(getContract().INTENT_BEEP)) {
-            BeepParameter beepParameter = getMapper().readValue(payload, BeepParameter.class);
-            getDevice().beep(beepParameter);
-        }
+    
 
-        if (string.startsWith(getContract().INTENT_MORSE)) {
-            MorseCodeParameter morseCodeParameter = getMapper().readValue(payload, MorseCodeParameter.class);
-            getDevice().morse(morseCodeParameter);
-        }
-
-        if (string.startsWith(getContract().INTENT_CALIBRATE)) {
-            Boolean calibrate = getMapper().readValue(payload, Boolean.class);
-            getDevice().calibrate(calibrate);
-        }
-    }
 
     @Override
     public void beepInvoked(BeepParameter beepParameter) {

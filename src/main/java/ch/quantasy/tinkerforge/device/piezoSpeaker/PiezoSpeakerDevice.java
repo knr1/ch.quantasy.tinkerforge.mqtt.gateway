@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.piezoSpeaker;
 
+import ch.quantasy.gateway.intent.piezoSpeaker.PiezoSpeakerIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletPiezoSpeaker;
@@ -56,10 +57,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class PiezoSpeakerDevice extends GenericDevice<BrickletPiezoSpeaker, PiezoSpeakerDeviceCallback> {
+public class PiezoSpeakerDevice extends GenericDevice<BrickletPiezoSpeaker, PiezoSpeakerDeviceCallback, PiezoSpeakerIntent> {
 
     public PiezoSpeakerDevice(TinkerforgeStack stack, BrickletPiezoSpeaker device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, null);
     }
 
     @Override
@@ -75,32 +76,39 @@ public class PiezoSpeakerDevice extends GenericDevice<BrickletPiezoSpeaker, Piez
         device.removeMorseCodeFinishedListener(super.getCallback());
     }
 
-    public void beep(BeepParameter beepParameter) {
-        try {
-            getDevice().beep(beepParameter.getDuration(), beepParameter.getFrequency());
-            super.getCallback().beepInvoked(beepParameter);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(PiezoSpeakerDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(PiezoSpeakerIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void morse(MorseCodeParameter morseCodeParameter) {
-        try {
-            getDevice().morseCode(morseCodeParameter.getString(), morseCodeParameter.getFrequency());
-            super.getCallback().morseCodeInvoked(morseCodeParameter);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(PiezoSpeakerDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
-
-    public void calibrate(Boolean calibrate) {
-        try {
-            if (calibrate) {
-                getDevice().calibrate();
-                super.getCallback().calibrationInvoked();
+        if (intent.beepParameter != null) {
+            try {
+                getDevice().beep(intent.beepParameter.getDuration(), intent.beepParameter.getFrequency());
+                super.getCallback().beepInvoked(intent.beepParameter);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(PiezoSpeakerDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(PiezoSpeakerDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (intent.morseCodeParameter != null) {
+            try {
+                getDevice().morseCode(intent.morseCodeParameter.getString(), intent.morseCodeParameter.getFrequency());
+                super.getCallback().morseCodeInvoked(intent.morseCodeParameter);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(PiezoSpeakerDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.calibrate != null) {
+            try {
+                if (intent.calibrate) {
+                    getDevice().calibrate();
+                    super.getCallback().calibrationInvoked();
+                }
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(PiezoSpeakerDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.uvLight;
 
+import ch.quantasy.gateway.intent.uvLight.DeviceUVLightCallbackThreshold;
+import ch.quantasy.gateway.intent.uvLight.UVLightIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletUVLight;
@@ -54,31 +56,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class UVLightDevice extends GenericDevice<BrickletUVLight, UVLightDeviceCallback> {
-
-    private Long callbackPeriod;
-    private Long debouncePeriod;
-    private DeviceUVLightCallbackThreshold uvLightThreshold;
+public class UVLightDevice extends GenericDevice<BrickletUVLight, UVLightDeviceCallback, UVLightIntent> {
 
     public UVLightDevice(TinkerforgeStack stack, BrickletUVLight device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new UVLightIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletUVLight device) {
         device.addUVLightListener(super.getCallback());
         device.addUVLightReachedListener(super.getCallback());
-
-        if (callbackPeriod != null) {
-            setUVLightCallbackPeriod(this.callbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (uvLightThreshold != null) {
-            setUVLightCallbackThreshold(uvLightThreshold);
-        }
-
     }
 
     @Override
@@ -87,34 +74,40 @@ public class UVLightDevice extends GenericDevice<BrickletUVLight, UVLightDeviceC
         device.removeUVLightReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(UVLightDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(UVLightIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(UVLightDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.uvLightCallbackPeriod != null) {
+            try {
+                getDevice().setUVLightCallbackPeriod(intent.uvLightCallbackPeriod);
+                getIntent().uvLightCallbackPeriod = getDevice().getUVLightCallbackPeriod();
+                super.getCallback().uvLightCallbackPeriodChanged(getIntent().uvLightCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(UVLightDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.uvLightCallbackThreshold != null) {
+            try {
+                getDevice().setUVLightCallbackThreshold(intent.uvLightCallbackThreshold.getOption(), intent.uvLightCallbackThreshold.getMin(), intent.uvLightCallbackThreshold.getMax());
+                getIntent().uvLightCallbackThreshold = new DeviceUVLightCallbackThreshold(getDevice().getUVLightCallbackThreshold());
+                super.getCallback().uvLightCallbackThresholdChanged(getIntent().uvLightCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(UVLightDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    public void setUVLightCallbackPeriod(Long period) {
-        try {
-            getDevice().setUVLightCallbackPeriod(period);
-            this.callbackPeriod = getDevice().getUVLightCallbackPeriod();
-            super.getCallback().uvLightCallbackPeriodChanged(this.callbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(UVLightDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setUVLightCallbackThreshold(DeviceUVLightCallbackThreshold threshold) {
-        try {
-            getDevice().setUVLightCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.uvLightThreshold = new DeviceUVLightCallbackThreshold(getDevice().getUVLightCallbackThreshold());
-            super.getCallback().uvLightCallbackThresholdChanged(this.uvLightThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(UVLightDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

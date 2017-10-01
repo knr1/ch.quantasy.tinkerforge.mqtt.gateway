@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.realTimeClock;
 
+import ch.quantasy.gateway.intent.realTimeClock.RealTimeClockIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
@@ -79,7 +80,7 @@ public class RealTimeClockServiceContract extends DeviceServiceContract {
     }
 
     public RealTimeClockServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,RealTimeClockIntent.class);
         DATE_TIME = "dateTime";
         OFFSET = "offset";
         SET = "set";
@@ -105,7 +106,7 @@ public class RealTimeClockServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_DATE_TIME_SET, "year: [2000..2099]\n month: [1..12]\n day:b[1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
+        descriptions.put(INTENT_DATE_TIME_SET, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
         descriptions.put(STATUS_DATE_TIME, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
         descriptions.put(INTENT_OFFSET, "[-128..127]");
         descriptions.put(STATUS_OFFSET, "[-128..127]");

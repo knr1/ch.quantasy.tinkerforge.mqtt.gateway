@@ -47,8 +47,11 @@ package ch.quantasy.tinkerforge.device;
  * @author reto
  */
 public interface TinkerforgeDeviceListener {
+
     public void connected(TinkerforgeDevice tinkerforgeDevice);
+
     public void reConnected(TinkerforgeDevice tinkerforgeDevice);
+
     public void disconnected(TinkerforgeDevice tinkerforgeDevice);
 
 }

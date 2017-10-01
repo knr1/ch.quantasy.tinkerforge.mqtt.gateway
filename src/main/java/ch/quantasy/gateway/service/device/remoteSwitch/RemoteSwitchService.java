@@ -44,14 +44,15 @@ package ch.quantasy.gateway.service.device.remoteSwitch;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import ch.quantasy.tinkerforge.device.remoteSwitch.DimSocketBParameters;
+import ch.quantasy.gateway.intent.remoteSwitch.DimSocketBParameters;
+import ch.quantasy.gateway.intent.remoteSwitch.RemoteSwitchIntent;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDeviceCallback;
-import ch.quantasy.tinkerforge.device.remoteSwitch.SocketParameters;
-import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketAParameters;
-import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketBParameters;
-import ch.quantasy.tinkerforge.device.remoteSwitch.SwitchSocketCParameters;
+import ch.quantasy.gateway.intent.remoteSwitch.SocketParameters;
+import ch.quantasy.mqtt.gateway.client.AyamlServiceContract;
+import java.io.IOException;
 import java.net.URI;
+import java.util.Map;
 
 /**
  *
@@ -64,31 +65,7 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
 
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DIM_SOCKET_B)) {
-            DimSocketBParameters parameters = getMapper().readValue(payload, DimSocketBParameters.class);
-            getDevice().dimSocketB(parameters);
-        }
-        if (string.startsWith(getContract().INTENT_SWITCH_SOCKET_A)) {
-            SwitchSocketAParameters parameters = getMapper().readValue(payload, SwitchSocketAParameters.class);
-            getDevice().switchSocketA(parameters);
-        }
-        if (string.startsWith(getContract().INTENT_SWITCH_SOCKET_B)) {
-            SwitchSocketBParameters parameters = getMapper().readValue(payload, SwitchSocketBParameters.class);
-            getDevice().switchSocketB(parameters);
-        }
-        if (string.startsWith(getContract().INTENT_SWITCH_SOCKET_C)) {
-
-            SwitchSocketCParameters parameters = getMapper().readValue(payload, SwitchSocketCParameters.class);
-            getDevice().switchSocketC(parameters);
-        }
-        if (string.startsWith(getContract().INTENT_REPEATS)) {
-            short value = getMapper().readValue(payload, short.class);
-            getDevice().setRepeats(value);
-        }
-    }
+    
 
     @Override
     public void repeatsChanged(short period) {
@@ -99,5 +76,4 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
     public void switchingDone(SocketParameters socketParameters) {
         publishEvent(getContract().EVENT_SWITCHING_DONE, socketParameters);
     }
-
 }

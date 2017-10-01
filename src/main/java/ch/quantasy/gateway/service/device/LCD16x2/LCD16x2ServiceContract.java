@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.LCD16x2;
 
+import ch.quantasy.gateway.intent.LCD16x2.LCD16x2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
@@ -54,18 +55,13 @@ import java.util.Map;
 public class LCD16x2ServiceContract extends DeviceServiceContract {
 
     public final String BACKLIGHT;
-    public final String INTENT_BACKLIGHT;
     public final String STATUS_BACKLIGHT;
     public final String CLEAR_DISPLAY;
-    public final String INTENT_CLEAR_DISPLAY;
-    public final String INTENT_CONFIG_PARAMETERS;
     public final String CONFIG_PARAMETERS;
     public final String STATUS_CONFIG_PARAMETERS;
-    public final String INTENT_CUSTOM_CHARACTERS;
     public final String STATUS_CUSTOM_CHARACTERS;
     public final String CUSTOM_CHARACTERS;
     public final String WRITE_LINES;
-    public final String INTENT_WRITE_LINES;
     public final String BUTTON;
     public final String PRESSED;
     public final String RELEASED;
@@ -81,25 +77,20 @@ public class LCD16x2ServiceContract extends DeviceServiceContract {
     }
 
     public LCD16x2ServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,LCD16x2Intent.class);
 
         BACKLIGHT = "backlight";
-        INTENT_BACKLIGHT = INTENT + "/" + BACKLIGHT;
         STATUS_BACKLIGHT = STATUS + "/" + BACKLIGHT;
 
         CLEAR_DISPLAY = "clearDisplay";
-        INTENT_CLEAR_DISPLAY = INTENT + "/" + CLEAR_DISPLAY;
 
         CONFIG_PARAMETERS = "configParameters";
-        INTENT_CONFIG_PARAMETERS = INTENT + "/" + CONFIG_PARAMETERS;
         STATUS_CONFIG_PARAMETERS = STATUS + "/" + CONFIG_PARAMETERS;
 
         CUSTOM_CHARACTERS = "customCharacters";
-        INTENT_CUSTOM_CHARACTERS = INTENT + "/" + CUSTOM_CHARACTERS;
         STATUS_CUSTOM_CHARACTERS = STATUS + "/" + CUSTOM_CHARACTERS;
 
         WRITE_LINES = "writeLines";
-        INTENT_WRITE_LINES = INTENT + "/" + WRITE_LINES;
 
         BUTTON = "button";
         PRESSED = "pressed";
@@ -110,13 +101,8 @@ public class LCD16x2ServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_BACKLIGHT, "[true|false]");
         descriptions.put(STATUS_BACKLIGHT, "[true|false]");
-        descriptions.put(INTENT_CLEAR_DISPLAY, "[true|false]");
-        descriptions.put(INTENT_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
         descriptions.put(STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        descriptions.put(INTENT_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
         descriptions.put(STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        descriptions.put(INTENT_WRITE_LINES, "[line: [0..1]\n position: [0..15]\n text: [String]_[1..16]]");
     }
 }

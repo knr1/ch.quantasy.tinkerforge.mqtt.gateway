@@ -42,6 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.ptc;
 
+import ch.quantasy.gateway.intent.ptc.DeviceNoiseReductionFilter;
+import ch.quantasy.gateway.intent.ptc.DeviceResistanceCallbackThreshold;
+import ch.quantasy.gateway.intent.ptc.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.ptc.PTCIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletPTC;
@@ -54,18 +58,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class PTCDevice extends GenericDevice<BrickletPTC, PTCDeviceCallback> {
-
-    private Short wireMode;
-    private Long temperatureCallbackPeriod;
-    private Long resistanceCallbackPeriod;
-    private Long debouncePeriod;
-    private DeviceTemperatureCallbackThreshold temperatureThreshold;
-    private DeviceResistanceCallbackThreshold resistanceThreshold;
-    private DeviceNoiseReductionFilter filter;
+public class PTCDevice extends GenericDevice<BrickletPTC, PTCDeviceCallback, PTCIntent> {
 
     public PTCDevice(TinkerforgeStack stack, BrickletPTC device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new PTCIntent());
     }
 
     @Override
@@ -74,25 +70,6 @@ public class PTCDevice extends GenericDevice<BrickletPTC, PTCDeviceCallback> {
         device.addTemperatureReachedListener(super.getCallback());
         device.addResistanceListener(super.getCallback());
         device.addResistanceReachedListener(super.getCallback());
-
-        if (wireMode != null) {
-            setWireMode(wireMode);
-        }
-        if (temperatureCallbackPeriod != null) {
-            setTemperatureCallbackPeriod(this.temperatureCallbackPeriod);
-        }
-        if (resistanceCallbackPeriod != null) {
-            setResistanceCallbackPeriod(this.resistanceCallbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (temperatureThreshold != null) {
-            setTemperatureCallbackThreshold(temperatureThreshold);
-        }
-        if (filter != null) {
-            setNoiseReductionFilter(filter);
-        }
 
     }
 
@@ -105,72 +82,77 @@ public class PTCDevice extends GenericDevice<BrickletPTC, PTCDeviceCallback> {
 
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(PTCIntent intent) {
+       if (intent == null) {
+            return;
         }
-    }
-
-    public void setTemperatureCallbackPeriod(Long period) {
-        try {
-            getDevice().setTemperatureCallbackPeriod(period);
-            this.resistanceCallbackPeriod = getDevice().getTemperatureCallbackPeriod();
-            super.getCallback().temperatureCallbackPeriodChanged(this.resistanceCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
 
-    public void setTemperatureCallbackThreshold(DeviceTemperatureCallbackThreshold threshold) {
-        try {
-            getDevice().setTemperatureCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.temperatureThreshold = new DeviceTemperatureCallbackThreshold(getDevice().getTemperatureCallbackThreshold());
-            super.getCallback().temperatureCallbackThresholdChanged(this.temperatureThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setResistanceCallbackPeriod(Long period) {
-        try {
-            getDevice().setResistanceCallbackPeriod(period);
-            this.resistanceCallbackPeriod = getDevice().getResistanceCallbackPeriod();
-            super.getCallback().resistanceCallbackPeriodChanged(this.resistanceCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.temperatureCallbackPeriod != null) {
+            try {
+                getDevice().setTemperatureCallbackPeriod(intent.temperatureCallbackPeriod);
+                getIntent().temperatureCallbackPeriod = getDevice().getTemperatureCallbackPeriod();
+                super.getCallback().temperatureCallbackPeriodChanged(getIntent().temperatureCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setResistanceCallbackThreshold(DeviceResistanceCallbackThreshold threshold) {
-        try {
-            getDevice().setResistanceCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.resistanceThreshold = new DeviceResistanceCallbackThreshold(getDevice().getResistanceCallbackThreshold());
-            super.getCallback().resistanceCallbackThresholdChanged(this.resistanceThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.temperatureThreshold != null) {
+            try {
+                getDevice().setTemperatureCallbackThreshold(intent.temperatureThreshold.getOption(), intent.temperatureThreshold.getMin(), intent.temperatureThreshold.getMax());
+                getIntent().temperatureThreshold = new DeviceTemperatureCallbackThreshold(getDevice().getTemperatureCallbackThreshold());
+                super.getCallback().temperatureCallbackThresholdChanged(getIntent().temperatureThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setNoiseReductionFilter(DeviceNoiseReductionFilter filter) {
-        try {
-            getDevice().setNoiseRejectionFilter(filter.getFilter().getValue());
-            this.filter = new DeviceNoiseReductionFilter(getDevice().getNoiseRejectionFilter());
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.resistanceCallbackPeriod != null) {
+            try {
+                getDevice().setResistanceCallbackPeriod(intent.resistanceCallbackPeriod);
+                getIntent().resistanceCallbackPeriod = getDevice().getResistanceCallbackPeriod();
+                super.getCallback().resistanceCallbackPeriodChanged(getIntent().resistanceCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setWireMode(short wireMode) {
-        try {
-            getDevice().setWireMode(wireMode);
-            this.wireMode = getDevice().getWireMode();
-            super.getCallback().wireModeChanged(this.wireMode);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.resistanceThreshold != null) {
+            try {
+                getDevice().setResistanceCallbackThreshold(intent.resistanceThreshold.getOption(), intent.resistanceThreshold.getMin(), intent.resistanceThreshold.getMax());
+                getIntent().resistanceThreshold = new DeviceResistanceCallbackThreshold(getDevice().getResistanceCallbackThreshold());
+                super.getCallback().resistanceCallbackThresholdChanged(getIntent().resistanceThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.noiseReductionFilter != null) {
+            try {
+                getDevice().setNoiseRejectionFilter(intent.noiseReductionFilter.getFilter().getValue());
+                getIntent().noiseReductionFilter = new DeviceNoiseReductionFilter(getDevice().getNoiseRejectionFilter());
+                super.getCallback().noiseReductionFilterChanged(getIntent().noiseReductionFilter);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.wireMode != null) {
+            try {
+                getDevice().setWireMode(intent.wireMode);
+                getIntent().wireMode = getDevice().getWireMode();
+                super.getCallback().wireModeChanged(getIntent().wireMode);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(PTCDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

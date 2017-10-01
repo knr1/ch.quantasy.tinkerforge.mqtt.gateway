@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.hallEffect;
 
+import ch.quantasy.gateway.intent.hallEffect.DeviceConfiguration;
+import ch.quantasy.gateway.intent.hallEffect.HallEffectIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletHallEffect;
@@ -54,29 +56,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class HallEffectDevice extends GenericDevice<BrickletHallEffect, HallEffectDeviceCallback> {
-
-    private Long edgeCountCallbackPeriod;
-    private DeviceConfiguration configuration;
-    private Long edges;
+public class HallEffectDevice extends GenericDevice<BrickletHallEffect, HallEffectDeviceCallback, HallEffectIntent> {
 
     public HallEffectDevice(TinkerforgeStack stack, BrickletHallEffect device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new HallEffectIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletHallEffect device) {
         device.addEdgeCountListener(super.getCallback());
-        
-        if (edgeCountCallbackPeriod != null) {
-            setEdgeCountCallbackPeriod(edgeCountCallbackPeriod);
-        }
-        if (configuration != null) {
-            setEdgeCountConfig(this.configuration);
-        }
-        if (edges != null) {
-            setEdgeInterrupt(edges);
-        }
+
     }
 
     @Override
@@ -84,43 +73,47 @@ public class HallEffectDevice extends GenericDevice<BrickletHallEffect, HallEffe
         device.removeEdgeCountListener(super.getCallback());
     }
 
-    public void setEdgeInterrupt(Long edges) {
-        try {
-            getDevice().setEdgeInterrupt(edges);
-            this.edges = getDevice().getEdgeInterrupt();
-            super.getCallback().edgeInterruptChanged(this.edges);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(HallEffectDevice.class.getName()).log(Level.SEVERE, null, ex);
+    public void update(HallEffectIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+        if (intent.edgeCountInterrupt != null) {
+            try {
+                getDevice().setEdgeInterrupt(intent.edgeCountInterrupt);
+                getIntent().edgeCountInterrupt = getDevice().getEdgeInterrupt();
+                super.getCallback().edgeInterruptChanged(getIntent().edgeCountInterrupt);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(HallEffectDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.edgeCountCallbackPeriod != null) {
+            try {
+                getDevice().setEdgeCountCallbackPeriod(intent.edgeCountCallbackPeriod);
+                getIntent().edgeCountCallbackPeriod = getDevice().getEdgeCountCallbackPeriod();
+                super.getCallback().edgeCountCallbackPeriodChanged(getIntent().edgeCountCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(HallEffectDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.edgeCountConfiguration != null) {
+            try {
+                getDevice().setEdgeCountConfig(intent.edgeCountConfiguration.getEdgeType().getValue(), intent.edgeCountConfiguration.getDebounce());
+                getIntent().edgeCountConfiguration = new DeviceConfiguration(getDevice().getEdgeCountConfig());
+                super.getCallback().edgeCountConfigChanged(getIntent().edgeCountConfiguration);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(HallEffectDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.edgeCountReset != null) {
+            try {
+                long edgeCount = getDevice().getEdgeCount(intent.edgeCountReset);
+                super.getCallback().edgeCountReset(edgeCount);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(HallEffectDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    public void setEdgeCountCallbackPeriod(Long period) {
-        try {
-            getDevice().setEdgeCountCallbackPeriod(period);
-            this.edgeCountCallbackPeriod = getDevice().getEdgeCountCallbackPeriod();
-            super.getCallback().edgeCountCallbackPeriodChanged(this.edgeCountCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(HallEffectDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setEdgeCountConfig(DeviceConfiguration configuration) {
-        try {
-            getDevice().setEdgeCountConfig(configuration.getEdgeType().getValue(),configuration.getDebounce());
-            this.configuration=new DeviceConfiguration(getDevice().getEdgeCountConfig());
-            super.getCallback().edgeCountConfigChanged(this.configuration);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(HallEffectDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void setEdgeCountReset(boolean reset){
-        try{
-            long edgeCount=getDevice().getEdgeCount(reset);
-            super.getCallback().edgeCountReset(edgeCount);
-        }catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(HallEffectDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-   
 }

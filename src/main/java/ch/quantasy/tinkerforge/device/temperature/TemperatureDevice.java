@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.temperature;
 
+import ch.quantasy.gateway.intent.temperature.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.temperature.DeviceI2CMode;
+import ch.quantasy.gateway.intent.temperature.TemperatureIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletTemperature;
@@ -54,34 +57,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class TemperatureDevice extends GenericDevice<BrickletTemperature, TemperatureDeviceCallback> {
-
-    private DeviceI2CMode mode;
-    private Long callbackPeriod;
-    private Long debouncePeriod;
-    private DeviceTemperatureCallbackThreshold illuminanceThreshold;
+public class TemperatureDevice extends GenericDevice<BrickletTemperature, TemperatureDeviceCallback, TemperatureIntent> {
 
     public TemperatureDevice(TinkerforgeStack stack, BrickletTemperature device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new TemperatureIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletTemperature device) {
         device.addTemperatureListener(super.getCallback());
         device.addTemperatureReachedListener(super.getCallback());
-
-        if (mode != null) {
-            setI2CMode(mode);
-        }
-        if (callbackPeriod != null) {
-            setTemperatureCallbackPeriod(this.callbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (illuminanceThreshold != null) {
-            setTemperatureCallbackThreshold(illuminanceThreshold);
-        }
 
     }
 
@@ -91,44 +76,50 @@ public class TemperatureDevice extends GenericDevice<BrickletTemperature, Temper
         device.removeTemperatureReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(TemperatureDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(TemperatureIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void setTemperatureCallbackPeriod(Long period) {
-        try {
-            getDevice().setTemperatureCallbackPeriod(period);
-            this.callbackPeriod = getDevice().getTemperatureCallbackPeriod();
-            super.getCallback().temperatureCallbackPeriodChanged(this.callbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(TemperatureDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
-
-    public void setTemperatureCallbackThreshold(DeviceTemperatureCallbackThreshold threshold) {
-        try {
-            getDevice().setTemperatureCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.illuminanceThreshold = new DeviceTemperatureCallbackThreshold(getDevice().getTemperatureCallbackThreshold());
-            super.getCallback().temperatureCallbackThresholdChanged(this.illuminanceThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(TemperatureDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(TemperatureDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setI2CMode(DeviceI2CMode mode) {
-        try {
-            getDevice().setI2CMode(mode.getMode().getValue());
-            this.mode = new DeviceI2CMode(getDevice().getI2CMode());
-            super.getCallback().i2CModeChanged(this.mode);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(TemperatureDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.temperatureCallbackPeriod != null) {
+            try {
+                getDevice().setTemperatureCallbackPeriod(intent.temperatureCallbackPeriod);
+                getIntent().temperatureCallbackPeriod = getDevice().getTemperatureCallbackPeriod();
+                super.getCallback().temperatureCallbackPeriodChanged(getIntent().temperatureCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(TemperatureDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
+        if (intent.temperatureThreshold != null) {
+            try {
+                getDevice().setTemperatureCallbackThreshold(intent.temperatureThreshold.getOption(), intent.temperatureThreshold.getMin(), intent.temperatureThreshold.getMax());
+                getIntent().temperatureThreshold = new DeviceTemperatureCallbackThreshold(getDevice().getTemperatureCallbackThreshold());
+                super.getCallback().temperatureCallbackThresholdChanged(getIntent().temperatureThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(TemperatureDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.mode != null) {
+            try {
+                getDevice().setI2CMode(intent.mode.getMode().getValue());
+                getIntent().mode = new DeviceI2CMode(getDevice().getI2CMode());
+                super.getCallback().i2CModeChanged(getIntent().mode);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(TemperatureDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
+    }
 }

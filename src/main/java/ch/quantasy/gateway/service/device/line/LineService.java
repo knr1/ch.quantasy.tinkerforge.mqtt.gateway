@@ -43,7 +43,8 @@
 package ch.quantasy.gateway.service.device.line;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.line.DeviceReflectivityCallbackThreshold;
+import ch.quantasy.gateway.intent.line.DeviceReflectivityCallbackThreshold;
+import ch.quantasy.gateway.intent.line.LineIntent;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.line.LineDeviceCallback;
 import java.net.URI;
@@ -60,26 +61,7 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
         super(mqttURI, device, new LineServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_REFLECTIVITY_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setReflectivityCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_REFLECTIVITY_THRESHOLD)) {
-
-            DeviceReflectivityCallbackThreshold threshold = getMapper().readValue(payload, DeviceReflectivityCallbackThreshold.class);
-            getDevice().setReflectivityCallbackThreshold(threshold);
-        }
-    }
+   
 
     @Override
     public void debouncePeriodChanged(long period) {

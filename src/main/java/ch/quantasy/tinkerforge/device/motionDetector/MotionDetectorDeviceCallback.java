@@ -50,5 +50,5 @@ import com.tinkerforge.BrickletMotionDetector;
  * @author reto
  */
 public interface MotionDetectorDeviceCallback extends DeviceCallback, BrickletMotionDetector.DetectionCycleEndedListener, BrickletMotionDetector.MotionDetectedListener {
-    
+
 }

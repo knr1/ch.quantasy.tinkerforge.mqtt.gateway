@@ -45,9 +45,7 @@ package ch.quantasy.gateway.service.device.dualRelay;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDeviceCallback;
-import ch.quantasy.tinkerforge.device.dualRelay.DeviceMonoflopParameters;
-import ch.quantasy.tinkerforge.device.dualRelay.DeviceSelectedState;
-import ch.quantasy.tinkerforge.device.dualRelay.DeviceState;
+import ch.quantasy.gateway.intent.dualRelay.DeviceRelayState;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -61,26 +59,9 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
         super(mqttURI, device, new DualRelayServiceContract(device));
     }
 
+  
     @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_MONOFLOP)) {
-            DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
-            getDevice().setMonoflop(parameters);
-        }
-        if (string.startsWith(getContract().INTENT_SELECTED_STATE)) {
-            DeviceSelectedState parameters = getMapper().readValue(payload, DeviceSelectedState.class);
-            getDevice().setSelectedState(parameters);
-        }
-        if (string.startsWith(getContract().INTENT_STATE)) {
-            DeviceState parameters = getMapper().readValue(payload, DeviceState.class);
-            getDevice().setState(parameters);
-        }
-
-    }
-
-    @Override
-    public void stateChanged(DeviceState state) {
+    public void stateChanged(DeviceRelayState state) {
         publishStatus(getContract().STATUS_STATE, state);
     }
 

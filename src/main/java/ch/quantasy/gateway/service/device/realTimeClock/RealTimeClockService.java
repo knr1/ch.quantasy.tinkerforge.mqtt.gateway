@@ -42,9 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.realTimeClock;
 
+import ch.quantasy.gateway.intent.realTimeClock.AlarmParamter;
+import ch.quantasy.gateway.intent.realTimeClock.DateTimeParameter;
+import ch.quantasy.gateway.intent.realTimeClock.RealTimeClockIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.realTimeClock.AlarmParamter;
-import ch.quantasy.tinkerforge.device.realTimeClock.DateTimeParameter;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -60,28 +61,8 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
         super(mqttURI, device, new RealTimeClockServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DATE_TIME_SET)) {
-            DateTimeParameter parameter = getMapper().readValue(payload, DateTimeParameter.class);
-            getDevice().setDateTime(parameter);
-        }
-
-        if (string.startsWith(getContract().INTENT_OFFSET)) {
-            Byte offset = getMapper().readValue(payload, Byte.class);
-            getDevice().setOffset(offset);
-        }
-        if (string.startsWith(getContract().INTENT_DATE_TIME_CALLBACK_PERIOD)) {
-            Long callback = getMapper().readValue(payload, Long.class);
-            getDevice().setDateTimeCallbackPeriod(callback);
-        }
-        if (string.startsWith(getContract().INTENT_ALARM)) {
-            AlarmParamter alarm = getMapper().readValue(payload, AlarmParamter.class);
-            getDevice().setAlarm(alarm);
-        }
-    }
-
+   
+    
     @Override
     public void dateTimeChanged(DateTimeParameter dateTimeParameter) {
         publishStatus(getContract().STATUS_DATE_TIME, dateTimeParameter);

@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.distanceUS;
 
+import ch.quantasy.gateway.intent.distanceUS.DistanceUSIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
@@ -64,20 +65,14 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
     public final String STATUS_DISTANCE_CALLBACK_PERIOD;
     public final String EVENT_DISTANCE;
     public final String EVENT_DISTANCE_REACHED;
-    private final String INTENT_DISTANCE;
-    public final String INTENT_DISTANCE_THRESHOLD;
-    public final String INTENT_DISTANCE_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String MOVING_AVERAGE;
     public final String STATUS_MOVING_AVERAGE;
-    public final String INTENT_MOVING_AVERAGE;
 
     public DistanceUSServiceContract(DistanceUSDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -88,7 +83,7 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
     }
 
     public DistanceUSServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,DistanceUSIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -102,30 +97,20 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
         STATUS_DISTANCE_CALLBACK_PERIOD = STATUS_DISTANCE + "/" + CALLBACK_PERIOD;
         EVENT_DISTANCE = EVENT + "/" + DISTANCE;
         EVENT_DISTANCE_REACHED = EVENT_DISTANCE + "/" + REACHED;
-        INTENT_DISTANCE = INTENT + "/" + DISTANCE;
-        INTENT_DISTANCE_THRESHOLD = INTENT_DISTANCE + "/" + THRESHOLD;
-        INTENT_DISTANCE_CALLBACK_PERIOD = INTENT_DISTANCE + "/" + CALLBACK_PERIOD;
-
+       
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
-
+      
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-        INTENT_MOVING_AVERAGE = INTENT + "/" + MOVING_AVERAGE;
-
+      
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(INTENT_MOVING_AVERAGE, "[0..100]");
-
+       
         descriptions.put(EVENT_DISTANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [[0..4095]");
         descriptions.put(EVENT_DISTANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

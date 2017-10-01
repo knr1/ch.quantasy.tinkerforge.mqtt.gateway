@@ -42,11 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.color;
 
+import ch.quantasy.gateway.intent.color.ColorIntent;
+import ch.quantasy.gateway.intent.color.DeviceColorCallbackThreshold;
+import ch.quantasy.gateway.intent.color.DeviceConfiguration;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
 import ch.quantasy.tinkerforge.device.color.ColorDeviceCallback;
-import ch.quantasy.tinkerforge.device.color.DeviceColorCallbackThreshold;
-import ch.quantasy.tinkerforge.device.color.DeviceConfiguration;
 
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -59,40 +60,6 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
     public ColorService(ColorDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new ColorServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_COLOR_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setColorCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_IllUMINANCE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setIlluminanceCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_COLOR_CALLBACK_THRESHOLD)) {
-            DeviceColorCallbackThreshold threshold = getMapper().readValue(payload, DeviceColorCallbackThreshold.class);
-            getDevice().setColorCallbackThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setColorTemperatureCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_CONFIGURATION)) {
-            DeviceConfiguration config = getMapper().readValue(payload, DeviceConfiguration.class);
-            getDevice().setConfig(config);
-        }
-        if (string.startsWith(getContract().INTENT_LIGHT_STATE)) {
-            Boolean state = getMapper().readValue(payload, Boolean.class);
-            getDevice().setLight(state);
-        }
-
     }
 
     @Override

@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.dc;
 
+import ch.quantasy.gateway.intent.dc.DCIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
@@ -55,47 +56,38 @@ public class DCServiceContract extends DeviceServiceContract {
 
     public final String ENABLED;
     public final String STATUS_ENABLED;
-    public final String INTENT_ENABLED;
 
     public final String MINIMUM_VOLTAGE;
-    public final String INTENT_MINIMUM_VOLTAGE;
     public final String STATUS_MINIMUM_VOLTAGE;
 
     public final String UNDERVOLTAGE;
     public final String EVENT_UNDERVOLTAGE;
 
     public final String VELOCITY;
-    private final String INTENT_VELOCITY;
     private final String STATUS_VELOCITY;
     public final String EVENT_VELOCITY;
     public final String EVENT_VELOCITY_REACHED;
     public final String REACHED;
 
     public final String CALLBACK_PERIOD;
-    public final String INTENT_VELOCITY_CALLBACK_PERIOD;
     public final String STATUS_VELOCITY_CALLBACK_PERIOD;
 
     public final String DRIVER_MODE;
-    public final String INTENT_DRIVER_MODE;
     public final String STATUS_DRIVER_MODE;
 
     public final String PWM_FREQUENCY;
-    public final String INTENT_PWM_FREQUENCY;
     public final String STATUS_PWM_FREQUENCY;
 
     public final String FULL_BRAKE;
-    public final String INTENT_FULL_BRAKE;
     public final String EVENT_FULL_BRAKE;
 
     public final String ACCELERATION;
-    public final String INTENT_ACCELERATION;
     public final String STATUS_ACCELERATION;
 
     public final String EMERGENCY_SHUTDOWN;
     public final String EVENT_EMERGENCY_SHUTDOWN;
     public final String STATUS_VELOCITY_VELOCITY;
     public final String EVENT_VELOCITY_VELOCITY;
-    public final String INTENT_VELOCITY_VELOCITY;
 
     public DCServiceContract(DCDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -106,44 +98,36 @@ public class DCServiceContract extends DeviceServiceContract {
     }
 
     public DCServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,DCIntent.class);
 
         ENABLED = "enabled";
         STATUS_ENABLED = STATUS + "/" + ENABLED;
-        INTENT_ENABLED = INTENT + "/" + ENABLED;
 
         VELOCITY = "velocity";
         STATUS_VELOCITY = STATUS + "/" + VELOCITY;
-        INTENT_VELOCITY = INTENT + "/" + VELOCITY;
         EVENT_VELOCITY = EVENT + "/" + VELOCITY;
 
         STATUS_VELOCITY_VELOCITY = STATUS_VELOCITY + "/" + VELOCITY;
         EVENT_VELOCITY_VELOCITY = EVENT_VELOCITY + "/" + VELOCITY;
-        INTENT_VELOCITY_VELOCITY = INTENT_VELOCITY + "/" + VELOCITY;
         REACHED = "reached";
         EVENT_VELOCITY_REACHED = EVENT_VELOCITY + "/" + REACHED;
 
         CALLBACK_PERIOD = "callbackPeriod";
         STATUS_VELOCITY_CALLBACK_PERIOD = STATUS_VELOCITY + "/" + CALLBACK_PERIOD;
-        INTENT_VELOCITY_CALLBACK_PERIOD = INTENT_VELOCITY + "/" + CALLBACK_PERIOD;
 
         FULL_BRAKE = "fullBrake";
-        INTENT_FULL_BRAKE = INTENT + "/" + FULL_BRAKE;
         EVENT_FULL_BRAKE = EVENT + "/" + FULL_BRAKE;
 
         ACCELERATION = "acceleration";
-        INTENT_ACCELERATION = INTENT + "/" + ACCELERATION;
         STATUS_ACCELERATION = STATUS + "/" + ACCELERATION;
 
         MINIMUM_VOLTAGE = "minimumVoltage";
-        INTENT_MINIMUM_VOLTAGE = INTENT + "/" + MINIMUM_VOLTAGE;
         STATUS_MINIMUM_VOLTAGE = STATUS + "/" + MINIMUM_VOLTAGE;
 
         UNDERVOLTAGE = "undervoltage";
         EVENT_UNDERVOLTAGE = EVENT + "/" + UNDERVOLTAGE;
 
         DRIVER_MODE = "driverMode";
-        INTENT_DRIVER_MODE = INTENT + "/" + DRIVER_MODE;
         STATUS_DRIVER_MODE = STATUS + "/" + DRIVER_MODE;
 
         EMERGENCY_SHUTDOWN = "emergencyShutdown";
@@ -151,21 +135,11 @@ public class DCServiceContract extends DeviceServiceContract {
 
         PWM_FREQUENCY = "pwmFrequency";
         STATUS_PWM_FREQUENCY = STATUS + "/" + PWM_FREQUENCY;
-        INTENT_PWM_FREQUENCY = INTENT + "/" + PWM_FREQUENCY;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
-        descriptions.put(INTENT_DRIVER_MODE, "[0|1]");
-        descriptions.put(INTENT_ENABLED, "[true|false]");
-        descriptions.put(INTENT_FULL_BRAKE, "[true|false]");
-
-        descriptions.put(INTENT_MINIMUM_VOLTAGE, "[6000.." + Integer.MAX_VALUE + "]");
-        descriptions.put(INTENT_PWM_FREQUENCY, "[1..20000]");
-        descriptions.put(INTENT_VELOCITY_VELOCITY, "-32767..32767");
-        descriptions.put(INTENT_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
-
+       
         descriptions.put(EVENT_FULL_BRAKE, "- timestamp: [0.." + Long.MAX_VALUE + "] \n  value: [0.." + Long.MAX_VALUE + "]");
         descriptions.put(EVENT_UNDERVOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Integer.MAX_VALUE + "]");
         descriptions.put(EVENT_VELOCITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");

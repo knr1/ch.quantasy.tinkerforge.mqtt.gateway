@@ -43,8 +43,9 @@
 package ch.quantasy.gateway.service.device.loadCell;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.loadCell.DeviceConfiguration;
-import ch.quantasy.tinkerforge.device.loadCell.DeviceWeightCallbackThreshold;
+import ch.quantasy.gateway.intent.loadCell.DeviceConfiguration;
+import ch.quantasy.gateway.intent.loadCell.DeviceWeightCallbackThreshold;
+import ch.quantasy.gateway.intent.loadCell.LoadCellIntent;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDeviceCallback;
 
@@ -63,47 +64,7 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
         super(mqttURI, device, new LoadCellServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_WEIGHT_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setWeightCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_WEIGHT_THRESHOLD)) {
-
-            DeviceWeightCallbackThreshold threshold = getMapper().readValue(payload, DeviceWeightCallbackThreshold.class);
-            getDevice().setWeightCallbackThreshold(threshold);
-        }
-
-        if (string.startsWith(getContract().INTENT_CONFIGURATION)) {
-            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-            getDevice().setConfiguration(configuration);
-        }
-        if (string.startsWith(getContract().INTENT_MOVING_AVERAGE)) {
-            Short average = getMapper().readValue(payload, Short.class);
-            getDevice().setMovingAverage(average);
-        }
-        if (string.startsWith(getContract().INTENT_TARE)) {
-            Boolean tare = getMapper().readValue(payload, Boolean.class);
-            getDevice().tare(tare);
-        }
-        if (string.startsWith(getContract().INTENT_LED)) {
-            Boolean LED = getMapper().readValue(payload, Boolean.class);
-            getDevice().setLED(LED);
-        }
-        if (string.startsWith(getContract().INTENT_CALIBRATE)) {
-            Long value = getMapper().readValue(payload, Long.class);
-            getDevice().calibrate(value);
-        }
-    }
+   
 
     @Override
     public void debouncePeriodChanged(long period) {

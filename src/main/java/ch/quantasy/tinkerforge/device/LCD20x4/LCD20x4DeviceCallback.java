@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.LCD20x4;
 
+import ch.quantasy.gateway.intent.LCD20x4.DeviceConfigParameters;
+import ch.quantasy.gateway.intent.LCD20x4.DeviceCustomCharacter;
+import ch.quantasy.gateway.intent.LCD20x4.DeviceDefaultText;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletLCD20x4;
 
@@ -49,11 +52,15 @@ import com.tinkerforge.BrickletLCD20x4;
  *
  * @author reto
  */
-public interface LCD20x4DeviceCallback extends DeviceCallback, BrickletLCD20x4.ButtonPressedListener,BrickletLCD20x4.ButtonReleasedListener {
+public interface LCD20x4DeviceCallback extends DeviceCallback, BrickletLCD20x4.ButtonPressedListener, BrickletLCD20x4.ButtonReleasedListener {
+
     public void backlightChanged(Boolean isBacklightEnabled);
+
     public void configurationChanged(DeviceConfigParameters configParameters);
+
     public void customCharactersChanged(DeviceCustomCharacter... customCharacters);
+
     public void defaultTextsChanged(DeviceDefaultText... defaultTexts);
+
     public void defaultTextCounterChanged(Integer defaultTextCounter);
 }
-

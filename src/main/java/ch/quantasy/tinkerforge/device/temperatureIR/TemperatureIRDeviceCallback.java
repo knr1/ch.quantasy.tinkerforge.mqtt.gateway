@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.temperatureIR;
 
+import ch.quantasy.gateway.intent.temperatureIR.DeviceAmbientTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.temperatureIR.DeviceObjectTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletTemperatureIR;
 
@@ -49,7 +51,8 @@ import com.tinkerforge.BrickletTemperatureIR;
  *
  * @author reto
  */
-public interface TemperatureIRDeviceCallback extends DeviceCallback, BrickletTemperatureIR.AmbientTemperatureListener, BrickletTemperatureIR.AmbientTemperatureReachedListener,BrickletTemperatureIR.ObjectTemperatureListener,BrickletTemperatureIR.ObjectTemperatureReachedListener{
+public interface TemperatureIRDeviceCallback extends DeviceCallback, BrickletTemperatureIR.AmbientTemperatureListener, BrickletTemperatureIR.AmbientTemperatureReachedListener, BrickletTemperatureIR.ObjectTemperatureListener, BrickletTemperatureIR.ObjectTemperatureReachedListener {
+
     public void objectTemperatureCallbackPeriodChanged(long period);
 
     public void ambientTemperatureCallbackPeriodChanged(long period);

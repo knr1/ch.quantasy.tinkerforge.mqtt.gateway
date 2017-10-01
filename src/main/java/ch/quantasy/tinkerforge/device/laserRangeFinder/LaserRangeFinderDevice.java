@@ -42,6 +42,13 @@
  */
 package ch.quantasy.tinkerforge.device.laserRangeFinder;
 
+import ch.quantasy.gateway.intent.laserRangeFinder.SensorHardware;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceMode;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceVelocityCallbackThreshold;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceAveraging;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceConfiguration;
+import ch.quantasy.gateway.intent.laserRangeFinder.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.intent.laserRangeFinder.LaserRangeFinderIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLaserRangeFinder;
@@ -54,21 +61,12 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFinder, LaserRangeFinderDeviceCallback> {
+public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFinder, LaserRangeFinderDeviceCallback, LaserRangeFinderIntent> {
 
-    private Long distanceCallbackPeriod;
-    private Long velocityCallbackPeriod;
-    private Long debouncePeriod;
-    private DeviceDistanceCallbackThreshold analogValueThreshold;
-    private DeviceVelocityCallbackThreshold velocityCallbackThreshold;
-    private Boolean laserEnabled;
-    private DeviceAveraging averaging;
-    private DeviceMode mode;
-    private DeviceConfiguration configuration;
     private SensorHardware.Version sensorHardwareVersion;
 
     public LaserRangeFinderDevice(TinkerforgeStack stack, BrickletLaserRangeFinder device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new LaserRangeFinderIntent());
     }
 
     @Override
@@ -77,33 +75,10 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
         device.addDistanceReachedListener(super.getCallback());
         device.addVelocityListener(super.getCallback());
         device.addVelocityReachedListener(super.getCallback());
-        if (distanceCallbackPeriod != null) {
-            setDistanceCallbackPeriod(distanceCallbackPeriod);
-        }
-        if (velocityCallbackPeriod != null) {
-            setVelocityCallbackPeriod(this.velocityCallbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (analogValueThreshold != null) {
-            setDistanceCallbackThreshold(analogValueThreshold);
-        }
-        if (velocityCallbackThreshold != null) {
-            setVelocityCallbackThreshold(velocityCallbackThreshold);
-        }
-        if (laserEnabled != null) {
-            setLaser(laserEnabled);
-        }
-        if (averaging != null) {
-            setMovingAverage(averaging);
-        }
-        if (configuration != null) {
-            setConfiguration(configuration);
-        }
         if (sensorHardwareVersion == null) {
             updateSensorHardwareVersion();
         }
+
     }
 
     @Override
@@ -124,100 +99,102 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
         }
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(LaserRangeFinderIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void setDistanceCallbackPeriod(Long period) {
-        try {
-            getDevice().setDistanceCallbackPeriod(period);
-            this.distanceCallbackPeriod = getDevice().getDistanceCallbackPeriod();
-            super.getCallback().distanceCallbackPeriodChanged(this.distanceCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
 
-    public void setVelocityCallbackPeriod(Long period) {
-        try {
-            getDevice().setVelocityCallbackPeriod(period);
-            this.velocityCallbackPeriod = getDevice().getVelocityCallbackPeriod();
-            super.getCallback().velocityCallbackPeriodChanged(this.velocityCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setDistanceCallbackThreshold(DeviceDistanceCallbackThreshold threshold) {
-        try {
-            getDevice().setDistanceCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.analogValueThreshold = new DeviceDistanceCallbackThreshold(getDevice().getDistanceCallbackThreshold());
-            super.getCallback().distanceCallbackThresholdChanged(this.analogValueThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setVelocityCallbackThreshold(DeviceVelocityCallbackThreshold threshold) {
-        try {
-            getDevice().setVelocityCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.velocityCallbackThreshold = new DeviceVelocityCallbackThreshold(getDevice().getVelocityCallbackThreshold());
-            super.getCallback().velocityCallbackThresholdChanged(this.velocityCallbackThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setLaser(Boolean laserEnabled) {
-        try {
-            if (laserEnabled) {
-                getDevice().enableLaser();
-            } else {
-                getDevice().disableLaser();
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.laserEnabled = getDevice().isLaserEnabled();
-            super.getCallback().laserStatusChanged(laserEnabled);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void setMovingAverage(DeviceAveraging movingAverage) {
-        try {
-            getDevice().setMovingAverage(movingAverage.getAveragingDistance(), movingAverage.getAveragingVelocity());
-            this.averaging = new DeviceAveraging(getDevice().getMovingAverage());
-            super.getCallback().movingAverageChanged(movingAverage);
-
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.distanceCallbackPeriod != null) {
+            try {
+                getDevice().setDistanceCallbackPeriod(intent.distanceCallbackPeriod);
+                getIntent().distanceCallbackPeriod = getDevice().getDistanceCallbackPeriod();
+                super.getCallback().distanceCallbackPeriodChanged(getIntent().distanceCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setMode(DeviceMode deviceMode) {
-        try {
-            getDevice().setMode(deviceMode.getMode().getValue());
-            this.mode = new DeviceMode(getDevice().getMode());
-            super.getCallback().deviceModeChanged(mode);
-
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.velocityCallbackPeriod != null) {
+            try {
+                getDevice().setVelocityCallbackPeriod(intent.velocityCallbackPeriod);
+                getIntent().velocityCallbackPeriod = getDevice().getVelocityCallbackPeriod();
+                super.getCallback().velocityCallbackPeriodChanged(getIntent().velocityCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
+        if (intent.distanceCallbackThreshold != null) {
+            try {
+                getDevice().setDistanceCallbackThreshold(intent.distanceCallbackThreshold.getOption(), intent.distanceCallbackThreshold.getMin(), intent.distanceCallbackThreshold.getMax());
+                getIntent().distanceCallbackThreshold = new DeviceDistanceCallbackThreshold(getDevice().getDistanceCallbackThreshold());
+                super.getCallback().distanceCallbackThresholdChanged(getIntent().distanceCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.velocityCallbackThreshold != null) {
+            try {
+                getDevice().setVelocityCallbackThreshold(intent.velocityCallbackThreshold.getOption(), intent.velocityCallbackThreshold.getMin(), intent.velocityCallbackThreshold.getMax());
+                getIntent().velocityCallbackThreshold = new DeviceVelocityCallbackThreshold(getDevice().getVelocityCallbackThreshold());
+                super.getCallback().velocityCallbackThresholdChanged(getIntent().velocityCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.laserEnabled != null) {
+            try {
+                if (intent.laserEnabled) {
+                    getDevice().enableLaser();
+                } else {
+                    getDevice().disableLaser();
+                }
+                getIntent().laserEnabled = getDevice().isLaserEnabled();
+                super.getCallback().laserStatusChanged(getIntent().laserEnabled);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.movingAverage != null) {
+            try {
+                getDevice().setMovingAverage(intent.movingAverage.getAveragingDistance(), intent.movingAverage.getAveragingVelocity());
+                getIntent().movingAverage = new DeviceAveraging(getDevice().getMovingAverage());
+                super.getCallback().movingAverageChanged(getIntent().movingAverage);
 
-    public void setConfiguration(DeviceConfiguration configruation) {
-        try {
-            getDevice().setConfiguration(configruation.getAquisitionCount(), configruation.getQuickTermination(), configruation.getThresholdValue(), configruation.getMeasurementFrequency());
-            this.configuration = new DeviceConfiguration(getDevice().getConfiguration());
-            super.getCallback().deviceConfigurationChanged(configuration);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.mode != null) {
+            try {
+                getDevice().setMode(intent.mode.getMode().getValue());
+                getIntent().mode = new DeviceMode(getDevice().getMode());
+                super.getCallback().deviceModeChanged(getIntent().mode);
 
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.configuration != null) {
+            try {
+                getDevice().setConfiguration(intent.configuration.getAquisitionCount(), intent.configuration.getQuickTermination(), intent.configuration.getThresholdValue(), intent.configuration.getMeasurementFrequency());
+                getIntent().configuration = new DeviceConfiguration(getDevice().getConfiguration());
+                super.getCallback().deviceConfigurationChanged(getIntent().configuration);
+
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

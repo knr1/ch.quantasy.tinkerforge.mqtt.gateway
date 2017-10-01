@@ -42,9 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.distanceIR;
 
+import ch.quantasy.gateway.intent.distanceIR.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.intent.distanceIR.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletDistanceIR;
-
 
 /**
  *

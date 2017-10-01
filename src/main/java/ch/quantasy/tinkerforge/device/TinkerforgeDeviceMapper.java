@@ -66,7 +66,7 @@ import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
-import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
+import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
@@ -92,7 +92,7 @@ import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.intent.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickIMU;
 import com.tinkerforge.BrickIMUV2;
@@ -291,15 +291,15 @@ public class TinkerforgeDeviceMapper {
         if (TinkerforgeDeviceClass.Master == TinkerforgeDeviceClass.getDevice(device)) {
             return new MasterDevice(stack, (BrickMaster) device);
         }
-        
-        if(TinkerforgeDeviceClass.NfcRfid == TinkerforgeDeviceClass.getDevice(device)){
-            return new NFCRFIDDevice(stack, (BrickletNFCRFID)device);
+
+        if (TinkerforgeDeviceClass.NfcRfid == TinkerforgeDeviceClass.getDevice(device)) {
+            return new NFCRFIDDevice(stack, (BrickletNFCRFID) device);
         }
-        if(TinkerforgeDeviceClass.VoltageCurrent == TinkerforgeDeviceClass.getDevice(device)){
-            return new VoltageCurrentDevice(stack, (BrickletVoltageCurrent)device);
+        if (TinkerforgeDeviceClass.VoltageCurrent == TinkerforgeDeviceClass.getDevice(device)) {
+            return new VoltageCurrentDevice(stack, (BrickletVoltageCurrent) device);
         }
-        if(TinkerforgeDeviceClass.Servo == TinkerforgeDeviceClass.getDevice(device)){
-            return new ServoDevice(stack, (BrickServo)device);
+        if (TinkerforgeDeviceClass.Servo == TinkerforgeDeviceClass.getDevice(device)) {
+            return new ServoDevice(stack, (BrickServo) device);
         }
         return new TinkerforgeDevice(stack, device);
     }

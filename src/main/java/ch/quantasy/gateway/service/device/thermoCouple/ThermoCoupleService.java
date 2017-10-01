@@ -43,8 +43,8 @@
 package ch.quantasy.gateway.service.device.thermoCouple;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.thermoCouple.DeviceConfiguration;
-import ch.quantasy.tinkerforge.device.thermoCouple.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.thermoCouple.DeviceConfiguration;
+import ch.quantasy.gateway.intent.thermoCouple.DeviceTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -61,33 +61,6 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
         super(mqttURI, device, new ThermoCoupleServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setTemperatureCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_TEMPERATURE_THRESHOLD)) {
-
-            DeviceTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceTemperatureCallbackThreshold.class);
-            getDevice().setTemperatureCallbackThreshold(threshold);
-        }
-
-        if (string.startsWith(getContract().INTENT_CONFIGURATION)) {
-
-            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-            getDevice().setConfiguration(configuration);
-        }
-
-    }
 
     @Override
     public void debouncePeriodChanged(long period) {

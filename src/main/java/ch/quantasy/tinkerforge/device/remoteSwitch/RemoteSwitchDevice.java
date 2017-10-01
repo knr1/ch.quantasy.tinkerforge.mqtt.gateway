@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.remoteSwitch;
 
+import ch.quantasy.gateway.intent.remoteSwitch.RemoteSwitchIntent;
+import ch.quantasy.gateway.intent.remoteSwitch.SocketParameters;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletRemoteSwitch;
@@ -54,22 +56,18 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, RemoteSwitchDeviceCallback> implements BrickletRemoteSwitch.SwitchingDoneListener {
+public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, RemoteSwitchDeviceCallback, RemoteSwitchIntent> implements BrickletRemoteSwitch.SwitchingDoneListener {
 
-    private Short repeats;
     private boolean isSwitching;
     private transient SocketParameters socketParameters;
 
     public RemoteSwitchDevice(TinkerforgeStack stack, BrickletRemoteSwitch device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new RemoteSwitchIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletRemoteSwitch device) {
         device.addSwitchingDoneListener(this);
-        if (repeats != null) {
-            setRepeats(repeats);
-        }
 
     }
 
@@ -79,86 +77,97 @@ public class RemoteSwitchDevice extends GenericDevice<BrickletRemoteSwitch, Remo
         this.switchingDone();
     }
 
-    public void setRepeats(short repeats) {
-        try {
-            getDevice().setRepeats(repeats);
-            super.getCallback().repeatsChanged(getDevice().getRepeats());
-            this.repeats = repeats;
-        } catch (Exception ex) {
-            Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(RemoteSwitchIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
+        if (!intent.isValid()) {
+            return;
+        }
+        if (intent.repeats != null) {
 
-    public synchronized void dimSocketB(DimSocketBParameters parameters) {
-        while (isSwitching) {
             try {
-                wait(5000);
-            } catch (InterruptedException ex) {
+                getDevice().setRepeats(intent.repeats);
+                super.getCallback().repeatsChanged(getDevice().getRepeats());
+                getIntent().repeats = getDevice().getRepeats();
+            } catch (Exception ex) {
                 Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        try {
-            getDevice().dimSocketB(parameters.getAddress(), parameters.getUnit(), parameters.getDimValue());
-            this.socketParameters = parameters;
-            isSwitching = true;
+        if (intent.dimSocketBParameters != null) {
+            synchronized (this) {
+                blockWhileBusy();
+                try {
+                    getDevice().dimSocketB(intent.dimSocketBParameters.getAddress(), intent.dimSocketBParameters.getUnit(), intent.dimSocketBParameters.getDimValue());
+                    this.socketParameters = intent.dimSocketBParameters;
+                    isSwitching = true;
+                } catch (Exception ex) {
+                    Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        if (intent.switchSocketAParameters != null) {
+            synchronized (this) {
+                blockWhileBusy();
+                try {
+                    getDevice().switchSocketA(intent.switchSocketAParameters.getHouseCode(), intent.switchSocketAParameters.getReceiverCode(), intent.switchSocketAParameters.getSwitchingValue().getValue());
+                    this.socketParameters = intent.switchSocketAParameters;
+                    isSwitching = true;
+                } catch (Exception ex) {
+                    Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
 
-        } catch (Exception ex) {
-            Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.switchSocketBParameters != null) {
+            synchronized (this) {
+                blockWhileBusy();
+                try {
+                    getDevice().switchSocketB(intent.switchSocketBParameters.getAddress(), intent.switchSocketBParameters.getUnit(), intent.switchSocketBParameters.getSwitchingValue().getValue());
+                    this.socketParameters = intent.switchSocketBParameters;
+                    isSwitching = true;
+                } catch (Exception ex) {
+                    Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        if (intent.switchSocketCParameters != null) {
+            synchronized (this) {
+                blockWhileBusy();
+                try {
+                    getDevice().switchSocketC(intent.switchSocketCParameters.getSystemCode(), intent.switchSocketCParameters.getDeviceCode(), intent.switchSocketCParameters.getSwitchingValue().getValue());
+                    this.socketParameters = intent.switchSocketCParameters;
+                    isSwitching = true;
+                } catch (Exception ex) {
+                    Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 
-    public synchronized void switchSocketB(SwitchSocketBParameters parameters) {
+    private synchronized boolean blockWhileBusy() {
         while (isSwitching) {
             try {
+                try {
+                    if (getDevice().getSwitchingState() == BrickletRemoteSwitch.SWITCHING_STATE_READY) {
+                        switchingDone();
+
+                    }
+                } catch (TimeoutException | NotConnectedException ex) {
+                    Logger.getLogger(RemoteSwitchDevice.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
                 wait(5000);
+
             } catch (InterruptedException ex) {
-                Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RemoteSwitchDevice.class
+                        .getName()).log(Level.SEVERE, null, ex);
+                return false;
             }
         }
-        try {
-            getDevice().switchSocketB(parameters.getAddress(), parameters.getUnit(), parameters.getSwitchingValue().getValue());
-            this.socketParameters = parameters;
-            isSwitching = true;
-
-        } catch (Exception ex) {
-            Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public synchronized void switchSocketA(SwitchSocketAParameters parameters) {
-        while (isSwitching) {
-            try {
-                wait(5000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        try {
-            getDevice().switchSocketA(parameters.getHouseCode(), parameters.getReceiverCode(), parameters.getSwitchingValue().getValue());
-            this.socketParameters = parameters;
-            isSwitching = true;
-
-        } catch (Exception ex) {
-            Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public synchronized void switchSocketC(SwitchSocketCParameters parameters) {
-        while (isSwitching) {
-            try {
-                wait(5000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        try {
-            getDevice().switchSocketC(parameters.getSystemCode(), parameters.getDeviceCode(), parameters.getSwitchingValue().getValue());
-            this.socketParameters = parameters;
-            isSwitching = true;
-
-        } catch (Exception ex) {
-            Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return true;
     }
 
     @Override

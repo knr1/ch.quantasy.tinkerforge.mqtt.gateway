@@ -42,6 +42,11 @@
  */
 package ch.quantasy.tinkerforge.device.LCD20x4;
 
+import ch.quantasy.gateway.intent.LCD20x4.DeviceConfigParameters;
+import ch.quantasy.gateway.intent.LCD20x4.DeviceCustomCharacter;
+import ch.quantasy.gateway.intent.LCD20x4.DeviceWriteLine;
+import ch.quantasy.gateway.intent.LCD20x4.DeviceDefaultText;
+import ch.quantasy.gateway.intent.LCD20x4.LCD20x4Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLCD20x4;
@@ -58,23 +63,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceCallback> {
+public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceCallback, LCD20x4Intent> {
 
-    private Boolean isBacklightEnabled;
-    private DeviceConfigParameters configParameters;
-    private final Set<DeviceCustomCharacter> customCharacters;
-    private final Set<DeviceDefaultText> defaultTexts;
-    private Integer defaultTextCounter;
     private final StringBuffer[] lines;
     private Thread writerThread;
     private final Writer writer;
 
     public LCD20x4Device(TinkerforgeStack stack, BrickletLCD20x4 device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new LCD20x4Intent());
         writer = new Writer();
 
-        this.customCharacters = new HashSet<>();
-        this.defaultTexts = new HashSet<>();
         lines = new StringBuffer[4];
         for (int i = 0; i < lines.length; i++) {
             lines[i] = new StringBuffer("                    ");
@@ -87,21 +85,6 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
         device.addButtonReleasedListener(super.getCallback());
         writerThread = new Thread(writer);
         writerThread.start();
-        if (this.isBacklightEnabled != null) {
-            setBacklight(isBacklightEnabled);
-        }
-        if (this.configParameters != null) {
-            setConfigParameters(configParameters);
-        }
-        if (!this.customCharacters.isEmpty()) {
-            setCustomCharacters(customCharacters.toArray(new DeviceCustomCharacter[0]));
-        }
-        if (!this.defaultTexts.isEmpty()) {
-            setDefaultText(defaultTexts.toArray(new DeviceDefaultText[0]));
-        }
-        if (this.defaultTextCounter != null) {
-            setDefaultTextCounter(defaultTextCounter);
-        }
 
     }
 
@@ -113,86 +96,91 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
         device.removeButtonReleasedListener(super.getCallback());
     }
 
-    public void setBacklight(Boolean isBacklightEnabled) {
-        try {
-            if (isBacklightEnabled) {
-                getDevice().backlightOn();
-            } else {
-                getDevice().backlightOff();
-            }
-            this.isBacklightEnabled = getDevice().isBacklightOn();
-            super.getCallback().backlightChanged(this.isBacklightEnabled);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(LCD20x4Intent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void clearDisplay(Boolean clearDisplay) {
-        try {
-            if (!clearDisplay) {
-            }
-            getDevice().clearDisplay();
-            for (int i = 0; i < lines.length; i++) {
-                lines[i] = new StringBuffer("                    ");
-            }
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
-
-    public void setConfigParameters(DeviceConfigParameters parameters) {
-        try {
-            getDevice().setConfig(parameters.getCursor(), parameters.getBlinking());
-            this.configParameters = new DeviceConfigParameters(getDevice().getConfig());
-            super.getCallback().configurationChanged(this.configParameters);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setCustomCharacters(DeviceCustomCharacter... characters) {
-        try {
-            for (DeviceCustomCharacter character : characters) {
-                getDevice().setCustomCharacter(character.getIndex(), character.getPixels());
-                this.customCharacters.add(new DeviceCustomCharacter(character.getIndex(), getDevice().getCustomCharacter(character.getIndex())));
+        if (intent.backlight != null) {
+            try {
+                if (intent.backlight) {
+                    getDevice().backlightOn();
+                } else {
+                    getDevice().backlightOff();
+                }
+                getIntent().backlight = getDevice().isBacklightOn();
+                super.getCallback().backlightChanged(getIntent().backlight);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
             }
-            super.getCallback().customCharactersChanged(this.customCharacters.toArray(new DeviceCustomCharacter[0]));
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setDefaultText(DeviceDefaultText... texts) {
-        try {
-            for (DeviceDefaultText text : texts) {
-                getDevice().setDefaultText(text.getLine(), text.getText());
-                this.defaultTexts.add(new DeviceDefaultText(text.getLine(), getDevice().getDefaultText(text.getLine())));
+            if (intent.clearDisplay != null) {
+                try {
+                    if (!intent.clearDisplay) {
+                    }
+                    getDevice().clearDisplay();
+                    for (int i = 0; i < lines.length; i++) {
+                        lines[i] = new StringBuffer("                    ");
+                    }
+                } catch (TimeoutException | NotConnectedException ex) {
+                    Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            super.getCallback().defaultTextsChanged(this.defaultTexts.toArray(new DeviceDefaultText[0]));
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setDefaultTextCounter(Integer counter) {
-        try {
-
-            getDevice().setDefaultTextCounter(counter);
-            this.defaultTextCounter = getDevice().getDefaultTextCounter();
-            super.getCallback().defaultTextCounterChanged(this.defaultTextCounter);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void write(DeviceWriteLine... lines) {
-        try {
-            for (DeviceWriteLine line : lines) {
-                this.lines[line.getLine()].replace(line.getPosition(), line.getPosition() + line.getText().length(), line.getText());
-                writer.readyToWrite(line.getLine());
+            if (intent.parameters != null) {
+                try {
+                    getDevice().setConfig(intent.parameters.getCursor(), intent.parameters.getBlinking());
+                    getIntent().parameters = new DeviceConfigParameters(getDevice().getConfig());
+                    super.getCallback().configurationChanged(getIntent().parameters);
+                } catch (TimeoutException | NotConnectedException ex) {
+                    Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        } catch (Exception ex) {
-            Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+
+            if (intent.customCharacters != null && !intent.customCharacters.isEmpty()) {
+                try {
+                    for (DeviceCustomCharacter character : intent.customCharacters) {
+                        getDevice().setCustomCharacter(character.getIndex(), character.getPixels());
+                        getIntent().customCharacters.add(new DeviceCustomCharacter(character.getIndex(), getDevice().getCustomCharacter(character.getIndex())));
+                    }
+                    super.getCallback().customCharactersChanged(getIntent().customCharacters.toArray(new DeviceCustomCharacter[0]));
+                } catch (TimeoutException | NotConnectedException ex) {
+                    Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (intent.defaultTexts != null && !intent.defaultTexts.isEmpty()) {
+                try {
+                    for (DeviceDefaultText text : intent.defaultTexts) {
+                        getDevice().setDefaultText(text.getLine(), text.getText());
+                        getIntent().defaultTexts.add(new DeviceDefaultText(text.getLine(), getDevice().getDefaultText(text.getLine())));
+                    }
+                    super.getCallback().defaultTextsChanged(getIntent().defaultTexts.toArray(new DeviceDefaultText[0]));
+                } catch (TimeoutException | NotConnectedException ex) {
+                    Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (intent.defaultTextCounter != null) {
+                try {
+
+                    getDevice().setDefaultTextCounter(intent.defaultTextCounter);
+                    intent.defaultTextCounter = getDevice().getDefaultTextCounter();
+                    super.getCallback().defaultTextCounterChanged(getIntent().defaultTextCounter);
+                } catch (TimeoutException | NotConnectedException ex) {
+                    Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (intent.lines != null && !intent.lines.isEmpty()) {
+                try {
+                    for (DeviceWriteLine line : intent.lines) {
+                        this.lines[line.getLine()].replace(line.getPosition(),line.getPosition() + Math.min(20-line.getPosition(),line.getText().length()), line.getText());
+                        writer.readyToWrite(line.getLine());
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 
@@ -228,10 +216,10 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
             }
         }
     }
-
     // Maps a normal UTF-16 encoded string to the LCD charset
     // This has been copied from somewhere else... But I cannot remember from
     // where... Today it can be found @Tinkerforge as well
+
     private String utf16ToKS0066U(final String utf16) {
         String ks0066u = "";
         char c;

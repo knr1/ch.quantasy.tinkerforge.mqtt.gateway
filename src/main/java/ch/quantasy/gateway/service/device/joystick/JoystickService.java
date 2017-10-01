@@ -42,9 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.joystick;
 
+import ch.quantasy.gateway.intent.joystick.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.intent.joystick.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.intent.joystick.JoystickIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.joystick.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.tinkerforge.device.joystick.DevicePositionCallbackThreshold;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDeviceCallback;
 
@@ -61,36 +62,7 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
         super(mqttURI, device, new JoystickServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAnalogValueCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_POSITION_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setPositionCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
-            DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
-            getDevice().setAnalogValueThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_POSITION_THRESHOLD)) {
-            DevicePositionCallbackThreshold threshold = getMapper().readValue(payload, DevicePositionCallbackThreshold.class);
-            getDevice().setIlluminanceCallbackThreshold(threshold);
-
-        }
-        if (string.startsWith(getContract().INTENT_CALIBRATE)) {
-            Boolean calibrate = getMapper().readValue(payload, Boolean.class);
-            getDevice().setCalibration(calibrate);
-        }
-
-    }
+    
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
@@ -113,7 +85,7 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
     }
 
     @Override
-    public void postionCallbackThresholdChanged(DevicePositionCallbackThreshold threshold) {
+    public void positionCallbackThresholdChanged(DevicePositionCallbackThreshold threshold) {
         publishStatus(getContract().STATUS_POSITION_THRESHOLD, threshold);
     }
 

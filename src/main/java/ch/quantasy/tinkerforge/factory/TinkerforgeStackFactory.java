@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.factory;
 
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.intent.stack.TinkerforgeStackAddress;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -69,7 +69,7 @@ public class TinkerforgeStackFactory {
     
 
     public boolean addStack(final TinkerforgeStackAddress address) {
-        if (this.tinkerforgeStacks.containsKey(address)) {
+        if (this.containsStack(address)) {
             return false;
         }
         this.tinkerforgeStacks.put(address, new TinkerforgeStack(address));
@@ -81,14 +81,14 @@ public class TinkerforgeStackFactory {
     }
 
     public TinkerforgeStack removeStack(final TinkerforgeStackAddress address) {
-        if (!this.tinkerforgeStacks.containsKey(address)) {
+        if (!this.containsStack(address)) {
             return null;
         }
         TinkerforgeStack stack = this.tinkerforgeStacks.remove(address);
         return stack;
     }
 
-    public boolean containsStack(final TinkerforgeStackAddress address) {
+    private boolean containsStack(final TinkerforgeStackAddress address) {
         return (this.tinkerforgeStacks.containsKey(address));
     }
 

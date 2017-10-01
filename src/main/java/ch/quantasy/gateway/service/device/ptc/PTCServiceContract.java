@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.ptc;
 
+import ch.quantasy.gateway.intent.ptc.PTCIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
@@ -64,20 +65,14 @@ public class PTCServiceContract extends DeviceServiceContract {
     public final String STATUS_TEMPERATURE_CALLBACK_PERIOD;
     public final String EVENT_TEMPERATURE;
     public final String EVENT_TEMPERATURE_REACHED;
-    private final String INTENT_TEMPERATURE;
-    public final String INTENT_TEMPERATURE_THRESHOLD;
-    public final String INTENT_TEMPERATURE_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String NOISE_REDUCTION_FILTER;
     public final String STATUS_NOISE_REDUCTION_FILTER;
-    public final String INTENT_NOISE_REDUCTION_FILTER;
 
     private final String RESISTANCE;
     public final String STATUS_RESISTANCE;
@@ -85,12 +80,8 @@ public class PTCServiceContract extends DeviceServiceContract {
     public final String STATUS_RESISTANCE_CALLBACK_PERIOD;
     public final String EVENT_RESISTANCE;
     public final String EVENT_RESISTANCE_REACHED;
-    private final String INTENT_RESISTANCE;
-    public final String INTENT_RESISTANCE_THRESHOLD;
-    public final String INTENT_RESISTANCE_CALLBACK_PERIOD;
     public final String WIRE_MODE;
     public final String STATUS_WIRE_MODE;
-    public final String INTENT_WIRE_MODE;
 
     public PTCServiceContract(PTCDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -101,7 +92,7 @@ public class PTCServiceContract extends DeviceServiceContract {
     }
 
     public PTCServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device, PTCIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -115,9 +106,6 @@ public class PTCServiceContract extends DeviceServiceContract {
         STATUS_TEMPERATURE_CALLBACK_PERIOD = STATUS_TEMPERATURE + "/" + CALLBACK_PERIOD;
         EVENT_TEMPERATURE = EVENT + "/" + TEMPERATURE;
         EVENT_TEMPERATURE_REACHED = EVENT_TEMPERATURE + "/" + REACHED;
-        INTENT_TEMPERATURE = INTENT + "/" + TEMPERATURE;
-        INTENT_TEMPERATURE_THRESHOLD = INTENT_TEMPERATURE + "/" + THRESHOLD;
-        INTENT_TEMPERATURE_CALLBACK_PERIOD = INTENT_TEMPERATURE + "/" + CALLBACK_PERIOD;
 
         RESISTANCE = "resistance";
         STATUS_RESISTANCE = STATUS + "/" + RESISTANCE;
@@ -125,36 +113,22 @@ public class PTCServiceContract extends DeviceServiceContract {
         STATUS_RESISTANCE_CALLBACK_PERIOD = STATUS_RESISTANCE + "/" + CALLBACK_PERIOD;
         EVENT_RESISTANCE = EVENT + "/" + RESISTANCE;
         EVENT_RESISTANCE_REACHED = EVENT_RESISTANCE + "/" + REACHED;
-        INTENT_RESISTANCE = INTENT + "/" + RESISTANCE;
-        INTENT_RESISTANCE_THRESHOLD = INTENT_RESISTANCE + "/" + THRESHOLD;
-        INTENT_RESISTANCE_CALLBACK_PERIOD = INTENT_RESISTANCE + "/" + CALLBACK_PERIOD;
 
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
 
         NOISE_REDUCTION_FILTER = "noiseReductionFilter";
         STATUS_NOISE_REDUCTION_FILTER = STATUS + "/" + NOISE_REDUCTION_FILTER;
-        INTENT_NOISE_REDUCTION_FILTER = INTENT + "/" + NOISE_REDUCTION_FILTER;
 
         WIRE_MODE = "wireMode";
         STATUS_WIRE_MODE = STATUS + "/" + WIRE_MODE;
-        INTENT_WIRE_MODE = INTENT + "/" + WIRE_MODE;
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
-        descriptions.put(INTENT_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
-        descriptions.put(INTENT_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
-        descriptions.put(INTENT_WIRE_MODE, "[2|3|4]");
         descriptions.put(EVENT_TEMPERATURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-24600..84900]");
         descriptions.put(EVENT_TEMPERATURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-24600..84900]");
         descriptions.put(EVENT_RESISTANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");

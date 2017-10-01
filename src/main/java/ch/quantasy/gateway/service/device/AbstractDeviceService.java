@@ -70,6 +70,15 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
 
     }
 
+    @Override
+    public void messageReceived(String string, byte[] payload) throws Exception {
+        //Check if the device handles intents at all
+        if (getDevice().getIntent() == null) {
+            return;
+        }
+        getDevice().update(getMapper().readValue(payload, getDevice().getIntent().getClass()));
+    }
+
     public G getDevice() {
         return device;
     }

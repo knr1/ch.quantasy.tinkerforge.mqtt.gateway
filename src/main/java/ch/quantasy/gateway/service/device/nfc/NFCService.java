@@ -42,11 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.nfc;
 
+import ch.quantasy.gateway.intent.nfc.NFCIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDeviceCallback;
 import ch.quantasy.tinkerforge.device.nfc.NFCTag;
-import ch.quantasy.tinkerforge.device.nfc.NFCWrite;
+import ch.quantasy.gateway.intent.nfc.NFCWrite;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;
 
@@ -60,24 +61,7 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
         super(mqttURI, device, new NFCServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_SCANNING_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setScanningCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_READ)) {
-            String id = getMapper().readValue(payload, String.class);
-            getDevice().setActiveTagIDToRead(id);
-        }
-        if (string.startsWith(getContract().INTENT_WRITE)) {
-            NFCWrite write = getMapper().readValue(payload, NFCWrite.class);
-            getDevice().setActiveTagToWrite(write);
-        }
-
-    }
-
+    
     @Override
     public void scanningCallbackPeriodChanged(long period) {
         publishStatus(getContract().STATUS_SCANNING_CALLBACK_PERIOD, period);

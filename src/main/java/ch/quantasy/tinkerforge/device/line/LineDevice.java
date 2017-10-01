@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.line;
 
+import ch.quantasy.gateway.intent.line.DeviceReflectivityCallbackThreshold;
+import ch.quantasy.gateway.intent.line.LineIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLine;
@@ -54,31 +56,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class LineDevice extends GenericDevice<BrickletLine, LineDeviceCallback> {
-
-    private Long callbackPeriod;
-    private Long debouncePeriod;
-    private DeviceReflectivityCallbackThreshold reflectivityThreshold;
+public class LineDevice extends GenericDevice<BrickletLine, LineDeviceCallback, LineIntent> {
 
     public LineDevice(TinkerforgeStack stack, BrickletLine device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new LineIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletLine device) {
         device.addReflectivityListener(super.getCallback());
         device.addReflectivityReachedListener(super.getCallback());
-
-        if (this.debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (this.callbackPeriod != null) {
-            setReflectivityCallbackPeriod(callbackPeriod);
-        }
-        if (this.reflectivityThreshold != null) {
-            setReflectivityCallbackThreshold(reflectivityThreshold);
-        }
-
     }
 
     @Override
@@ -87,34 +74,42 @@ public class LineDevice extends GenericDevice<BrickletLine, LineDeviceCallback> 
         device.removeReflectivityReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            super.getCallback().debouncePeriodChanged(getDevice().getDebouncePeriod());
-            this.debouncePeriod = period;
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LineDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(LineIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LineDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.reflectivityCallbackPeriod != null) {
+            try {
+                getDevice().setReflectivityCallbackPeriod(intent.reflectivityCallbackPeriod);
+                getIntent().reflectivityCallbackPeriod = getDevice().getReflectivityCallbackPeriod();
+                super.getCallback().reflectivityCallbackPeriodChanged(getIntent().reflectivityCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LineDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.reflectivityCallbackThreshold != null) {
+            try {
+                getDevice().setReflectivityCallbackThreshold(intent.reflectivityCallbackThreshold.getOption(), intent.reflectivityCallbackThreshold.getMin(), intent.reflectivityCallbackThreshold.getMax());
+                getIntent().reflectivityCallbackThreshold = new DeviceReflectivityCallbackThreshold(getDevice().getReflectivityCallbackThreshold());
+                super.getCallback().reflectivityThresholdChanged(getIntent().reflectivityCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LineDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    public void setReflectivityCallbackPeriod(Long period) {
-        try {
-            getDevice().setReflectivityCallbackPeriod(period);
-            this.callbackPeriod = getDevice().getReflectivityCallbackPeriod();
-            super.getCallback().reflectivityCallbackPeriodChanged(this.callbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LineDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setReflectivityCallbackThreshold(DeviceReflectivityCallbackThreshold threshold) {
-        try {
-            getDevice().setReflectivityCallbackThreshold(threshold.option, threshold.min, threshold.max);
-            this.reflectivityThreshold = new DeviceReflectivityCallbackThreshold(getDevice().getReflectivityCallbackThreshold());
-            super.getCallback().reflectivityThresholdChanged(this.reflectivityThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LineDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

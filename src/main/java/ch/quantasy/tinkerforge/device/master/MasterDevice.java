@@ -42,6 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.master;
 
+import ch.quantasy.gateway.intent.master.MasterIntent;
+import ch.quantasy.gateway.intent.master.StackVoltageCallbackThreshold;
+import ch.quantasy.gateway.intent.master.USBVoltageCallbackThreshold;
+import ch.quantasy.gateway.intent.master.StackCurrentCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickMaster;
@@ -55,19 +59,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallback> {
-
-    private Long debouncePeriod;
-    private Long currentCallbackPeriod;
-    private StackCurrentCallbackThreshold currentCallbackThreshold;
-    private Boolean isStatusLEDEnabled;
-    private Long voltageCallbackPeriod;
-    private StackVoltageCallbackThreshold voltageCallbackThreshold;
-    private Long usbVoltageCallbackPeriod;
-    private USBVoltageCallbackThreshold usbVoltageCallbackThreshold;
+public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallback, MasterIntent> {
 
     public MasterDevice(TinkerforgeStack stack, BrickMaster device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new MasterIntent());
     }
 
     @Override
@@ -78,32 +73,6 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
         device.addStackVoltageReachedListener(super.getCallback());
         device.addUSBVoltageListener(super.getCallback());
         device.addUSBVoltageReachedListener(super.getCallback());
-
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (currentCallbackPeriod != null) {
-            setStackCurrentCallbackPeriod(currentCallbackPeriod);
-        }
-        if (currentCallbackThreshold != null) {
-            setStackCurrentCallbackThreshold(currentCallbackThreshold);
-        }
-        if (voltageCallbackPeriod != null) {
-            setStackVoltageCallbackPeriod(voltageCallbackPeriod);
-        }
-        if (voltageCallbackThreshold != null) {
-            setStackVoltageCallbackThreshold(voltageCallbackThreshold);
-        }
-        if (usbVoltageCallbackPeriod != null) {
-            setUSBVoltageCallbackPeriod(usbVoltageCallbackPeriod);
-        }
-        if (usbVoltageCallbackThreshold != null) {
-            setUSBVoltageCallbackThreshold(usbVoltageCallbackThreshold);
-        }
-        if (isStatusLEDEnabled != null) {
-            setEnableStatusLED(isStatusLEDEnabled);
-        }
-
     }
 
     @Override
@@ -116,96 +85,100 @@ public class MasterDevice extends GenericDevice<BrickMaster, MasterDeviceCallbac
         device.removeUSBVoltageReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long debouncePeriod) {
-        try {
-            getDevice().setDebouncePeriod(debouncePeriod);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(MasterIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void setStackCurrentCallbackPeriod(Long currentCallbackPeriod) {
-        try {
-            getDevice().setStackCurrentCallbackPeriod(currentCallbackPeriod);
-            this.currentCallbackPeriod = getDevice().getStackCurrentCallbackPeriod();
-            super.getCallback().stackCurrentCallbackPeriodChanged(this.currentCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
 
-    public void setStackCurrentCallbackThreshold(StackCurrentCallbackThreshold threshold) {
-        try {
-            getDevice().setStackCurrentCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.currentCallbackThreshold = new StackCurrentCallbackThreshold(getDevice().getStackCurrentCallbackThreshold());
-            super.getCallback().stackCurrentCallbackThresholdChanged(this.currentCallbackThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setStackVoltageCallbackPeriod(Long voltageCallbackPeriod) {
-        try {
-            getDevice().setStackVoltageCallbackPeriod(voltageCallbackPeriod);
-            this.voltageCallbackPeriod = getDevice().getStackVoltageCallbackPeriod();
-            super.getCallback().stackVoltageCallbackPeriodChanged(this.voltageCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setStackVoltageCallbackThreshold(StackVoltageCallbackThreshold threshold) {
-        try {
-            getDevice().setStackVoltageCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.voltageCallbackThreshold = new StackVoltageCallbackThreshold(getDevice().getStackVoltageCallbackThreshold());
-            super.getCallback().stackVoltageCallbackThresholdChanged(this.voltageCallbackThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setUSBVoltageCallbackPeriod(Long usbVoltageCallbackPeriod) {
-        try {
-            getDevice().setUSBVoltageCallbackPeriod(usbVoltageCallbackPeriod);
-            this.usbVoltageCallbackPeriod = getDevice().getUSBVoltageCallbackPeriod();
-            super.getCallback().usbVoltageCallbackPeriodChanged(this.usbVoltageCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setUSBVoltageCallbackThreshold(USBVoltageCallbackThreshold threshold) {
-        try {
-            getDevice().setUSBVoltageCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.usbVoltageCallbackThreshold = new USBVoltageCallbackThreshold(getDevice().getUSBVoltageCallbackThreshold());
-            super.getCallback().USBVoltageCallbackThresholdChanged(this.usbVoltageCallbackThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setEnableStatusLED(Boolean isEnabled) {
-        try {
-            if (isEnabled) {
-                getDevice().enableStatusLED();
-            } else {
-                getDevice().disableStatusLED();
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.isStatusLEDEnabled = getDevice().isStatusLEDEnabled();
-            super.getCallback().statusLEDEnabledChanged(this.isStatusLEDEnabled);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void reset() {
-        try {
-            getDevice().reset();
-            super.getCallback().reset();
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.currentCallbackPeriod != null) {
+            try {
+                getDevice().setStackCurrentCallbackPeriod(intent.currentCallbackPeriod);
+                getIntent().currentCallbackPeriod = getDevice().getStackCurrentCallbackPeriod();
+                super.getCallback().stackCurrentCallbackPeriodChanged(getIntent().currentCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.currentCallbackThreshold != null) {
+            try {
+                getDevice().setStackCurrentCallbackThreshold(intent.currentCallbackThreshold.getOption(), intent.currentCallbackThreshold.getMin(), intent.currentCallbackThreshold.getMax());
+                getIntent().currentCallbackThreshold = new StackCurrentCallbackThreshold(getDevice().getStackCurrentCallbackThreshold());
+                super.getCallback().stackCurrentCallbackThresholdChanged(getIntent().currentCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.stackVoltageCallbackPeriod != null) {
+            try {
+                getDevice().setStackVoltageCallbackPeriod(intent.stackVoltageCallbackPeriod);
+                getIntent().stackVoltageCallbackPeriod = getDevice().getStackVoltageCallbackPeriod();
+                super.getCallback().stackVoltageCallbackPeriodChanged(getIntent().stackVoltageCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.stackVoltageCallbackThreshold != null) {
+            try {
+                getDevice().setStackVoltageCallbackThreshold(intent.stackVoltageCallbackThreshold.getOption(), intent.stackVoltageCallbackThreshold.getMin(), intent.stackVoltageCallbackThreshold.getMax());
+                getIntent().stackVoltageCallbackThreshold = new StackVoltageCallbackThreshold(getDevice().getStackVoltageCallbackThreshold());
+                super.getCallback().stackVoltageCallbackThresholdChanged(getIntent().stackVoltageCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.usbVoltageCallbackPeriod != null) {
+            try {
+                getDevice().setUSBVoltageCallbackPeriod(intent.usbVoltageCallbackPeriod);
+                getIntent().usbVoltageCallbackPeriod = getDevice().getUSBVoltageCallbackPeriod();
+                super.getCallback().usbVoltageCallbackPeriodChanged(getIntent().usbVoltageCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.usbVoltageCallbackThreshold != null) {
+            try {
+                getDevice().setUSBVoltageCallbackThreshold(intent.usbVoltageCallbackThreshold.getOption(), intent.usbVoltageCallbackThreshold.getMin(), intent.usbVoltageCallbackThreshold.getMax());
+                getIntent().usbVoltageCallbackThreshold = new USBVoltageCallbackThreshold(getDevice().getUSBVoltageCallbackThreshold());
+                super.getCallback().USBVoltageCallbackThresholdChanged(getIntent().usbVoltageCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.statusLED != null) {
+            try {
+                if (intent.statusLED) {
+                    getDevice().enableStatusLED();
+                } else {
+                    getDevice().disableStatusLED();
+                }
+                getIntent().statusLED = getDevice().isStatusLEDEnabled();
+                super.getCallback().statusLEDEnabledChanged(getIntent().statusLED);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.reset != null) {
+            try {
+                if (intent.reset) {
+                    getDevice().reset();
+                    super.getCallback().reset();
+                }
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(MasterDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

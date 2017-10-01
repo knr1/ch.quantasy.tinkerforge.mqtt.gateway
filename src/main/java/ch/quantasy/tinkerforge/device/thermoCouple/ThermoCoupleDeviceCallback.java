@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.thermoCouple;
 
+import ch.quantasy.gateway.intent.thermoCouple.DeviceConfiguration;
+import ch.quantasy.gateway.intent.thermoCouple.DeviceTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletThermocouple;
 
@@ -50,8 +52,12 @@ import com.tinkerforge.BrickletThermocouple;
  * @author reto
  */
 public interface ThermoCoupleDeviceCallback extends DeviceCallback, BrickletThermocouple.TemperatureListener, BrickletThermocouple.TemperatureReachedListener, BrickletThermocouple.ErrorStateListener {
+
     public void debouncePeriodChanged(long period);
+
     public void temperatureCallbackPeriodChanged(long period);
+
     public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold);
+
     public void configurationChanged(DeviceConfiguration average);
 }

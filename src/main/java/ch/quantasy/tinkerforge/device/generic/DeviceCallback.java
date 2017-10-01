@@ -46,5 +46,5 @@ package ch.quantasy.tinkerforge.device.generic;
  *
  * @author reto
  */
-public interface DeviceCallback{
+public interface DeviceCallback {
 }

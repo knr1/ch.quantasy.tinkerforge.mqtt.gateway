@@ -42,12 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.master;
 
+import ch.quantasy.gateway.intent.master.MasterIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.master.MasterDevice;
 import ch.quantasy.tinkerforge.device.master.MasterDeviceCallback;
-import ch.quantasy.tinkerforge.device.master.StackCurrentCallbackThreshold;
-import ch.quantasy.tinkerforge.device.master.StackVoltageCallbackThreshold;
-import ch.quantasy.tinkerforge.device.master.USBVoltageCallbackThreshold;
+import ch.quantasy.gateway.intent.master.StackCurrentCallbackThreshold;
+import ch.quantasy.gateway.intent.master.StackVoltageCallbackThreshold;
+import ch.quantasy.gateway.intent.master.USBVoltageCallbackThreshold;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -62,43 +63,7 @@ public class MasterService extends AbstractDeviceService<MasterDevice, MasterSer
 
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_STATUS_LED_ENABLED)) {
-            Boolean enabled = getMapper().readValue(payload, Boolean.class);
-            getDevice().setEnableStatusLED(enabled);
-        }
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long debouncePeriod = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(debouncePeriod);
-        }
-        if (string.startsWith(getContract().INTENT_STACK_CURRENT_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setStackCurrentCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_STACK_CURRENT_CALLBACK_THRESHOLD)) {
-            StackCurrentCallbackThreshold threshold = getMapper().readValue(payload, StackCurrentCallbackThreshold.class);
-            getDevice().setStackCurrentCallbackThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_STACK_VOLTAGE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setStackVoltageCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_STACK_VOLTAGE_CALLBACK_THRESHOLD)) {
-            StackVoltageCallbackThreshold threshold = getMapper().readValue(payload, StackVoltageCallbackThreshold.class);
-            getDevice().setStackVoltageCallbackThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_USB_VOLTAGE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setUSBVoltageCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_USB_VOLTAGE_CALLBACK_THRESHOLD)) {
-            USBVoltageCallbackThreshold threshold = getMapper().readValue(payload, USBVoltageCallbackThreshold.class);
-            getDevice().setUSBVoltageCallbackThreshold(threshold);
-        }
-    }
+    
 
     @Override
     public void debouncePeriodChanged(Long debouncePeriod) {

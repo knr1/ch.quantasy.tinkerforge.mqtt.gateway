@@ -42,11 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.ambientLight;
 
+import ch.quantasy.gateway.intent.ambientLight.AmbientLightIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDeviceCallback;
-import ch.quantasy.tinkerforge.device.ambientLight.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.tinkerforge.device.ambientLight.DeviceIlluminanceCallbackThreshold;
+import ch.quantasy.gateway.intent.ambientLight.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.intent.ambientLight.DeviceIlluminanceCallbackThreshold;
 
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -59,33 +60,6 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
 
     public AmbientLightService(AmbientLightDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new AmbientLightServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAnalogValueCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_IllUMINANCE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setIlluminanceCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
-            DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
-            getDevice().setAnalogValueThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_ILLUMINANCE_THRESHOLD)) {
-            DeviceIlluminanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceIlluminanceCallbackThreshold.class);
-            getDevice().setIlluminanceCallbackThreshold(threshold);
-
-        }
-
     }
 
     @Override

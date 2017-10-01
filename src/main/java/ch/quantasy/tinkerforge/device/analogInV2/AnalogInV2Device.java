@@ -42,7 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.analogInV2;
 
-
+import ch.quantasy.gateway.intent.analogInV2.AnalogInV2Intent;
+import ch.quantasy.gateway.intent.analogInV2.DeviceVoltageCallbackThreshold;
+import ch.quantasy.gateway.intent.analogInV2.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAnalogInV2;
@@ -55,17 +57,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class AnalogInV2Device extends GenericDevice<BrickletAnalogInV2, AnalogInV2DeviceCallback> {
-
-    private Long analogValueCallbackPeriod;
-    private Long voltageCallbackPeriod;
-    private Long debouncePeriod;
-    private DeviceAnalogValueCallbackThreshold analogValueCallbackThreshold;
-    private DeviceVoltageCallbackThreshold altitudeThreshold;
-    private Short movingAverage;
+public class AnalogInV2Device extends GenericDevice<BrickletAnalogInV2, AnalogInV2DeviceCallback, AnalogInV2Intent> {
 
     public AnalogInV2Device(TinkerforgeStack stack, BrickletAnalogInV2 device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new AnalogInV2Intent());
     }
 
     @Override
@@ -74,25 +69,6 @@ public class AnalogInV2Device extends GenericDevice<BrickletAnalogInV2, AnalogIn
         device.addAnalogValueReachedListener(super.getCallback());
         device.addVoltageListener(super.getCallback());
         device.addVoltageReachedListener(super.getCallback());
-        if (analogValueCallbackPeriod != null) {
-            setAnalogValueCallbackPeriod(analogValueCallbackPeriod);
-        }
-        if (voltageCallbackPeriod != null) {
-            setVoltageCallbackPeriod(this.voltageCallbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (analogValueCallbackThreshold != null) {
-            setAirPressureThreshold(analogValueCallbackThreshold);
-        }
-        if (altitudeThreshold != null) {
-            setVoltageCallbackThreshold(altitudeThreshold);
-        }
-        if (movingAverage != null) {
-            setMovingAverage(movingAverage);
-        }
-       
     }
 
     @Override
@@ -103,64 +79,68 @@ public class AnalogInV2Device extends GenericDevice<BrickletAnalogInV2, AnalogIn
         device.removeVoltageReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(AnalogInV2Intent intent) {
+       if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.analogValueCallbackPeriod != null) {
+            try {
+                getDevice().setAnalogValueCallbackPeriod(intent.analogValueCallbackPeriod);
+                getIntent().analogValueCallbackPeriod = getDevice().getAnalogValueCallbackPeriod();
+                super.getCallback().analogValueCallbackPeriodChanged(getIntent().analogValueCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.voltageCallbackPeriod != null) {
+            try {
+                getDevice().setVoltageCallbackPeriod(intent.voltageCallbackPeriod);
+                getIntent().voltageCallbackPeriod = getDevice().getVoltageCallbackPeriod();
+                super.getCallback().voltageCallbackPeriodChanged(getIntent().voltageCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.analogValueCallbackThreshold != null) {
+            try {
+                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.getOption(), intent.analogValueCallbackThreshold.getMin(), intent.analogValueCallbackThreshold.getMax());
+                getIntent().analogValueCallbackThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
+                super.getCallback().analogValueCallbackThresholdChanged(getIntent().analogValueCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.voltageCallbackThreshold != null) {
+            try {
+                getDevice().setVoltageCallbackThreshold(intent.voltageCallbackThreshold.getOption(), intent.voltageCallbackThreshold.getMin(), intent.voltageCallbackThreshold.getMax());
+                getIntent().voltageCallbackThreshold = new DeviceVoltageCallbackThreshold(getDevice().getVoltageCallbackThreshold());
+                super.getCallback().voltageCallbackThresholdChanged(getIntent().voltageCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.movingAverage != null) {
+            try {
+                getDevice().setMovingAverage(intent.movingAverage);
+                getIntent().movingAverage = getDevice().getMovingAverage();
+                super.getCallback().movingAverageChanged(getIntent().movingAverage);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    public void setAnalogValueCallbackPeriod(Long period) {
-        try {
-            getDevice().setAnalogValueCallbackPeriod(period);
-            this.analogValueCallbackPeriod = getDevice().getAnalogValueCallbackPeriod();
-            super.getCallback().analogValueCallbackPeriodChanged(this.analogValueCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setVoltageCallbackPeriod(Long period) {
-        try {
-            getDevice().setVoltageCallbackPeriod(period);
-            this.voltageCallbackPeriod = getDevice().getVoltageCallbackPeriod();
-            super.getCallback().voltageCallbackPeriodChanged(this.voltageCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setAirPressureThreshold(DeviceAnalogValueCallbackThreshold threshold) {
-        try {
-            getDevice().setAnalogValueCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.analogValueCallbackThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
-            super.getCallback().analogValueCallbackThresholdChanged(this.analogValueCallbackThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setVoltageCallbackThreshold(DeviceVoltageCallbackThreshold threshold) {
-        try {
-            getDevice().setVoltageCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.altitudeThreshold = new DeviceVoltageCallbackThreshold(getDevice().getVoltageCallbackThreshold());
-            super.getCallback().voltageCallbackThresholdChanged(this.altitudeThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setMovingAverage(Short movingAverage) {
-        try {
-            getDevice().setMovingAverage(movingAverage);
-            this.movingAverage = getDevice().getMovingAverage();
-            super.getCallback().movingAverageChanged(this.movingAverage);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AnalogInV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

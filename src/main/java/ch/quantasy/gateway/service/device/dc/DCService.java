@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.dc;
 
+import ch.quantasy.gateway.intent.dc.DCIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.dc.DCDeviceCallback;
@@ -56,46 +57,6 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     public DCService(DCDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DCServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_ENABLED)) {
-            Boolean enabled = getMapper().readValue(payload, Boolean.class);
-            getDevice().setEnabled(enabled);
-        }
-
-        if (string.startsWith(getContract().INTENT_ACCELERATION)) {
-            Integer acceleration = getMapper().readValue(payload, Integer.class);
-            getDevice().setAcceleration(acceleration);
-        }
-        if (string.startsWith(getContract().INTENT_DRIVER_MODE)) {
-            Short driverMode = getMapper().readValue(payload, Short.class);
-            getDevice().setDriveMode(driverMode);
-        }
-        if (string.startsWith(getContract().INTENT_MINIMUM_VOLTAGE)) {
-            Integer minimumVoltage = getMapper().readValue(payload, Integer.class);
-            getDevice().setMinimumVoltage(minimumVoltage);
-        }
-        if (string.startsWith(getContract().INTENT_PWM_FREQUENCY)) {
-            Integer pwmFrequency = getMapper().readValue(payload, Integer.class);
-            getDevice().setPWMFrequency(pwmFrequency);
-        }
-        if (string.startsWith(getContract().INTENT_VELOCITY_VELOCITY)) {
-            Short velocity = getMapper().readValue(payload, Short.class);
-            getDevice().setVelocity(velocity);
-        }
-        if (string.startsWith(getContract().INTENT_VELOCITY_CALLBACK_PERIOD)) {
-            Integer velocityPeriod = getMapper().readValue(payload, Integer.class);
-            getDevice().setVelocityPeriod(velocityPeriod);
-        }
-        if (string.startsWith(getContract().INTENT_FULL_BRAKE)) {
-            Boolean value = getMapper().readValue(payload, Boolean.class);
-            if (value) {
-                getDevice().fullBrake();
-            }
-        }
     }
 
     @Override

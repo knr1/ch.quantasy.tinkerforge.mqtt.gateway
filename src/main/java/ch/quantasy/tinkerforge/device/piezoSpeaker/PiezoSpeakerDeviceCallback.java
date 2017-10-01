@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.piezoSpeaker;
 
+import ch.quantasy.gateway.intent.piezoSpeaker.MorseCodeParameter;
+import ch.quantasy.gateway.intent.piezoSpeaker.BeepParameter;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletPiezoSpeaker;
 

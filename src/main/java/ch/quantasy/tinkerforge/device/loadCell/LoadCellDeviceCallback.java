@@ -42,7 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.loadCell;
 
-
+import ch.quantasy.gateway.intent.loadCell.DeviceWeightCallbackThreshold;
+import ch.quantasy.gateway.intent.loadCell.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletLoadCell;
 
@@ -50,11 +51,17 @@ import com.tinkerforge.BrickletLoadCell;
  *
  * @author reto
  */
-public interface LoadCellDeviceCallback extends DeviceCallback, BrickletLoadCell.WeightListener,BrickletLoadCell.WeightReachedListener {
+public interface LoadCellDeviceCallback extends DeviceCallback, BrickletLoadCell.WeightListener, BrickletLoadCell.WeightReachedListener {
+
     public void debouncePeriodChanged(long period);
+
     public void weightCallbackPeriodChanged(long period);
+
     public void weightCallbackThresholdChanged(DeviceWeightCallbackThreshold threshold);
+
     public void configurationChanged(DeviceConfiguration average);
+
     public void movingAverageChanged(short average);
+
     public void statusLEDChanged(boolean led);
 }

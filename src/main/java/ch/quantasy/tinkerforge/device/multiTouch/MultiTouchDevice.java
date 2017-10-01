@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.multiTouch;
 
+import ch.quantasy.gateway.intent.multiTouch.MultiTouchIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletMultiTouch;
@@ -54,24 +55,15 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class MultiTouchDevice extends GenericDevice<BrickletMultiTouch, MultiTouchDeviceCallback> {
-
-    private Integer electrodeConfig;
-    private Short sensitivity;
+public class MultiTouchDevice extends GenericDevice<BrickletMultiTouch, MultiTouchDeviceCallback, MultiTouchIntent> {
 
     public MultiTouchDevice(TinkerforgeStack stack, BrickletMultiTouch device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new MultiTouchIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletMultiTouch device) {
         device.addTouchStateListener(super.getCallback());
-        if (electrodeConfig != null) {
-            setElectrodeConfig(electrodeConfig);
-        }
-        if (sensitivity != null) {
-            setElectrodeSensitivity(this.sensitivity);
-        }
     }
 
     @Override
@@ -79,35 +71,43 @@ public class MultiTouchDevice extends GenericDevice<BrickletMultiTouch, MultiTou
         device.removeTouchStateListener(super.getCallback());
     }
 
-    public void recalibrate(Boolean recalibration) {
-        try {
-            if (recalibration) {
-                getDevice().recalibrate();
-                super.getCallback().recalibrated();
+    @Override
+    public void update(MultiTouchIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+
+        if (intent.recalibration != null) {
+            try {
+                if (intent.recalibration) {
+                    getDevice().recalibrate();
+                    super.getCallback().recalibrated();
+                }
+
+            } catch (Exception ex) {
+                Logger.getLogger(MultiTouchDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-        } catch (Exception ex) {
-            Logger.getLogger(MultiTouchDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void setElectrodeConfig(Integer config) {
-        try {
-            getDevice().setElectrodeConfig(config);
-            this.electrodeConfig = getDevice().getElectrodeConfig();
-            super.getCallback().electrodeConfigChanged(this.electrodeConfig);
-        } catch (Exception ex) {
-            Logger.getLogger(MultiTouchDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.electrodeConfig != null) {
+            try {
+                getDevice().setElectrodeConfig(intent.electrodeConfig);
+                getIntent().electrodeConfig = getDevice().getElectrodeConfig();
+                super.getCallback().electrodeConfigChanged(getIntent().electrodeConfig);
+            } catch (Exception ex) {
+                Logger.getLogger(MultiTouchDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setElectrodeSensitivity(Short sensitivity) {
-        try {
-            getDevice().setElectrodeSensitivity(sensitivity);
-            this.sensitivity = getDevice().getElectrodeSensitivity();
-            super.getCallback().electrodeSensitivityChanged(this.sensitivity);
-        } catch (Exception ex) {
-            Logger.getLogger(MultiTouchDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.sensitivity != null) {
+            try {
+                getDevice().setElectrodeSensitivity(intent.sensitivity);
+                getIntent().sensitivity = getDevice().getElectrodeSensitivity();
+                super.getCallback().electrodeSensitivityChanged(getIntent().sensitivity);
+            } catch (Exception ex) {
+                Logger.getLogger(MultiTouchDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

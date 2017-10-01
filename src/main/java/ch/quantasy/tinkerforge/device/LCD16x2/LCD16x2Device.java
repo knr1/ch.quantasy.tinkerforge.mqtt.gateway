@@ -42,13 +42,15 @@
  */
 package ch.quantasy.tinkerforge.device.LCD16x2;
 
+import ch.quantasy.gateway.intent.LCD16x2.DeviceConfigParameters;
+import ch.quantasy.gateway.intent.LCD16x2.DeviceCustomCharacter;
+import ch.quantasy.gateway.intent.LCD16x2.DeviceWriteLine;
+import ch.quantasy.gateway.intent.LCD16x2.LCD16x2Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLCD16x2;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.Level;
@@ -58,20 +60,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceCallback> {
+public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceCallback, LCD16x2Intent> {
 
-    private Boolean isBacklightEnabled;
-    private DeviceConfigParameters configParameters;
-    private final Set<DeviceCustomCharacter> customCharacters;
     private final StringBuffer[] lines;
     private Thread writerThread;
     private final Writer writer;
 
     public LCD16x2Device(TinkerforgeStack stack, BrickletLCD16x2 device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new LCD16x2Intent());
         writer = new Writer();
 
-        this.customCharacters = new HashSet<>();
         lines = new StringBuffer[4];
         for (int i = 0; i < lines.length; i++) {
             lines[i] = new StringBuffer("                    ");
@@ -84,16 +82,6 @@ public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceC
         device.addButtonReleasedListener(super.getCallback());
         writerThread = new Thread(writer);
         writerThread.start();
-        if (this.isBacklightEnabled != null) {
-            setBacklight(isBacklightEnabled);
-        }
-        if (this.configParameters != null) {
-            setConfigParameters(configParameters);
-        }
-        if (!this.customCharacters.isEmpty()) {
-            setCustomCharacters(customCharacters.toArray(new DeviceCustomCharacter[0]));
-        }
-        
 
     }
 
@@ -105,52 +93,71 @@ public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceC
         device.removeButtonReleasedListener(super.getCallback());
     }
 
-    public void setBacklight(Boolean isBacklightEnabled) {
-        try {
-            if (isBacklightEnabled) {
-                getDevice().backlightOn();
-            } else {
-                getDevice().backlightOff();
-            }
-            this.isBacklightEnabled = getDevice().isBacklightOn();
-            super.getCallback().backlightChanged(this.isBacklightEnabled);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(LCD16x2Intent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void clearDisplay(Boolean clearDisplay) {
-        try {
-            if (!clearDisplay) {
-            }
-            getDevice().clearDisplay();
-            for (int i = 0; i < lines.length; i++) {
-                lines[i] = new StringBuffer("                    ");
-            }
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
 
-    public void setConfigParameters(DeviceConfigParameters parameters) {
-        try {
-            getDevice().setConfig(parameters.getCursor(), parameters.getBlinking());
-            this.configParameters = new DeviceConfigParameters(getDevice().getConfig());
-            super.getCallback().configurationChanged(this.configParameters);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setCustomCharacters(DeviceCustomCharacter... characters) {
-        try {
-            for (DeviceCustomCharacter character : characters) {
-                getDevice().setCustomCharacter(character.getIndex(), character.getPixels());
-                this.customCharacters.add(new DeviceCustomCharacter(character.getIndex(), getDevice().getCustomCharacter(character.getIndex())));
+        if (intent.backlight != null) {
+            try {
+                if (intent.backlight) {
+                    getDevice().backlightOn();
+                } else {
+                    getDevice().backlightOff();
+                }
+                getIntent().backlight = getDevice().isBacklightOn();
+                super.getCallback().backlightChanged(getIntent().backlight);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
             }
-            super.getCallback().customCharactersChanged(this.customCharacters.toArray(new DeviceCustomCharacter[0]));
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
+            if (intent.clearDisplay != null) {
+                try {
+                    if (!intent.clearDisplay) {
+                    }
+                    getDevice().clearDisplay();
+                    for (int i = 0; i < lines.length; i++) {
+                        lines[i] = new StringBuffer("                    ");
+                    }
+                } catch (TimeoutException | NotConnectedException ex) {
+                    Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (intent.parameters != null) {
+                try {
+                    getDevice().setConfig(intent.parameters.getCursor(), intent.parameters.getBlinking());
+                    getIntent().parameters = new DeviceConfigParameters(getDevice().getConfig());
+                    super.getCallback().configurationChanged(getIntent().parameters);
+                } catch (TimeoutException | NotConnectedException ex) {
+                    Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (intent.customCharacters != null && !intent.customCharacters.isEmpty()) {
+                try {
+                    for (DeviceCustomCharacter character : intent.customCharacters) {
+                        getDevice().setCustomCharacter(character.getIndex(), character.getPixels());
+                        getIntent().customCharacters.add(new DeviceCustomCharacter(character.getIndex(), getDevice().getCustomCharacter(character.getIndex())));
+                    }
+                    super.getCallback().customCharactersChanged(getIntent().customCharacters.toArray(new DeviceCustomCharacter[0]));
+                } catch (TimeoutException | NotConnectedException ex) {
+                    Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            if (intent.lines != null && !intent.lines.isEmpty()) {
+                try {
+                    for (DeviceWriteLine line : intent.lines) {
+                        this.lines[line.getLine()].replace(line.getPosition(), line.getPosition() + Math.min(16 - line.getPosition(), line.getText().length()), line.getText());
+                        writer.readyToWrite(line.getLine());
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

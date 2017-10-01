@@ -42,6 +42,11 @@
  */
 package ch.quantasy.tinkerforge.device.voltageCurrent;
 
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceVoltagCallbackThreshold;
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceConfiguration;
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceCalibration;
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceCurrentCallbackThreshold;
+import ch.quantasy.gateway.intent.voltageCurrent.DevicePowerCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletVoltageCurrent;
 
@@ -59,13 +64,13 @@ public interface VoltageCurrentDeviceCallback extends DeviceCallback, BrickletVo
 
     public void currentCallbackPeriodChanged(long period);
 
-    public void currentCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold threshold);
+    public void currentCallbackThresholdChanged(DeviceCurrentCallbackThreshold threshold);
 
-    public void voltageCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold voltageThreshold);
+    public void voltageCallbackThresholdChanged(DeviceVoltagCallbackThreshold voltageThreshold);
 
     public void voltageCallbackPeriodChanged(long voltageCallbackPeriod);
 
     public void powerCallbackPeriodChanged(long powerCallbackPeriod);
 
-    public void powerCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold powerThreshold);
+    public void powerCallbackThresholdChanged(DevicePowerCallbackThreshold powerThreshold);
 }

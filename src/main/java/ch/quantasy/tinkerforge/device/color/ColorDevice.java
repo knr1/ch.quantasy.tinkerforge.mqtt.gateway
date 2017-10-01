@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.color;
 
+import ch.quantasy.gateway.intent.color.ColorIntent;
+import ch.quantasy.gateway.intent.color.DeviceColorCallbackThreshold;
+import ch.quantasy.gateway.intent.color.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletColor;
@@ -54,18 +57,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class ColorDevice extends GenericDevice<BrickletColor, ColorDeviceCallback> {
-
-    private Long colorCallbackPeriod;
-    private Long illuminanceCallbackPeriod;
-    private Long debouncePeriod;
-    private DeviceColorCallbackThreshold colorCallbackThreshold;
-    private Long colorTemperaturePeriod;
-    private DeviceConfiguration config;
-    private Boolean isLight;
+public class ColorDevice extends GenericDevice<BrickletColor, ColorDeviceCallback, ColorIntent> {
 
     public ColorDevice(TinkerforgeStack stack, BrickletColor device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new ColorIntent());
     }
 
     @Override
@@ -74,27 +69,6 @@ public class ColorDevice extends GenericDevice<BrickletColor, ColorDeviceCallbac
         device.addColorReachedListener(super.getCallback());
         device.addColorTemperatureListener(super.getCallback());
         device.addIlluminanceListener(super.getCallback());
-        if (colorCallbackPeriod != null) {
-            setColorCallbackPeriod(colorCallbackPeriod);
-        }
-        if (illuminanceCallbackPeriod != null) {
-            setIlluminanceCallbackPeriod(this.illuminanceCallbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (colorCallbackThreshold != null) {
-            setColorCallbackThreshold(colorCallbackThreshold);
-        }
-        if (colorTemperaturePeriod != null) {
-            setColorTemperatureCallbackPeriod(colorTemperaturePeriod);
-        }
-        if(config!=null){
-            setConfig(config);
-        }
-        if(isLight!=null){
-            setLight(isLight);
-        }
     }
 
     @Override
@@ -105,81 +79,82 @@ public class ColorDevice extends GenericDevice<BrickletColor, ColorDeviceCallbac
         device.addIlluminanceListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(ColorIntent intent) {
+       if (intent == null) {
+            return;
         }
-    }
-
-    public void setColorCallbackPeriod(Long period) {
-        try {
-            getDevice().setColorCallbackPeriod(period);
-            this.colorCallbackPeriod = getDevice().getColorCallbackPeriod();
-            super.getCallback().colorCallbackPeriodChanged(this.colorCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
-
-    public void setIlluminanceCallbackPeriod(Long period) {
-        try {
-            getDevice().setIlluminanceCallbackPeriod(period);
-            this.illuminanceCallbackPeriod=getDevice().getIlluminanceCallbackPeriod();
-            super.getCallback().illuminanceCallbackPeriodChanged(this.illuminanceCallbackPeriod );
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setColorCallbackThreshold(DeviceColorCallbackThreshold threshold) {
-        try {
-            getDevice().setColorCallbackThreshold(threshold.getOption(), threshold.getMinR(),threshold.getMaxR(),threshold.getMinG(),threshold.getMaxG(),threshold.getMinB(),threshold.getMaxB(),threshold.getMinC(),threshold.getMaxC());
-            this.colorCallbackThreshold = new DeviceColorCallbackThreshold(getDevice().getColorCallbackThreshold());
-            super.getCallback().colorCallbackThresholdChanged(this.colorCallbackThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setColorTemperatureCallbackPeriod(Long period) {
-        try {
-            getDevice().setColorTemperatureCallbackPeriod(period);
-            this.colorTemperaturePeriod = getDevice().getColorTemperatureCallbackPeriod();
-            super.getCallback().colorTemperatureCallbackPeriodChanged(this.colorTemperaturePeriod);
-            
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void setConfig(DeviceConfiguration config){
-        try{
-            getDevice().setConfig(config.getGain().getValue(),config.getIntegrationTime().getValue());
-            this.config=new DeviceConfiguration(getDevice().getConfig());
-            super.getCallback().configurationChanged(this.config);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }  
-    }
-    
-    public void setLight(Boolean isLightOn){
-        try{
-            if(isLightOn){
-                getDevice().lightOn();
-            }else{
-                getDevice().lightOff();
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.isLight=getDevice().isLightOn() != 0;
-            super.getCallback().lightStatusChanged(this.isLight);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }  
+        }
+        if (intent.colorCallbackPeriod != null) {
+            try {
+                getDevice().setColorCallbackPeriod(intent.colorCallbackPeriod);
+                getIntent().colorCallbackPeriod = getDevice().getColorCallbackPeriod();
+                super.getCallback().colorCallbackPeriodChanged(getIntent().colorCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.illuminanceCallbackPeriod != null) {
+            try {
+                getDevice().setIlluminanceCallbackPeriod(intent.illuminanceCallbackPeriod);
+                getIntent().illuminanceCallbackPeriod = getDevice().getIlluminanceCallbackPeriod();
+                super.getCallback().illuminanceCallbackPeriodChanged(getIntent().illuminanceCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.colorCallbackThreshold != null) {
+            try {
+                getDevice().setColorCallbackThreshold(intent.colorCallbackThreshold.getOption(), intent.colorCallbackThreshold.getMinR(), intent.colorCallbackThreshold.getMaxR(), intent.colorCallbackThreshold.getMinG(), intent.colorCallbackThreshold.getMaxG(), intent.colorCallbackThreshold.getMinB(), intent.colorCallbackThreshold.getMaxB(), intent.colorCallbackThreshold.getMinC(), intent.colorCallbackThreshold.getMaxC());
+                getIntent().colorCallbackThreshold = new DeviceColorCallbackThreshold(getDevice().getColorCallbackThreshold());
+                super.getCallback().colorCallbackThresholdChanged(getIntent().colorCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.colorTemperatureCallbackPeriod != null) {
+            try {
+                getDevice().setColorTemperatureCallbackPeriod(intent.colorTemperatureCallbackPeriod);
+                getIntent().colorTemperatureCallbackPeriod = getDevice().getColorTemperatureCallbackPeriod();
+                super.getCallback().colorTemperatureCallbackPeriodChanged(getIntent().colorTemperatureCallbackPeriod);
+
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.config != null) {
+            try {
+                getDevice().setConfig(intent.config.getGain().getValue(), intent.config.getIntegrationTime().getValue());
+                getIntent().config = new DeviceConfiguration(getDevice().getConfig());
+                super.getCallback().configurationChanged(getIntent().config);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.light != null) {
+            try {
+                if (intent.light) {
+                    getDevice().lightOn();
+                } else {
+                    getDevice().lightOff();
+                }
+                getIntent().light = getDevice().isLightOn() != 0;
+                super.getCallback().lightStatusChanged(getIntent().light);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ColorDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
-    
-    
 
 }

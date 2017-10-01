@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.stack;
 
+import ch.quantasy.gateway.intent.stack.TinkerforgeStackAddress;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
@@ -54,8 +55,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
@@ -217,7 +216,7 @@ public class TinkerforgeStack implements EnumerateListener {
             listener.connected(TinkerforgeStack.this);
         }
         if (timerFuture != null) {
-            timerFuture.cancel(false);
+            timerFuture.cancel(true);
         }
         timerFuture = this.timerService.scheduleAtFixedRate(new WatchDog(1), 10000, 10000, TimeUnit.MILLISECONDS);
 
@@ -225,8 +224,7 @@ public class TinkerforgeStack implements EnumerateListener {
 
     protected void disconnected() {
         if (timerFuture != null) {
-            timerFuture.cancel(false);
-            timerFuture = null;
+            timerFuture.cancel(true);
         }
         this.ipConnection.removeEnumerateListener(this);
         for (TinkerforgeDevice device : getDevices()) {
@@ -380,7 +378,6 @@ public class TinkerforgeStack implements EnumerateListener {
                 Thread.sleep(5000);
                 if (count > 0) {
                     ipConnectionHandler.reconnect();
-                    timerFuture.cancel(false);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);

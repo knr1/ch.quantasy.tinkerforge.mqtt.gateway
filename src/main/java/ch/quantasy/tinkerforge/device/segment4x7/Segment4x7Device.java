@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.segment4x7;
 
+import ch.quantasy.gateway.intent.segment4x7.DeviceCounterParameters;
+import ch.quantasy.gateway.intent.segment4x7.DeviceSegments;
+import ch.quantasy.gateway.intent.segment4x7.Segment4x7Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
@@ -55,13 +58,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class Segment4x7Device extends GenericDevice<BrickletSegmentDisplay4x7, Segment4x7DeviceCallback> {
-
-    private DeviceSegments segments;
-    private DeviceCounterParameters counterParameter;
+public class Segment4x7Device extends GenericDevice<BrickletSegmentDisplay4x7, Segment4x7DeviceCallback, Segment4x7Intent> {
 
     public Segment4x7Device(TinkerforgeStack stack, BrickletSegmentDisplay4x7 device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new Segment4x7Intent());
     }
 
     @Override
@@ -75,27 +75,32 @@ public class Segment4x7Device extends GenericDevice<BrickletSegmentDisplay4x7, S
         device.removeCounterFinishedListener(super.getCallback());
     }
 
-    public void setSegments(DeviceSegments segments) {
-        try {
-            getDevice().setSegments(segments.getBits(), segments.getBrightness(), segments.getColon());
-            this.segments = new DeviceSegments(getDevice().getSegments());
-            getCallback().segmentsChanged(this.segments);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(Segment4x7Intent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+
+        if (intent.segments != null) {
+            try {
+
+                getDevice().setSegments(intent.segments.getBits(), intent.segments.getBrightness(), intent.segments.getColon());
+                getCallback().segmentsChanged(new DeviceSegments(getDevice().getSegments()));
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.counterParameter != null) {
+            try {
+                getDevice().startCounter(intent.counterParameter.getFrom(), intent.counterParameter.getTo(), intent.counterParameter.getIncrement(), intent.counterParameter.getLength());
+                getCallback().counterStarted(intent.counterParameter);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-       
-    public void startCounter(DeviceCounterParameters counter) {
-        try {
-            getDevice().startCounter(counter.getFrom(),counter.getTo(),counter.getIncrement(),counter.getLength());
-            this.counterParameter = counter;
-            getCallback().counterStarted(counter);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RemoteSwitchDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    
-    
 
 }

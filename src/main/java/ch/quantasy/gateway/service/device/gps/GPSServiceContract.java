@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.gps;
 
+import ch.quantasy.gateway.intent.gps.GPSIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
@@ -57,17 +58,11 @@ public class GPSServiceContract extends DeviceServiceContract {
     public final String ALTITUDE;
     public final String RESTART;
 
-    public final String INTENT_COORDINATES_CALLBACK_PERIOD;
     public final String STATUS_COORDINATES_CALLBACK_PERIOD;
 
-    public final String INTENT_DATE_TIME_CALLBACK_PERIOD;
-
-    public final String INTENT_ALTITUDE_CALLBACK_PERIOD;
     public final String EVENT_ALTITUDE;
     public final String STATUS_ALTITUDE_CALLBACK_PERIOD;
 
-    public final String INTENT_MOTION_CALLBACK_PERIOD;
-    public String INTENT_RESTART;
     public final String COORDINATES;
     public final String DATE_TIME;
     public final String STATUS_DATE_TIME_CALLBACK_PERIOD;
@@ -77,7 +72,6 @@ public class GPSServiceContract extends DeviceServiceContract {
     public final String STATUS_MOTION_CALLBACK_PERIOD;
     public final String EVENT_MOTION;
     public final String STATE;
-    public final String INTENT_STATE_CALLBACK_PERIOD;
     public final String STATUS_STATE_CALLBACK_PERIOD;
     public final String EVENT_COORDINATES;
     public final String EVENT_STATE;
@@ -91,36 +85,30 @@ public class GPSServiceContract extends DeviceServiceContract {
     }
 
     public GPSServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device, GPSIntent.class);
 
         CALLBACK_PERIOD = "callbackPeriod";
 
         COORDINATES = "coordinates";
         STATUS_COORDINATES_CALLBACK_PERIOD = STATUS + "/" + COORDINATES + "/" + CALLBACK_PERIOD;
-        INTENT_COORDINATES_CALLBACK_PERIOD = INTENT + "/" + COORDINATES + "/" + CALLBACK_PERIOD;
         EVENT_COORDINATES = EVENT + "/" + COORDINATES;
 
         ALTITUDE = "altitude";
         STATUS_ALTITUDE_CALLBACK_PERIOD = STATUS + "/" + ALTITUDE + "/" + CALLBACK_PERIOD;
-        INTENT_ALTITUDE_CALLBACK_PERIOD = INTENT + "/" + ALTITUDE + "/" + CALLBACK_PERIOD;
         EVENT_ALTITUDE = EVENT + "/" + ALTITUDE;
 
         RESTART = "restart";
-        INTENT_RESTART = INTENT + "/" + RESTART;
         EVENT_RESTART = EVENT + "/" + RESTART;
 
         DATE_TIME = "dateTime";
-        INTENT_DATE_TIME_CALLBACK_PERIOD = INTENT + "/" + DATE_TIME + "/" + CALLBACK_PERIOD;
         STATUS_DATE_TIME_CALLBACK_PERIOD = STATUS + "/" + DATE_TIME + "/" + CALLBACK_PERIOD;
         EVENT_DATE_TIME = EVENT + "/" + DATE_TIME;
 
         MOTION = "motion";
-        INTENT_MOTION_CALLBACK_PERIOD = INTENT + "/" + MOTION + "/" + CALLBACK_PERIOD;
         STATUS_MOTION_CALLBACK_PERIOD = STATUS + "/" + MOTION + "/" + CALLBACK_PERIOD;
         EVENT_MOTION = EVENT + "/" + MOTION;
 
         STATE = "status";
-        INTENT_STATE_CALLBACK_PERIOD = INTENT + "/" + STATE + "/" + CALLBACK_PERIOD;
         STATUS_STATE_CALLBACK_PERIOD = STATUS + "/" + STATE + "/" + CALLBACK_PERIOD;
         EVENT_STATE = EVENT + "/" + STATE;
 
@@ -128,12 +116,8 @@ public class GPSServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
-        descriptions.put(INTENT_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

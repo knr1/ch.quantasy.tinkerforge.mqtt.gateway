@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.solidStateRelay;
 
+import ch.quantasy.gateway.intent.solidState.SolidStateRelayIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
@@ -54,14 +55,12 @@ import java.util.Map;
 public class SolidStateRelayServiceContract extends DeviceServiceContract {
 
     public final String STATE;
-    public final String INTENT_STATE;
     public final String STATUS_STATE;
 
     public final String MONOFLOP_DONE;
     public final String EVENT_MONOFLOP_DONE;
 
     public final String MONOFLOP;
-    public final String INTENT_MONOFLOP;
 
     public SolidStateRelayServiceContract(SolidStateRelayDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -72,23 +71,19 @@ public class SolidStateRelayServiceContract extends DeviceServiceContract {
     }
 
     public SolidStateRelayServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,SolidStateRelayIntent.class);
         MONOFLOP_DONE = "monoflopDone";
         EVENT_MONOFLOP_DONE = EVENT + "/" + MONOFLOP_DONE;
 
         MONOFLOP = "monoflop";
-        INTENT_MONOFLOP = INTENT + "/" + MONOFLOP;
 
         STATE = "state";
-        INTENT_STATE = INTENT + "/" + STATE;
         STATUS_STATE = STATUS + "/" + STATE;
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_MONOFLOP, "state: [true|false]\n period: [0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_STATE, "[true|false]");
         descriptions.put(EVENT_MONOFLOP_DONE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [true|false]");
         descriptions.put(STATUS_STATE, "[true|false]");
     }

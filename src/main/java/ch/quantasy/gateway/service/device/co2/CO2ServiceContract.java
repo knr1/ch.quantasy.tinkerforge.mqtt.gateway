@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.co2;
 
+import ch.quantasy.gateway.intent.co2.CO2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
@@ -64,15 +65,10 @@ public class CO2ServiceContract extends DeviceServiceContract {
     public final String STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD;
     public final String EVENT_CO2_CONCENTRATION;
     public final String EVENT_CO2_CONCENTRATION_REACHED;
-    private final String INTENT_CO2_CONCENTRATION;
-    public final String INTENT_CO2_CONCENTRATION_THRESHOLD;
-    public final String INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD;
-
+   
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public CO2ServiceContract(CO2Device device) {
@@ -84,7 +80,7 @@ public class CO2ServiceContract extends DeviceServiceContract {
     }
 
     public CO2ServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,CO2Intent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -98,24 +94,16 @@ public class CO2ServiceContract extends DeviceServiceContract {
         STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD = STATUS_CO2_CONCENTRATION + "/" + CALLBACK_PERIOD;
         EVENT_CO2_CONCENTRATION = EVENT + "/" + CO2_CONCENTRATION;
         EVENT_CO2_CONCENTRATION_REACHED = EVENT_CO2_CONCENTRATION + "/" + REACHED;
-        INTENT_CO2_CONCENTRATION = INTENT + "/" + CO2_CONCENTRATION;
-        INTENT_CO2_CONCENTRATION_THRESHOLD = INTENT_CO2_CONCENTRATION + "/" + THRESHOLD;
-        INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD = INTENT_CO2_CONCENTRATION + "/" + CALLBACK_PERIOD;
-
+   
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_CO2_CONCENTRATION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
-
+       
         descriptions.put(EVENT_CO2_CONCENTRATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
         descriptions.put(EVENT_CO2_CONCENTRATION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
         descriptions.put(STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

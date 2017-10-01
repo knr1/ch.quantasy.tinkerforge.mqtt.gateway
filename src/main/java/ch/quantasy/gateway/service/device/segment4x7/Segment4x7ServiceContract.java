@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.segment4x7;
 
+import ch.quantasy.gateway.intent.segment4x7.Segment4x7Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
@@ -60,10 +61,8 @@ public class Segment4x7ServiceContract extends DeviceServiceContract {
     public final String EVENT_COUNTER_FINISHED;
 
     public final String COUNTER;
-    public final String INTENT_COUNTER;
-
+   
     public final String SEGMENTS;
-    public final String INTENT_SEGMENTS;
     public final String STATUS_SEGMENTS;
 
     public Segment4x7ServiceContract(Segment4x7Device device) {
@@ -75,15 +74,13 @@ public class Segment4x7ServiceContract extends DeviceServiceContract {
     }
 
     public Segment4x7ServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,Segment4x7Intent.class);
 
         SEGMENTS = "segments";
-        INTENT_SEGMENTS = INTENT + "/" + SEGMENTS;
         STATUS_SEGMENTS = STATUS + "/" + SEGMENTS;
 
         COUNTER = "counter";
-        INTENT_COUNTER = INTENT + "/" + COUNTER;
-
+      
         COUNTER_STARTED = COUNTER + "Started";
         EVENT_COUNTER_STARTED = EVENT + "/" + COUNTER_STARTED;
 
@@ -95,9 +92,7 @@ public class Segment4x7ServiceContract extends DeviceServiceContract {
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(INTENT_COUNTER, "from: [-999..9999]\n to: [-999..9999]\n increment: [-999..9999]\n lenght: [0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
-
+    
         descriptions.put(EVENT_COUNTER_STARTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
         descriptions.put(EVENT_COUNTER_FINISHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
 

@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.remoteSwitch;
 
+import ch.quantasy.gateway.intent.remoteSwitch.SocketParameters;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletRemoteSwitch;
 
@@ -50,6 +51,8 @@ import com.tinkerforge.BrickletRemoteSwitch;
  * @author reto
  */
 public interface RemoteSwitchDeviceCallback extends DeviceCallback {
+
     public void repeatsChanged(short repeats);
+
     public void switchingDone(SocketParameters socketParamters);
 }

@@ -42,106 +42,12 @@
  */
 package ch.quantasy.gateway.tinkerforge;
 
-import ch.quantasy.gateway.service.device.IMU.IMUService;
-import ch.quantasy.gateway.service.device.IMUV2.IMUV2Service;
-import ch.quantasy.gateway.service.device.LCD16x2.LCD16x2Service;
-import ch.quantasy.gateway.service.device.LCD20x4.LCD20x4Service;
-import ch.quantasy.gateway.service.device.accelerometer.AccelerometerService;
-import ch.quantasy.gateway.service.device.ambientLight.AmbientLightService;
-import ch.quantasy.gateway.service.device.ambientLightV2.AmbientLightV2Service;
-import ch.quantasy.gateway.service.device.analogInV2.AnalogInV2Service;
-import ch.quantasy.gateway.service.device.analogOutV2.AnalogOutV2Service;
-import ch.quantasy.gateway.service.device.barometer.BarometerService;
-import ch.quantasy.gateway.service.device.co2.CO2Service;
-import ch.quantasy.gateway.service.device.color.ColorService;
-import ch.quantasy.gateway.service.device.dc.DCService;
-import ch.quantasy.gateway.service.device.distanceIR.DistanceIRService;
-import ch.quantasy.gateway.service.device.distanceUS.DistanceUSService;
-import ch.quantasy.gateway.service.device.dualRelay.DualRelayService;
-import ch.quantasy.gateway.service.device.humidity.HumidityService;
-import ch.quantasy.gateway.service.device.ledStrip.LEDStripService;
-import ch.quantasy.gateway.service.device.moisture.MoistureService;
-import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorService;
-import ch.quantasy.gateway.service.device.remoteSwitch.RemoteSwitchService;
-import ch.quantasy.gateway.service.device.dualButton.DualButtonService;
-import ch.quantasy.gateway.service.device.dustDetector.DustDetectorService;
-import ch.quantasy.gateway.service.device.hallEffect.HallEffectService;
-import ch.quantasy.gateway.service.device.joystick.JoystickService;
-import ch.quantasy.gateway.service.device.laserRangeFinder.LaserRangeFinderService;
-import ch.quantasy.gateway.service.device.line.LineService;
-import ch.quantasy.gateway.service.device.linearPoti.LinearPotiService;
-import ch.quantasy.gateway.service.device.loadCell.LoadCellService;
-import ch.quantasy.gateway.service.device.master.MasterService;
-import ch.quantasy.gateway.service.device.multiTouch.MultiTouchService;
-import ch.quantasy.gateway.service.device.nfc.NFCService;
-import ch.quantasy.gateway.service.device.piezoSpeaker.PiezoSpeakerService;
-import ch.quantasy.gateway.service.device.realTimeClock.RealTimeClockService;
-import ch.quantasy.gateway.service.device.rotaryEncoder.RotaryEncoderService;
-import ch.quantasy.gateway.service.device.rotaryPoti.RotaryPotiService;
-import ch.quantasy.gateway.service.device.segment4x7.Segment4x7Service;
-import ch.quantasy.gateway.service.device.solidStateRelay.SolidStateRelayService;
-import ch.quantasy.gateway.service.device.soundIntensity.SoundIntensityService;
-import ch.quantasy.gateway.service.device.temperature.TemperatureService;
-import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
-import ch.quantasy.gateway.service.device.thermoCouple.ThermoCoupleService;
-import ch.quantasy.gateway.service.device.tilt.TiltService;
-import ch.quantasy.gateway.service.device.uvLight.UVLightService;
 import ch.quantasy.gateway.service.AbstractService;
-import ch.quantasy.gateway.service.device.gpsv2.GPSv2Service;
-import ch.quantasy.gateway.service.device.servo.ServoService;
-import ch.quantasy.gateway.service.device.voltageCurrent.VoltageCurrentService;
-import ch.quantasy.tinkerforge.device.imu.IMUDevice;
-import ch.quantasy.tinkerforge.device.imuV2.IMUV2Device;
-import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
-import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
-import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
-import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
-import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
-import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
-import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
-import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
-import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
-import ch.quantasy.tinkerforge.device.co2.CO2Device;
-import ch.quantasy.tinkerforge.device.color.ColorDevice;
-import ch.quantasy.tinkerforge.device.dc.DCDevice;
-import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
-import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
-import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
-import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
-import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
-import ch.quantasy.tinkerforge.device.gpsV2.GPSv2Device;
-import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
-import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
-import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
-import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
-import ch.quantasy.tinkerforge.device.line.LineDevice;
-import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
-import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
-import ch.quantasy.tinkerforge.device.master.MasterDevice;
-import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
-import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
-import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
-import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
-import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
-import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
-import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
-import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
-import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
-import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
-import ch.quantasy.tinkerforge.device.servo.ServoDevice;
-import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
-import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
-import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
-import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
-import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
-import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
-import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
-import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import ch.quantasy.tinkerforge.factory.TinkerforgeStackFactory;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import ch.quantasy.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.intent.stack.TinkerforgeStackAddress;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -149,7 +55,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
  *
@@ -178,7 +83,7 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
         this.listeners.remove(listener);
     }
 
-    public TinkerforgeStack addStack(TinkerforgeStackAddress address) {
+    public void addStack(TinkerforgeStackAddress address) {
         TinkerforgeStack stack = null;
         if (stackFactory.addStack(address)) {
             stack = stackFactory.getStack(address);
@@ -188,10 +93,9 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             stack.addListener(this);
             stack.connect();
         }
-        return stackFactory.getStack(address);
     }
 
-    public TinkerforgeStack removeStack(TinkerforgeStackAddress address) {
+    public void removeStack(TinkerforgeStackAddress address) {
         TinkerforgeStack stack = stackFactory.removeStack(address);
         if (stack != null) {
             stack.disconnect();
@@ -203,11 +107,6 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             }
             stack.removeListener(this);
         }
-        return stack;
-    }
-
-    public boolean containsStack(TinkerforgeStackAddress address) {
-        return stackFactory.containsStack(address);
     }
 
     public Set<TinkerforgeStackAddress> getStackAddresses() {
@@ -232,197 +131,11 @@ public class TinkerForgeManager implements TinkerforgeDeviceListener {
             return;
         }
         try {
-
-            if (tinkerforgeDevice instanceof HumidityDevice) {
-                HumidityService service = new HumidityService((HumidityDevice) tinkerforgeDevice, mqttURI);
+            AbstractService service = TinkerforgeServiceMapper.getService(tinkerforgeDevice, mqttURI);
+            if (service != null) {
                 managedServices.put(tinkerforgeDevice, service);
             }
-            if (tinkerforgeDevice instanceof LEDStripDevice) {
-                LEDStripService service = new LEDStripService((LEDStripDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof MotionDetectorDevice) {
-                MotionDetectorService service = new MotionDetectorService((MotionDetectorDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof MoistureDevice) {
-                MoistureService service = new MoistureService((MoistureDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof AmbientLightDevice) {
-                AmbientLightService service = new AmbientLightService((AmbientLightDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof AmbientLightV2Device) {
-                AmbientLightV2Service service = new AmbientLightV2Service((AmbientLightV2Device) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof RemoteSwitchDevice) {
-                RemoteSwitchService service = new RemoteSwitchService((RemoteSwitchDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof DualRelayDevice) {
-                DualRelayService service = new DualRelayService((DualRelayDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof BarometerDevice) {
-                BarometerService service = new BarometerService((BarometerDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof DualButtonDevice) {
-                DualButtonService service = new DualButtonService((DualButtonDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof CO2Device) {
-                CO2Service service = new CO2Service((CO2Device) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof DCDevice) {
-                DCService service = new DCService((DCDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof DistanceUSDevice) {
-                DistanceUSService service = new DistanceUSService((DistanceUSDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof TemperatureIRDevice) {
-                TemperatureIRService service = new TemperatureIRService((TemperatureIRDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof UVLightDevice) {
-                UVLightService service = new UVLightService((UVLightDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof DistanceIRDevice) {
-                DistanceIRService service = new DistanceIRService((DistanceIRDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof DustDetectorDevice) {
-                DustDetectorService service = new DustDetectorService((DustDetectorDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof TiltDevice) {
-                TiltService service = new TiltService((TiltDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof AccelerometerDevice) {
-                AccelerometerService service = new AccelerometerService((AccelerometerDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof ColorDevice) {
-                ColorService service = new ColorService((ColorDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof Segment4x7Device) {
-                Segment4x7Service service = new Segment4x7Service((Segment4x7Device) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof LaserRangeFinderDevice) {
-                LaserRangeFinderService service = new LaserRangeFinderService((LaserRangeFinderDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof HallEffectDevice) {
-                HallEffectService service = new HallEffectService((HallEffectDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof JoystickDevice) {
-                JoystickService service = new JoystickService((JoystickDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof LinearPotiDevice) {
-                LinearPotiService service = new LinearPotiService((LinearPotiDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof RotaryPotiDevice) {
-                RotaryPotiService service = new RotaryPotiService((RotaryPotiDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof RotaryEncoderDevice) {
-                RotaryEncoderService service = new RotaryEncoderService((RotaryEncoderDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof SolidStateRelayDevice) {
-                SolidStateRelayService service = new SolidStateRelayService((SolidStateRelayDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof MultiTouchDevice) {
-                MultiTouchService service = new MultiTouchService((MultiTouchDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof AnalogInV2Device) {
-                AnalogInV2Service service = new AnalogInV2Service((AnalogInV2Device) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof AnalogOutV2Device) {
-                AnalogOutV2Service service = new AnalogOutV2Service((AnalogOutV2Device) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof PiezoSpeakerDevice) {
-                PiezoSpeakerService service = new PiezoSpeakerService((PiezoSpeakerDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof SoundIntensityDevice) {
-                SoundIntensityService service = new SoundIntensityService((SoundIntensityDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof IMUV2Device) {
-                IMUV2Service service = new IMUV2Service((IMUV2Device) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof IMUDevice) {
-                IMUService service = new IMUService((IMUDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof LineDevice) {
-                LineService service = new LineService((LineDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof LCD20x4Device) {
-                LCD20x4Service service = new LCD20x4Service((LCD20x4Device) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof LCD16x2Device) {
-                LCD16x2Service service = new LCD16x2Service((LCD16x2Device) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof TemperatureDevice) {
-                TemperatureService service = new TemperatureService((TemperatureDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof LoadCellDevice) {
-                LoadCellService service = new LoadCellService((LoadCellDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof RealTimeClockDevice) {
-                RealTimeClockService service = new RealTimeClockService((RealTimeClockDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof ThermoCoupleDevice) {
-                ThermoCoupleService service = new ThermoCoupleService((ThermoCoupleDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof GPSv2Device) {
-                GPSv2Service service = new GPSv2Service((GPSv2Device) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof NFCRFIDDevice) {
-                NFCService service = new NFCService((NFCRFIDDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof MasterDevice) {
-                MasterService service = new MasterService((MasterDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof VoltageCurrentDevice) {
-                VoltageCurrentService service = new VoltageCurrentService((VoltageCurrentDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-            if (tinkerforgeDevice instanceof ServoDevice) {
-                ServoService service = new ServoService((ServoDevice) tinkerforgeDevice, mqttURI);
-                managedServices.put(tinkerforgeDevice, service);
-            }
-
-        } catch (MqttException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(TinkerForgeManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

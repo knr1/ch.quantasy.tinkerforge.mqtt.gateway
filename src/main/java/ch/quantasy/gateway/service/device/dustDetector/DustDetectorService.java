@@ -42,8 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.dustDetector;
 
+import ch.quantasy.gateway.intent.dustDetector.DeviceDustDensityCallbackThreshold;
+import ch.quantasy.gateway.intent.dustDetector.DustDetectorIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.dustDetector.DeviceDustDensityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDeviceCallback;
 import java.net.URI;
@@ -59,32 +60,7 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
         super(mqttURI, device, new DustDetectorServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_MOVING_AVERAGE)) {
-
-            Short average = getMapper().readValue(payload, Short.class);
-            getDevice().setMovingAverage(average);
-        }
-        if (string.startsWith(getContract().INTENT_DUST_DENSITY_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDustDensityCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_DUST_DENSITY_THRESHOLD)) {
-
-            DeviceDustDensityCallbackThreshold threshold = getMapper().readValue(payload, DeviceDustDensityCallbackThreshold.class);
-            getDevice().setDustDensityCallbackThreshold(threshold);
-        }
-
-    }
+  
 
     @Override
     public void debouncePeriodChanged(long period) {

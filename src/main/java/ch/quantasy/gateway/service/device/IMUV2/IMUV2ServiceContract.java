@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.IMUV2;
 
+import ch.quantasy.gateway.intent.IMUV2.IMUV2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.imuV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
@@ -56,27 +57,16 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
     public final String PERIOD;
     public final String CALLBACK_PERIOD;
     public final String ACCELRATION;
-    public final String INTENT_ACCELERATION_CALLBACK_PERIOD;
     public final String ALL_DATA;
-    public final String INTENT_ALL_DATA_CALLBACK_PERIOD;
     public final String ANGULAR_VELOCITY;
-    public final String INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD;
     public final String GRAVITY_VECTOR;
-    public final String INTENT_GRAVITY_VECTOR_CALLBACK_PERIOD;
     public final String LINEAR_ACCELERATION;
-    public final String INTENT_LINEAR_ACCELERATION_CALLBACK_PERIOD;
     public final String MAGNETIC_FIELD;
-    public final String INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD;
     public final String ORIENTATION;
-    public final String INTENT_ORIENTATION_CALLBACK_PERIOD;
     public final String QUATERNION;
-    public final String INTENT_QUATERNION_CALLBACK_PERIOD;
     public final String TEMPERATURE;
-    public final String INTENT_TEMPERATURE_CALLBACK_PERIOD;
     public final String LEDS;
-    public final String INTENT_LEDS;
     public final String STATUS_LED;
-    public final String INTENT_STATUS_LED;
     public final String STATUS_STATUS_LED;
     public final String STATUS_LEDS;
     public final String STATUS_TEMPERATURE_CALLBACK_PERIOD;
@@ -90,7 +80,6 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
     public final String STATUS_ACCELERATION_CALLBACK_PERIOD;
     public final String SENSOR_FUSION_MODE;
     public final String STATUS_SENSOR_FUSION_MODE;
-    public final String INTENT_SENSOR_FUSION_MODE;
     public final String EVENT_ACCELERATION;
     public final String EVENT_ALL_DATA;
     public final String EVENT_ANGULAR_VELOCITY;
@@ -110,85 +99,61 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
     }
 
     public IMUV2ServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,IMUV2Intent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
 
         ACCELRATION = "acceleration";
-        INTENT_ACCELERATION_CALLBACK_PERIOD = INTENT + "/" + ACCELRATION + "/" + CALLBACK_PERIOD;
         STATUS_ACCELERATION_CALLBACK_PERIOD = STATUS + "/" + ACCELRATION + "/" + CALLBACK_PERIOD;
         EVENT_ACCELERATION = EVENT + "/" + ACCELRATION;
 
         ALL_DATA = "allData";
-        INTENT_ALL_DATA_CALLBACK_PERIOD = INTENT + "/" + ALL_DATA + "/" + CALLBACK_PERIOD;
         STATUS_ALL_DATA_CALLBACK_PERIOD = STATUS + "/" + ALL_DATA + "/" + CALLBACK_PERIOD;
         EVENT_ALL_DATA = EVENT + "/" + ALL_DATA;
 
         ANGULAR_VELOCITY = "angularVelocity";
-        INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD = INTENT + "/" + ANGULAR_VELOCITY + "/" + CALLBACK_PERIOD;
         STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD = STATUS + "/" + ANGULAR_VELOCITY + "/" + CALLBACK_PERIOD;
         EVENT_ANGULAR_VELOCITY = EVENT + "/" + ANGULAR_VELOCITY;
 
         GRAVITY_VECTOR = "gravityVector";
-        INTENT_GRAVITY_VECTOR_CALLBACK_PERIOD = INTENT + "/" + GRAVITY_VECTOR + "/" + CALLBACK_PERIOD;
         STATUS_GRAVITY_VECTOR_CALLBACK_PERIOD = STATUS + "/" + GRAVITY_VECTOR + "/" + CALLBACK_PERIOD;
         EVENT_GRAVITY_VECTOR = EVENT + "/" + GRAVITY_VECTOR;
 
         LINEAR_ACCELERATION = "linearAcceleration";
-        INTENT_LINEAR_ACCELERATION_CALLBACK_PERIOD = INTENT + "/" + LINEAR_ACCELERATION + "/" + CALLBACK_PERIOD;
         STATUS_LINEAR_ACCELERATION_CALLBACK_PERIOD = STATUS + "/" + LINEAR_ACCELERATION + "/" + CALLBACK_PERIOD;
         EVENT_LINEAR_ACCELERATION = EVENT + "/" + LINEAR_ACCELERATION;
 
         MAGNETIC_FIELD = "magneticField";
-        INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD = INTENT + "/" + MAGNETIC_FIELD + "/" + CALLBACK_PERIOD;
         STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD = STATUS + "/" + MAGNETIC_FIELD + "/" + CALLBACK_PERIOD;
         EVENT_MAGNETIC_FIELD = EVENT + "/" + MAGNETIC_FIELD;
 
         ORIENTATION = "orientation";
-        INTENT_ORIENTATION_CALLBACK_PERIOD = INTENT + "/" + ORIENTATION + "/" + CALLBACK_PERIOD;
         STATUS_ORIENTATION_CALLBACK_PERIOD = STATUS + "/" + ORIENTATION + "/" + CALLBACK_PERIOD;
         EVENT_ORIENTATION = EVENT + "/" + ORIENTATION;
 
         QUATERNION = "quaternion";
-        INTENT_QUATERNION_CALLBACK_PERIOD = INTENT + "/" + QUATERNION + "/" + CALLBACK_PERIOD;
         STATUS_QUATERNION_CALLBACK_PERIOD = STATUS + "/" + QUATERNION + "/" + CALLBACK_PERIOD;
         EVENT_QUATERNION = EVENT + "/" + QUATERNION;
 
         TEMPERATURE = "temperature";
-        INTENT_TEMPERATURE_CALLBACK_PERIOD = INTENT + "/" + TEMPERATURE + "/" + CALLBACK_PERIOD;
         STATUS_TEMPERATURE_CALLBACK_PERIOD = STATUS + "/" + TEMPERATURE + "/" + CALLBACK_PERIOD;
         EVENT_TEMPERATURE = EVENT + "/" + TEMPERATURE;
 
         LEDS = "LEDs";
-        INTENT_LEDS = INTENT + "/" + LEDS + "/" + CALLBACK_PERIOD;
         STATUS_LEDS = STATUS + "/" + LEDS + "/" + CALLBACK_PERIOD;
 
         STATUS_LED = "statusLED";
-        INTENT_STATUS_LED = INTENT + "/" + STATUS_LED;
         STATUS_STATUS_LED = STATUS + "/" + STATUS_LED;
 
         SENSOR_FUSION_MODE = "sensorFusionMode";
-        INTENT_SENSOR_FUSION_MODE = INTENT + "/" + SENSOR_FUSION_MODE;
         STATUS_SENSOR_FUSION_MODE = STATUS + "/" + SENSOR_FUSION_MODE;
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_GRAVITY_VECTOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_LINEAR_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_LEDS, "true|false]");
-        descriptions.put(INTENT_STATUS_LED, "true|false]");
-        descriptions.put(INTENT_SENSOR_FUSION_MODE, "[0..2]");
-
+      
         descriptions.put(STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

@@ -50,5 +50,6 @@ import com.tinkerforge.BrickletSolidStateRelay;
  * @author reto
  */
 public interface SolidStateRelayDeviceCallback extends DeviceCallback, BrickletSolidStateRelay.MonoflopDoneListener {
+
     public void stateChanged(Boolean state);
 }

@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.accelerometer;
 
+import ch.quantasy.gateway.intent.accelerometer.AccelerometerIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
@@ -64,21 +65,15 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
     public final String STATUS_ACCELERATION_CALLBACK_PERIOD;
     public final String EVENT_ACCELERATION;
     public final String EVENT_ACCELERATION_REACHED;
-    public final String INTENT_ACCELERATION;
-    public final String INTENT_ACCELERATION_THRESHOLD;
-    public final String INTENT_ACCELERATION_CALLBACK_PERIOD;
-
+   
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String CONFIGURATION;
     public final String STATUS_CONFIGURATION;
-    public final String INTENT_CONFIGURATION;
-
+  
     public AccelerometerServiceContract(AccelerometerDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -88,7 +83,7 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
     }
 
     public AccelerometerServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,AccelerometerIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -102,30 +97,20 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
         STATUS_ACCELERATION_CALLBACK_PERIOD = STATUS_ACCELERATION + "/" + CALLBACK_PERIOD;
         EVENT_ACCELERATION = EVENT + "/" + ACCELERATION;
         EVENT_ACCELERATION_REACHED = EVENT_ACCELERATION + "/" + REACHED;
-        INTENT_ACCELERATION = INTENT + "/" + ACCELERATION;
-        INTENT_ACCELERATION_THRESHOLD = INTENT_ACCELERATION + "/" + THRESHOLD;
-        INTENT_ACCELERATION_CALLBACK_PERIOD = INTENT_ACCELERATION + "/" + CALLBACK_PERIOD;
-
+   
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
-
+ 
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-        INTENT_CONFIGURATION = INTENT + "/" + CONFIGURATION;
-
+  
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ACCELERATION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n minY: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n minZ: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxX: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxY: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxZ: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(INTENT_CONFIGURATION, "dataRate: [OFF|Hz3|Hz6|Hz12|Hz25|Hz50|Hz100|Hz400|Hz800|Hz1600]\n fullScale: [G2|G4|G6|G8|G16\n filterBandwidth: [Hz800|Hz400|Hz200|Hz50]");
-
+       
         descriptions.put(EVENT_ACCELERATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n    y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n    z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n");
         descriptions.put(EVENT_ACCELERATION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n    x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n    y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n    z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
 

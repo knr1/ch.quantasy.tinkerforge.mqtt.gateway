@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.analogOutV2;
 
+import ch.quantasy.gateway.intent.AnalogOutV2.AnalogOutV2Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAnalogOutV2;
@@ -56,21 +57,15 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class AnalogOutV2Device extends GenericDevice<BrickletAnalogOutV2, AnalogOutV2DeviceCallback> {
-
-    private Integer outputVoltage;
+public class AnalogOutV2Device extends GenericDevice<BrickletAnalogOutV2, AnalogOutV2DeviceCallback, AnalogOutV2Intent> {
 
     public AnalogOutV2Device(TinkerforgeStack stack, BrickletAnalogOutV2 device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new AnalogOutV2Intent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletAnalogOutV2 device) {
-       //None existing
-        if (outputVoltage != null) {
-            setOutputVoltage(outputVoltage);
-        }
-        
+        //None existing
 
     }
 
@@ -80,13 +75,23 @@ public class AnalogOutV2Device extends GenericDevice<BrickletAnalogOutV2, Analog
 
     }
 
-    public void setOutputVoltage(Integer voltage) {
-        try {
-            getDevice().setOutputVoltage(voltage);
-            this.outputVoltage = getDevice().getOutputVoltage();
-            super.getCallback().outputVoltageChanged(this.outputVoltage);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AnalogOutV2Device.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(AnalogOutV2Intent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+
+        if (intent.outputVoltage != null) {
+            try {
+                getDevice().setOutputVoltage(intent.outputVoltage);
+                getIntent().outputVoltage = getDevice().getOutputVoltage();
+                super.getCallback().outputVoltageChanged(getIntent().outputVoltage);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AnalogOutV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

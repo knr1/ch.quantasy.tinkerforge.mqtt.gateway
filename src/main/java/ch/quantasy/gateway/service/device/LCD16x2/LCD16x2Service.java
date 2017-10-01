@@ -42,9 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.LCD16x2;
 
+import ch.quantasy.gateway.intent.LCD16x2.LCD16x2Intent;
+import ch.quantasy.gateway.intent.LCD16x2.DeviceConfigParameters;
+import ch.quantasy.gateway.intent.LCD16x2.DeviceCustomCharacter;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.LCD16x2.DeviceConfigParameters;
-import ch.quantasy.tinkerforge.device.LCD16x2.DeviceCustomCharacter;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2DeviceCallback;
 import java.net.URI;
@@ -59,20 +60,6 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     public LCD16x2Service(LCD16x2Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LCD16x2ServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_BACKLIGHT)) {
-            Boolean backlight = getMapper().readValue(payload, Boolean.class);
-            getDevice().setBacklight(backlight);
-        }
-        if (string.startsWith(getContract().INTENT_CLEAR_DISPLAY)) {
-            Boolean clear = getMapper().readValue(payload, Boolean.class);
-            getDevice().clearDisplay(clear);
-        }
-
     }
 
     @Override

@@ -71,7 +71,7 @@ public class TinkerforgeDevice<D extends Device> {
     public TinkerforgeDevice(TinkerforgeStack stack, D device) throws NotConnectedException, TimeoutException {
         this.deviceListeners = new HashSet<>();
         this.stack = stack;
-        this.connection=stack.getIpConnection();
+        this.connection = stack.getIpConnection();
         this.device = device;
         this.uid = device.getIdentity().uid;
         this.position = device.getIdentity().position;
@@ -117,7 +117,7 @@ public class TinkerforgeDevice<D extends Device> {
         if (device == null || !device.getIdentity().uid.equals(this.uid)) {
             throw new IllegalArgumentException();
         }
-        this.connection=getStack().getIpConnection();
+        this.connection = getStack().getIpConnection();
         D oldDevice = this.device;
         this.device = device;
         //this.device.setResponseExpectedAll(true);
@@ -127,8 +127,6 @@ public class TinkerforgeDevice<D extends Device> {
     public IPConnection getIPConnection() {
         return connection;
     }
-    
-    
 
     public boolean isConnected() throws TimeoutException, NotConnectedException {
         if (device == null) {

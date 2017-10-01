@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.rotaryPoti;
 
+import ch.quantasy.gateway.intent.rotaryPoti.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.intent.rotaryPoti.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.intent.rotaryPoti.RotaryPotiIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletRotaryPoti;
@@ -54,16 +57,11 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class RotaryPotiDevice extends GenericDevice<BrickletRotaryPoti, RotaryPotiDeviceCallback> {
+public class RotaryPotiDevice extends GenericDevice<BrickletRotaryPoti, RotaryPotiDeviceCallback, RotaryPotiIntent> {
 
-    private Long analogCallbackPeriod;
-    private Long positionCallbackPeriod;
-    private Long debouncePeriod;
-    private DeviceAnalogValueCallbackThreshold analogValueThreshold;
-    private DevicePositionCallbackThreshold positionThreshold;
 
     public RotaryPotiDevice(TinkerforgeStack stack, BrickletRotaryPoti device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device,new RotaryPotiIntent());
     }
 
     @Override
@@ -72,21 +70,7 @@ public class RotaryPotiDevice extends GenericDevice<BrickletRotaryPoti, RotaryPo
         device.addAnalogValueReachedListener(super.getCallback());
         device.addPositionListener(super.getCallback());
         device.addPositionReachedListener(super.getCallback());
-        if (analogCallbackPeriod != null) {
-            setAnalogValueCallbackPeriod(analogCallbackPeriod);
-        }
-        if (positionCallbackPeriod != null) {
-            setPositionCallbackPeriod(this.positionCallbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (analogValueThreshold != null) {
-            setAnalogValueThreshold(analogValueThreshold);
-        }
-        if (positionThreshold != null) {
-            setPositionCallbackThreshold(positionThreshold);
-        }
+        
     }
 
     @Override
@@ -97,54 +81,60 @@ public class RotaryPotiDevice extends GenericDevice<BrickletRotaryPoti, RotaryPo
         device.removePositionReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RotaryPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+     @Override
+    public void update(RotaryPotiIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void setAnalogValueCallbackPeriod(Long period) {
-        try {
-            getDevice().setAnalogValueCallbackPeriod(period);
-            this.analogCallbackPeriod = getDevice().getAnalogValueCallbackPeriod();
-            super.getCallback().analogValueCallbackPeriodChanged(this.analogCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RotaryPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
 
-    public void setPositionCallbackPeriod(Long period) {
-        try {
-            getDevice().setPositionCallbackPeriod(period);
-            this.positionCallbackPeriod=getDevice().getPositionCallbackPeriod();
-            super.getCallback().positionCallbackPeriodChanged(this.positionCallbackPeriod );
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RotaryPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RotaryPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setAnalogValueThreshold(DeviceAnalogValueCallbackThreshold threshold) {
-        try {
-            getDevice().setAnalogValueCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.analogValueThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
-            super.getCallback().analogValueCallbackThresholdChanged(this.analogValueThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RotaryPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.analogValueCallbackPeriod != null) {
+            try {
+                getDevice().setAnalogValueCallbackPeriod(intent.analogValueCallbackPeriod);
+                getIntent().analogValueCallbackPeriod = getDevice().getAnalogValueCallbackPeriod();
+                super.getCallback().analogValueCallbackPeriodChanged(getIntent().analogValueCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RotaryPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
 
-    public void setPositionCallbackThreshold(DevicePositionCallbackThreshold threshold) {
-        try {
-            getDevice().setPositionCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.positionThreshold = new DevicePositionCallbackThreshold(getDevice().getPositionCallbackThreshold());
-            super.getCallback().positionCallbackThresholdChanged(this.positionThreshold);
-            
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RotaryPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.positionCallbackPeriod != null) {
+            try {
+                getDevice().setPositionCallbackPeriod(intent.positionCallbackPeriod);
+                getIntent().positionCallbackPeriod = getDevice().getPositionCallbackPeriod();
+                super.getCallback().positionCallbackPeriodChanged(getIntent().positionCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RotaryPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.analogValueCallbackThreshold != null) {
+            try {
+                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.getOption(), intent.analogValueCallbackThreshold.getMin(), intent.analogValueCallbackThreshold.getMax());
+                getIntent().analogValueCallbackThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
+                super.getCallback().analogValueCallbackThresholdChanged(getIntent().analogValueCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RotaryPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.positionCallbackThreshold != null) {
+            try {
+                getDevice().setPositionCallbackThreshold(intent.positionCallbackThreshold.getOption(), intent.positionCallbackThreshold.getMin(), intent.positionCallbackThreshold.getMax());
+                getIntent().positionCallbackThreshold = new DevicePositionCallbackThreshold(getDevice().getPositionCallbackThreshold());
+                super.getCallback().positionCallbackThresholdChanged(getIntent().positionCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RotaryPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

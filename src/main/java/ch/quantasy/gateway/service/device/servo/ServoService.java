@@ -43,7 +43,8 @@
 package ch.quantasy.gateway.service.device.servo;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.servo.Servo;
+import ch.quantasy.gateway.intent.servo.Servo;
+import ch.quantasy.gateway.intent.servo.ServoIntent;
 import ch.quantasy.tinkerforge.device.servo.ServoDevice;
 import ch.quantasy.tinkerforge.device.servo.ServoDeviceCallback;
 import java.net.URI;
@@ -60,27 +61,7 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
         super(mqttURI, device, new ServoServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_STATUS_LED)) {
-            Boolean enabled = getMapper().readValue(payload, Boolean.class);
-            getDevice().setStatusLED(enabled);
-        }
-        if (string.startsWith(getContract().INTENT_SERVOS)) {
-            Servo[] servos = getMapper().readValue(payload, Servo[].class);
-            getDevice().setServos(servos);
-        }
-        if (string.startsWith(getContract().INTENT_MINIMUM_VOLTAGE)) {
-            Integer value = getMapper().readValue(payload, Integer.class);
-            getDevice().setMinimumVoltage(value);
-        }
-        if (string.startsWith(getContract().INTENT_OUTPUT_VOLTAGE)) {
-            Integer value = getMapper().readValue(payload, Integer.class);
-            getDevice().setOutputVoltage(value);
-        }
-
-    }
+   
 
     @Override
     public void minimumVoltageChanged(Integer minimumVoltage) {

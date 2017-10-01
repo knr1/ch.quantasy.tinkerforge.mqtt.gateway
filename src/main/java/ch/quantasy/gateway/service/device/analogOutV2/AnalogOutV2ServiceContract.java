@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.analogOutV2;
 
+import ch.quantasy.gateway.intent.AnalogOutV2.AnalogOutV2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
@@ -55,7 +56,6 @@ public class AnalogOutV2ServiceContract extends DeviceServiceContract {
 
     public final String OUTPUT_VOLTAGE;
     public final String STATUS_OUTPUT_VOLTAGE;
-    public final String INTENT_OUTPUT_VOLTAGE;
 
     public AnalogOutV2ServiceContract(AnalogOutV2Device device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -66,15 +66,13 @@ public class AnalogOutV2ServiceContract extends DeviceServiceContract {
     }
 
     public AnalogOutV2ServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,AnalogOutV2Intent.class);
         OUTPUT_VOLTAGE = "outputVoltage";
         STATUS_OUTPUT_VOLTAGE = STATUS + "/" + OUTPUT_VOLTAGE;
-        INTENT_OUTPUT_VOLTAGE = INTENT + "/" + OUTPUT_VOLTAGE;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_OUTPUT_VOLTAGE, "[0..12000]");
         descriptions.put(STATUS_OUTPUT_VOLTAGE, "[0..12000]");
     }
 }

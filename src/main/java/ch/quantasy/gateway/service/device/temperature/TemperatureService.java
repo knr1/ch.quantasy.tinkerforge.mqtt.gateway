@@ -43,8 +43,9 @@
 package ch.quantasy.gateway.service.device.temperature;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.temperature.DeviceI2CMode;
-import ch.quantasy.tinkerforge.device.temperature.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.temperature.DeviceI2CMode;
+import ch.quantasy.gateway.intent.temperature.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.temperature.TemperatureIntent;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -62,32 +63,7 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
 
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setTemperatureCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_TEMPERATURE_THRESHOLD)) {
-
-            DeviceTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceTemperatureCallbackThreshold.class);
-            getDevice().setTemperatureCallbackThreshold(threshold);
-        }
-
-        if (string.startsWith(getContract().INTENT_I2C_MODE)) {
-
-            DeviceI2CMode mode = getMapper().readValue(payload, DeviceI2CMode.class);
-            getDevice().setI2CMode(mode);
-        }
-    }
+    
 
     @Override
     public void debouncePeriodChanged(long period) {

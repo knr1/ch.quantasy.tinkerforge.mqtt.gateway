@@ -43,9 +43,10 @@
 package ch.quantasy.gateway.service.device.ptc;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.ptc.DeviceNoiseReductionFilter;
-import ch.quantasy.tinkerforge.device.ptc.DeviceResistanceCallbackThreshold;
-import ch.quantasy.tinkerforge.device.ptc.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.ptc.DeviceNoiseReductionFilter;
+import ch.quantasy.gateway.intent.ptc.DeviceResistanceCallbackThreshold;
+import ch.quantasy.gateway.intent.ptc.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.ptc.PTCIntent;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
 import ch.quantasy.tinkerforge.device.ptc.PTCDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -63,46 +64,7 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
 
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setTemperatureCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_TEMPERATURE_THRESHOLD)) {
-
-            DeviceTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceTemperatureCallbackThreshold.class);
-            getDevice().setTemperatureCallbackThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_RESISTANCE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setResistanceCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_RESISTANCE_THRESHOLD)) {
-
-            DeviceResistanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceResistanceCallbackThreshold.class);
-            getDevice().setResistanceCallbackThreshold(threshold);
-        }
-
-        if (string.startsWith(getContract().INTENT_NOISE_REDUCTION_FILTER)) {
-            DeviceNoiseReductionFilter filter = getMapper().readValue(payload, DeviceNoiseReductionFilter.class);
-            getDevice().setNoiseReductionFilter(filter);
-        }
-        if (string.startsWith(getContract().INTENT_WIRE_MODE)) {
-            Short wireMode = getMapper().readValue(payload, Short.class);
-            getDevice().setWireMode(wireMode);
-        }
-    }
+    
 
     @Override
     public void debouncePeriodChanged(long period) {

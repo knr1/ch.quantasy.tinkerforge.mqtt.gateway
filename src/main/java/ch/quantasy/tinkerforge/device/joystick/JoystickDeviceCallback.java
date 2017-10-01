@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.joystick;
 
+import ch.quantasy.gateway.intent.joystick.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.intent.joystick.DevicePositionCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletJoystick;
 
@@ -59,7 +61,7 @@ public interface JoystickDeviceCallback extends DeviceCallback, BrickletJoystick
 
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold);
 
-    public void postionCallbackThresholdChanged(DevicePositionCallbackThreshold threshold);
-    
+    public void positionCallbackThresholdChanged(DevicePositionCallbackThreshold threshold);
+
     public void calibrated();
 }

@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.generic;
 
+import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.Intent;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.Device;
@@ -52,18 +54,26 @@ import com.tinkerforge.TimeoutException;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public abstract class GenericDevice<D extends Device, C extends DeviceCallback> extends TinkerforgeDevice<D> {
+public abstract class GenericDevice<D extends Device, C extends DeviceCallback, I extends Intent> extends TinkerforgeDevice<D> {
 
+    private final I intent;
     private C callback;
     private boolean areListenersAdded;
 
-    public GenericDevice(TinkerforgeStack address, D device) throws NotConnectedException, TimeoutException {
+    public GenericDevice(TinkerforgeStack address, D device, I intent) throws NotConnectedException, TimeoutException {
         super(address, device);
+        this.intent = intent;
     }
 
-    protected  abstract void addDeviceListeners(D device);
+    protected abstract void addDeviceListeners(D device);
 
-    protected  abstract void removeDeviceListeners(D device);
+    protected abstract void removeDeviceListeners(D device);
+
+    public abstract void update(I intent);
+
+    public I getIntent() {
+        return intent;
+    }
 
     @Override
     public D updateDevice(D device) throws TimeoutException, NotConnectedException, IllegalArgumentException {
@@ -72,6 +82,7 @@ public abstract class GenericDevice<D extends Device, C extends DeviceCallback> 
         areListenersAdded = false;
 
         addDeviceListeners(device);
+        update(intent);
 
         areListenersAdded = true;
         return device;

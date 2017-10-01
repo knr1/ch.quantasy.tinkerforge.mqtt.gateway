@@ -58,10 +58,6 @@ public class MotionDetectorService extends AbstractDeviceService<MotionDetectorD
         super(mqttURI, device, new MotionDetectorServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-        //There are no intents that can be handled
-    }
 
     @Override
     public void detectionCycleEnded() {

@@ -42,11 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.accelerometer;
 
+import ch.quantasy.gateway.intent.accelerometer.AccelerometerIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDeviceCallback;
-import ch.quantasy.tinkerforge.device.accelerometer.DeviceAccelerationCallbackThreshold;
-import ch.quantasy.tinkerforge.device.accelerometer.DeviceConfiguration;
+import ch.quantasy.gateway.intent.accelerometer.DeviceAccelerationCallbackThreshold;
+import ch.quantasy.gateway.intent.accelerometer.DeviceConfiguration;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -59,34 +60,6 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
     public AccelerometerService(AccelerometerDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new AccelerometerServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAccelerationCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_ACCELERATION_THRESHOLD)) {
-
-            DeviceAccelerationCallbackThreshold threshold = getMapper().readValue(payload, DeviceAccelerationCallbackThreshold.class);
-            getDevice().setAccelerationCallbackThreshold(threshold);
-        }
-
-        if (string.startsWith(getContract().INTENT_CONFIGURATION)) {
-
-            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-            getDevice().setConfiguration(configuration);
-        }
-
     }
 
     @Override

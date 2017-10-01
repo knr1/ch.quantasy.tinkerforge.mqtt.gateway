@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.servo;
 
-
+import ch.quantasy.gateway.intent.servo.Servo;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickServo;
 import java.util.Collection;
@@ -52,8 +52,12 @@ import java.util.Collection;
  * @author reto
  */
 public interface ServoDeviceCallback extends DeviceCallback, BrickServo.PositionReachedListener, BrickServo.VelocityReachedListener, BrickServo.UnderVoltageListener {
+
     public void minimumVoltageChanged(Integer minimumVoltage);
+
     public void statusLEDChanged(Boolean statusLED);
+
     public void outputVoltageChanged(Integer outputVoltage);
+
     public void servosChanged(Collection<Servo> values);
 }

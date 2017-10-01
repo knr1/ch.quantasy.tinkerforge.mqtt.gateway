@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.soundIntensity;
 
+import ch.quantasy.gateway.intent.soundIntensity.DeviceSoundIntensityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletSoundIntensity;
 
@@ -51,11 +52,10 @@ import com.tinkerforge.BrickletSoundIntensity;
  */
 public interface SoundIntensityDeviceCallback extends DeviceCallback, BrickletSoundIntensity.IntensityListener, BrickletSoundIntensity.IntensityReachedListener {
 
-   
     public void soundIntensityCallbackPeriodChanged(long period);
 
     public void debouncePeriodChanged(long period);
 
     public void soundIntensityCallbackThresholdChanged(DeviceSoundIntensityCallbackThreshold threshold);
 
-   }
+}

@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.rotaryEncoder;
 
+import ch.quantasy.gateway.intent.rotaryEncoder.RotaryEncoderIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
@@ -70,18 +71,12 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
     public final String STATUS_COUNT_CALLBACK_PERIOD;
     public final String EVENT_COUNT;
     public final String EVENT_COUNT_REACHED;
-    private final String INTENT_COUNT;
-    public final String INTENT_COUNT_THRESHOLD;
-    public final String INTENT_COUNT_CALLBACK_PERIOD;
-
+   
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
-    public final String STATUS_DEBOUNCE_PERIOD;
+   public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String RESET;
-    public final String INTENT_COUNT_RESET;
     public final String EVENT_COUNT_RESET;
 
     public RotaryEncoderServiceContract(RotaryEncoderDevice device) {
@@ -93,7 +88,7 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
     }
 
     public RotaryEncoderServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,RotaryEncoderIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -111,26 +106,17 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
         STATUS_COUNT_CALLBACK_PERIOD = STATUS_COUNT + "/" + CALLBACK_PERIOD;
         EVENT_COUNT = EVENT + "/" + COUNT;
         EVENT_COUNT_REACHED = EVENT_COUNT + "/" + REACHED;
-        INTENT_COUNT = INTENT + "/" + COUNT;
-        INTENT_COUNT_THRESHOLD = INTENT_COUNT + "/" + THRESHOLD;
-        INTENT_COUNT_CALLBACK_PERIOD = INTENT_COUNT + "/" + CALLBACK_PERIOD;
-
+     
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
-
+      
         RESET = "reset";
-        INTENT_COUNT_RESET = INTENT_COUNT + "/" + RESET;
         EVENT_COUNT_RESET = EVENT_COUNT + "/" + RESET;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
         descriptions.put(EVENT_PRESSED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
         descriptions.put(EVENT_RELEASED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
         descriptions.put(EVENT_COUNT_RESET, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Long.MIN_VALUE + "0.." + Long.MAX_VALUE + "]");

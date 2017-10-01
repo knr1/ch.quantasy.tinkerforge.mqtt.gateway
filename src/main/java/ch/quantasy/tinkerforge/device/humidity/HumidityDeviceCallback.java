@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.humidity;
 
+import ch.quantasy.gateway.intent.humidity.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.intent.humidity.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletHumidity.AnalogValueCallbackThreshold;
@@ -52,9 +54,14 @@ import com.tinkerforge.BrickletHumidity.HumidityCallbackThreshold;
  * @author reto
  */
 public interface HumidityDeviceCallback extends DeviceCallback, BrickletHumidity.AnalogValueListener, BrickletHumidity.AnalogValueReachedListener, BrickletHumidity.HumidityListener, BrickletHumidity.HumidityReachedListener {
+
     public void analogValueCallbackPeriodChanged(long period);
+
     public void humidityCallbackPeriodChanged(long period);
+
     public void debouncePeriodChanged(long period);
+
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold);
-    public void humidityCallbackThresholdChanged(DeviceHumidityCallbackThreshold threshold);
+
+    public void humidityCallbackThresholdChanged(DevicePositionCallbackThreshold threshold);
 }

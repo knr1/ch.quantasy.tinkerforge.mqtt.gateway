@@ -44,8 +44,9 @@ package ch.quantasy.gateway.service.device.humidity;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
-import ch.quantasy.tinkerforge.device.humidity.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.tinkerforge.device.humidity.DeviceHumidityCallbackThreshold;
+import ch.quantasy.gateway.intent.humidity.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.intent.humidity.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.intent.humidity.HumidityIntent;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDeviceCallback;
 import java.net.URI;
@@ -58,35 +59,6 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
 
     public HumidityService(HumidityDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new HumidityServiceContract(device));
-
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAnalogValueCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_HUMIDITY_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setHumidityCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
-
-            DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class
-            );
-            getDevice().setAnalogValueThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_HUMIDITY_THRESHOLD)) {
-            DeviceHumidityCallbackThreshold threshold = getMapper().readValue(payload, DeviceHumidityCallbackThreshold.class);
-            getDevice().setHumidityCallbackThreshold(threshold);
-        }
 
     }
 
@@ -131,7 +103,7 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
     }
 
     @Override
-    public void humidityCallbackThresholdChanged(DeviceHumidityCallbackThreshold threshold) {
+    public void humidityCallbackThresholdChanged(DevicePositionCallbackThreshold threshold) {
         publishStatus(getContract().STATUS_HUMIDITY_THRESHOLD, threshold);
     }
 

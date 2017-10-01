@@ -43,8 +43,9 @@
 package ch.quantasy.gateway.service.device.distanceIR;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.distanceIR.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.tinkerforge.device.distanceIR.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.intent.distanceIR.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.intent.distanceIR.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.intent.distanceIR.DistanceIRIntent;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDeviceCallback;
 import java.net.URI;
@@ -58,33 +59,6 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
 
     public DistanceIRService(DistanceIRDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DistanceIRServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAnalogValueCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_DISTANCE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDistanceCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
-            DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
-            getDevice().setAnalogValueThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_DISTANCE_THRESHOLD)) {
-            DeviceDistanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceDistanceCallbackThreshold.class);
-            getDevice().setDistanceCallbackThreshold(threshold);
-
-        }
-
     }
 
     @Override

@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.ambientLight;
 
+import ch.quantasy.gateway.intent.ambientLight.DeviceIlluminanceCallbackThreshold;
+import ch.quantasy.gateway.intent.ambientLight.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletAmbientLight.AnalogValueCallbackThreshold;

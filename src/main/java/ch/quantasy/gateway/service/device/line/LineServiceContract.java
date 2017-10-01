@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.line;
 
+import ch.quantasy.gateway.intent.line.LineIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
@@ -64,16 +65,11 @@ public class LineServiceContract extends DeviceServiceContract {
     public final String STATUS_REFLECTIVITY_CALLBACK_PERIOD;
     public final String EVENT_REFLECTIVITY;
     public final String EVENT_REFLECTIVITY_REACHED;
-    private final String INTENT_REFLECTIVITY;
-    public final String INTENT_REFLECTIVITY_THRESHOLD;
-    public final String INTENT_REFLECTIVITY_CALLBACK_PERIOD;
-
+  
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
-    public final String STATUS_DEBOUNCE_PERIOD;
+     public final String STATUS_DEBOUNCE_PERIOD;
 
     public LineServiceContract(LineDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -84,7 +80,7 @@ public class LineServiceContract extends DeviceServiceContract {
     }
 
     public LineServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,LineIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -98,25 +94,17 @@ public class LineServiceContract extends DeviceServiceContract {
         STATUS_REFLECTIVITY_CALLBACK_PERIOD = STATUS_REFLECTIVITY + "/" + CALLBACK_PERIOD;
         EVENT_REFLECTIVITY = EVENT + "/" + REFLECTIVITY;
         EVENT_REFLECTIVITY_REACHED = EVENT_REFLECTIVITY + "/" + REACHED;
-        INTENT_REFLECTIVITY = INTENT + "/" + REFLECTIVITY;
-        INTENT_REFLECTIVITY_THRESHOLD = INTENT_REFLECTIVITY + "/" + THRESHOLD;
-        INTENT_REFLECTIVITY_CALLBACK_PERIOD = INTENT_REFLECTIVITY + "/" + CALLBACK_PERIOD;
-
+    
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
-
+     
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-
+     
         descriptions.put(EVENT_REFLECTIVITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [[0..4095]");
         descriptions.put(EVENT_REFLECTIVITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(STATUS_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

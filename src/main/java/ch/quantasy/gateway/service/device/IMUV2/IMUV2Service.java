@@ -43,6 +43,7 @@
 package ch.quantasy.gateway.service.device.IMUV2;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
+import ch.quantasy.gateway.intent.IMUV2.IMUV2Intent;
 import ch.quantasy.tinkerforge.device.imuV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.imuV2.IMUV2DeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -57,57 +58,6 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
     public IMUV2Service(IMUV2Device device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new IMUV2ServiceContract(device));
-
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_ACCELERATION_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAccelerationPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ALL_DATA_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAllDataPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAngularVelocityPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_GRAVITY_VECTOR_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setGravityVectorPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_LINEAR_ACCELERATION_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setLinearAccelerationPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setMagneticFieldPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ORIENTATION_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setOrientationPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_QUATERNION_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setQuaternionPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_TEMPERATURE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setTemperaturePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_LEDS)) {
-            Boolean enabled = getMapper().readValue(payload, Boolean.class);
-            getDevice().setLEDs(enabled);
-        }
-        if (string.startsWith(getContract().INTENT_STATUS_LED)) {
-            Boolean enabled = getMapper().readValue(payload, Boolean.class);
-            getDevice().setStatusLED(enabled);
-        }
 
     }
 

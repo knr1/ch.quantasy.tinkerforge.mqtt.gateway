@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.dualButton;
 
+import ch.quantasy.gateway.intent.dualButton.DeviceLEDState;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletDualButton;
 
@@ -50,5 +51,6 @@ import com.tinkerforge.BrickletDualButton;
  * @author reto
  */
 public interface DualButtonDeviceCallback extends DeviceCallback, BrickletDualButton.StateChangedListener {
+
     public void ledStateChanged(DeviceLEDState state);
 }

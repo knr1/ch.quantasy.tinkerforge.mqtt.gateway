@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.hallEffect;
 
+import ch.quantasy.gateway.intent.hallEffect.HallEffectIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
@@ -59,21 +60,16 @@ public class HallEffectServiceContract extends DeviceServiceContract {
 
     public final String EDGE_COUNT;
     public final String STATUS_EDGE_COUNT;
-    private final String INTENT_EDGE_COUNT;
     public final String EVENT_EDGE_COUNT;
 
-    public final String INTENT_EDGE_COUNT_CALLBACK_PERIOD;
     public final String STATUS_EDGE_COUNT_CALLBACK_PERIOD;
 
-    public final String INTENT_EDGE_COUNT_RESET;
     public final String EVENT_EDGE_COUNT_RESET;
 
-    public final String INTENT_EDGE_COUNT_INTERRUPT;
     public final String STATUS_EDGE_COUNT_INTERRUPT;
 
     public final String CONFIGURATION;
     public final String STATUS_CONFIGURATION;
-    public final String INTENT_CONFIGURATION;
 
     public HallEffectServiceContract(HallEffectDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -84,37 +80,27 @@ public class HallEffectServiceContract extends DeviceServiceContract {
     }
 
     public HallEffectServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device, HallEffectIntent.class);
 
         EDGE_COUNT = "edgeCount";
         STATUS_EDGE_COUNT = STATUS + "/" + EDGE_COUNT;
-        INTENT_EDGE_COUNT = INTENT + "/" + EDGE_COUNT;
         EVENT_EDGE_COUNT = EVENT + "/" + EDGE_COUNT;
 
         CALLBACK_PERIOD = "callbackPeriod";
         STATUS_EDGE_COUNT_CALLBACK_PERIOD = STATUS_EDGE_COUNT + "/" + CALLBACK_PERIOD;
-        INTENT_EDGE_COUNT_CALLBACK_PERIOD = INTENT_EDGE_COUNT + "/" + CALLBACK_PERIOD;
 
         INTERRUPT = "interrupt";
         STATUS_EDGE_COUNT_INTERRUPT = STATUS_EDGE_COUNT + "/" + INTERRUPT;
-        INTENT_EDGE_COUNT_INTERRUPT = INTENT_EDGE_COUNT + "/" + INTERRUPT;
 
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-        INTENT_CONFIGURATION = INTENT + "/" + CONFIGURATION;
 
         RESET = "reset";
-        INTENT_EDGE_COUNT_RESET = INTENT_EDGE_COUNT + "/" + RESET;
         EVENT_EDGE_COUNT_RESET = EVENT_EDGE_COUNT + "/" + RESET;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_EDGE_COUNT_RESET, "[true|false]");
-        descriptions.put(INTENT_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
-
         descriptions.put(EVENT_EDGE_COUNT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    count: [0.." + Long.MAX_VALUE + "]\n    greater35Gauss: [true|false]");
         descriptions.put(EVENT_EDGE_COUNT_RESET, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:    [0.." + Long.MAX_VALUE + "]");
 

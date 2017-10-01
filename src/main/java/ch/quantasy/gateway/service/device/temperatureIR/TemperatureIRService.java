@@ -43,8 +43,8 @@
 package ch.quantasy.gateway.service.device.temperatureIR;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.temperatureIR.DeviceAmbientTemperatureCallbackThreshold;
-import ch.quantasy.tinkerforge.device.temperatureIR.DeviceObjectTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.temperatureIR.DeviceAmbientTemperatureCallbackThreshold;
+import ch.quantasy.gateway.intent.temperatureIR.DeviceObjectTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDeviceCallback;
 import java.net.URI;
@@ -60,32 +60,7 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
         super(mqttURI, device, new TemperatureIRServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAmbientTemperatureCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setObjectTemperatureCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_AMBIENT_TEMPERATURE_THRESHOLD)) {
-            DeviceAmbientTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceAmbientTemperatureCallbackThreshold.class);
-            getDevice().setAmbientTemperatureThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_OBJECT_TEMPERATURE_THRESHOLD)) {
-            DeviceObjectTemperatureCallbackThreshold threshold = getMapper().readValue(payload, DeviceObjectTemperatureCallbackThreshold.class);
-            getDevice().setObjectTemperatureThreshold(threshold);
-
-        }
-    }
-
+    
     @Override
     public void ambientTemperature(short s) {
         publishEvent(getContract().EVENT_AMBIENT_TEMPERATURE, s);

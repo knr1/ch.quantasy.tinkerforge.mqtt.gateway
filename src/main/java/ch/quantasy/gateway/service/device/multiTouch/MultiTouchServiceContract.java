@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.multiTouch;
 
+import ch.quantasy.gateway.intent.multiTouch.MultiTouchIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
@@ -59,17 +60,14 @@ public class MultiTouchServiceContract extends DeviceServiceContract {
     public final String CONFIG;
     public final String ELECTRODE_CONFIG;
     public final String STATUS_ELECTRODE_SENSITIVITY;
-    public final String INTENT_ELECTRODE_CONFIG;
-    public final String INTENT_ELECTRODE_SENSITIVITY;
-
+   
     public final String TOUCH_STATE;
     public final String STATUS_ELECTRODE_CONFIG;
     public final String EVENT_TOUCH_STATE;
     public final String RECALIBRATE;
     public final String RECALIBRATED;
     public final String EVENT_RECALIBRATED;
-    public final String INTENT_RECALIBRATE;
-
+   
     public MultiTouchServiceContract(MultiTouchDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -79,32 +77,26 @@ public class MultiTouchServiceContract extends DeviceServiceContract {
     }
 
     public MultiTouchServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,MultiTouchIntent.class);
 
         ELECTRODE = "electrode";
         SENSITIVITY = "sensitivity";
         CONFIG = "config";
         ELECTRODE_SENSITIVITY = ELECTRODE + "/" + SENSITIVITY;
         ELECTRODE_CONFIG = ELECTRODE + "/" + CONFIG;
-        INTENT_ELECTRODE_CONFIG = INTENT + "/" + ELECTRODE_CONFIG;
-        STATUS_ELECTRODE_CONFIG = STATUS + "/" + ELECTRODE_CONFIG;
-        INTENT_ELECTRODE_SENSITIVITY = INTENT + "/" + ELECTRODE_SENSITIVITY;
+         STATUS_ELECTRODE_CONFIG = STATUS + "/" + ELECTRODE_CONFIG;
         STATUS_ELECTRODE_SENSITIVITY = STATUS + "/" + ELECTRODE_SENSITIVITY;
 
         TOUCH_STATE = "touchState";
         EVENT_TOUCH_STATE = EVENT + "/" + TOUCH_STATE;
-        RECALIBRATE = "recalibrate";
+        RECALIBRATE = "recalibration";
         RECALIBRATED = "recalibrated";
         EVENT_RECALIBRATED = EVENT + "/" + RECALIBRATED;
-        INTENT_RECALIBRATE = INTENT + "/" + RECALIBRATE;
-    }
+       }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_ELECTRODE_CONFIG, "[0..8191]");
-        descriptions.put(INTENT_ELECTRODE_SENSITIVITY, "[0..8191]");
-        descriptions.put(INTENT_RECALIBRATE, "[true|false]");
-
+        
         descriptions.put(EVENT_TOUCH_STATE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..8191]");
         descriptions.put(EVENT_RECALIBRATED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
 

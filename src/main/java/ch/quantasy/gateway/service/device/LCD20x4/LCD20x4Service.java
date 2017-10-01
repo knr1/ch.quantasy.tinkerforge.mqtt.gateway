@@ -43,10 +43,10 @@
 package ch.quantasy.gateway.service.device.LCD20x4;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.LCD20x4.DeviceConfigParameters;
-import ch.quantasy.tinkerforge.device.LCD20x4.DeviceCustomCharacter;
-import ch.quantasy.tinkerforge.device.LCD20x4.DeviceDefaultText;
-import ch.quantasy.tinkerforge.device.LCD20x4.DeviceWriteLine;
+import ch.quantasy.gateway.intent.LCD20x4.DeviceConfigParameters;
+import ch.quantasy.gateway.intent.LCD20x4.DeviceCustomCharacter;
+import ch.quantasy.gateway.intent.LCD20x4.DeviceDefaultText;
+import ch.quantasy.gateway.intent.LCD20x4.LCD20x4Intent;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4DeviceCallback;
 import java.net.URI;
@@ -61,39 +61,6 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     public LCD20x4Service(LCD20x4Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LCD20x4ServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_BACKLIGHT)) {
-            Boolean backlight = getMapper().readValue(payload, Boolean.class);
-            getDevice().setBacklight(backlight);
-        }
-        if (string.startsWith(getContract().INTENT_CLEAR_DISPLAY)) {
-            Boolean clear = getMapper().readValue(payload, Boolean.class);
-            getDevice().clearDisplay(clear);
-        }
-        if (string.startsWith(getContract().INTENT_CONFIG_PARAMETERS)) {
-            DeviceConfigParameters parameters = getMapper().readValue(payload, DeviceConfigParameters.class);
-            getDevice().setConfigParameters(parameters);
-        }
-        if (string.startsWith(getContract().INTENT_CUSTOM_CHARACTERS)) {
-            DeviceCustomCharacter[] characters = getMapper().readValue(payload, DeviceCustomCharacter[].class);
-            getDevice().setCustomCharacters(characters);
-        }
-        if (string.startsWith(getContract().INTENT_DEFAULT_TEXT_TEXTS)) {
-            DeviceDefaultText[] texts = getMapper().readValue(payload, DeviceDefaultText[].class);
-            getDevice().setDefaultText(texts);
-        }
-        if (string.startsWith(getContract().INTENT_DEFAULT_TEXT_COUNTER)) {
-            Integer counter = getMapper().readValue(payload, Integer.class);
-            getDevice().setDefaultTextCounter(counter);
-        }
-        if (string.startsWith(getContract().INTENT_WRITE_LINES)) {
-            DeviceWriteLine[] lines = getMapper().readValue(payload, DeviceWriteLine[].class);
-            getDevice().write(lines);
-        }
     }
 
     @Override

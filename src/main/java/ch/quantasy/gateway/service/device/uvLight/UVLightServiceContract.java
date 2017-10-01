@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.uvLight;
 
+import ch.quantasy.gateway.intent.uvLight.UVLightIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
@@ -64,15 +65,10 @@ public class UVLightServiceContract extends DeviceServiceContract {
     public final String STATUS_UV_LIGHT_CALLBACK_PERIOD;
     public final String EVENT_UV_LIGHT;
     public final String EVENT_UV_LIGHT_REACHED;
-    private final String INTENT_UV_LIGHT;
-    public final String INTENT_UV_LIGHT_THRESHOLD;
-    public final String INTENT_UV_LIGHT_CALLBACK_PERIOD;
-
+    
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public UVLightServiceContract(UVLightDevice device) {
@@ -84,7 +80,7 @@ public class UVLightServiceContract extends DeviceServiceContract {
     }
 
     public UVLightServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,UVLightIntent.class);
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";
@@ -97,25 +93,17 @@ public class UVLightServiceContract extends DeviceServiceContract {
         STATUS_UV_LIGHT_CALLBACK_PERIOD = STATUS_UV_LIGHT + "/" + CALLBACK_PERIOD;
         EVENT_UV_LIGHT = EVENT + "/" + UV_LIGHT;
         EVENT_UV_LIGHT_REACHED = EVENT_UV_LIGHT + "/" + REACHED;
-        INTENT_UV_LIGHT = INTENT + "/" + UV_LIGHT;
-        INTENT_UV_LIGHT_THRESHOLD = INTENT_UV_LIGHT + "/" + THRESHOLD;
-        INTENT_UV_LIGHT_CALLBACK_PERIOD = INTENT_UV_LIGHT + "/" + CALLBACK_PERIOD;
-
+       
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
-
+       
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
-
+       
         descriptions.put(EVENT_UV_LIGHT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..328000]");
         descriptions.put(EVENT_UV_LIGHT_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..328000]");
         descriptions.put(STATUS_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

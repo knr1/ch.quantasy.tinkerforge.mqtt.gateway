@@ -68,7 +68,7 @@ public class MotionDetectorServiceContract extends DeviceServiceContract {
     }
 
     public MotionDetectorServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,null);
 
         DETECTION_CYCLE_ENDED = "eventDetectionCycleEnded";
         EVENT_DETECTION_CYCLE_ENDED = EVENT + "/" + DETECTION_CYCLE_ENDED;

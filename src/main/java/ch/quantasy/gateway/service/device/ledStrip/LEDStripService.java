@@ -42,12 +42,14 @@
  */
 package ch.quantasy.gateway.service.device.ledStrip;
 
+import ch.quantasy.gateway.intent.laserRangeFinder.LaserRangeFinderIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import ch.quantasy.tinkerforge.device.led.LEDStripDevice;
-import ch.quantasy.tinkerforge.device.led.LEDStripDeviceCallback;
-import ch.quantasy.tinkerforge.device.led.LEDStripDeviceConfig;
-import ch.quantasy.tinkerforge.device.led.LEDFrame;
+import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDevice;
+import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDeviceCallback;
+import ch.quantasy.gateway.intent.ledStrip.LEDStripDeviceConfig;
+import ch.quantasy.gateway.intent.ledStrip.LEDFrame;
+import ch.quantasy.gateway.intent.ledStrip.LedStripIntent;
 
 import java.net.URI;
 import java.util.Deque;
@@ -59,69 +61,26 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  */
 public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDStripServiceContract> implements LEDStripDeviceCallback {
 
-    private LEDFrame frame;
-    private Deque<LEDFrame> frames;
 
     public LEDStripService(LEDStripDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LEDStripServiceContract(device));
-        frames = new ConcurrentLinkedDeque<>();
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_CONFIG)) {
-            LEDStripDeviceConfig config = getMapper().readValue(payload, LEDStripDeviceConfig.class);
-            getDevice().setConfig(config);
-        }
-        if (string.startsWith(getContract().INTENT_FRAME)) {
-            synchronized (this) {
-                frame = (getMapper().readValue(payload, LEDFrame.class));
-                if (frame.isValid() && frames != null) {
-                    frames.clear();
-                    getDevice().readyToPublish(this);
-                }
-            }
-        }
-        if (string.startsWith(getContract().INTENT_FRAMES)) {
-            LEDFrame[] internalFrames = (getMapper().readValue(payload, LEDFrame[].class));
-            synchronized (this) {
-                for (LEDFrame frame : internalFrames) {
-                    frames.offer(frame);
-                }
-                getDevice().readyToPublish(this);
-            }
-        }
-    }
-
+    
     @Override
     public void configurationChanged(LEDStripDeviceConfig config) {
         publishStatus(getContract().STATUS_CONFIG, config);
     }
 
-    @Override
-    public LEDFrame getLEDsToPublish() {
-        LEDFrame frame = frames.poll();
-        if (frame != null) {
-            if (!frames.isEmpty()) {
-                getDevice().readyToPublish(this);
-            }
-            return frame;
-        } else {
-            return this.frame;
-        }
-    }
 
     @Override
-    public void frameRendered() {
-        publishEvent(getContract().EVENT_LEDs_RENDERED, frames.size());
+    public void frameRendered(int remainingFramesInQueue) {
+        publishEvent(getContract().EVENT_LEDs_RENDERED, remainingFramesInQueue);
 
     }
 
     @Override
     public void isLaging() {
         publishEvent(getContract().EVENT_LAGING, true);
-
     }
-
 }

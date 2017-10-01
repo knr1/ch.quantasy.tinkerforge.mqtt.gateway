@@ -43,8 +43,9 @@
 package ch.quantasy.gateway.service.device.linearPoti;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.linearPoti.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.tinkerforge.device.linearPoti.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.intent.linearPoti.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.intent.linearPoti.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.intent.linearPoti.LinearPotiIntent;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDeviceCallback;
 
@@ -61,31 +62,7 @@ public class LinearPotiService extends AbstractDeviceService<LinearPotiDevice, L
         super(mqttURI, device, new LinearPotiServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAnalogValueCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_POSITION_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setPositionCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
-            DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
-            getDevice().setAnalogValueThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_POSITION_THRESHOLD)) {
-            DevicePositionCallbackThreshold threshold = getMapper().readValue(payload, DevicePositionCallbackThreshold.class);
-            getDevice().setPositionCallbackThreshold(threshold);
-
-        }
-    }
+    
 
     @Override
     public void analogValue(int i) {

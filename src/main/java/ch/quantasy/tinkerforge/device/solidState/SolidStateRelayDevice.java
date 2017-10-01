@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.solidState;
 
+import ch.quantasy.gateway.intent.solidState.DeviceMonoflopParameters;
+import ch.quantasy.gateway.intent.solidState.SolidStateRelayIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletSolidStateRelay;
@@ -54,27 +56,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class SolidStateRelayDevice extends GenericDevice<BrickletSolidStateRelay, SolidStateRelayDeviceCallback> implements BrickletSolidStateRelay.MonoflopDoneListener {
-
-    private DeviceMonoflopParameters monoflopParameters;
-    private Boolean state;
+public class SolidStateRelayDevice extends GenericDevice<BrickletSolidStateRelay, SolidStateRelayDeviceCallback, SolidStateRelayIntent> implements BrickletSolidStateRelay.MonoflopDoneListener {
 
     public SolidStateRelayDevice(TinkerforgeStack stack, BrickletSolidStateRelay device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new SolidStateRelayIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletSolidStateRelay device) {
         device.addMonoflopDoneListener(super.getCallback());
         device.addMonoflopDoneListener(this);
-
-        if(monoflopParameters!=null) {
-            setMonoflop(monoflopParameters);
-        }
-        if (state != null) {
-            setState(state);
-        }
-
     }
 
     @Override
@@ -84,32 +75,42 @@ public class SolidStateRelayDevice extends GenericDevice<BrickletSolidStateRelay
 
     }
 
-    public void setMonoflop(DeviceMonoflopParameters parameters) {
-        try {
-            getDevice().setMonoflop(parameters.getState(), parameters.getPeriod());
-            this.monoflopParameters=new DeviceMonoflopParameters(getDevice().getMonoflop());
-            this.state = getDevice().getState();
-            super.getCallback().stateChanged(this.state);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(SolidStateRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(SolidStateRelayIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
+        if (!intent.isValid()) {
+            return;
+        }
 
-    public void setState(Boolean state) {
-        try {
-            getDevice().setState(state);
-            this.state = getDevice().getState();
-            super.getCallback().stateChanged(this.state);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(SolidStateRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.monoflopParameters != null) {
+            try {
+                getDevice().setMonoflop(intent.monoflopParameters.getState(), intent.monoflopParameters.getPeriod());
+                getIntent().monoflopParameters = new DeviceMonoflopParameters(getDevice().getMonoflop());
+                getIntent().state = getDevice().getState();
+                super.getCallback().stateChanged(getIntent().state);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(SolidStateRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.state != null) {
+            try {
+                getDevice().setState(intent.state);
+                getIntent().state = getDevice().getState();
+                super.getCallback().stateChanged(getIntent().state);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(SolidStateRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
     @Override
-    public void monoflopDone(boolean bln) {
+    public void monoflopDone(boolean bln
+    ) {
         try {
-            this.state = getDevice().getState();
-            super.getCallback().stateChanged(this.state);
+            getIntent().state = getDevice().getState();
+            super.getCallback().stateChanged(getIntent().state);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(SolidStateRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
         }

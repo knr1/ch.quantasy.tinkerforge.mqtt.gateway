@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.color;
 
+import ch.quantasy.gateway.intent.color.ColorIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
@@ -64,31 +65,22 @@ public class ColorServiceContract extends DeviceServiceContract {
     public final String STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD;
     public final String EVENT_COLOR;
     public final String EVENT_COLOR_REACHED;
-    public final String INTENT_COLOR_VALUE;
-    public final String INTENT_COLOR_CALLBACK_THRESHOLD;
-    public final String INTENT_COLOR_CALLBACK_PERIOD;
 
     public final String ILLUMINANCE;
     public final String STATUS_ILLUMINANCE;
     public final String STATUS_ILLUMINANCE_CALLBACK_PERIOD;
     public final String EVENT_ILLUMINANCE;
     public final String EVENT_COLOR_TEMPERATURE_REACHED;
-    private final String INTENT_ILLUMINANCE;
-    public final String INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD;
-    public final String INTENT_IllUMINANCE_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String CONFIGURATION;
-    public final String INTENT_CONFIGURATION;
     public final String STATUS_CONFIGURATION;
 
     public final String LED_STATE;
-    public final String INTENT_LIGHT_STATE;
     public final String STATUS_LIGHT_STATE;
 
     public ColorServiceContract(ColorDevice device) {
@@ -100,7 +92,7 @@ public class ColorServiceContract extends DeviceServiceContract {
     }
 
     public ColorServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device, ColorIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -113,41 +105,27 @@ public class ColorServiceContract extends DeviceServiceContract {
         STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD = STATUS_COLOR + "/" + CALLBACK_PERIOD;
         EVENT_COLOR = EVENT + "/" + COLOR;
         EVENT_COLOR_REACHED = EVENT_COLOR + "/" + REACHED;
-        INTENT_COLOR_VALUE = INTENT + "/" + COLOR;
-        INTENT_COLOR_CALLBACK_THRESHOLD = INTENT_COLOR_VALUE + "/" + THRESHOLD;
-        INTENT_COLOR_CALLBACK_PERIOD = INTENT_COLOR_VALUE + "/" + CALLBACK_PERIOD;
 
         ILLUMINANCE = "illuminance";
         STATUS_ILLUMINANCE = STATUS + "/" + ILLUMINANCE;
         STATUS_ILLUMINANCE_CALLBACK_PERIOD = STATUS_ILLUMINANCE + "/" + CALLBACK_PERIOD;
         EVENT_ILLUMINANCE = EVENT + "/" + ILLUMINANCE;
         EVENT_COLOR_TEMPERATURE_REACHED = EVENT_ILLUMINANCE + "/" + REACHED;
-        INTENT_ILLUMINANCE = INTENT + "/" + ILLUMINANCE;
-        INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD = INTENT_ILLUMINANCE + "/" + THRESHOLD;
-        INTENT_IllUMINANCE_CALLBACK_PERIOD = INTENT_ILLUMINANCE + "/" + CALLBACK_PERIOD;
 
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
 
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-        INTENT_CONFIGURATION = INTENT + "/" + CONFIGURATION;
 
         LED_STATE = "ledState";
         STATUS_LIGHT_STATE = STATUS + "/" + LED_STATE;
-        INTENT_LIGHT_STATE = INTENT + "/" + LED_STATE;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_COLOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_IllUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_COLOR_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
-        descriptions.put(INTENT_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(EVENT_COLOR, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    red: [0..65535]\n    green: [0..65535]\n    blue: [0..65535]\n    clear: [0..65535]");
         descriptions.put(EVENT_ILLUMINANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..65535]");
         descriptions.put(EVENT_COLOR_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    red: [0..65535]\n    green: [0..65535]\n    blue: [0..65535]\n    clear: [0..65535]");

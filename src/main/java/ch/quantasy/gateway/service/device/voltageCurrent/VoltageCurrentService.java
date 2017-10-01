@@ -43,9 +43,11 @@
 package ch.quantasy.gateway.service.device.voltageCurrent;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.voltageCurrent.DeviceCalibration;
-import ch.quantasy.tinkerforge.device.voltageCurrent.DeviceConfiguration;
-import ch.quantasy.tinkerforge.device.voltageCurrent.DeviceVoltageCurrentCallbackThreshold;
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceCalibration;
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceConfiguration;
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceCurrentCallbackThreshold;
+import ch.quantasy.gateway.intent.voltageCurrent.DevicePowerCallbackThreshold;
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceVoltagCallbackThreshold;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -60,60 +62,6 @@ public class VoltageCurrentService extends AbstractDeviceService<VoltageCurrentD
     public VoltageCurrentService(VoltageCurrentDevice device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new VoltageCurrentServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_VOLTAGE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setVoltageCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_VOLTAGE_THRESHOLD)) {
-
-            DeviceVoltageCurrentCallbackThreshold threshold = getMapper().readValue(payload, DeviceVoltageCurrentCallbackThreshold.class);
-            getDevice().setVoltageCallbackThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_CURRENT_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setCurrentCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_CURRENT_THRESHOLD)) {
-
-            DeviceVoltageCurrentCallbackThreshold threshold = getMapper().readValue(payload, DeviceVoltageCurrentCallbackThreshold.class);
-            getDevice().setCurrentCallbackThreshold(threshold);
-        }
-
-        if (string.startsWith(getContract().INTENT_POWER_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setPowerCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_POWER_THRESHOLD)) {
-
-            DeviceVoltageCurrentCallbackThreshold threshold = getMapper().readValue(payload, DeviceVoltageCurrentCallbackThreshold.class);
-            getDevice().setPowerCallbackThreshold(threshold);
-        }
-
-        if (string.startsWith(getContract().INTENT_CONFIGURATION)) {
-            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-            getDevice().setConfiguration(configuration);
-        }
-        if (string.startsWith(getContract().INTENT_CALIBRATION)) {
-            DeviceCalibration calibration = getMapper().readValue(payload, DeviceCalibration.class);
-            getDevice().setCalibration(calibration);
-        }
-
     }
 
     @Override
@@ -132,7 +80,7 @@ public class VoltageCurrentService extends AbstractDeviceService<VoltageCurrentD
     }
 
     @Override
-    public void currentCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold threshold) {
+    public void currentCallbackThresholdChanged(DeviceCurrentCallbackThreshold threshold) {
         publishStatus(getContract().STATUS_CURRENT_THRESHOLD, threshold);
     }
 
@@ -142,7 +90,7 @@ public class VoltageCurrentService extends AbstractDeviceService<VoltageCurrentD
     }
 
     @Override
-    public void voltageCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold voltageThreshold) {
+    public void voltageCallbackThresholdChanged(DeviceVoltagCallbackThreshold voltageThreshold) {
         publishStatus(getContract().STATUS_VOLTAGE_THRESHOLD, voltageThreshold);
     }
 
@@ -157,7 +105,7 @@ public class VoltageCurrentService extends AbstractDeviceService<VoltageCurrentD
     }
 
     @Override
-    public void powerCallbackThresholdChanged(DeviceVoltageCurrentCallbackThreshold powerThreshold) {
+    public void powerCallbackThresholdChanged(DevicePowerCallbackThreshold powerThreshold) {
         publishStatus(getContract().STATUS_POWER_THRESHOLD, powerThreshold);
     }
 

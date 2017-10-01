@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.humidity;
 
+import ch.quantasy.gateway.intent.humidity.HumidityIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
@@ -64,25 +65,17 @@ public class HumidityServiceContract extends DeviceServiceContract {
     public final String STATUS_ANALOG_VALUE_CALLBACK_PERIOD;
     public final String EVENT_ANALOG_VALUE;
     public final String EVENT_ANALOG_VALUE_REACHED;
-    private final String INTENT_ANALOG_VALUE;
-    public final String INTENT_ANALOG_VALUE_THRESHOLD;
-    public final String INTENT_ANALOG_VALUE_CALLBACK_PERIOD;
-
+   
     public final String HUMIDITY;
     public final String STATUS_HUMIDITY;
     public final String STATUS_HUMIDITY_THRESHOLD;
     public final String STATUS_HUMIDITY_CALLBACK_PERIOD;
     public final String EVENT_HUMIDITY;
     public final String EVENT_HUMIDITY_REACHED;
-    private final String INTENT_HUMIDITY;
-    public final String INTENT_HUMIDITY_THRESHOLD;
-    public final String INTENT_HUMIDITY_CALLBACK_PERIOD;
-
+    
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public HumidityServiceContract(HumidityDevice device) {
@@ -94,7 +87,7 @@ public class HumidityServiceContract extends DeviceServiceContract {
     }
 
     public HumidityServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,HumidityIntent.class);
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";
@@ -106,36 +99,23 @@ public class HumidityServiceContract extends DeviceServiceContract {
         STATUS_ANALOG_VALUE_CALLBACK_PERIOD = STATUS_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
         EVENT_ANALOG_VALUE = EVENT + "/" + ANALOG_VALUE;
         EVENT_ANALOG_VALUE_REACHED = EVENT_ANALOG_VALUE + "/" + REACHED;
-        INTENT_ANALOG_VALUE = INTENT + "/" + ANALOG_VALUE;
-        INTENT_ANALOG_VALUE_THRESHOLD = INTENT_ANALOG_VALUE + "/" + THRESHOLD;
-        INTENT_ANALOG_VALUE_CALLBACK_PERIOD = INTENT_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
-
+    
         HUMIDITY = "humidity";
         STATUS_HUMIDITY = STATUS + "/" + HUMIDITY;
         STATUS_HUMIDITY_THRESHOLD = STATUS_HUMIDITY + "/" + THRESHOLD;
         STATUS_HUMIDITY_CALLBACK_PERIOD = STATUS_HUMIDITY + "/" + CALLBACK_PERIOD;
         EVENT_HUMIDITY = EVENT + "/" + HUMIDITY;
         EVENT_HUMIDITY_REACHED = EVENT_HUMIDITY + "/" + REACHED;
-        INTENT_HUMIDITY = INTENT + "/" + HUMIDITY;
-        INTENT_HUMIDITY_THRESHOLD = INTENT_HUMIDITY + "/" + THRESHOLD;
-        INTENT_HUMIDITY_CALLBACK_PERIOD = INTENT_HUMIDITY + "/" + CALLBACK_PERIOD;
-
+    
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
-    }
+      }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_HUMIDITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(INTENT_HUMIDITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..1000]\n max: [0..9000]");
-        descriptions.put(EVENT_ANALOG_VALUE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
+         descriptions.put(EVENT_ANALOG_VALUE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(EVENT_HUMIDITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..1000]");
         descriptions.put(EVENT_ANALOG_VALUE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(EVENT_HUMIDITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..1000]");

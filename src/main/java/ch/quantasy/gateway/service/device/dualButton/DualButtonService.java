@@ -45,9 +45,10 @@ package ch.quantasy.gateway.service.device.dualButton;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDeviceCallback;
-import ch.quantasy.tinkerforge.device.dualButton.DeviceLEDState;
-import ch.quantasy.tinkerforge.device.dualButton.DeviceSelectedLEDStateParameters;
-import ch.quantasy.tinkerforge.device.dualButton.LEDState;
+import ch.quantasy.gateway.intent.dualButton.DeviceLEDState;
+import ch.quantasy.gateway.intent.dualButton.DeviceSelectedLEDStateParameters;
+import ch.quantasy.gateway.intent.dualButton.DualButtonIntent;
+import ch.quantasy.gateway.intent.dualButton.LEDState;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -59,18 +60,6 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
     public DualButtonService(DualButtonDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new DualButtonServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-        if (string.startsWith(getContract().INTENT_SELECTED_LED_STATE)) {
-            DeviceSelectedLEDStateParameters parameters = getMapper().readValue(payload, DeviceSelectedLEDStateParameters.class);
-            getDevice().setSelectedLEDState(parameters);
-        }
-        if (string.startsWith(getContract().INTENT_LED_STATE)) {
-            DeviceLEDState parameters = getMapper().readValue(payload, DeviceLEDState.class);
-            getDevice().setLEDState(parameters);
-        }
     }
 
     @Override

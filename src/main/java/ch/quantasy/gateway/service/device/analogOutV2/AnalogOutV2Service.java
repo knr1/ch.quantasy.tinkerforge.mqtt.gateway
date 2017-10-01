@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.analogOutV2;
 
+import ch.quantasy.gateway.intent.AnalogOutV2.AnalogOutV2Intent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2DeviceCallback;
@@ -56,16 +57,6 @@ public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device,
 
     public AnalogOutV2Service(AnalogOutV2Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new AnalogOutV2ServiceContract(device));
-
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_OUTPUT_VOLTAGE)) {
-            Integer outputVoltage = getMapper().readValue(payload, Integer.class);
-            getDevice().setOutputVoltage(outputVoltage);
-        }
 
     }
 

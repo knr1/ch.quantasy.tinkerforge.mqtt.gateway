@@ -42,11 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.analogInV2;
 
+import ch.quantasy.gateway.intent.analogInV2.AnalogInV2Intent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2DeviceCallback;
-import ch.quantasy.tinkerforge.device.analogInV2.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.tinkerforge.device.analogInV2.DeviceVoltageCallbackThreshold;
+import ch.quantasy.gateway.intent.analogInV2.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.intent.analogInV2.DeviceVoltageCallbackThreshold;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -61,44 +62,7 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
 
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAnalogValueCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_VOLTAGE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setVoltageCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ANALOG_VALUE_THRESHOLD)) {
-
-            DeviceAnalogValueCallbackThreshold threshold = getMapper().readValue(payload, DeviceAnalogValueCallbackThreshold.class);
-            getDevice().setAirPressureThreshold(threshold);
-        }
-        if (string.startsWith(getContract().INTENT_VOLTAGE_THRESHOLD)) {
-
-            DeviceVoltageCallbackThreshold threshold = getMapper().readValue(payload, DeviceVoltageCallbackThreshold.class);
-            getDevice().setVoltageCallbackThreshold(threshold);
-
-        }
-        if (string.startsWith(getContract().INTENT_MOVING_AVERAGE)) {
-
-            Short movingAverage = getMapper().readValue(payload, Short.class);
-            getDevice().setMovingAverage(movingAverage);
-
-        }
-
-    }
-
+  
     @Override
     public void analogValue(int i) {
 

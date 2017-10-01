@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.LCD16x2;
 
+import ch.quantasy.gateway.intent.LCD16x2.DeviceConfigParameters;
+import ch.quantasy.gateway.intent.LCD16x2.DeviceCustomCharacter;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletLCD16x2;
 
@@ -49,9 +51,11 @@ import com.tinkerforge.BrickletLCD16x2;
  *
  * @author reto
  */
-public interface LCD16x2DeviceCallback extends DeviceCallback, BrickletLCD16x2.ButtonPressedListener,BrickletLCD16x2.ButtonReleasedListener {
+public interface LCD16x2DeviceCallback extends DeviceCallback, BrickletLCD16x2.ButtonPressedListener, BrickletLCD16x2.ButtonReleasedListener {
+
     public void backlightChanged(Boolean isBacklightEnabled);
+
     public void configurationChanged(DeviceConfigParameters configParameters);
+
     public void customCharactersChanged(DeviceCustomCharacter... customCharacters);
 }
-

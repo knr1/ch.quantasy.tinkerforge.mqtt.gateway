@@ -42,7 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.dustDetector;
 
-
+import ch.quantasy.gateway.intent.dustDetector.DeviceDustDensityCallbackThreshold;
+import ch.quantasy.gateway.intent.dustDetector.DustDetectorIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDustDetector;
@@ -55,33 +56,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class DustDetectorDevice extends GenericDevice<BrickletDustDetector, DustDetectorDeviceCallback> {
+public class DustDetectorDevice extends GenericDevice<BrickletDustDetector, DustDetectorDeviceCallback, DustDetectorIntent> {
 
-    private Long debouncePeriod;
-    private Long dustDensityCallbackPeriod;
-    private DeviceDustDensityCallbackThreshold threshold;
-    private Short average;
-    
     public DustDetectorDevice(TinkerforgeStack stack, BrickletDustDetector device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new DustDetectorIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletDustDetector device) {
         device.addDustDensityListener(getCallback());
         device.addDustDensityReachedListener(getCallback());
-        if(debouncePeriod!=null){
-            setDebouncePeriod(debouncePeriod);
-        }
-        if(dustDensityCallbackPeriod!=null){
-            setDustDensityCallbackPeriod(dustDensityCallbackPeriod);
-        }
-        if(threshold!=null){
-            setDustDensityCallbackThreshold(threshold);
-        }
-        if(average!=null){
-            setMovingAverage(average);
-        }
     }
 
     @Override
@@ -90,44 +74,50 @@ public class DustDetectorDevice extends GenericDevice<BrickletDustDetector, Dust
         device.removeDustDensityReachedListener(getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DustDetectorDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(DustDetectorIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DustDetectorDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.dustDensityCallbackPeriod != null) {
+            try {
+                getDevice().setDustDensityCallbackPeriod(intent.dustDensityCallbackPeriod);
+                getIntent().dustDensityCallbackPeriod = getDevice().getDustDensityCallbackPeriod();
+                super.getCallback().dustDensityCallbackPeriodChanged(getIntent().dustDensityCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DustDetectorDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.dustDensityCallbackThreshold != null) {
+            try {
+                getDevice().setDustDensityCallbackThreshold(intent.dustDensityCallbackThreshold.getOption(), intent.dustDensityCallbackThreshold.getMin(), intent.dustDensityCallbackThreshold.getMax());
+                getIntent().dustDensityCallbackThreshold = new DeviceDustDensityCallbackThreshold(getDevice().getDustDensityCallbackThreshold());
+                super.getCallback().dustDensityCallbackThresholdChanged(getIntent().dustDensityCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DustDetectorDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.movingAverage != null) {
+            try {
+                getDevice().setMovingAverage(intent.movingAverage);
+                getIntent().movingAverage = getDevice().getMovingAverage();
+                super.getCallback().movingAverageChanged(getIntent().movingAverage);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DustDetectorDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    public void setDustDensityCallbackPeriod(Long period) {
-        try {
-            getDevice().setDustDensityCallbackPeriod(period);
-            this.dustDensityCallbackPeriod = getDevice().getDustDensityCallbackPeriod();
-            super.getCallback().dustDensityCallbackPeriodChanged(this.dustDensityCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DustDetectorDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setMovingAverage(short average) {
-        try {
-            getDevice().setMovingAverage(average);
-            this.average = getDevice().getMovingAverage();
-            super.getCallback().movingAverageChanged(this.average);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DustDetectorDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setDustDensityCallbackThreshold(DeviceDustDensityCallbackThreshold threshold) {
-        try {
-            getDevice().setDustDensityCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.threshold = new DeviceDustDensityCallbackThreshold(getDevice().getDustDensityCallbackThreshold());
-            super.getCallback().dustDensityCallbackThresholdChanged(this.threshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DustDetectorDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

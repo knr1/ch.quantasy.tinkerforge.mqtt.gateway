@@ -49,7 +49,7 @@ import com.tinkerforge.BrickIMU;
  *
  * @author reto
  */
-public interface IMUDeviceCallback extends DeviceCallback, BrickIMU.AccelerationListener,BrickIMU.AllDataListener,BrickIMU.AngularVelocityListener,BrickIMU.MagneticFieldListener,BrickIMU.OrientationListener,BrickIMU.QuaternionListener {
+public interface IMUDeviceCallback extends DeviceCallback, BrickIMU.AccelerationListener, BrickIMU.AllDataListener, BrickIMU.AngularVelocityListener, BrickIMU.MagneticFieldListener, BrickIMU.OrientationListener, BrickIMU.QuaternionListener {
 
     public void accelerationPeriodChanged(Long accelerationPeriod);
 
@@ -63,10 +63,9 @@ public interface IMUDeviceCallback extends DeviceCallback, BrickIMU.Acceleration
 
     public void quaternionPeriodChanged(Long quaternionPeriod);
 
-
     public void statusLEDChanged(Boolean isEnabled);
 
     public void LEDsChanged(Boolean areEnabled);
-    
+
     public void orientationCalculationChanged(Boolean isOrientationCalculationOn);
 }

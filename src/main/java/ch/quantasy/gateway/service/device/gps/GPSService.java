@@ -42,10 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.gps;
 
+import ch.quantasy.gateway.intent.gps.GPSIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
 import ch.quantasy.tinkerforge.device.gps.GPSDeviceCallback;
-import ch.quantasy.tinkerforge.device.gps.RestartType;
+import ch.quantasy.gateway.intent.gps.RestartType;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;
 
@@ -60,42 +61,7 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
         super(mqttURI, device, new GPSServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_ALTITUDE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAltitudeCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_COORDINATES_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setCoordinatesCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_DATE_TIME_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDateTimeCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_MOTION_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setMotionCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_STATE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setStatusCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_RESTART)) {
-            RestartType type = getMapper().readValue(payload, RestartType.class);
-            getDevice().restart(type);
-        }
-
-    }
-
+  
     @Override
     public void altitudeCallbackPeriodChanged(long period) {
         super.publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, period);

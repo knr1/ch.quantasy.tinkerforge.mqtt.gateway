@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.multiTouch;
 
+import ch.quantasy.gateway.intent.multiTouch.MultiTouchIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDeviceCallback;
@@ -59,23 +60,7 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
         super(mqttURI, device, new MultiTouchServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_RECALIBRATE)) {
-            Boolean recalibrate = getMapper().readValue(payload, Boolean.class);
-            getDevice().recalibrate(recalibrate);
-        }
-        if (string.startsWith(getContract().INTENT_ELECTRODE_CONFIG)) {
-            Integer electrodeConfig = getMapper().readValue(payload, Integer.class);
-            getDevice().setElectrodeConfig(electrodeConfig);
-        }
-        if (string.startsWith(getContract().INTENT_ELECTRODE_SENSITIVITY)) {
-            Short electrodeConfig = getMapper().readValue(payload, Short.class);
-            getDevice().setElectrodeSensitivity(electrodeConfig);
-        }
-
-    }
+    
 
     @Override
     public void electrodeConfigChanged(Integer electrodeConfig) {

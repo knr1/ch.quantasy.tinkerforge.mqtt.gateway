@@ -42,12 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.ambientLightV2;
 
+import ch.quantasy.gateway.intent.ambientLightV2.AmbientLightV2Intent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2DeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import ch.quantasy.tinkerforge.device.ambientLightV2.DeviceIlluminanceCallbackThreshold;
-import ch.quantasy.tinkerforge.device.ambientLightV2.DeviceConfiguration;
+import ch.quantasy.gateway.intent.ambientLightV2.DeviceIlluminanceCallbackThreshold;
+import ch.quantasy.gateway.intent.ambientLightV2.DeviceConfiguration;
 import java.net.URI;
 
 /**
@@ -59,33 +60,6 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
     public AmbientLightV2Service(AmbientLightV2Device device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new AmbientLightV2ServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_ILLUMINANCE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setIlluminanceCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_ILLUMINANCE_THRESHOLD)) {
-
-            DeviceIlluminanceCallbackThreshold threshold = getMapper().readValue(payload, DeviceIlluminanceCallbackThreshold.class);
-            getDevice().setIlluminanceCallbackThreshold(threshold);
-        }
-
-        if (string.startsWith(getContract().INTENT_CONFIGURATION)) {
-
-            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-            getDevice().setConfiguration(configuration);
-        }
     }
 
     @Override

@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.temperature;
 
+import ch.quantasy.gateway.intent.temperature.DeviceI2CMode;
+import ch.quantasy.gateway.intent.temperature.DeviceTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletTemperature;
 
@@ -50,8 +52,12 @@ import com.tinkerforge.BrickletTemperature;
  * @author reto
  */
 public interface TemperatureDeviceCallback extends DeviceCallback, BrickletTemperature.TemperatureListener, BrickletTemperature.TemperatureReachedListener {
+
     public void debouncePeriodChanged(long period);
+
     public void temperatureCallbackPeriodChanged(long period);
+
     public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold);
+
     public void i2CModeChanged(DeviceI2CMode mode);
 }

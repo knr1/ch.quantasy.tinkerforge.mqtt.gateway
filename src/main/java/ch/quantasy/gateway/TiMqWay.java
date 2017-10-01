@@ -42,7 +42,7 @@
  */
 package ch.quantasy.gateway;
 
-import ch.quantasy.gateway.service.stackManager.ManagerService;
+import ch.quantasy.gateway.service.stackManager.StackManagerService;
 import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class TiMqWay {
         System.out.printf("\n%s will be used as broker address.\n", mqttURI);
 
         TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        ManagerService managerService = new ManagerService(manager, mqttURI);
+        StackManagerService managerService = new StackManagerService(manager, mqttURI);
         System.out.println("" + managerService);
         System.in.read();
     }

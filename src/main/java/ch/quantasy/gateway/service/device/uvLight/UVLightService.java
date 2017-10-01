@@ -43,7 +43,7 @@
 package ch.quantasy.gateway.service.device.uvLight;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.uvLight.DeviceUVLightCallbackThreshold;
+import ch.quantasy.gateway.intent.uvLight.DeviceUVLightCallbackThreshold;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDeviceCallback;
 import java.net.URI;
@@ -60,28 +60,7 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
         super(mqttURI, device, new UVLightServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_UV_LIGHT_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setUVLightCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_UV_LIGHT_THRESHOLD)) {
-
-            DeviceUVLightCallbackThreshold threshold = getMapper().readValue(payload, DeviceUVLightCallbackThreshold.class);
-            getDevice().setUVLightCallbackThreshold(threshold);
-        }
-
-    }
-
+   
     @Override
     public void debouncePeriodChanged(long period) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);

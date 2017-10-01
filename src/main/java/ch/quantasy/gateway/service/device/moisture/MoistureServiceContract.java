@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.moisture;
 
+import ch.quantasy.gateway.intent.moisture.MoistureIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
@@ -65,21 +66,15 @@ public class MoistureServiceContract extends DeviceServiceContract {
     public final String STATUS_MOISTURE_CALLBACK_PERIOD;
     public final String EVENT_MOISTURE;
     public final String EVENT_MOISTURE_REACHED;
-    private final String INTENT_MOISTURE;
-    public final String INTENT_MOISTURE_THRESHOLD;
-    public final String INTENT_MOISTURE_CALLBACK_PERIOD;
-
+   
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String MOVING_AVERAGE;
     public final String STATUS_MOVING_AVERAGE;
-    public final String INTENT_MOVING_AVERAGE;
-
+   
     public MoistureServiceContract(MoistureDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -89,7 +84,7 @@ public class MoistureServiceContract extends DeviceServiceContract {
     }
 
     public MoistureServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,MoistureIntent.class);
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";
@@ -103,29 +98,19 @@ public class MoistureServiceContract extends DeviceServiceContract {
         STATUS_MOISTURE_CALLBACK_PERIOD = STATUS_MOISTURE + "/" + CALLBACK_PERIOD;
         EVENT_MOISTURE = EVENT + "/" + MOISTURE;
         EVENT_MOISTURE_REACHED = EVENT_MOISTURE + REACHED_TOPIC;
-        INTENT_MOISTURE = INTENT + "/" + MOISTURE;
-        INTENT_MOISTURE_THRESHOLD = INTENT_MOISTURE + "/" + THRESHOLD;
-        INTENT_MOISTURE_CALLBACK_PERIOD = INTENT_MOISTURE + "/" + CALLBACK_PERIOD;
-
+    
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
-
+   
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-        INTENT_MOVING_AVERAGE = INTENT + "/" + MOVING_AVERAGE;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(INTENT_MOVING_AVERAGE, "[0..100]");
-
+    
         descriptions.put(EVENT_MOISTURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(EVENT_MOISTURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(STATUS_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

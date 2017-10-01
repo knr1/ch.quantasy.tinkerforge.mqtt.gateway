@@ -42,6 +42,11 @@
  */
 package ch.quantasy.tinkerforge.device.io16;
 
+import ch.quantasy.gateway.intent.io16.DeviceConfiguration;
+import ch.quantasy.gateway.intent.io16.DeviceInterrupt;
+import ch.quantasy.gateway.intent.io16.DeviceMonoflopParameters;
+import ch.quantasy.gateway.intent.io16.DevicePortAEdgeCountConfig;
+import ch.quantasy.gateway.intent.io16.IO16Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletIO16;
@@ -60,16 +65,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class IO16Device extends GenericDevice<BrickletIO16, IO16DeviceCallback> implements BrickletIO16.MonoflopDoneListener {
+public class IO16Device extends GenericDevice<BrickletIO16, IO16DeviceCallback,IO16Intent> implements BrickletIO16.MonoflopDoneListener {
 
     private final SortedMap<String, DeviceMonoflopParameters> monoflopParametersMap;
     private final SortedMap<Short, DevicePortAEdgeCountConfig> edgeCountConfigMap;
     private final SortedMap<String, DeviceConfiguration> configurationMap;
-    private  SortedSet<DeviceInterrupt> deviceInterruptSet;
+    private SortedSet<DeviceInterrupt> deviceInterruptSet;
     private Long debouncePeriod;
 
     public IO16Device(TinkerforgeStack stack, BrickletIO16 device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device,new IO16Intent());
         this.monoflopParametersMap = new TreeMap<>();
         this.edgeCountConfigMap = new TreeMap<>();
         this.configurationMap = new TreeMap<>();
@@ -103,6 +108,12 @@ public class IO16Device extends GenericDevice<BrickletIO16, IO16DeviceCallback> 
 
     }
 
+    @Override
+    public void update(IO16Intent intent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     public void setDebouncePeriod(Long period) {
         try {
             getDevice().setDebouncePeriod(period);

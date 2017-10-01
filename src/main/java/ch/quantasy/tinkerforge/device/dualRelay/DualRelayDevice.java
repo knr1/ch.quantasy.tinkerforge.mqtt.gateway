@@ -42,13 +42,15 @@
  */
 package ch.quantasy.tinkerforge.device.dualRelay;
 
+import ch.quantasy.gateway.intent.dualRelay.DeviceSelectedRelayState;
+import ch.quantasy.gateway.intent.dualRelay.DeviceRelayState;
+import ch.quantasy.gateway.intent.dualRelay.DeviceMonoflopParameters;
+import ch.quantasy.gateway.intent.dualRelay.DualRelayIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDualRelay;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,28 +58,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayDeviceCallback> implements BrickletDualRelay.MonoflopDoneListener {
-
-    private Map<Short, DeviceMonoflopParameters> monoflopParametersMap;
-    private DeviceState state;
+public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayDeviceCallback, DualRelayIntent> implements BrickletDualRelay.MonoflopDoneListener {
 
     public DualRelayDevice(TinkerforgeStack stack, BrickletDualRelay device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
-        this.monoflopParametersMap = new HashMap<>();
+        super(stack, device, new DualRelayIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletDualRelay device) {
         device.addMonoflopDoneListener(super.getCallback());
         device.addMonoflopDoneListener(this);
-
-        //for (DeviceMonoflopParameters parameters : monoflopParametersMap.values()) {
-        //    setMonoflop(parameters);
-        //}
-        //if (state != null) {
-        //    setState(state);
-        //}
-
     }
 
     @Override
@@ -87,47 +77,56 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
 
     }
 
-    public void setMonoflop(DeviceMonoflopParameters parameters) {
-        try {
-            getDevice().setMonoflop(parameters.getRelay(), parameters.getState(), parameters.getPeriod());
-            BrickletDualRelay.Monoflop monoflop=getDevice().getMonoflop(parameters.getRelay());
-            // This is a patch, as Tinkerforge has forgotten to fill in the relay.
-            // TODO: Take out that patch, as soon as Tinkerforge corrected the bug.
-            this.monoflopParametersMap.put(parameters.getRelay(),new DeviceMonoflopParameters(parameters.getRelay(),monoflop));
-            
-            this.state = new DeviceState(getDevice().getState());
-            super.getCallback().stateChanged(this.state);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(DualRelayIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void setSelectedState(DeviceSelectedState parameters) {
-        try {
-            getDevice().setSelectedState(parameters.getRelay(), parameters.getState());
-            this.state = new DeviceState(getDevice().getState());
-            super.getCallback().stateChanged(this.state);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
-
-    public void setState(DeviceState state) {
-        try {
-            getDevice().setState(state.getRelay1(), state.getRelay2());
-            this.state = new DeviceState(getDevice().getState());
-            super.getCallback().stateChanged(this.state);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.monoflopParameters != null && !intent.monoflopParameters.isEmpty()) {
+            try {
+                for (DeviceMonoflopParameters parameters : intent.monoflopParameters) {
+                    getDevice().setMonoflop(parameters.getRelay(), parameters.getState(), parameters.getPeriod());
+                    BrickletDualRelay.Monoflop monoflop = getDevice().getMonoflop(parameters.getRelay());
+                    // This is a patch, as Tinkerforge does not provide the relay.
+                    this.getIntent().monoflopParameters.add(new DeviceMonoflopParameters(parameters.getRelay(), monoflop));
+                }
+                this.getIntent().relayState = new DeviceRelayState(getDevice().getState());
+                super.getCallback().stateChanged(this.getIntent().relayState);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.selectedRelayStates != null && !intent.selectedRelayStates.isEmpty()) {
+            try {
+                for (DeviceSelectedRelayState parameters : intent.selectedRelayStates) {
+                    getDevice().setSelectedState(parameters.getRelay(), parameters.getState());
+                }
+                this.getIntent().relayState = new DeviceRelayState(getDevice().getState());
+                super.getCallback().stateChanged(this.getIntent().relayState);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.relayState != null) {
+            try {
+                getDevice().setState(intent.relayState.getRelay1(), intent.relayState.getRelay2());
+                getIntent().relayState = new DeviceRelayState(getDevice().getState());
+                super.getCallback().stateChanged(getIntent().relayState);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
     @Override
     public void monoflopDone(short s, boolean bln) {
         try {
-            
-            this.state = new DeviceState(getDevice().getState());
-            super.getCallback().stateChanged(this.state);
+            this.getIntent().monoflopParameters.add(new DeviceMonoflopParameters(s, bln, 0));
+            this.getIntent().relayState = new DeviceRelayState(getDevice().getState());
+            super.getCallback().stateChanged(this.getIntent().relayState);
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(DualRelayDevice.class.getName()).log(Level.SEVERE, null, ex);
         }

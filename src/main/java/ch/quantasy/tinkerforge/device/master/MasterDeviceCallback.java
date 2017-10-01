@@ -42,7 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.master;
 
-
+import ch.quantasy.gateway.intent.master.StackVoltageCallbackThreshold;
+import ch.quantasy.gateway.intent.master.USBVoltageCallbackThreshold;
+import ch.quantasy.gateway.intent.master.StackCurrentCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickMaster;
 
@@ -50,7 +52,7 @@ import com.tinkerforge.BrickMaster;
  *
  * @author reto
  */
-public interface MasterDeviceCallback extends DeviceCallback, BrickMaster.StackCurrentListener, BrickMaster.StackCurrentReachedListener,BrickMaster.StackVoltageListener,BrickMaster.StackVoltageReachedListener,BrickMaster.USBVoltageListener,BrickMaster.USBVoltageReachedListener {
+public interface MasterDeviceCallback extends DeviceCallback, BrickMaster.StackCurrentListener, BrickMaster.StackCurrentReachedListener, BrickMaster.StackVoltageListener, BrickMaster.StackVoltageReachedListener, BrickMaster.USBVoltageListener, BrickMaster.USBVoltageReachedListener {
 
     public void debouncePeriodChanged(Long debouncePeriod);
 

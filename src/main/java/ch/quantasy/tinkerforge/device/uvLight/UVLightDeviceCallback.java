@@ -42,16 +42,19 @@
  */
 package ch.quantasy.tinkerforge.device.uvLight;
 
+import ch.quantasy.gateway.intent.uvLight.DeviceUVLightCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletUVLight;
-
 
 /**
  *
  * @author reto
  */
-public interface UVLightDeviceCallback extends DeviceCallback, BrickletUVLight.UVLightListener, BrickletUVLight.UVLightReachedListener{
+public interface UVLightDeviceCallback extends DeviceCallback, BrickletUVLight.UVLightListener, BrickletUVLight.UVLightReachedListener {
+
     public void debouncePeriodChanged(long period);
+
     public void uvLightCallbackPeriodChanged(long period);
+
     public void uvLightCallbackThresholdChanged(DeviceUVLightCallbackThreshold threshold);
 }

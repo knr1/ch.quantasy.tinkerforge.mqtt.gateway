@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.dustDetector;
 
+import ch.quantasy.gateway.intent.dustDetector.DustDetectorIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
@@ -64,19 +65,13 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
     public final String STATUS_DUST_DENSITY_CALLBACK_PERIOD;
     public final String EVENT_DUST_DENSITY;
     public final String EVENT_DUST_DENSITY_REACHED;
-    public final String INTENT_CO2_CONCENTRATION;
-    public final String INTENT_DUST_DENSITY_THRESHOLD;
-    public final String INTENT_DUST_DENSITY_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String MOVING_AVERAGE;
-    public final String INTENT_MOVING_AVERAGE;
     public final String STATUS_MOVING_AVERAGE;
 
     public DustDetectorServiceContract(DustDetectorDevice device) {
@@ -88,7 +83,7 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
     }
 
     public DustDetectorServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device, DustDetectorIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -102,29 +97,18 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
         STATUS_DUST_DENSITY_CALLBACK_PERIOD = STATUS_CO2_CONCENTRATION + "/" + CALLBACK_PERIOD;
         EVENT_DUST_DENSITY = EVENT + "/" + DUST_DENSITY;
         EVENT_DUST_DENSITY_REACHED = EVENT_DUST_DENSITY + "/" + REACHED;
-        INTENT_CO2_CONCENTRATION = INTENT + "/" + DUST_DENSITY;
-        INTENT_DUST_DENSITY_THRESHOLD = INTENT_CO2_CONCENTRATION + "/" + THRESHOLD;
-        INTENT_DUST_DENSITY_CALLBACK_PERIOD = INTENT_CO2_CONCENTRATION + "/" + CALLBACK_PERIOD;
 
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
 
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-        INTENT_MOVING_AVERAGE = INTENT + "/" + MOVING_AVERAGE;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_MOVING_AVERAGE, "[0..100]");
-
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
 
         descriptions.put(EVENT_DUST_DENSITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..500]");
         descriptions.put(EVENT_DUST_DENSITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..500]");

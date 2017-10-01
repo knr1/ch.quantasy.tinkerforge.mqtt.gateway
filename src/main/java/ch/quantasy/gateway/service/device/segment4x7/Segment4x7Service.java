@@ -43,8 +43,9 @@
 package ch.quantasy.gateway.service.device.segment4x7;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.segment4x7.DeviceCounterParameters;
-import ch.quantasy.tinkerforge.device.segment4x7.DeviceSegments;
+import ch.quantasy.gateway.intent.segment4x7.DeviceCounterParameters;
+import ch.quantasy.gateway.intent.segment4x7.DeviceSegments;
+import ch.quantasy.gateway.intent.segment4x7.Segment4x7Intent;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7DeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -62,20 +63,6 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
 
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_SEGMENTS)) {
-            DeviceSegments segments = getMapper().readValue(payload, DeviceSegments.class);
-            getDevice().setSegments(segments);
-
-        }
-        if (string.startsWith(getContract().INTENT_COUNTER)) {
-            DeviceCounterParameters counter = getMapper().readValue(payload, DeviceCounterParameters.class);
-            getDevice().startCounter(counter);
-
-        }
-    }
 
     @Override
     public void counterStarted(DeviceCounterParameters counterParameters) {

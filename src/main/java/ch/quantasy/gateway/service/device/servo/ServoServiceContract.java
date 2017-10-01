@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.servo;
 
+import ch.quantasy.gateway.intent.servo.ServoIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.servo.ServoDevice;
@@ -55,10 +56,8 @@ public class ServoServiceContract extends DeviceServiceContract {
 
     public final String STATUS_LED;
     public final String STATUS_STATUS_LED;
-    public final String INTENT_STATUS_LED;
-
+    
     public final String MINIMUM_VOLTAGE;
-    public final String INTENT_MINIMUM_VOLTAGE;
     public final String STATUS_MINIMUM_VOLTAGE;
 
     public final String UNDERVOLTAGE;
@@ -68,18 +67,15 @@ public class ServoServiceContract extends DeviceServiceContract {
     public final String VELOCITY_REACHED;
 
     public final String DRIVER_MODE;
-    public final String INTENT_DRIVER_MODE;
     public final String STATUS_DRIVER_MODE;
 
     public final String OUTPUT_VOLTAGE;
-    public final String INTENT_OUTPUT_VOLTAGE;
     public final String STATUS_OUTPUT_VOLTAGE;
 
     public final String POSITION_REACHED;
     public final String EVENT_POSITION_REACHED;
 
     public final String SERVOS;
-    public final String INTENT_SERVOS;
     public final String STATUS_SERVOS;
 
     public ServoServiceContract(ServoDevice device) {
@@ -91,12 +87,11 @@ public class ServoServiceContract extends DeviceServiceContract {
     }
 
     public ServoServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,ServoIntent.class);
 
         STATUS_LED = "statusLED";
         STATUS_STATUS_LED = STATUS + "/" + STATUS_LED;
-        INTENT_STATUS_LED = INTENT + "/" + STATUS_LED;
-
+    
         VELOCITY_REACHED = "velocityReached";
         EVENT_VELOCITY_REACHED = EVENT + "/" + VELOCITY_REACHED;
 
@@ -104,32 +99,24 @@ public class ServoServiceContract extends DeviceServiceContract {
         EVENT_POSITION_REACHED = EVENT + "/" + POSITION_REACHED;
 
         SERVOS = "servos";
-        INTENT_SERVOS = INTENT + "/" + SERVOS;
         STATUS_SERVOS = STATUS + "/" + SERVOS;
 
         MINIMUM_VOLTAGE = "minimumVoltage";
-        INTENT_MINIMUM_VOLTAGE = INTENT + "/" + MINIMUM_VOLTAGE;
         STATUS_MINIMUM_VOLTAGE = STATUS + "/" + MINIMUM_VOLTAGE;
 
         UNDERVOLTAGE = "undervoltage";
         EVENT_UNDERVOLTAGE = EVENT + "/" + UNDERVOLTAGE;
 
         DRIVER_MODE = "driverMode";
-        INTENT_DRIVER_MODE = INTENT + "/" + DRIVER_MODE;
         STATUS_DRIVER_MODE = STATUS + "/" + DRIVER_MODE;
 
         OUTPUT_VOLTAGE = "outputVoltage";
         STATUS_OUTPUT_VOLTAGE = STATUS + "/" + OUTPUT_VOLTAGE;
-        INTENT_OUTPUT_VOLTAGE = INTENT + "/" + OUTPUT_VOLTAGE;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_SERVOS, "--- \n  {- \n  id: [0..6]\n  [enabled: [true|false]|]\n  [position: [-32767..32767]|]\n  [acceleration: [0..65536]|]\n  [velocity: [0..65535]|]\n  [degree:\n    min: [-32767..32767]\n    max: [-32767..32767]|]\n  [period: [1..65535]|]\n  [pulseWidth:\n    min: [1..65535]\n    max: [1..65535]|]}_7");
-        descriptions.put(INTENT_STATUS_LED, "[true|false]");
-        descriptions.put(INTENT_MINIMUM_VOLTAGE, "[5000.." + Integer.MAX_VALUE + "]");
-        descriptions.put(INTENT_OUTPUT_VOLTAGE, "[2000..9000]");
-
+    
         descriptions.put(EVENT_POSITION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [0..6]\n    position: [-32767..32767]");
         descriptions.put(EVENT_UNDERVOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Integer.MAX_VALUE + "]");
         descriptions.put(EVENT_VELOCITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [0..6]\n    value: [0.." + Short.MAX_VALUE + "]");

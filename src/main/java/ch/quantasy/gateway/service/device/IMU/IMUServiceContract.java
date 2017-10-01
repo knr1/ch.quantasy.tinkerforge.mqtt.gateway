@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.IMU;
 
+import ch.quantasy.gateway.intent.IMU.IMUIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
@@ -57,24 +58,15 @@ public class IMUServiceContract extends DeviceServiceContract {
     public final String PERIOD;
     public final String CALLBACK_PERIOD;
     public final String ACCELRATION;
-    public final String INTENT_ACCELERATION_CALLBACK_PERIOD;
     public final String ALL_DATA;
-    public final String INTENT_ALL_DATA_CALLBACK_PERIOD;
     public final String ANGULAR_VELOCITY;
-    public final String INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD;
     public final String MAGNETIC_FIELD;
-    public final String INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD;
     public final String ORIENTATION;
     public final String ORIENTATION_CALCULATION;
-    public final String INTENT_ORIENTATION_CALLBACK_PERIOD;
     public final String QUATERNION;
-    public final String INTENT_QUATERNION_CALLBACK_PERIOD;
     public final String LEDS;
-    public final String INTENT_LEDS;
-    public final String INTENT_ORIENTATION_CALCULATION;
     public final String STATUS_ORIENTATION_CALCULATION;
     public final String STATUS_LED;
-    public final String INTENT_STATUS_LED;
     public final String STATUS_STATUS_LED;
     public final String STATUS_LEDS;
     public final String STATUS_QUATERNION_CALLBACK_PERIOD;
@@ -99,66 +91,48 @@ public class IMUServiceContract extends DeviceServiceContract {
     }
 
     public IMUServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,IMUIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
 
         ACCELRATION = "acceleration";
-        INTENT_ACCELERATION_CALLBACK_PERIOD = INTENT + "/" + ACCELRATION + "/" + CALLBACK_PERIOD;
         STATUS_ACCELERATION_CALLBACK_PERIOD = STATUS + "/" + ACCELRATION + "/" + CALLBACK_PERIOD;
         EVENT_ACCELERATION = EVENT + "/" + ACCELRATION;
 
         ALL_DATA = "allData";
-        INTENT_ALL_DATA_CALLBACK_PERIOD = INTENT + "/" + ALL_DATA + "/" + CALLBACK_PERIOD;
         STATUS_ALL_DATA_CALLBACK_PERIOD = STATUS + "/" + ALL_DATA + "/" + CALLBACK_PERIOD;
         EVENT_ALL_DATA = EVENT + "/" + ALL_DATA;
 
         ANGULAR_VELOCITY = "angularVelocity";
-        INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD = INTENT + "/" + ANGULAR_VELOCITY + "/" + CALLBACK_PERIOD;
         STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD = STATUS + "/" + ANGULAR_VELOCITY + "/" + CALLBACK_PERIOD;
         EVENT_ANGULAR_VELOCITY = EVENT + "/" + ANGULAR_VELOCITY;
 
         MAGNETIC_FIELD = "magneticField";
-        INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD = INTENT + "/" + MAGNETIC_FIELD + "/" + CALLBACK_PERIOD;
         STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD = STATUS + "/" + MAGNETIC_FIELD + "/" + CALLBACK_PERIOD;
         EVENT_MAGNETIC_FIELD = EVENT + "/" + MAGNETIC_FIELD;
 
         ORIENTATION = "orientation";
-        INTENT_ORIENTATION_CALLBACK_PERIOD = INTENT + "/" + ORIENTATION + "/" + CALLBACK_PERIOD;
         STATUS_ORIENTATION_CALLBACK_PERIOD = STATUS + "/" + ORIENTATION + "/" + CALLBACK_PERIOD;
         EVENT_ORIENTATION = EVENT + "/" + ORIENTATION;
 
         QUATERNION = "quaternion";
-        INTENT_QUATERNION_CALLBACK_PERIOD = INTENT + "/" + QUATERNION + "/" + CALLBACK_PERIOD;
         STATUS_QUATERNION_CALLBACK_PERIOD = STATUS + "/" + QUATERNION + "/" + CALLBACK_PERIOD;
         EVENT_QUATERNION = EVENT + "/" + QUATERNION;
 
         LEDS = "LEDs";
-        INTENT_LEDS = INTENT + "/" + LEDS + "/" + CALLBACK_PERIOD;
         STATUS_LEDS = STATUS + "/" + LEDS + "/" + CALLBACK_PERIOD;
 
         STATUS_LED = "statusLED";
-        INTENT_STATUS_LED = INTENT + "/" + STATUS_LED + "/" + CALLBACK_PERIOD;
         STATUS_STATUS_LED = STATUS + "/" + STATUS_LED + "/" + CALLBACK_PERIOD;
 
         ORIENTATION_CALCULATION = ORIENTATION + "/" + "calculation";
-        INTENT_ORIENTATION_CALCULATION = INTENT + "/" + ORIENTATION_CALCULATION;
         STATUS_ORIENTATION_CALCULATION = STATUS + "/" + ORIENTATION_CALCULATION;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_LEDS, "true|false]");
-        descriptions.put(INTENT_STATUS_LED, "true|false]");
-        descriptions.put(INTENT_ORIENTATION_CALCULATION, "true|false]");
-
+        
         descriptions.put(STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
@@ -175,6 +149,5 @@ public class IMUServiceContract extends DeviceServiceContract {
         descriptions.put(EVENT_ORIENTATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     heading: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     roll: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     pitch: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
         descriptions.put(EVENT_QUATERNION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     w: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
         descriptions.put(EVENT_ALL_DATA, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     @acceleration\n     @magneticField\n     @angularVelocity\n     @orientation\n     @quaternion\n     @linearAcceleration\n     @gravityVector\n     @temperature\n     calibrationStatus: [0..255]");
-
     }
 }

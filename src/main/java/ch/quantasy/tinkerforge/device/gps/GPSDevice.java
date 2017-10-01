@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.gps;
 
+import ch.quantasy.gateway.intent.gps.GPSIntent;
+import ch.quantasy.gateway.intent.gps.RestartType;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletGPS;
@@ -54,16 +56,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class GPSDevice extends GenericDevice<BrickletGPS, GPSDeviceCallback> {
-
-    private Long altitudeCallbackPeriod;
-    private Long statusCallbackPeriod;
-    private Long motionCallbackPeriod;
-    private Long dateTimeCallbackPeriod;
-    private Long coordinatesCallbackPeriod;
+public class GPSDevice extends GenericDevice<BrickletGPS, GPSDeviceCallback, GPSIntent> {
 
     public GPSDevice(TinkerforgeStack stack, BrickletGPS device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new GPSIntent());
     }
 
     @Override
@@ -74,22 +70,6 @@ public class GPSDevice extends GenericDevice<BrickletGPS, GPSDeviceCallback> {
         device.addMotionListener(super.getCallback());
         device.addStatusListener(super.getCallback());
 
-        if (altitudeCallbackPeriod != null) {
-            setAltitudeCallbackPeriod(altitudeCallbackPeriod);
-        }
-        if (statusCallbackPeriod != null) {
-            setStatusCallbackPeriod(this.statusCallbackPeriod);
-        }
-        if (motionCallbackPeriod != null) {
-            setMotionCallbackPeriod(motionCallbackPeriod);
-        }
-        if(dateTimeCallbackPeriod!=null){
-            setDateTimeCallbackPeriod(dateTimeCallbackPeriod);
-        }
-        if(coordinatesCallbackPeriod!=null){
-            setCoordinatesCallbackPeriod(coordinatesCallbackPeriod);
-        }
-        
     }
 
     @Override
@@ -101,60 +81,66 @@ public class GPSDevice extends GenericDevice<BrickletGPS, GPSDeviceCallback> {
         device.removeStatusListener(super.getCallback());
     }
 
-    public void restart(RestartType restartType) {
-        try {
-            getDevice().restart(restartType.getValue());
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+    public void update(GPSIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
+        if (!intent.isValid()) {
+            return;
+        }
 
-    public void setAltitudeCallbackPeriod(Long period) {
-        try {
-            getDevice().setAltitudeCallbackPeriod(period);
-            this.altitudeCallbackPeriod = getDevice().getAltitudeCallbackPeriod();
-            super.getCallback().altitudeCallbackPeriodChanged(this.altitudeCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+        if (intent.restart != null) {
+            try {
+                getDevice().restart(intent.restart.getValue());
 
-    public void setCoordinatesCallbackPeriod(Long period) {
-        try {
-            getDevice().setCoordinatesCallbackPeriod(period);
-            this.coordinatesCallbackPeriod = getDevice().getCoordinatesCallbackPeriod();
-            super.getCallback().coordinatesCallbackPeriodChanged(this.coordinatesCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setDateTimeCallbackPeriod(Long period) {
-        try {
-            getDevice().setDateTimeCallbackPeriod(period);
-            this.dateTimeCallbackPeriod = getDevice().getDateTimeCallbackPeriod();
-            super.getCallback().dateTimeCallbackPeriodChanged(this.dateTimeCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.altitudeCallbackPeriod != null) {
+            try {
+                getDevice().setAltitudeCallbackPeriod(intent.altitudeCallbackPeriod);
+                getIntent().altitudeCallbackPeriod = getDevice().getAltitudeCallbackPeriod();
+                super.getCallback().altitudeCallbackPeriodChanged(getIntent().altitudeCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-    
-    public void setMotionCallbackPeriod(Long period) {
-        try {
-            getDevice().setMotionCallbackPeriod(period);
-            this.motionCallbackPeriod = getDevice().getMotionCallbackPeriod();
-            super.getCallback().motionCallbackPeriodChanged(motionCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.coordinatesCallbackPeriod != null) {
+            try {
+                getDevice().setCoordinatesCallbackPeriod(intent.coordinatesCallbackPeriod);
+                getIntent().coordinatesCallbackPeriod = getDevice().getCoordinatesCallbackPeriod();
+                super.getCallback().coordinatesCallbackPeriodChanged(getIntent().coordinatesCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-    public void setStatusCallbackPeriod(Long period) {
-        try {
-            getDevice().setStatusCallbackPeriod(period);
-            this.statusCallbackPeriod = getDevice().getStatusCallbackPeriod();
-            super.getCallback().statusCallbackPeriodChanged(statusCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.dateTimeCallbackPeriod != null) {
+            try {
+                getDevice().setDateTimeCallbackPeriod(intent.dateTimeCallbackPeriod);
+                getIntent().dateTimeCallbackPeriod = getDevice().getDateTimeCallbackPeriod();
+                super.getCallback().dateTimeCallbackPeriodChanged(getIntent().dateTimeCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.motionCallbackPeriod != null) {
+            try {
+                getDevice().setMotionCallbackPeriod(intent.motionCallbackPeriod);
+                getIntent().motionCallbackPeriod = getDevice().getMotionCallbackPeriod();
+                super.getCallback().motionCallbackPeriodChanged(getIntent().motionCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.statusCallbackPeriod != null) {
+            try {
+                getDevice().setStatusCallbackPeriod(intent.statusCallbackPeriod);
+                getIntent().statusCallbackPeriod = getDevice().getStatusCallbackPeriod();
+                super.getCallback().statusCallbackPeriodChanged(getIntent().statusCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(GPSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

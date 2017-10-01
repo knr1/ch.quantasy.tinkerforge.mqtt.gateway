@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.distanceUS;
 
+import ch.quantasy.gateway.intent.distanceUS.DeviceDistanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletDistanceUS;
 
@@ -49,9 +50,13 @@ import com.tinkerforge.BrickletDistanceUS;
  *
  * @author reto
  */
-public interface DistanceUSDeviceCallback extends DeviceCallback, BrickletDistanceUS.DistanceListener,BrickletDistanceUS.DistanceReachedListener {
+public interface DistanceUSDeviceCallback extends DeviceCallback, BrickletDistanceUS.DistanceListener, BrickletDistanceUS.DistanceReachedListener {
+
     public void debouncePeriodChanged(long period);
+
     public void distanceCallbackPeriodChanged(long period);
+
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold);
+
     public void movingAverageChanged(short average);
 }

@@ -43,11 +43,12 @@
 package ch.quantasy.gateway.service.device.gpsv2;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.gpsV2.FixLEDConfig;
+import ch.quantasy.gateway.intent.gpsv2.FixLEDConfig;
+import ch.quantasy.gateway.intent.gpsv2.GPSv2Intent;
 import ch.quantasy.tinkerforge.device.gpsV2.GPSv2Device;
 import ch.quantasy.tinkerforge.device.gpsV2.GPSv2DeviceCallback;
-import ch.quantasy.tinkerforge.device.gpsV2.RestartType;
-import ch.quantasy.tinkerforge.device.gpsV2.StatusLEDConfig;
+import ch.quantasy.gateway.intent.gpsv2.RestartType;
+import ch.quantasy.gateway.intent.gpsv2.StatusLEDConfig;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;
@@ -61,50 +62,6 @@ public class GPSv2Service extends AbstractDeviceService<GPSv2Device, GPSv2Servic
     public GPSv2Service(GPSv2Device device, URI mqttURI) throws MqttException {
 
         super(mqttURI, device, new GPSv2ServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_ALTITUDE_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setAltitudeCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_COORDINATES_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setCoordinatesCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_DATE_TIME_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDateTimeCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_MOTION_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setMotionCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_STATE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setStatusCallbackPeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_RESTART)) {
-            RestartType type = getMapper().readValue(payload, RestartType.class);
-            getDevice().restart(type);
-        }
-        if (string.startsWith(getContract().INTENT_FIX_LED_CONFIG)) {
-            FixLEDConfig config = getMapper().readValue(payload, FixLEDConfig.class);
-            getDevice().setLEDConfig(config);
-        }
-        if (string.startsWith(getContract().INTENT_STATE_LED_CONFIG)) {
-            StatusLEDConfig config = getMapper().readValue(payload, StatusLEDConfig.class);
-            getDevice().setLEDConfig(config);
-        }
-
     }
 
     @Override

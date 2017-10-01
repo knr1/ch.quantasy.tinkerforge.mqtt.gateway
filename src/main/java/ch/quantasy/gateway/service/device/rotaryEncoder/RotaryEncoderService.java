@@ -43,7 +43,8 @@
 package ch.quantasy.gateway.service.device.rotaryEncoder;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.rotaryEncoder.DeviceCountCallbackThreshold;
+import ch.quantasy.gateway.intent.rotaryEncoder.DeviceCountCallbackThreshold;
+import ch.quantasy.gateway.intent.rotaryEncoder.RotaryEncoderIntent;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDeviceCallback;
 
@@ -60,31 +61,7 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
         super(mqttURI, device, new RotaryEncoderServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_COUNT_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setCountCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_COUNT_THRESHOLD)) {
-            DeviceCountCallbackThreshold threshold = getMapper().readValue(payload, DeviceCountCallbackThreshold.class);
-            getDevice().setPositionCallbackThreshold(threshold);
-
-        }
-        if (string.startsWith(getContract().INTENT_COUNT_RESET)) {
-
-            Boolean reset = getMapper().readValue(payload, Boolean.class);
-            getDevice().setCountReset(reset);
-        }
-
-    }
+   
 
     @Override
     public void count(int i) {

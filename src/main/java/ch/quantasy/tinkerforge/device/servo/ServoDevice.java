@@ -42,6 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.servo;
 
+import ch.quantasy.gateway.intent.servo.Servo;
+import ch.quantasy.gateway.intent.servo.PulseWidth;
+import ch.quantasy.gateway.intent.servo.Degree;
+import ch.quantasy.gateway.intent.servo.ServoIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickServo;
@@ -51,9 +55,9 @@ import com.tinkerforge.TimeoutException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,19 +65,17 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class ServoDevice extends GenericDevice<BrickServo, ServoDeviceCallback> {
+public class ServoDevice extends GenericDevice<BrickServo, ServoDeviceCallback, ServoIntent> {
 
     public static final int AMOUNT_OF_SERVOS = 7;
     private Map<Integer, Servo> servoMap;
-    private Boolean statusLED;
-    private Integer minimumVoltage;
-    private Integer outputVoltage;
 
     public ServoDevice(TinkerforgeStack stack, BrickServo device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
-        servoMap = new TreeMap<>();
-        for (int i = 0; i < AMOUNT_OF_SERVOS; i++) {
-            servoMap.put(i, new Servo(i));
+        super(stack, device, new ServoIntent());
+        getIntent().servos = new HashSet<>();
+        for (int i = 0; i < 7; i++) {
+            Servo servo = new Servo(i);
+            servoMap.put(i, servo);
         }
     }
 
@@ -85,25 +87,6 @@ public class ServoDevice extends GenericDevice<BrickServo, ServoDeviceCallback> 
             device.addVelocityReachedListener(super.getCallback());
             device.enablePositionReachedCallback();
             device.enableVelocityReachedCallback();
-            if (servoMap != null) {
-                Collection<Servo> servos = servoMap.values();
-                setAcceleration(servos);
-                setVelocity(servos);
-                setPeriod(servos);
-                setPosition(servos);
-                setDegree(servos);
-                setPulseWidth(servos);
-                setEnabled(servos);
-            }
-            if (statusLED != null) {
-                setStatusLED(statusLED);
-            }
-            if (minimumVoltage != null) {
-                setMinimumVoltage(minimumVoltage);
-            }
-            if (outputVoltage != null) {
-                setOutputVoltage(outputVoltage);
-            }
         } catch (TimeoutException | NotConnectedException ex) {
             Logger.getLogger(ServoDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -116,76 +99,67 @@ public class ServoDevice extends GenericDevice<BrickServo, ServoDeviceCallback> 
         device.removeVelocityReachedListener(super.getCallback());
     }
 
-    public void setServos(Servo... servos) {
-
-        List<Servo> deltaList = new ArrayList<>();
-        for (Servo servo : servos) {
-            Servo otherServo = servoMap.get(servo.getId());
-            if (otherServo == null) {
-                continue;
-            }
-            Servo deltaServo = otherServo.update(servo);
-            if (deltaServo == null) {
-                continue;
-            }
-            deltaList.add(deltaServo);
-        }
-        if (deltaList.isEmpty()) {
+    @Override
+    public void update(ServoIntent intent) {
+        if (intent == null) {
             return;
         }
-        setAcceleration(deltaList);
-        setVelocity(deltaList);
-        setPeriod(deltaList);
-        setPosition(deltaList);
-        setDegree(deltaList);
-        setPulseWidth(deltaList);
-        setEnabled(deltaList);
-        getCallback().servosChanged(this.servoMap.values());
-    }
-
-    public void setStatusLED(Boolean statusLED) {
-        try {
-            if (statusLED == null) {
-                return;
-            }
-            if (statusLED) {
-
-                getDevice().enableStatusLED();
-
-            } else {
-                getDevice().disableStatusLED();
-            }
-            this.statusLED = getDevice().isStatusLEDEnabled();
-            getCallback().statusLEDChanged(this.statusLED);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ServoDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
+        if (intent.servos != null) {
+            List<Servo> deltaList = new ArrayList<>();
 
-    public void setMinimumVoltage(Integer voltage) {
-        try {
-            if (voltage == null) {
-                return;
+            for (Servo servo : intent.servos) {
+                deltaList.add(servo.update(servoMap.get(servo.getId())));
             }
-            getDevice().setMinimumVoltage(voltage);
-            this.minimumVoltage = getDevice().getMinimumVoltage();
-            getCallback().minimumVoltageChanged(this.minimumVoltage);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ServoDevice.class.getName()).log(Level.SEVERE, null, ex);
+            if (!deltaList.isEmpty()) {
+                setAcceleration(deltaList);
+                setVelocity(deltaList);
+                setPeriod(deltaList);
+                setPosition(deltaList);
+                setDegree(deltaList);
+                setPulseWidth(deltaList);
+                setEnabled(deltaList);
+                getCallback().servosChanged(this.servoMap.values());
+            }
         }
-    }
+        if (intent.statusLED != null) {
+            try {
 
-    public void setOutputVoltage(Integer voltage) {
-        try {
-            if (voltage == null) {
-                return;
+                if (intent.statusLED) {
+
+                    getDevice().enableStatusLED();
+
+                } else {
+                    getDevice().disableStatusLED();
+                }
+                getIntent().statusLED = getDevice().isStatusLEDEnabled();
+                getCallback().statusLEDChanged(getIntent().statusLED);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ServoDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
-            getDevice().setOutputVoltage(voltage);
-            this.outputVoltage = getDevice().getOutputVoltage();
-            getCallback().outputVoltageChanged(this.outputVoltage);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(ServoDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if (intent.minimumVoltage != null) {
+            try {
+
+                getDevice().setMinimumVoltage(intent.minimumVoltage);
+                getIntent().minimumVoltage = getDevice().getMinimumVoltage();
+                getCallback().minimumVoltageChanged(getIntent().minimumVoltage);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ServoDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.outputVoltage != null) {
+            try {
+                getDevice().setOutputVoltage(intent.outputVoltage);
+                getIntent().outputVoltage = getDevice().getOutputVoltage();
+                getCallback().outputVoltageChanged(getIntent().outputVoltage);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(ServoDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
     private void setAcceleration(Collection<Servo> deltaServos) {

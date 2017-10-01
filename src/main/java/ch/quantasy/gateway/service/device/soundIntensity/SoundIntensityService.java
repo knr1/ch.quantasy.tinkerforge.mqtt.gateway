@@ -43,7 +43,8 @@
 package ch.quantasy.gateway.service.device.soundIntensity;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.soundIntensity.DeviceSoundIntensityCallbackThreshold;
+import ch.quantasy.gateway.intent.soundIntensity.DeviceSoundIntensityCallbackThreshold;
+import ch.quantasy.gateway.intent.soundIntensity.SoundIntensityIntent;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDeviceCallback;
 import java.net.URI;
@@ -60,27 +61,7 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
         super(mqttURI, device, new SoundIntensityServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_SOUND_INTENSITY_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setSoundIntensityCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_SOUND_INTENSITY_THRESHOLD)) {
-
-            DeviceSoundIntensityCallbackThreshold threshold = getMapper().readValue(payload, DeviceSoundIntensityCallbackThreshold.class);
-            getDevice().setSoundIntensityCallbackThreshold(threshold);
-        }
-
-    }
+    
 
     @Override
     public void debouncePeriodChanged(long period) {

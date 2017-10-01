@@ -42,6 +42,12 @@
  */
 package ch.quantasy.tinkerforge.device.voltageCurrent;
 
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceVoltagCallbackThreshold;
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceConfiguration;
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceCalibration;
+import ch.quantasy.gateway.intent.voltageCurrent.DeviceCurrentCallbackThreshold;
+import ch.quantasy.gateway.intent.voltageCurrent.DevicePowerCallbackThreshold;
+import ch.quantasy.gateway.intent.voltageCurrent.VoltageCurrentIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletVoltageCurrent;
@@ -54,20 +60,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class VoltageCurrentDevice extends GenericDevice<BrickletVoltageCurrent, VoltageCurrentDeviceCallback> {
-
-    private DeviceConfiguration configuration;
-    private Long currentCallbackPeriod;
-    private Long debouncePeriod;
-    private DeviceVoltageCurrentCallbackThreshold voltageThreshold;
-    private Long voltageCallbackPeriod;
-    private Long powerCallbackPeriod;
-    private DeviceVoltageCurrentCallbackThreshold powerThreshold;
-    private DeviceVoltageCurrentCallbackThreshold currentThreshold;
-    private DeviceCalibration calibration;
+public class VoltageCurrentDevice extends GenericDevice<BrickletVoltageCurrent, VoltageCurrentDeviceCallback, VoltageCurrentIntent> {
 
     public VoltageCurrentDevice(TinkerforgeStack stack, BrickletVoltageCurrent device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new VoltageCurrentIntent());
     }
 
     @Override
@@ -78,35 +74,6 @@ public class VoltageCurrentDevice extends GenericDevice<BrickletVoltageCurrent, 
         device.addPowerReachedListener(super.getCallback());
         device.addVoltageListener(super.getCallback());
         device.addVoltageReachedListener(super.getCallback());
-        if (calibration != null) {
-            setCalibration(calibration);
-        }
-        if (configuration != null) {
-            setConfiguration(configuration);
-        }
-       
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-         if (currentCallbackPeriod != null) {
-            setCurrentCallbackPeriod(this.currentCallbackPeriod);
-        }
-        if (currentThreshold != null) {
-            setCurrentCallbackThreshold(currentThreshold);
-        }
-        if (voltageCallbackPeriod != null) {
-            setVoltageCallbackPeriod(this.voltageCallbackPeriod);
-        }
-        if (voltageThreshold != null) {
-            setVoltageCallbackThreshold(voltageThreshold);
-        }
-        if (powerCallbackPeriod != null) {
-            setPowerCallbackPeriod(this.powerCallbackPeriod);
-        }
-        if (powerThreshold != null) {
-            setPowerCallbackThreshold(powerThreshold);
-        }
-       
 
     }
 
@@ -120,95 +87,96 @@ public class VoltageCurrentDevice extends GenericDevice<BrickletVoltageCurrent, 
         device.removeVoltageReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(VoltageCurrentIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.currentCallbackPeriod != null) {
+            try {
+                getDevice().setCurrentCallbackPeriod(intent.currentCallbackPeriod);
+                getIntent().currentCallbackPeriod = getDevice().getCurrentCallbackPeriod();
+                super.getCallback().currentCallbackPeriodChanged(getIntent().currentCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.currentCalbackThreshold != null) {
+            try {
+                getDevice().setCurrentCallbackThreshold(intent.currentCalbackThreshold.getOption(), intent.currentCalbackThreshold.getMin(), intent.currentCalbackThreshold.getMax());
+                getIntent().currentCalbackThreshold = new DeviceCurrentCallbackThreshold(getDevice().getCurrentCallbackThreshold());
+                super.getCallback().currentCallbackThresholdChanged(getIntent().currentCalbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.voltageCallbackPeriod != null) {
+            try {
+                getDevice().setVoltageCallbackPeriod(intent.voltageCallbackPeriod);
+                getIntent().voltageCallbackPeriod = getDevice().getVoltageCallbackPeriod();
+                super.getCallback().voltageCallbackPeriodChanged(getIntent().voltageCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.voltageCallbackThreshold != null) {
+            try {
+                getDevice().setVoltageCallbackThreshold(intent.voltageCallbackThreshold.getOption(), intent.voltageCallbackThreshold.getMin(), intent.voltageCallbackThreshold.getMax());
+                getIntent().voltageCallbackThreshold = new DeviceVoltagCallbackThreshold(getDevice().getVoltageCallbackThreshold());
+                super.getCallback().voltageCallbackThresholdChanged(getIntent().voltageCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.powerCallbackPeriod != null) {
+            try {
+                getDevice().setPowerCallbackPeriod(intent.powerCallbackPeriod);
+                getIntent().powerCallbackPeriod = getDevice().getPowerCallbackPeriod();
+                super.getCallback().powerCallbackPeriodChanged(getIntent().powerCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.powerCallbackThreshold != null) {
+            try {
+                getDevice().setPowerCallbackThreshold(intent.powerCallbackThreshold.getOption(), intent.powerCallbackThreshold.getMin(), intent.powerCallbackThreshold.getMax());
+                getIntent().powerCallbackThreshold = new DevicePowerCallbackThreshold(getDevice().getPowerCallbackThreshold());
+                super.getCallback().powerCallbackThresholdChanged(getIntent().powerCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.configuration != null) {
+            try {
+                getDevice().setConfiguration(intent.configuration.getAveraging().getValue(), intent.configuration.getVoltageConversionTime().getValue(), intent.configuration.getCurrentConversionTime().getValue());
+                getIntent().configuration = new DeviceConfiguration(getDevice().getConfiguration());
+                super.getCallback().configurationChanged(getIntent().configuration);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.calibration != null) {
+            try {
+                getDevice().setCalibration(intent.calibration.getGainMultiplier(), intent.calibration.getGainDivisor());
+                getIntent().calibration = new DeviceCalibration(getDevice().getCalibration());
+                super.getCallback().calibrationChanged(getIntent().calibration);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
-    public void setCurrentCallbackPeriod(Long period) {
-        try {
-            getDevice().setCurrentCallbackPeriod(period);
-            this.currentCallbackPeriod = getDevice().getCurrentCallbackPeriod();
-            super.getCallback().currentCallbackPeriodChanged(this.currentCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setCurrentCallbackThreshold(DeviceVoltageCurrentCallbackThreshold threshold) {
-        try {
-            getDevice().setCurrentCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.currentThreshold = new DeviceVoltageCurrentCallbackThreshold(getDevice().getCurrentCallbackThreshold());
-            super.getCallback().currentCallbackThresholdChanged(this.currentThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setVoltageCallbackPeriod(Long period) {
-        try {
-            getDevice().setVoltageCallbackPeriod(period);
-            this.voltageCallbackPeriod = getDevice().getCurrentCallbackPeriod();
-            super.getCallback().voltageCallbackPeriodChanged(this.voltageCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setVoltageCallbackThreshold(DeviceVoltageCurrentCallbackThreshold threshold) {
-        try {
-            getDevice().setVoltageCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.voltageThreshold = new DeviceVoltageCurrentCallbackThreshold(getDevice().getVoltageCallbackThreshold());
-            super.getCallback().voltageCallbackThresholdChanged(this.voltageThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setPowerCallbackPeriod(Long period) {
-        try {
-            getDevice().setPowerCallbackPeriod(period);
-            this.powerCallbackPeriod = getDevice().getPowerCallbackPeriod();
-            super.getCallback().powerCallbackPeriodChanged(this.powerCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setPowerCallbackThreshold(DeviceVoltageCurrentCallbackThreshold threshold) {
-        try {
-            getDevice().setPowerCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.powerThreshold = new DeviceVoltageCurrentCallbackThreshold(getDevice().getPowerCallbackThreshold());
-            super.getCallback().powerCallbackThresholdChanged(this.powerThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setConfiguration(DeviceConfiguration configuration) {
-        try {
-            getDevice().setConfiguration(configuration.getAveraging().getValue(), configuration.getVoltageConversionTime().getValue(), configuration.getCurrentConversionTime().getValue());
-            this.configuration = new DeviceConfiguration(getDevice().getConfiguration());
-            super.getCallback().configurationChanged(this.configuration);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setCalibration(DeviceCalibration calibration) {
-        try {
-            getDevice().setCalibration(calibration.getGainMultiplier(), calibration.getGainDivisor());
-            this.calibration = new DeviceCalibration(getDevice().getCalibration());
-            super.getCallback().calibrationChanged(this.calibration);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(VoltageCurrentDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-  
 }

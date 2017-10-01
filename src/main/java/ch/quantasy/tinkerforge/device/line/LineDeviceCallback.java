@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.line;
 
+import ch.quantasy.gateway.intent.line.DeviceReflectivityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletLine;
 
@@ -50,7 +51,10 @@ import com.tinkerforge.BrickletLine;
  * @author reto
  */
 public interface LineDeviceCallback extends DeviceCallback, BrickletLine.ReflectivityListener, BrickletLine.ReflectivityReachedListener {
+
     public void debouncePeriodChanged(long period);
+
     public void reflectivityCallbackPeriodChanged(long period);
+
     public void reflectivityThresholdChanged(DeviceReflectivityCallbackThreshold threshold);
 }

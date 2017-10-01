@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.loadCell;
 
+import ch.quantasy.gateway.intent.loadCell.DeviceWeightCallbackThreshold;
+import ch.quantasy.gateway.intent.loadCell.DeviceConfiguration;
+import ch.quantasy.gateway.intent.loadCell.LoadCellIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 
@@ -56,43 +59,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class LoadCellDevice extends GenericDevice<BrickletLoadCell, LoadCellDeviceCallback> {
-
-    private DeviceConfiguration configuration;
-    private Long callbackPeriod;
-    private Long debouncePeriod;
-    private DeviceWeightCallbackThreshold weightThreshold;
-    private Short average;
-        private Boolean isStatusLEDEnabled;
-
+public class LoadCellDevice extends GenericDevice<BrickletLoadCell, LoadCellDeviceCallback, LoadCellIntent> {
 
     public LoadCellDevice(TinkerforgeStack stack, BrickletLoadCell device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new LoadCellIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletLoadCell device) {
         device.addWeightListener(super.getCallback());
         device.addWeightReachedListener(super.getCallback());
-        if (average != null) {
-            setMovingAverage(average);
-        }
-        if (configuration != null) {
-            setConfiguration(configuration);
-        }
-        if (callbackPeriod != null) {
-            setWeightCallbackPeriod(this.callbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (weightThreshold != null) {
-            setWeightCallbackThreshold(weightThreshold);
-        }
-        if(isStatusLEDEnabled!=null){
-            setLED(isStatusLEDEnabled);
-        }
-
     }
 
     @Override
@@ -101,87 +77,89 @@ public class LoadCellDevice extends GenericDevice<BrickletLoadCell, LoadCellDevi
         device.removeWeightReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(LoadCellIntent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void setWeightCallbackPeriod(Long period) {
-        try {
-            getDevice().setWeightCallbackPeriod(period);
-            this.callbackPeriod = getDevice().getWeightCallbackPeriod();
-            super.getCallback().weightCallbackPeriodChanged(this.callbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
 
-    public void setWeightCallbackThreshold(DeviceWeightCallbackThreshold threshold) {
-        try {
-            getDevice().setWeightCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.weightThreshold = new DeviceWeightCallbackThreshold(getDevice().getWeightCallbackThreshold());
-            super.getCallback().weightCallbackThresholdChanged(this.weightThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setConfiguration(DeviceConfiguration configuration) {
-        try {
-            getDevice().setConfiguration(configuration.getGain().getValue(), configuration.getRate().getValue());
-            this.configuration = new DeviceConfiguration(getDevice().getConfiguration());
-            super.getCallback().configurationChanged(this.configuration);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setMovingAverage(Short average) {
-        try {
-            getDevice().setMovingAverage(average);
-            this.average = getDevice().getMovingAverage();
-            super.getCallback().movingAverageChanged(this.average);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void tare(Boolean tare) {
-        try {
-            if (!tare) {
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
-            getDevice().tare();
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    public void setLED(Boolean isStatusLEDEnabled) {
-        try {
-            if (isStatusLEDEnabled) {
-                getDevice().ledOn();
-            } else {
-                getDevice().ledOff();
+        if (intent.weightCallbackPeriod != null) {
+            try {
+
+                getDevice().setWeightCallbackPeriod(intent.weightCallbackPeriod);
+                getIntent().weightCallbackPeriod = getDevice().getWeightCallbackPeriod();
+                super.getCallback().weightCallbackPeriodChanged(getIntent().weightCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.isStatusLEDEnabled = getDevice().isLEDOn();
-            super.getCallback().statusLEDChanged(this.isStatusLEDEnabled);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (intent.weightCallbackThreshold != null) {
+            try {
+                getDevice().setWeightCallbackThreshold(intent.weightCallbackThreshold.getOption(), intent.weightCallbackThreshold.getMin(), intent.weightCallbackThreshold.getMax());
+                getIntent().weightCallbackThreshold = new DeviceWeightCallbackThreshold(getDevice().getWeightCallbackThreshold());
+                super.getCallback().weightCallbackThresholdChanged(getIntent().weightCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.configuration != null) {
+            try {
+                getDevice().setConfiguration(intent.configuration.getGain().getValue(), intent.configuration.getRate().getValue());
+                getIntent().configuration = new DeviceConfiguration(getDevice().getConfiguration());
+                super.getCallback().configurationChanged(getIntent().configuration);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.movingAverage != null) {
+            try {
+                getDevice().setMovingAverage(intent.movingAverage);
+                getIntent().movingAverage = getDevice().getMovingAverage();
+                super.getCallback().movingAverageChanged(getIntent().movingAverage);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.tare != null) {
+            try {
+                if (!intent.tare) {
+                }
+                getDevice().tare();
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.statusLED != null) {
+            try {
+                if (intent.statusLED) {
+                    getDevice().ledOn();
+                } else {
+                    getDevice().ledOff();
+                }
+                getIntent().statusLED = getDevice().isLEDOn();
+                super.getCallback().statusLEDChanged(getIntent().statusLED);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.calibrate != null) {
+            try {
+                getDevice().calibrate(intent.calibrate);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-	public void calibrate(long value) {
-		try {
-			getDevice().calibrate(value);
-		}catch(TimeoutException | NotConnectedException ex){
-            Logger.getLogger(LoadCellDevice.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		
-	}
-
 }

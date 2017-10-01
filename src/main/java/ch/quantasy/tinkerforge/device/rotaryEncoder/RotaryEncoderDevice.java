@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.rotaryEncoder;
 
+import ch.quantasy.gateway.intent.rotaryEncoder.DeviceCountCallbackThreshold;
+import ch.quantasy.gateway.intent.rotaryEncoder.RotaryEncoderIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletRotaryEncoder;
@@ -54,14 +56,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class RotaryEncoderDevice extends GenericDevice<BrickletRotaryEncoder, RotaryEncoderDeviceCallback> {
-
-    private Long countCallbackPeriod;
-    private Long debouncePeriod;
-    private DeviceCountCallbackThreshold countThreshold;
+public class RotaryEncoderDevice extends GenericDevice<BrickletRotaryEncoder, RotaryEncoderDeviceCallback, RotaryEncoderIntent> {
 
     public RotaryEncoderDevice(TinkerforgeStack stack, BrickletRotaryEncoder device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new RotaryEncoderIntent());
     }
 
     @Override
@@ -70,17 +68,6 @@ public class RotaryEncoderDevice extends GenericDevice<BrickletRotaryEncoder, Ro
         device.addReleasedListener(super.getCallback());
         device.addCountListener(super.getCallback());
         device.addCountReachedListener(super.getCallback());
-
-        if (countCallbackPeriod != null) {
-            setCountCallbackPeriod(this.countCallbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-
-        if (countThreshold != null) {
-            setPositionCallbackThreshold(countThreshold);
-        }
     }
 
     @Override
@@ -91,44 +78,53 @@ public class RotaryEncoderDevice extends GenericDevice<BrickletRotaryEncoder, Ro
         device.removeCountReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RotaryEncoderDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(RotaryEncoderIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RotaryEncoderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.countCallbackPeriod != null) {
+            try {
+                getDevice().setCountCallbackPeriod(intent.countCallbackPeriod);
+                getIntent().countCallbackPeriod = getDevice().getCountCallbackPeriod();
+                super.getCallback().countCallbackPeriodChanged(getIntent().countCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RotaryEncoderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.countThreshold != null) {
+            try {
+                getDevice().setCountCallbackThreshold(intent.countThreshold.getOption(), intent.countThreshold.getMin(), intent.countThreshold.getMax());
+                getIntent().countThreshold = new DeviceCountCallbackThreshold(getDevice().getCountCallbackThreshold());
+                super.getCallback().countCallbackThresholdChanged(getIntent().countThreshold);
+
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(RotaryEncoderDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.countReset != null) {
+            if (intent.countReset == true) {
+
+                try {
+                    long edgeCount = getDevice().getCount(intent.countReset);
+                    super.getCallback().countReset(edgeCount);
+                } catch (TimeoutException | NotConnectedException ex) {
+                    Logger.getLogger(RotaryEncoderDevice.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
-
-    public void setCountCallbackPeriod(Long period) {
-        try {
-            getDevice().setCountCallbackPeriod(period);
-            this.countCallbackPeriod = getDevice().getCountCallbackPeriod();
-            super.getCallback().countCallbackPeriodChanged(this.countCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RotaryEncoderDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setPositionCallbackThreshold(DeviceCountCallbackThreshold threshold) {
-        try {
-            getDevice().setCountCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.countThreshold = new DeviceCountCallbackThreshold(getDevice().getCountCallbackThreshold());
-            super.getCallback().countCallbackThresholdChanged(this.countThreshold);
-
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RotaryEncoderDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setCountReset(boolean reset) {
-        try {
-            long edgeCount = getDevice().getCount(reset);
-            super.getCallback().countReset(edgeCount);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(RotaryEncoderDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-   
 }

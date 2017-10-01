@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.dualButton;
 
+import ch.quantasy.gateway.intent.dualButton.DeviceLEDState;
+import ch.quantasy.gateway.intent.dualButton.DeviceSelectedLEDStateParameters;
+import ch.quantasy.gateway.intent.dualButton.DualButtonIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDualButton;
@@ -55,21 +58,15 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class DualButtonDevice extends GenericDevice<BrickletDualButton, DualButtonDeviceCallback> {
-
-    private DeviceLEDState LEDState;
+public class DualButtonDevice extends GenericDevice<BrickletDualButton, DualButtonDeviceCallback, DualButtonIntent> {
 
     public DualButtonDevice(TinkerforgeStack stack, BrickletDualButton device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new DualButtonIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletDualButton device) {
         device.addStateChangedListener(super.getCallback());
-        if (LEDState != null) {
-            setLEDState(LEDState);
-        }
-
     }
 
     @Override
@@ -77,24 +74,33 @@ public class DualButtonDevice extends GenericDevice<BrickletDualButton, DualButt
         device.removeStateChangedListener(super.getCallback());
     }
 
-    public void setLEDState(DeviceLEDState ledState) {
-        try {
-            getDevice().setLEDState(ledState.led1.getValue(), ledState.led2.getValue());
-            this.LEDState = new DeviceLEDState(getDevice().getLEDState());
-            super.getCallback().ledStateChanged(this.LEDState);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DualButtonDevice.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(DualButtonIntent intent) {
+        if (intent == null) {
+            return;
+        }
+        if (!intent.isValid()) {
+            return;
+        }
+        if (intent.ledState != null) {
+            try {
+                getDevice().setLEDState(intent.ledState.getLed1().getValue(), intent.ledState.getLed2().getValue());
+                getIntent().ledState = new DeviceLEDState(getDevice().getLEDState());
+                super.getCallback().ledStateChanged(getIntent().ledState);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DualButtonDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.selectedLEDStates != null) {
+            try {
+                for (DeviceSelectedLEDStateParameters selectedLEDState : intent.selectedLEDStates) {
+                    getDevice().setSelectedLEDState(selectedLEDState.getLed(), selectedLEDState.getState().getValue());
+                }
+                getIntent().ledState = new DeviceLEDState(getDevice().getLEDState());
+                super.getCallback().ledStateChanged(getIntent().ledState);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DualButtonDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
-    public void setSelectedLEDState(DeviceSelectedLEDStateParameters parameters) {
-        try {
-            getDevice().setSelectedLEDState(parameters.getLed(), parameters.getState().getValue());
-            this.LEDState = new DeviceLEDState(getDevice().getLEDState());
-            super.getCallback().ledStateChanged(this.LEDState);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DualButtonDevice.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

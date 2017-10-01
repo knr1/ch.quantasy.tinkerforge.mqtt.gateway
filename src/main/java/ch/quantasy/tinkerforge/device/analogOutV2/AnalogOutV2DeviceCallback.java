@@ -42,7 +42,6 @@
  */
 package ch.quantasy.tinkerforge.device.analogOutV2;
 
-
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 
 /**
@@ -50,5 +49,6 @@ import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
  * @author reto
  */
 public interface AnalogOutV2DeviceCallback extends DeviceCallback {
+
     public void outputVoltageChanged(Integer voltage);
 }

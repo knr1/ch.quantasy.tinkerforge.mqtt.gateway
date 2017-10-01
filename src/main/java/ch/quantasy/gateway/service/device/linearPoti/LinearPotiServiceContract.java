@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.linearPoti;
 
+import ch.quantasy.gateway.intent.linearPoti.LinearPotiIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
@@ -64,24 +65,16 @@ public class LinearPotiServiceContract extends DeviceServiceContract {
     public final String STATUS_ANALOG_VALUE_CALLBACK_PERIOD;
     public final String EVENT_ANALOG_VALUE;
     public final String EVENT_ANALOG_VALUE_REACHED;
-    private final String INTENT_ANALOG_VALUE;
-    public final String INTENT_ANALOG_VALUE_THRESHOLD;
-    public final String INTENT_ANALOG_VALUE_CALLBACK_PERIOD;
-
+  
     public final String POSITION;
     public final String STATUS_POSITION;
     public final String STATUS_POSITION_THRESHOLD;
     public final String STATUS_POSITION_CALLBACK_PERIOD;
     public final String EVENT_POSITION;
     public final String EVENT_POSITION_REACHED;
-    private final String INTENT_POSITION;
-    public final String INTENT_POSITION_THRESHOLD;
-    public final String INTENT_POSITION_CALLBACK_PERIOD;
-
+ 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public LinearPotiServiceContract(LinearPotiDevice device) {
@@ -93,7 +86,7 @@ public class LinearPotiServiceContract extends DeviceServiceContract {
     }
 
     public LinearPotiServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,LinearPotiIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -106,34 +99,21 @@ public class LinearPotiServiceContract extends DeviceServiceContract {
         STATUS_ANALOG_VALUE_CALLBACK_PERIOD = STATUS_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
         EVENT_ANALOG_VALUE = EVENT + "/" + ANALOG_VALUE;
         EVENT_ANALOG_VALUE_REACHED = EVENT_ANALOG_VALUE + "/" + REACHED;
-        INTENT_ANALOG_VALUE = INTENT + "/" + ANALOG_VALUE;
-        INTENT_ANALOG_VALUE_THRESHOLD = INTENT_ANALOG_VALUE + "/" + THRESHOLD;
-        INTENT_ANALOG_VALUE_CALLBACK_PERIOD = INTENT_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
-
+   
         POSITION = "position";
         STATUS_POSITION = STATUS + "/" + POSITION;
         STATUS_POSITION_THRESHOLD = STATUS_POSITION + "/" + THRESHOLD;
         STATUS_POSITION_CALLBACK_PERIOD = STATUS_POSITION + "/" + CALLBACK_PERIOD;
         EVENT_POSITION = EVENT + "/" + POSITION;
         EVENT_POSITION_REACHED = EVENT_POSITION + "/" + REACHED;
-        INTENT_POSITION = INTENT + "/" + POSITION;
-        INTENT_POSITION_THRESHOLD = INTENT_POSITION + "/" + THRESHOLD;
-        INTENT_POSITION_CALLBACK_PERIOD = INTENT_POSITION + "/" + CALLBACK_PERIOD;
-
+    
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
-    }
+      }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(INTENT_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100]\n max: [0..100]");
         descriptions.put(EVENT_ANALOG_VALUE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(EVENT_POSITION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..100]");
         descriptions.put(EVENT_ANALOG_VALUE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");

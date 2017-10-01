@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.imuV2;
 
+import ch.quantasy.gateway.intent.IMUV2.IMUV2Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickIMUV2;
@@ -55,25 +56,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> {
-
-    private Long accelerationPeriod;
-    private Long allDataPeriod;
-    private Long angularVelocityPeriod;
-    private Long gravityVectorPeriod;
-    private Long linearAccelerationPeriod;
-    private Long magneticFieldPeriod;
-    private Long orientationPeriod;
-    private Long quaternionPeriod;
-    private Long temperaturePeriod;
-    
-    private Short sensorFusionMode;
-
-    private Boolean isStatusLEDEnabled;
-    private Boolean areLEDsEnabled;
+public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback, IMUV2Intent> {
 
     public IMUV2Device(TinkerforgeStack stack, BrickIMUV2 device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new IMUV2Intent());
     }
 
     @Override
@@ -87,43 +73,6 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
         device.addOrientationListener(super.getCallback());
         device.addQuaternionListener(super.getCallback());
         device.addTemperatureListener(super.getCallback());
-
-        if (accelerationPeriod != null) {
-            setAccelerationPeriod(accelerationPeriod);
-        }
-        if (allDataPeriod != null) {
-            setAllDataPeriod(allDataPeriod);
-        }
-        if (angularVelocityPeriod != null) {
-            setAngularVelocityPeriod(angularVelocityPeriod);
-        }
-        if (gravityVectorPeriod != null) {
-            setGravityVectorPeriod(gravityVectorPeriod);
-        }
-        if (linearAccelerationPeriod != null) {
-            setLinearAccelerationPeriod(linearAccelerationPeriod);
-        }
-        if (magneticFieldPeriod != null) {
-            setMagneticFieldPeriod(magneticFieldPeriod);
-        }
-        if (orientationPeriod != null) {
-            setOrientationPeriod(orientationPeriod);
-        }
-        if (quaternionPeriod != null) {
-            setQuaternionPeriod(quaternionPeriod);
-        }
-        if (temperaturePeriod != null) {
-            setTemperaturePeriod(temperaturePeriod);
-        }
-        if(isStatusLEDEnabled!=null){
-            setStatusLED(isStatusLEDEnabled);
-        }
-        if(areLEDsEnabled!=null){
-            setLEDs(areLEDsEnabled);
-        }
-        if(sensorFusionMode!=null){
-            setSensorFusionMode(sensorFusionMode);
-        }
     }
 
     @Override
@@ -138,130 +87,137 @@ public class IMUV2Device extends GenericDevice<BrickIMUV2, IMUV2DeviceCallback> 
         device.removeTemperatureListener(super.getCallback());
     }
 
-    public void setAccelerationPeriod(Long accelerationPeriod) {
-        try {
-            getDevice().setAccelerationPeriod(accelerationPeriod);
-            this.accelerationPeriod = getDevice().getAccelerationPeriod();
-            super.getCallback().accelerationPeriodChanged(this.accelerationPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(IMUV2Intent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void setAllDataPeriod(Long allDataPeriod) {
-        try {
-            getDevice().setAllDataPeriod(allDataPeriod);
-            this.allDataPeriod = getDevice().getAllDataPeriod();
-            super.getCallback().allDataPeriodChanged(this.accelerationPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
-
-    public void setAngularVelocityPeriod(Long angularVelocityPeriod) {
-        try {
-            getDevice().setAngularVelocityPeriod(angularVelocityPeriod);
-            this.angularVelocityPeriod = getDevice().getAngularVelocityPeriod();
-            super.getCallback().angularVelocityPeriodChanged(this.angularVelocityPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setGravityVectorPeriod(Long gravityVectorPeriod) {
-        try {
-            getDevice().setGravityVectorPeriod(gravityVectorPeriod);
-            this.gravityVectorPeriod = getDevice().getGravityVectorPeriod();
-            super.getCallback().gravityVectorPeriodChanged(this.gravityVectorPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setLinearAccelerationPeriod(Long linearAccelerationPeriod) {
-        try {
-            getDevice().setLinearAccelerationPeriod(linearAccelerationPeriod);
-            this.linearAccelerationPeriod = getDevice().getLinearAccelerationPeriod();
-            super.getCallback().linearAccelerationPeriodChanged(this.linearAccelerationPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setMagneticFieldPeriod(Long magneticFieldPeriod) {
-        try {
-            getDevice().setMagneticFieldPeriod(magneticFieldPeriod);
-            this.magneticFieldPeriod = getDevice().getMagneticFieldPeriod();
-            super.getCallback().magneticFieldPeriodChanged(this.magneticFieldPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setOrientationPeriod(Long orientationPeriod) {
-        try {
-            getDevice().setOrientationPeriod(orientationPeriod);
-            this.orientationPeriod = getDevice().getOrientationPeriod();
-            super.getCallback().orientationPeriodChanged(this.orientationPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setQuaternionPeriod(Long quaternionPeriod) {
-        try {
-            getDevice().setQuaternionPeriod(quaternionPeriod);
-            this.quaternionPeriod = getDevice().getQuaternionPeriod();
-            super.getCallback().quaternionPeriodChanged(this.quaternionPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setTemperaturePeriod(Long temperaturePeriod) {
-        try {
-            getDevice().setTemperaturePeriod(temperaturePeriod);
-            this.temperaturePeriod = getDevice().getTemperaturePeriod();
-            super.getCallback().temperaturePeriodChanged(this.temperaturePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setStatusLED(Boolean isStatusLEDEnabled) {
-        try {
-            if (isStatusLEDEnabled) {
-                getDevice().enableStatusLED();
-            } else {
-                getDevice().disableStatusLED();
+        if (intent.accelerationCallbackPeriod != null) {
+            try {
+                getDevice().setAccelerationPeriod(intent.accelerationCallbackPeriod);
+                getIntent().accelerationCallbackPeriod = getDevice().getAccelerationPeriod();
+                super.getCallback().accelerationPeriodChanged(getIntent().accelerationCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.isStatusLEDEnabled = getDevice().isStatusLEDEnabled();
-            super.getCallback().statusLEDChanged(this.isStatusLEDEnabled);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
 
-    public void setSensorFusionMode(Short sensorFusionMode) {
-        try {
-            this.getDevice().setSensorFusionMode(sensorFusionMode);
-            this.sensorFusionMode= getDevice().getSensorFusionMode();
-            super.getCallback().sensorFusionModeChanged(this.sensorFusionMode);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public void setLEDs(Boolean areLEDsEnabled) {
-        try {
-            if (areLEDsEnabled) {
-                getDevice().ledsOn();;
-            } else {
-                getDevice().ledsOff();
+        if (intent.allDataCallbackPeriod != null) {
+            try {
+                getDevice().setAllDataPeriod(intent.allDataCallbackPeriod);
+                getIntent().allDataCallbackPeriod = getDevice().getAllDataPeriod();
+                super.getCallback().allDataPeriodChanged(getIntent().allDataCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.areLEDsEnabled = getDevice().areLedsOn();
-            super.getCallback().LEDsChanged(this.areLEDsEnabled);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (intent.angularVelocityCallbackPeriod != null) {
+            try {
+                getDevice().setAngularVelocityPeriod(intent.angularVelocityCallbackPeriod);
+                getIntent().angularVelocityCallbackPeriod = getDevice().getAngularVelocityPeriod();
+                super.getCallback().angularVelocityPeriodChanged(getIntent().angularVelocityCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.gravityVectorCallbackPeriod != null) {
+            try {
+                getDevice().setGravityVectorPeriod(intent.gravityVectorCallbackPeriod);
+                getIntent().gravityVectorCallbackPeriod = getDevice().getGravityVectorPeriod();
+                super.getCallback().gravityVectorPeriodChanged(getIntent().gravityVectorCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.linearAccelerationCallbackPeriod != null) {
+            try {
+                getDevice().setLinearAccelerationPeriod(intent.linearAccelerationCallbackPeriod);
+                getIntent().linearAccelerationCallbackPeriod = getDevice().getLinearAccelerationPeriod();
+                super.getCallback().linearAccelerationPeriodChanged(getIntent().linearAccelerationCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.magneticFieldCallbackPeriod != null) {
+            try {
+                getDevice().setMagneticFieldPeriod(intent.magneticFieldCallbackPeriod);
+                getIntent().magneticFieldCallbackPeriod = getDevice().getMagneticFieldPeriod();
+                super.getCallback().magneticFieldPeriodChanged(intent.magneticFieldCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.orientationCallbackPeriod != null) {
+            try {
+                getDevice().setOrientationPeriod(intent.orientationCallbackPeriod);
+                getIntent().orientationCallbackPeriod = getDevice().getOrientationPeriod();
+                super.getCallback().orientationPeriodChanged(getIntent().orientationCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.quaternionCallbackPeriod != null) {
+            try {
+                getDevice().setQuaternionPeriod(intent.quaternionCallbackPeriod);
+                getIntent().quaternionCallbackPeriod = getDevice().getQuaternionPeriod();
+                super.getCallback().quaternionPeriodChanged(getIntent().quaternionCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.temperatureCallbackPeriod != null) {
+            try {
+                getDevice().setTemperaturePeriod(intent.temperatureCallbackPeriod);
+                getIntent().temperatureCallbackPeriod = getDevice().getTemperaturePeriod();
+                super.getCallback().temperaturePeriodChanged(getIntent().temperatureCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (intent.statusLED != null) {
+            try {
+                if (intent.statusLED) {
+                    getDevice().enableStatusLED();
+                } else {
+                    getDevice().disableStatusLED();
+                }
+                getIntent().statusLED = getDevice().isStatusLEDEnabled();
+                super.getCallback().statusLEDChanged(getIntent().statusLED);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.sensorFusionMode != null) {
+            try {
+                this.getDevice().setSensorFusionMode(intent.sensorFusionMode);
+                getIntent().sensorFusionMode = getDevice().getSensorFusionMode();
+                super.getCallback().sensorFusionModeChanged(getIntent().sensorFusionMode);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.leds != null) {
+            try {
+                if (intent.leds) {
+                    getDevice().ledsOn();;
+                } else {
+                    getDevice().ledsOff();
+                }
+                getIntent().leds = getDevice().areLedsOn();
+                super.getCallback().LEDsChanged(getIntent().leds);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(IMUV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

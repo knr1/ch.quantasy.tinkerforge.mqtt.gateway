@@ -46,7 +46,8 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDeviceCallback;
-import ch.quantasy.tinkerforge.device.moisture.DeviceMoistureCallbackThreshold;
+import ch.quantasy.gateway.intent.moisture.DeviceMoistureCallbackThreshold;
+import ch.quantasy.gateway.intent.moisture.MoistureIntent;
 import java.net.URI;
 
 /**
@@ -60,28 +61,7 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
 
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_MOISTURE_CALLBACK_PERIOD)) {
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setMoistureCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_MOISTURE_THRESHOLD)) {
-            DeviceMoistureCallbackThreshold threshold = getMapper().readValue(payload, DeviceMoistureCallbackThreshold.class);
-            getDevice().setMoistureCallbackThreshold(threshold);
-        }
-
-        if (string.startsWith(getContract().INTENT_MOVING_AVERAGE)) {
-            Short average = getMapper().readValue(payload, Short.class);
-            getDevice().setMovingAverage(average);
-        }
-    }
+   
 
     @Override
     public void debouncePeriodChanged(long period) {

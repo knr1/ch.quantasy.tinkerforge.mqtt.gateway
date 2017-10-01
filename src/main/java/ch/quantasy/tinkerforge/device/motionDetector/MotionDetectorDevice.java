@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.motionDetector;
 
+import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletMotionDetector;
@@ -52,20 +54,17 @@ import com.tinkerforge.TimeoutException;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class MotionDetectorDevice extends GenericDevice<BrickletMotionDetector, MotionDetectorDeviceCallback> {
-
-    
+public class MotionDetectorDevice extends GenericDevice<BrickletMotionDetector, MotionDetectorDeviceCallback,Intent> {
 
     public MotionDetectorDevice(TinkerforgeStack stack, BrickletMotionDetector device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device,null);
     }
 
     @Override
     protected void addDeviceListeners(BrickletMotionDetector device) {
         device.addDetectionCycleEndedListener(super.getCallback());
         device.addMotionDetectedListener(super.getCallback());
-       
-       
+
     }
 
     @Override
@@ -74,5 +73,9 @@ public class MotionDetectorDevice extends GenericDevice<BrickletMotionDetector, 
         device.removeMotionDetectedListener(super.getCallback());
     }
 
-    
+    @Override
+    public void update(Intent intent) {
+        //Nothing to do!
+    }
+
 }

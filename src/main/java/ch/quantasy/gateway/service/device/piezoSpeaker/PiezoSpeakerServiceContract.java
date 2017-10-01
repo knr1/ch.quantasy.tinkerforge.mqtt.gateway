@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.piezoSpeaker;
 
+import ch.quantasy.gateway.intent.piezoSpeaker.PiezoSpeakerIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
@@ -59,10 +60,7 @@ public class PiezoSpeakerServiceContract extends DeviceServiceContract {
     public final String CALIBRATED;
     public final String STARTED;
     public final String FINISHED;
-    public final String INTENT_BEEP;
-    public final String INTENT_MORSE;
-    public final String INTENT_CALIBRATE;
-    public final String EVENT_CALIBRATED;
+     public final String EVENT_CALIBRATED;
     public final String EVENT_BEEP_STARTED;
     public final String EVENT_BEEP_FINISHED;
     public final String EVENT_MORSE_STARTED;
@@ -77,17 +75,14 @@ public class PiezoSpeakerServiceContract extends DeviceServiceContract {
     }
 
     public PiezoSpeakerServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,PiezoSpeakerIntent.class);
         BEEP = "beep";
         MORSE = "morse";
         CALIBRATE = "calibrate";
         CALIBRATED = "calibrated";
         STARTED = "started";
         FINISHED = "finished";
-        INTENT_BEEP = INTENT + "/" + BEEP;
-        INTENT_MORSE = INTENT + "/" + MORSE;
-        INTENT_CALIBRATE = INTENT + "/" + CALIBRATE;
-        EVENT_CALIBRATED = EVENT + "/" + CALIBRATED;
+       EVENT_CALIBRATED = EVENT + "/" + CALIBRATED;
         EVENT_BEEP_STARTED = EVENT + "/" + STARTED;
         EVENT_BEEP_FINISHED = EVENT + "/" + FINISHED;
         EVENT_MORSE_FINISHED = EVENT + "/" + FINISHED;
@@ -97,9 +92,6 @@ public class PiezoSpeakerServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_BEEP, "duration: [0..4294967295]\n frequency: [585..7100]");
-        descriptions.put(INTENT_MORSE, "string: [.|-| |]_60\n frequency: [585..7100]");
-        descriptions.put(INTENT_CALIBRATE, "[true|false]");
         descriptions.put(EVENT_CALIBRATED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
         descriptions.put(EVENT_BEEP_FINISHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
         descriptions.put(EVENT_BEEP_STARTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");

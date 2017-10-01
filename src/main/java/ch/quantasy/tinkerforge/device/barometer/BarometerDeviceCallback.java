@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.barometer;
 
+import ch.quantasy.gateway.intent.barometer.DeviceAirPressureCallbackThreshold;
+import ch.quantasy.gateway.intent.barometer.DeviceAveraging;
+import ch.quantasy.gateway.intent.barometer.DeviceAltitudeCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletBarometer;
 
@@ -62,7 +65,7 @@ public interface BarometerDeviceCallback extends DeviceCallback, BrickletBaromet
     public void altitudeCallbackThresholdChanged(DeviceAltitudeCallbackThreshold threshold);
 
     public void averagingChanged(DeviceAveraging averaging);
-    
+
     public void referenceAirPressureChanged(Integer referenceAirPressure);
 
 }

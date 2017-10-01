@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.hallEffect;
 
+import ch.quantasy.gateway.intent.hallEffect.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletHallEffect;
-
 
 /**
  *
@@ -52,12 +52,11 @@ import com.tinkerforge.BrickletHallEffect;
  */
 public interface HallEffectDeviceCallback extends DeviceCallback, BrickletHallEffect.EdgeCountListener {
 
-
     public void edgeCountCallbackPeriodChanged(long period);
 
     public void edgeInterruptChanged(long period);
-    
+
     public void edgeCountConfigChanged(DeviceConfiguration configuration);
-    
+
     public void edgeCountReset(long latestEdgeCount);
 }

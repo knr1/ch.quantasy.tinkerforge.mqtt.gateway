@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.tilt;
 
+import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletTilt;
@@ -52,19 +54,16 @@ import com.tinkerforge.TimeoutException;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class TiltDevice extends GenericDevice<BrickletTilt, TiltDeviceCallback> {
-
-    
+public class TiltDevice extends GenericDevice<BrickletTilt, TiltDeviceCallback,Intent> {
 
     public TiltDevice(TinkerforgeStack stack, BrickletTilt device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device,null);
     }
 
     @Override
     protected void addDeviceListeners(BrickletTilt device) {
         device.addTiltStateListener(super.getCallback());
-       
-       
+
     }
 
     @Override
@@ -72,5 +71,9 @@ public class TiltDevice extends GenericDevice<BrickletTilt, TiltDeviceCallback> 
         device.removeTiltStateListener(super.getCallback());
     }
 
-    
+    @Override
+    public void update(Intent intent) {
+        //Nothing to do!
+    }
+
 }

@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.color;
 
+import ch.quantasy.gateway.intent.color.DeviceColorCallbackThreshold;
+import ch.quantasy.gateway.intent.color.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletColor;
 
@@ -60,8 +62,8 @@ public interface ColorDeviceCallback extends DeviceCallback, BrickletColor.Color
     public void colorCallbackThresholdChanged(DeviceColorCallbackThreshold threshold);
 
     public void colorTemperatureCallbackPeriodChanged(long period);
-    
+
     public void configurationChanged(DeviceConfiguration config);
-    
+
     public void lightStatusChanged(boolean isLightOn);
 }

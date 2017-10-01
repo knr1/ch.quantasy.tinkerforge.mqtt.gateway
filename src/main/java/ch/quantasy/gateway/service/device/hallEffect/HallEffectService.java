@@ -43,7 +43,8 @@
 package ch.quantasy.gateway.service.device.hallEffect;
 
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.hallEffect.DeviceConfiguration;
+import ch.quantasy.gateway.intent.hallEffect.DeviceConfiguration;
+import ch.quantasy.gateway.intent.hallEffect.HallEffectIntent;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -56,36 +57,10 @@ import java.net.URI;
 public class HallEffectService extends AbstractDeviceService<HallEffectDevice, HallEffectServiceContract> implements HallEffectDeviceCallback {
 
     public HallEffectService(HallEffectDevice device, URI mqttURI) throws MqttException {
-
         super(mqttURI, device, new HallEffectServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_EDGE_COUNT_INTERRUPT)) {
-
-            Long edges = getMapper().readValue(payload, Long.class);
-            getDevice().setEdgeInterrupt(edges);
-        }
-        if (string.startsWith(getContract().INTENT_EDGE_COUNT_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setEdgeCountCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_EDGE_COUNT_RESET)) {
-
-            Boolean reset = getMapper().readValue(payload, Boolean.class);
-            getDevice().setEdgeCountReset(reset);
-        }
-
-        if (string.startsWith(getContract().INTENT_CONFIGURATION)) {
-
-            DeviceConfiguration configuration = getMapper().readValue(payload, DeviceConfiguration.class);
-            getDevice().setEdgeCountConfig(configuration);
-        }
-    }
+   
 
     @Override
     public void edgeInterruptChanged(long period) {

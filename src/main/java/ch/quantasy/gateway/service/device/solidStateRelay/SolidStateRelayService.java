@@ -42,8 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.solidStateRelay;
 
+import ch.quantasy.gateway.intent.solidState.DeviceMonoflopParameters;
+import ch.quantasy.gateway.intent.solidState.SolidStateRelayIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.tinkerforge.device.solidState.DeviceMonoflopParameters;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDeviceCallback;
 import java.net.URI;
@@ -59,19 +60,7 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
         super(mqttURI, device, new SolidStateRelayServiceContract(device));
     }
 
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_MONOFLOP)) {
-            DeviceMonoflopParameters parameters = getMapper().readValue(payload, DeviceMonoflopParameters.class);
-            getDevice().setMonoflop(parameters);
-        }
-
-        if (string.startsWith(getContract().INTENT_STATE)) {
-            Boolean parameters = getMapper().readValue(payload, Boolean.class);
-            getDevice().setState(parameters);
-        }
-    }
+    
 
     @Override
     public void stateChanged(Boolean state) {

@@ -42,6 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.ambientLightV2;
 
+import ch.quantasy.gateway.intent.ambientLightV2.AmbientLightV2Intent;
+import ch.quantasy.gateway.intent.ambientLightV2.DeviceConfiguration;
+import ch.quantasy.gateway.intent.ambientLightV2.DeviceIlluminanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAmbientLightV2;
@@ -54,34 +57,16 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, AmbientLightV2DeviceCallback> {
-
-    private DeviceConfiguration configuration;
-    private Long callbackPeriod;
-    private Long debouncePeriod;
-    private DeviceIlluminanceCallbackThreshold illuminanceThreshold;
+public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, AmbientLightV2DeviceCallback, AmbientLightV2Intent> {
 
     public AmbientLightV2Device(TinkerforgeStack stack, BrickletAmbientLightV2 device) throws NotConnectedException, TimeoutException {
-        super(stack, device);
+        super(stack, device, new AmbientLightV2Intent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletAmbientLightV2 device) {
         device.addIlluminanceListener(super.getCallback());
         device.addIlluminanceReachedListener(super.getCallback());
-
-        if (configuration != null) {
-            setConfiguration(configuration);
-        }
-        if (callbackPeriod != null) {
-            setIlluminanceCallbackPeriod(this.callbackPeriod);
-        }
-        if (debouncePeriod != null) {
-            setDebouncePeriod(debouncePeriod);
-        }
-        if (illuminanceThreshold != null) {
-            setIlluminanceCallbackThreshold(illuminanceThreshold);
-        }
 
     }
 
@@ -91,43 +76,50 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
         device.removeIlluminanceReachedListener(super.getCallback());
     }
 
-    public void setDebouncePeriod(Long period) {
-        try {
-            getDevice().setDebouncePeriod(period);
-            this.debouncePeriod = getDevice().getDebouncePeriod();
-            super.getCallback().debouncePeriodChanged(this.debouncePeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
+    @Override
+    public void update(AmbientLightV2Intent intent) {
+        if (intent == null) {
+            return;
         }
-    }
-
-    public void setIlluminanceCallbackPeriod(Long period) {
-        try {
-            getDevice().setIlluminanceCallbackPeriod(period);
-            this.callbackPeriod = getDevice().getIlluminanceCallbackPeriod();
-            super.getCallback().illuminanceCallbackPeriodChanged(this.callbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
+        if (!intent.isValid()) {
+            return;
         }
-    }
 
-    public void setIlluminanceCallbackThreshold(DeviceIlluminanceCallbackThreshold threshold) {
-        try {
-            getDevice().setIlluminanceCallbackThreshold(threshold.getOption(), threshold.getMin(), threshold.getMax());
-            this.illuminanceThreshold = new DeviceIlluminanceCallbackThreshold(getDevice().getIlluminanceCallbackThreshold());
-            super.getCallback().illuminanceCallbackThresholdChanged(this.illuminanceThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.debouncePeriod != null) {
+            try {
+                getDevice().setDebouncePeriod(intent.debouncePeriod);
+                getIntent().debouncePeriod = getDevice().getDebouncePeriod();
+                super.getCallback().debouncePeriodChanged(getIntent().debouncePeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
-
-    public void setConfiguration(DeviceConfiguration configuration) {
-        try {
-            getDevice().setConfiguration(configuration.getIlluminanceRange().getValue(), configuration.getIntegrationTime().getValue());
-            this.configuration = new DeviceConfiguration(getDevice().getConfiguration());
-            super.getCallback().configurationChanged(this.configuration);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.illuminanceCallbackPeriod != null) {
+            try {
+                getDevice().setIlluminanceCallbackPeriod(intent.illuminanceCallbackPeriod);
+                getIntent().illuminanceCallbackPeriod = getDevice().getIlluminanceCallbackPeriod();
+                super.getCallback().illuminanceCallbackPeriodChanged(getIntent().illuminanceCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.illuminanceCallbackThreshold != null) {
+            try {
+                getDevice().setIlluminanceCallbackThreshold(intent.illuminanceCallbackThreshold.getOption(), intent.illuminanceCallbackThreshold.getMin(), intent.illuminanceCallbackThreshold.getMax());
+                getIntent().illuminanceCallbackThreshold = new DeviceIlluminanceCallbackThreshold(getDevice().getIlluminanceCallbackThreshold());
+                super.getCallback().illuminanceCallbackThresholdChanged(getIntent().illuminanceCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.configuration != null) {
+            try {
+                getDevice().setConfiguration(intent.configuration.getIlluminanceRange().getValue(), intent.configuration.getIntegrationTime().getValue());
+                getIntent().configuration = new DeviceConfiguration(getDevice().getConfiguration());
+                super.getCallback().configurationChanged(getIntent().configuration);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(AmbientLightV2Device.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

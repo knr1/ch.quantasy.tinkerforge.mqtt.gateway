@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.temperatureIR;
 
+import ch.quantasy.gateway.intent.temperatureIR.TemperatureIRIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
@@ -64,25 +65,17 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
     public final String STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD;
     public final String EVENT_AMBIENT_TEMPERATURE;
     public final String EVENT_AMBIENT_TEMPERATURE_REACHED;
-    public final String INTENT_ANALOG_VALUE;
-    public final String INTENT_AMBIENT_TEMPERATURE_THRESHOLD;
-    public final String INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD;
-
+   
     public final String OBJECT_TEMPERATURE;
     public final String STATUS_OBJECT_TEMPERATURE;
     public final String STATUS_OBJECT_TEMPERATURE_THRESHOLD;
     public final String STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD;
     public final String EVENT_OBJECT_TEMPERATURE;
     public final String EVENT_OBJECT_TEMPERATURE_REACHED;
-    private final String INTENT_OBJECT_TEMPERATURE;
-    public final String INTENT_OBJECT_TEMPERATURE_THRESHOLD;
-    public final String INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD;
-
+   
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public TemperatureIRServiceContract(TemperatureIRDevice device) {
@@ -94,7 +87,7 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
     }
 
     public TemperatureIRServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,TemperatureIRIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -107,35 +100,22 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
         STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD = STATUS_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
         EVENT_AMBIENT_TEMPERATURE = EVENT + "/" + AMBIENT_TEMPERATURE;
         EVENT_AMBIENT_TEMPERATURE_REACHED = EVENT_AMBIENT_TEMPERATURE + "/" + REACHED;
-        INTENT_ANALOG_VALUE = INTENT + "/" + AMBIENT_TEMPERATURE;
-        INTENT_AMBIENT_TEMPERATURE_THRESHOLD = INTENT_ANALOG_VALUE + "/" + THRESHOLD;
-        INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD = INTENT_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
-
+   
         OBJECT_TEMPERATURE = "objectTemperature";
         STATUS_OBJECT_TEMPERATURE = STATUS + "/" + OBJECT_TEMPERATURE;
         STATUS_OBJECT_TEMPERATURE_THRESHOLD = STATUS_OBJECT_TEMPERATURE + "/" + THRESHOLD;
         STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD = STATUS_OBJECT_TEMPERATURE + "/" + CALLBACK_PERIOD;
         EVENT_OBJECT_TEMPERATURE = EVENT + "/" + OBJECT_TEMPERATURE;
         EVENT_OBJECT_TEMPERATURE_REACHED = EVENT_OBJECT_TEMPERATURE + "/" + REACHED;
-        INTENT_OBJECT_TEMPERATURE = INTENT + "/" + OBJECT_TEMPERATURE;
-        INTENT_OBJECT_TEMPERATURE_THRESHOLD = INTENT_OBJECT_TEMPERATURE + "/" + THRESHOLD;
-        INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD = INTENT_OBJECT_TEMPERATURE + "/" + CALLBACK_PERIOD;
-
+   
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_OBJECT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_AMBIENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-400..1250]\n max: [-400..1250]");
-        descriptions.put(INTENT_OBJECT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-700..3800]\n max: [-700..3800]");
         descriptions.put(EVENT_AMBIENT_TEMPERATURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-400..1250]");
         descriptions.put(EVENT_OBJECT_TEMPERATURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-700..3800]");
         descriptions.put(EVENT_AMBIENT_TEMPERATURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-400..1250]");

@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.segment4x7;
 
+import ch.quantasy.gateway.intent.segment4x7.DeviceCounterParameters;
+import ch.quantasy.gateway.intent.segment4x7.DeviceSegments;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletSegmentDisplay4x7;
 
@@ -50,6 +52,8 @@ import com.tinkerforge.BrickletSegmentDisplay4x7;
  * @author reto
  */
 public interface Segment4x7DeviceCallback extends DeviceCallback, BrickletSegmentDisplay4x7.CounterFinishedListener {
+
     public void counterStarted(DeviceCounterParameters counterParameters);
+
     public void segmentsChanged(DeviceSegments segments);
 }

@@ -59,11 +59,6 @@ public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceCo
     }
 
     @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-        //There are no intents that can be handled
-    }
-
-    @Override
     public void tiltState(short s) {
         publishEvent(getContract().EVENT_TILT_STATE, s);
     }

@@ -42,10 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.co2;
 
+import ch.quantasy.gateway.intent.co2.CO2Intent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
 import ch.quantasy.tinkerforge.device.co2.CO2DeviceCallback;
-import ch.quantasy.tinkerforge.device.co2.DeviceCO2ConcentrationCallbackThreshold;
+import ch.quantasy.gateway.intent.co2.DeviceCO2ConcentrationCallbackThreshold;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -57,28 +58,6 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
 
     public CO2Service(CO2Device device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new CO2ServiceContract(device));
-    }
-
-    @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-
-        if (string.startsWith(getContract().INTENT_DEBOUNCE_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setDebouncePeriod(period);
-        }
-        if (string.startsWith(getContract().INTENT_CO2_CONCENTRATION_CALLBACK_PERIOD)) {
-
-            Long period = getMapper().readValue(payload, Long.class);
-            getDevice().setCO2ConcentrationCallbackPeriod(period);
-        }
-
-        if (string.startsWith(getContract().INTENT_CO2_CONCENTRATION_THRESHOLD)) {
-
-            DeviceCO2ConcentrationCallbackThreshold threshold = getMapper().readValue(payload, DeviceCO2ConcentrationCallbackThreshold.class);
-            getDevice().setCO2ConcentrationCallbackThreshold(threshold);
-        }
-
     }
 
     @Override

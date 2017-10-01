@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.analogInV2;
 
+import ch.quantasy.gateway.intent.analogInV2.AnalogInV2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
@@ -64,9 +65,6 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
     public final String STATUS_ANALOG_VALUE_CALLBACK_PERIOD;
     public final String EVENT_ANALOG_VALUE;
     public final String EVENT_ANALOG_VALUE_REACHED;
-    private final String INTENT_ANALOG_VALUE;
-    public final String INTENT_ANALOG_VALUE_THRESHOLD;
-    public final String INTENT_ANALOG_VALUE_CALLBACK_PERIOD;
 
     public final String VOLTAGE;
     public final String STATUS_VOLTAGE;
@@ -74,21 +72,15 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
     public final String STATUS_VOLTAGE_CALLBACK_PERIOD;
     public final String EVENT_VOLTAGE;
     public final String EVENT_VOLTAGE_REACHED;
-    private final String INTENT_ALTITUDE;
-    public final String INTENT_VOLTAGE_THRESHOLD;
-    public final String INTENT_VOLTAGE_CALLBACK_PERIOD;
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
-    public final String STATUS_DEBOUNCE_PERIOD;
+      public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String MOVING_AVERAGE;
     public final String STATUS_MOVING_AVERAGE;
-    public final String INTENT_MOVING_AVERAGE;
-
+  
     public AnalogInV2ServiceContract(AnalogInV2Device device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -98,7 +90,7 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
     }
 
     public AnalogInV2ServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,AnalogInV2Intent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -111,42 +103,28 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
         STATUS_ANALOG_VALUE_CALLBACK_PERIOD = STATUS_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
         EVENT_ANALOG_VALUE = EVENT + "/" + ANALOG_VALUE;
         EVENT_ANALOG_VALUE_REACHED = EVENT_ANALOG_VALUE + "/" + REACHED;
-        INTENT_ANALOG_VALUE = INTENT + "/" + ANALOG_VALUE;
-        INTENT_ANALOG_VALUE_THRESHOLD = INTENT_ANALOG_VALUE + "/" + THRESHOLD;
-        INTENT_ANALOG_VALUE_CALLBACK_PERIOD = INTENT_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
-
+     
+        
         VOLTAGE = "voltage";
         STATUS_VOLTAGE = STATUS + "/" + VOLTAGE;
         STATUS_VOLTAGE_THRESHOLD = STATUS_VOLTAGE + "/" + THRESHOLD;
         STATUS_VOLTAGE_CALLBACK_PERIOD = STATUS_VOLTAGE + "/" + CALLBACK_PERIOD;
         EVENT_VOLTAGE = EVENT + "/" + VOLTAGE;
         EVENT_VOLTAGE_REACHED = EVENT_VOLTAGE + "/" + REACHED;
-        INTENT_ALTITUDE = INTENT + "/" + VOLTAGE;
-        INTENT_VOLTAGE_THRESHOLD = INTENT_ALTITUDE + "/" + THRESHOLD;
-        INTENT_VOLTAGE_CALLBACK_PERIOD = INTENT_ALTITUDE + "/" + CALLBACK_PERIOD;
-
+      
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
-
+     
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-        INTENT_MOVING_AVERAGE = INTENT + "/" + MOVING_AVERAGE;
-
+     
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(INTENT_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..42000]\n max: [0..42000]");
-        descriptions.put(INTENT_MOVING_AVERAGE, "[1..50]");
-
+     
         descriptions.put(EVENT_ANALOG_VALUE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]\n");
         descriptions.put(EVENT_VOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
         descriptions.put(EVENT_ANALOG_VALUE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]\n");

@@ -65,7 +65,7 @@ public class TiltServiceContract extends DeviceServiceContract {
     }
 
     public TiltServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,null);
 
         TILT_STATE = "tiltState";
         EVENT_TILT_STATE = EVENT + "/" + TILT_STATE;

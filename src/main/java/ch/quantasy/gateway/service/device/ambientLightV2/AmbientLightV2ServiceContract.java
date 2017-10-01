@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.ambientLightV2;
 
+import ch.quantasy.gateway.intent.ambientLightV2.AmbientLightV2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
@@ -64,21 +65,16 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
     public final String STATUS_ILLUMINANCE_CALLBACK_PERIOD;
     public final String EVENT_IllUMINANCE;
     public final String EVENT_ILLUMINANCE_REACHED;
-    private final String INTENT_ILLUMINANCE;
-    public final String INTENT_ILLUMINANCE_THRESHOLD;
-    public final String INTENT_ILLUMINANCE_CALLBACK_PERIOD;
-
+ 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
     private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String CONFIGURATION;
     public final String STATUS_CONFIGURATION;
-    public final String INTENT_CONFIGURATION;
-
+  
     public AmbientLightV2ServiceContract(AmbientLightV2Device device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -88,7 +84,7 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
     }
 
     public AmbientLightV2ServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,AmbientLightV2Intent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -102,30 +98,21 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
         STATUS_ILLUMINANCE_CALLBACK_PERIOD = STATUS_ILLUMINANCE + "/" + CALLBACK_PERIOD;
         EVENT_IllUMINANCE = EVENT + "/" + ILLUMINANCE;
         EVENT_ILLUMINANCE_REACHED = EVENT_IllUMINANCE + "/" + REACHED;
-        INTENT_ILLUMINANCE = INTENT + "/" + ILLUMINANCE;
-        INTENT_ILLUMINANCE_THRESHOLD = INTENT_ILLUMINANCE + "/" + THRESHOLD;
-        INTENT_ILLUMINANCE_CALLBACK_PERIOD = INTENT_ILLUMINANCE + "/" + CALLBACK_PERIOD;
-
+    
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
         INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
-
+    
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-        INTENT_CONFIGURATION = INTENT + "/" + CONFIGURATION;
-
+    
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
-        descriptions.put(INTENT_CONFIGURATION, "illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]\n integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]\n");
-
+       
         descriptions.put(EVENT_IllUMINANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..100000]\n");
         descriptions.put(EVENT_ILLUMINANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..100000]\n");
         descriptions.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

@@ -110,7 +110,6 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
             if (this.timerFuture != null) {
                 this.timerFuture.cancel(false);
             }
-            this.timerFuture = null;
             this.stack.connected(ipConnection);
         } catch (final Exception ex) {
             // Well, this should not happen?!
@@ -130,10 +129,11 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
 
     public void connect() {
         Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Connection requested...");
-        if (this.timerFuture != null) {
+        if (this.timerFuture != null && !this.timerFuture.isCancelled()) {
+            System.out.println("Timer is still up...");
             return;
         }
-        this.timerService.scheduleAtFixedRate(new Runnable() {
+        timerFuture = this.timerService.scheduleAtFixedRate(new Runnable() {
 
             private int count;
 
@@ -163,7 +163,6 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
                         ipConnection.connect(stack.getStackAddress().getHostName(), stack.getStackAddress().getPort());
                         Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "New IP-Connection connected");
                         timerFuture.cancel(false);
-                        timerFuture=null;
 
                     } catch (final AlreadyConnectedException e) {
                         // Oh, great, that is what we want!
@@ -186,7 +185,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
     }
 
     public long getConnectionTimeoutInMilliseconds() {
-        return 1;//this.connectionTimeoutInMilliseconds;
+        return this.connectionTimeoutInMilliseconds;
     }
 
     public void setConnectionTimeoutInMilliseconds(long connectionTimeoutInMilliseconds) {
@@ -204,7 +203,6 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
     public void disconnect() {
         if (this.timerFuture != null) {
             this.timerFuture.cancel(false);
-            this.timerFuture = null;
         }
         try {
             Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "IP will be disconnected");

@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.dustDetector;
 
+import ch.quantasy.gateway.intent.dustDetector.DeviceDustDensityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletDustDetector;
 
@@ -51,13 +52,12 @@ import com.tinkerforge.BrickletDustDetector;
  */
 public interface DustDetectorDeviceCallback extends DeviceCallback, BrickletDustDetector.DustDensityListener, BrickletDustDetector.DustDensityReachedListener {
 
-   
     public void dustDensityCallbackPeriodChanged(long period);
 
     public void debouncePeriodChanged(long period);
 
     public void dustDensityCallbackThresholdChanged(DeviceDustDensityCallbackThreshold threshold);
-    
+
     public void movingAverageChanged(short movingAverage);
 
-   }
+}

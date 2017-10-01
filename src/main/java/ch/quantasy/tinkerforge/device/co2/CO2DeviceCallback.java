@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.co2;
 
+import ch.quantasy.gateway.intent.co2.DeviceCO2ConcentrationCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletCO2;
 
@@ -51,11 +52,10 @@ import com.tinkerforge.BrickletCO2;
  */
 public interface CO2DeviceCallback extends DeviceCallback, BrickletCO2.CO2ConcentrationListener, BrickletCO2.CO2ConcentrationReachedListener {
 
-   
     public void co2ConcentrationCallbackPeriodChanged(long period);
 
     public void debouncePeriodChanged(long period);
 
     public void co2ConcentrationCallbackThresholdChanged(DeviceCO2ConcentrationCallbackThreshold threshold);
 
-   }
+}

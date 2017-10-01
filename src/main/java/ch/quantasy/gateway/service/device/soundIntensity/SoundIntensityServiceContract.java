@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.soundIntensity;
 
+import ch.quantasy.gateway.intent.soundIntensity.SoundIntensityIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
@@ -64,15 +65,10 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
     public final String STATUS_SOUND_INTENSITY_CALLBACK_PERIOD;
     public final String EVENT_INTENSITY;
     public final String EVENT_INTENSITY_REACHED;
-    private final String INTENT_SOUND_INTENSITY;
-    public final String INTENT_SOUND_INTENSITY_THRESHOLD;
-    public final String INTENT_SOUND_INTENSITY_CALLBACK_PERIOD;
-
+    
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
-    public final String INTENT_DEBOUNCE_PERIOD;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public SoundIntensityServiceContract(SoundIntensityDevice device) {
@@ -84,7 +80,7 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
     }
 
     public SoundIntensityServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,SoundIntensityIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -98,24 +94,16 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
         STATUS_SOUND_INTENSITY_CALLBACK_PERIOD = STATUS_SOUND_INTENSITY + "/" + CALLBACK_PERIOD;
         EVENT_INTENSITY = EVENT + "/" + SOUND_INTENSITY;
         EVENT_INTENSITY_REACHED = EVENT_INTENSITY + "/" + REACHED;
-        INTENT_SOUND_INTENSITY = INTENT + "/" + SOUND_INTENSITY;
-        INTENT_SOUND_INTENSITY_THRESHOLD = INTENT_SOUND_INTENSITY + "/" + THRESHOLD;
-        INTENT_SOUND_INTENSITY_CALLBACK_PERIOD = INTENT_SOUND_INTENSITY + "/" + CALLBACK_PERIOD;
-
+    
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE_PERIOD = INTENT_DEBOUNCE + "/" + PERIOD;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(INTENT_SOUND_INTENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
-
+    
         descriptions.put(EVENT_INTENSITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
         descriptions.put(EVENT_INTENSITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
         descriptions.put(STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

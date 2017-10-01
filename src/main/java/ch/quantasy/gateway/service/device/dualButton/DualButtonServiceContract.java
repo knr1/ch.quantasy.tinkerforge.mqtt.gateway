@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.dualButton;
 
+import ch.quantasy.gateway.intent.dualButton.DualButtonIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
@@ -54,17 +55,14 @@ import java.util.Map;
 public class DualButtonServiceContract extends DeviceServiceContract {
 
     public final String LED_STATE;
-    public final String INTENT_LED_STATE;
     public final String STATUS_LED_STATE;
 
     public final String SELECTED_LED_STATE;
-    public final String INTENT_SELECTED_LED_STATE;
 
     public final String STATE_CHANGED;
     public final String EVENT_STATE_CHANGED;
 
     public final String MONOFLOP;
-    public final String INTENT_MONOFLOP;
 
     public DualButtonServiceContract(DualButtonDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -75,28 +73,23 @@ public class DualButtonServiceContract extends DeviceServiceContract {
     }
 
     public DualButtonServiceContract(String id, String device) {
-        super(id, device);
+        super(id, device,DualButtonIntent.class);
 
         STATE_CHANGED = "stateChanged";
         EVENT_STATE_CHANGED = EVENT + "/" + STATE_CHANGED;
 
         MONOFLOP = "monoflop";
-        INTENT_MONOFLOP = INTENT + "/" + MONOFLOP;
 
         LED_STATE = "LEDState";
-        INTENT_LED_STATE = INTENT + "/" + LED_STATE;
         STATUS_LED_STATE = STATUS + "/" + LED_STATE;
 
         SELECTED_LED_STATE = "selectedLEDState";
-        INTENT_SELECTED_LED_STATE = INTENT + "/" + SELECTED_LED_STATE;
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_LED_STATE, "leftLED: [AutoToggleOn|AutoToggleOff|On|Off]\n rightLED: [AutoToggleOn|AutoToggleOff|On|Off] ");
-        descriptions.put(INTENT_SELECTED_LED_STATE, "led: [AutoToggleOn|AutoToggleOff|On|Off]");
-
+       
         descriptions.put(EVENT_STATE_CHANGED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    led1: [AutoToggleOn|AutoToggleOff|On|Off]\n    led2: [AutoToggleOn|AutoToggleOff|On|Off]\n   switch1: [0|1]\n   switch2: [0|1]");
         descriptions.put(STATUS_LED_STATE, "led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]");
     }

@@ -91,7 +91,7 @@ import ch.quantasy.gateway.service.device.thermoCouple.ThermoCoupleServiceContra
 import ch.quantasy.gateway.service.device.tilt.TiltServiceContract;
 import ch.quantasy.gateway.service.device.uvLight.UVLightServiceContract;
 import ch.quantasy.gateway.service.device.voltageCurrent.VoltageCurrentServiceContract;
-import ch.quantasy.gateway.service.stackManager.ManagerServiceContract;
+import ch.quantasy.gateway.service.stackManager.StackManagerServiceContract;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -105,8 +105,8 @@ public class Descriptions {
 
     public static void main(String[] args) throws Exception {
         SortedSet<String> ContractClasses = new TreeSet<>();
-        ContractClasses.add(ManagerServiceContract.class.getName());
-        ContractClasses.add(IMUServiceContract.class.getName());
+        ContractClasses.add(StackManagerServiceContract.class.getName());
+       ContractClasses.add(IMUServiceContract.class.getName());
         ContractClasses.add(IMUV2ServiceContract.class.getName());
         ContractClasses.add(LCD16x2ServiceContract.class.getName());
         ContractClasses.add(LCD20x4ServiceContract.class.getName());

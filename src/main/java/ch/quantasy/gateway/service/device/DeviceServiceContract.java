@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device;
 
+import ch.quantasy.gateway.intent.Intent;
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
@@ -57,12 +58,12 @@ public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
     public final String STATUS_FIRMWARE;
     public final String STATUS_HARDWARE;
 
-    public DeviceServiceContract(GenericDevice device) {
-        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
+    public DeviceServiceContract(GenericDevice device,Class<? extends Intent> intentClass) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString(),intentClass);
     }
 
-    public DeviceServiceContract(String id, String device) {
-        super(device, id);
+    public DeviceServiceContract(String id, String device,Class<? extends Intent>intentClass) {
+        super(device, id,intentClass);
         STATUS_POSITION = STATUS + "/position";
         STATUS_FIRMWARE = STATUS + "/firmware";
         STATUS_HARDWARE = STATUS + "/hardware";
@@ -70,7 +71,8 @@ public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
 
     @Override
     public void describe(Map<String, String> descriptions) {
-        descriptions.put(STATUS_POSITION, "[0|1|2|3|4|5|6|7|8|a|b|c|d]");
+        super.describe(descriptions);
+        descriptions.put(STATUS_POSITION, "String: <0,1,2,3,4,5,6,7,8,a,b,c,d>");
         descriptions.put(STATUS_FIRMWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
         descriptions.put(STATUS_HARDWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
         descirbeMore(descriptions);

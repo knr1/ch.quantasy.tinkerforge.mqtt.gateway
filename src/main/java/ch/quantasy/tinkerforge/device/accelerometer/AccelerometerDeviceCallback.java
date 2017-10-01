@@ -42,6 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.accelerometer;
 
+import ch.quantasy.gateway.intent.accelerometer.DeviceConfiguration;
+import ch.quantasy.gateway.intent.accelerometer.DeviceAccelerationCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletAccelerometer;
 
@@ -50,8 +52,12 @@ import com.tinkerforge.BrickletAccelerometer;
  * @author reto
  */
 public interface AccelerometerDeviceCallback extends DeviceCallback, BrickletAccelerometer.AccelerationListener, BrickletAccelerometer.AccelerationReachedListener {
+
     public void debouncePeriodChanged(long period);
+
     public void accelerationCallbackPeriodChanged(long period);
+
     public void accelerationCallbackThresholdChanged(DeviceAccelerationCallbackThreshold threshold);
+
     public void configurationChanged(DeviceConfiguration average);
 }
