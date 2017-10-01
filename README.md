@@ -420,7 +420,7 @@ Message: - line: 0
 ### Manager
 This logical service allows a user to add or remove a true tinkerforge stack. As soon as a stack is connected, the service takes care of the 
 connected Bricks and Bricklets.
-
+```
 TF/Manager/U/<id>/E/device/connected
    - timestamp: [0..9223372036854775807]
      value:
