@@ -69,7 +69,6 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String CONFIGURATION;
@@ -103,8 +102,7 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-
+        
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
 

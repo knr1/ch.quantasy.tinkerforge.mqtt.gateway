@@ -74,7 +74,6 @@ public class ColorServiceContract extends DeviceServiceContract {
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
-    private final String INTENT_DEBOUNCE;
     public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String CONFIGURATION;
@@ -115,7 +114,6 @@ public class ColorServiceContract extends DeviceServiceContract {
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
-        INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
 
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;

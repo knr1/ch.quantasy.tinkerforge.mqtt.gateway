@@ -57,17 +57,12 @@ public class RealTimeClockServiceContract extends DeviceServiceContract {
     public final String DATE_TIME;
     public final String OFFSET;
     public final String SET;
-    private final String INTENT_DATE_TIME;
-    public final String INTENT_DATE_TIME_SET;
     public final String STATUS_DATE_TIME;
-    public final String INTENT_OFFSET;
     public final String STATUS_OFFSET;
     public final String ALARM;
-    public final String INTENT_ALARM;
     public final String STATUS_ALARM;
     public final String EVENT_ALARM;
     public final String CALLBACK_PERIOD;
-    public final String INTENT_DATE_TIME_CALLBACK_PERIOD;
     public final String STATUS_DATE_TIME_CALLBACK_PERIOD;
     public final String EVENT_DATE_TIME;
 
@@ -85,20 +80,16 @@ public class RealTimeClockServiceContract extends DeviceServiceContract {
         OFFSET = "offset";
         SET = "set";
 
-        INTENT_DATE_TIME = INTENT + "/" + DATE_TIME;
-        INTENT_DATE_TIME_SET = INTENT_DATE_TIME + "/" + SET;
-        INTENT_OFFSET = INTENT + "/" + OFFSET;
+        
         STATUS_DATE_TIME = STATUS + "/" + DATE_TIME;
         STATUS_OFFSET = STATUS + "/" + OFFSET;
 
         ALARM = "alarm";
         STATUS_ALARM = STATUS + "/" + ALARM;
         EVENT_ALARM = EVENT + "/" + ALARM;
-        INTENT_ALARM = INTENT + "/" + ALARM;
 
         CALLBACK_PERIOD = "callbackPeriod";
         STATUS_DATE_TIME_CALLBACK_PERIOD = STATUS_DATE_TIME + "/" + CALLBACK_PERIOD;
-        INTENT_DATE_TIME_CALLBACK_PERIOD = INTENT_DATE_TIME + "/" + CALLBACK_PERIOD;
 
         EVENT_DATE_TIME = EVENT + "/" + DATE_TIME;
 
@@ -106,14 +97,10 @@ public class RealTimeClockServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(INTENT_DATE_TIME_SET, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
         descriptions.put(STATUS_DATE_TIME, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        descriptions.put(INTENT_OFFSET, "[-128..127]");
         descriptions.put(STATUS_OFFSET, "[-128..127]");
-        descriptions.put(INTENT_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(EVENT_DATE_TIME, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    year: [2000..2099]\n    month: [1..12]\n    day: [1..31]\n    hour: [0..23]\n    minute: [0..59]\n    second: [0..59]\n    centisecond: [0..9]\n    weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        descriptions.put(INTENT_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
         descriptions.put(STATUS_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
         descriptions.put(EVENT_ALARM, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    year: [2000..2099]\n    month: [1..12]\n    day: [1..31]\n    hour: [0..23]\n    minute: [0..59]\n    second: [0..59]\n    centisecond: [0..9]\n    weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
     }

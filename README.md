@@ -397,6 +397,7 @@ Message:
 
 ## API
 
+
 ### IMU
 ```
 TF/IMU/U/<id>/E/acceleration
@@ -2978,35 +2979,6 @@ TF/RealTimeClock/U/<id>/I
    
 ```
 ```
-TF/RealTimeClock/U/<id>/I/alarm
-   month: [-1|1..12]
-    day: [-1|1..31]
-    hour: [-1|0..23]
-    minute: [-1|0..59]
-    second: [-1|0..59]
-    weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]
-    interval:[-1|0..2147483647]
-```
-```
-TF/RealTimeClock/U/<id>/I/dateTime/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/RealTimeClock/U/<id>/I/dateTime/set
-   year: [2000..2099]
-    month: [1..12]
-    day: [1..31]
-    hour: [0..23]
-    minute: [0..59]
-    second: [0..59]
-    centisecond: [0..9]
-    weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]
-```
-```
-TF/RealTimeClock/U/<id>/I/offset
-   [-128..127]
-```
-```
 TF/RealTimeClock/U/<id>/S/alarm
    month: [-1|1..12]
     day: [-1|1..31]
@@ -3816,52 +3788,6 @@ TF/VoltageCurrent/U/<id>/I
      min: Number <from: -5001 to: 5001>
      option: String <[x, o, i, <, >]>
    
-```
-```
-TF/VoltageCurrent/U/<id>/I/calibration
-   gainMultiplier: [1..2147483647]
-    gainDivisor: [1..2147483647]
-```
-```
-TF/VoltageCurrent/U/<id>/I/configuration
-   averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]
-    voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]
-    currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]
-   
-```
-```
-TF/VoltageCurrent/U/<id>/I/current/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/VoltageCurrent/U/<id>/I/current/threshold
-   option: [x|o|i|<|>]
-    min: [0..36000]
-    max: [0..36000]
-```
-```
-TF/VoltageCurrent/U/<id>/I/debounce/period
-   [0..9223372036854775807]
-```
-```
-TF/VoltageCurrent/U/<id>/I/power/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/VoltageCurrent/U/<id>/I/power/threshold
-   option: [x|o|i|<|>]
-    min: [0..720000]
-    max: [0..720000]
-```
-```
-TF/VoltageCurrent/U/<id>/I/voltage/callbackPeriod
-   [0..9223372036854775807]
-```
-```
-TF/VoltageCurrent/U/<id>/I/voltage/threshold
-   option: [x|o|i|<|>]
-    min: [-50001..50001]
-    max: [-50001..50001]
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/calibration
