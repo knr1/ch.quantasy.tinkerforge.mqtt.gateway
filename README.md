@@ -397,50 +397,6 @@ Message:
 
 ## API
 
-
-### Manager                                                                        
-```
-TF/Manager/U/<id>/E/device/connected
-   - timestamp: [0..9223372036854775807]
-     value:
-       hostName: <String>
-       port: [0..4223..65536]
-```
-```
-TF/Manager/U/<id>/E/device/disconnected
-   - timestamp: [0..9223372036854775807]
-     value:
-       hostName: <String>
-       port: [0..4223..65536]
-```
-```
-TF/Manager/U/<id>/E/stack/address/added
-   - timestamp: [0..9223372036854775807]
-     value:
-       hostName: <String>
-       port: [0..4223..65536]
-```
-```
-TF/Manager/U/<id>/E/stack/address/removed
-   - timestamp: [0..9223372036854775807]
-     value:
-       hostName: <String>
-       port: [0..4223..65536]
-```
-```
-TF/Manager/U/<id>/I
-   address: 
-     hostName: String <min: 1 max: 255>
-     hostName: String <regEx: \w+(\.\w+){0,3}>
-     port: Number <from: 1024 to: 65535>
-   connect: Boolean <true,false> 
-   
-```
-```
-TF/Manager/U/<id>/S/stack/address/<address>/connected
-   [true|false]
-```
-
 ### IMU
 ```
 TF/IMU/U/<id>/E/acceleration
@@ -653,9 +609,11 @@ TF/IMUV2/U/<id>/I
    allDataCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    angularVelocityCallbackPeriod: null
    angularVelocityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   gravityVectorCallbackPeriod: null
    gravityVectorCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    leds: null
    leds: Boolean <true,false> 
+   linearAccelerationCallbackPeriod: null
    linearAccelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    magneticFieldCallbackPeriod: null
    magneticFieldCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -665,9 +623,11 @@ TF/IMUV2/U/<id>/I
    orientationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    quaternionCallbackPeriod: null
    quaternionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   sensorFusionMode: null
    sensorFusionMode: String <[0, 1, 2]>
    statusLED: null
    statusLED: Boolean <true,false> 
+   temperatureCallbackPeriod: null
    temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -735,17 +695,22 @@ TF/IMUV2/U/<id>/S/temperature/callbackPeriod
 ### LCD16x2
 ```
 TF/LCD16x2/U/<id>/I
+   backlight: null
    backlight: Boolean <true,false> 
+   clearDisplay: null
    clearDisplay: Boolean <true,false> 
+   customCharacters: null
    customCharacters: Set <min: 0 max: 8>
    customCharacters: 
     index: Number <from: 0 to: 7>
-    pixels: Set <min: 8 max: 8>
+    pixels: Array <min: 8 max: 8>
+   lines: null
    lines: Set <min: 0 max: 32>
    lines: 
     line: Number <from: 0 to: 1>
     position: Number <from: 0 to: 15>
     text: String <min: 0 max: 16>
+   parameters: null
    
 ```
 ```
@@ -790,22 +755,29 @@ TF/LCD20x4/U/<id>/E/button/released
 ```
 ```
 TF/LCD20x4/U/<id>/I
+   backlight: null
    backlight: Boolean <true,false> 
+   clearDisplay: null
    clearDisplay: Boolean <true,false> 
+   customCharacters: null
    customCharacters: Set <min: 0 max: 8>
    customCharacters: 
     index: Number <from: 0 to: 7>
-    pixels: Set <min: 8 max: 8>
+    pixels: Array <min: 8 max: 8>
+   defaultTextCounter: null
    defaultTextCounter: Number <from: -1 to: 2147483647>
+   defaultTexts: null
    defaultTexts: Set <min: 0 max: 4>
    defaultTexts: 
     line: Number <from: 0 to: 3>
     text: String <min: 0 max: 20>
+   lines: null
    lines: Set <min: 0 max: 80>
    lines: 
     line: Number <from: 0 to: 3>
     position: Number <from: 0 to: 19>
     text: String <min: 0 max: 20>
+   parameters: null
    
 ```
 ```
@@ -864,13 +836,17 @@ TF/Accelerometer/U/<id>/E/acceleration/reached
 ```
 ```
 TF/Accelerometer/U/<id>/I
+   accelerationThreshold: null
    accelerationThreshold: 
      option: String <[x, o, i, <, >]>
+   callbackPeriod: null
    callbackPeriod: Number <from: 0 to: 9223372036854775807>
+   configuration: null
    configuration: 
      DataRate: String <OFF,Hz3,Hz6,Hz12,Hz25,Hz50,Hz100,Hz400,Hz800,Hz1600>
      FilterBandwidth: String <Hz800,Hz400,Hz200,Hz50>
      FullScale: String <G2,G4,G6,G8,G16>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -938,13 +914,18 @@ TF/AmbientLight/U/<id>/E/illuminance/reached
 ```
 ```
 TF/AmbientLight/U/<id>/I
+   analogCallbackPeriod: null
    analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueThreshold: null
    analogValueThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   illuminanceCallbackPeriod: null
    illuminanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   illuminanceThreshold: null
    illuminanceThreshold: 
      max: Number <from: 0 to: 9000>
      min: Number <from: 0 to: 9000>
@@ -1003,15 +984,20 @@ TF/AmbientLightV2/U/<id>/E/illuminance/reached
 ```
 ```
 TF/AmbientLightV2/U/<id>/I
+   analogValueThreshold: null
    analogValueThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   configuration: null
    configuration: 
      IlluminanceRange: String <lx_unlimitted,lx_64000,lx_32000,lx_16000,lx_8000,lx_1300,lx_600>
      IntegrationTime: String <ms_50,ms_100,ms_150,ms_200,ms_250,ms_300,ms_350,ms_400>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   illuminanceCallbackPeriod: null
    illuminanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   illuminanceCallbackThreshold: null
    
 ```
 ```
@@ -1074,14 +1060,20 @@ TF/AnalogInV2/U/<id>/E/voltage/reached
 ```
 ```
 TF/AnalogInV2/U/<id>/I
+   analogValueCallbackPeriod: null
    analogValueCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: null
    analogValueCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   movingAverage: null
    movingAverage: Number <from: 0 to: 9223372036854775807>
+   voltageCallbackPeriod: null
    voltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   voltageCallbackThreshold: null
    voltageCallbackThreshold: 
      max: Number <from: 0 to: 42000>
      min: Number <from: 0 to: 42000>
@@ -1132,6 +1124,7 @@ TF/AnalogInV2/U/<id>/S/voltage/threshold
 ### AnalogOutV2
 ```
 TF/AnalogOutV2/U/<id>/I
+   outputVoltage: null
    outputVoltage: Number <from: 0 to: 12000>
    
 ```
@@ -1179,19 +1172,26 @@ TF/Barometer/U/<id>/E/altitude/reached
 ```
 ```
 TF/Barometer/U/<id>/I
+   airPressureCallbackPeriod: null
    airPressureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   airPressureCallbackThreshold: null
    airPressureCallbackThreshold: 
      max: Number <from: 10000 to: 1200000>
      min: Number <from: 10000 to: 1200000>
      option: String <[x, o, i, <, >]>
+   altitudeCallbackPeriod: null
    altitudeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   altitudeCallbackThreshold: null
    altitudeCallbackThreshold: 
      option: String <[x, o, i, <, >]>
+   averaging: null
    averaging: 
      averagingPressure: Number <from: 0 to: 10>
      averagingTemperature: Number <from: 0 to: 255>
      movingAveragePressure: Number <from: 0 to: 25>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   referenceAirPressure: null
    
 ```
 ```
@@ -1256,11 +1256,14 @@ TF/CO2/U/<id>/E/CO2Concentration/reached
 ```
 ```
 TF/CO2/U/<id>/I
+   co2ConcentrationCallbackPeriod: null
    co2ConcentrationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   co2ConcentrationCallbackThreshold: null
    co2ConcentrationCallbackThreshold: 
      max: Number <from: 0 to: 10000>
      min: Number <from: 0 to: 10000>
      option: String <[x, o, i, <, >]>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -1323,7 +1326,9 @@ TF/Color/U/<id>/E/illuminance/reached
 ```
 ```
 TF/Color/U/<id>/I
+   colorCallbackPeriod: null
    colorCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   colorCallbackThreshold: null
    colorCallbackThreshold: 
      maxB: Number <from: 0 to: 65535>
      maxC: Number <from: 0 to: 65535>
@@ -1334,12 +1339,17 @@ TF/Color/U/<id>/I
      minG: Number <from: 0 to: 65535>
      minR: Number <from: 0 to: 65535>
      option: String <[x, o, i, <, >]>
+   colorTemperatureCallbackPeriod: null
    colorTemperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   config: null
    config: 
      Gain: String <x1,x4,x16,Hz60>
      IntegrationTime: String <ms2_4,ms24,ms101,ms154,ms700>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   illuminanceCallbackPeriod: null
    illuminanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   light: null
    light: Boolean <true,false> 
    
 ```
@@ -1406,13 +1416,21 @@ TF/DC/U/<id>/E/velocity/reached
 ```
 ```
 TF/DC/U/<id>/I
+   acceleration: null
    acceleration: Number <from: 0 to: 2147483647>
+   driveMode: null
    driveMode: String <[1, 2]>
+   enable: null
    enable: Boolean <true,false> 
+   fullBrake: null
    fullBrake: Boolean <true,false> 
+   minimumVoltage: null
    minimumVoltage: Number <from: 6000 to: 2147483647>
+   pwmFrequency: null
    pwmFrequency: Number <from: 1 to: 20000>
+   velocity: null
    velocity: Number <from: -32767 to: 32767>
+   velocityPeriod: null
    velocityPeriod: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -1480,13 +1498,18 @@ TF/DistanceIR/U/<id>/E/distance/reached
 ```
 ```
 TF/DistanceIR/U/<id>/I
+   analogCallbackPeriod: null
    analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: null
    analogValueCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackPeriod: null
    distanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackThreshold: null
    distanceCallbackThreshold: 
      max: Number <[from: 0 to: 0,from: 40 to: 300,from: 100 to: 800,from: 200 to: 1500]>
      min: Number <[from: 0 to: 0,from: 40 to: 300,from: 100 to: 800,from: 200 to: 1500]>
@@ -1543,12 +1566,16 @@ TF/DistanceUS/U/<id>/E/distance/reached
 ```
 ```
 TF/DistanceUS/U/<id>/I
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackPeriod: null
    distanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackThreshold: null
    distanceCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   movingAverage: null
    movingAverage: Number <from: 0 to: 100>
    
 ```
@@ -1595,9 +1622,11 @@ TF/DualButton/U/<id>/E/stateChanged
 ```
 ```
 TF/DualButton/U/<id>/I
+   ledState: null
    ledState: 
      LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
      LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+   selectedLEDStates: null
    selectedLEDStates: Set <min: 0 max: 2>
    selectedLEDStates: 
     led: String <[1, 2]>
@@ -1635,12 +1664,16 @@ TF/DustDetector/U/<id>/E/dustDensity/reached
 ```
 ```
 TF/DustDetector/U/<id>/I
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   dustDensityCallbackPeriod: null
    dustDensityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   dustDensityCallbackThreshold: null
    dustDensityCallbackThreshold: 
      max: Number <from: 0 to: 500>
      min: Number <from: 0 to: 500>
      option: String <[x, o, i, <, >]>
+   movingAverage: null
    movingAverage: Number <from: 0 to: 100>
    
 ```
@@ -1720,11 +1753,17 @@ TF/GPS/U/<id>/E/status
 ```
 ```
 TF/GPS/U/<id>/I
+   altitudeCallbackPeriod: null
    altitudeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   coordinatesCallbackPeriod: null
    coordinatesCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   dateTimeCallbackPeriod: null
    dateTimeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   motionCallbackPeriod: null
    motionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   restart: null
    RestartType: String <hot,warm,cold,factoryReset>
+   statusCallbackPeriod: null
    statusCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -1797,13 +1836,21 @@ TF/GPSv2/U/<id>/E/status
 ```
 ```
 TF/GPSv2/U/<id>/I
+   altitudeCallbackPeriod: null
    altitudeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   coordinatesCallbackPeriod: null
    coordinatesCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   dateTimeCallbackPeriod: null
    dateTimeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   fixLEDConfig: null
    FixLEDConfig: String <OFF,ON,HEARTBEAT,FIX,PPS>
+   motionCallbackPeriod: null
    motionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   restart: null
    RestartType: String <hot,warm,cold,factoryReset>
+   statusCallbackPeriod: null
    statusCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   statusLEDConfig: null
    StatusLEDConfig: String <OFF,ON,HEARTBEAT,STATUS>
    
 ```
@@ -1859,8 +1906,12 @@ TF/HallEffect/U/<id>/E/edgeCount/reset
 ```
 ```
 TF/HallEffect/U/<id>/I
+   edgeCountCallbackPeriod: null
    edgeCountCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   edgeCountConfiguration: null
+   edgeCountInterrupt: null
    edgeCountInterrupt: Number <from: 0 to: 9223372036854775807>
+   edgeCountReset: null
    edgeCountReset: Boolean <true,false> 
    
 ```
@@ -2012,16 +2063,22 @@ TF/Joystick/U/<id>/E/released
 ```
 ```
 TF/Joystick/U/<id>/I
+   analogCallbackPeriod: null
    analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: null
    analogValueCallbackThreshold: 
      maxX: Number <from: 0 to: 4095>
      maxY: Number <from: 0 to: 4095>
      minX: Number <from: 0 to: 4095>
      minY: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   calibrate: null
    calibrate: Boolean <true,false> 
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackPeriod: null
    positionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackThreshold: null
    positionCallbackThreshold: 
      maxX: Number <from: -100 to: 100>
      maxY: Number <from: -100 to: 100>
@@ -2094,24 +2151,33 @@ TF/LaserRangeFinder/U/<id>/E/velocity/reached
 ```
 ```
 TF/LaserRangeFinder/U/<id>/I
+   configuration: null
    configuration: 
      aquisitionCount: Number <from: 1 to: 255>
      measurementFrequency: Number <[from: 0 to: 0,from: 10 to: 500]>
      quickTermination: Boolean <true,false> 
      thresholdValue: Number <from: 0 to: 255>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackPeriod: null
    distanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackThreshold: null
    distanceCallbackThreshold: 
      max: Number <from: 0 to: 4000>
      min: Number <from: 0 to: 4000>
      option: String <[x, o, i, <, >]>
+   laserEnabled: null
    laserEnabled: Boolean <true,false> 
+   mode: null
    mode: 
      Mode: String <distance,velocity_12_7,velocity_31_75,velocity_63_5,velocity_127>
+   movingAverage: null
    movingAverage: 
      averagingDistance: Number <from: 0 to: 30>
      averagingVelocity: Number <from: 0 to: 30>
+   velocityCallbackPeriod: null
    velocityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   velocityCallbackThreshold: null
    velocityCallbackThreshold: 
      max: Number <from: -127 to: 127>
      min: Number <from: -127 to: 127>
@@ -2244,8 +2310,11 @@ TF/Line/U/<id>/E/reflectivity/reached
 ```
 ```
 TF/Line/U/<id>/I
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   reflectivityCallbackPeriod: null
    reflectivityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   reflectivityCallbackThreshold: null
    reflectivityCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
@@ -2302,13 +2371,18 @@ TF/LinearPoti/U/<id>/E/position/reached
 ```
 ```
 TF/LinearPoti/U/<id>/I
+   analogCallbackPeriod: null
    analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: null
    analogValueCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackPeriod: null
    positionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackThreshold: null
    positionCallbackThreshold: 
      max: Number <from: 0 to: 100>
      min: Number <from: 0 to: 100>
@@ -2365,14 +2439,22 @@ TF/LoadCell/U/<id>/E/weight/reached
 ```
 ```
 TF/LoadCell/U/<id>/I
+   calibrate: null
+   configuration: null
    configuration: 
      Gain: String <gain128X,gain64X,gain32X>
      Rate: String <rate10Hz,rate80Hz>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   movingAverage: null
    movingAverage: Number <from: 1 to: 40>
+   statusLED: null
    statusLED: Boolean <true,false> 
+   tare: null
    tare: Boolean <true,false> 
+   weightCallbackPeriod: null
    weightCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   weightCallbackThreshold: null
    weightCallbackThreshold: 
      max: Number <from: -50001 to: 50001>
      min: Number <from: -50001 to: 50001>
@@ -2456,20 +2538,28 @@ TF/Master/U/<id>/E/stack/voltage/reached
 ```
 ```
 TF/Master/U/<id>/I
+   currentCallbackPeriod: null
    currentCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   currentCallbackThreshold: null
    currentCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   reset: null
    reset: Boolean <true,false> 
+   stackVoltageCallbackPeriod: null
    stackVoltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   stackVoltageCallbackThreshold: null
    stackVoltageCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   statusLED: null
    statusLED: Boolean <true,false> 
    usbVoltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   usbVoltageCallbackThreshold: null
    usbVoltageCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
@@ -2534,12 +2624,16 @@ TF/Moisture/U/<id>/E/moisture/reached
 ```
 ```
 TF/Moisture/U/<id>/I
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   moistureCallbackPeriod: null
    moistureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   moistureCallbackThreshold: null
    moistureCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   movingAverage: null
    movingAverage: Number <from: 0 to: 100>
    
 ```
@@ -2615,8 +2709,11 @@ TF/MultiTouch/U/<id>/E/touchState
 ```
 ```
 TF/MultiTouch/U/<id>/I
+   electrodeConfig: null
    electrodeConfig: Number <from: 0 to: 8191>
+   recalibration: null
    recalibration: Boolean <true,false> 
+   sensitivity: null
    sensitivity: Number <from: 5 to: 201>
    
 ```
@@ -2673,11 +2770,14 @@ TF/NfcRfid/U/<id>/E/tag/written
 ```
 ```
 TF/NfcRfid/U/<id>/I
+   nfcWrite: null
    nfcWrite: 
      tagID: String <regEx: [0-9A-F]{8}|[0-9A-F]{14}>
      value: Array <min: 0 max: 2147483647>
+   scanningInterval: null
    scanningInterval: Number <from: 0 to: 9223372036854775807>
-   tagID: String <regEx: [0-9A-F]{8}|[0-9A-F]{14}>
+   tagID: null
+   tagID: String <regEx: [0-9A-F]{8-14}>
    
 ```
 ```
@@ -2715,10 +2815,13 @@ TF/PiezoSpeaker/U/<id>/E/started
 ```
 ```
 TF/PiezoSpeaker/U/<id>/I
+   beepParameter: null
    beepParameter: 
      duration: Number <from: 0 to: 2147483647>
      frequency: Number <from: 585 to: 7100>
+   calibrate: null
    calibrate: Boolean <true,false> 
+   morseCodeParameter: null
    morseCodeParameter: 
      frequency: Number <from: 585 to: 7100>
      string: String <regEx: [\.\s-]{1,60}>
@@ -2760,11 +2863,18 @@ TF/PTC/U/<id>/E/temperature/reached
 ```
 ```
 TF/PTC/U/<id>/I
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   noiseReductionFilter: null
    noiseReductionFilter: 
      Filter: String <Hz_50,Hz_60>
+   resistanceCallbackPeriod: null
    resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   resistanceThreshold: null
+   temperatureCallbackPeriod: null
    temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureThreshold: null
+   wireMode: null
    wireMode: String <[2, 3, 4]>
    
 ```
@@ -2842,6 +2952,7 @@ TF/RealTimeClock/U/<id>/E/dateTime
 ```
 ```
 TF/RealTimeClock/U/<id>/I
+   alarmParameter: null
    alarmParameter: 
      day: Number <from: 1 to: 31>
      hour: Number <from: 0 to: 23>
@@ -2850,6 +2961,7 @@ TF/RealTimeClock/U/<id>/I
      month: Number <from: 1 to: 12>
      second: Number <from: 0 to: 59>
      WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday,disabled>
+   dateTimeParameter: null
    dateTimeParameter: 
      centisecond: Number <from: 0 to: 10>
      day: Number <from: 1 to: 31>
@@ -2859,7 +2971,9 @@ TF/RealTimeClock/U/<id>/I
      second: Number <from: 0 to: 59>
      WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
      year: Number <from: 2000 to: 2099>
+   offset: null
    offset: Number <from: -128 to: 127>
+   period: null
    period: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -2951,19 +3065,24 @@ TF/RemoteSwitch/U/<id>/E/switchingDone
 ```
 ```
 TF/RemoteSwitch/U/<id>/I
+   dimSocketBParameters: null
    dimSocketBParameters: 
      address: Number <from: 0 to: 67108863>
      dimValue: Number <from: 0 to: 15>
      unit: Number <from: 0 to: 15>
+   repeats: null
    repeats: Number <from: 0 to: 32767>
+   switchSocketAParameters: null
    switchSocketAParameters: 
      houseCode: Number <from: 0 to: 31>
      receiverCode: Number <from: 0 to: 31>
      SwitchTo: String <switchOn,switchOff>
+   switchSocketBParameters: null
    switchSocketBParameters: 
      address: Number <from: 0 to: 67108863>
      SwitchTo: String <switchOn,switchOff>
      unit: Number <from: 0 to: 15>
+   switchSocketCParameters: null
    switchSocketCParameters: 
      deviceCode: Number <from: 1 to: 16>
      SwitchTo: String <switchOn,switchOff>
@@ -3015,12 +3134,16 @@ TF/RotaryEncoder/U/<id>/E/released
 ```
 ```
 TF/RotaryEncoder/U/<id>/I
+   countCallbackPeriod: null
    countCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   countReset: null
    countReset: Boolean <true,false> 
+   countThreshold: null
    countThreshold: 
      max: Number <from: -150 to: 150>
      min: Number <from: -150 to: 150>
      option: String <[x, o, i, <, >]>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -3078,12 +3201,15 @@ TF/RotaryPoti/U/<id>/E/position/reached
 ```
 ```
 TF/RotaryPoti/U/<id>/I
+   analogValueCallbackPeriod: null
    analogValueCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    analogValueCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackPeriod: null
    positionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    positionCallbackThreshold: 
      max: Number <from: -150 to: 150>
@@ -3150,6 +3276,7 @@ TF/SegmentDisplay4x7/U/<id>/I
    segments: null
    segments: 
      bits: Array <min: 4 max: 4>
+     bits: Number <from: 0 to: 128>
      brightness: Number <from: 0 to: 7>
      colon: Boolean <true,false> 
    
@@ -3195,8 +3322,11 @@ TF/Servo/U/<id>/E/velocityReached
 ```
 ```
 TF/Servo/U/<id>/I
+   minimumVoltage: null
    minimumVoltage: Number <from: 5000 to: 2147483647>
+   outputVoltage: null
    outputVoltage: Number <from: 2000 to: 9000>
+   servos: null
    servos: Set <min: 0 max: 7>
    servos: 
     acceleration: Number <from: 0 to: 65536>
@@ -3211,6 +3341,7 @@ TF/Servo/U/<id>/I
       max: Number <from: -32767 to: 32767>
       min: Number <from: -32767 to: 32767>
     velocity: Number <from: 0 to: 65536>
+   statusLED: null
    statusLED: Boolean <true,false> 
    
 ```
@@ -3265,9 +3396,11 @@ TF/SolidState/U/<id>/E/monoflopDone
 ```
 ```
 TF/SolidState/U/<id>/I
+   monoflopParameters: null
    monoflopParameters: 
      period: Number <from: 0 to: 9223372036854775807>
      state: Boolean <true,false> 
+   state: null
    state: Boolean <true,false> 
    
 ```
@@ -3303,8 +3436,11 @@ TF/SoundIntensity/U/<id>/E/soundIntensity/reached
 ```
 ```
 TF/SoundIntensity/U/<id>/I
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   intensityCallbackPeriod: null
    intensityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   intensityCallbackThreshold: null
    intensityCallbackThreshold: 
      max: Number <from: 0 to: 10000>
      min: Number <from: 0 to: 10000>
@@ -3351,11 +3487,16 @@ TF/Temperature/U/<id>/E/temperature/reached
 ```
 ```
 TF/Temperature/U/<id>/I
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   mode: null
    mode: 
      Mode: String <Fast,Slow>
+   resistanceCallbackPeriod: null
    resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureCallbackPeriod: null
    temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureThreshold: null
    temperatureThreshold: 
      max: Number <from: -2500 to: 8500>
      min: Number <from: -2500 to: 8500>
@@ -3416,13 +3557,18 @@ TF/TemperatureIR/U/<id>/E/objectTemperature/reached
 ```
 ```
 TF/TemperatureIR/U/<id>/I
+   ambientTemperatureCallbackPeriod: null
    ambientTemperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   ambientTemperatureCallbackThreshold: null
    ambientTemperatureCallbackThreshold: 
      max: Number <from: -400 to: 1250>
      min: Number <from: -400 to: 1250>
      option: String <[x, o, i, <, >]>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   objectTemperatureCallbackPeriod: null
    objectTemperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   objectTemperatureCallbackThreshold: null
    objectTemperatureCallbackThreshold: 
      max: Number <from: -700 to: 3800>
      min: Number <from: -700 to: 3800>
@@ -3479,12 +3625,16 @@ TF/ThermoCouple/U/<id>/E/temperature/reached
 ```
 ```
 TF/ThermoCouple/U/<id>/I
+   configuration: null
    configuration: 
      Averaging: String <sample_1,sample_2,sample_4,sample_8,sample_16>
      Filter: String <Hz_50,Hz_60>
      Type: String <B,E,J,K,N,R,S,T,G8,G32>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureCallbackPeriod: null
    temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureCallbackThreshold: null
    temperatureCallbackThreshold: 
      max: Number <from: -21000 to: 180000>
      min: Number <from: -21000 to: 180000>
@@ -3560,9 +3710,13 @@ TF/UVLight/U/<id>/E/uvLight/reached
 ```
 ```
 TF/UVLight/U/<id>/I
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   movingAverage: null
    movingAverage: Number <from: 0 to: 100>
+   uvLightCallbackPeriod: null
    uvLightCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   uvLightCallbackThreshold: null
    uvLightCallbackThreshold: 
      max: Number <from: 0 to: 328000>
      min: Number <from: 0 to: 328000>
@@ -3629,25 +3783,34 @@ TF/VoltageCurrent/U/<id>/E/voltage/reached
 ```
 ```
 TF/VoltageCurrent/U/<id>/I
+   calibration: null
    calibration: 
      gainDivisor: Number <from: 1 to: 2147483647>
      gainMultiplier: Number <from: 1 to: 2147483647>
+   configuration: null
    configuration: 
      Averaging: String <AVERAGING_1,AVERAGING_4,AVERAGING_16,AVERAGING_64,AVERAGING_128,AVERAGING_256,AVERAGING_512,AVERAGING_1024>
      Conversion: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
      Conversion: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
+   currentCalbackThreshold: null
    currentCalbackThreshold: 
      max: Number <from: 0 to: 36000>
      min: Number <from: 0 to: 36000>
      option: String <[x, o, i, <, >]>
+   currentCallbackPeriod: null
    currentCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   powerCallbackPeriod: null
    powerCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   powerCallbackThreshold: null
    powerCallbackThreshold: 
      max: Number <from: 0 to: 720000>
      min: Number <from: 0 to: 720000>
      option: String <[x, o, i, <, >]>
+   voltageCallbackPeriod: null
    voltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   voltageCallbackThreshold: null
    voltageCallbackThreshold: 
      max: Number <from: -5001 to: 5001>
      min: Number <from: -5001 to: 5001>
@@ -3759,3 +3922,45 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
     max: [-50001..50001]
 ```
 
+### Manager
+```
+TF/Manager/U/<id>/E/device/connected
+   - timestamp: [0..9223372036854775807]
+     value:
+       hostName: <String>
+       port: [0..4223..65536]
+```
+```
+TF/Manager/U/<id>/E/device/disconnected
+   - timestamp: [0..9223372036854775807]
+     value:
+       hostName: <String>
+       port: [0..4223..65536]
+```
+```
+TF/Manager/U/<id>/E/stack/address/added
+   - timestamp: [0..9223372036854775807]
+     value:
+       hostName: <String>
+       port: [0..4223..65536]
+```
+```
+TF/Manager/U/<id>/E/stack/address/removed
+   - timestamp: [0..9223372036854775807]
+     value:
+       hostName: <String>
+       port: [0..4223..65536]
+```
+```
+TF/Manager/U/<id>/I
+   address: 
+     hostName: String <min: 1 max: 255>
+     hostName: String <regEx: \w+(\.\w+){0,3}>
+     port: Number <from: 1024 to: 65535>
+   connect: Boolean <true,false> 
+   
+```
+```
+TF/Manager/U/<id>/S/stack/address/<address>/connected
+   [true|false]
+```
