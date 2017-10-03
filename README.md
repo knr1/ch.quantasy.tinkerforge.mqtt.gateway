@@ -377,28 +377,28 @@ TF
            hardware --- 1-2-0
 ```
 All that is left is to write the orchestration/choreography, subscribing to the temperature of red and blue. Then process the values and write them to lcd... as a publish to
+
 ```
 TF/LCD20x4/U/lcd/I
    lines: Set <min: 0 max: 80>
+```
+```
+Topic: TF/LCD20x4/U/lcd/I
 
+Message:
+  lines: 
+    - line: 0
+      position: 0
+      text: "RED: 22°C"
+    - line: 1
+      position: 0
+      text: "BLUE: 18°C"
 ```
-Topic: TF/LCD20x4/U/lcd/I/writeLines
-Message: - line: 0
-           position: 0
-           text: "RED: 22°C"
-         - line: 1
-           position: 0
-           text: "BLUE: 18°C"
-```
+
 ## API
-### Manager
-This logical service allows a user to add or remove a true tinkerforge stack. As soon as a stack is connected, the service takes care of the 
-connected Bricks and Bricklets.
 
-cd /home/reto/NetBeansProjects/ch.quantasy.tinkerforge.mqtt.gateway; JAVA_HOME=/usr/lib/jvm/default /usr/share/netbeans/java/maven/bin/mvn "-Dexec.args=-classpath %classpath ch.quantasy.gateway.service.doc.Descriptions" -Dexec.executable=/usr/lib/jvm/default/bin/java -Dexec.classpathScope=runtime org.codehaus.mojo:exec-maven-plugin:1.2.1:exec
-Running NetBeans Compile On Save execution. Phase execution is skipped and output directories of dependency projects (with Compile on Save turned on) will be used instead of their jar artifacts.
-Scanning for projects...
 
+### Manager                                                                        
 ```
 TF/Manager/U/<id>/E/device/connected
    - timestamp: [0..9223372036854775807]
@@ -738,14 +738,14 @@ TF/LCD16x2/U/<id>/I
    backlight: Boolean <true,false> 
    clearDisplay: Boolean <true,false> 
    customCharacters: Set <min: 0 max: 8>
-     DeviceCustomCharacter: 
-       index: Number <from: 0 to: 7>
-       pixels: Set <min: 8 max: 8>
+   customCharacters: 
+    index: Number <from: 0 to: 7>
+    pixels: Set <min: 8 max: 8>
    lines: Set <min: 0 max: 32>
-     DeviceWriteLine: 
-       line: Number <from: 0 to: 1>
-       position: Number <from: 0 to: 15>
-       text: String <min: 0 max: 16>
+   lines: 
+    line: Number <from: 0 to: 1>
+    position: Number <from: 0 to: 15>
+    text: String <min: 0 max: 16>
    
 ```
 ```
@@ -793,19 +793,19 @@ TF/LCD20x4/U/<id>/I
    backlight: Boolean <true,false> 
    clearDisplay: Boolean <true,false> 
    customCharacters: Set <min: 0 max: 8>
-     DeviceCustomCharacter: 
-       index: Number <from: 0 to: 7>
-       pixels: Set <min: 8 max: 8>
+   customCharacters: 
+    index: Number <from: 0 to: 7>
+    pixels: Set <min: 8 max: 8>
    defaultTextCounter: Number <from: -1 to: 2147483647>
    defaultTexts: Set <min: 0 max: 4>
-     DeviceDefaultText: 
-       line: Number <from: 0 to: 3>
-       text: String <min: 0 max: 20>
+   defaultTexts: 
+    line: Number <from: 0 to: 3>
+    text: String <min: 0 max: 20>
    lines: Set <min: 0 max: 80>
-     DeviceWriteLine: 
-       line: Number <from: 0 to: 3>
-       position: Number <from: 0 to: 19>
-       text: String <min: 0 max: 20>
+   lines: 
+    line: Number <from: 0 to: 3>
+    position: Number <from: 0 to: 19>
+    text: String <min: 0 max: 20>
    
 ```
 ```
@@ -1599,9 +1599,9 @@ TF/DualButton/U/<id>/I
      LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
      LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
    selectedLEDStates: Set <min: 0 max: 2>
-     DeviceSelectedLEDStateParameters: 
-       led: String <[1, 2]>
-       LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+   selectedLEDStates: 
+    led: String <[1, 2]>
+    LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
    
 ```
 ```
@@ -2205,7 +2205,6 @@ TF/LEDStrip/U/<id>/I
      channels: Number <from: 0 to: 255>
    LEDFrames: null
    LEDFrames: Array <min: 1 max: 2147483647>
-   LEDFrames: 
      LEDFrame: 
        channels: Arrays: <[min: 1 max: 4,min: 1 max: 320]>
        channels: Number <from: 0 to: 255>
@@ -3199,19 +3198,19 @@ TF/Servo/U/<id>/I
    minimumVoltage: Number <from: 5000 to: 2147483647>
    outputVoltage: Number <from: 2000 to: 9000>
    servos: Set <min: 0 max: 7>
-     Servo: 
-       acceleration: Number <from: 0 to: 65536>
-       degree: 
-         max: Number <from: -32767 to: 32767>
-         min: Number <from: -32767 to: 32767>
-       enabled: Boolean <true,false> 
-       id: Number <from: 0 to: 6>
-       period: Number <from: 1 to: 65536>
-       position: Number <from: -32767 to: 32767>
-       pulseWidth: 
-         max: Number <from: -32767 to: 32767>
-         min: Number <from: -32767 to: 32767>
-       velocity: Number <from: 0 to: 65536>
+   servos: 
+    acceleration: Number <from: 0 to: 65536>
+    degree: 
+      max: Number <from: -32767 to: 32767>
+      min: Number <from: -32767 to: 32767>
+    enabled: Boolean <true,false> 
+    id: Number <from: 0 to: 6>
+    period: Number <from: 1 to: 65536>
+    position: Number <from: -32767 to: 32767>
+    pulseWidth: 
+      max: Number <from: -32767 to: 32767>
+      min: Number <from: -32767 to: 32767>
+    velocity: Number <from: 0 to: 65536>
    statusLED: Boolean <true,false> 
    
 ```

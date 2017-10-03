@@ -237,7 +237,6 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
                 } else if (c.isArray()) {
                     c = c.getComponentType();
                     if (Validator.class.isAssignableFrom(c)) {
-                        description += field.getName() + ": \n";
                         description += indentation + "  " + c.getSimpleName() + ": \n";
                         description += getDataFormatDescription(c, indentation + "    ");
 
@@ -249,11 +248,10 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
 
                         ParameterizedType pType = (ParameterizedType) type;
                         Type[] arr = pType.getActualTypeArguments();
-
                         for (Type tp : arr) {
                             Class<?> clzz = (Class<?>) tp;
-                            description += indentation + "  " + clzz.getSimpleName() + ": \n";
-                            description += getDataFormatDescription(clzz, indentation + "    ");
+                        description += indentation + field.getName() + ": \n";
+                            description += getDataFormatDescription(clzz, indentation + " ");
                         }
                     }
 
