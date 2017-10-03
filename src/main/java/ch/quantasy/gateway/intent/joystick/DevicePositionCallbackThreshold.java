@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.intent.joystick;
 
+import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.annotations.Choice;
 import ch.quantasy.gateway.intent.annotations.Range;
 import com.tinkerforge.BrickletJoystick;
@@ -50,7 +51,7 @@ import com.tinkerforge.BrickletJoystick;
  *
  * @author reto
  */
-public class DevicePositionCallbackThreshold {
+public class DevicePositionCallbackThreshold extends AValidator{
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

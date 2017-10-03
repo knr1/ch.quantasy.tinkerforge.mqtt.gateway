@@ -118,5 +118,8 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
         descriptions.put(STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
         descriptions.put(STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
+        descriptions.put(EVENT_BUTTON_PRESSED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [1..4]\n");
+        descriptions.put(EVENT_BUTTON_RELEASED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [1..4]\n");
+        
     }
 }

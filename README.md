@@ -5,10 +5,10 @@ ch.quantasy.tinkerforge.mqtt.gateway
 Please note, that this project depends on [https://github.com/knr1/ch.quantasy.mqtt.gateway]
 
 
-The underlying idea of TiMqWay is a set of self-explaining micro-services, providing a data-driven interface to the known Tinkerforge devices. This way,
- the implementation is agnostic to the programming-language and paradigm used for orchestration. Any language will do, as long as you master it.
+The underlying idea of TiMqWay is a set of micro-services with auto discovery and data definition using the mqtt protocol, providing a data-driven
+interface to the known Tinkerforge devices. This way, the implementation is agnostic to the programming-language and paradigm used for orchestration. Any language will do, as long as you master it.
 
-What is left to do for the user of TiMqWay, is the orchestration and choreography of how these services in order to fit the needs.
+What is left to do for the user of TiMqWay, is the orchestration / choreography of these services in order to fit the needs.
 
 
  <!---<a href="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TinkerforgeSBAO.svg">--->
@@ -24,21 +24,21 @@ Each Tinkerforge micro-service provides the following minimal contract:
 <a href="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TiMqWayService.svg">
 <img src="https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway/blob/master/TiMqWayService.svg.png" alt="Service-Diagram" />
 </a>
-* **Description** Each micro-service describes its abilities via the description topic.
-* **Status** Each micro-service describes its actual status via its specialized status topics.
-* **Event** Each micro-service provides all events via its specialized event topics. As there might be more events available than the mqtt broker is able to handle, all events are always covered within an array. Hence, there might be 0,1 or multiple events within one message.
-* **Intent** Each micro-service accepts _intentions_ via the intent topic. It is equivalent to the setter methods but allows _parallel_ and _concurrent_ 'requests'.
+* **Description** Each micro-service class describes its abilities and provides a data definition via the description topic.
+* **Status** Each micro-service instance describes its actual status via its specialized status topics.
+* **Event** Each micro-service instance provides all events via its specialized event topics.As there might be more events available than the mqtt broker is able to handle, all events are always covered within an array. Hence, there might be 0,1 or multiple events within one message.
+* **Intent** Each micro-service instance accepts _intentions_ via the intent topic. It is equivalent to the setter methods but allows _parallel_ and _concurrent_ 'requests'.
 
 
-**Root topic** The root topic of TiMqWay, where all thinkerforge micro-services can be reached: **TF/**.
+**Root topic** The root topic of TiMqWay, where all Tinkerforge micro-services can be reached: **TF/**.
 
 **Data language** TiMqWay's data language used is **[YAML]**.
 
 **No Connection between services** The services do not know each other and cannot 'learn' from other services (i.e. they are cohesive). What is needed is a software
-that orchestrates the services. You can write the orchestration in any programming language (e.g. Node-Red, Java, js, Swift, ...), as long as you can access the mqtt-broker used.
+that orchestrates / choreographs the services. This can be written in any programming language (e.g. Node-Red, Java, js, Swift, ...), as long as you can access the mqtt-broker used.
 
 ### Abstraction to Tinkerforge 
-Each micro-service is an instance of a Tinkerforge-Device class, accessible by its UID. Hence, devices are not represented within their 'stack', but loosely coupled so
+Each micro-service is an instance of a Tinkerforge-Device class, accessible by its UID. Hence, devices are not represented within their 'stack', but loosely coupled and class-wise so
  a device might even change its stack but is still accessible in MQTT at the same location (TF/device-class/UID).
 
 
@@ -59,7 +59,7 @@ Or, if you do not have any MQTT-Broker ready, use an existing one at iot.eclipse
 $ java -jar TiMqWay.jar tcp://iot.eclipse.org:1883
 ```
 
-Then, if you subscribe to TF/# you will immediately get the description info for the TiMqWay-Manager, which does all the nasty stuff for you.
+Then, if you subscribe to TF/# you will immediately get the description info for the TiMqWay-Manager, which does all the discovery stuff for you.
 
 In order to interact with some specific Tinkerforge-Stack (e.g. localhost), the following message has to be sent to the following topic:
 ```sh
@@ -74,20 +74,20 @@ In order to see who is calling, the intent will always end with '/quickshot' as 
  
 **Setting backlight of LCD-Display (uid: lcd):**
 ```
-Topic: TF/LCD20x4/lcd/I/backlight/quickshot
-Message: true
+Topic: TF/LCD20x4/U/lcd/I/quickshot
+Message: backlight: true
 ```
 
 **Measuring the temperature once per second on temperature bricklet (uid: red):**
 ```
-Topic: TF/Temperature/red/I/temperature/callbackPeriod/quickshot
-Message: 1000
+Topic: TF/Temperature/U/red/I/quickshot
+Message: temperatureCallbackPeriod: 1000
 ```
 
 **Detecting NFC-Tags once per second on NFCRFID bricklet (uid: ouu):**
 ```
-Topic: TF/NfcRfid/ouu/I/scanning/callbackPeriod/quickshot
-Message: 1000
+Topic: TF/NfcRfid/U/ouu/I/quickshot
+Message: scanningCallbackPeriod: 1000
 ```
 
 
@@ -167,10 +167,12 @@ TF
              added --- <address>
              removed --- <removed>
        I 
-         stack
-           address
-             add --- <address>
-             remove --- <address>
+         address: 
+          hostName: String <min: 1 max: 255>
+          hostName: String <regEx: \w+(\.\w+){0,3}>
+          port: Number <from: 1024 to: 65535>
+          connect: Boolean <true,false> 
+   
      U
        pc
           S
@@ -182,8 +184,10 @@ TF
 As the description explains, we now have to tell TiMqWay where to look for the Master Bricks (Stacks). Hence, we want to attach Master-Brick-1 (say, its 
 network-name is master-brick-1). Therefore the following message has to be sent to the following topic:
 ```
-Topic: TF/Manager/U/pc/I/stack/address/add
-Message: hostName: master-brick-1
+Topic: TF/Manager/U/pc/I
+Message: address:
+           hostName: master-brick-1
+           connect: true
 ```
 
 Looking into the mqtt-broker, the following can be seen:
@@ -208,9 +212,7 @@ TF
               address
                 added --- -hostname:"master-brick-1" port: 4223
           I
-            stack
-              address
-                add --- master-brick-1
+            #omitted for better readability
    Temperature
      D
        #omitted for better readability
@@ -234,8 +236,8 @@ TF
 If you want to switch on the backlight of the device called 'lcd' which is an instance of the 20x4LCD class then you publish the following message to
 the following topic:
 ```
-Topic: TF/LCD20x4/U/lcd/I/backlight
-Message: true
+Topic: TF/LCD20x4/U/lcd/I
+Message: backlight: true
 ```
 What happenes is that the backlight is now switched to on at the specific 20x4LCD device. In the mqtt-broker, some topics changed as well.
 ```
@@ -264,13 +266,16 @@ TF
            hardware --- 1-2-0
            backlight --- true
          I
-           backlight --- true
+           #omitted for better readability 
+
 ```
  
 Now, let us connect the second master-brick (stack). This one is connected via USB, hence, its address is `localhost`:
 ```
-Topic: TF/Manager/U/pc/I/stack/address/add
-Message: hostName: localhost
+Topic: TF/Manager/U/pc/I
+Message: address:
+          hostName: localhost
+          connect: true
 ```
 The TiMqWay-manager now knows two stacks and manages one temperature device more
 ```
@@ -296,31 +301,12 @@ TF
                address
                  added --- -hostname:"localhost" port: 4223
            I
-             stack
-               address
-                 add --- localhost
+             #omitted for better readability 
+
    Temperature
      D
-       S
-         connection ---[online|offline]
-         position --- [0|1|2|3|4|5|6|7|8|a|b|c|d]
-         firmware --- [-32768..32767]_*
-         hardware --- [-32768..32767]_*
-         temperature
-           callbackPeriod --- [0..9223372036854775807]
-           threshold --- option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]
-           deounce --- [0..9223372036854775807]
-           mode ---[Slow|Fast]
-       E
-         temperature --- - timestamp: [0..9223372036854775807]\n  value: [-2500..8500]\n
-           reached --- - timestamp: [0..9223372036854775807]\n  value: [-2500..8500]\n
-       I
-         debounce
-           period --- [0..9223372036854775807]
-         temperature
-           callbackPeriod --- [0..9223372036854775807]
-           threshold --- option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]
-         mode -- mode:[Slow|Fast]
+       #omitted for better readability 
+
      U
        blue
          S
@@ -336,22 +322,8 @@ TF
            hardware --- 1-1-0
    LCD20x4
      D
-       S
-         connection ---[online|offline]
-         position --- [0|1|2|3|4|5|6|7|8|a|b|c|d]
-         firmware --- [-32768..32767]_*
-         hardware --- [-32768..32767]_*
-         backlight --- [true|false]
-         defaultText
-           texts --- [line: [0..3]\n text: [String]_[1..20]]
-           counter --- [-1..2147483647]
-       I
-         backlight --- [true|false]
-         clearDisplay --- [true|false]
-         defaultText
-           texts --- [line: [0..3]\n text: [String]_[1..20]]
-           counter --- [-1..2147483647]
-         writeLines --- [line: [0..3]\n position: [0..18]\n text: [String]_[1..20]]
+       #omitted for better readability 
+
      U
        lcd
          S
@@ -363,8 +335,8 @@ TF
 
 If we want to have a temperature reading every second for `red`, we provide the following message to the following topic:
 ```
-Topic: TF/Temperature/U/red/I/temperature/callbackPeriod
-Message: 1000
+Topic: TF/Temperature/U/red/I
+Message: temperatureCallbackPeriod: 1000
 ```
 Now, there is a reading every second, that will be promoted as an event to `TF/Temperature/red/event/temperature`
 
@@ -404,8 +376,10 @@ TF
            firmware --- 2-0-2
            hardware --- 1-2-0
 ```
-All that is left is to write a little agent, subscribing to the temperature of red and blue. Then process the values and write them to lcd... as a publish to
-`TF/LCD20x4/U/lcd/I/writeLines`...
+All that is left is to write the orchestration/choreography, subscribing to the temperature of red and blue. Then process the values and write them to lcd... as a publish to
+```
+TF/LCD20x4/U/lcd/I
+   lines: Set <min: 0 max: 80>
 
 ```
 Topic: TF/LCD20x4/U/lcd/I/writeLines
@@ -420,6 +394,11 @@ Message: - line: 0
 ### Manager
 This logical service allows a user to add or remove a true tinkerforge stack. As soon as a stack is connected, the service takes care of the 
 connected Bricks and Bricklets.
+
+cd /home/reto/NetBeansProjects/ch.quantasy.tinkerforge.mqtt.gateway; JAVA_HOME=/usr/lib/jvm/default /usr/share/netbeans/java/maven/bin/mvn "-Dexec.args=-classpath %classpath ch.quantasy.gateway.service.doc.Descriptions" -Dexec.executable=/usr/lib/jvm/default/bin/java -Dexec.classpathScope=runtime org.codehaus.mojo:exec-maven-plugin:1.2.1:exec
+Running NetBeans Compile On Save execution. Phase execution is skipped and output directories of dependency projects (with Compile on Save turned on) will be used instead of their jar artifacts.
+Scanning for projects...
+
 ```
 TF/Manager/U/<id>/E/device/connected
    - timestamp: [0..9223372036854775807]
@@ -759,7 +738,14 @@ TF/LCD16x2/U/<id>/I
    backlight: Boolean <true,false> 
    clearDisplay: Boolean <true,false> 
    customCharacters: Set <min: 0 max: 8>
+     DeviceCustomCharacter: 
+       index: Number <from: 0 to: 7>
+       pixels: Set <min: 8 max: 8>
    lines: Set <min: 0 max: 32>
+     DeviceWriteLine: 
+       line: Number <from: 0 to: 1>
+       position: Number <from: 0 to: 15>
+       text: String <min: 0 max: 16>
    
 ```
 ```
@@ -791,13 +777,35 @@ TF/LCD16x2/U/<id>/S/position
 
 ### LCD20x4
 ```
+TF/LCD20x4/U/<id>/E/button/pressed
+   - timestamp: [0..9223372036854775807]
+     value: [1..4]
+   
+```
+```
+TF/LCD20x4/U/<id>/E/button/released
+   - timestamp: [0..9223372036854775807]
+     value: [1..4]
+   
+```
+```
 TF/LCD20x4/U/<id>/I
    backlight: Boolean <true,false> 
    clearDisplay: Boolean <true,false> 
    customCharacters: Set <min: 0 max: 8>
+     DeviceCustomCharacter: 
+       index: Number <from: 0 to: 7>
+       pixels: Set <min: 8 max: 8>
    defaultTextCounter: Number <from: -1 to: 2147483647>
    defaultTexts: Set <min: 0 max: 4>
+     DeviceDefaultText: 
+       line: Number <from: 0 to: 3>
+       text: String <min: 0 max: 20>
    lines: Set <min: 0 max: 80>
+     DeviceWriteLine: 
+       line: Number <from: 0 to: 3>
+       position: Number <from: 0 to: 19>
+       text: String <min: 0 max: 20>
    
 ```
 ```
@@ -1535,6 +1543,8 @@ TF/DistanceUS/U/<id>/E/distance/reached
 ```
 ```
 TF/DistanceUS/U/<id>/I
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   distanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    distanceCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
@@ -1589,6 +1599,9 @@ TF/DualButton/U/<id>/I
      LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
      LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
    selectedLEDStates: Set <min: 0 max: 2>
+     DeviceSelectedLEDStateParameters: 
+       led: String <[1, 2]>
+       LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
    
 ```
 ```
@@ -2000,9 +2013,21 @@ TF/Joystick/U/<id>/E/released
 ```
 TF/Joystick/U/<id>/I
    analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: 
+     maxX: Number <from: 0 to: 4095>
+     maxY: Number <from: 0 to: 4095>
+     minX: Number <from: 0 to: 4095>
+     minY: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
    calibrate: Boolean <true,false> 
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    positionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackThreshold: 
+     maxX: Number <from: -100 to: 100>
+     maxY: Number <from: -100 to: 100>
+     minX: Number <from: -100 to: 100>
+     minY: Number <from: -100 to: 100>
+     option: String <[x, o, i, <, >]>
    
 ```
 ```
@@ -2072,6 +2097,7 @@ TF/LaserRangeFinder/U/<id>/I
    configuration: 
      aquisitionCount: Number <from: 1 to: 255>
      measurementFrequency: Number <[from: 0 to: 0,from: 10 to: 500]>
+     quickTermination: Boolean <true,false> 
      thresholdValue: Number <from: 0 to: 255>
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    distanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -2649,7 +2675,10 @@ TF/NfcRfid/U/<id>/E/tag/written
 ```
 TF/NfcRfid/U/<id>/I
    nfcWrite: 
+     tagID: String <regEx: [0-9A-F]{8}|[0-9A-F]{14}>
+     value: Array <min: 0 max: 2147483647>
    scanningInterval: Number <from: 0 to: 9223372036854775807>
+   tagID: String <regEx: [0-9A-F]{8}|[0-9A-F]{14}>
    
 ```
 ```
@@ -3123,6 +3152,7 @@ TF/SegmentDisplay4x7/U/<id>/I
    segments: 
      bits: Array <min: 4 max: 4>
      brightness: Number <from: 0 to: 7>
+     colon: Boolean <true,false> 
    
 ```
 ```
@@ -3169,6 +3199,19 @@ TF/Servo/U/<id>/I
    minimumVoltage: Number <from: 5000 to: 2147483647>
    outputVoltage: Number <from: 2000 to: 9000>
    servos: Set <min: 0 max: 7>
+     Servo: 
+       acceleration: Number <from: 0 to: 65536>
+       degree: 
+         max: Number <from: -32767 to: 32767>
+         min: Number <from: -32767 to: 32767>
+       enabled: Boolean <true,false> 
+       id: Number <from: 0 to: 6>
+       period: Number <from: 1 to: 65536>
+       position: Number <from: -32767 to: 32767>
+       pulseWidth: 
+         max: Number <from: -32767 to: 32767>
+         min: Number <from: -32767 to: 32767>
+       velocity: Number <from: 0 to: 65536>
    statusLED: Boolean <true,false> 
    
 ```
@@ -3225,6 +3268,7 @@ TF/SolidState/U/<id>/E/monoflopDone
 TF/SolidState/U/<id>/I
    monoflopParameters: 
      period: Number <from: 0 to: 9223372036854775807>
+     state: Boolean <true,false> 
    state: Boolean <true,false> 
    
 ```
@@ -3715,3 +3759,4 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
     min: [-50001..50001]
     max: [-50001..50001]
 ```
+

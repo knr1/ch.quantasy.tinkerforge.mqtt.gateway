@@ -41,10 +41,8 @@
  */
 package ch.quantasy.gateway.intent.LCD20x4;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
 import ch.quantasy.gateway.intent.annotations.Period;
-import ch.quantasy.gateway.intent.annotations.StringSize;
 import ch.quantasy.gateway.intent.annotations.SetSize;
 import java.util.HashSet;
 import java.util.Set;

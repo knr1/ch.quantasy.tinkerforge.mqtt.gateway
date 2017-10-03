@@ -43,6 +43,8 @@
 package ch.quantasy.gateway.intent.nfc;
 
 import ch.quantasy.gateway.intent.annotations.AValidator;
+import ch.quantasy.gateway.intent.annotations.ArraySize;
+import ch.quantasy.gateway.intent.annotations.StringForm;
 
 /**
  *
@@ -50,14 +52,16 @@ import ch.quantasy.gateway.intent.annotations.AValidator;
  */
 public class NFCWrite extends AValidator{
 
-    private String id;
+    @StringForm(regEx = "[0-9A-F]{8}|[0-9A-F]{14}")
+    private String tagID;
+    @ArraySize
     private Short[] value;
 
     public NFCWrite() {
     }
 
     public NFCWrite(String id, Short[] content) {
-        this.id = id;
+        this.tagID = id;
         this.value = content.clone();
     }
 
@@ -65,8 +69,8 @@ public class NFCWrite extends AValidator{
         return value.clone();
     }
 
-    public String getId() {
-        return id;
+    public String getTagID() {
+        return tagID;
     }
 
 }

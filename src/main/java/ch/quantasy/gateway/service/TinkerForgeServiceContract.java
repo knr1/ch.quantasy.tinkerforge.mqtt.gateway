@@ -55,13 +55,18 @@ import ch.quantasy.gateway.intent.annotations.SetSize;
 import ch.quantasy.gateway.intent.annotations.StringForm;
 import ch.quantasy.gateway.intent.annotations.StringSize;
 import ch.quantasy.gateway.intent.annotations.Validator;
+import ch.quantasy.gateway.intent.dualRelay.DualRelayIntent;
 import ch.quantasy.gateway.intent.ledStrip.LedStripIntent;
 
 import ch.quantasy.mqtt.gateway.client.AyamlServiceContract;
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.lang.reflect.ParameterizedType;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -97,14 +102,13 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
             current = current.getSuperclass();
             fields.addAll(Arrays.asList(current.getDeclaredFields()));
         }
-        Collections.sort(fields,new Comparator<Field>() {
+        Collections.sort(fields, new Comparator<Field>() {
             @Override
             public int compare(Field o1, Field o2) {
                 return o1.getName().compareToIgnoreCase(o2.getName());
             }
-        } );
-             
-       
+        });
+
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
@@ -219,7 +223,7 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
                 }
 
                 Class c = field.getType();
-                if (Boolean.class.isAssignableFrom(c)) {
+                if (Boolean.class.isAssignableFrom(c)||boolean.class.isAssignableFrom(c)) {
                     description += indentation;
                     description += field.getName() + ": ";
                     description += "Boolean <true,false> \n";
@@ -238,6 +242,21 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
                         description += getDataFormatDescription(c, indentation + "    ");
 
                     }
+                } else if (Collection.class.isAssignableFrom(c)) {
+                    Type type = field.getGenericType();
+
+                    if (type instanceof ParameterizedType) {
+
+                        ParameterizedType pType = (ParameterizedType) type;
+                        Type[] arr = pType.getActualTypeArguments();
+
+                        for (Type tp : arr) {
+                            Class<?> clzz = (Class<?>) tp;
+                            description += indentation + "  " + clzz.getSimpleName() + ": \n";
+                            description += getDataFormatDescription(clzz, indentation + "    ");
+                        }
+                    }
+
                 }
 
             } catch (Exception ex) {
@@ -263,10 +282,12 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
                     description += separator;
                     description += field.getName();
                     separator = ",";
+
                 }
 
             } catch (Exception ex) {
-                Logger.getLogger(AValidator.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AValidator.class
+                        .getName()).log(Level.SEVERE, null, ex);
             } finally {
                 field.setAccessible(false);
             }
@@ -282,7 +303,8 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
     }
 
     public static void main(String[] args) {
-        System.out.println(TinkerForgeServiceContract.getDataFormatDescription(LedStripIntent.class));
+        System.out.println(TinkerForgeServiceContract.getDataFormatDescription(DualRelayIntent.class
+        ));
     }
 
 }

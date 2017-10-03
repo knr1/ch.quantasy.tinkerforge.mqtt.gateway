@@ -103,8 +103,8 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
          getIntent().scanningInterval=nfcReader.interval;
          getCallback().scanningCallbackPeriodChanged(getIntent().scanningInterval);
         }
-        if(intent.nfcRead!=null){
-            nfcReader.addActiveTagToRead(intent.nfcRead);
+        if(intent.tagID!=null){
+            nfcReader.addActiveTagToRead(intent.tagID);
         }
         if(intent.nfcWrite!=null){
             nfcReader.addActiveTagToWrite(intent.nfcWrite);
@@ -134,7 +134,7 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
         }
 
         public synchronized void addActiveTagToWrite(NFCWrite write) {
-            this.activeTagsToWrite.put(write.getId(), write);
+            this.activeTagsToWrite.put(write.getTagID(), write);
             this.notifyAll();
         }
 

@@ -43,6 +43,7 @@ package ch.quantasy.gateway.intent.dualRelay;
 
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.SetSize;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,9 +54,12 @@ import java.util.Set;
  */
 public class DualRelayIntent extends AnIntent {
 
+    @Nullable
     @SetSize(max = 2)
     public Set<DeviceSelectedRelayState> selectedRelayStates;
+    @Nullable
     public DeviceRelayState relayState;
+    @Nullable
     @SetSize(max = 2)
     public Set<DeviceMonoflopParameters> monoflopParameters;
 

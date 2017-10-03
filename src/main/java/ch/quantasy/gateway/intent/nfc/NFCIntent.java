@@ -41,13 +41,9 @@
  */
 package ch.quantasy.gateway.intent.nfc;
 
-import ch.quantasy.gateway.intent.multiTouch.*;
-import ch.quantasy.gateway.intent.moisture.*;
-import ch.quantasy.gateway.intent.line.*;
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
 import ch.quantasy.gateway.intent.annotations.Period;
-import ch.quantasy.gateway.intent.annotations.Range;
+import ch.quantasy.gateway.intent.annotations.StringForm;
 
 /**
  *
@@ -58,6 +54,7 @@ public class NFCIntent extends AnIntent {
     @Period
     public Long scanningInterval;
     public NFCWrite nfcWrite;
-    public String nfcRead;
+    @StringForm(regEx = "[0-9A-F]{8}|[0-9A-F]{14}")
+    public String tagID;
 
 }
