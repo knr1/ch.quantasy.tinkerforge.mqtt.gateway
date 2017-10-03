@@ -51,15 +51,14 @@ import com.tinkerforge.BrickletUVLight;
  *
  * @author reto
  */
-public class DeviceUVLightCallbackThreshold extends AValidator{
+public class DeviceUVLightCallbackThreshold extends AValidator {
 
-     @Choice(values = {"x", "o", "i", "<", ">"})
+    @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
     @Range(from = 0, to = 328000)
     private long min;
     @Range(from = 0, to = 328000)
     private long max;
-
 
     public DeviceUVLightCallbackThreshold() {
     }

@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.intent.LCD16x2;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.SetSize;
 import java.util.HashSet;
 import java.util.Set;
@@ -51,20 +51,23 @@ import java.util.Set;
  *
  * @author reto
  */
-public class LCD16x2Intent extends AnIntent{
+public class LCD16x2Intent extends AnIntent {
 
+    @Nullable
     public Boolean backlight;
+    @Nullable
     public Boolean clearDisplay;
+    @Nullable
     public DeviceConfigParameters parameters;
-
+    @Nullable
     @SetSize(max = 8)
     public Set<DeviceCustomCharacter> customCharacters;
-
+    @Nullable
     @SetSize(max = 32)
     public Set<DeviceWriteLine> lines;
-    
-    public LCD16x2Intent(){
+
+    public LCD16x2Intent() {
         this.customCharacters = new HashSet<>();
-        this.lines=new HashSet<>();
+        this.lines = new HashSet<>();
     }
 }

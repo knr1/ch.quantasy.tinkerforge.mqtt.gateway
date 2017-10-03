@@ -51,11 +51,12 @@ import ch.quantasy.gateway.intent.annotations.Range;
  * @author reto
  */
 public class DeviceCounterParameters extends AValidator {
-    @Range(from = -999,to = 9999)
+
+    @Range(from = -999, to = 9999)
     private short from;
-    @Range(from = -999,to = 9999)
+    @Range(from = -999, to = 9999)
     private short to;
-    @Range(from = -999,to = 9999)
+    @Range(from = -999, to = 9999)
     private short increment;
     @Period
     private long length;

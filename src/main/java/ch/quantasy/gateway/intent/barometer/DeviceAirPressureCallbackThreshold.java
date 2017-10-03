@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletBarometer;
  *
  * @author reto
  */
-public class DeviceAirPressureCallbackThreshold extends AValidator{
+public class DeviceAirPressureCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

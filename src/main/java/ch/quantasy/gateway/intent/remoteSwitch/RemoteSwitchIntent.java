@@ -43,6 +43,7 @@ package ch.quantasy.gateway.intent.remoteSwitch;
 
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Range;
 
 /**
@@ -51,11 +52,16 @@ import ch.quantasy.gateway.intent.annotations.Range;
  */
 public class RemoteSwitchIntent extends AnIntent {
 
+    @Nullable
     @Range(from = 0, to = Short.MAX_VALUE)
     public Short repeats;
+    @Nullable
     public SwitchSocketAParameters switchSocketAParameters;
+    @Nullable
     public SwitchSocketBParameters switchSocketBParameters;
+    @Nullable
     public SwitchSocketCParameters switchSocketCParameters;
+    @Nullable
     public DimSocketBParameters dimSocketBParameters;
 
 }

@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.intent.hallEffect;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 import ch.quantasy.gateway.intent.annotations.Range;
 
@@ -52,11 +52,15 @@ import ch.quantasy.gateway.intent.annotations.Range;
  */
 public class HallEffectIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long edgeCountCallbackPeriod;
+    @Nullable
     public DeviceConfiguration edgeCountConfiguration;
+    @Nullable
     @Range(from = 0)
     public Long edgeCountInterrupt;
+    @Nullable
     public Boolean edgeCountReset;
 
 }

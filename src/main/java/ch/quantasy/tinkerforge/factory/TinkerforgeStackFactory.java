@@ -52,21 +52,19 @@ public class TinkerforgeStackFactory {
 
     private static TinkerforgeStackFactory instance;
     private final HashMap<TinkerforgeStackAddress, TinkerforgeStack> tinkerforgeStacks;
-    
+
     static {
         instance = new TinkerforgeStackFactory();
     }
 
     private TinkerforgeStackFactory() {
         this.tinkerforgeStacks = new HashMap<>();
-       
+
     }
 
     public static TinkerforgeStackFactory getInstance() {
         return TinkerforgeStackFactory.instance;
     }
-
-    
 
     public boolean addStack(final TinkerforgeStackAddress address) {
         if (this.containsStack(address)) {

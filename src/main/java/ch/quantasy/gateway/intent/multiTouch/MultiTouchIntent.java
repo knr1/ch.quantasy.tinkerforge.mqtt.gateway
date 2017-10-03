@@ -45,6 +45,7 @@ import ch.quantasy.gateway.intent.moisture.*;
 import ch.quantasy.gateway.intent.line.*;
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 import ch.quantasy.gateway.intent.annotations.Range;
 
@@ -54,10 +55,13 @@ import ch.quantasy.gateway.intent.annotations.Range;
  */
 public class MultiTouchIntent extends AnIntent {
 
+    @Nullable
     @Range(from = 0, to = 8191)
     public Integer electrodeConfig;
+    @Nullable
     @Range(from = 5, to = 201)
     public Short sensitivity;
+    @Nullable
     public Boolean recalibration;
 
 }

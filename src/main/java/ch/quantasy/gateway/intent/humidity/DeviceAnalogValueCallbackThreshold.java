@@ -51,12 +51,13 @@ import com.tinkerforge.BrickletHumidity;
  *
  * @author reto
  */
-public class DeviceAnalogValueCallbackThreshold extends AValidator{
+public class DeviceAnalogValueCallbackThreshold extends AValidator {
+
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
-    @Range(from = 0, to=4095)
+    @Range(from = 0, to = 4095)
     private int min;
-    @Range(from = 0, to=4095)
+    @Range(from = 0, to = 4095)
     private int max;
 
     public DeviceAnalogValueCallbackThreshold() {

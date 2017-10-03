@@ -41,10 +41,11 @@
  */
 package ch.quantasy.gateway.intent.servo;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Range;
 import ch.quantasy.gateway.intent.annotations.SetSize;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -53,11 +54,19 @@ import java.util.Set;
  */
 public class ServoIntent extends AnIntent {
 
+    @Nullable
     public Boolean statusLED;
+    @Nullable
     @Range(from = 5000, to = Integer.MAX_VALUE)
     public Integer minimumVoltage;
+    @Nullable
     @Range(from = 2000, to = 9000)
     public Integer outputVoltage;
+    @Nullable
     @SetSize(max = 7)
     public Set<Servo> servos;
+
+    public ServoIntent() {
+        servos = new HashSet<>();
+    }
 }

@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.intent.distanceUS;
 
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 import ch.quantasy.gateway.intent.annotations.Range;
 
@@ -50,11 +51,16 @@ import ch.quantasy.gateway.intent.annotations.Range;
  * @author reto
  */
 public class DistanceUSIntent extends AnIntent {
+
+    @Nullable
     @Period
     public Long distanceCallbackPeriod;
+    @Nullable
     @Period
     public Long debouncePeriod;
-    @Range(from=0,to=100)
+    @Nullable
+    @Range(from = 0, to = 100)
     public Short movingAverage;
+    @Nullable
     public DeviceDistanceCallbackThreshold distanceCallbackThreshold;
 }

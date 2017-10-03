@@ -86,7 +86,7 @@ public class DeviceConfiguration extends AValidator {
         }
     }
 
-    public static enum IntegrationTime implements Validator{
+    public static enum IntegrationTime implements Validator {
         ms_50((short) 0), ms_100((short) 1), ms_150((short) 2), ms_200((short) 3), ms_250((short) 4), ms_300((short) 5), ms_350((short) 6), ms_400((short) 7);
         private short value;
 

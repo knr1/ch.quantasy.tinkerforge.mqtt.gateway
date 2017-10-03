@@ -52,8 +52,9 @@ import com.tinkerforge.BrickletVoltageCurrent;
  *
  * @author reto
  */
-public class DeviceCurrentCallbackThreshold extends AValidator{
-     @Choice(values = {"x", "o", "i", "<", ">"})
+public class DeviceCurrentCallbackThreshold extends AValidator {
+
+    @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
     @Range(from = 0, to = 36000)
     private int min;

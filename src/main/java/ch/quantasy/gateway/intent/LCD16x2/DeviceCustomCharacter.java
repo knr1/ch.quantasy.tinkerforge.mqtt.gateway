@@ -43,6 +43,7 @@
 package ch.quantasy.gateway.intent.LCD16x2;
 
 import ch.quantasy.gateway.intent.annotations.AValidator;
+import ch.quantasy.gateway.intent.annotations.ArraySize;
 import ch.quantasy.gateway.intent.annotations.Range;
 import ch.quantasy.gateway.intent.annotations.SetSize;
 
@@ -54,7 +55,7 @@ public class DeviceCustomCharacter extends AValidator implements Comparable<Devi
 
     @Range(from = 0, to = 7)
     private short index;
-    @SetSize(min=8, max = 8)
+    @ArraySize(min = 8, max = 8)
     private short[] pixels;
 
     public DeviceCustomCharacter() {

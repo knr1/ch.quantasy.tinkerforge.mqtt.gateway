@@ -73,7 +73,7 @@ public class DualRelayServiceContract extends DeviceServiceContract {
     }
 
     public DualRelayServiceContract(String id, String device) {
-        super(id, device,DualRelayIntent.class);
+        super(id, device, DualRelayIntent.class);
         MONOFLOP_DONE = "monoflopDone";
         EVENT_MONOFLOP_DONE = EVENT + "/" + MONOFLOP_DONE;
 

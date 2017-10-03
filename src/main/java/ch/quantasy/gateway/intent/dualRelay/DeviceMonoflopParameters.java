@@ -53,7 +53,7 @@ import com.tinkerforge.BrickletDualRelay;
  */
 public class DeviceMonoflopParameters extends AValidator {
 
-    @Choice(values = {"1","2"})
+    @Choice(values = {"1", "2"})
     private short relay;
     private boolean state;
     @Period

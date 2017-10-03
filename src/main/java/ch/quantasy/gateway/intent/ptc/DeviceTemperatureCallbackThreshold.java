@@ -51,6 +51,7 @@ import com.tinkerforge.BrickletPTC;
  * @author reto
  */
 public class DeviceTemperatureCallbackThreshold {
+
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
     @Range(from = -24600, to = 8900)

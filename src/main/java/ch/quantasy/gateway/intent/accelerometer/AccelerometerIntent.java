@@ -43,18 +43,24 @@ package ch.quantasy.gateway.intent.accelerometer;
 
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
  *
  * @author reto
  */
-public class AccelerometerIntent  extends AnIntent{
+public class AccelerometerIntent extends AnIntent {
+
+    @Nullable
     public DeviceConfiguration configuration;
+    @Nullable
     @Period
     public Long callbackPeriod;
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     public DeviceAccelerationCallbackThreshold accelerationThreshold;
 
 }

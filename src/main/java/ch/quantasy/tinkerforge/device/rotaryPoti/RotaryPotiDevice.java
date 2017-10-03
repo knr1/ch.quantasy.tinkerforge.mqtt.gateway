@@ -59,9 +59,8 @@ import java.util.logging.Logger;
  */
 public class RotaryPotiDevice extends GenericDevice<BrickletRotaryPoti, RotaryPotiDeviceCallback, RotaryPotiIntent> {
 
-
     public RotaryPotiDevice(TinkerforgeStack stack, BrickletRotaryPoti device) throws NotConnectedException, TimeoutException {
-        super(stack, device,new RotaryPotiIntent());
+        super(stack, device, new RotaryPotiIntent());
     }
 
     @Override
@@ -70,7 +69,7 @@ public class RotaryPotiDevice extends GenericDevice<BrickletRotaryPoti, RotaryPo
         device.addAnalogValueReachedListener(super.getCallback());
         device.addPositionListener(super.getCallback());
         device.addPositionReachedListener(super.getCallback());
-        
+
     }
 
     @Override
@@ -81,7 +80,7 @@ public class RotaryPotiDevice extends GenericDevice<BrickletRotaryPoti, RotaryPo
         device.removePositionReachedListener(super.getCallback());
     }
 
-     @Override
+    @Override
     public void update(RotaryPotiIntent intent) {
         if (intent == null) {
             return;

@@ -98,7 +98,7 @@ public class DCServiceContract extends DeviceServiceContract {
     }
 
     public DCServiceContract(String id, String device) {
-        super(id, device,DCIntent.class);
+        super(id, device, DCIntent.class);
 
         ENABLED = "enabled";
         STATUS_ENABLED = STATUS + "/" + ENABLED;
@@ -139,7 +139,7 @@ public class DCServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-       
+
         descriptions.put(EVENT_FULL_BRAKE, "- timestamp: [0.." + Long.MAX_VALUE + "] \n  value: [0.." + Long.MAX_VALUE + "]");
         descriptions.put(EVENT_UNDERVOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Integer.MAX_VALUE + "]");
         descriptions.put(EVENT_VELOCITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");

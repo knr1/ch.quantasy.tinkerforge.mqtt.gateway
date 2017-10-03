@@ -91,7 +91,7 @@ public class IMUServiceContract extends DeviceServiceContract {
     }
 
     public IMUServiceContract(String id, String device) {
-        super(id, device,IMUIntent.class);
+        super(id, device, IMUIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -132,7 +132,7 @@ public class IMUServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        
+
         descriptions.put(STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

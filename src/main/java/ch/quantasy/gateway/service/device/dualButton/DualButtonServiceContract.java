@@ -73,7 +73,7 @@ public class DualButtonServiceContract extends DeviceServiceContract {
     }
 
     public DualButtonServiceContract(String id, String device) {
-        super(id, device,DualButtonIntent.class);
+        super(id, device, DualButtonIntent.class);
 
         STATE_CHANGED = "stateChanged";
         EVENT_STATE_CHANGED = EVENT + "/" + STATE_CHANGED;
@@ -89,7 +89,7 @@ public class DualButtonServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-       
+
         descriptions.put(EVENT_STATE_CHANGED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    led1: [AutoToggleOn|AutoToggleOff|On|Off]\n    led2: [AutoToggleOn|AutoToggleOff|On|Off]\n   switch1: [0|1]\n   switch2: [0|1]");
         descriptions.put(STATUS_LED_STATE, "led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]");
     }

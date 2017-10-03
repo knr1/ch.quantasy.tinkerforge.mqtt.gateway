@@ -59,7 +59,6 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
         super(mqttURI, device, new DualRelayServiceContract(device));
     }
 
-  
     @Override
     public void stateChanged(DeviceRelayState state) {
         publishStatus(getContract().STATUS_STATE, state);

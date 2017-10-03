@@ -50,9 +50,9 @@ import ch.quantasy.gateway.intent.annotations.Validator;
  *
  * @author reto
  */
-public class DeviceI2CMode extends AValidator{
+public class DeviceI2CMode extends AValidator {
 
-    public static enum Mode implements Validator{
+    public static enum Mode implements Validator {
         Fast((short) 0), Slow((short) 1);
         private short value;
 
@@ -72,6 +72,7 @@ public class DeviceI2CMode extends AValidator{
             }
             throw new IllegalArgumentException("Not supported: " + s);
         }
+
         @Override
         public boolean isValid() {
             try {

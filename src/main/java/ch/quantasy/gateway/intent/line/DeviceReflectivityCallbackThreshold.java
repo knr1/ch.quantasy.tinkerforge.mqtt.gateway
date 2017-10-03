@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletLine;
  *
  * @author reto
  */
-public class DeviceReflectivityCallbackThreshold extends AValidator{
+public class DeviceReflectivityCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

@@ -62,9 +62,9 @@ public class NFCServiceContract extends DeviceServiceContract {
     public final String EVENT_TAG_VANISHED;
     public final String READ;
     public final String EVENT_TAG_READ;
-     public final String WRITE;
+    public final String WRITE;
     public final String EVENT_TAG_WRITTEN;
-  
+
     public NFCServiceContract(NFCRFIDDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -74,23 +74,23 @@ public class NFCServiceContract extends DeviceServiceContract {
     }
 
     public NFCServiceContract(String id, String device) {
-        super(id, device,NFCIntent.class);
+        super(id, device, NFCIntent.class);
         SCANNING = "scanning";
         CALLBACK_PERIOD = "callbackPeriod";
-         STATUS_SCANNING_CALLBACK_PERIOD = STATUS + "/" + SCANNING + "/" + CALLBACK_PERIOD;
+        STATUS_SCANNING_CALLBACK_PERIOD = STATUS + "/" + SCANNING + "/" + CALLBACK_PERIOD;
         TAG = "tag";
         EVENT_TAG_DISCOVERD = EVENT + "/" + TAG + "/discovered";
         EVENT_TAG_VANISHED = EVENT + "/" + TAG + "/vanished";
         READ = "read";
         EVENT_TAG_READ = EVENT + "/" + TAG + "/" + READ;
         WRITE = "write";
-         EVENT_TAG_WRITTEN = EVENT + "/" + TAG + "/written";
+        EVENT_TAG_WRITTEN = EVENT + "/" + TAG + "/written";
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-    
+
         descriptions.put(EVENT_TAG_DISCOVERD, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    type: [MifareClassic|Type1|Type2]");
         descriptions.put(EVENT_TAG_READ, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    value: [00..FF]_*");
 
@@ -98,6 +98,6 @@ public class NFCServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
         descriptions.put(EVENT_TAG_WRITTEN, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    state: [WritePageError|WritePageReady]\n    value: [00..FF]_*");
-     
+
     }
 }

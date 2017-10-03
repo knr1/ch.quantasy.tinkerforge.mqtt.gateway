@@ -52,14 +52,13 @@ import com.tinkerforge.BrickletPTC;
  */
 public class DeviceResistanceCallbackThreshold {
 
-   @Choice(values = {"x", "o", "i", "<", ">"})
+    @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
     @Range(from = 0, to = Short.MAX_VALUE)
     private int min;
     @Range(from = 0, to = Short.MAX_VALUE)
 
     private int max;
-
 
     public DeviceResistanceCallbackThreshold() {
     }

@@ -223,7 +223,7 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
                 }
 
                 Class c = field.getType();
-                if (Boolean.class.isAssignableFrom(c)||boolean.class.isAssignableFrom(c)) {
+                if (Boolean.class.isAssignableFrom(c) || boolean.class.isAssignableFrom(c)) {
                     description += indentation;
                     description += field.getName() + ": ";
                     description += "Boolean <true,false> \n";
@@ -250,7 +250,7 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
                         Type[] arr = pType.getActualTypeArguments();
                         for (Type tp : arr) {
                             Class<?> clzz = (Class<?>) tp;
-                        description += indentation + field.getName() + ": \n";
+                            description += indentation + field.getName() + ": \n";
                             description += getDataFormatDescription(clzz, indentation + " ");
                         }
                     }

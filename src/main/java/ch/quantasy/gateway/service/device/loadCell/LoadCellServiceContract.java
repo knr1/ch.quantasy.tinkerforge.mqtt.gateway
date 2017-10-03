@@ -60,14 +60,14 @@ public class LoadCellServiceContract extends DeviceServiceContract {
     public final String THRESHOLD;
 
     public final String TARE;
- 
+
     public final String WEIGHT;
     public final String STATUS_WEIGHT;
     public final String STATUS_WEIGHT_THRESHOLD;
     public final String STATUS_WEIGHT_CALLBACK_PERIOD;
     public final String EVENT_WEIGHT;
     public final String EVENT_WEIGHT_REACHED;
- 
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
@@ -75,15 +75,15 @@ public class LoadCellServiceContract extends DeviceServiceContract {
 
     public final String CONFIGURATION;
     public final String STATUS_CONFIGURATION;
- 
+
     public final String MOVING_AVERAGE;
     public final String STATUS_MOVING_AVERAGE;
- 
+
     public final String LED;
     public final String STATUS_LED;
 
     public final String CALIBRATE;
- 
+
     public LoadCellServiceContract(LoadCellDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -93,7 +93,7 @@ public class LoadCellServiceContract extends DeviceServiceContract {
     }
 
     public LoadCellServiceContract(String id, String device) {
-        super(id, device,LoadCellIntent.class);
+        super(id, device, LoadCellIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -107,31 +107,30 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         STATUS_WEIGHT_CALLBACK_PERIOD = STATUS_WEIGHT + "/" + CALLBACK_PERIOD;
         EVENT_WEIGHT = EVENT + "/" + WEIGHT;
         EVENT_WEIGHT_REACHED = EVENT_WEIGHT + "/" + REACHED;
-      
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-     
+
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-     
+
         TARE = "tare";
-     
+
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-     
+
         LED = "LED";
         STATUS_LED = STATUS + "/" + LED;
 
         CALIBRATE = "calibrate";
-     }
+    }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-       descriptions.put(STATUS_MOVING_AVERAGE, "[1..40]");
+        descriptions.put(STATUS_MOVING_AVERAGE, "[1..40]");
 
-       
         descriptions.put(EVENT_WEIGHT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-50001..50001]");
         descriptions.put(EVENT_WEIGHT_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-50001..50001]");
         descriptions.put(STATUS_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

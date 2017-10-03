@@ -56,19 +56,17 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class SoundIntensityDevice extends GenericDevice<BrickletSoundIntensity, SoundIntensityDeviceCallback,SoundIntensityIntent> {
-
-    
+public class SoundIntensityDevice extends GenericDevice<BrickletSoundIntensity, SoundIntensityDeviceCallback, SoundIntensityIntent> {
 
     public SoundIntensityDevice(TinkerforgeStack stack, BrickletSoundIntensity device) throws NotConnectedException, TimeoutException {
-        super(stack, device,new SoundIntensityIntent());
+        super(stack, device, new SoundIntensityIntent());
     }
 
     @Override
     protected void addDeviceListeners(BrickletSoundIntensity device) {
         device.addIntensityListener(getCallback());
         device.addIntensityReachedListener(getCallback());
-        
+
     }
 
     @Override
@@ -105,7 +103,6 @@ public class SoundIntensityDevice extends GenericDevice<BrickletSoundIntensity, 
             }
         }
 
-      
         if (intent.intensityCallbackThreshold != null) {
             try {
                 getDevice().setIntensityCallbackThreshold(intent.intensityCallbackThreshold.getOption(), intent.intensityCallbackThreshold.getMin(), intent.intensityCallbackThreshold.getMax());

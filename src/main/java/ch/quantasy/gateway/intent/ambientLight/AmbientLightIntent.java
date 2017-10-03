@@ -41,22 +41,28 @@
  */
 package ch.quantasy.gateway.intent.ambientLight;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
  *
  * @author reto
  */
-public class AmbientLightIntent  extends AnIntent{
+public class AmbientLightIntent extends AnIntent {
+
+    @Nullable
     @Period
     public Long analogCallbackPeriod;
+    @Nullable
     @Period
     public Long illuminanceCallbackPeriod;
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     public DeviceAnalogValueCallbackThreshold analogValueThreshold;
+    @Nullable
     public DeviceIlluminanceCallbackThreshold illuminanceThreshold;
 
 }

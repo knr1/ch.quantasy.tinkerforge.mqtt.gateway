@@ -53,9 +53,9 @@ import com.tinkerforge.BrickletSoundIntensity;
  *
  * @author reto
  */
-public class DeviceSoundIntensityCallbackThreshold extends AValidator{
+public class DeviceSoundIntensityCallbackThreshold extends AValidator {
 
-   @Choice(values = {"x", "o", "i", "<", ">"})
+    @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
     @Range(from = 0, to = 10000)
     private int min;

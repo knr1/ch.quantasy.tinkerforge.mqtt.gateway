@@ -65,7 +65,6 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
         super(mqttURI, device, new LaserRangeFinderServiceContract(device));
     }
 
-
     @Override
     public void distance(int i) {
         publishEvent(getContract().EVENT_DISTANCE, i);

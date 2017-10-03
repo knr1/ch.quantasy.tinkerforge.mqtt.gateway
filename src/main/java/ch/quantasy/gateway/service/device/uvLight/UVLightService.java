@@ -60,7 +60,6 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
         super(mqttURI, device, new UVLightServiceContract(device));
     }
 
-   
     @Override
     public void debouncePeriodChanged(long period) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);

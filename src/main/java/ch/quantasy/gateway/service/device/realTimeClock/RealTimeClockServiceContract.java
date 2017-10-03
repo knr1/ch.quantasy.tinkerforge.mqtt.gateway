@@ -80,7 +80,7 @@ public class RealTimeClockServiceContract extends DeviceServiceContract {
     }
 
     public RealTimeClockServiceContract(String id, String device) {
-        super(id, device,RealTimeClockIntent.class);
+        super(id, device, RealTimeClockIntent.class);
         DATE_TIME = "dateTime";
         OFFSET = "offset";
         SET = "set";

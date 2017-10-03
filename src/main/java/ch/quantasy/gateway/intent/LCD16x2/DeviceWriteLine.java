@@ -50,7 +50,7 @@ import ch.quantasy.gateway.intent.annotations.StringSize;
  *
  * @author reto
  */
-public class DeviceWriteLine extends AValidator{
+public class DeviceWriteLine extends AValidator {
 
     @StringSize(max = 16)
     private String text;
@@ -79,5 +79,5 @@ public class DeviceWriteLine extends AValidator{
     public String getText() {
         return text;
     }
-    
+
 }

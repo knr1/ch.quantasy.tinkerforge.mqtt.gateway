@@ -47,6 +47,6 @@ import ch.quantasy.gateway.intent.annotations.Validator;
  *
  * @author reto
  */
-public interface Intent extends Validator{
-    
+public interface Intent extends Validator {
+
 }

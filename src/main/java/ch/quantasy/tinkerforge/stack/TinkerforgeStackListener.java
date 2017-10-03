@@ -50,12 +50,14 @@ public interface TinkerforgeStackListener {
 
     /**
      * Called when the stack has been connected
+     *
      * @param stack
      */
     public void connected(TinkerforgeStack stack);
 
     /**
      * Called when the stack has been disconnected
+     *
      * @param stack
      */
     public void disconnected(TinkerforgeStack stack);

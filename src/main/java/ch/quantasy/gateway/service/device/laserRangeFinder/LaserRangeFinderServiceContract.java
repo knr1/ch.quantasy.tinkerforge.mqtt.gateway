@@ -65,14 +65,14 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
     public final String STATUS_DISTANCE_CALLBACK_PERIOD;
     public final String EVENT_DISTANCE;
     public final String EVENT_DISTANCE_REACHED;
- 
+
     public final String VELOCITY;
     public final String STATUS_VELOCITY;
     public final String STATUS_VELOCITY_THRESHOLD;
     public final String STATUS_VELOCITY_CALLBACK_PERIOD;
     public final String EVENT_VELOCITY;
     public final String EVENT_VELOCITY_REACHED;
- 
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String STATUS_DEBOUNCE_PERIOD;
@@ -87,7 +87,7 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
     public final String STATUS_DEVICE_MODE;
 
     public final String DEVICE_CONFIGURATION;
-     public final String STATUS_DEVICE_CONFIGURATION;
+    public final String STATUS_DEVICE_CONFIGURATION;
 
     public final String SENSOR_HARDWARE_VERSION;
     public final String STATUS_SENSOR_HARDWARE_VERSION;
@@ -101,7 +101,7 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
     }
 
     public LaserRangeFinderServiceContract(String id, String device) {
-        super(id, device,LaserRangeFinderIntent.class);
+        super(id, device, LaserRangeFinderIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -114,18 +114,18 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
         STATUS_DISTANCE_CALLBACK_PERIOD = STATUS_DISTANCE_VALUE + "/" + CALLBACK_PERIOD;
         EVENT_DISTANCE = EVENT + "/" + DISTANCE;
         EVENT_DISTANCE_REACHED = EVENT_DISTANCE + "/" + REACHED;
-     
+
         VELOCITY = "velocity";
         STATUS_VELOCITY = STATUS + "/" + VELOCITY;
         STATUS_VELOCITY_THRESHOLD = STATUS_VELOCITY + "/" + THRESHOLD;
         STATUS_VELOCITY_CALLBACK_PERIOD = STATUS_VELOCITY + "/" + CALLBACK_PERIOD;
         EVENT_VELOCITY = EVENT + "/" + VELOCITY;
         EVENT_VELOCITY_REACHED = EVENT_VELOCITY + "/" + REACHED;
-     
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
-    
+
         LASER = "laser";
         STATUS_LASER = STATUS + "/" + LASER;
 
@@ -136,7 +136,7 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
         STATUS_DEVICE_MODE = STATUS + "/" + DEVICE_MODE;
 
         DEVICE_CONFIGURATION = "deviceConfiguration";
-       STATUS_DEVICE_CONFIGURATION = STATUS + "/" + DEVICE_CONFIGURATION;
+        STATUS_DEVICE_CONFIGURATION = STATUS + "/" + DEVICE_CONFIGURATION;
 
         SENSOR_HARDWARE_VERSION = "sensorHardwareVersion";
         STATUS_SENSOR_HARDWARE_VERSION = STATUS + "/" + SENSOR_HARDWARE_VERSION;
@@ -144,7 +144,7 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-       
+
         descriptions.put(EVENT_DISTANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4000]");
         descriptions.put(EVENT_VELOCITY, "- timestamp: [-127.." + Long.MAX_VALUE + "]\n  value: [0..127]");
         descriptions.put(EVENT_DISTANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4000]");

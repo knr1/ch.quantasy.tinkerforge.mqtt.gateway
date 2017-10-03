@@ -43,6 +43,7 @@ package ch.quantasy.gateway.intent.rotaryEncoder;
 
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -51,11 +52,14 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class RotaryEncoderIntent extends AnIntent {
 
+    @Nullable
     public Boolean countReset;
-    
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     @Period
     public Long countCallbackPeriod;
+    @Nullable
     public DeviceCountCallbackThreshold countThreshold;
 }

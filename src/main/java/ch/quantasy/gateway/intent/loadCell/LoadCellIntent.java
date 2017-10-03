@@ -45,6 +45,7 @@ import ch.quantasy.gateway.intent.linearPoti.*;
 import ch.quantasy.gateway.intent.humidity.*;
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 import ch.quantasy.gateway.intent.annotations.Range;
 
@@ -54,16 +55,24 @@ import ch.quantasy.gateway.intent.annotations.Range;
  */
 public class LoadCellIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     @Period
     public Long weightCallbackPeriod;
+    @Nullable
     public DeviceWeightCallbackThreshold weightCallbackThreshold;
+    @Nullable
     @Range(from = 1, to = 40)
     public Short movingAverage;
+    @Nullable
     public Boolean statusLED;
+    @Nullable
     public Boolean tare;
+    @Nullable
     public Long calibrate;
+    @Nullable
     public DeviceConfiguration configuration;
 
 }

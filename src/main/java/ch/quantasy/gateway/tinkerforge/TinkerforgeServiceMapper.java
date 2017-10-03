@@ -144,9 +144,9 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author reto
  */
-public class TinkerforgeServiceMapper{
+public class TinkerforgeServiceMapper {
 
-    public static AbstractService getService(TinkerforgeDevice tinkerforgeDevice, URI mqttURI) throws MqttException{
+    public static AbstractService getService(TinkerforgeDevice tinkerforgeDevice, URI mqttURI) throws MqttException {
         if (tinkerforgeDevice instanceof HumidityDevice) {
             return new HumidityService((HumidityDevice) tinkerforgeDevice, mqttURI);
         }

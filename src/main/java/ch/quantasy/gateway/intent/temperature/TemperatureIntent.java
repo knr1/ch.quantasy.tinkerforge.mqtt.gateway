@@ -41,9 +41,8 @@
  */
 package ch.quantasy.gateway.intent.temperature;
 
-import ch.quantasy.gateway.intent.ptc.*;
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -52,13 +51,17 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class TemperatureIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     @Period
     public Long temperatureCallbackPeriod;
+    @Nullable
     @Period
     public Long resistanceCallbackPeriod;
+    @Nullable
     public DeviceTemperatureCallbackThreshold temperatureThreshold;
-    
+    @Nullable
     public DeviceI2CMode mode;
 }

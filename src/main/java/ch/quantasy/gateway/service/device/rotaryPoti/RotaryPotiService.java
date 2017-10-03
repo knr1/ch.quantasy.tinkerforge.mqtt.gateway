@@ -62,8 +62,6 @@ public class RotaryPotiService extends AbstractDeviceService<RotaryPotiDevice, R
         super(mqttURI, device, new RotaryPotiServiceContract(device));
     }
 
-   
-
     @Override
     public void analogValue(int i) {
         publishEvent(getContract().EVENT_ANALOG_VALUE, i);

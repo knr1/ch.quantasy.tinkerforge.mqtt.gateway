@@ -41,11 +41,9 @@
  */
 package ch.quantasy.gateway.intent.co2;
 
-import ch.quantasy.gateway.intent.barometer.*;
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
-import ch.quantasy.gateway.intent.annotations.Range;
 
 /**
  *
@@ -53,11 +51,13 @@ import ch.quantasy.gateway.intent.annotations.Range;
  */
 public class CO2Intent extends AnIntent {
 
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     @Period
     public Long co2ConcentrationCallbackPeriod;
-
+    @Nullable
     public DeviceCO2ConcentrationCallbackThreshold co2ConcentrationCallbackThreshold;
 
 }

@@ -41,12 +41,9 @@
  */
 package ch.quantasy.gateway.intent.color;
 
-import ch.quantasy.gateway.intent.co2.*;
-import ch.quantasy.gateway.intent.barometer.*;
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
-import ch.quantasy.gateway.intent.annotations.Range;
 
 /**
  *
@@ -54,16 +51,23 @@ import ch.quantasy.gateway.intent.annotations.Range;
  */
 public class ColorIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long colorCallbackPeriod;
+    @Nullable
     @Period
     public Long illuminanceCallbackPeriod;
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     @Period
     public Long colorTemperatureCallbackPeriod;
-    public DeviceColorCallbackThreshold colorCallbackThreshold;    
+    @Nullable
+    public DeviceColorCallbackThreshold colorCallbackThreshold;
+    @Nullable
     public DeviceConfiguration config;
+    @Nullable
     public Boolean light;
 
 }

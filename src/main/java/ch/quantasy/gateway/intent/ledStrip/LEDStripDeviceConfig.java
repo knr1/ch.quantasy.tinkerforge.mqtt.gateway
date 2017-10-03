@@ -139,9 +139,9 @@ public class LEDStripDeviceConfig extends AValidator {
     private ChipType chipType;
     @Range(from = 0)
     private int frameDurationInMilliseconds;
-    @Range(from = 10000, to=2000000)
+    @Range(from = 10000, to = 2000000)
     private long clockFrequencyOfICsInHz;
-    @Range(from = 0, to=320)
+    @Range(from = 0, to = 320)
     private int numberOfLEDs;
     @NonNull
     private ChannelMapping channelMapping;

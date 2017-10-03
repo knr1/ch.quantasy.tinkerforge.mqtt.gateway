@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.intent.thermoCouple;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -51,11 +51,15 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class ThermoCoupleIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     public DeviceConfiguration configuration;
+    @Nullable
     @Period
     public Long temperatureCallbackPeriod;
+    @Nullable
     public DeviceTemperatureCallbackThreshold temperatureCallbackThreshold;
 
 }

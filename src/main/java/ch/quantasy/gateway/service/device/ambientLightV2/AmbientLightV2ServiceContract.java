@@ -65,7 +65,7 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
     public final String STATUS_ILLUMINANCE_CALLBACK_PERIOD;
     public final String EVENT_IllUMINANCE;
     public final String EVENT_ILLUMINANCE_REACHED;
- 
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
@@ -74,7 +74,7 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
 
     public final String CONFIGURATION;
     public final String STATUS_CONFIGURATION;
-  
+
     public AmbientLightV2ServiceContract(AmbientLightV2Device device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -84,7 +84,7 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
     }
 
     public AmbientLightV2ServiceContract(String id, String device) {
-        super(id, device,AmbientLightV2Intent.class);
+        super(id, device, AmbientLightV2Intent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -98,21 +98,21 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
         STATUS_ILLUMINANCE_CALLBACK_PERIOD = STATUS_ILLUMINANCE + "/" + CALLBACK_PERIOD;
         EVENT_IllUMINANCE = EVENT + "/" + ILLUMINANCE;
         EVENT_ILLUMINANCE_REACHED = EVENT_IllUMINANCE + "/" + REACHED;
-    
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
         INTENT_DEBOUNCE = INTENT + "/" + DEBOUNCE;
-    
+
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-    
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-       
+
         descriptions.put(EVENT_IllUMINANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..100000]\n");
         descriptions.put(EVENT_ILLUMINANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..100000]\n");
         descriptions.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

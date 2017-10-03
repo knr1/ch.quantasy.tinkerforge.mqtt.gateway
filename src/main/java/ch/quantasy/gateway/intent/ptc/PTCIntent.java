@@ -44,6 +44,7 @@ package ch.quantasy.gateway.intent.ptc;
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
 import ch.quantasy.gateway.intent.annotations.Choice;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -52,15 +53,22 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class PTCIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     @Choice(values = {"2", "3", "4"})
     public Short wireMode;
+    @Nullable
     @Period
     public Long temperatureCallbackPeriod;
+    @Nullable
     @Period
     public Long resistanceCallbackPeriod;
+    @Nullable
     public DeviceTemperatureCallbackThreshold temperatureThreshold;
+    @Nullable
     public DeviceResistanceCallbackThreshold resistanceThreshold;
+    @Nullable
     public DeviceNoiseReductionFilter noiseReductionFilter;
 }

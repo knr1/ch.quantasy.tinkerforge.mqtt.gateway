@@ -94,7 +94,7 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
         if (intent.connect) {
             manager.addStack(intent.address);
         }
-        if(!intent.connect){
+        if (!intent.connect) {
             manager.removeStack(intent.address);
             //System.out.println(">>" + getMapper().readValue(payload, String.class));
         }
@@ -163,7 +163,6 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
 //        }
 //        publishStatus(topic, connection + "updated");
 //    }
-
     @Override
     public void connected(TinkerforgeDevice device) {
         String topic = getContract().STATUS_DEVICE + "/" + device.getStack().getStackAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();

@@ -87,18 +87,18 @@ public class AlarmParamter extends AValidator {
         }
     }
 
-    @Range(from = 1,to = 12)
+    @Range(from = 1, to = 12)
     private byte month;
-    @Range(from = 1,to = 31)
+    @Range(from = 1, to = 31)
     private byte day;
-    @Range(from = 0,to = 23)
+    @Range(from = 0, to = 23)
     private byte hour;
-    @Range(from = 0,to = 59)
+    @Range(from = 0, to = 59)
     private byte minute;
-    @Range(from = 0,to = 59)
+    @Range(from = 0, to = 59)
     private byte second;
     private WeekDay weekday;
-    @Range(from=-1,to=Integer.MAX_VALUE)
+    @Range(from = -1, to = Integer.MAX_VALUE)
     private int interval;
 
     private AlarmParamter() {

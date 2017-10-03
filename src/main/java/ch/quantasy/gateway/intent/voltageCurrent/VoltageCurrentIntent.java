@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.intent.voltageCurrent;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -51,18 +51,27 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class VoltageCurrentIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     public DeviceConfiguration configuration;
+    @Nullable
     @Period
     public Long currentCallbackPeriod;
+    @Nullable
     public DeviceVoltagCallbackThreshold voltageCallbackThreshold;
+    @Nullable
     @Period
     public Long voltageCallbackPeriod;
+    @Nullable
     @Period
     public Long powerCallbackPeriod;
+    @Nullable
     public DevicePowerCallbackThreshold powerCallbackThreshold;
+    @Nullable
     public DeviceCurrentCallbackThreshold currentCalbackThreshold;
+    @Nullable
     public DeviceCalibration calibration;
 
 }

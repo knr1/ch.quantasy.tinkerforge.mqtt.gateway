@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletLaserRangeFinder;
  *
  * @author reto
  */
-public class DeviceConfiguration extends AValidator{
+public class DeviceConfiguration extends AValidator {
 
     @Range(from = 1, to = 255)
     private short aquisitionCount;
@@ -59,7 +59,9 @@ public class DeviceConfiguration extends AValidator{
     private boolean quickTermination;
     @Range(from = 0, to = 255)
     private short thresholdValue;
-    @Ranges(values = {@Range(from=0,to=0),@Range(from = 10, to = 500)})
+    @Ranges(values = {
+        @Range(from = 0, to = 0)
+        ,@Range(from = 10, to = 500)})
     private int measurementFrequency;
 
     private DeviceConfiguration() {

@@ -83,7 +83,7 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
     }
 
     public DistanceUSServiceContract(String id, String device) {
-        super(id, device,DistanceUSIntent.class);
+        super(id, device, DistanceUSIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -97,20 +97,20 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
         STATUS_DISTANCE_CALLBACK_PERIOD = STATUS_DISTANCE + "/" + CALLBACK_PERIOD;
         EVENT_DISTANCE = EVENT + "/" + DISTANCE;
         EVENT_DISTANCE_REACHED = EVENT_DISTANCE + "/" + REACHED;
-       
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-      
+
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-      
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-       
+
         descriptions.put(EVENT_DISTANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [[0..4095]");
         descriptions.put(EVENT_DISTANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

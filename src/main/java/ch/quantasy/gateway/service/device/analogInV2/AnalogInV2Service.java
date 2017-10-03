@@ -62,7 +62,6 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
 
     }
 
-  
     @Override
     public void analogValue(int i) {
 

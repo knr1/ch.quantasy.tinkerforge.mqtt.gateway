@@ -56,12 +56,10 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class DistanceUSDevice extends GenericDevice<BrickletDistanceUS, DistanceUSDeviceCallback,DistanceUSIntent> {
-
-    
+public class DistanceUSDevice extends GenericDevice<BrickletDistanceUS, DistanceUSDeviceCallback, DistanceUSIntent> {
 
     public DistanceUSDevice(TinkerforgeStack stack, BrickletDistanceUS device) throws NotConnectedException, TimeoutException {
-        super(stack, device,new DistanceUSIntent());
+        super(stack, device, new DistanceUSIntent());
     }
 
     @Override
@@ -76,7 +74,7 @@ public class DistanceUSDevice extends GenericDevice<BrickletDistanceUS, Distance
         device.removeDistanceReachedListener(super.getCallback());
     }
 
-     @Override
+    @Override
     public void update(DistanceUSIntent intent) {
         if (intent == null) {
             return;
@@ -93,31 +91,34 @@ public class DistanceUSDevice extends GenericDevice<BrickletDistanceUS, Distance
             } catch (TimeoutException | NotConnectedException ex) {
                 Logger.getLogger(DistanceUSDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }if(intent.distanceCallbackPeriod!=null){
-        try {
-            getDevice().setDistanceCallbackPeriod(intent.distanceCallbackPeriod);
-            getIntent().distanceCallbackPeriod = getDevice().getDistanceCallbackPeriod();
-            super.getCallback().distanceCallbackPeriodChanged(getIntent().distanceCallbackPeriod);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DistanceUSDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }if(intent.distanceCallbackThreshold!=null){
-        try {
-            getDevice().setDistanceCallbackThreshold(intent.distanceCallbackThreshold.getOption(), intent.distanceCallbackThreshold.getMin(), intent.distanceCallbackThreshold.getMax());
-            getIntent().distanceCallbackThreshold = new DeviceDistanceCallbackThreshold(getDevice().getDistanceCallbackThreshold());
-            super.getCallback().distanceCallbackThresholdChanged(getIntent().distanceCallbackThreshold);
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DistanceUSDevice.class.getName()).log(Level.SEVERE, null, ex);
+        if (intent.distanceCallbackPeriod != null) {
+            try {
+                getDevice().setDistanceCallbackPeriod(intent.distanceCallbackPeriod);
+                getIntent().distanceCallbackPeriod = getDevice().getDistanceCallbackPeriod();
+                super.getCallback().distanceCallbackPeriodChanged(getIntent().distanceCallbackPeriod);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DistanceUSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }if(intent.movingAverage!=null){
-        try {
-            getDevice().setMovingAverage(intent.movingAverage);
-            getIntent().movingAverage = getDevice().getMovingAverage();
-            super.getCallback().movingAverageChanged(getIntent().movingAverage);
+        if (intent.distanceCallbackThreshold != null) {
+            try {
+                getDevice().setDistanceCallbackThreshold(intent.distanceCallbackThreshold.getOption(), intent.distanceCallbackThreshold.getMin(), intent.distanceCallbackThreshold.getMax());
+                getIntent().distanceCallbackThreshold = new DeviceDistanceCallbackThreshold(getDevice().getDistanceCallbackThreshold());
+                super.getCallback().distanceCallbackThresholdChanged(getIntent().distanceCallbackThreshold);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DistanceUSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (intent.movingAverage != null) {
+            try {
+                getDevice().setMovingAverage(intent.movingAverage);
+                getIntent().movingAverage = getDevice().getMovingAverage();
+                super.getCallback().movingAverageChanged(getIntent().movingAverage);
 
-        } catch (TimeoutException | NotConnectedException ex) {
-            Logger.getLogger(DistanceUSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TimeoutException | NotConnectedException ex) {
+                Logger.getLogger(DistanceUSDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
     }
 }

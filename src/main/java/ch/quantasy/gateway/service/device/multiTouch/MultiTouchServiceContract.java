@@ -60,14 +60,14 @@ public class MultiTouchServiceContract extends DeviceServiceContract {
     public final String CONFIG;
     public final String ELECTRODE_CONFIG;
     public final String STATUS_ELECTRODE_SENSITIVITY;
-   
+
     public final String TOUCH_STATE;
     public final String STATUS_ELECTRODE_CONFIG;
     public final String EVENT_TOUCH_STATE;
     public final String RECALIBRATE;
     public final String RECALIBRATED;
     public final String EVENT_RECALIBRATED;
-   
+
     public MultiTouchServiceContract(MultiTouchDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -77,14 +77,14 @@ public class MultiTouchServiceContract extends DeviceServiceContract {
     }
 
     public MultiTouchServiceContract(String id, String device) {
-        super(id, device,MultiTouchIntent.class);
+        super(id, device, MultiTouchIntent.class);
 
         ELECTRODE = "electrode";
         SENSITIVITY = "sensitivity";
         CONFIG = "config";
         ELECTRODE_SENSITIVITY = ELECTRODE + "/" + SENSITIVITY;
         ELECTRODE_CONFIG = ELECTRODE + "/" + CONFIG;
-         STATUS_ELECTRODE_CONFIG = STATUS + "/" + ELECTRODE_CONFIG;
+        STATUS_ELECTRODE_CONFIG = STATUS + "/" + ELECTRODE_CONFIG;
         STATUS_ELECTRODE_SENSITIVITY = STATUS + "/" + ELECTRODE_SENSITIVITY;
 
         TOUCH_STATE = "touchState";
@@ -92,11 +92,11 @@ public class MultiTouchServiceContract extends DeviceServiceContract {
         RECALIBRATE = "recalibration";
         RECALIBRATED = "recalibrated";
         EVENT_RECALIBRATED = EVENT + "/" + RECALIBRATED;
-       }
+    }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        
+
         descriptions.put(EVENT_TOUCH_STATE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..8191]");
         descriptions.put(EVENT_RECALIBRATED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
 

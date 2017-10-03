@@ -61,8 +61,6 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
 
     }
 
-   
-
     @Override
     public void debouncePeriodChanged(long period) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);

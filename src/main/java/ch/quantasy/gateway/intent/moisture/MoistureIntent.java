@@ -44,6 +44,7 @@ package ch.quantasy.gateway.intent.moisture;
 import ch.quantasy.gateway.intent.line.*;
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 import ch.quantasy.gateway.intent.annotations.Range;
 
@@ -53,12 +54,15 @@ import ch.quantasy.gateway.intent.annotations.Range;
  */
 public class MoistureIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     @Period
     public Long moistureCallbackPeriod;
+    @Nullable
     @Range(from = 0, to = 100)
     public Short movingAverage;
-
+    @Nullable
     public DeviceMoistureCallbackThreshold moistureCallbackThreshold;
 }

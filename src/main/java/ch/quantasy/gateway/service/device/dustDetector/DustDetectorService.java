@@ -60,8 +60,6 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
         super(mqttURI, device, new DustDetectorServiceContract(device));
     }
 
-  
-
     @Override
     public void debouncePeriodChanged(long period) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);

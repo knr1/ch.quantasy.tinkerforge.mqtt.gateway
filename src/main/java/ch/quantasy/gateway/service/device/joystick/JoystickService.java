@@ -62,8 +62,6 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
         super(mqttURI, device, new JoystickServiceContract(device));
     }
 
-    
-
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
         publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);

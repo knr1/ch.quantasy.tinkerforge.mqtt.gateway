@@ -61,7 +61,6 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
         super(mqttURI, device, new NFCServiceContract(device));
     }
 
-    
     @Override
     public void scanningCallbackPeriodChanged(long period) {
         publishStatus(getContract().STATUS_SCANNING_CALLBACK_PERIOD, period);

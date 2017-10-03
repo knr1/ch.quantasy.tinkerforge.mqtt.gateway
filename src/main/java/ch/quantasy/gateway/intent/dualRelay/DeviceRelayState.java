@@ -49,7 +49,7 @@ import com.tinkerforge.BrickletDualRelay;
  *
  * @author reto
  */
-public class DeviceRelayState extends AValidator{
+public class DeviceRelayState extends AValidator {
 
     private boolean relay1;
     private boolean relay2;

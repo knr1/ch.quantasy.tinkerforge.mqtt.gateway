@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletTemperatureIR;
  *
  * @author reto
  */
-public class DeviceObjectTemperatureCallbackThreshold extends AValidator{
+public class DeviceObjectTemperatureCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
@@ -81,10 +81,8 @@ public class DeviceObjectTemperatureCallbackThreshold extends AValidator{
         return max;
     }
 
-
     public char getOption() {
         return option;
     }
 
-    
 }

@@ -65,7 +65,7 @@ public class ThermoCoupleServiceContract extends DeviceServiceContract {
     public final String STATUS_TEMPERATURE_CALLBACK_PERIOD;
     public final String EVENT_TEMPERATURE;
     public final String EVENT_TEMPERATURE_REACHED;
-    
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
@@ -73,7 +73,7 @@ public class ThermoCoupleServiceContract extends DeviceServiceContract {
 
     public final String CONFIGURATION;
     public final String STATUS_CONFIGURATION;
-    
+
     public final String ERROR;
     public final String EVENT_ERROR;
 
@@ -86,7 +86,7 @@ public class ThermoCoupleServiceContract extends DeviceServiceContract {
     }
 
     public ThermoCoupleServiceContract(String id, String device) {
-        super(id, device,ThermoCoupleIntent.class);
+        super(id, device, ThermoCoupleIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -100,22 +100,22 @@ public class ThermoCoupleServiceContract extends DeviceServiceContract {
         STATUS_TEMPERATURE_CALLBACK_PERIOD = STATUS_TEMPERATURE + "/" + CALLBACK_PERIOD;
         EVENT_TEMPERATURE = EVENT + "/" + TEMPERATURE;
         EVENT_TEMPERATURE_REACHED = EVENT_TEMPERATURE + "/" + REACHED;
-    
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-    
+
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-    
+
         ERROR = "error";
         EVENT_ERROR = EVENT + "/" + ERROR;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-    
+
         descriptions.put(EVENT_TEMPERATURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-21000..180000]");
         descriptions.put(EVENT_TEMPERATURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-21000..180000]");
         descriptions.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

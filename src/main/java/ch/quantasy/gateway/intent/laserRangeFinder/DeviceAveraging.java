@@ -50,7 +50,7 @@ import com.tinkerforge.BrickletLaserRangeFinder;
  *
  * @author reto
  */
-public class DeviceAveraging extends AValidator{
+public class DeviceAveraging extends AValidator {
 
     @Range(from = 0, to = 30)
     private short averagingDistance;

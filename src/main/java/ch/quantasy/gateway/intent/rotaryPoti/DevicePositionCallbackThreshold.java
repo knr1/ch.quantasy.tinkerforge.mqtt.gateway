@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletRotaryPoti;
  *
  * @author reto
  */
-public class DevicePositionCallbackThreshold extends AValidator{
+public class DevicePositionCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

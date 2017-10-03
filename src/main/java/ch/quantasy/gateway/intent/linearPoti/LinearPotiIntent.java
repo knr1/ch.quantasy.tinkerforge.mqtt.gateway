@@ -41,9 +41,8 @@
  */
 package ch.quantasy.gateway.intent.linearPoti;
 
-import ch.quantasy.gateway.intent.humidity.*;
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -52,14 +51,18 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class LinearPotiIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long analogCallbackPeriod;
+    @Nullable
     @Period
     public Long positionCallbackPeriod;
+    @Nullable
     @Period
     public Long debouncePeriod;
-
+    @Nullable
     public DeviceAnalogValueCallbackThreshold analogValueCallbackThreshold;
+    @Nullable
     public DevicePositionCallbackThreshold positionCallbackThreshold;
 
 }

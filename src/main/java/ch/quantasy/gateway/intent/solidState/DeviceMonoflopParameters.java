@@ -50,7 +50,7 @@ import com.tinkerforge.BrickletSolidStateRelay;
  *
  * @author reto
  */
-public class DeviceMonoflopParameters extends AValidator{
+public class DeviceMonoflopParameters extends AValidator {
 
     private boolean state;
     @Period

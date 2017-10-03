@@ -61,9 +61,6 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
         super(mqttURI, device, new PiezoSpeakerServiceContract(device));
     }
 
-    
-
-
     @Override
     public void beepInvoked(BeepParameter beepParameter) {
         publishEvent(getContract().EVENT_BEEP_STARTED, true);

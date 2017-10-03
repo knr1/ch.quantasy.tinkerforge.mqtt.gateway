@@ -42,14 +42,16 @@
 package ch.quantasy.gateway.intent.AnalogOutV2;
 
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Range;
 
 /**
  *
  * @author reto
  */
-public class AnalogOutV2Intent extends AnIntent{
+public class AnalogOutV2Intent extends AnIntent {
 
+    @Nullable
     @Range(from = 0, to = 12000)
     public Integer outputVoltage;
 

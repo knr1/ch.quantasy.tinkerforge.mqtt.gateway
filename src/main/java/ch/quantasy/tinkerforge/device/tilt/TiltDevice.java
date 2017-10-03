@@ -54,10 +54,10 @@ import com.tinkerforge.TimeoutException;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class TiltDevice extends GenericDevice<BrickletTilt, TiltDeviceCallback,Intent> {
+public class TiltDevice extends GenericDevice<BrickletTilt, TiltDeviceCallback, Intent> {
 
     public TiltDevice(TinkerforgeStack stack, BrickletTilt device) throws NotConnectedException, TimeoutException {
-        super(stack, device,null);
+        super(stack, device, null);
     }
 
     @Override

@@ -51,9 +51,9 @@ import com.tinkerforge.BrickletVoltageCurrent;
  *
  * @author reto
  */
-public class DeviceConfiguration extends AValidator{
+public class DeviceConfiguration extends AValidator {
 
-    public static enum Averaging implements Validator{
+    public static enum Averaging implements Validator {
         AVERAGING_1((short) 0), AVERAGING_4((short) 1), AVERAGING_16((short) 2), AVERAGING_64((short) 3), AVERAGING_128((short) 4), AVERAGING_256((short) 5), AVERAGING_512((short) 6), AVERAGING_1024((short) 7),;
         private short value;
 
@@ -73,6 +73,7 @@ public class DeviceConfiguration extends AValidator{
             }
             throw new IllegalArgumentException("Not supported: " + s);
         }
+
         @Override
         public boolean isValid() {
             try {
@@ -82,10 +83,10 @@ public class DeviceConfiguration extends AValidator{
                 return false;
             }
         }
-        
+
     }
 
-    public static enum Conversion implements Validator{
+    public static enum Conversion implements Validator {
         CONVERSION_140us((short) 0), CONVERSION_204us((short) 1), CONVERSION_332us((short) 2), CONVERSION_588us((short) 3), CONVERSION_1100us((short) 4), CONVERSION_2116us((short) 5), CONVERSION_4156us((short) 6), CONVERSION_8244us((short) 7);
         private short value;
 
@@ -105,6 +106,7 @@ public class DeviceConfiguration extends AValidator{
             }
             throw new IllegalArgumentException("Not supported: " + s);
         }
+
         @Override
         public boolean isValid() {
             try {

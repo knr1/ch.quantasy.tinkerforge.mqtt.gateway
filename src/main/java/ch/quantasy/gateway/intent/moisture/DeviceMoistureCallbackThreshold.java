@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletMoisture;
  *
  * @author reto
  */
-public class DeviceMoistureCallbackThreshold extends AValidator{
+public class DeviceMoistureCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
@@ -59,7 +59,6 @@ public class DeviceMoistureCallbackThreshold extends AValidator{
     private int min;
     @Range(from = 0, to = 4095)
     private int max;
-
 
     public DeviceMoistureCallbackThreshold() {
     }

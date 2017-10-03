@@ -61,7 +61,7 @@ public class Segment4x7ServiceContract extends DeviceServiceContract {
     public final String EVENT_COUNTER_FINISHED;
 
     public final String COUNTER;
-   
+
     public final String SEGMENTS;
     public final String STATUS_SEGMENTS;
 
@@ -74,13 +74,13 @@ public class Segment4x7ServiceContract extends DeviceServiceContract {
     }
 
     public Segment4x7ServiceContract(String id, String device) {
-        super(id, device,Segment4x7Intent.class);
+        super(id, device, Segment4x7Intent.class);
 
         SEGMENTS = "segments";
         STATUS_SEGMENTS = STATUS + "/" + SEGMENTS;
 
         COUNTER = "counter";
-      
+
         COUNTER_STARTED = COUNTER + "Started";
         EVENT_COUNTER_STARTED = EVENT + "/" + COUNTER_STARTED;
 
@@ -92,7 +92,6 @@ public class Segment4x7ServiceContract extends DeviceServiceContract {
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-    
         descriptions.put(EVENT_COUNTER_STARTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
         descriptions.put(EVENT_COUNTER_FINISHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
 

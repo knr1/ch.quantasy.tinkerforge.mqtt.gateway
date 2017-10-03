@@ -61,8 +61,6 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
         super(mqttURI, device, new RotaryEncoderServiceContract(device));
     }
 
-   
-
     @Override
     public void count(int i) {
         publishEvent(getContract().EVENT_COUNT, i);

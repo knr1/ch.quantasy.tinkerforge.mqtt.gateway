@@ -50,7 +50,7 @@ import com.tinkerforge.BrickletBarometer;
  *
  * @author reto
  */
-public class DeviceAveraging extends AValidator{
+public class DeviceAveraging extends AValidator {
 
     @Range(from = 0, to = 10)
     private short averagingPressure;

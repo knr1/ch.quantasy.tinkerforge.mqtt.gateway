@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletLoadCell;
  *
  * @author reto
  */
-public class DeviceWeightCallbackThreshold extends AValidator{
+public class DeviceWeightCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

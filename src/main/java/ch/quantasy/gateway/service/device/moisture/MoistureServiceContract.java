@@ -66,7 +66,7 @@ public class MoistureServiceContract extends DeviceServiceContract {
     public final String STATUS_MOISTURE_CALLBACK_PERIOD;
     public final String EVENT_MOISTURE;
     public final String EVENT_MOISTURE_REACHED;
-   
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
@@ -74,7 +74,7 @@ public class MoistureServiceContract extends DeviceServiceContract {
 
     public final String MOVING_AVERAGE;
     public final String STATUS_MOVING_AVERAGE;
-   
+
     public MoistureServiceContract(MoistureDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -84,7 +84,7 @@ public class MoistureServiceContract extends DeviceServiceContract {
     }
 
     public MoistureServiceContract(String id, String device) {
-        super(id, device,MoistureIntent.class);
+        super(id, device, MoistureIntent.class);
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";
@@ -98,19 +98,19 @@ public class MoistureServiceContract extends DeviceServiceContract {
         STATUS_MOISTURE_CALLBACK_PERIOD = STATUS_MOISTURE + "/" + CALLBACK_PERIOD;
         EVENT_MOISTURE = EVENT + "/" + MOISTURE;
         EVENT_MOISTURE_REACHED = EVENT_MOISTURE + REACHED_TOPIC;
-    
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-   
+
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-    
+
         descriptions.put(EVENT_MOISTURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(EVENT_MOISTURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(STATUS_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

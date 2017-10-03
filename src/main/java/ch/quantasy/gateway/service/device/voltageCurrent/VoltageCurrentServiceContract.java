@@ -114,7 +114,7 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
     }
 
     public VoltageCurrentServiceContract(String id, String device) {
-        super(id, device,VoltageCurrentIntent.class);
+        super(id, device, VoltageCurrentIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";

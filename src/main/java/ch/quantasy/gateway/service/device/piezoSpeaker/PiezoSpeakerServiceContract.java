@@ -60,7 +60,7 @@ public class PiezoSpeakerServiceContract extends DeviceServiceContract {
     public final String CALIBRATED;
     public final String STARTED;
     public final String FINISHED;
-     public final String EVENT_CALIBRATED;
+    public final String EVENT_CALIBRATED;
     public final String EVENT_BEEP_STARTED;
     public final String EVENT_BEEP_FINISHED;
     public final String EVENT_MORSE_STARTED;
@@ -75,14 +75,14 @@ public class PiezoSpeakerServiceContract extends DeviceServiceContract {
     }
 
     public PiezoSpeakerServiceContract(String id, String device) {
-        super(id, device,PiezoSpeakerIntent.class);
+        super(id, device, PiezoSpeakerIntent.class);
         BEEP = "beep";
         MORSE = "morse";
         CALIBRATE = "calibrate";
         CALIBRATED = "calibrated";
         STARTED = "started";
         FINISHED = "finished";
-       EVENT_CALIBRATED = EVENT + "/" + CALIBRATED;
+        EVENT_CALIBRATED = EVENT + "/" + CALIBRATED;
         EVENT_BEEP_STARTED = EVENT + "/" + STARTED;
         EVENT_BEEP_FINISHED = EVENT + "/" + FINISHED;
         EVENT_MORSE_FINISHED = EVENT + "/" + FINISHED;

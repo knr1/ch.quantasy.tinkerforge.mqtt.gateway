@@ -65,14 +65,14 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
     public final String STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD;
     public final String EVENT_AMBIENT_TEMPERATURE;
     public final String EVENT_AMBIENT_TEMPERATURE_REACHED;
-   
+
     public final String OBJECT_TEMPERATURE;
     public final String STATUS_OBJECT_TEMPERATURE;
     public final String STATUS_OBJECT_TEMPERATURE_THRESHOLD;
     public final String STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD;
     public final String EVENT_OBJECT_TEMPERATURE;
     public final String EVENT_OBJECT_TEMPERATURE_REACHED;
-   
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
@@ -87,7 +87,7 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
     }
 
     public TemperatureIRServiceContract(String id, String device) {
-        super(id, device,TemperatureIRIntent.class);
+        super(id, device, TemperatureIRIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -100,14 +100,14 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
         STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD = STATUS_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
         EVENT_AMBIENT_TEMPERATURE = EVENT + "/" + AMBIENT_TEMPERATURE;
         EVENT_AMBIENT_TEMPERATURE_REACHED = EVENT_AMBIENT_TEMPERATURE + "/" + REACHED;
-   
+
         OBJECT_TEMPERATURE = "objectTemperature";
         STATUS_OBJECT_TEMPERATURE = STATUS + "/" + OBJECT_TEMPERATURE;
         STATUS_OBJECT_TEMPERATURE_THRESHOLD = STATUS_OBJECT_TEMPERATURE + "/" + THRESHOLD;
         STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD = STATUS_OBJECT_TEMPERATURE + "/" + CALLBACK_PERIOD;
         EVENT_OBJECT_TEMPERATURE = EVENT + "/" + OBJECT_TEMPERATURE;
         EVENT_OBJECT_TEMPERATURE_REACHED = EVENT_OBJECT_TEMPERATURE + "/" + REACHED;
-   
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;

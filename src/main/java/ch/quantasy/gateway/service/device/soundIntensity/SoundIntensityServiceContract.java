@@ -65,7 +65,7 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
     public final String STATUS_SOUND_INTENSITY_CALLBACK_PERIOD;
     public final String EVENT_INTENSITY;
     public final String EVENT_INTENSITY_REACHED;
-    
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
@@ -80,7 +80,7 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
     }
 
     public SoundIntensityServiceContract(String id, String device) {
-        super(id, device,SoundIntensityIntent.class);
+        super(id, device, SoundIntensityIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -94,7 +94,7 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
         STATUS_SOUND_INTENSITY_CALLBACK_PERIOD = STATUS_SOUND_INTENSITY + "/" + CALLBACK_PERIOD;
         EVENT_INTENSITY = EVENT + "/" + SOUND_INTENSITY;
         EVENT_INTENSITY_REACHED = EVENT_INTENSITY + "/" + REACHED;
-    
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
@@ -103,7 +103,7 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-    
+
         descriptions.put(EVENT_INTENSITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
         descriptions.put(EVENT_INTENSITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
         descriptions.put(STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

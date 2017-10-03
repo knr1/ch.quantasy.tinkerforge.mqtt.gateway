@@ -77,7 +77,7 @@ public class LCD16x2ServiceContract extends DeviceServiceContract {
     }
 
     public LCD16x2ServiceContract(String id, String device) {
-        super(id, device,LCD16x2Intent.class);
+        super(id, device, LCD16x2Intent.class);
 
         BACKLIGHT = "backlight";
         STATUS_BACKLIGHT = STATUS + "/" + BACKLIGHT;

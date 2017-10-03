@@ -65,8 +65,6 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
 
     }
 
-    
-
     @Override
     public void repeatsChanged(short period) {
         publishStatus(getContract().STATUS_REPEATS, period);

@@ -48,7 +48,7 @@ import ch.quantasy.gateway.intent.annotations.Validator;
  *
  * @author reto
  */
-public enum RestartType implements Validator{
+public enum RestartType implements Validator {
     hot((short) 0), warm((short) 1), cold((short) 2), factoryReset((short) 3);
     private final short value;
 
@@ -68,14 +68,14 @@ public enum RestartType implements Validator{
         }
         throw new IllegalArgumentException("Not supported: " + s);
     }
-    
+
     @Override
-        public boolean isValid() {
-            try {
-                getRestartTypeFor(value);
-                return true;
-            } catch (IllegalArgumentException ex) {
-                return false;
-            }
+    public boolean isValid() {
+        try {
+            getRestartTypeFor(value);
+            return true;
+        } catch (IllegalArgumentException ex) {
+            return false;
         }
+    }
 }

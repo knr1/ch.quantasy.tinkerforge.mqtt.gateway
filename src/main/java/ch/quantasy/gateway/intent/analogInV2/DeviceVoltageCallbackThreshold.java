@@ -51,13 +51,13 @@ import com.tinkerforge.BrickletAnalogInV2;
  *
  * @author reto
  */
-public class DeviceVoltageCallbackThreshold extends AValidator{
+public class DeviceVoltageCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
-    @Range(from = 0,to = 42000)
+    @Range(from = 0, to = 42000)
     private int min;
-    @Range(from = 0,to = 42000)
+    @Range(from = 0, to = 42000)
     private int max;
 
     public DeviceVoltageCallbackThreshold() {

@@ -50,9 +50,9 @@ import com.tinkerforge.BrickletLoadCell;
  *
  * @author reto
  */
-public class DeviceConfiguration extends AValidator{
+public class DeviceConfiguration extends AValidator {
 
-    public static enum Gain implements Validator{
+    public static enum Gain implements Validator {
         gain128X((short) 0), gain64X((short) 1), gain32X((short) 2);
         private short value;
 
@@ -72,6 +72,7 @@ public class DeviceConfiguration extends AValidator{
             }
             throw new IllegalArgumentException("Not supported: " + s);
         }
+
         @Override
         public boolean isValid() {
             try {
@@ -83,7 +84,7 @@ public class DeviceConfiguration extends AValidator{
         }
     }
 
-    public static enum Rate implements Validator{
+    public static enum Rate implements Validator {
         rate10Hz((short) 0), rate80Hz((short) 1);
         private short value;
 
@@ -114,7 +115,7 @@ public class DeviceConfiguration extends AValidator{
             }
         }
     }
-    
+
     private Gain gain;
     private Rate rate;
 

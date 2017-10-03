@@ -76,11 +76,11 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-      public final String STATUS_DEBOUNCE_PERIOD;
+    public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String MOVING_AVERAGE;
     public final String STATUS_MOVING_AVERAGE;
-  
+
     public AnalogInV2ServiceContract(AnalogInV2Device device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -90,7 +90,7 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
     }
 
     public AnalogInV2ServiceContract(String id, String device) {
-        super(id, device,AnalogInV2Intent.class);
+        super(id, device, AnalogInV2Intent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -103,28 +103,27 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
         STATUS_ANALOG_VALUE_CALLBACK_PERIOD = STATUS_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
         EVENT_ANALOG_VALUE = EVENT + "/" + ANALOG_VALUE;
         EVENT_ANALOG_VALUE_REACHED = EVENT_ANALOG_VALUE + "/" + REACHED;
-     
-        
+
         VOLTAGE = "voltage";
         STATUS_VOLTAGE = STATUS + "/" + VOLTAGE;
         STATUS_VOLTAGE_THRESHOLD = STATUS_VOLTAGE + "/" + THRESHOLD;
         STATUS_VOLTAGE_CALLBACK_PERIOD = STATUS_VOLTAGE + "/" + CALLBACK_PERIOD;
         EVENT_VOLTAGE = EVENT + "/" + VOLTAGE;
         EVENT_VOLTAGE_REACHED = EVENT_VOLTAGE + "/" + REACHED;
-      
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-     
+
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-     
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-     
+
         descriptions.put(EVENT_ANALOG_VALUE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]\n");
         descriptions.put(EVENT_VOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
         descriptions.put(EVENT_ANALOG_VALUE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]\n");

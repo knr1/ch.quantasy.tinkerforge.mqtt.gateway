@@ -65,7 +65,7 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
     public final String STATUS_ACCELERATION_CALLBACK_PERIOD;
     public final String EVENT_ACCELERATION;
     public final String EVENT_ACCELERATION_REACHED;
-   
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
@@ -73,7 +73,7 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
 
     public final String CONFIGURATION;
     public final String STATUS_CONFIGURATION;
-  
+
     public AccelerometerServiceContract(AccelerometerDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -83,7 +83,7 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
     }
 
     public AccelerometerServiceContract(String id, String device) {
-        super(id, device,AccelerometerIntent.class);
+        super(id, device, AccelerometerIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -97,20 +97,20 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
         STATUS_ACCELERATION_CALLBACK_PERIOD = STATUS_ACCELERATION + "/" + CALLBACK_PERIOD;
         EVENT_ACCELERATION = EVENT + "/" + ACCELERATION;
         EVENT_ACCELERATION_REACHED = EVENT_ACCELERATION + "/" + REACHED;
-   
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
- 
+
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-  
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-       
+
         descriptions.put(EVENT_ACCELERATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n    y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n    z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n");
         descriptions.put(EVENT_ACCELERATION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n    x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n    y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n    z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
 

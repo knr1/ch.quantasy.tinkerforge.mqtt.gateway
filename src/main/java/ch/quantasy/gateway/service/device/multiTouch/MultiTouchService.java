@@ -60,8 +60,6 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
         super(mqttURI, device, new MultiTouchServiceContract(device));
     }
 
-    
-
     @Override
     public void electrodeConfigChanged(Integer electrodeConfig) {
         publishStatus(getContract().STATUS_ELECTRODE_CONFIG, electrodeConfig);

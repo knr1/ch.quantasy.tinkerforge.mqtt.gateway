@@ -82,7 +82,7 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
 
     @Override
     public void update(AmbientLightIntent intent) {
-       if (intent == null) {
+        if (intent == null) {
             return;
         }
         if (!intent.isValid()) {

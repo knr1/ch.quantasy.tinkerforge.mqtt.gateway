@@ -61,8 +61,6 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
         super(mqttURI, device, new RealTimeClockServiceContract(device));
     }
 
-   
-    
     @Override
     public void dateTimeChanged(DateTimeParameter dateTimeParameter) {
         publishStatus(getContract().STATUS_DATE_TIME, dateTimeParameter);

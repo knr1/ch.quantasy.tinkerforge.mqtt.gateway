@@ -56,7 +56,7 @@ public class ServoServiceContract extends DeviceServiceContract {
 
     public final String STATUS_LED;
     public final String STATUS_STATUS_LED;
-    
+
     public final String MINIMUM_VOLTAGE;
     public final String STATUS_MINIMUM_VOLTAGE;
 
@@ -87,11 +87,11 @@ public class ServoServiceContract extends DeviceServiceContract {
     }
 
     public ServoServiceContract(String id, String device) {
-        super(id, device,ServoIntent.class);
+        super(id, device, ServoIntent.class);
 
         STATUS_LED = "statusLED";
         STATUS_STATUS_LED = STATUS + "/" + STATUS_LED;
-    
+
         VELOCITY_REACHED = "velocityReached";
         EVENT_VELOCITY_REACHED = EVENT + "/" + VELOCITY_REACHED;
 
@@ -116,7 +116,7 @@ public class ServoServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-    
+
         descriptions.put(EVENT_POSITION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [0..6]\n    position: [-32767..32767]");
         descriptions.put(EVENT_UNDERVOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Integer.MAX_VALUE + "]");
         descriptions.put(EVENT_VELOCITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [0..6]\n    value: [0.." + Short.MAX_VALUE + "]");

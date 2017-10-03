@@ -41,7 +41,6 @@
  */
 package ch.quantasy.gateway.intent.dualRelay;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
 import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.SetSize;

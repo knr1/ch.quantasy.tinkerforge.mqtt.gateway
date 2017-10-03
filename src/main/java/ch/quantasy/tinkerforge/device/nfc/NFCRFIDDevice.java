@@ -70,7 +70,6 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
     private NFCReader nfcReader;
     private Thread nfcThread;
 
-
     public NFCRFIDDevice(TinkerforgeStack stack, BrickletNFCRFID device) throws NotConnectedException, TimeoutException {
         super(stack, device, new NFCIntent());
         nfcReader = new NFCReader();
@@ -81,7 +80,7 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
         device.addStateChangedListener(nfcReader);
         nfcThread = new Thread(nfcReader);
         nfcThread.start();
-        
+
     }
 
     @Override
@@ -90,7 +89,8 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
         nfcThread.interrupt();
         nfcThread = null;
     }
-@Override
+
+    @Override
     public void update(NFCIntent intent) {
         if (intent == null) {
             return;
@@ -99,17 +99,18 @@ public class NFCRFIDDevice extends GenericDevice<BrickletNFCRFID, NFCRFIDDeviceC
             return;
         }
         if (intent.scanningInterval != null) {
-         nfcReader.interval=intent.scanningInterval;
-         getIntent().scanningInterval=nfcReader.interval;
-         getCallback().scanningCallbackPeriodChanged(getIntent().scanningInterval);
+            nfcReader.interval = intent.scanningInterval;
+            getIntent().scanningInterval = nfcReader.interval;
+            getCallback().scanningCallbackPeriodChanged(getIntent().scanningInterval);
         }
-        if(intent.tagID!=null){
+        if (intent.tagID != null) {
             nfcReader.addActiveTagToRead(intent.tagID);
         }
-        if(intent.nfcWrite!=null){
+        if (intent.nfcWrite != null) {
             nfcReader.addActiveTagToWrite(intent.nfcWrite);
         }
     }
+
     class NFCReader implements Runnable, BrickletNFCRFID.StateChangedListener {
 
         private Map<String, NFCTag> tagMap;

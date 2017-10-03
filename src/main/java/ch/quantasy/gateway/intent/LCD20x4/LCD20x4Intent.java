@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.intent.LCD20x4;
 
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 import ch.quantasy.gateway.intent.annotations.SetSize;
 import java.util.HashSet;
@@ -51,28 +52,31 @@ import java.util.Set;
  *
  * @author reto
  */
-public class LCD20x4Intent extends AnIntent{
+public class LCD20x4Intent extends AnIntent {
 
+    @Nullable
     public Boolean backlight;
+    @Nullable
     public Boolean clearDisplay;
+    @Nullable
     public DeviceConfigParameters parameters;
-
+    @Nullable
     @SetSize(max = 8)
     public Set<DeviceCustomCharacter> customCharacters;
-
+    @Nullable
     @SetSize(max = 4)
     public Set<DeviceDefaultText> defaultTexts;
-
+    @Nullable
     @Period(from = -1, to = Integer.MAX_VALUE)
     public Integer defaultTextCounter;
+    @Nullable
     @SetSize(max = 80)
     public Set<DeviceWriteLine> lines;
-    
-    public LCD20x4Intent(){
+
+    public LCD20x4Intent() {
         this.customCharacters = new HashSet<>();
         this.defaultTexts = new HashSet<>();
-        this.lines=new HashSet<>();
+        this.lines = new HashSet<>();
     }
-    
-    
+
 }

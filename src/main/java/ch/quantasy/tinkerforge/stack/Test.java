@@ -51,18 +51,18 @@ import java.net.Socket;
 public class Test {
 
     public static void main(String[] args) {
-        Socket tmpSocket=null;
-        IPConnection ipConnection=null;
-        while (ipConnection==null) {
+        Socket tmpSocket = null;
+        IPConnection ipConnection = null;
+        while (ipConnection == null) {
             try {
-              //  tmpSocket = new Socket("host_den_es_nicht_gibt", 4223);
-              //  tmpSocket.close();
-              //  System.out.println("Host gibts, dann mach ich jetzt die TF-IPConnection");
+                //  tmpSocket = new Socket("host_den_es_nicht_gibt", 4223);
+                //  tmpSocket.close();
+                //  System.out.println("Host gibts, dann mach ich jetzt die TF-IPConnection");
                 ipConnection = new IPConnection();
                 ipConnection.connect("host_den_es_nicht_gibt", 4223);
             } catch (Exception ex) {
                 //Hier wirds immer wieder rein kommen, da UnknownHostException
-                ipConnection=null;
+                ipConnection = null;
             }
         }
     }

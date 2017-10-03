@@ -65,14 +65,14 @@ public class BarometerServiceContract extends DeviceServiceContract {
     public final String STATUS_AIR_PRESSURE_CALLBACK_PERIOD;
     public final String EVENT_AIR_PRESSURE;
     public final String EVENT_AIR_PRESSURE_REACHED;
-  
+
     public final String ALTITUDE;
     public final String STATUS_ALTITUDE;
     public final String STATUS_ALTITUDE_THRESHOLD;
     public final String STATUS_ALTITUDE_CALLBACK_PERIOD;
     public final String EVENT_ALTITUDE;
     public final String EVENT_ALTITUDE_REACHED;
-  
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
@@ -80,10 +80,10 @@ public class BarometerServiceContract extends DeviceServiceContract {
 
     public final String AVERAGING;
     public final String STATUS_AVERAGING;
-  
+
     public final String REFERENCE_AIR_PRESSURE;
     public final String STATUS_REFERENCE_AIR_PRESSURE;
-  
+
     public BarometerServiceContract(BarometerDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -93,7 +93,7 @@ public class BarometerServiceContract extends DeviceServiceContract {
     }
 
     public BarometerServiceContract(String id, String device) {
-        super(id, device,BarometerIntent.class);
+        super(id, device, BarometerIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -106,29 +106,29 @@ public class BarometerServiceContract extends DeviceServiceContract {
         STATUS_AIR_PRESSURE_CALLBACK_PERIOD = STATUS_AIR_PRESSURE + "/" + CALLBACK_PERIOD;
         EVENT_AIR_PRESSURE = EVENT + "/" + AIR_PRESSURE;
         EVENT_AIR_PRESSURE_REACHED = EVENT_AIR_PRESSURE + "/" + REACHED;
-       
+
         ALTITUDE = "altitude";
         STATUS_ALTITUDE = STATUS + "/" + ALTITUDE;
         STATUS_ALTITUDE_THRESHOLD = STATUS_ALTITUDE + "/" + THRESHOLD;
         STATUS_ALTITUDE_CALLBACK_PERIOD = STATUS_ALTITUDE + "/" + CALLBACK_PERIOD;
         EVENT_ALTITUDE = EVENT + "/" + ALTITUDE;
         EVENT_ALTITUDE_REACHED = EVENT_ALTITUDE + "/" + REACHED;
-    
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-     
+
         AVERAGING = "averaging";
         STATUS_AVERAGING = STATUS + "/" + AVERAGING;
-     
+
         REFERENCE_AIR_PRESSURE = "referenceAirPressure";
         STATUS_REFERENCE_AIR_PRESSURE = STATUS + "/" + REFERENCE_AIR_PRESSURE;
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-     
+
         descriptions.put(EVENT_AIR_PRESSURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [10000..1200000]\n");
         descriptions.put(EVENT_ALTITUDE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
         descriptions.put(EVENT_AIR_PRESSURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [10000..1200000]\n");

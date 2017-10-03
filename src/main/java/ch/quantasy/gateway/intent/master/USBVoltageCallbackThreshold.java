@@ -51,7 +51,7 @@ import com.tinkerforge.BrickMaster;
  *
  * @author reto
  */
-public class USBVoltageCallbackThreshold extends AValidator{
+public class USBVoltageCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
@@ -59,7 +59,6 @@ public class USBVoltageCallbackThreshold extends AValidator{
     private int min;
     @Range(from = 0, to = 4095)
     private int max;
-
 
     public USBVoltageCallbackThreshold() {
     }

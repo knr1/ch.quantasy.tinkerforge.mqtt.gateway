@@ -51,9 +51,9 @@ import com.tinkerforge.BrickMaster;
  *
  * @author reto
  */
-public class StackVoltageCallbackThreshold extends AValidator{
+public class StackVoltageCallbackThreshold extends AValidator {
 
-     @Choice(values = {"x", "o", "i", "<", ">"})
+    @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
     @Range(from = 0, to = 4095)
     private int min;

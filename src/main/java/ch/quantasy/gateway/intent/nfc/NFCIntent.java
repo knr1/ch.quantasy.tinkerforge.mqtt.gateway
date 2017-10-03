@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.intent.nfc;
 
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 import ch.quantasy.gateway.intent.annotations.StringForm;
 
@@ -51,10 +52,13 @@ import ch.quantasy.gateway.intent.annotations.StringForm;
  */
 public class NFCIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long scanningInterval;
+    @Nullable
     public NFCWrite nfcWrite;
-    @StringForm(regEx = "[0-9A-F]{8}|[0-9A-F]{14}")
+    @StringForm(regEx = "[0-9A-F]{8-14}")
+    @Nullable
     public String tagID;
 
 }

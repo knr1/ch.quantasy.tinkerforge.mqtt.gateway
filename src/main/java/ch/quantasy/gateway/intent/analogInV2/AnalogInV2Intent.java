@@ -41,10 +41,8 @@
  */
 package ch.quantasy.gateway.intent.analogInV2;
 
-import ch.quantasy.gateway.intent.ambientLightV2.*;
-import ch.quantasy.gateway.intent.ambientLight.*;
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -53,15 +51,21 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class AnalogInV2Intent extends AnIntent {
 
+    @Nullable
     @Period
     public Long analogValueCallbackPeriod;
+    @Nullable
     @Period
     public Long voltageCallbackPeriod;
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     @Period
     public Short movingAverage;
+    @Nullable
     public DeviceAnalogValueCallbackThreshold analogValueCallbackThreshold;
+    @Nullable
     public DeviceVoltageCallbackThreshold voltageCallbackThreshold;
 
 }

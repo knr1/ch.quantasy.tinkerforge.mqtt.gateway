@@ -48,6 +48,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author reto
  */
 public interface Validator {
+
     @JsonIgnore
     public boolean isValid();
 }

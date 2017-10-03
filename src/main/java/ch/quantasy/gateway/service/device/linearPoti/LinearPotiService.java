@@ -62,8 +62,6 @@ public class LinearPotiService extends AbstractDeviceService<LinearPotiDevice, L
         super(mqttURI, device, new LinearPotiServiceContract(device));
     }
 
-    
-
     @Override
     public void analogValue(int i) {
         publishEvent(getContract().EVENT_ANALOG_VALUE, i);

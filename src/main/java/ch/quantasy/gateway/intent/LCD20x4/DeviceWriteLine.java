@@ -107,7 +107,7 @@ public class DeviceWriteLine extends AValidator {
         if (this.position != other.position) {
             return false;
         }
-        if(this.text.length()!=other.text.length()){
+        if (this.text.length() != other.text.length()) {
             return false;
         }
         return true;

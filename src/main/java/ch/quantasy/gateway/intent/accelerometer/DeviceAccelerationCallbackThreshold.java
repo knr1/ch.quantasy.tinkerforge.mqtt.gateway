@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletAccelerometer;
  *
  * @author reto
  */
-public class DeviceAccelerationCallbackThreshold extends AValidator{
+public class DeviceAccelerationCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

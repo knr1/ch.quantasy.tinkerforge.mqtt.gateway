@@ -63,8 +63,6 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
 
     }
 
-    
-
     @Override
     public void debouncePeriodChanged(long period) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);

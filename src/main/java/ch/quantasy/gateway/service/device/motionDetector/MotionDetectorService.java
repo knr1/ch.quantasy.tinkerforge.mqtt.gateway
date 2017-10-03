@@ -58,7 +58,6 @@ public class MotionDetectorService extends AbstractDeviceService<MotionDetectorD
         super(mqttURI, device, new MotionDetectorServiceContract(device));
     }
 
-
     @Override
     public void detectionCycleEnded() {
         publishEvent(getContract().EVENT_DETECTION_CYCLE_ENDED, true);

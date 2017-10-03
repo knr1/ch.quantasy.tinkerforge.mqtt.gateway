@@ -59,5 +59,5 @@ public @interface ArraySize {
      * Largest value, inclusive
      */
     long max() default Integer.MAX_VALUE;
-    
+
 }

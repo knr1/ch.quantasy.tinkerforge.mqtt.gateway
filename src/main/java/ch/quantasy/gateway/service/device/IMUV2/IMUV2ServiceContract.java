@@ -99,7 +99,7 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
     }
 
     public IMUV2ServiceContract(String id, String device) {
-        super(id, device,IMUV2Intent.class);
+        super(id, device, IMUV2Intent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -153,7 +153,7 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-      
+
         descriptions.put(STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

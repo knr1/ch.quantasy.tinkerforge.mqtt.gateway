@@ -48,7 +48,7 @@ import ch.quantasy.gateway.intent.annotations.Validator;
  *
  * @author reto
  */
-public enum StatusLEDConfig implements Validator{
+public enum StatusLEDConfig implements Validator {
     OFF(0), ON(1), HEARTBEAT(2), STATUS(3);
     private final int value;
 
@@ -68,13 +68,14 @@ public enum StatusLEDConfig implements Validator{
         }
         throw new IllegalArgumentException("Not supported: " + s);
     }
+
     @Override
-        public boolean isValid() {
-            try {
-                getLEDConfigFor(value);
-                return true;
-            } catch (IllegalArgumentException ex) {
-                return false;
-            }
+    public boolean isValid() {
+        try {
+            getLEDConfigFor(value);
+            return true;
+        } catch (IllegalArgumentException ex) {
+            return false;
         }
+    }
 }

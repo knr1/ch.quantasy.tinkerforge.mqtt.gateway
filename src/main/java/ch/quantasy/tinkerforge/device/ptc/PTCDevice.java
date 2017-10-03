@@ -84,7 +84,7 @@ public class PTCDevice extends GenericDevice<BrickletPTC, PTCDeviceCallback, PTC
 
     @Override
     public void update(PTCIntent intent) {
-       if (intent == null) {
+        if (intent == null) {
             return;
         }
         if (!intent.isValid()) {

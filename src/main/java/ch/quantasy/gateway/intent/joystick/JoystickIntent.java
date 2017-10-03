@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.intent.joystick;
 
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -50,13 +51,19 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class JoystickIntent extends AnIntent {
 
+    @Nullable
     public Boolean calibrate;
+    @Nullable
     @Period
     public Long analogCallbackPeriod;
+    @Nullable
     @Period
     public Long positionCallbackPeriod;
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     public DeviceAnalogValueCallbackThreshold analogValueCallbackThreshold;
+    @Nullable
     public DevicePositionCallbackThreshold positionCallbackThreshold;
 }

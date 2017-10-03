@@ -174,7 +174,7 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
             if (intent.lines != null && !intent.lines.isEmpty()) {
                 try {
                     for (DeviceWriteLine line : intent.lines) {
-                        this.lines[line.getLine()].replace(line.getPosition(),line.getPosition() + Math.min(20-line.getPosition(),line.getText().length()), line.getText());
+                        this.lines[line.getLine()].replace(line.getPosition(), line.getPosition() + Math.min(20 - line.getPosition(), line.getText().length()), line.getText());
                         writer.readyToWrite(line.getLine());
                     }
                 } catch (Exception ex) {

@@ -66,7 +66,7 @@ public class AnalogOutV2ServiceContract extends DeviceServiceContract {
     }
 
     public AnalogOutV2ServiceContract(String id, String device) {
-        super(id, device,AnalogOutV2Intent.class);
+        super(id, device, AnalogOutV2Intent.class);
         OUTPUT_VOLTAGE = "outputVoltage";
         STATUS_OUTPUT_VOLTAGE = STATUS + "/" + OUTPUT_VOLTAGE;
     }

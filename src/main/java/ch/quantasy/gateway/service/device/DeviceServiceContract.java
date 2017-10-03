@@ -58,12 +58,12 @@ public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
     public final String STATUS_FIRMWARE;
     public final String STATUS_HARDWARE;
 
-    public DeviceServiceContract(GenericDevice device,Class<? extends Intent> intentClass) {
-        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString(),intentClass);
+    public DeviceServiceContract(GenericDevice device, Class<? extends Intent> intentClass) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString(), intentClass);
     }
 
-    public DeviceServiceContract(String id, String device,Class<? extends Intent>intentClass) {
-        super(device, id,intentClass);
+    public DeviceServiceContract(String id, String device, Class<? extends Intent> intentClass) {
+        super(device, id, intentClass);
         STATUS_POSITION = STATUS + "/position";
         STATUS_FIRMWARE = STATUS + "/firmware";
         STATUS_HARDWARE = STATUS + "/hardware";

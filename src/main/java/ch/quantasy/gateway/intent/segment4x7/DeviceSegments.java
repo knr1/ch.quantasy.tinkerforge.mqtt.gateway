@@ -52,7 +52,9 @@ import com.tinkerforge.BrickletSegmentDisplay4x7;
  * @author reto
  */
 public class DeviceSegments extends AValidator {
-    @ArraySize(min=4, max = 4)
+
+    @ArraySize(min = 4, max = 4)
+    @Range(from = 0, to = 128)
     private short[] bits; //and each from 0..128
     @Range(from = 0, to = 7)
     private short brightness;

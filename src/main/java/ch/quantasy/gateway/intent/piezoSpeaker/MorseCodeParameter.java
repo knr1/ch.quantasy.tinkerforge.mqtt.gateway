@@ -50,7 +50,7 @@ import ch.quantasy.gateway.intent.annotations.StringForm;
  *
  * @author reto
  */
-public class MorseCodeParameter extends AValidator{
+public class MorseCodeParameter extends AValidator {
 
     @StringForm(regEx = "[\\.\\s-]{1,60}")
     public String string;
@@ -63,7 +63,7 @@ public class MorseCodeParameter extends AValidator{
     public MorseCodeParameter(String string, int max) {
         this.string = string;
         this.frequency = max;
-        if(!this.isValid()){
+        if (!this.isValid()) {
             throw new IllegalArgumentException();
         }
     }

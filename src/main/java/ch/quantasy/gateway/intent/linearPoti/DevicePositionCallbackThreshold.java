@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletLinearPoti;
  *
  * @author reto
  */
-public class DevicePositionCallbackThreshold extends AValidator{
+public class DevicePositionCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
@@ -59,6 +59,7 @@ public class DevicePositionCallbackThreshold extends AValidator{
     private int min;
     @Range(from = 0, to = 100)
     private int max;
+
     public DevicePositionCallbackThreshold() {
     }
 

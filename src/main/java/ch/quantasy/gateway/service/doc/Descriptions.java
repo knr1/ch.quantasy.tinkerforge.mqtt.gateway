@@ -106,7 +106,7 @@ public class Descriptions {
     public static void main(String[] args) throws Exception {
         SortedSet<String> ContractClasses = new TreeSet<>();
         ContractClasses.add(StackManagerServiceContract.class.getName());
-       ContractClasses.add(IMUServiceContract.class.getName());
+        ContractClasses.add(IMUServiceContract.class.getName());
         ContractClasses.add(IMUV2ServiceContract.class.getName());
         ContractClasses.add(LCD16x2ServiceContract.class.getName());
         ContractClasses.add(LCD20x4ServiceContract.class.getName());

@@ -61,7 +61,6 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
         super(mqttURI, device, new ThermoCoupleServiceContract(device));
     }
 
-
     @Override
     public void debouncePeriodChanged(long period) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);

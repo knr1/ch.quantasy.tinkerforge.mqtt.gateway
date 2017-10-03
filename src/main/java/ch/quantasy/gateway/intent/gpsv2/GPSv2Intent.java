@@ -41,6 +41,7 @@
  */
 package ch.quantasy.gateway.intent.gpsv2;
 
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.gps.GPSIntent;
 
 /**
@@ -48,6 +49,9 @@ import ch.quantasy.gateway.intent.gps.GPSIntent;
  * @author reto
  */
 public class GPSv2Intent extends GPSIntent {
+
+    @Nullable
     public StatusLEDConfig statusLEDConfig;
+    @Nullable
     public FixLEDConfig fixLEDConfig;
 }

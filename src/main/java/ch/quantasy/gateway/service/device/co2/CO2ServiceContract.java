@@ -65,7 +65,7 @@ public class CO2ServiceContract extends DeviceServiceContract {
     public final String STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD;
     public final String EVENT_CO2_CONCENTRATION;
     public final String EVENT_CO2_CONCENTRATION_REACHED;
-   
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
@@ -80,7 +80,7 @@ public class CO2ServiceContract extends DeviceServiceContract {
     }
 
     public CO2ServiceContract(String id, String device) {
-        super(id, device,CO2Intent.class);
+        super(id, device, CO2Intent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -94,7 +94,7 @@ public class CO2ServiceContract extends DeviceServiceContract {
         STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD = STATUS_CO2_CONCENTRATION + "/" + CALLBACK_PERIOD;
         EVENT_CO2_CONCENTRATION = EVENT + "/" + CO2_CONCENTRATION;
         EVENT_CO2_CONCENTRATION_REACHED = EVENT_CO2_CONCENTRATION + "/" + REACHED;
-   
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
@@ -103,7 +103,7 @@ public class CO2ServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-       
+
         descriptions.put(EVENT_CO2_CONCENTRATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
         descriptions.put(EVENT_CO2_CONCENTRATION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
         descriptions.put(STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

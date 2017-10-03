@@ -49,9 +49,9 @@ import ch.quantasy.gateway.intent.annotations.Choice;
  *
  * @author reto
  */
-public class DeviceSelectedRelayState extends AValidator{
+public class DeviceSelectedRelayState extends AValidator {
 
-    @Choice(values = {"1","2"})
+    @Choice(values = {"1", "2"})
     private short relay;
     private boolean state;
 

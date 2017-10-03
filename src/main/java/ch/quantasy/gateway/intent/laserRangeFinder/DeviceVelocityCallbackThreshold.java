@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletLaserRangeFinder;
  *
  * @author reto
  */
-public class DeviceVelocityCallbackThreshold extends AValidator{
+public class DeviceVelocityCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

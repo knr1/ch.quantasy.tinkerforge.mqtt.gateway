@@ -71,10 +71,10 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
     public final String STATUS_COUNT_CALLBACK_PERIOD;
     public final String EVENT_COUNT;
     public final String EVENT_COUNT_REACHED;
-   
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
-   public final String STATUS_DEBOUNCE_PERIOD;
+    public final String STATUS_DEBOUNCE_PERIOD;
 
     public final String RESET;
     public final String EVENT_COUNT_RESET;
@@ -88,7 +88,7 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
     }
 
     public RotaryEncoderServiceContract(String id, String device) {
-        super(id, device,RotaryEncoderIntent.class);
+        super(id, device, RotaryEncoderIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -106,11 +106,11 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
         STATUS_COUNT_CALLBACK_PERIOD = STATUS_COUNT + "/" + CALLBACK_PERIOD;
         EVENT_COUNT = EVENT + "/" + COUNT;
         EVENT_COUNT_REACHED = EVENT_COUNT + "/" + REACHED;
-     
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
-      
+
         RESET = "reset";
         EVENT_COUNT_RESET = EVENT_COUNT + "/" + RESET;
     }

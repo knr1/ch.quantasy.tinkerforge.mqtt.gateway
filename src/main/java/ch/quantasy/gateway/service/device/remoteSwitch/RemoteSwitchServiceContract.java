@@ -61,13 +61,13 @@ public class RemoteSwitchServiceContract extends DeviceServiceContract {
     public final String STATUS_REPEATS;
 
     public final String SWITCH_SOCKET_A;
-  
+
     public final String SWITCH_SOCKET_B;
- 
+
     public final String SWITCH_SOCKET_C;
-  
+
     public final String DIM_SOCKET_B;
-   
+
     public RemoteSwitchServiceContract(RemoteSwitchDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
@@ -77,7 +77,7 @@ public class RemoteSwitchServiceContract extends DeviceServiceContract {
     }
 
     public RemoteSwitchServiceContract(String id, String device) {
-        super(id, device,RemoteSwitchIntent.class);
+        super(id, device, RemoteSwitchIntent.class);
 
         SWITCHING_DONE = "switchingDone";
         EVENT_SWITCHING_DONE = EVENT + "/" + SWITCHING_DONE;
@@ -89,11 +89,11 @@ public class RemoteSwitchServiceContract extends DeviceServiceContract {
         SWITCH_SOCKET_B = "switchSocketB";
         SWITCH_SOCKET_C = "switchSocketC";
         DIM_SOCKET_B = "dimSocketB";
-      
+
     }
 
     @Override
-    protected void descirbeMore(Map<String, String> descriptions) {       
+    protected void descirbeMore(Map<String, String> descriptions) {
         descriptions.put(EVENT_SWITCHING_DONE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    [houseCode: [0..31]\n    receiverCode:    [0..31]\n    switchingValue: [ON|OFF] | address: [0..67108863]\n    unit: [0..15]\n    switchingValue: [ON|OFF] | systemCode: ['A'..'P']\n    deviceCode: [1..16]\n    switchingValue: [ON|OFF] | address:    [0..67108863]\n    unit: [0..15]\n    dimValue: [0..15]]");
         descriptions.put(STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
     }

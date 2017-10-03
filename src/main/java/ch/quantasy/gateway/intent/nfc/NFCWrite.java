@@ -50,7 +50,7 @@ import ch.quantasy.gateway.intent.annotations.StringForm;
  *
  * @author reto
  */
-public class NFCWrite extends AValidator{
+public class NFCWrite extends AValidator {
 
     @StringForm(regEx = "[0-9A-F]{8}|[0-9A-F]{14}")
     private String tagID;

@@ -65,7 +65,7 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class IO16Device extends GenericDevice<BrickletIO16, IO16DeviceCallback,IO16Intent> implements BrickletIO16.MonoflopDoneListener {
+public class IO16Device extends GenericDevice<BrickletIO16, IO16DeviceCallback, IO16Intent> implements BrickletIO16.MonoflopDoneListener {
 
     private final SortedMap<String, DeviceMonoflopParameters> monoflopParametersMap;
     private final SortedMap<Short, DevicePortAEdgeCountConfig> edgeCountConfigMap;
@@ -74,7 +74,7 @@ public class IO16Device extends GenericDevice<BrickletIO16, IO16DeviceCallback,I
     private Long debouncePeriod;
 
     public IO16Device(TinkerforgeStack stack, BrickletIO16 device) throws NotConnectedException, TimeoutException {
-        super(stack, device,new IO16Intent());
+        super(stack, device, new IO16Intent());
         this.monoflopParametersMap = new TreeMap<>();
         this.edgeCountConfigMap = new TreeMap<>();
         this.configurationMap = new TreeMap<>();
@@ -113,7 +113,6 @@ public class IO16Device extends GenericDevice<BrickletIO16, IO16DeviceCallback,I
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
     public void setDebouncePeriod(Long period) {
         try {
             getDevice().setDebouncePeriod(period);

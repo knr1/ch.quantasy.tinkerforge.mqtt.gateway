@@ -83,7 +83,7 @@ public class TemperatureServiceContract extends DeviceServiceContract {
     }
 
     public TemperatureServiceContract(String id, String device) {
-        super(id, device,TemperatureIntent.class);
+        super(id, device, TemperatureIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -97,12 +97,12 @@ public class TemperatureServiceContract extends DeviceServiceContract {
         STATUS_TEMPERATURE_CALLBACK_PERIOD = STATUS_TEMPERATURE + "/" + CALLBACK_PERIOD;
         EVENT_TEMPERATURE = EVENT + "/" + TEMPERATURE;
         EVENT_TEMPERATURE_REACHED = EVENT_TEMPERATURE + "/" + REACHED;
-     
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-     
+
         MODE = "mode";
         STATUS_I2CMODE = STATUS + "/" + MODE;
 

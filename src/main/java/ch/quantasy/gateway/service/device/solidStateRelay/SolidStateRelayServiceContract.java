@@ -71,7 +71,7 @@ public class SolidStateRelayServiceContract extends DeviceServiceContract {
     }
 
     public SolidStateRelayServiceContract(String id, String device) {
-        super(id, device,SolidStateRelayIntent.class);
+        super(id, device, SolidStateRelayIntent.class);
         MONOFLOP_DONE = "monoflopDone";
         EVENT_MONOFLOP_DONE = EVENT + "/" + MONOFLOP_DONE;
 

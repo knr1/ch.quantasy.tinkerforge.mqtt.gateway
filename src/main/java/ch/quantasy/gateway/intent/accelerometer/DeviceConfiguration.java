@@ -50,9 +50,8 @@ import com.tinkerforge.BrickletAccelerometer;
  *
  * @author reto
  */
-public class DeviceConfiguration extends AValidator{
+public class DeviceConfiguration extends AValidator {
 
-   
     public static enum DataRate {
         OFF((short) 0), Hz3((short) 1), Hz6((short) 2), Hz12((short) 3), Hz25((short) 4), Hz50((short) 5), Hz100((short) 6), Hz400((short) 7), Hz800((short) 8), Hz1600((short) 9);
         private short value;
@@ -128,9 +127,10 @@ public class DeviceConfiguration extends AValidator{
     private DeviceConfiguration() {
     }
 
-    public DeviceConfiguration(String dataRate, String fullScale, String filterBandwidth){
-        this(DataRate.valueOf(dataRate),FullScale.valueOf(fullScale),FilterBandwidth.valueOf(filterBandwidth));
+    public DeviceConfiguration(String dataRate, String fullScale, String filterBandwidth) {
+        this(DataRate.valueOf(dataRate), FullScale.valueOf(fullScale), FilterBandwidth.valueOf(filterBandwidth));
     }
+
     public DeviceConfiguration(DataRate dataRate, FullScale fullScale, FilterBandwidth filterBandwidth) {
         this.dataRate = dataRate;
         this.fullScale = fullScale;

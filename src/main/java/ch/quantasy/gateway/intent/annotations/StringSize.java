@@ -59,5 +59,5 @@ public @interface StringSize {
      * Largest value, inclusive
      */
     long max() default Long.MAX_VALUE;
-    
+
 }

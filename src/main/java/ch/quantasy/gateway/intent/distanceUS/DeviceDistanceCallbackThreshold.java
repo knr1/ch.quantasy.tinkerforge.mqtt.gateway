@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletDistanceUS;
  *
  * @author reto
  */
-public class DeviceDistanceCallbackThreshold extends AValidator{
+public class DeviceDistanceCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

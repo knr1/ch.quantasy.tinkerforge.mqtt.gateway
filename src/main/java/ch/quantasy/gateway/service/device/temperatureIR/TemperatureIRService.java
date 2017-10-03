@@ -60,7 +60,6 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
         super(mqttURI, device, new TemperatureIRServiceContract(device));
     }
 
-    
     @Override
     public void ambientTemperature(short s) {
         publishEvent(getContract().EVENT_AMBIENT_TEMPERATURE, s);

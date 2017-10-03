@@ -52,8 +52,7 @@ import ch.quantasy.mqtt.gateway.client.MessageReceiver;
  * @author reto
  * @param <S>
  */
-public abstract class AbstractService<S extends TinkerForgeServiceContract> extends GatewayClient<S>implements MessageReceiver {
-
+public abstract class AbstractService<S extends TinkerForgeServiceContract> extends GatewayClient<S> implements MessageReceiver {
 
     public AbstractService(URI mqttURI, String clientID, S contract) throws MqttException {
         super(mqttURI, clientID, contract);
@@ -61,15 +60,14 @@ public abstract class AbstractService<S extends TinkerForgeServiceContract> exte
         subscribe(contract.INTENT + "/#", this);
     }
 
-
     /**
      * This is called within a new runnable! Be sure this method is programmed
      * thread safe!
      *
      * @param topic This String is never null and contains the topic of the mqtt
      * message.
-     * @param payload This byte[] shall never be null and contains the payload of the
-     * mqtt message.
+     * @param payload This byte[] shall never be null and contains the payload
+     * of the mqtt message.
      * @throws Exception Any exception is handled 'gracefully' within
      * AbstractService.
      */

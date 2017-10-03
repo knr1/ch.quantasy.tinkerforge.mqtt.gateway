@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.intent.laserRangeFinder;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -51,16 +51,25 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class LaserRangeFinderIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long distanceCallbackPeriod;
+    @Nullable
     @Period
     public Long velocityCallbackPeriod;
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     public DeviceDistanceCallbackThreshold distanceCallbackThreshold;
+    @Nullable
     public DeviceVelocityCallbackThreshold velocityCallbackThreshold;
+    @Nullable
     public Boolean laserEnabled;
+    @Nullable
     public DeviceAveraging movingAverage;
+    @Nullable
     public DeviceMode mode;
+    @Nullable
     public DeviceConfiguration configuration;
 }

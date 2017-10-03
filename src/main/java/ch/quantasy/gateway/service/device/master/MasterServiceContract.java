@@ -57,7 +57,7 @@ public class MasterServiceContract extends DeviceServiceContract {
 
     public final String STATUS_LED_ENABLED;
     public final String STATUS_STATUS_LED_ENABLED;
-   
+
     public final String CALLBACK_THRESHOLD;
     public final String STATUS_CURRENT_CALLBACK_THRESHOLD;
     private final String REACHED;
@@ -108,17 +108,17 @@ public class MasterServiceContract extends DeviceServiceContract {
     }
 
     public MasterServiceContract(String id, String device) {
-        super(id, device,MasterIntent.class);
+        super(id, device, MasterIntent.class);
         EVENT_RESET = EVENT + "/" + "reset";
         STACK = "stack";
         PERIOD = "period";
         STATUS_LED_ENABLED = "statusLED/enabled";
         STATUS_STATUS_LED_ENABLED = STATUS + "/" + STATUS_LED_ENABLED;
-    
+
         CALLBACK_PERIOD = "callbackPeriod";
 
         DEBOUNCE_PERIOD = "debounce/" + PERIOD;
-         STATUS_DEBOUNCE_PERIOD = STATUS + "/" + DEBOUNCE_PERIOD;
+        STATUS_DEBOUNCE_PERIOD = STATUS + "/" + DEBOUNCE_PERIOD;
 
         REACHED = "reached";
         CURRENT = "current";
@@ -127,9 +127,9 @@ public class MasterServiceContract extends DeviceServiceContract {
         EVENT_STACK_CURRENT_REACHED = EVENT_STACK_CURRENT + "/" + REACHED;
         STATUS_STACK_CURRENT = STATUS + "/" + STACK_CURRENT;
         STATUS_STACK_CURRENT_CALLBACK_PERIOD = STATUS_STACK_CURRENT + "/" + CALLBACK_PERIOD;
-     
+
         CALLBACK_THRESHOLD = "callbackThreshold";
-         STATUS_CURRENT_CALLBACK_THRESHOLD = STATUS_STACK_CURRENT + "/" + CALLBACK_THRESHOLD;
+        STATUS_CURRENT_CALLBACK_THRESHOLD = STATUS_STACK_CURRENT + "/" + CALLBACK_THRESHOLD;
 
         VOLTAGE = "voltage";
         STACK_VOLTAGE = STACK + "/" + VOLTAGE;
@@ -140,7 +140,6 @@ public class MasterServiceContract extends DeviceServiceContract {
         STATUS_STACK_VOLTAGE_CALLBACK_PERIOD = STATUS_STACK_VOLTAGE + "/" + CALLBACK_PERIOD;
         STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD = STATUS_STACK_VOLTAGE + "/" + CALLBACK_THRESHOLD;
 
-    
         USB = "USB";
         USB_VOLTAGE = USB + "/" + VOLTAGE;
         EVENT_USB_VOLTAGE = EVENT + "/" + USB_VOLTAGE;
@@ -153,7 +152,7 @@ public class MasterServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-     
+
         descriptions.put(EVENT_RESET, "- timestamp: [0.." + Long.MAX_VALUE + "]");
         descriptions.put(EVENT_STACK_VOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
         descriptions.put(EVENT_STACK_VOLTAGE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");

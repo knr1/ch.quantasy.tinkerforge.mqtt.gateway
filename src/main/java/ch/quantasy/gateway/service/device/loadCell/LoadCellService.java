@@ -64,8 +64,6 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
         super(mqttURI, device, new LoadCellServiceContract(device));
     }
 
-   
-
     @Override
     public void debouncePeriodChanged(long period) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);

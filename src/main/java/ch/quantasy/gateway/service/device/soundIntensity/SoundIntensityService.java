@@ -61,8 +61,6 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
         super(mqttURI, device, new SoundIntensityServiceContract(device));
     }
 
-    
-
     @Override
     public void debouncePeriodChanged(long period) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);

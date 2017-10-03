@@ -50,6 +50,8 @@ import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
  * @author reto
  */
 public interface TinkerforgeFactoryListener {
+
     public void stackAdded(TinkerforgeStack stack);
+
     public void stackRemoved(TinkerforgeStack stack);
 }

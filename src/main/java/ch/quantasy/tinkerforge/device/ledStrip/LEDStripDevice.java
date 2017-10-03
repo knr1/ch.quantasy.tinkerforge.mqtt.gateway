@@ -273,8 +273,8 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         public Publisher() {
             this.publishingQueue = new LinkedBlockingDeque<>();
         }
-        
-        public int getQueueSize(){
+
+        public int getQueueSize() {
             return publishingQueue.size();
         }
 

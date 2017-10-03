@@ -43,6 +43,7 @@ package ch.quantasy.gateway.intent.gps;
 
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -51,15 +52,21 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class GPSIntent extends AnIntent {
 
+    @Nullable
     public RestartType restart;
+    @Nullable
     @Period
     public Long altitudeCallbackPeriod;
+    @Nullable
     @Period
     public Long statusCallbackPeriod;
+    @Nullable
     @Period
     public Long motionCallbackPeriod;
+    @Nullable
     @Period
     public Long dateTimeCallbackPeriod;
+    @Nullable
     @Period
     public Long coordinatesCallbackPeriod;
 }

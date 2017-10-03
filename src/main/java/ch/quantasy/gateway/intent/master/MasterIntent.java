@@ -46,6 +46,7 @@ import ch.quantasy.gateway.intent.linearPoti.*;
 import ch.quantasy.gateway.intent.humidity.*;
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 import ch.quantasy.gateway.intent.annotations.Range;
 
@@ -55,18 +56,26 @@ import ch.quantasy.gateway.intent.annotations.Range;
  */
 public class MasterIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     @Period
     public Long currentCallbackPeriod;
+    @Nullable
     public StackCurrentCallbackThreshold currentCallbackThreshold;
+    @Nullable
     public Boolean statusLED;
+    @Nullable
     @Period
     public Long stackVoltageCallbackPeriod;
+    @Nullable
     public StackVoltageCallbackThreshold stackVoltageCallbackThreshold;
     @Period
     public Long usbVoltageCallbackPeriod;
+    @Nullable
     public USBVoltageCallbackThreshold usbVoltageCallbackThreshold;
+    @Nullable
     public Boolean reset;
 
 }

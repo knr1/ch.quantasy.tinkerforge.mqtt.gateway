@@ -61,7 +61,6 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
         super(mqttURI, device, new GPSServiceContract(device));
     }
 
-  
     @Override
     public void altitudeCallbackPeriodChanged(long period) {
         super.publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, period);

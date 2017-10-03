@@ -44,6 +44,7 @@ package ch.quantasy.gateway.intent.rotaryPoti;
 import ch.quantasy.gateway.intent.rotaryEncoder.*;
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -52,13 +53,16 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class RotaryPotiIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long analogValueCallbackPeriod;
+    @Nullable
     @Period
     public Long positionCallbackPeriod;
+    @Nullable
     @Period
     public Long debouncePeriod;
-    
+
     public DeviceAnalogValueCallbackThreshold analogValueCallbackThreshold;
     public DevicePositionCallbackThreshold positionCallbackThreshold;
 }

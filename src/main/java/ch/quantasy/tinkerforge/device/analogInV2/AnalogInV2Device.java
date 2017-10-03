@@ -81,7 +81,7 @@ public class AnalogInV2Device extends GenericDevice<BrickletAnalogInV2, AnalogIn
 
     @Override
     public void update(AnalogInV2Intent intent) {
-       if (intent == null) {
+        if (intent == null) {
             return;
         }
         if (!intent.isValid()) {

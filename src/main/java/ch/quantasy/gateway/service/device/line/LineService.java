@@ -61,8 +61,6 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
         super(mqttURI, device, new LineServiceContract(device));
     }
 
-   
-
     @Override
     public void debouncePeriodChanged(long period) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);

@@ -60,8 +60,6 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
         super(mqttURI, device, new HallEffectServiceContract(device));
     }
 
-   
-
     @Override
     public void edgeInterruptChanged(long period) {
         publishStatus(getContract().STATUS_EDGE_COUNT_INTERRUPT, period);

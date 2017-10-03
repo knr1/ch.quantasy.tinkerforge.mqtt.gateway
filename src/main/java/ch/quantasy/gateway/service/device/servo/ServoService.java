@@ -61,8 +61,6 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
         super(mqttURI, device, new ServoServiceContract(device));
     }
 
-   
-
     @Override
     public void minimumVoltageChanged(Integer minimumVoltage) {
         publishStatus(getContract().STATUS_MINIMUM_VOLTAGE, minimumVoltage);

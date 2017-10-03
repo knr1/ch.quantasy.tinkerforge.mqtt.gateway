@@ -63,8 +63,6 @@ public class MasterService extends AbstractDeviceService<MasterDevice, MasterSer
 
     }
 
-    
-
     @Override
     public void debouncePeriodChanged(Long debouncePeriod) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, debouncePeriod);

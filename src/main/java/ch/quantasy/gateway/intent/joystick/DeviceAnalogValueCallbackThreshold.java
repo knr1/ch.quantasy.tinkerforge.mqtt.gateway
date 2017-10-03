@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletJoystick;
  *
  * @author reto
  */
-public class DeviceAnalogValueCallbackThreshold extends AValidator{
+public class DeviceAnalogValueCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

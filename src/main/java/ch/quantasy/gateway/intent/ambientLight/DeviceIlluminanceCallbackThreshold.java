@@ -51,7 +51,7 @@ import com.tinkerforge.BrickletAmbientLight;
  *
  * @author reto
  */
-public class DeviceIlluminanceCallbackThreshold extends AValidator{
+public class DeviceIlluminanceCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

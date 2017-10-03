@@ -60,8 +60,6 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
         super(mqttURI, device, new SolidStateRelayServiceContract(device));
     }
 
-    
-
     @Override
     public void stateChanged(Boolean state) {
         publishStatus(getContract().STATUS_STATE, state);

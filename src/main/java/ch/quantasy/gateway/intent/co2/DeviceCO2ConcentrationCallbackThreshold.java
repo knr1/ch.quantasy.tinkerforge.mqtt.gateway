@@ -47,18 +47,17 @@ import ch.quantasy.gateway.intent.annotations.Choice;
 import ch.quantasy.gateway.intent.annotations.Range;
 import com.tinkerforge.BrickletCO2;
 
-
 /**
  *
  * @author reto
  */
-public class DeviceCO2ConcentrationCallbackThreshold extends AValidator{
-    
+public class DeviceCO2ConcentrationCallbackThreshold extends AValidator {
+
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
-    @Range(from = 0,to = 10000)
+    @Range(from = 0, to = 10000)
     private int min;
-    @Range(from = 0,to = 10000)
+    @Range(from = 0, to = 10000)
     private int max;
 
     public DeviceCO2ConcentrationCallbackThreshold() {
@@ -71,7 +70,7 @@ public class DeviceCO2ConcentrationCallbackThreshold extends AValidator{
     }
 
     public DeviceCO2ConcentrationCallbackThreshold(BrickletCO2.CO2ConcentrationCallbackThreshold threshold) {
-        this(threshold.option,threshold.min,threshold.max);
+        this(threshold.option, threshold.min, threshold.max);
     }
 
     public int getMax() {
@@ -85,6 +84,5 @@ public class DeviceCO2ConcentrationCallbackThreshold extends AValidator{
     public char getOption() {
         return option;
     }
-    
-    
+
 }

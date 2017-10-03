@@ -50,7 +50,7 @@ import com.tinkerforge.BrickletDualButton;
  *
  * @author reto
  */
-public class DeviceLEDState extends AValidator{
+public class DeviceLEDState extends AValidator {
 
     @NonNull
     private LEDState led1;
@@ -80,6 +80,5 @@ public class DeviceLEDState extends AValidator{
     public LEDState getLed2() {
         return led2;
     }
-    
 
 }

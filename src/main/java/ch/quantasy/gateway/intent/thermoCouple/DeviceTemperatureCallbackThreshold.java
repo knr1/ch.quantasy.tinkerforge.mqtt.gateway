@@ -51,15 +51,14 @@ import com.tinkerforge.BrickletThermocouple;
  *
  * @author reto
  */
-public class DeviceTemperatureCallbackThreshold extends AValidator{
+public class DeviceTemperatureCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;
-    @Range(from = -21000, to=180000)
+    @Range(from = -21000, to = 180000)
     private int min;
-    @Range(from = -21000, to=180000)
+    @Range(from = -21000, to = 180000)
     private int max;
-
 
     public DeviceTemperatureCallbackThreshold() {
     }

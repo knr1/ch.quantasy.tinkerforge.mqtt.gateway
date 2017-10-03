@@ -50,6 +50,7 @@ import java.util.Objects;
  * @author reto
  */
 public class Servo extends AValidator {
+
     @Range(from = 0, to = 6)
     private int id;
     private Boolean enabled;

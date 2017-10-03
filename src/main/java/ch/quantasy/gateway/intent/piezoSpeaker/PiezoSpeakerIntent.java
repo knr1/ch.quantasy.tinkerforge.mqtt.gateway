@@ -41,12 +41,8 @@
  */
 package ch.quantasy.gateway.intent.piezoSpeaker;
 
-import ch.quantasy.gateway.intent.moisture.*;
-import ch.quantasy.gateway.intent.line.*;
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
-import ch.quantasy.gateway.intent.annotations.Period;
-import ch.quantasy.gateway.intent.annotations.Range;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 
 /**
  *
@@ -54,8 +50,11 @@ import ch.quantasy.gateway.intent.annotations.Range;
  */
 public class PiezoSpeakerIntent extends AnIntent {
 
+    @Nullable
     public BeepParameter beepParameter;
+    @Nullable
     public MorseCodeParameter morseCodeParameter;
+    @Nullable
     public Boolean calibrate;
 
 }

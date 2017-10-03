@@ -81,7 +81,7 @@ public class ColorDevice extends GenericDevice<BrickletColor, ColorDeviceCallbac
 
     @Override
     public void update(ColorIntent intent) {
-       if (intent == null) {
+        if (intent == null) {
             return;
         }
         if (!intent.isValid()) {

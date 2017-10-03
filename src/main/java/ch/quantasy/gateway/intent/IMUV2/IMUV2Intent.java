@@ -43,30 +43,26 @@ package ch.quantasy.gateway.intent.IMUV2;
 
 import ch.quantasy.gateway.intent.IMU.IMUIntent;
 import ch.quantasy.gateway.intent.annotations.Choice;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
  *
  * @author reto
  */
-public class IMUV2Intent extends IMUIntent{
+public class IMUV2Intent extends IMUIntent {
 
+    @Nullable
     @Period
     public Long linearAccelerationCallbackPeriod;
+    @Nullable
     @Period
     public Long temperatureCallbackPeriod;
+    @Nullable
     @Period
     public Long gravityVectorCallbackPeriod;
+    @Nullable
     @Choice(values = {"0", "1", "2"})
     public Short sensorFusionMode;
-    
-    public static void main(String[] args) {
-        IMUV2Intent i=new IMUV2Intent();
-        i.accelerationCallbackPeriod=-1l;
-        System.out.println(i.isValid());
-        
-    }
 
 }
-
-

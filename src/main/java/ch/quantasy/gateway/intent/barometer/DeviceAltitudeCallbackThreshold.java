@@ -50,7 +50,7 @@ import com.tinkerforge.BrickletBarometer;
  *
  * @author reto
  */
-public class DeviceAltitudeCallbackThreshold extends AValidator{
+public class DeviceAltitudeCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     private char option;

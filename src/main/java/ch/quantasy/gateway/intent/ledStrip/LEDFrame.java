@@ -57,10 +57,13 @@ import java.util.logging.Logger;
  *
  * @author reto
  */
-public class LEDFrame extends AValidator{
+public class LEDFrame extends AValidator {
+
     @NonNull
-    @MultiArraySize(values = {@ArraySize(min = 1,max=4),@ArraySize(min=1,max=320)})
-    @Range(from=0,to=255)
+    @MultiArraySize(values = {
+        @ArraySize(min = 1, max = 4)
+        ,@ArraySize(min = 1, max = 320)})
+    @Range(from = 0, to = 255)
     private short[][] channels;
 
     private LEDFrame() {

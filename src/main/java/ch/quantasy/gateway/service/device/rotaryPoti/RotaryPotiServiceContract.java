@@ -65,14 +65,14 @@ public class RotaryPotiServiceContract extends DeviceServiceContract {
     public final String STATUS_ANALOG_VALUE_CALLBACK_PERIOD;
     public final String EVENT_ANALOG_VALUE;
     public final String EVENT_ANALOG_VALUE_REACHED;
-   
+
     public final String POSITION;
     public final String STATUS_POSITION;
     public final String STATUS_POSITION_THRESHOLD;
     public final String STATUS_POSITION_CALLBACK_PERIOD;
     public final String EVENT_POSITION;
     public final String EVENT_POSITION_REACHED;
-   
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String STATUS_DEBOUNCE_PERIOD;
@@ -86,7 +86,7 @@ public class RotaryPotiServiceContract extends DeviceServiceContract {
     }
 
     public RotaryPotiServiceContract(String id, String device) {
-        super(id, device,RotaryPotiIntent.class);
+        super(id, device, RotaryPotiIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -99,18 +99,18 @@ public class RotaryPotiServiceContract extends DeviceServiceContract {
         STATUS_ANALOG_VALUE_CALLBACK_PERIOD = STATUS_ANALOG_VALUE + "/" + CALLBACK_PERIOD;
         EVENT_ANALOG_VALUE = EVENT + "/" + ANALOG_VALUE;
         EVENT_ANALOG_VALUE_REACHED = EVENT_ANALOG_VALUE + "/" + REACHED;
-      
+
         POSITION = "position";
         STATUS_POSITION = STATUS + "/" + POSITION;
         STATUS_POSITION_THRESHOLD = STATUS_POSITION + "/" + THRESHOLD;
         STATUS_POSITION_CALLBACK_PERIOD = STATUS_POSITION + "/" + CALLBACK_PERIOD;
         EVENT_POSITION = EVENT + "/" + POSITION;
         EVENT_POSITION_REACHED = EVENT_POSITION + "/" + REACHED;
-      
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
-        }
+    }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {

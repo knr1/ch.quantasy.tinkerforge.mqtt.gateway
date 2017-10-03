@@ -64,8 +64,6 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
 
     }
 
-    
-
     @Override
     public void debouncePeriodChanged(long period) {
         publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);

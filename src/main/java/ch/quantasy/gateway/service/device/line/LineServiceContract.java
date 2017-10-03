@@ -65,11 +65,11 @@ public class LineServiceContract extends DeviceServiceContract {
     public final String STATUS_REFLECTIVITY_CALLBACK_PERIOD;
     public final String EVENT_REFLECTIVITY;
     public final String EVENT_REFLECTIVITY_REACHED;
-  
+
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
     public final String EVENT_DEBOUNCE;
-     public final String STATUS_DEBOUNCE_PERIOD;
+    public final String STATUS_DEBOUNCE_PERIOD;
 
     public LineServiceContract(LineDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -80,7 +80,7 @@ public class LineServiceContract extends DeviceServiceContract {
     }
 
     public LineServiceContract(String id, String device) {
-        super(id, device,LineIntent.class);
+        super(id, device, LineIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
@@ -94,17 +94,17 @@ public class LineServiceContract extends DeviceServiceContract {
         STATUS_REFLECTIVITY_CALLBACK_PERIOD = STATUS_REFLECTIVITY + "/" + CALLBACK_PERIOD;
         EVENT_REFLECTIVITY = EVENT + "/" + REFLECTIVITY;
         EVENT_REFLECTIVITY_REACHED = EVENT_REFLECTIVITY + "/" + REACHED;
-    
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-     
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-     
+
         descriptions.put(EVENT_REFLECTIVITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [[0..4095]");
         descriptions.put(EVENT_REFLECTIVITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
         descriptions.put(STATUS_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

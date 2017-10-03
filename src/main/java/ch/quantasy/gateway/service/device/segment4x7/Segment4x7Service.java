@@ -63,7 +63,6 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
 
     }
 
-
     @Override
     public void counterStarted(DeviceCounterParameters counterParameters) {
         publishEvent(getContract().EVENT_COUNTER_STARTED, true);

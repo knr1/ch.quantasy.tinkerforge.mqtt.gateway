@@ -45,6 +45,7 @@ import ch.quantasy.gateway.intent.ptc.*;
 import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
 import ch.quantasy.gateway.intent.annotations.Choice;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 import ch.quantasy.gateway.intent.annotations.Range;
 
@@ -54,10 +55,14 @@ import ch.quantasy.gateway.intent.annotations.Range;
  */
 public class RealTimeClockIntent extends AnIntent {
 
+    @Nullable
     public DateTimeParameter dateTimeParameter;
-    @Range(from = Byte.MIN_VALUE,to=Byte.MAX_VALUE)
+    @Nullable
+    @Range(from = Byte.MIN_VALUE, to = Byte.MAX_VALUE)
     public Byte offset;
+    @Nullable
     @Period
     public Long period;
+    @Nullable
     public AlarmParamter alarmParameter;
 }

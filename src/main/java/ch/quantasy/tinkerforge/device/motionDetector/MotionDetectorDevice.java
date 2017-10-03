@@ -54,10 +54,10 @@ import com.tinkerforge.TimeoutException;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class MotionDetectorDevice extends GenericDevice<BrickletMotionDetector, MotionDetectorDeviceCallback,Intent> {
+public class MotionDetectorDevice extends GenericDevice<BrickletMotionDetector, MotionDetectorDeviceCallback, Intent> {
 
     public MotionDetectorDevice(TinkerforgeStack stack, BrickletMotionDetector device) throws NotConnectedException, TimeoutException {
-        super(stack, device,null);
+        super(stack, device, null);
     }
 
     @Override

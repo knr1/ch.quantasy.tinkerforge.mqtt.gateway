@@ -41,17 +41,25 @@
  */
 package ch.quantasy.gateway.intent.dualButton;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.SetSize;
 import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
  * @author reto
  */
 public class DualButtonIntent extends AnIntent {
+
+    @Nullable
     @SetSize(max = 2)
     public Set<DeviceSelectedLEDStateParameters> selectedLEDStates;
+    @Nullable
     public DeviceLEDState ledState;
+    
+    public DualButtonIntent(){
+        selectedLEDStates=new HashSet();
+    }
 }

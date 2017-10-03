@@ -82,7 +82,7 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
     }
 
     public LCD20x4ServiceContract(String id, String device) {
-        super(id, device,LCD20x4Intent.class);
+        super(id, device, LCD20x4Intent.class);
 
         BACKLIGHT = "backlight";
         STATUS_BACKLIGHT = STATUS + "/" + BACKLIGHT;
@@ -120,6 +120,6 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
         descriptions.put(EVENT_BUTTON_PRESSED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [1..4]\n");
         descriptions.put(EVENT_BUTTON_RELEASED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [1..4]\n");
-        
+
     }
 }

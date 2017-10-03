@@ -41,10 +41,7 @@
  */
 package ch.quantasy.gateway.intent.io16;
 
-import ch.quantasy.gateway.intent.humidity.*;
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
-import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
  *

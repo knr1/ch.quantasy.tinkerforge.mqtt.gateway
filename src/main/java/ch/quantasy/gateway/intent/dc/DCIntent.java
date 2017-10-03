@@ -41,9 +41,9 @@
  */
 package ch.quantasy.gateway.intent.dc;
 
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
 import ch.quantasy.gateway.intent.annotations.Choice;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 import ch.quantasy.gateway.intent.annotations.Range;
 
@@ -52,18 +52,27 @@ import ch.quantasy.gateway.intent.annotations.Range;
  * @author reto
  */
 public class DCIntent extends AnIntent {
+
+    @Nullable
     @Range(from = 0, to = Integer.MAX_VALUE)
     public Integer acceleration;
+    @Nullable
     @Period
     public Integer velocityPeriod;
+    @Nullable
     @Choice(values = {"1", "2"})
     public Short driveMode;
+    @Nullable
     @Range(from = 6000, to = Integer.MAX_VALUE)
     public Integer minimumVoltage;
+    @Nullable
     @Range(from = 1, to = 20000)
     public Integer pwmFrequency;
+    @Nullable
     @Range(from = -32767, to = 32767)
     public Short velocity;
+    @Nullable
     public Boolean enable;
+    @Nullable
     public Boolean fullBrake;
 }

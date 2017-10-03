@@ -61,17 +61,14 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  */
 public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDStripServiceContract> implements LEDStripDeviceCallback {
 
-
     public LEDStripService(LEDStripDevice device, URI mqttURI) throws MqttException {
         super(mqttURI, device, new LEDStripServiceContract(device));
     }
 
-    
     @Override
     public void configurationChanged(LEDStripDeviceConfig config) {
         publishStatus(getContract().STATUS_CONFIG, config);
     }
-
 
     @Override
     public void frameRendered(int remainingFramesInQueue) {

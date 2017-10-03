@@ -41,10 +41,8 @@
  */
 package ch.quantasy.gateway.intent.soundIntensity;
 
-import ch.quantasy.gateway.intent.rotaryPoti.*;
-import ch.quantasy.gateway.intent.rotaryEncoder.*;
-import ch.quantasy.gateway.intent.annotations.AValidator;
 import ch.quantasy.gateway.intent.AnIntent;
+import ch.quantasy.gateway.intent.annotations.Nullable;
 import ch.quantasy.gateway.intent.annotations.Period;
 
 /**
@@ -53,9 +51,12 @@ import ch.quantasy.gateway.intent.annotations.Period;
  */
 public class SoundIntensityIntent extends AnIntent {
 
+    @Nullable
     @Period
     public Long intensityCallbackPeriod;
+    @Nullable
     @Period
     public Long debouncePeriod;
+    @Nullable
     public DeviceSoundIntensityCallbackThreshold intensityCallbackThreshold;
 }

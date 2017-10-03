@@ -52,9 +52,10 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-public @interface Period{
+public @interface Period {
+
     public long from() default 0;
+
     public long to() default Long.MAX_VALUE;
-    
-    
+
 }

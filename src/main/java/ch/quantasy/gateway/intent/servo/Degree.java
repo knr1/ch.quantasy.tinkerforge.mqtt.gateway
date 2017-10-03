@@ -52,9 +52,9 @@ import java.util.Objects;
  */
 public class Degree extends AValidator {
 
-    @Range(from = -32767,to = 32767)    
+    @Range(from = -32767, to = 32767)
     private Short min;
-    @Range(from = -32767,to = 32767)    
+    @Range(from = -32767, to = 32767)
     private Short max;
 
     private Degree() {
