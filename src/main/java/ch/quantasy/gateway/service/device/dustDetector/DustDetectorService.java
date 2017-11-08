@@ -42,8 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.dustDetector;
 
-import ch.quantasy.gateway.intent.dustDetector.DeviceDustDensityCallbackThreshold;
-import ch.quantasy.gateway.intent.dustDetector.DustDetectorIntent;
+import ch.quantasy.gateway.message.event.dustDensity.DustDensityEvent;
+import ch.quantasy.gateway.message.intent.dustDetector.DeviceDustDensityCallbackThreshold;
+import ch.quantasy.gateway.message.intent.dustDetector.DustDetectorIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDeviceCallback;
@@ -82,12 +83,12 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
     @Override
     public void dustDensity(int i) {
-        publishEvent(getContract().EVENT_DUST_DENSITY, i);
+        publishEvent(getContract().EVENT_DUST_DENSITY, new DustDensityEvent(i));
     }
 
     @Override
     public void dustDensityReached(int i) {
-        publishEvent(getContract().EVENT_DUST_DENSITY_REACHED, i);
+        publishEvent(getContract().EVENT_DUST_DENSITY_REACHED, new DustDensityEvent(i));
     }
 
 }

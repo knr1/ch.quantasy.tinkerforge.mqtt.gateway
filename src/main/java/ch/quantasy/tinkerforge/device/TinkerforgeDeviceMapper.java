@@ -92,7 +92,7 @@ import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import ch.quantasy.gateway.intent.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.message.intent.stack.TinkerforgeStackAddress;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickIMU;
 import com.tinkerforge.BrickIMUV2;

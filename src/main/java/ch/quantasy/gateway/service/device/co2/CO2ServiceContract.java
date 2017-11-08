@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.co2;
 
-import ch.quantasy.gateway.intent.co2.CO2Intent;
+import ch.quantasy.gateway.message.event.co2.CO2ConcentrationEvent;
+import ch.quantasy.gateway.message.intent.co2.CO2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
@@ -99,13 +100,14 @@ public class CO2ServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
+         addMessageTopic(EVENT_CO2_CONCENTRATION,CO2ConcentrationEvent.class);
+        addMessageTopic(EVENT_CO2_CONCENTRATION_REACHED, CO2ConcentrationEvent.class);
+       
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_CO2_CONCENTRATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
-        descriptions.put(EVENT_CO2_CONCENTRATION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..10000]\n");
         descriptions.put(STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_CO2_CONCENTRATION_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

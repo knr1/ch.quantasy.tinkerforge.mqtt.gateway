@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.rotaryPoti;
 
-import ch.quantasy.gateway.intent.rotaryPoti.RotaryPotiIntent;
+import ch.quantasy.gateway.message.event.rotaryPoti.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.rotaryPoti.PositionEvent;
+import ch.quantasy.gateway.message.intent.rotaryPoti.RotaryPotiIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
@@ -110,14 +112,15 @@ public class RotaryPotiServiceContract extends DeviceServiceContract {
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
+        addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
+        addMessageTopic(EVENT_POSITION, PositionEvent.class);
+        addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
+        addMessageTopic(EVENT_POSITION_REACHED, PositionEvent.class);
+        
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_ANALOG_VALUE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]\n");
-        descriptions.put(EVENT_POSITION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..9000]\n");
-        descriptions.put(EVENT_ANALOG_VALUE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]\n");
-        descriptions.put(EVENT_POSITION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-150..150]\n");
         descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");

@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.dustDetector;
 
-import ch.quantasy.gateway.intent.dustDetector.DeviceDustDensityCallbackThreshold;
+import ch.quantasy.gateway.message.intent.dustDetector.DeviceDustDensityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletDustDetector;
 

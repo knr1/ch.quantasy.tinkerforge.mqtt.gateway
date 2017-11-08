@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.dualButton;
 
-import ch.quantasy.gateway.intent.dualButton.DualButtonIntent;
+import ch.quantasy.gateway.message.event.dualButton.StateChangedEvent;
+import ch.quantasy.gateway.message.intent.dualButton.DualButtonIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
@@ -84,13 +85,12 @@ public class DualButtonServiceContract extends DeviceServiceContract {
         STATUS_LED_STATE = STATUS + "/" + LED_STATE;
 
         SELECTED_LED_STATE = "selectedLEDState";
-
+        addMessageTopic(EVENT_STATE_CHANGED, StateChangedEvent.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_STATE_CHANGED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    led1: [AutoToggleOn|AutoToggleOff|On|Off]\n    led2: [AutoToggleOn|AutoToggleOff|On|Off]\n   switch1: [0|1]\n   switch2: [0|1]");
         descriptions.put(STATUS_LED_STATE, "led1: [AutoToggleOn|AutoToggleOff|On|Off]\n led2: [AutoToggleOn|AutoToggleOff|On|Off]");
     }
 }

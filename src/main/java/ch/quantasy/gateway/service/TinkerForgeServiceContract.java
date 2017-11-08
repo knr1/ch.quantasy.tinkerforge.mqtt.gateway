@@ -42,23 +42,23 @@
  */
 package ch.quantasy.gateway.service;
 
-import ch.quantasy.gateway.intent.Intent;
-import ch.quantasy.gateway.intent.annotations.AValidator;
-import ch.quantasy.gateway.intent.annotations.ArraySize;
-import ch.quantasy.gateway.intent.annotations.Choice;
-import ch.quantasy.gateway.intent.annotations.MultiArraySize;
-import ch.quantasy.gateway.intent.annotations.Nullable;
-import ch.quantasy.gateway.intent.annotations.Period;
-import ch.quantasy.gateway.intent.annotations.Range;
-import ch.quantasy.gateway.intent.annotations.Ranges;
-import ch.quantasy.gateway.intent.annotations.SetSize;
-import ch.quantasy.gateway.intent.annotations.StringForm;
-import ch.quantasy.gateway.intent.annotations.StringSize;
-import ch.quantasy.gateway.intent.annotations.Validator;
-import ch.quantasy.gateway.intent.dualRelay.DualRelayIntent;
-import ch.quantasy.gateway.intent.ledStrip.LedStripIntent;
+import ch.quantasy.mqtt.gateway.client.message.Intent;
+import ch.quantasy.gateway.message.annotations.AValidator;
+import ch.quantasy.gateway.message.annotations.ArraySize;
+import ch.quantasy.gateway.message.annotations.Choice;
+import ch.quantasy.gateway.message.annotations.MultiArraySize;
+import ch.quantasy.gateway.message.annotations.Nullable;
+import ch.quantasy.gateway.message.annotations.Period;
+import ch.quantasy.gateway.message.annotations.Range;
+import ch.quantasy.gateway.message.annotations.Ranges;
+import ch.quantasy.gateway.message.annotations.SetSize;
+import ch.quantasy.gateway.message.annotations.StringForm;
+import ch.quantasy.gateway.message.annotations.StringSize;
+import ch.quantasy.gateway.message.intent.dualRelay.DualRelayIntent;
 
-import ch.quantasy.mqtt.gateway.client.AyamlServiceContract;
+import ch.quantasy.mqtt.gateway.client.contract.AyamlServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
+import ch.quantasy.mqtt.gateway.client.message.Validator;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.lang.reflect.ParameterizedType;
@@ -72,6 +72,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Map.Entry;
 
 /**
  *
@@ -79,11 +80,12 @@ import java.util.logging.Logger;
  */
 public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
 
-    Class<? extends Intent> intentClass;
-
+    private Class<? extends Intent> intentClass;
+   
     public TinkerForgeServiceContract(String baseClass, String instance, Class<? extends Intent> intentClass) {
         super("TF", baseClass, instance);
         this.intentClass = intentClass;
+       
     }
 
     public static String getDataFormatDescription(Class o) {
@@ -297,12 +299,8 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
     @Override
     protected void describe(Map<String, String> descriptions) {
         descriptions.put(INTENT, getDataFormatDescription(intentClass));
-
+        for(Entry<String,Class<? extends Message>> entry:getMessageTopicMap().entrySet()){
+            descriptions.put(entry.getKey(), getDataFormatDescription(entry.getValue()));
+        }
     }
-
-    public static void main(String[] args) {
-        System.out.println(TinkerForgeServiceContract.getDataFormatDescription(DualRelayIntent.class
-        ));
-    }
-
 }

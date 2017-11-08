@@ -42,10 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.dualRelay;
 
-import ch.quantasy.gateway.intent.dualRelay.DeviceSelectedRelayState;
-import ch.quantasy.gateway.intent.dualRelay.DeviceRelayState;
-import ch.quantasy.gateway.intent.dualRelay.DeviceMonoflopParameters;
-import ch.quantasy.gateway.intent.dualRelay.DualRelayIntent;
+import ch.quantasy.gateway.message.intent.dualRelay.DeviceSelectedRelayState;
+import ch.quantasy.gateway.message.intent.dualRelay.DeviceRelayState;
+import ch.quantasy.gateway.message.intent.dualRelay.DeviceMonoflopParameters;
+import ch.quantasy.gateway.message.intent.dualRelay.DualRelayIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDualRelay;

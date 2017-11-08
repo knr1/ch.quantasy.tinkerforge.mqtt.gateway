@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.analogInV2;
 
-import ch.quantasy.gateway.intent.analogInV2.AnalogInV2Intent;
+import ch.quantasy.gateway.message.event.analogInV2.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.analogInV2.VoltageEvent;
+import ch.quantasy.gateway.message.intent.analogInV2.AnalogInV2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
@@ -119,15 +121,16 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
 
+        addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
+        addMessageTopic(EVENT_VOLTAGE, VoltageEvent.class);
+        addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
+        addMessageTopic(EVENT_VOLTAGE_REACHED, VoltageEvent.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_ANALOG_VALUE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]\n");
-        descriptions.put(EVENT_VOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
-        descriptions.put(EVENT_ANALOG_VALUE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]\n");
-        descriptions.put(EVENT_VOLTAGE_REACHED, "- timestamp: [0..42000]\n  value: [0..42000]\n");
         descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");

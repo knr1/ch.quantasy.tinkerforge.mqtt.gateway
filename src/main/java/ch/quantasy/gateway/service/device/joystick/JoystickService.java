@@ -42,9 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.joystick;
 
-import ch.quantasy.gateway.intent.joystick.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.intent.joystick.DevicePositionCallbackThreshold;
-import ch.quantasy.gateway.intent.joystick.JoystickIntent;
+import ch.quantasy.gateway.message.event.joystick.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.joystick.ButtonEvent;
+import ch.quantasy.gateway.message.event.joystick.CalibratedEvent;
+import ch.quantasy.gateway.message.event.joystick.PositionEvent;
+import ch.quantasy.gateway.message.intent.joystick.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.intent.joystick.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.message.intent.joystick.JoystickIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDeviceCallback;
@@ -89,83 +93,36 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
 
     @Override
     public void calibrated() {
-        publishEvent(getContract().EVENT_CALIBRATE, true);
+        publishEvent(getContract().EVENT_CALIBRATE, new CalibratedEvent(true));
     }
 
     @Override
     public void analogValue(int i, int i1) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValue(i, i1));
+        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i, i1));
     }
 
     @Override
     public void analogValueReached(int i, int i1) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValue(i, i1));
+        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i, i1));
     }
 
     @Override
     public void position(short s, short s1) {
-        publishEvent(getContract().EVENT_POSITION, new Position(s, s1));
+        publishEvent(getContract().EVENT_POSITION, new PositionEvent(s, s1));
     }
 
     @Override
     public void positionReached(short s, short s1) {
-        publishEvent(getContract().EVENT_POSITION_REACHED, new Position(s, s1));
+        publishEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(s, s1));
     }
 
     @Override
     public void pressed() {
-        publishEvent(getContract().EVENT_PRESSED, true);
+        publishEvent(getContract().EVENT_PRESSED, new ButtonEvent(true));
     }
 
     @Override
     public void released() {
-        publishEvent(getContract().EVENT_RELEASED, true);
+        publishEvent(getContract().EVENT_PRESSED, new ButtonEvent(false));
     }
-
-    public static class AnalogValue {
-
-        private int x;
-        private int y;
-
-        private AnalogValue() {
-        }
-
-        public AnalogValue(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-    }
-
-    public static class Position {
-
-        private short x;
-        private short y;
-
-        private Position() {
-        }
-
-        public Position(short x, short y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public short getX() {
-            return x;
-        }
-
-        public short getY() {
-            return y;
-        }
-
-    }
-
 }

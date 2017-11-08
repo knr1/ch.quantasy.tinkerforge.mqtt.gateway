@@ -42,10 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.barometer;
 
-import ch.quantasy.gateway.intent.barometer.BarometerIntent;
-import ch.quantasy.gateway.intent.barometer.DeviceAirPressureCallbackThreshold;
-import ch.quantasy.gateway.intent.barometer.DeviceAveraging;
-import ch.quantasy.gateway.intent.barometer.DeviceAltitudeCallbackThreshold;
+import ch.quantasy.gateway.message.intent.barometer.BarometerIntent;
+import ch.quantasy.gateway.message.intent.barometer.DeviceAirPressureCallbackThreshold;
+import ch.quantasy.gateway.message.intent.barometer.DeviceAveraging;
+import ch.quantasy.gateway.message.intent.barometer.DeviceAltitudeCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletBarometer;

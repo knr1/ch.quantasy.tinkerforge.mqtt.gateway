@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.loadCell;
 
-import ch.quantasy.gateway.intent.loadCell.DeviceWeightCallbackThreshold;
-import ch.quantasy.gateway.intent.loadCell.DeviceConfiguration;
-import ch.quantasy.gateway.intent.loadCell.LoadCellIntent;
+import ch.quantasy.gateway.message.intent.loadCell.DeviceWeightCallbackThreshold;
+import ch.quantasy.gateway.message.intent.loadCell.DeviceConfiguration;
+import ch.quantasy.gateway.message.intent.loadCell.LoadCellIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 

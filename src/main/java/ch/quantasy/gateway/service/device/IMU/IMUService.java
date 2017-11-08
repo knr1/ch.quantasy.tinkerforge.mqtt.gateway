@@ -42,6 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.IMU;
 
+import ch.quantasy.gateway.message.event.IMU.OrientationEvent;
+import ch.quantasy.gateway.message.event.IMU.QuaternionEvent;
+import ch.quantasy.gateway.message.event.IMU.MagneticFieldEvent;
+import ch.quantasy.gateway.message.event.IMU.AngularVelocityEvent;
+import ch.quantasy.gateway.message.event.IMU.AccelerationEvent;
+import ch.quantasy.gateway.message.event.IMU.AllDataEvent;
+import ch.quantasy.gateway.message.event.IMU.TemperatureEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.imu.IMUDeviceCallback;
@@ -106,279 +113,43 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     @Override
     public void acceleration(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_ACCELERATION, new Acceleration(s, s1, s2));
+        publishEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(s, s1, s2));
     }
 
     @Override
     public void allData(short shorts, short shorts1, short shorts2, short shorts3, short shorts4, short shorts5, short shorts6, short short7, short s8, short s9) {
-        publishEvent(getContract().EVENT_ALL_DATA, new AllDataEvent(new Acceleration(shorts, shorts1, shorts2),
-                new MagneticField(shorts3, shorts4, shorts5),
-                new AngularVelocity(shorts6, short7, s8),
-                s9));
+        publishEvent(getContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts, shorts1, shorts2),
+                new MagneticFieldEvent(shorts3, shorts4, shorts5),
+                new AngularVelocityEvent(shorts6, short7, s8),
+                new TemperatureEvent(s9)));
     }
 
     @Override
     public void angularVelocity(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocity(s, s1, s2));
+        publishEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocityEvent(s, s1, s2));
     }
 
     @Override
     public void magneticField(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticField(s, s1, s2));
+        publishEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticFieldEvent(s, s1, s2));
     }
 
     @Override
     public void orientation(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_ORIENTATION, new Orientation(s, s1, s2));
+        publishEvent(getContract().EVENT_ORIENTATION, new OrientationEvent(s, s1, s2));
     }
 
     @Override
     public void quaternion(float s, float s1, float s2, float s3) {
-        publishEvent(getContract().EVENT_QUATERNION, new Quaternion(s, s1, s2, s3));
+        publishEvent(getContract().EVENT_QUATERNION, new QuaternionEvent(s, s1, s2, s3));
     }
 
-    public static class Acceleration {
 
-        private short x;
-        private short y;
-        private short z;
 
-        private Acceleration() {
-        }
 
-        public Acceleration(short x, short y, short z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
 
-        public short getX() {
-            return x;
-        }
 
-        public short getY() {
-            return y;
-        }
 
-        public short getZ() {
-            return z;
-        }
 
-    }
-
-    public static class AngularVelocity {
-
-        private short x;
-        private short y;
-        private short z;
-
-        private AngularVelocity() {
-        }
-
-        public AngularVelocity(short x, short y, short z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        public short getX() {
-            return x;
-        }
-
-        public short getY() {
-            return y;
-        }
-
-        public short getZ() {
-            return z;
-        }
-
-    }
-
-    public static class GravityVector {
-
-        private short x;
-        private short y;
-        private short z;
-
-        private GravityVector() {
-        }
-
-        public GravityVector(short x, short y, short z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        public short getX() {
-            return x;
-        }
-
-        public short getY() {
-            return y;
-        }
-
-        public short getZ() {
-            return z;
-        }
-
-    }
-
-    public static class LinearAcceleration {
-
-        private short x;
-        private short y;
-        private short z;
-
-        private LinearAcceleration() {
-        }
-
-        public LinearAcceleration(short x, short y, short z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        public short getX() {
-            return x;
-        }
-
-        public short getY() {
-            return y;
-        }
-
-        public short getZ() {
-            return z;
-        }
-
-    }
-
-    public static class MagneticField {
-
-        private short x;
-        private short y;
-        private short z;
-
-        private MagneticField() {
-        }
-
-        public MagneticField(short x, short y, short z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        public short getX() {
-            return x;
-        }
-
-        public short getY() {
-            return y;
-        }
-
-        public short getZ() {
-            return z;
-        }
-
-    }
-
-    public static class Orientation {
-
-        private short heading;
-        private short roll;
-        private short pitch;
-
-        private Orientation() {
-        }
-
-        public Orientation(short heading, short roll, short pitch) {
-            this.heading = heading;
-            this.roll = roll;
-            this.pitch = pitch;
-        }
-
-        public short getHeading() {
-            return heading;
-        }
-
-        public short getRoll() {
-            return roll;
-        }
-
-        public short getPitch() {
-            return pitch;
-        }
-
-    }
-
-    public static class Quaternion {
-
-        private float w;
-        private float x;
-        private float y;
-        private float z;
-
-        private Quaternion() {
-        }
-
-        public Quaternion(float w, float x, float y, float z) {
-            this.w = w;
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        public float getW() {
-            return w;
-        }
-
-        public float getX() {
-            return x;
-        }
-
-        public float getY() {
-            return y;
-        }
-
-        public float getZ() {
-            return z;
-        }
-
-    }
-
-    public static class AllDataEvent {
-
-        private Acceleration acceleration;
-        private MagneticField magneticField;
-        private AngularVelocity angularVelocity;
-        private Short temperature;
-
-        private AllDataEvent() {
-        }
-
-        public AllDataEvent(Acceleration acceleration, MagneticField magneticField, AngularVelocity angularVelocity, Short temperature) {
-            this.acceleration = acceleration;
-            this.magneticField = magneticField;
-            this.angularVelocity = angularVelocity;
-            this.temperature = temperature;
-        }
-
-        public Acceleration getAcceleration() {
-            return acceleration;
-        }
-
-        public MagneticField getMagneticField() {
-            return magneticField;
-        }
-
-        public AngularVelocity getAngularVelocity() {
-            return angularVelocity;
-        }
-
-        public Short getTemperature() {
-            return temperature;
-        }
-
-    }
 
 }

@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.line;
 
+import ch.quantasy.gateway.message.event.line.ReflectivityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.line.DeviceReflectivityCallbackThreshold;
-import ch.quantasy.gateway.intent.line.LineIntent;
+import ch.quantasy.gateway.message.intent.line.DeviceReflectivityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.line.LineDeviceCallback;
 import java.net.URI;
@@ -78,12 +78,12 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
 
     @Override
     public void reflectivity(int i) {
-        publishEvent(getContract().EVENT_REFLECTIVITY, i);
+        publishEvent(getContract().EVENT_REFLECTIVITY, new ReflectivityEvent(i));
     }
 
     @Override
     public void reflectivityReached(int i) {
-        publishEvent(getContract().EVENT_REFLECTIVITY_REACHED, i);
+        publishEvent(getContract().EVENT_REFLECTIVITY_REACHED, new ReflectivityEvent(i));
     }
 
 }

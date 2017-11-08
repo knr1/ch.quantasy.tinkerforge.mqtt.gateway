@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.LCD16x2;
 
-import ch.quantasy.gateway.intent.LCD16x2.LCD16x2Intent;
-import ch.quantasy.gateway.intent.LCD16x2.DeviceConfigParameters;
-import ch.quantasy.gateway.intent.LCD16x2.DeviceCustomCharacter;
+import ch.quantasy.gateway.message.event.LCD16x2.ButtonEvent;
+import ch.quantasy.gateway.message.intent.LCD16x2.DeviceConfigParameters;
+import ch.quantasy.gateway.message.intent.LCD16x2.DeviceCustomCharacter;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2DeviceCallback;
@@ -80,12 +80,12 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     @Override
     public void buttonPressed(short s) {
-        publishEvent(getContract().EVENT_BUTTON_PRESSED, s);
+        publishEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s,true));
     }
 
     @Override
     public void buttonReleased(short s) {
-        publishEvent(getContract().EVENT_BUTTON_RELEASED, s);
+        publishEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s,false));
     }
 
 }

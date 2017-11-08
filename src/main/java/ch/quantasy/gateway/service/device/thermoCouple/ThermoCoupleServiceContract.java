@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.thermoCouple;
 
-import ch.quantasy.gateway.intent.thermoCouple.ThermoCoupleIntent;
+import ch.quantasy.gateway.message.event.thermoCouple.TemperatureEvent;
+import ch.quantasy.gateway.message.event.thermoCouple.ErrorEvent;
+import ch.quantasy.gateway.message.intent.thermoCouple.ThermoCoupleIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
@@ -111,13 +113,15 @@ public class ThermoCoupleServiceContract extends DeviceServiceContract {
 
         ERROR = "error";
         EVENT_ERROR = EVENT + "/" + ERROR;
+
+        addMessageTopic(EVENT_TEMPERATURE, TemperatureEvent.class);
+        addMessageTopic(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
+        addMessageTopic(EVENT_ERROR, ErrorEvent.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_TEMPERATURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-21000..180000]");
-        descriptions.put(EVENT_TEMPERATURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-21000..180000]");
         descriptions.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-21000..180000]\n max: [-21000..180000]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

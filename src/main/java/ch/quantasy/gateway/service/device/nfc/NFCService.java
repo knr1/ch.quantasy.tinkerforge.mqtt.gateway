@@ -42,12 +42,15 @@
  */
 package ch.quantasy.gateway.service.device.nfc;
 
-import ch.quantasy.gateway.intent.nfc.NFCIntent;
+import ch.quantasy.gateway.message.event.nfc.TagIDEvent;
+import ch.quantasy.gateway.message.event.nfc.TagReadEvent;
+import ch.quantasy.gateway.message.event.nfc.TagWrittenEvent;
+import ch.quantasy.gateway.message.intent.nfc.NFCIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDeviceCallback;
 import ch.quantasy.tinkerforge.device.nfc.NFCTag;
-import ch.quantasy.gateway.intent.nfc.NFCWrite;
+import ch.quantasy.gateway.message.intent.nfc.NFCWrite;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;
 
@@ -68,109 +71,21 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
 
     @Override
     public void tagDiscovered(NFCTag nfcTag) {
-        publishEvent(getContract().EVENT_TAG_DISCOVERD, new TagID(nfcTag), nfcTag.getLatestDiscoveryTimeStamp());
+        publishEvent(getContract().EVENT_TAG_DISCOVERD, new TagIDEvent(nfcTag));
     }
 
     @Override
     public void tagVanished(NFCTag nfcTag) {
-        publishEvent(getContract().EVENT_TAG_VANISHED, new TagID(nfcTag), nfcTag.getLatestDiscoveryTimeStamp());
+        publishEvent(getContract().EVENT_TAG_VANISHED, new TagIDEvent(nfcTag));
     }
 
     @Override
     public void tagRead(NFCTag tag) {
-        publishEvent(getContract().EVENT_TAG_READ, new TagRead(tag), tag.getLatestDiscoveryTimeStamp());
+        publishEvent(getContract().EVENT_TAG_READ, new TagReadEvent(tag));
     }
 
     @Override
     public void tagWritten(NFCTag tag) {
-        publishEvent(getContract().EVENT_TAG_WRITTEN, new TagWritten(tag));
+        publishEvent(getContract().EVENT_TAG_WRITTEN, new TagWrittenEvent(tag));
     }
-
-    static class TagWritten {
-
-        private String id;
-        private NFCTag.NFCRFIDReaderState state;
-        private Short[] value;
-
-        public TagWritten(NFCTag tag) {
-            this(tag.getTidAsHexString(), tag.getLatestReaderState(), tag.getWriteContent());
-        }
-
-        private TagWritten() {
-        }
-
-        public TagWritten(String id, NFCTag.NFCRFIDReaderState readerState, Short[] value) {
-            this.id = id;
-            this.state = readerState;
-            this.value = value;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public Short[] getValue() {
-            return value;
-        }
-
-        public NFCTag.NFCRFIDReaderState getState() {
-            return state;
-        }
-
-    }
-
-    static class TagRead {
-
-        private String id;
-        private Short[] value;
-
-        public TagRead(NFCTag tag) {
-            this(tag.getTidAsHexString(), tag.getReadContent());
-        }
-
-        private TagRead() {
-        }
-
-        public TagRead(String id, Short[] value) {
-            this.id = id;
-            this.value = value;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public Short[] getValue() {
-            return value;
-        }
-
-    }
-
-    static class TagID {
-
-        private String id;
-        private NFCTag.NFCType type;
-
-        private TagID() {
-        }
-
-        public TagID(NFCTag tag) {
-            this(tag.getTidAsHexString(), tag.getType());
-        }
-
-        public TagID(String id, NFCTag.NFCType type) {
-            this.id = id;
-            this.type = type;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public NFCTag.NFCType getType() {
-            return type;
-        }
-
-    }
-
 }

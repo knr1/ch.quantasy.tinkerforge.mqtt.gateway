@@ -42,7 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.joystick;
 
-import ch.quantasy.gateway.intent.joystick.JoystickIntent;
+import ch.quantasy.gateway.message.event.joystick.ButtonEvent;
+import ch.quantasy.gateway.message.event.joystick.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.joystick.CalibratedEvent;
+import ch.quantasy.gateway.message.event.joystick.PositionEvent;
+import ch.quantasy.gateway.message.intent.joystick.JoystickIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
@@ -128,20 +132,22 @@ public class JoystickServiceContract extends DeviceServiceContract {
 
         RELEASED = "released";
         EVENT_RELEASED = EVENT + "/" + RELEASED;
+        
+          addMessageTopic(EVENT_CALIBRATE, CalibratedEvent.class);
+        addMessageTopic(EVENT_PRESSED, ButtonEvent.class);
+        addMessageTopic(EVENT_RELEASED, ButtonEvent.class);
+addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
+        addMessageTopic(EVENT_POSITION, PositionEvent.class);
+        addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
+        addMessageTopic(EVENT_POSITION_REACHED, PositionEvent.class);
+        
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_CALIBRATE, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(EVENT_PRESSED, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(EVENT_RELEASED, "[0.." + Long.MAX_VALUE + "]");
-
-        descriptions.put(EVENT_ANALOG_VALUE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    x: [0..4095]\n    y: [0..4095]");
-        descriptions.put(EVENT_POSITION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    x: [-100..100]\n    y: [-100..100]");
-        descriptions.put(EVENT_ANALOG_VALUE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    x: [0..4095]\n    y: [0..4095]");
-        descriptions.put(EVENT_POSITION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    x: [-100..100]\n    y: [-100..100]");
+      
         descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");

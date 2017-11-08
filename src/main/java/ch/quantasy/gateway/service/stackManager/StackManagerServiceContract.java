@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.stackManager;
 
-import ch.quantasy.gateway.intent.stack.TinkerforgeStackIntent;
+import ch.quantasy.gateway.message.event.stackManager.StackAddressEvent;
+import ch.quantasy.gateway.message.intent.stack.TinkerforgeStackIntent;
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
 import java.util.Map;
 
@@ -111,15 +112,15 @@ public class StackManagerServiceContract extends TinkerForgeServiceContract {
         DISCONNECTED = "disconnected";
 
         EVENT_ADDRESS_DISCONNECTED = EVENT_DEVICE + "/" + DISCONNECTED;
+        addMessageTopic(EVENT_STACK_ADDRESS_ADDED, StackAddressEvent.class);
+        addMessageTopic(EVENT_STACK_ADDRESS_REMOVED, StackAddressEvent.class);
 
     }
 
     @Override
     protected void describe(Map<String, String> descriptions) {
-        descriptions.put(EVENT_ADDRESS_CONNECTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    hostName: <String>\n    port: [0..4223..65536]");
-        descriptions.put(EVENT_ADDRESS_DISCONNECTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    hostName: <String>\n    port: [0..4223..65536]");
-        descriptions.put(EVENT_STACK_ADDRESS_ADDED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    hostName: <String>\n    port: [0..4223..65536]");
-        descriptions.put(EVENT_STACK_ADDRESS_REMOVED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    hostName: <String>\n    port: [0..4223..65536]");
+        //descriptions.put(EVENT_ADDRESS_CONNECTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    hostName: <String>\n    port: [0..4223..65536]");
+        //descriptions.put(EVENT_ADDRESS_DISCONNECTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    hostName: <String>\n    port: [0..4223..65536]");
         descriptions.put(STATUS_STACK_ADDRESS + "/<address>/connected", "[true|false]");
         super.describe(descriptions);
     }

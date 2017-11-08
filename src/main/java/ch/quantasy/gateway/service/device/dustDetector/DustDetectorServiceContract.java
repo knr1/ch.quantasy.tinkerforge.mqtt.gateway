@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.dustDetector;
 
-import ch.quantasy.gateway.intent.dustDetector.DustDetectorIntent;
+import ch.quantasy.gateway.message.event.dustDensity.DustDensityEvent;
+import ch.quantasy.gateway.message.intent.dustDetector.DustDetectorIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
@@ -105,13 +106,14 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
 
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
+        addMessageTopic(EVENT_DUST_DENSITY, DustDensityEvent.class);
+        addMessageTopic(EVENT_DUST_DENSITY_REACHED, DustDensityEvent.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_DUST_DENSITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..500]");
-        descriptions.put(EVENT_DUST_DENSITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..500]");
+        
         descriptions.put(STATUS_DUST_DENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_DUST_DENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..500]\n max: [0..500]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

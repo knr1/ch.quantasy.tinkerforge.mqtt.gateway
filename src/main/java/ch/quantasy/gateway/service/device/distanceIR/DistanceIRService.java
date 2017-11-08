@@ -42,10 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.distanceIR;
 
+import ch.quantasy.gateway.message.event.distanceIR.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.distanceIR.DistanceEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.distanceIR.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.intent.distanceIR.DeviceDistanceCallbackThreshold;
-import ch.quantasy.gateway.intent.distanceIR.DistanceIRIntent;
+import ch.quantasy.gateway.message.intent.distanceIR.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.intent.distanceIR.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.message.intent.distanceIR.DistanceIRIntent;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDeviceCallback;
 import java.net.URI;
@@ -63,22 +65,22 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
 
     @Override
     public void analogValue(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void distance(int i) {
-        publishEvent(getContract().EVENT_DISTANCE, i);
+        publishEvent(getContract().EVENT_DISTANCE, new DistanceEvent(i));
     }
 
     @Override
     public void distanceReached(int i) {
-        publishEvent(getContract().EVENT_DISTANCE_REACHED, i);
+        publishEvent(getContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
     }
 
     @Override

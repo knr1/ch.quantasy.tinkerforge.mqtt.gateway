@@ -42,10 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.ptc;
 
-import ch.quantasy.gateway.intent.ptc.DeviceNoiseReductionFilter;
-import ch.quantasy.gateway.intent.ptc.DeviceResistanceCallbackThreshold;
-import ch.quantasy.gateway.intent.ptc.DeviceTemperatureCallbackThreshold;
-import ch.quantasy.gateway.intent.ptc.PTCIntent;
+import ch.quantasy.gateway.message.intent.ptc.DeviceNoiseReductionFilter;
+import ch.quantasy.gateway.message.intent.ptc.DeviceResistanceCallbackThreshold;
+import ch.quantasy.gateway.message.intent.ptc.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.intent.ptc.PTCIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletPTC;

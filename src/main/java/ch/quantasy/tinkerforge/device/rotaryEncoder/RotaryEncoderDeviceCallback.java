@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.rotaryEncoder;
 
-import ch.quantasy.gateway.intent.rotaryEncoder.DeviceCountCallbackThreshold;
+import ch.quantasy.gateway.message.intent.rotaryEncoder.DeviceCountCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletRotaryEncoder;
 

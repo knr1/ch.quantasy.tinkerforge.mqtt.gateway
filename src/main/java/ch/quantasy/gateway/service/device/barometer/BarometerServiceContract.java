@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.barometer;
 
-import ch.quantasy.gateway.intent.barometer.BarometerIntent;
+import ch.quantasy.gateway.message.event.barometer.AirPressureEvent;
+import ch.quantasy.gateway.message.event.barometer.AltitudeEvent;
+import ch.quantasy.gateway.message.intent.barometer.BarometerIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
@@ -124,15 +126,17 @@ public class BarometerServiceContract extends DeviceServiceContract {
 
         REFERENCE_AIR_PRESSURE = "referenceAirPressure";
         STATUS_REFERENCE_AIR_PRESSURE = STATUS + "/" + REFERENCE_AIR_PRESSURE;
+
+        addMessageTopic(EVENT_AIR_PRESSURE, AirPressureEvent.class);
+        addMessageTopic(EVENT_ALTITUDE, AltitudeEvent.class);
+        addMessageTopic(EVENT_AIR_PRESSURE_REACHED, AirPressureEvent.class);
+        addMessageTopic(EVENT_ALTITUDE_REACHED, AltitudeEvent.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_AIR_PRESSURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [10000..1200000]\n");
-        descriptions.put(EVENT_ALTITUDE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
-        descriptions.put(EVENT_AIR_PRESSURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [10000..1200000]\n");
-        descriptions.put(EVENT_ALTITUDE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n");
         descriptions.put(STATUS_AIR_PRESSURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_AIR_PRESSURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [10000..1200000]\n max: [10000..1200000]");

@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.LCD20x4;
 
-import ch.quantasy.gateway.intent.LCD20x4.LCD20x4Intent;
+import ch.quantasy.gateway.message.event.LCD20x4.ButtonEvent;
+import ch.quantasy.gateway.message.intent.LCD20x4.LCD20x4Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
@@ -109,6 +110,8 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
         RELEASED = "released";
         EVENT_BUTTON_RELEASED = EVENT + "/" + BUTTON + "/" + RELEASED;
         EVENT_BUTTON_PRESSED = EVENT + "/" + BUTTON + "/" + PRESSED;
+          addMessageTopic(EVENT_BUTTON_PRESSED, ButtonEvent.class);
+        addMessageTopic(EVENT_BUTTON_RELEASED, ButtonEvent.class);
     }
 
     @Override
@@ -118,8 +121,7 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
         descriptions.put(STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
         descriptions.put(STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_BUTTON_PRESSED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [1..4]\n");
-        descriptions.put(EVENT_BUTTON_RELEASED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [1..4]\n");
+     
 
     }
 }

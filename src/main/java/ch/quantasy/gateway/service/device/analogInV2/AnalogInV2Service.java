@@ -42,12 +42,14 @@
  */
 package ch.quantasy.gateway.service.device.analogInV2;
 
-import ch.quantasy.gateway.intent.analogInV2.AnalogInV2Intent;
+import ch.quantasy.gateway.message.event.analogInV2.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.analogInV2.VoltageEvent;
+import ch.quantasy.gateway.message.intent.analogInV2.AnalogInV2Intent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2DeviceCallback;
-import ch.quantasy.gateway.intent.analogInV2.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.intent.analogInV2.DeviceVoltageCallbackThreshold;
+import ch.quantasy.gateway.message.intent.analogInV2.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.intent.analogInV2.DeviceVoltageCallbackThreshold;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -65,22 +67,22 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
     @Override
     public void analogValue(int i) {
 
-        publishEvent(getContract().EVENT_ANALOG_VALUE, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void voltage(int i) {
-        publishEvent(getContract().EVENT_VOLTAGE, i);
+        publishEvent(getContract().EVENT_VOLTAGE, new VoltageEvent(i));
     }
 
     @Override
     public void voltageReached(int i) {
-        publishEvent(getContract().EVENT_VOLTAGE_REACHED, i);
+        publishEvent(getContract().EVENT_VOLTAGE_REACHED, new VoltageEvent(i));
     }
 
     @Override

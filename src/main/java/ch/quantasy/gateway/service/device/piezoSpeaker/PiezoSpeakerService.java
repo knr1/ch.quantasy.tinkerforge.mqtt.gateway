@@ -42,10 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.piezoSpeaker;
 
+import ch.quantasy.gateway.message.event.piezoSpeaker.BeepEvent;
+import ch.quantasy.gateway.message.event.piezoSpeaker.CalibratedEvent;
+import ch.quantasy.gateway.message.event.piezoSpeaker.MorseEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.piezoSpeaker.BeepParameter;
-import ch.quantasy.gateway.intent.piezoSpeaker.MorseCodeParameter;
-import ch.quantasy.gateway.intent.piezoSpeaker.PiezoSpeakerIntent;
+import ch.quantasy.gateway.message.intent.piezoSpeaker.BeepParameter;
+import ch.quantasy.gateway.message.intent.piezoSpeaker.MorseCodeParameter;
+import ch.quantasy.gateway.message.intent.piezoSpeaker.PiezoSpeakerIntent;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDeviceCallback;
 import java.net.URI;
@@ -63,27 +66,27 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
 
     @Override
     public void beepInvoked(BeepParameter beepParameter) {
-        publishEvent(getContract().EVENT_BEEP_STARTED, true);
+        publishEvent(getContract().EVENT_BEEP_STARTED, new BeepEvent(beepParameter));
     }
 
     @Override
     public void morseCodeInvoked(MorseCodeParameter morseCodeParameter) {
-        publishEvent(getContract().EVENT_MORSE_STARTED, true);
+        publishEvent(getContract().EVENT_MORSE_STARTED, new MorseEvent(morseCodeParameter));
     }
 
     @Override
     public void calibrationInvoked() {
-        publishEvent(getContract().EVENT_CALIBRATED, true);
+        publishEvent(getContract().EVENT_CALIBRATED, new CalibratedEvent());
     }
 
     @Override
     public void beepFinished() {
-        publishEvent(getContract().EVENT_BEEP_FINISHED, true);
+        publishEvent(getContract().EVENT_BEEP_FINISHED, new BeepEvent());
     }
 
     @Override
     public void morseCodeFinished() {
-        publishEvent(getContract().EVENT_MORSE_FINISHED, true);
+        publishEvent(getContract().EVENT_MORSE_FINISHED, new MorseEvent());
     }
 
 }

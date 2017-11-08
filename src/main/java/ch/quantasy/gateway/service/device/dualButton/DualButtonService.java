@@ -42,13 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.dualButton;
 
+import ch.quantasy.gateway.message.event.dualButton.StateChangedEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDeviceCallback;
-import ch.quantasy.gateway.intent.dualButton.DeviceLEDState;
-import ch.quantasy.gateway.intent.dualButton.DeviceSelectedLEDStateParameters;
-import ch.quantasy.gateway.intent.dualButton.DualButtonIntent;
-import ch.quantasy.gateway.intent.dualButton.LEDState;
+import ch.quantasy.gateway.message.intent.dualButton.DeviceLEDState;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -69,46 +67,7 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
     @Override
     public void stateChanged(short s, short s1, short s2, short s3) {
-        publishEvent(getContract().EVENT_STATE_CHANGED, new StateChanged(s, s1, s2, s3));
-    }
-
-    public static class StateChanged {
-
-        protected LEDState led1;
-        protected LEDState led2;
-        protected short switch1;
-        protected short switch2;
-
-        private StateChanged() {
-        }
-
-        public StateChanged(short switch1, short switch2, short led1, short led2) {
-            this(switch1, switch2, LEDState.getLEDStateFor(led1), LEDState.getLEDStateFor(led1));
-        }
-
-        public StateChanged(short switch1, short switch2, LEDState led1, LEDState led2) {
-            this.led1 = led1;
-            this.led2 = led2;
-            this.switch1 = switch1;
-            this.switch2 = switch2;
-        }
-
-        public LEDState getLed1() {
-            return led1;
-        }
-
-        public LEDState getLed2() {
-            return led2;
-        }
-
-        public short getSwitch1() {
-            return switch1;
-        }
-
-        public short getSwitch2() {
-            return switch2;
-        }
-
+        publishEvent(getContract().EVENT_STATE_CHANGED, new StateChangedEvent(s, s1, s2, s3));
     }
 
 }

@@ -42,10 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.nfc;
 
-import ch.quantasy.gateway.intent.nfc.NFCIntent;
-import ch.quantasy.gateway.intent.nfc.NFCWrite;
+import ch.quantasy.gateway.message.intent.nfc.NFCType;
+import ch.quantasy.gateway.message.intent.nfc.NFCIntent;
+import ch.quantasy.gateway.message.intent.nfc.NFCWrite;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
-import ch.quantasy.tinkerforge.device.nfc.NFCTag.NFCType;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletNFCRFID;
 import com.tinkerforge.NotConnectedException;

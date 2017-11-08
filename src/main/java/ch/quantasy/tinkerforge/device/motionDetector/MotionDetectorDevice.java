@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.motionDetector;
 
-import ch.quantasy.gateway.intent.AnIntent;
-import ch.quantasy.gateway.intent.Intent;
+import ch.quantasy.gateway.message.intent.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletMotionDetector;

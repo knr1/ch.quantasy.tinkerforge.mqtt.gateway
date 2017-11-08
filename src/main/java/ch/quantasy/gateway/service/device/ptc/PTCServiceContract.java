@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.ptc;
 
-import ch.quantasy.gateway.intent.ptc.PTCIntent;
+import ch.quantasy.gateway.message.event.ptc.ResistanceEvent;
+import ch.quantasy.gateway.message.intent.ptc.PTCIntent;
+import ch.quantasy.gateway.message.intent.temperature.TemperatureIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
@@ -124,15 +126,15 @@ public class PTCServiceContract extends DeviceServiceContract {
 
         WIRE_MODE = "wireMode";
         STATUS_WIRE_MODE = STATUS + "/" + WIRE_MODE;
+        addMessageTopic(EVENT_TEMPERATURE, TemperatureIntent.class);
+        addMessageTopic(EVENT_TEMPERATURE_REACHED, TemperatureIntent.class);
+        addMessageTopic(EVENT_RESISTANCE, ResistanceEvent.class);
+        addMessageTopic(EVENT_RESISTANCE_REACHED, ResistanceEvent.class);
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_TEMPERATURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-24600..84900]");
-        descriptions.put(EVENT_TEMPERATURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-24600..84900]");
-        descriptions.put(EVENT_RESISTANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_RESISTANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");
         descriptions.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
         descriptions.put(STATUS_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

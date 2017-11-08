@@ -42,10 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.temperature;
 
+import ch.quantasy.gateway.message.event.temperature.TemperatureEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.temperature.DeviceI2CMode;
-import ch.quantasy.gateway.intent.temperature.DeviceTemperatureCallbackThreshold;
-import ch.quantasy.gateway.intent.temperature.TemperatureIntent;
+import ch.quantasy.gateway.message.intent.temperature.DeviceI2CMode;
+import ch.quantasy.gateway.message.intent.temperature.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.intent.temperature.TemperatureIntent;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -85,12 +86,12 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
 
     @Override
     public void temperature(short i) {
-        publishEvent(getContract().EVENT_TEMPERATURE, i);
+        publishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
     }
 
     @Override
     public void temperatureReached(short i) {
-        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
+        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
     }
 
 }

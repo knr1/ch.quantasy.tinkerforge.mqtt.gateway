@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.dualRelay;
 
-import ch.quantasy.gateway.intent.dualRelay.DualRelayIntent;
+import ch.quantasy.gateway.message.event.dualRelay.MonoflopDoneEvent;
+import ch.quantasy.gateway.message.intent.dualRelay.DualRelayIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
@@ -83,12 +84,12 @@ public class DualRelayServiceContract extends DeviceServiceContract {
         STATUS_STATE = STATUS + "/" + STATE;
 
         SELECTED_STATE = "selectedState";
+        addMessageTopic(EVENT_MONOFLOP_DONE, MonoflopDoneEvent.class);
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_MONOFLOP_DONE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    relay: [1|2]\n    state: [true|false]");
         descriptions.put(STATUS_STATE, "relay1: [true|false]\n relay2: [true|false]\n");
     }
 }

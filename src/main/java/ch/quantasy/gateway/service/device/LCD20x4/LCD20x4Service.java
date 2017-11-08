@@ -42,11 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.LCD20x4;
 
+import ch.quantasy.gateway.message.event.LCD20x4.ButtonEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.LCD20x4.DeviceConfigParameters;
-import ch.quantasy.gateway.intent.LCD20x4.DeviceCustomCharacter;
-import ch.quantasy.gateway.intent.LCD20x4.DeviceDefaultText;
-import ch.quantasy.gateway.intent.LCD20x4.LCD20x4Intent;
+import ch.quantasy.gateway.message.intent.LCD20x4.DeviceConfigParameters;
+import ch.quantasy.gateway.message.intent.LCD20x4.DeviceCustomCharacter;
+import ch.quantasy.gateway.message.intent.LCD20x4.DeviceDefaultText;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4DeviceCallback;
 import java.net.URI;
@@ -92,12 +92,12 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     @Override
     public void buttonPressed(short s) {
-        publishEvent(getContract().EVENT_BUTTON_PRESSED, s);
+        publishEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s, true));
     }
 
     @Override
     public void buttonReleased(short s) {
-        publishEvent(getContract().EVENT_BUTTON_RELEASED, s);
+        publishEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s,false));
     }
 
 }

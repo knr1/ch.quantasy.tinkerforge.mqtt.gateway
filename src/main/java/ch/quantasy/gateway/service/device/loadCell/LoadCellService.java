@@ -42,10 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.loadCell;
 
+import ch.quantasy.gateway.message.event.loadCell.WeightEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.loadCell.DeviceConfiguration;
-import ch.quantasy.gateway.intent.loadCell.DeviceWeightCallbackThreshold;
-import ch.quantasy.gateway.intent.loadCell.LoadCellIntent;
+import ch.quantasy.gateway.message.intent.loadCell.DeviceConfiguration;
+import ch.quantasy.gateway.message.intent.loadCell.DeviceWeightCallbackThreshold;
+import ch.quantasy.gateway.message.intent.loadCell.LoadCellIntent;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDeviceCallback;
 
@@ -96,12 +97,12 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
 
     @Override
     public void weight(int i) {
-        publishEvent(getContract().EVENT_WEIGHT, i);
+        publishEvent(getContract().EVENT_WEIGHT, new WeightEvent(i));
     }
 
     @Override
     public void weightReached(int i) {
-        publishEvent(getContract().EVENT_WEIGHT_REACHED, i);
+        publishEvent(getContract().EVENT_WEIGHT_REACHED, new WeightEvent(i));
     }
 
 }

@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.loadCell;
 
-import ch.quantasy.gateway.intent.loadCell.LoadCellIntent;
+import ch.quantasy.gateway.message.event.loadCell.WeightEvent;
+import ch.quantasy.gateway.message.intent.loadCell.LoadCellIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
@@ -125,14 +126,15 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         STATUS_LED = STATUS + "/" + LED;
 
         CALIBRATE = "calibrate";
+        addMessageTopic(EVENT_WEIGHT, WeightEvent.class);
+        addMessageTopic(EVENT_WEIGHT_REACHED, WeightEvent.class);
+        
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
         descriptions.put(STATUS_MOVING_AVERAGE, "[1..40]");
 
-        descriptions.put(EVENT_WEIGHT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-50001..50001]");
-        descriptions.put(EVENT_WEIGHT_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-50001..50001]");
         descriptions.put(STATUS_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

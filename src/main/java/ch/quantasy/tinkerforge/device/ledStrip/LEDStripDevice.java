@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.ledStrip;
 
-import ch.quantasy.gateway.intent.ledStrip.LEDFrame;
-import ch.quantasy.gateway.intent.ledStrip.LEDStripDeviceConfig;
-import ch.quantasy.gateway.intent.ledStrip.LedStripIntent;
+import ch.quantasy.gateway.message.intent.ledStrip.LEDFrame;
+import ch.quantasy.gateway.message.intent.ledStrip.LEDStripDeviceConfig;
+import ch.quantasy.gateway.message.intent.ledStrip.LedStripIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLEDStrip;

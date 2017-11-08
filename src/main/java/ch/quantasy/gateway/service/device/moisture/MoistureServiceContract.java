@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.moisture;
 
-import ch.quantasy.gateway.intent.moisture.MoistureIntent;
+import ch.quantasy.gateway.message.event.moisture.MoistureEvent;
+import ch.quantasy.gateway.message.intent.moisture.MoistureIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
@@ -106,14 +107,16 @@ public class MoistureServiceContract extends DeviceServiceContract {
 
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
+        
+         addMessageTopic(EVENT_MOISTURE, MoistureEvent.class);
+        addMessageTopic(EVENT_MOISTURE_REACHED,MoistureEvent.class);
+    
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_MOISTURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
-        descriptions.put(EVENT_MOISTURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
-        descriptions.put(STATUS_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+          descriptions.put(STATUS_MOISTURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_MOISTURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_MOVING_AVERAGE, "[0..100]");

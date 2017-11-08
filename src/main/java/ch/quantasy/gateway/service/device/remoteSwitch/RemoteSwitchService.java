@@ -42,14 +42,15 @@
  */
 package ch.quantasy.gateway.service.device.remoteSwitch;
 
+import ch.quantasy.gateway.message.event.remoteSwitch.SwitchingEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import ch.quantasy.gateway.intent.remoteSwitch.DimSocketBParameters;
-import ch.quantasy.gateway.intent.remoteSwitch.RemoteSwitchIntent;
+import ch.quantasy.gateway.message.intent.remoteSwitch.DimSocketBParameters;
+import ch.quantasy.gateway.message.intent.remoteSwitch.RemoteSwitchIntent;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDeviceCallback;
-import ch.quantasy.gateway.intent.remoteSwitch.SocketParameters;
-import ch.quantasy.mqtt.gateway.client.AyamlServiceContract;
+import ch.quantasy.gateway.message.intent.remoteSwitch.SocketParameters;
+import ch.quantasy.mqtt.gateway.client.contract.AyamlServiceContract;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
@@ -72,6 +73,6 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
 
     @Override
     public void switchingDone(SocketParameters socketParameters) {
-        publishEvent(getContract().EVENT_SWITCHING_DONE, socketParameters);
+        publishEvent(getContract().EVENT_SWITCHING_DONE, new SwitchingEvent(socketParameters));
     }
 }

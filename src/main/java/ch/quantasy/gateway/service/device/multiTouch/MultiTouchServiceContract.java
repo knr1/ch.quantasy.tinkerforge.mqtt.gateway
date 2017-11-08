@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.multiTouch;
 
-import ch.quantasy.gateway.intent.multiTouch.MultiTouchIntent;
+import ch.quantasy.gateway.message.event.multiTouch.RecalibratedEvent;
+import ch.quantasy.gateway.message.event.multiTouch.TouchStateEvent;
+import ch.quantasy.gateway.message.intent.multiTouch.MultiTouchIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
@@ -92,14 +94,16 @@ public class MultiTouchServiceContract extends DeviceServiceContract {
         RECALIBRATE = "recalibration";
         RECALIBRATED = "recalibrated";
         EVENT_RECALIBRATED = EVENT + "/" + RECALIBRATED;
+        
+           addMessageTopic(EVENT_TOUCH_STATE, TouchStateEvent.class);
+        addMessageTopic(EVENT_RECALIBRATED,RecalibratedEvent.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_TOUCH_STATE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..8191]");
-        descriptions.put(EVENT_RECALIBRATED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
-
+     
         descriptions.put(STATUS_ELECTRODE_SENSITIVITY, "[5..201]");
         descriptions.put(STATUS_ELECTRODE_CONFIG, "[0..8191]");
     }

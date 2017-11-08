@@ -42,9 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.thermoCouple;
 
+import ch.quantasy.gateway.message.event.thermoCouple.ErrorEvent;
+import ch.quantasy.gateway.message.event.thermoCouple.TemperatureEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.thermoCouple.DeviceConfiguration;
-import ch.quantasy.gateway.intent.thermoCouple.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.intent.thermoCouple.DeviceConfiguration;
+import ch.quantasy.gateway.message.intent.thermoCouple.DeviceTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -83,37 +85,17 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
 
     @Override
     public void temperature(int i) {
-        publishEvent(getContract().EVENT_TEMPERATURE, i);
+        publishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
     }
 
     @Override
     public void temperatureReached(int i) {
-        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
+        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
     }
 
     @Override
     public void errorState(boolean bln, boolean bln1) {
-        publishEvent(getContract().EVENT_ERROR, new Error(bln, bln1));
-    }
-
-    public static class Error {
-
-        protected boolean voltage;
-        protected boolean openCircuit;
-
-        public Error(boolean voltage, boolean openCircuit) {
-            this.voltage = voltage;
-            this.openCircuit = openCircuit;
-        }
-
-        public boolean getVoltage() {
-            return voltage;
-        }
-
-        public boolean getOpenCircuit() {
-            return openCircuit;
-        }
-
+        publishEvent(getContract().EVENT_ERROR, new ErrorEvent(bln, bln1));
     }
 
 }

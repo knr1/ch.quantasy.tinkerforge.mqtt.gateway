@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.tilt;
 
+import ch.quantasy.gateway.message.event.tilt.TiltEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import com.tinkerforge.BrickletTilt;
@@ -60,6 +61,6 @@ public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceCo
 
     @Override
     public void tiltState(short s) {
-        publishEvent(getContract().EVENT_TILT_STATE, s);
+        publishEvent(getContract().EVENT_TILT_STATE, new TiltEvent(s));
     }
 }

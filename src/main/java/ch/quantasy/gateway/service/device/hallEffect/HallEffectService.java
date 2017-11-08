@@ -42,9 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.hallEffect;
 
+import ch.quantasy.gateway.message.event.hallEffect.EdgeCountEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.hallEffect.DeviceConfiguration;
-import ch.quantasy.gateway.intent.hallEffect.HallEffectIntent;
+import ch.quantasy.gateway.message.intent.hallEffect.DeviceConfiguration;
+import ch.quantasy.gateway.message.intent.hallEffect.HallEffectIntent;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -77,35 +78,14 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
 
     @Override
     public void edgeCountReset(long latestEdgeCount) {
-        publishEvent(getContract().EVENT_EDGE_COUNT_RESET, latestEdgeCount);
+        publishEvent(getContract().EVENT_EDGE_COUNT_RESET, new EdgeCountEvent(latestEdgeCount));
     }
 
     @Override
     public void edgeCount(long l, boolean bln) {
-        publishEvent(getContract().EVENT_EDGE_COUNT, new EdgeCount(l, bln));
+        publishEvent(getContract().EVENT_EDGE_COUNT, new EdgeCountEvent(l, bln));
     }
 
-    public static class EdgeCount {
-
-        private long count;
-        private boolean greater35Gauss;
-
-        private EdgeCount() {
-        }
-
-        public EdgeCount(long value, boolean greater35Gauss) {
-            this.count = value;
-            this.greater35Gauss = greater35Gauss;
-        }
-
-        public long getCount() {
-            return count;
-        }
-
-        public boolean getGreater35Gauss() {
-            return greater35Gauss;
-        }
-
-    }
+    
 
 }

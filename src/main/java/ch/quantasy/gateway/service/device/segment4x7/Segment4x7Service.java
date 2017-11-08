@@ -42,10 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.segment4x7;
 
+import ch.quantasy.gateway.message.event.segment4x7.CounterEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.segment4x7.DeviceCounterParameters;
-import ch.quantasy.gateway.intent.segment4x7.DeviceSegments;
-import ch.quantasy.gateway.intent.segment4x7.Segment4x7Intent;
+import ch.quantasy.gateway.message.intent.segment4x7.DeviceCounterParameters;
+import ch.quantasy.gateway.message.intent.segment4x7.DeviceSegments;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7DeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -65,7 +65,7 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
 
     @Override
     public void counterStarted(DeviceCounterParameters counterParameters) {
-        publishEvent(getContract().EVENT_COUNTER_STARTED, true);
+        publishEvent(getContract().EVENT_COUNTER_STARTED, new CounterEvent(counterParameters,false) );
     }
 
     @Override
@@ -75,7 +75,7 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
 
     @Override
     public void counterFinished() {
-        publishEvent(getContract().EVENT_COUNTER_FINISHED, true);
+        publishEvent(getContract().EVENT_COUNTER_FINISHED, new CounterEvent(true));
     }
 
 }

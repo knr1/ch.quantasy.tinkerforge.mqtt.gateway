@@ -42,11 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.humidity;
 
+import ch.quantasy.gateway.message.event.humidity.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.humidity.HumidityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
-import ch.quantasy.gateway.intent.humidity.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.intent.humidity.DevicePositionCallbackThreshold;
-import ch.quantasy.gateway.intent.humidity.HumidityIntent;
+import ch.quantasy.gateway.message.intent.humidity.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.intent.humidity.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.message.intent.humidity.HumidityIntent;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDeviceCallback;
 import java.net.URI;
@@ -64,22 +66,22 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
 
     @Override
     public void analogValue(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void humidity(int i) {
-        publishEvent(getContract().EVENT_HUMIDITY, i);
+        publishEvent(getContract().EVENT_HUMIDITY, new HumidityEvent(i));
     }
 
     @Override
     public void humidityReached(int i) {
-        publishEvent(getContract().EVENT_HUMIDITY_REACHED, i);
+        publishEvent(getContract().EVENT_HUMIDITY_REACHED, new HumidityEvent(i));
     }
 
     @Override

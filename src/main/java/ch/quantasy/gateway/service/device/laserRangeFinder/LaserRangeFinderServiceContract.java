@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.laserRangeFinder;
 
-import ch.quantasy.gateway.intent.laserRangeFinder.LaserRangeFinderIntent;
+import ch.quantasy.gateway.message.event.laserRangeFinder.VelocityEvent;
+import ch.quantasy.gateway.message.event.laserRangeFinder.DistanceEvent;
+import ch.quantasy.gateway.message.intent.laserRangeFinder.LaserRangeFinderIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
@@ -140,16 +142,17 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
 
         SENSOR_HARDWARE_VERSION = "sensorHardwareVersion";
         STATUS_SENSOR_HARDWARE_VERSION = STATUS + "/" + SENSOR_HARDWARE_VERSION;
+         addMessageTopic(EVENT_DISTANCE, DistanceEvent.class);
+        addMessageTopic(EVENT_VELOCITY, VelocityEvent.class);
+        addMessageTopic(EVENT_DISTANCE_REACHED, DistanceEvent.class);
+        addMessageTopic(EVENT_VELOCITY_REACHED, VelocityEvent.class);
+      
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_DISTANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4000]");
-        descriptions.put(EVENT_VELOCITY, "- timestamp: [-127.." + Long.MAX_VALUE + "]\n  value: [0..127]");
-        descriptions.put(EVENT_DISTANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4000]");
-        descriptions.put(EVENT_VELOCITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-127..127]");
-        descriptions.put(STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+         descriptions.put(STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
         descriptions.put(STATUS_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..-127]\n max: [-127..127]");

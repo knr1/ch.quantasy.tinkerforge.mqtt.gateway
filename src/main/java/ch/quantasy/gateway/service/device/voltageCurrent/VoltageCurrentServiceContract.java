@@ -42,7 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.voltageCurrent;
 
-import ch.quantasy.gateway.intent.voltageCurrent.VoltageCurrentIntent;
+import ch.quantasy.gateway.message.event.voltageCurrent.CurrentEvent;
+import ch.quantasy.gateway.message.event.voltageCurrent.PowerEvent;
+import ch.quantasy.gateway.message.event.voltageCurrent.VoltageEvent;
+import ch.quantasy.gateway.message.intent.voltageCurrent.VoltageCurrentIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
@@ -71,14 +74,13 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
     public final String STATUS_CURRENT_CALLBACK_PERIOD;
     public final String EVENT_CURRENT;
     public final String EVENT_CURRENT_REACHED;
-    
+
     public final String POWER;
     public final String STATUS_POWER;
     public final String STATUS_POWER_THRESHOLD;
     public final String STATUS_POWER_CALLBACK_PERIOD;
     public final String EVENT_POWER;
     public final String EVENT_POWER_REACHED;
-   
 
     public final String DEBOUNCE;
     public final String STATUS_DEBOUNCE;
@@ -114,50 +116,50 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
         STATUS_VOLTAGE_CALLBACK_PERIOD = STATUS_VOLTAGE + "/" + CALLBACK_PERIOD;
         EVENT_VOLTAGE = EVENT + "/" + VOLTAGE;
         EVENT_VOLTAGE_REACHED = EVENT_VOLTAGE + "/" + REACHED;
-      
+
         CURRENT = "current";
         STATUS_CURRENT = STATUS + "/" + CURRENT;
         STATUS_CURRENT_THRESHOLD = STATUS_CURRENT + "/" + THRESHOLD;
         STATUS_CURRENT_CALLBACK_PERIOD = STATUS_CURRENT + "/" + CALLBACK_PERIOD;
         EVENT_CURRENT = EVENT + "/" + CURRENT;
         EVENT_CURRENT_REACHED = EVENT_CURRENT + "/" + REACHED;
-      
+
         POWER = "power";
         STATUS_POWER = STATUS + "/" + POWER;
         STATUS_POWER_THRESHOLD = STATUS_POWER + "/" + THRESHOLD;
         STATUS_POWER_CALLBACK_PERIOD = STATUS_POWER + "/" + CALLBACK_PERIOD;
         EVENT_POWER = EVENT + "/" + POWER;
         EVENT_POWER_REACHED = EVENT_POWER + "/" + REACHED;
-    
+
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-     
+
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-      
+
         TARE = "tare";
-      
+
         CALIBRATION = "calibration";
         STATUS_CALIBRATION = STATUS + "/" + CALIBRATION;
-       
+        addMessageTopic(EVENT_POWER, PowerEvent.class);
+        addMessageTopic(EVENT_POWER_REACHED, PowerEvent.class);
+        addMessageTopic(EVENT_VOLTAGE, VoltageEvent.class);
+        addMessageTopic(EVENT_VOLTAGE_REACHED, VoltageEvent.class);
+        addMessageTopic(EVENT_CURRENT, CurrentEvent.class);
+        addMessageTopic(EVENT_CURRENT_REACHED, CurrentEvent.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
         descriptions.put(STATUS_CALIBRATION, "gainMultiplier: [1.." + Integer.MAX_VALUE + "]\n gainDivisor: [1.." + Integer.MAX_VALUE + "]");
 
-        descriptions.put(EVENT_VOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-50001..50001]");
-        descriptions.put(EVENT_VOLTAGE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-50001..50001]");
         descriptions.put(STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
-        descriptions.put(EVENT_CURRENT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..36000]");
-        descriptions.put(EVENT_CURRENT_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..36000]");
         descriptions.put(STATUS_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_CURRENT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..36000]\n max: [0..36000]");
-        descriptions.put(EVENT_POWER, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..720000]");
-        descriptions.put(EVENT_POWER_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..720000]");
         descriptions.put(STATUS_POWER_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_POWER_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..720000]\n max: [0..720000]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

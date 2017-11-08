@@ -42,9 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.soundIntensity;
 
+import ch.quantasy.gateway.message.event.soundIntensity.SoundIntensityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.soundIntensity.DeviceSoundIntensityCallbackThreshold;
-import ch.quantasy.gateway.intent.soundIntensity.SoundIntensityIntent;
+import ch.quantasy.gateway.message.intent.soundIntensity.DeviceSoundIntensityCallbackThreshold;
+import ch.quantasy.gateway.message.intent.soundIntensity.SoundIntensityIntent;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDeviceCallback;
 import java.net.URI;
@@ -78,12 +79,12 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
 
     @Override
     public void intensity(int i) {
-        publishEvent(getContract().EVENT_INTENSITY, i);
+        publishEvent(getContract().EVENT_INTENSITY, new SoundIntensityEvent(i));
     }
 
     @Override
     public void intensityReached(int i) {
-        publishEvent(getContract().EVENT_INTENSITY_REACHED, i);
+        publishEvent(getContract().EVENT_INTENSITY_REACHED, new SoundIntensityEvent(i));
     }
 
 }

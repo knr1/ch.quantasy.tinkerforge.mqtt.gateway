@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.rotaryEncoder;
 
-import ch.quantasy.gateway.intent.rotaryEncoder.RotaryEncoderIntent;
+import ch.quantasy.gateway.message.event.rotaryEncoder.ButtonEvent;
+import ch.quantasy.gateway.message.event.rotaryEncoder.CountEvent;
+import ch.quantasy.gateway.message.intent.rotaryEncoder.RotaryEncoderIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
@@ -113,16 +115,17 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
 
         RESET = "reset";
         EVENT_COUNT_RESET = EVENT_COUNT + "/" + RESET;
+        addMessageTopic(EVENT_PRESSED, ButtonEvent.class);
+        addMessageTopic(EVENT_RELEASED, ButtonEvent.class);
+        addMessageTopic(EVENT_COUNT_RESET, CountEvent.class);
+
+        addMessageTopic(EVENT_COUNT, CountEvent.class);
+        addMessageTopic(EVENT_COUNT_REACHED, CountEvent.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_PRESSED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
-        descriptions.put(EVENT_RELEASED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
-        descriptions.put(EVENT_COUNT_RESET, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Long.MIN_VALUE + "0.." + Long.MAX_VALUE + "]");
-
-        descriptions.put(EVENT_COUNT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..9000]");
-        descriptions.put(EVENT_COUNT_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-150..150]");
         descriptions.put(STATUS_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

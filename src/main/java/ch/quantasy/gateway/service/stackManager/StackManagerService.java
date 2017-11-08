@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.stackManager;
 
-import ch.quantasy.gateway.intent.stack.TinkerforgeStackIntent;
+import ch.quantasy.gateway.message.event.stackManager.StackAddressEvent;
+import ch.quantasy.gateway.message.intent.stack.TinkerforgeStackIntent;
 import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
 import ch.quantasy.gateway.tinkerforge.TinkerforgeFactoryListener;
 import ch.quantasy.gateway.service.AbstractService;
@@ -50,7 +51,7 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import ch.quantasy.gateway.intent.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.message.intent.stack.TinkerforgeStackAddress;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackListener;
 import java.net.URI;
 import java.net.UnknownHostException;
@@ -130,7 +131,7 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
 
         TinkerforgeStackAddress address = stack.getStackAddress();
         publishStatus(getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort(), stack.isConnected());
-        publishEvent(getContract().EVENT_STACK_ADDRESS_ADDED, address);
+        publishEvent(getContract().EVENT_STACK_ADDRESS_ADDED, new StackAddressEvent(true, address));
     }
 
     @Override
@@ -144,7 +145,7 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
             TinkerforgeStackAddress address = stack.getStackAddress();
             String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
             publishStatus(topic, null);
-            publishEvent(getContract().EVENT_STACK_ADDRESS_REMOVED, address);
+            publishEvent(getContract().EVENT_STACK_ADDRESS_REMOVED, new StackAddressEvent(false, address));
         }
         for (TinkerforgeDevice device : stack.getDevices()) {
             device.removeListener(this);

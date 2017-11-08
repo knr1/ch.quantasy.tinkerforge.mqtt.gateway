@@ -42,13 +42,17 @@
  */
 package ch.quantasy.gateway.service.device.master;
 
-import ch.quantasy.gateway.intent.master.MasterIntent;
+import ch.quantasy.gateway.message.event.master.ResetEvent;
+import ch.quantasy.gateway.message.event.master.StackCurrentEvent;
+import ch.quantasy.gateway.message.event.master.StackVoltageEvent;
+import ch.quantasy.gateway.message.event.master.USBVoltageEvent;
+import ch.quantasy.gateway.message.intent.master.MasterIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.master.MasterDevice;
 import ch.quantasy.tinkerforge.device.master.MasterDeviceCallback;
-import ch.quantasy.gateway.intent.master.StackCurrentCallbackThreshold;
-import ch.quantasy.gateway.intent.master.StackVoltageCallbackThreshold;
-import ch.quantasy.gateway.intent.master.USBVoltageCallbackThreshold;
+import ch.quantasy.gateway.message.intent.master.StackCurrentCallbackThreshold;
+import ch.quantasy.gateway.message.intent.master.StackVoltageCallbackThreshold;
+import ch.quantasy.gateway.message.intent.master.USBVoltageCallbackThreshold;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -100,7 +104,7 @@ public class MasterService extends AbstractDeviceService<MasterDevice, MasterSer
 
     @Override
     public void reset() {
-        publishEvent(getContract().EVENT_RESET, System.currentTimeMillis());
+        publishEvent(getContract().EVENT_RESET, new ResetEvent());
     }
 
     @Override
@@ -110,32 +114,32 @@ public class MasterService extends AbstractDeviceService<MasterDevice, MasterSer
 
     @Override
     public void stackCurrent(int i) {
-        publishEvent(getContract().EVENT_STACK_CURRENT, i);
+        publishEvent(getContract().EVENT_STACK_CURRENT, new StackCurrentEvent(i));
     }
 
     @Override
     public void stackCurrentReached(int i) {
-        publishEvent(getContract().EVENT_STACK_CURRENT_REACHED, i);
+        publishEvent(getContract().EVENT_STACK_CURRENT_REACHED, new StackCurrentEvent(i));
     }
 
     @Override
     public void stackVoltage(int i) {
-        publishEvent(getContract().EVENT_STACK_VOLTAGE, i);
+        publishEvent(getContract().EVENT_STACK_VOLTAGE, new StackVoltageEvent(i));
     }
 
     @Override
     public void stackVoltageReached(int i) {
-        publishEvent(getContract().EVENT_STACK_VOLTAGE_REACHED, i);
+        publishEvent(getContract().EVENT_STACK_VOLTAGE_REACHED, new StackVoltageEvent(i));
     }
 
     @Override
     public void usbVoltage(int i) {
-        publishEvent(getContract().EVENT_USB_VOLTAGE, i);
+        publishEvent(getContract().EVENT_USB_VOLTAGE, new USBVoltageEvent(i));
     }
 
     @Override
     public void usbVoltageReached(int i) {
-        publishEvent(getContract().EVENT_USB_VOLTAGE_REACHED, i);
+        publishEvent(getContract().EVENT_USB_VOLTAGE_REACHED, new USBVoltageEvent(i));
     }
 
 }

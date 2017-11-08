@@ -42,7 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.nfc;
 
-import ch.quantasy.gateway.intent.nfc.NFCIntent;
+import ch.quantasy.gateway.message.event.nfc.TagIDEvent;
+import ch.quantasy.gateway.message.event.nfc.TagReadEvent;
+import ch.quantasy.gateway.message.event.nfc.TagWrittenEvent;
+import ch.quantasy.gateway.message.intent.nfc.NFCIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
@@ -85,19 +88,17 @@ public class NFCServiceContract extends DeviceServiceContract {
         EVENT_TAG_READ = EVENT + "/" + TAG + "/" + READ;
         WRITE = "write";
         EVENT_TAG_WRITTEN = EVENT + "/" + TAG + "/written";
+        addMessageTopic(EVENT_TAG_DISCOVERD, TagIDEvent.class);
+        addMessageTopic(EVENT_TAG_READ, TagReadEvent.class);
+        addMessageTopic(EVENT_TAG_VANISHED, TagIDEvent.class);
+        addMessageTopic(EVENT_TAG_WRITTEN, TagWrittenEvent.class);
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_TAG_DISCOVERD, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    type: [MifareClassic|Type1|Type2]");
-        descriptions.put(EVENT_TAG_READ, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    value: [00..FF]_*");
-
-        descriptions.put(EVENT_TAG_VANISHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    type: [MifareClassic|Type1|Type2]");
         descriptions.put(STATUS_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-
-        descriptions.put(EVENT_TAG_WRITTEN, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [00..FF]_9\n    state: [WritePageError|WritePageReady]\n    value: [00..FF]_*");
 
     }
 }

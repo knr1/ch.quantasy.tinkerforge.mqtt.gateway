@@ -42,7 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.dc;
 
-import ch.quantasy.gateway.intent.dc.DCIntent;
+import ch.quantasy.gateway.message.event.analogInV2.VoltageEvent;
+import ch.quantasy.gateway.message.event.dc.EmergencyShutdownEvent;
+import ch.quantasy.gateway.message.event.dc.FullBrakeEvent;
+import ch.quantasy.gateway.message.event.dc.UnderVoltageEvent;
+import ch.quantasy.gateway.message.event.dc.VelocityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.dc.DCDeviceCallback;
@@ -92,22 +96,22 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void currentVelocity(short s) {
-        publishEvent(getContract().EVENT_VELOCITY, s);
+        publishEvent(getContract().EVENT_VELOCITY, new VelocityEvent(s));
     }
 
     @Override
     public void emergencyShutdown() {
-        publishEvent(getContract().EVENT_EMERGENCY_SHUTDOWN, System.currentTimeMillis());
+        publishEvent(getContract().EVENT_EMERGENCY_SHUTDOWN, new EmergencyShutdownEvent());
     }
 
     @Override
     public void underVoltage(int i) {
-        publishEvent(getContract().EVENT_UNDERVOLTAGE, i);
+        publishEvent(getContract().EVENT_UNDERVOLTAGE, new UnderVoltageEvent(i));
     }
 
     @Override
     public void velocityReached(short s) {
-        publishEvent(getContract().EVENT_VELOCITY_REACHED, s);
+        publishEvent(getContract().EVENT_VELOCITY_REACHED, new VoltageEvent(s));
     }
 
     @Override
@@ -117,7 +121,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void fullBrake() {
-        publishEvent(getContract().EVENT_FULL_BRAKE, System.currentTimeMillis());
+        publishEvent(getContract().EVENT_FULL_BRAKE, new FullBrakeEvent());
     }
 
 }

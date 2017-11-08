@@ -42,12 +42,15 @@
  */
 package ch.quantasy.gateway.service.device.master;
 
-import ch.quantasy.gateway.intent.master.MasterIntent;
+import ch.quantasy.gateway.message.event.master.ResetEvent;
+import ch.quantasy.gateway.message.event.master.StackCurrentEvent;
+import ch.quantasy.gateway.message.event.master.StackVoltageEvent;
+import ch.quantasy.gateway.message.event.master.USBVoltageEvent;
+import ch.quantasy.gateway.message.intent.master.MasterIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.master.MasterDevice;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  *
@@ -147,21 +150,20 @@ public class MasterServiceContract extends DeviceServiceContract {
         STATUS_USB_VOLTAGE = STATUS + "/" + USB_VOLTAGE;
         STATUS_USB_VOLTAGE_CALLBACK_PERIOD = STATUS_USB_VOLTAGE + "/" + CALLBACK_PERIOD;
         STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD = STATUS_USB_VOLTAGE + "/" + CALLBACK_THRESHOLD;
+        addMessageTopic(EVENT_RESET,ResetEvent.class);
+        addMessageTopic(EVENT_STACK_VOLTAGE, StackVoltageEvent.class);
+        addMessageTopic(EVENT_STACK_VOLTAGE_REACHED, StackVoltageEvent.class);
+
+        addMessageTopic(EVENT_USB_VOLTAGE, USBVoltageEvent.class);
+        addMessageTopic(EVENT_USB_VOLTAGE_REACHED, USBVoltageEvent.class);
+
+        addMessageTopic(EVENT_STACK_CURRENT, StackCurrentEvent.class);
+        addMessageTopic(EVENT_STACK_CURRENT_REACHED, StackCurrentEvent.class);
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(EVENT_RESET, "- timestamp: [0.." + Long.MAX_VALUE + "]");
-        descriptions.put(EVENT_STACK_VOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_STACK_VOLTAGE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-
-        descriptions.put(EVENT_USB_VOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_USB_VOLTAGE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-
-        descriptions.put(EVENT_STACK_CURRENT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_STACK_CURRENT_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Integer.MAX_VALUE + "]");
 
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_STACK_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

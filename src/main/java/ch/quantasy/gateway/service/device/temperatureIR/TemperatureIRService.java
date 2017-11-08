@@ -42,9 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.temperatureIR;
 
+import ch.quantasy.gateway.message.event.temperatureIR.AmbientTemperatureEvent;
+import ch.quantasy.gateway.message.event.temperatureIR.ObjectTemperatureEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.temperatureIR.DeviceAmbientTemperatureCallbackThreshold;
-import ch.quantasy.gateway.intent.temperatureIR.DeviceObjectTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.intent.temperatureIR.DeviceAmbientTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.intent.temperatureIR.DeviceObjectTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDeviceCallback;
 import java.net.URI;
@@ -62,22 +64,22 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
 
     @Override
     public void ambientTemperature(short s) {
-        publishEvent(getContract().EVENT_AMBIENT_TEMPERATURE, s);
+        publishEvent(getContract().EVENT_AMBIENT_TEMPERATURE, new AmbientTemperatureEvent(s));
     }
 
     @Override
     public void ambientTemperatureReached(short s) {
-        publishEvent(getContract().EVENT_AMBIENT_TEMPERATURE_REACHED, s);
+        publishEvent(getContract().EVENT_AMBIENT_TEMPERATURE_REACHED, new AmbientTemperatureEvent(s));
     }
 
     @Override
     public void objectTemperature(short s) {
-        publishEvent(getContract().EVENT_OBJECT_TEMPERATURE, s);
+        publishEvent(getContract().EVENT_OBJECT_TEMPERATURE, new ObjectTemperatureEvent(s));
     }
 
     @Override
     public void objectTemperatureReached(short s) {
-        publishEvent(getContract().EVENT_OBJECT_TEMPERATURE_REACHED, s);
+        publishEvent(getContract().EVENT_OBJECT_TEMPERATURE_REACHED, new ObjectTemperatureEvent(s));
     }
 
     @Override

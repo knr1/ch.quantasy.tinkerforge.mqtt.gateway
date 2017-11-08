@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.humidity;
 
-import ch.quantasy.gateway.intent.humidity.DevicePositionCallbackThreshold;
-import ch.quantasy.gateway.intent.humidity.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.intent.humidity.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.message.intent.humidity.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletHumidity.AnalogValueCallbackThreshold;

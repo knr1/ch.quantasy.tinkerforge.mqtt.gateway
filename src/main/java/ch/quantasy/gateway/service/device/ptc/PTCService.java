@@ -42,11 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.ptc;
 
+import ch.quantasy.gateway.message.event.ptc.ResistanceEvent;
+import ch.quantasy.gateway.message.event.ptc.TemperatureEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.ptc.DeviceNoiseReductionFilter;
-import ch.quantasy.gateway.intent.ptc.DeviceResistanceCallbackThreshold;
-import ch.quantasy.gateway.intent.ptc.DeviceTemperatureCallbackThreshold;
-import ch.quantasy.gateway.intent.ptc.PTCIntent;
+import ch.quantasy.gateway.message.intent.ptc.DeviceNoiseReductionFilter;
+import ch.quantasy.gateway.message.intent.ptc.DeviceResistanceCallbackThreshold;
+import ch.quantasy.gateway.message.intent.ptc.DeviceTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
 import ch.quantasy.tinkerforge.device.ptc.PTCDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -86,22 +87,22 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
 
     @Override
     public void temperature(int i) {
-        publishEvent(getContract().EVENT_TEMPERATURE, i);
+        publishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
     }
 
     @Override
     public void temperatureReached(int i) {
-        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, i);
+        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
     }
 
     @Override
     public void resistance(int i) {
-        publishEvent(getContract().EVENT_RESISTANCE, i);
+        publishEvent(getContract().EVENT_RESISTANCE, new ResistanceEvent(i));
     }
 
     @Override
     public void resistanceReached(int i) {
-        publishEvent(getContract().EVENT_RESISTANCE_REACHED, i);
+        publishEvent(getContract().EVENT_RESISTANCE_REACHED, new ResistanceEvent(i));
     }
 
     @Override

@@ -42,10 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.rotaryPoti;
 
+import ch.quantasy.gateway.message.event.rotaryPoti.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.rotaryPoti.PositionEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.rotaryPoti.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.intent.rotaryPoti.DevicePositionCallbackThreshold;
-import ch.quantasy.gateway.intent.rotaryPoti.RotaryPotiIntent;
+import ch.quantasy.gateway.message.intent.rotaryPoti.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.intent.rotaryPoti.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.message.intent.rotaryPoti.RotaryPotiIntent;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDeviceCallback;
 
@@ -64,22 +66,22 @@ public class RotaryPotiService extends AbstractDeviceService<RotaryPotiDevice, R
 
     @Override
     public void analogValue(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void position(short i) {
-        publishEvent(getContract().EVENT_POSITION, i);
+        publishEvent(getContract().EVENT_POSITION, new PositionEvent(i));
     }
 
     @Override
     public void positionReached(short i) {
-        publishEvent(getContract().EVENT_POSITION_REACHED, i);
+        publishEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(i));
     }
 
     @Override

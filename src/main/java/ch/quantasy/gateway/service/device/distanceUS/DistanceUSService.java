@@ -42,9 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.distanceUS;
 
+import ch.quantasy.gateway.message.event.distanceUS.DistanceEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.distanceUS.DeviceDistanceCallbackThreshold;
-import ch.quantasy.gateway.intent.distanceUS.DistanceUSIntent;
+import ch.quantasy.gateway.message.intent.distanceUS.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.message.intent.distanceUS.DistanceUSIntent;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDeviceCallback;
 import java.net.URI;
@@ -83,12 +84,12 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
 
     @Override
     public void distance(int i) {
-        publishEvent(getContract().EVENT_DISTANCE, i);
+        publishEvent(getContract().EVENT_DISTANCE, new DistanceEvent(i));
     }
 
     @Override
     public void distanceReached(int i) {
-        publishEvent(getContract().EVENT_DISTANCE_REACHED, i);
+        publishEvent(getContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
     }
 
 }

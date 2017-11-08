@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.imuV2;
 
-import ch.quantasy.gateway.intent.IMUV2.IMUV2Intent;
+import ch.quantasy.gateway.message.intent.IMUV2.IMUV2Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickIMUV2;

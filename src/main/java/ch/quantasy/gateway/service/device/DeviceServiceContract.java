@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device;
 
-import ch.quantasy.gateway.intent.Intent;
+import ch.quantasy.mqtt.gateway.client.message.Event;
+import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
@@ -58,12 +59,12 @@ public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
     public final String STATUS_FIRMWARE;
     public final String STATUS_HARDWARE;
 
-    public DeviceServiceContract(GenericDevice device, Class<? extends Intent> intentClass) {
+    public DeviceServiceContract(GenericDevice device, Class<? extends Intent> intentClass,Map<String,Class<? extends Event>> eventClassMap) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString(), intentClass);
     }
 
-    public DeviceServiceContract(String id, String device, Class<? extends Intent> intentClass) {
-        super(device, id, intentClass);
+    public DeviceServiceContract(String instance, String baseClass, Class<? extends Intent> intentClass) {
+        super(baseClass, instance, intentClass);
         STATUS_POSITION = STATUS + "/position";
         STATUS_FIRMWARE = STATUS + "/firmware";
         STATUS_HARDWARE = STATUS + "/hardware";

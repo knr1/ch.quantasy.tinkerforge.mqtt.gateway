@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.soundIntensity;
 
-import ch.quantasy.gateway.intent.soundIntensity.DeviceSoundIntensityCallbackThreshold;
-import ch.quantasy.gateway.intent.soundIntensity.SoundIntensityIntent;
+import ch.quantasy.gateway.message.intent.soundIntensity.DeviceSoundIntensityCallbackThreshold;
+import ch.quantasy.gateway.message.intent.soundIntensity.SoundIntensityIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletSoundIntensity;

@@ -42,10 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.servo;
 
-import ch.quantasy.gateway.intent.servo.Servo;
-import ch.quantasy.gateway.intent.servo.PulseWidth;
-import ch.quantasy.gateway.intent.servo.Degree;
-import ch.quantasy.gateway.intent.servo.ServoIntent;
+import ch.quantasy.gateway.message.intent.servo.Servo;
+import ch.quantasy.gateway.message.intent.servo.PulseWidth;
+import ch.quantasy.gateway.message.intent.servo.Degree;
+import ch.quantasy.gateway.message.intent.servo.ServoIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickServo;

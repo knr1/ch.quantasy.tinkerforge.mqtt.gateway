@@ -42,7 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.piezoSpeaker;
 
-import ch.quantasy.gateway.intent.piezoSpeaker.PiezoSpeakerIntent;
+import ch.quantasy.gateway.message.event.piezoSpeaker.BeepEvent;
+import ch.quantasy.gateway.message.event.piezoSpeaker.CalibratedEvent;
+import ch.quantasy.gateway.message.event.piezoSpeaker.MorseEvent;
+import ch.quantasy.gateway.message.intent.piezoSpeaker.PiezoSpeakerIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
@@ -87,16 +90,14 @@ public class PiezoSpeakerServiceContract extends DeviceServiceContract {
         EVENT_BEEP_FINISHED = EVENT + "/" + FINISHED;
         EVENT_MORSE_FINISHED = EVENT + "/" + FINISHED;
         EVENT_MORSE_STARTED = EVENT + "/" + STARTED;
-
+        addMessageTopic(EVENT_CALIBRATED, CalibratedEvent.class);
+        addMessageTopic(EVENT_BEEP_FINISHED, BeepEvent.class);
+        addMessageTopic(EVENT_BEEP_STARTED, BeepEvent.class);
+        addMessageTopic(EVENT_MORSE_FINISHED, MorseEvent.class);
+        addMessageTopic(EVENT_MORSE_STARTED, MorseEvent.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_CALIBRATED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
-        descriptions.put(EVENT_BEEP_FINISHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
-        descriptions.put(EVENT_BEEP_STARTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
-        descriptions.put(EVENT_CALIBRATED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
-        descriptions.put(EVENT_MORSE_FINISHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
-        descriptions.put(EVENT_MORSE_STARTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
     }
 }

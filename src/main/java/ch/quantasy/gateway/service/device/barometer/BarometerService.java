@@ -42,13 +42,15 @@
  */
 package ch.quantasy.gateway.service.device.barometer;
 
-import ch.quantasy.gateway.intent.barometer.BarometerIntent;
+import ch.quantasy.gateway.message.event.barometer.AirPressureEvent;
+import ch.quantasy.gateway.message.event.barometer.AltitudeEvent;
+import ch.quantasy.gateway.message.intent.barometer.BarometerIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.barometer.DeviceAirPressureCallbackThreshold;
-import ch.quantasy.gateway.intent.barometer.DeviceAltitudeCallbackThreshold;
+import ch.quantasy.gateway.message.intent.barometer.DeviceAirPressureCallbackThreshold;
+import ch.quantasy.gateway.message.intent.barometer.DeviceAltitudeCallbackThreshold;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDeviceCallback;
-import ch.quantasy.gateway.intent.barometer.DeviceAveraging;
+import ch.quantasy.gateway.message.intent.barometer.DeviceAveraging;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -66,22 +68,22 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
     @Override
     public void airPressure(int i) {
 
-        publishEvent(getContract().EVENT_AIR_PRESSURE, i);
+        publishEvent(getContract().EVENT_AIR_PRESSURE, new AirPressureEvent(i));
     }
 
     @Override
     public void airPressureReached(int i) {
-        publishEvent(getContract().EVENT_AIR_PRESSURE_REACHED, i);
+        publishEvent(getContract().EVENT_AIR_PRESSURE_REACHED, new AirPressureEvent(i));
     }
 
     @Override
     public void altitude(int i) {
-        publishEvent(getContract().EVENT_ALTITUDE, i);
+        publishEvent(getContract().EVENT_ALTITUDE, new AltitudeEvent(i));
     }
 
     @Override
     public void altitudeReached(int i) {
-        publishEvent(getContract().EVENT_ALTITUDE_REACHED, i);
+        publishEvent(getContract().EVENT_ALTITUDE_REACHED, new AltitudeEvent(i));
     }
 
     @Override

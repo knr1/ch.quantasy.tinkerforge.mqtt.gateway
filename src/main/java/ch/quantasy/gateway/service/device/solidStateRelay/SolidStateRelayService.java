@@ -42,8 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.solidStateRelay;
 
-import ch.quantasy.gateway.intent.solidState.DeviceMonoflopParameters;
-import ch.quantasy.gateway.intent.solidState.SolidStateRelayIntent;
+import ch.quantasy.gateway.message.event.solidStateRelay.MonoflopDoneEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDeviceCallback;
@@ -67,7 +66,7 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
 
     @Override
     public void monoflopDone(boolean state) {
-        publishEvent(getContract().EVENT_MONOFLOP_DONE, state);
+        publishEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(state));
     }
 
 }

@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.tilt;
 
+import ch.quantasy.gateway.message.event.tilt.TiltEvent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
@@ -69,10 +70,11 @@ public class TiltServiceContract extends DeviceServiceContract {
 
         TILT_STATE = "tiltState";
         EVENT_TILT_STATE = EVENT + "/" + TILT_STATE;
+        addMessageTopic(EVENT_TILT_STATE, TiltEvent.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_TILT_STATE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:  [0..2]");
     }
 }

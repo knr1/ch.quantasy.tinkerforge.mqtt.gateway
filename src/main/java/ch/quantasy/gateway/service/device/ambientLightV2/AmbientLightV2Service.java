@@ -42,13 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.ambientLightV2;
 
-import ch.quantasy.gateway.intent.ambientLightV2.AmbientLightV2Intent;
+import ch.quantasy.gateway.message.event.ambinetLightV2.IlluminanceEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2DeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import ch.quantasy.gateway.intent.ambientLightV2.DeviceIlluminanceCallbackThreshold;
-import ch.quantasy.gateway.intent.ambientLightV2.DeviceConfiguration;
+import ch.quantasy.gateway.message.intent.ambientLightV2.DeviceIlluminanceCallbackThreshold;
+import ch.quantasy.gateway.message.intent.ambientLightV2.DeviceConfiguration;
 import java.net.URI;
 
 /**
@@ -84,12 +84,12 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
 
     @Override
     public void illuminance(long i) {
-        publishEvent(getContract().EVENT_IllUMINANCE, i);
+        publishEvent(getContract().EVENT_IllUMINANCE, new IlluminanceEvent(i));
     }
 
     @Override
     public void illuminanceReached(long i) {
-        publishEvent(getContract().EVENT_ILLUMINANCE_REACHED, i);
+        publishEvent(getContract().EVENT_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
     }
 
 }

@@ -42,14 +42,16 @@
  */
 package ch.quantasy.gateway.service.device.ledStrip;
 
-import ch.quantasy.gateway.intent.laserRangeFinder.LaserRangeFinderIntent;
+import ch.quantasy.gateway.message.event.ledStrip.LagingEvent;
+import ch.quantasy.gateway.message.event.ledStrip.RenderedEvent;
+import ch.quantasy.gateway.message.intent.laserRangeFinder.LaserRangeFinderIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDeviceCallback;
-import ch.quantasy.gateway.intent.ledStrip.LEDStripDeviceConfig;
-import ch.quantasy.gateway.intent.ledStrip.LEDFrame;
-import ch.quantasy.gateway.intent.ledStrip.LedStripIntent;
+import ch.quantasy.gateway.message.intent.ledStrip.LEDStripDeviceConfig;
+import ch.quantasy.gateway.message.intent.ledStrip.LEDFrame;
+import ch.quantasy.gateway.message.intent.ledStrip.LedStripIntent;
 
 import java.net.URI;
 import java.util.Deque;
@@ -72,12 +74,12 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     @Override
     public void frameRendered(int remainingFramesInQueue) {
-        publishEvent(getContract().EVENT_LEDs_RENDERED, remainingFramesInQueue);
+        publishEvent(getContract().EVENT_LEDs_RENDERED, new RenderedEvent(remainingFramesInQueue));
 
     }
 
     @Override
     public void isLaging() {
-        publishEvent(getContract().EVENT_LAGING, true);
+        publishEvent(getContract().EVENT_LAGING, new LagingEvent(true));
     }
 }

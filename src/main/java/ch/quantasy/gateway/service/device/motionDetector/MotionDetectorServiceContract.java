@@ -42,6 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.motionDetector;
 
+import ch.quantasy.gateway.message.event.motionDetector.MotionDetectionCycleEndedEvent;
+import ch.quantasy.gateway.message.event.motionDetector.MotionDetectionDetected;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
@@ -75,12 +77,13 @@ public class MotionDetectorServiceContract extends DeviceServiceContract {
 
         MOTION_DETECTED = "motionDetected";
         EVENT_MOTION_DETECTED = EVENT + "/" + MOTION_DETECTED;
+        addMessageTopic(EVENT_DETECTION_CYCLE_ENDED, MotionDetectionCycleEndedEvent.class);
+        addMessageTopic(EVENT_MOTION_DETECTED, MotionDetectionDetected.class);
+ 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_DETECTION_CYCLE_ENDED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
-        descriptions.put(EVENT_MOTION_DETECTED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: true");
-    }
+           }
 }

@@ -42,8 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.uvLight;
 
+import ch.quantasy.gateway.message.event.uvLight.UVLightEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.uvLight.DeviceUVLightCallbackThreshold;
+import ch.quantasy.gateway.message.intent.uvLight.DeviceUVLightCallbackThreshold;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDeviceCallback;
 import java.net.URI;
@@ -77,12 +78,12 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
 
     @Override
     public void uvLight(long i) {
-        publishEvent(getContract().EVENT_UV_LIGHT, i);
+        publishEvent(getContract().EVENT_UV_LIGHT, new UVLightEvent(i));
     }
 
     @Override
     public void uvLightReached(long i) {
-        publishEvent(getContract().EVENT_UV_LIGHT_REACHED, i);
+        publishEvent(getContract().EVENT_UV_LIGHT_REACHED, new UVLightEvent(i));
     }
 
 }

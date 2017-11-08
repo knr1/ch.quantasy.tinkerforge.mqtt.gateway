@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.distanceIR;
 
-import ch.quantasy.gateway.intent.distanceIR.DistanceIRIntent;
+import ch.quantasy.gateway.message.event.distanceIR.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.distanceIR.DistanceEvent;
+import ch.quantasy.gateway.message.intent.distanceIR.DistanceIRIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
@@ -112,16 +114,18 @@ public class DistanceIRServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
+        
+        addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
+        addMessageTopic(EVENT_DISTANCE, DistanceEvent.class);
+        addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
+        addMessageTopic(EVENT_DISTANCE_REACHED, DistanceEvent.class);
+    
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_ANALOG_VALUE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
-        descriptions.put(EVENT_DISTANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [[40..300]|[100..800]|[200..1500]]");
-        descriptions.put(EVENT_ANALOG_VALUE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]");
-        descriptions.put(EVENT_DISTANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [[40..300]|[100..800]|[200..1500]]");
-        descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+           descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
         descriptions.put(STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [[40..300]|[100..800]|[200..1500]]\n max: [[40..300]|[100..800]|[200..1500]]");

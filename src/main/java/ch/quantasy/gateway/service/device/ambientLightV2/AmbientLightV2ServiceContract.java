@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.ambientLightV2;
 
-import ch.quantasy.gateway.intent.ambientLightV2.AmbientLightV2Intent;
+import ch.quantasy.gateway.message.event.ambinetLightV2.IlluminanceEvent;
+import ch.quantasy.gateway.message.intent.ambientLightV2.AmbientLightV2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
@@ -105,14 +106,14 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
         
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-
+        addMessageTopic(EVENT_IllUMINANCE, IlluminanceEvent.class);
+        addMessageTopic(EVENT_ILLUMINANCE_REACHED, IlluminanceEvent.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(EVENT_IllUMINANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..100000]\n");
-        descriptions.put(EVENT_ILLUMINANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..100000]\n");
+       
         descriptions.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
         descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");

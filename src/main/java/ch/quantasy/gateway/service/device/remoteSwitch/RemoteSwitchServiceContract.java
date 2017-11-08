@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.remoteSwitch;
 
-import ch.quantasy.gateway.intent.remoteSwitch.RemoteSwitchIntent;
+import ch.quantasy.gateway.message.event.remoteSwitch.SwitchingEvent;
+import ch.quantasy.gateway.message.intent.remoteSwitch.RemoteSwitchIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
@@ -89,12 +90,12 @@ public class RemoteSwitchServiceContract extends DeviceServiceContract {
         SWITCH_SOCKET_B = "switchSocketB";
         SWITCH_SOCKET_C = "switchSocketC";
         DIM_SOCKET_B = "dimSocketB";
-
+        addMessageTopic(EVENT_SWITCHING_DONE, SwitchingEvent.class);
+        
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_SWITCHING_DONE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    [houseCode: [0..31]\n    receiverCode:    [0..31]\n    switchingValue: [ON|OFF] | address: [0..67108863]\n    unit: [0..15]\n    switchingValue: [ON|OFF] | systemCode: ['A'..'P']\n    deviceCode: [1..16]\n    switchingValue: [ON|OFF] | address:    [0..67108863]\n    unit: [0..15]\n    dimValue: [0..15]]");
         descriptions.put(STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
     }
 }

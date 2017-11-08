@@ -42,6 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.nfc;
 
+import ch.quantasy.gateway.message.intent.nfc.NFCType;
 import com.tinkerforge.BrickletNFCRFID;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,28 +76,7 @@ public class NFCTag {
 
     }
 
-    public static enum NFCType {
-        MifareClassic(BrickletNFCRFID.TAG_TYPE_MIFARE_CLASSIC), Type1(BrickletNFCRFID.TAG_TYPE_TYPE1), Type2(BrickletNFCRFID.TAG_TYPE_TYPE2);
-        private short type;
-
-        private NFCType(short type) {
-            this.type = type;
-        }
-
-        public short getType() {
-            return type;
-        }
-
-        public static NFCType getNFCTypeFor(short s) throws IllegalArgumentException {
-            for (NFCType type : values()) {
-                if (type.type == s) {
-                    return type;
-                }
-            }
-            throw new IllegalArgumentException("Not supported: " + s);
-        }
-    }
-
+    
     private long latestDiscoveryTimeStamp;
     private NFCType type;
     private transient short[] tid;

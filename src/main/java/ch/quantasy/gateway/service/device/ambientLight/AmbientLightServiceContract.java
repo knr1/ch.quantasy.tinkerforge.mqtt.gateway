@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.ambientLight;
 
-import ch.quantasy.gateway.intent.ambientLight.AmbientLightIntent;
+import ch.quantasy.gateway.message.event.ambientLight.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.ambientLight.IlluminanceEvent;
+import ch.quantasy.gateway.message.intent.ambientLight.AmbientLightIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
@@ -110,14 +112,16 @@ public class AmbientLightServiceContract extends DeviceServiceContract {
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
+        
+        addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
+        addMessageTopic(EVENT_ILLUMINANCE, IlluminanceEvent.class);
+        addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
+        addMessageTopic(EVENT_ILLUMINANCE_REACHED, IlluminanceEvent.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_ANALOG_VALUE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]\n");
-        descriptions.put(EVENT_ILLUMINANCE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..9000]\n");
-        descriptions.put(EVENT_ANALOG_VALUE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..4095]\n");
-        descriptions.put(EVENT_ILLUMINANCE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0..9000]\n");
+        
         descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");

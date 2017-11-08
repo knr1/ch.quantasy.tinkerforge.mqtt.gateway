@@ -42,9 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.realTimeClock;
 
-import ch.quantasy.gateway.intent.realTimeClock.AlarmParamter;
-import ch.quantasy.gateway.intent.realTimeClock.DateTimeParameter;
-import ch.quantasy.gateway.intent.realTimeClock.RealTimeClockIntent;
+import ch.quantasy.gateway.message.event.realTimeClock.DateTimeEvent;
+import ch.quantasy.gateway.message.intent.realTimeClock.AlarmParamter;
+import ch.quantasy.gateway.message.intent.realTimeClock.DateTimeParameter;
+import ch.quantasy.gateway.message.intent.realTimeClock.RealTimeClockIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import java.net.URI;
@@ -83,12 +84,12 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
 
     @Override
     public void alarm(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-        publishEvent(getContract().EVENT_ALARM, new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday), timestamp);
+        publishEvent(getContract().EVENT_ALARM, new DateTimeEvent(true,new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday),timestamp));
     }
 
     @Override
     public void dateTime(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-        publishEvent(getContract().EVENT_DATE_TIME, new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday), timestamp);
+        publishEvent(getContract().EVENT_DATE_TIME, new DateTimeEvent(new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday),timestamp));
     }
 
 }

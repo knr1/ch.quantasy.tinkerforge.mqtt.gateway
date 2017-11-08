@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.LCD16x2;
 
-import ch.quantasy.gateway.intent.LCD16x2.LCD16x2Intent;
+import ch.quantasy.gateway.message.event.LCD16x2.ButtonEvent;
+import ch.quantasy.gateway.message.intent.LCD16x2.LCD16x2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
@@ -97,6 +98,9 @@ public class LCD16x2ServiceContract extends DeviceServiceContract {
         RELEASED = "released";
         EVENT_BUTTON_RELEASED = EVENT + "/" + BUTTON + "/" + RELEASED;
         EVENT_BUTTON_PRESSED = EVENT + "/" + BUTTON + "/" + PRESSED;
+        
+        addMessageTopic(EVENT_BUTTON_PRESSED, ButtonEvent.class);
+        addMessageTopic(EVENT_BUTTON_RELEASED, ButtonEvent.class);
     }
 
     @Override

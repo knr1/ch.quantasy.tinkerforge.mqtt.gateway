@@ -42,12 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.moisture;
 
+import ch.quantasy.gateway.message.event.moisture.MoistureEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDeviceCallback;
-import ch.quantasy.gateway.intent.moisture.DeviceMoistureCallbackThreshold;
-import ch.quantasy.gateway.intent.moisture.MoistureIntent;
+import ch.quantasy.gateway.message.intent.moisture.DeviceMoistureCallbackThreshold;
+import ch.quantasy.gateway.message.intent.moisture.MoistureIntent;
 import java.net.URI;
 
 /**
@@ -83,12 +84,12 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
 
     @Override
     public void moisture(int i) {
-        publishEvent(getContract().EVENT_MOISTURE, i);
+        publishEvent(getContract().EVENT_MOISTURE, new MoistureEvent(i));
     }
 
     @Override
     public void moistureReached(int i) {
-        publishEvent(getContract().EVENT_MOISTURE_REACHED, i);
+        publishEvent(getContract().EVENT_MOISTURE_REACHED, new MoistureEvent(i));
     }
 
 }

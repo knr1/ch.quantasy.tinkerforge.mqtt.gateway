@@ -42,12 +42,15 @@
  */
 package ch.quantasy.gateway.service.device.voltageCurrent;
 
+import ch.quantasy.gateway.message.event.voltageCurrent.CurrentEvent;
+import ch.quantasy.gateway.message.event.voltageCurrent.PowerEvent;
+import ch.quantasy.gateway.message.event.voltageCurrent.VoltageEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.voltageCurrent.DeviceCalibration;
-import ch.quantasy.gateway.intent.voltageCurrent.DeviceConfiguration;
-import ch.quantasy.gateway.intent.voltageCurrent.DeviceCurrentCallbackThreshold;
-import ch.quantasy.gateway.intent.voltageCurrent.DevicePowerCallbackThreshold;
-import ch.quantasy.gateway.intent.voltageCurrent.DeviceVoltagCallbackThreshold;
+import ch.quantasy.gateway.message.intent.voltageCurrent.DeviceCalibration;
+import ch.quantasy.gateway.message.intent.voltageCurrent.DeviceConfiguration;
+import ch.quantasy.gateway.message.intent.voltageCurrent.DeviceCurrentCallbackThreshold;
+import ch.quantasy.gateway.message.intent.voltageCurrent.DevicePowerCallbackThreshold;
+import ch.quantasy.gateway.message.intent.voltageCurrent.DeviceVoltagCallbackThreshold;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -111,32 +114,32 @@ public class VoltageCurrentService extends AbstractDeviceService<VoltageCurrentD
 
     @Override
     public void current(int i) {
-        publishEvent(getContract().EVENT_CURRENT, i);
+        publishEvent(getContract().EVENT_CURRENT, new CurrentEvent(i));
     }
 
     @Override
     public void currentReached(int i) {
-        publishEvent(getContract().EVENT_CURRENT_REACHED, i);
+        publishEvent(getContract().EVENT_CURRENT_REACHED, new CurrentEvent(i));
     }
 
     @Override
     public void power(int i) {
-        publishEvent(getContract().EVENT_POWER, i);
+        publishEvent(getContract().EVENT_POWER, new PowerEvent(i));
     }
 
     @Override
     public void powerReached(int i) {
-        publishEvent(getContract().EVENT_POWER_REACHED, i);
+        publishEvent(getContract().EVENT_POWER_REACHED, new PowerEvent(i));
     }
 
     @Override
     public void voltage(int i) {
-        publishEvent(getContract().EVENT_VOLTAGE, i);
+        publishEvent(getContract().EVENT_VOLTAGE, new VoltageEvent(i));
     }
 
     @Override
     public void voltageReached(int i) {
-        publishEvent(getContract().EVENT_VOLTAGE_REACHED, i);
+        publishEvent(getContract().EVENT_VOLTAGE_REACHED, new VoltageEvent(i));
     }
 
 }

@@ -42,11 +42,16 @@
  */
 package ch.quantasy.gateway.service.device.gps;
 
-import ch.quantasy.gateway.intent.gps.GPSIntent;
+import ch.quantasy.gateway.message.event.gps.AltitudeEvent;
+import ch.quantasy.gateway.message.event.gps.CoordinatesEvent;
+import ch.quantasy.gateway.message.event.gps.DateTimeEvent;
+import ch.quantasy.gateway.message.event.gps.MotionEvent;
+import ch.quantasy.gateway.message.event.gps.StatusEvent;
+import ch.quantasy.gateway.message.intent.gps.GPSIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
 import ch.quantasy.tinkerforge.device.gps.GPSDeviceCallback;
-import ch.quantasy.gateway.intent.gps.RestartType;
+import ch.quantasy.gateway.message.intent.gps.RestartType;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;
 
@@ -93,12 +98,12 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
 
     @Override
     public void coordinates(long latitude, char ns, long longitude, char ew, int pdop, int hdop, int vdop, int epe) {
-        super.publishEvent(getContract().EVENT_COORDINATES, new Coordinates(latitude, ns, longitude, ew, pdop, hdop, vdop, epe));
+        super.publishEvent(getContract().EVENT_COORDINATES, new CoordinatesEvent(latitude, ns, longitude, ew, pdop, hdop, vdop, epe));
     }
 
     @Override
     public void dateTime(long date, long time) {
-        super.publishEvent(getContract().EVENT_DATE_TIME, new DateTime(date, time));
+        super.publishEvent(getContract().EVENT_DATE_TIME, new DateTimeEvent(date, time));
     }
 
     @Override
@@ -110,180 +115,4 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
     public void status(short fix, short satellitesView, short satellitesUsed) {
         super.publishEvent(getContract().EVENT_STATE, new StatusEvent(fix, satellitesView, satellitesUsed));
     }
-
-    public static class StatusEvent {
-
-        protected long timestamp;
-        protected short fix;
-        protected short satellitesView;
-        protected short satellitesUsed;
-
-        public StatusEvent(short fix, short satellitesView, short satellitesUsed) {
-            this(fix, satellitesView, satellitesUsed, System.currentTimeMillis());
-        }
-
-        public StatusEvent(short fix, short satellitesView, short satellitesUsed, long timeStamp) {
-            this.fix = fix;
-            this.satellitesView = satellitesView;
-            this.satellitesUsed = satellitesUsed;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public short getFix() {
-            return fix;
-        }
-
-        public short getSatellitesUsed() {
-            return satellitesUsed;
-        }
-
-        public short getSatellitesView() {
-            return satellitesView;
-        }
-
-    }
-
-    public static class AltitudeEvent {
-
-        protected long timestamp;
-        protected int altitude;
-        protected int geoidalSeparation;
-
-        public AltitudeEvent(int altitude, int geoidalSeparation) {
-            this(altitude, geoidalSeparation, System.currentTimeMillis());
-        }
-
-        public AltitudeEvent(int altitude, int geoidalSeparation, long timeStamp) {
-            this.altitude = altitude;
-            this.geoidalSeparation = geoidalSeparation;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getAltitude() {
-            return altitude;
-        }
-
-        public int getGeoidalSeparation() {
-            return geoidalSeparation;
-        }
-    }
-
-    public static class MotionEvent {
-
-        protected long timestamp;
-        protected long course;
-        protected long speed;
-
-        public MotionEvent(long course, long speed) {
-            this(course, speed, System.currentTimeMillis());
-        }
-
-        public MotionEvent(long course, long speed, long timeStamp) {
-            this.course = course;
-            this.speed = speed;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getCourse() {
-            return course;
-        }
-
-        public long getSpeed() {
-            return speed;
-        }
-    }
-
-    public static class DateTime {
-
-        protected long date;
-        protected long time;
-
-        private DateTime() {
-        }
-
-        public DateTime(long date, long time) {
-            this.date = date;
-            this.time = time;
-        }
-
-        public long getDate() {
-            return date;
-        }
-
-        public long getTime() {
-            return time;
-        }
-    }
-
-    public static class Coordinates {
-
-        protected long latitude;
-        protected char ns;
-        protected long longitude;
-        protected char ew;
-        protected int pdop;
-        protected int hdop;
-        protected int vdop;
-        protected int epe;
-
-        private Coordinates() {
-        }
-
-        public Coordinates(long latitude, char ns, long longitude, char ew, int pdop, int hdop, int vdop, int epe) {
-            this.latitude = latitude;
-            this.ns = ns;
-            this.longitude = longitude;
-            this.ew = ew;
-            this.pdop = pdop;
-            this.hdop = hdop;
-            this.vdop = vdop;
-            this.epe = epe;
-        }
-
-        public int getEpe() {
-            return epe;
-        }
-
-        public char getEw() {
-            return ew;
-        }
-
-        public int getHdop() {
-            return hdop;
-        }
-
-        public long getLatitude() {
-            return latitude;
-        }
-
-        public long getLongitude() {
-            return longitude;
-        }
-
-        public char getNs() {
-            return ns;
-        }
-
-        public int getPdop() {
-            return pdop;
-        }
-
-        public int getVdop() {
-            return vdop;
-        }
-
-    }
-
 }

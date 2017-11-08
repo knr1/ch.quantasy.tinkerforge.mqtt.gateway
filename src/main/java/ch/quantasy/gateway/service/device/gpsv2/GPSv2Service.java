@@ -42,13 +42,18 @@
  */
 package ch.quantasy.gateway.service.device.gpsv2;
 
+import ch.quantasy.gateway.message.event.gps.AltitudeEvent;
+import ch.quantasy.gateway.message.event.gps.DateTimeEvent;
+import ch.quantasy.gateway.message.event.gps.MotionEvent;
+import ch.quantasy.gateway.message.event.gpsV2.CoordinatesEvent;
+import ch.quantasy.gateway.message.event.gpsV2.StatusEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.gpsv2.FixLEDConfig;
-import ch.quantasy.gateway.intent.gpsv2.GPSv2Intent;
+import ch.quantasy.gateway.message.intent.gpsv2.FixLEDConfig;
+import ch.quantasy.gateway.message.intent.gpsv2.GPSv2Intent;
 import ch.quantasy.tinkerforge.device.gpsV2.GPSv2Device;
 import ch.quantasy.tinkerforge.device.gpsV2.GPSv2DeviceCallback;
-import ch.quantasy.gateway.intent.gpsv2.RestartType;
-import ch.quantasy.gateway.intent.gpsv2.StatusLEDConfig;
+import ch.quantasy.gateway.message.intent.gpsv2.RestartType;
+import ch.quantasy.gateway.message.intent.gpsv2.StatusLEDConfig;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;
@@ -96,12 +101,12 @@ public class GPSv2Service extends AbstractDeviceService<GPSv2Device, GPSv2Servic
 
     @Override
     public void coordinates(long latitude, char ns, long longitude, char ew) {
-        super.publishEvent(getContract().EVENT_COORDINATES, new Coordinates(latitude, ns, longitude, ew));
+        super.publishEvent(getContract().EVENT_COORDINATES, new CoordinatesEvent(latitude, ns, longitude, ew));
     }
 
     @Override
     public void dateTime(long date, long time) {
-        super.publishEvent(getContract().EVENT_DATE_TIME, new DateTime(date, time));
+        super.publishEvent(getContract().EVENT_DATE_TIME, new DateTimeEvent(date, time));
     }
 
     @Override
@@ -129,150 +134,8 @@ public class GPSv2Service extends AbstractDeviceService<GPSv2Device, GPSv2Servic
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public static class StatusEvent {
+    
+  
 
-        protected long timestamp;
-        protected boolean fix;
-        protected int satellitesView;
-
-        public StatusEvent(boolean fix, int satellitesView) {
-            this(fix, satellitesView, System.currentTimeMillis());
-        }
-
-        public StatusEvent(boolean fix, int satellitesView, long timeStamp) {
-            this.fix = fix;
-            this.satellitesView = satellitesView;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public boolean getFix() {
-            return fix;
-        }
-
-        public int getSatellitesView() {
-            return satellitesView;
-        }
-
-    }
-
-    public static class AltitudeEvent {
-
-        protected long timestamp;
-        protected int altitude;
-        protected int geoidalSeparation;
-
-        public AltitudeEvent(int altitude, int geoidalSeparation) {
-            this(altitude, geoidalSeparation, System.currentTimeMillis());
-        }
-
-        public AltitudeEvent(int altitude, int geoidalSeparation, long timeStamp) {
-            this.altitude = altitude;
-            this.geoidalSeparation = geoidalSeparation;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getAltitude() {
-            return altitude;
-        }
-
-        public int getGeoidalSeparation() {
-            return geoidalSeparation;
-        }
-    }
-
-    public static class MotionEvent {
-
-        protected long timestamp;
-        protected long course;
-        protected long speed;
-
-        public MotionEvent(long course, long speed) {
-            this(course, speed, System.currentTimeMillis());
-        }
-
-        public MotionEvent(long course, long speed, long timeStamp) {
-            this.course = course;
-            this.speed = speed;
-            this.timestamp = timeStamp;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public long getCourse() {
-            return course;
-        }
-
-        public long getSpeed() {
-            return speed;
-        }
-    }
-
-    public static class DateTime {
-
-        protected long date;
-        protected long time;
-
-        private DateTime() {
-        }
-
-        public DateTime(long date, long time) {
-            this.date = date;
-            this.time = time;
-        }
-
-        public long getDate() {
-            return date;
-        }
-
-        public long getTime() {
-            return time;
-        }
-    }
-
-    public static class Coordinates {
-
-        protected long latitude;
-        protected char ns;
-        protected long longitude;
-        protected char ew;
-
-        private Coordinates() {
-        }
-
-        public Coordinates(long latitude, char ns, long longitude, char ew) {
-            this.latitude = latitude;
-            this.ns = ns;
-            this.longitude = longitude;
-            this.ew = ew;
-
-        }
-
-        public char getEw() {
-            return ew;
-        }
-
-        public long getLatitude() {
-            return latitude;
-        }
-
-        public long getLongitude() {
-            return longitude;
-        }
-
-        public char getNs() {
-            return ns;
-        }
-
-    }
-
+    
 }

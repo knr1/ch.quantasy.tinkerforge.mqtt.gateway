@@ -42,10 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.dualRelay;
 
+import ch.quantasy.gateway.message.event.dualRelay.MonoflopDoneEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDeviceCallback;
-import ch.quantasy.gateway.intent.dualRelay.DeviceRelayState;
+import ch.quantasy.gateway.message.intent.dualRelay.DeviceRelayState;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -66,31 +67,10 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     @Override
     public void monoflopDone(short relay, boolean state) {
-        publishEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDone(relay, state));
+        publishEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(relay, state));
 
     }
 
-    public static class MonoflopDone {
-
-        protected short relay;
-        protected boolean state;
-
-        private MonoflopDone() {
-        }
-
-        public MonoflopDone(short relay, boolean state) {
-            this.relay = relay;
-            this.state = state;
-        }
-
-        public short getRelay() {
-            return relay;
-        }
-
-        public boolean getState() {
-            return state;
-        }
-
-    }
+    
 
 }

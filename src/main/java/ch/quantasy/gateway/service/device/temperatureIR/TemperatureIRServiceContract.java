@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.temperatureIR;
 
-import ch.quantasy.gateway.intent.temperatureIR.TemperatureIRIntent;
+import ch.quantasy.gateway.message.event.temperatureIR.AmbientTemperatureEvent;
+import ch.quantasy.gateway.message.event.temperatureIR.ObjectTemperatureEvent;
+import ch.quantasy.gateway.message.intent.temperatureIR.TemperatureIRIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
@@ -116,10 +118,10 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_AMBIENT_TEMPERATURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-400..1250]");
-        descriptions.put(EVENT_OBJECT_TEMPERATURE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-700..3800]");
-        descriptions.put(EVENT_AMBIENT_TEMPERATURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-400..1250]");
-        descriptions.put(EVENT_OBJECT_TEMPERATURE_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [-700..3800]");
+        addMessageTopic(EVENT_AMBIENT_TEMPERATURE, AmbientTemperatureEvent.class);
+        addMessageTopic(EVENT_OBJECT_TEMPERATURE, ObjectTemperatureEvent.class);
+        addMessageTopic(EVENT_AMBIENT_TEMPERATURE_REACHED, AmbientTemperatureEvent.class);
+        addMessageTopic(EVENT_OBJECT_TEMPERATURE_REACHED, ObjectTemperatureEvent.class);
         descriptions.put(STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_AMBIENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-400..1250]\n max: [-400..1250]");

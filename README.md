@@ -401,58 +401,63 @@ Message:
 ### IMU
 ```
 TF/IMU/U/<id>/E/acceleration
-   - timestamp: [0..9223372036854775807]
-     value:
-        x: [-32768..32767]
-        y: [-32768..32767]
-        z: [-32768..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMU/U/<id>/E/allData
-   - timestamp: [0..9223372036854775807]
-     value:
-        @acceleration
-        @magneticField
-        @angularVelocity
-        @orientation
-        @quaternion
-        @linearAcceleration
-        @gravityVector
-        @temperature
-        calibrationStatus: [0..255]
+   acceleration: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   angularVelocity: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   magneticField: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   temperature: 
+     temperature: Number <from: -32768 to: 32767>
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/IMU/U/<id>/E/angularVelocity
-   - timestamp: [0..9223372036854775807]
-     value:
-        x: [-32768..32767]
-        y: [-32768..32767]
-        z: [-32768..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMU/U/<id>/E/magneticField
-   - timestamp: [0..9223372036854775807]
-     value:
-        x: [-32768..32767]
-        y: [-32768..32767]
-        z: [-32768..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMU/U/<id>/E/orientation
-   - timestamp: [0..9223372036854775807]
-     value:
-        heading: [-32768..32767]
-        roll: [-32768..32767]
-        pitch: [-32768..32767]
+   heading: Number <from: -32768 to: 32767>
+   pitch: Number <from: -32768 to: 32767>
+   roll: Number <from: -32768 to: 32767>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/IMU/U/<id>/E/quaternion
-   - timestamp: [0..9223372036854775807]
-     value:
-        w: [-32768..32767]
-        x: [-32768..32767]
-        y: [-32768..32767]
-        z: [-32768..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/IMU/U/<id>/I
@@ -474,6 +479,7 @@ TF/IMU/U/<id>/I
    quaternionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    statusLED: null
    statusLED: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -528,79 +534,97 @@ TF/IMU/U/<id>/S/statusLED/callbackPeriod
 ### IMUV2
 ```
 TF/IMUV2/U/<id>/E/acceleration
-   - timestamp: [0..9223372036854775807]
-     value:
-       x: [-32768..32767]
-       y: [-32768..32767]
-       z: [-32768..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMUV2/U/<id>/E/allData
-   - timestamp: [0..9223372036854775807]
-     value:
-       @acceleration
-       @magneticField
-       @angularVelocity
-       @orientation
-       @quaternion
-       @linearAcceleration
-       @gravityVector
-       @temperature
-       calibrationStatus: [0..255]
+   acceleration: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   angularVelocity: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   gravityVector: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   linearAcceleration: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   magneticField: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   quaternion: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+   temperature: 
+     temperature: Number <from: -32768 to: 32767>
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/IMUV2/U/<id>/E/angularVelocity
-   - timestamp: [0..9223372036854775807]
-     value:
-       x: [-32768..32767]
-       y: [-32768..32767]
-       z: [-32768..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMUV2/U/<id>/E/gravityVector
-   - timestamp: [0..9223372036854775807]
-     value:
-       x: [-32768..32767]
-       y: [-32768..32767]
-       z: [-32768..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMUV2/U/<id>/E/linearAcceleration
-   - timestamp: [0..9223372036854775807]
-     value:
-       x: [-32768..32767]
-       y: [-32768..32767]
-       z: [-32768..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMUV2/U/<id>/E/magneticField
-   - timestamp: [0..9223372036854775807]
-     value:
-       x: [-32768..32767]
-       y: [-32768..32767]
-       z: [-32768..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMUV2/U/<id>/E/orientation
-   - timestamp: [0..9223372036854775807]
-     value:
-       heading: [-32768..32767]
-       roll: [-32768..32767]
-       pitch: [-32768..32767]
+   heading: Number <from: -32768 to: 32767>
+   pitch: Number <from: -32768 to: 32767>
+   roll: Number <from: -32768 to: 32767>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/IMUV2/U/<id>/E/quaternion
-   - timestamp: [0..9223372036854775807]
-     value:
-       w: [-32768..32767]
-       x: [-32768..32767]
-       y: [-32768..32767]
-       z: [-32768..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/IMUV2/U/<id>/E/temperature
-   - timestamp: [0..9223372036854775807]
-     value: [-128..127]
+   temperature: Number <from: -32768 to: 32767>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/IMUV2/U/<id>/I
@@ -630,6 +654,7 @@ TF/IMUV2/U/<id>/I
    statusLED: Boolean <true,false> 
    temperatureCallbackPeriod: null
    temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -695,6 +720,20 @@ TF/IMUV2/U/<id>/S/temperature/callbackPeriod
 
 ### LCD16x2
 ```
+TF/LCD16x2/U/<id>/E/button/pressed
+   button: Number <from: 0 to: 2>
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/LCD16x2/U/<id>/E/button/released
+   button: Number <from: 0 to: 2>
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
 TF/LCD16x2/U/<id>/I
    backlight: null
    backlight: Boolean <true,false> 
@@ -712,6 +751,7 @@ TF/LCD16x2/U/<id>/I
     position: Number <from: 0 to: 15>
     text: String <min: 0 max: 16>
    parameters: null
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -744,14 +784,16 @@ TF/LCD16x2/U/<id>/S/position
 ### LCD20x4
 ```
 TF/LCD20x4/U/<id>/E/button/pressed
-   - timestamp: [0..9223372036854775807]
-     value: [1..4]
+   button: Number <from: 0 to: 3>
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
 TF/LCD20x4/U/<id>/E/button/released
-   - timestamp: [0..9223372036854775807]
-     value: [1..4]
+   button: Number <from: 0 to: 3>
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -779,6 +821,7 @@ TF/LCD20x4/U/<id>/I
     position: Number <from: 0 to: 19>
     text: String <min: 0 max: 20>
    parameters: null
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -817,26 +860,25 @@ TF/LCD20x4/U/<id>/S/position
    String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
-### Accelerometer
+### <id>
 ```
-TF/Accelerometer/U/<id>/E/acceleration
-   - timestamp: [0..9223372036854775807]
-     value:
-       x: [-32768..32767]
-       y: [-32768..32767]
-       z: [-32768..32767]
+TF/<id>/U/Accelerometer/E/acceleration
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
    
 ```
 ```
-TF/Accelerometer/U/<id>/E/acceleration/reached
-   - timestamp: [0..9223372036854775807]
-    value:
-       x: [-32768..32767]
-       y: [-32768..32767]
-       z: [-32768..32767]
+TF/<id>/U/Accelerometer/E/accelerationReached
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
 ```
 ```
-TF/Accelerometer/U/<id>/I
+TF/<id>/U/Accelerometer/I
    accelerationThreshold: null
    accelerationThreshold: 
      option: String <[x, o, i, <, >]>
@@ -849,14 +891,15 @@ TF/Accelerometer/U/<id>/I
      FullScale: String <G2,G4,G6,G8,G16>
    debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
-TF/Accelerometer/U/<id>/S/acceleration/callbackPeriod
+TF/<id>/U/Accelerometer/S/acceleration/callbackPeriod
    [0..9223372036854775807]
 ```
 ```
-TF/Accelerometer/U/<id>/S/acceleration/threshold
+TF/<id>/U/Accelerometer/S/acceleration/threshold
    option: [x|o|i|<|>]
     minX: [-32768..32767]
     minY: [-32768..32767]
@@ -866,51 +909,51 @@ TF/Accelerometer/U/<id>/S/acceleration/threshold
     maxZ: [-32768..32767]
 ```
 ```
-TF/Accelerometer/U/<id>/S/configuration
+TF/<id>/U/Accelerometer/S/configuration
    dataRate: [OFF|Hz3|Hz6|Hz12|Hz25|Hz50|Hz100|Hz400|Hz800|Hz1600]
     fullScale: [G2|G4|G6|G8|G16
     filterBandwidth: [Hz800|Hz400|Hz200|Hz50]
 ```
 ```
-TF/Accelerometer/U/<id>/S/debounce/period
+TF/<id>/U/Accelerometer/S/debounce/period
    [0..9223372036854775807]
 ```
 ```
-TF/Accelerometer/U/<id>/S/firmware
+TF/<id>/U/Accelerometer/S/firmware
    [[-32768...32767]]_*
 ```
 ```
-TF/Accelerometer/U/<id>/S/hardware
+TF/<id>/U/Accelerometer/S/hardware
    [[-32768...32767]]_*
 ```
 ```
-TF/Accelerometer/U/<id>/S/position
+TF/<id>/U/Accelerometer/S/position
    String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
 ```
 
 ### AmbientLight
 ```
 TF/AmbientLight/U/<id>/E/analogValue
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
    
 ```
 ```
 TF/AmbientLight/U/<id>/E/analogValue/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
    
 ```
 ```
 TF/AmbientLight/U/<id>/E/illuminance
-   - timestamp: [0..9223372036854775807]
-     value: [0..9000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9000>
    
 ```
 ```
 TF/AmbientLight/U/<id>/E/illuminance/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..9000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9000>
    
 ```
 ```
@@ -931,6 +974,7 @@ TF/AmbientLight/U/<id>/I
      max: Number <from: 0 to: 9000>
      min: Number <from: 0 to: 9000>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -973,23 +1017,18 @@ TF/AmbientLight/U/<id>/S/position
 ### AmbientLightV2
 ```
 TF/AmbientLightV2/U/<id>/E/illuminance
-   - timestamp: [0..9223372036854775807]
-     value: [0..100000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 100000>
    
 ```
 ```
 TF/AmbientLightV2/U/<id>/E/illuminance/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..100000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 100000>
    
 ```
 ```
 TF/AmbientLightV2/U/<id>/I
-   analogValueThreshold: null
-   analogValueThreshold: 
-     max: Number <from: 0 to: 4095>
-     min: Number <from: 0 to: 4095>
-     option: String <[x, o, i, <, >]>
    configuration: null
    configuration: 
      IlluminanceRange: String <lx_unlimitted,lx_64000,lx_32000,lx_16000,lx_8000,lx_1300,lx_600>
@@ -999,6 +1038,11 @@ TF/AmbientLightV2/U/<id>/I
    illuminanceCallbackPeriod: null
    illuminanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    illuminanceCallbackThreshold: null
+   illuminanceCallbackThreshold: 
+     max: Number <from: 0 to: 100000>
+     min: Number <from: 0 to: 100000>
+     option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1037,26 +1081,26 @@ TF/AmbientLightV2/U/<id>/S/position
 ### AnalogInV2
 ```
 TF/AnalogInV2/U/<id>/E/analogValue
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
    
 ```
 ```
 TF/AnalogInV2/U/<id>/E/analogValue/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
    
 ```
 ```
 TF/AnalogInV2/U/<id>/E/voltage
-   - timestamp: [0..9223372036854775807]
-     value: [-2147483648..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2147483648 to: 2147483647>
    
 ```
 ```
 TF/AnalogInV2/U/<id>/E/voltage/reached
-   - timestamp: [0..42000]
-     value: [0..42000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2147483648 to: 2147483647>
    
 ```
 ```
@@ -1072,6 +1116,7 @@ TF/AnalogInV2/U/<id>/I
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    movingAverage: null
    movingAverage: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    voltageCallbackPeriod: null
    voltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    voltageCallbackThreshold: null
@@ -1127,6 +1172,7 @@ TF/AnalogInV2/U/<id>/S/voltage/threshold
 TF/AnalogOutV2/U/<id>/I
    outputVoltage: null
    outputVoltage: Number <from: 0 to: 12000>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1149,26 +1195,26 @@ TF/AnalogOutV2/U/<id>/S/position
 ### Barometer
 ```
 TF/Barometer/U/<id>/E/airPressure
-   - timestamp: [0..9223372036854775807]
-     value: [10000..1200000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 10000 to: 1200000>
    
 ```
 ```
 TF/Barometer/U/<id>/E/airPressure/reached
-   - timestamp: [0..9223372036854775807]
-     value: [10000..1200000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 10000 to: 1200000>
    
 ```
 ```
 TF/Barometer/U/<id>/E/altitude
-   - timestamp: [0..9223372036854775807]
-     value: [-2147483648..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2147483648 to: 2147483647>
    
 ```
 ```
 TF/Barometer/U/<id>/E/altitude/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-2147483648..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2147483648 to: 2147483647>
    
 ```
 ```
@@ -1193,6 +1239,7 @@ TF/Barometer/U/<id>/I
    debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    referenceAirPressure: null
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1245,14 +1292,14 @@ TF/Barometer/U/<id>/S/referenceAirPressure
 ### CO2
 ```
 TF/CO2/U/<id>/E/CO2Concentration
-   - timestamp: [0..9223372036854775807]
-     value: [0..10000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 10000>
    
 ```
 ```
 TF/CO2/U/<id>/E/CO2Concentration/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..10000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 10000>
    
 ```
 ```
@@ -1266,6 +1313,7 @@ TF/CO2/U/<id>/I
      option: String <[x, o, i, <, >]>
    debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1298,31 +1346,32 @@ TF/CO2/U/<id>/S/position
 ### Color
 ```
 TF/Color/U/<id>/E/color
-   - timestamp: [0..9223372036854775807]
-     value:
-       red: [0..65535]
-       green: [0..65535]
-       blue: [0..65535]
-       clear: [0..65535]
+   blue: Number <from: 0 to: 65535>
+   clear: Number <from: 0 to: 65535>
+   green: Number <from: 0 to: 65535>
+   red: Number <from: 0 to: 65535>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Color/U/<id>/E/color/reached
-   - timestamp: [0..9223372036854775807]
-     value:
-       red: [0..65535]
-       green: [0..65535]
-       blue: [0..65535]
-       clear: [0..65535]
+   blue: Number <from: 0 to: 65535>
+   clear: Number <from: 0 to: 65535>
+   green: Number <from: 0 to: 65535>
+   red: Number <from: 0 to: 65535>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Color/U/<id>/E/illuminance
-   - timestamp: [0..9223372036854775807]
-     value: [0..65535]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 65535>
+   
 ```
 ```
 TF/Color/U/<id>/E/illuminance/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..65535]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 65535>
    
 ```
 ```
@@ -1352,6 +1401,7 @@ TF/Color/U/<id>/I
    illuminanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    light: null
    light: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1392,28 +1442,31 @@ TF/Color/U/<id>/S/position
 ### DC
 ```
 TF/DC/U/<id>/E/emergencyShutdown
-   - timestamp: [0..9223372036854775807] 
-     value: [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/DC/U/<id>/E/fullBrake
-   - timestamp: [0..9223372036854775807] 
-     value: [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/DC/U/<id>/E/undervoltage
-   - timestamp: [0..9223372036854775807]
-     value: [0..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2147483647>
+   
 ```
 ```
 TF/DC/U/<id>/E/velocity
-   - timestamp: [0..9223372036854775807]
-     value: [0..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 32767>
+   
 ```
 ```
 TF/DC/U/<id>/E/velocity/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 32767>
+   
 ```
 ```
 TF/DC/U/<id>/I
@@ -1429,6 +1482,7 @@ TF/DC/U/<id>/I
    minimumVoltage: Number <from: 6000 to: 2147483647>
    pwmFrequency: null
    pwmFrequency: Number <from: 1 to: 20000>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    velocity: null
    velocity: Number <from: -32767 to: 32767>
    velocityPeriod: null
@@ -1479,23 +1533,27 @@ TF/DC/U/<id>/S/velocity/velocity
 ### DistanceIR
 ```
 TF/DistanceIR/U/<id>/E/analogValue
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/DistanceIR/U/<id>/E/analogValue/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/DistanceIR/U/<id>/E/distance
-   - timestamp: [0..9223372036854775807]
-     value: [[40..300]|[100..800]|[200..1500]]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <[from: 40 to: 300,from: 100 to: 800,from: 200 to: 1500]>
+   
 ```
 ```
 TF/DistanceIR/U/<id>/E/distance/reached
-   - timestamp: [0..9223372036854775807]
-     value: [[40..300]|[100..800]|[200..1500]]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <[from: 40 to: 300,from: 100 to: 800,from: 200 to: 1500]>
+   
 ```
 ```
 TF/DistanceIR/U/<id>/I
@@ -1515,6 +1573,7 @@ TF/DistanceIR/U/<id>/I
      max: Number <[from: 0 to: 0,from: 40 to: 300,from: 100 to: 800,from: 200 to: 1500]>
      min: Number <[from: 0 to: 0,from: 40 to: 300,from: 100 to: 800,from: 200 to: 1500]>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1557,13 +1616,15 @@ TF/DistanceIR/U/<id>/S/position
 ### DistanceUS
 ```
 TF/DistanceUS/U/<id>/E/distance
-   - timestamp: [0..9223372036854775807]
-     value: [[0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/DistanceUS/U/<id>/E/distance/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/DistanceUS/U/<id>/I
@@ -1578,6 +1639,7 @@ TF/DistanceUS/U/<id>/I
      option: String <[x, o, i, <, >]>
    movingAverage: null
    movingAverage: Number <from: 0 to: 100>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1614,12 +1676,12 @@ TF/DistanceUS/U/<id>/S/position
 ### DualButton
 ```
 TF/DualButton/U/<id>/E/stateChanged
-   - timestamp: [0..9223372036854775807]
-     value:
-       led1: [AutoToggleOn|AutoToggleOff|On|Off]
-       led2: [AutoToggleOn|AutoToggleOff|On|Off]
-      switch1: [0|1]
-      switch2: [0|1]
+   LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+   LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+   switch1: String <[0, 1]>
+   switch2: String <[0, 1]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/DualButton/U/<id>/I
@@ -1632,6 +1694,7 @@ TF/DualButton/U/<id>/I
    selectedLEDStates: 
     led: String <[1, 2]>
     LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1655,13 +1718,15 @@ TF/DualButton/U/<id>/S/position
 ### DustDetector
 ```
 TF/DustDetector/U/<id>/E/dustDensity
-   - timestamp: [0..9223372036854775807]
-     value: [0..500]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 500>
+   
 ```
 ```
 TF/DustDetector/U/<id>/E/dustDensity/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..500]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 500>
+   
 ```
 ```
 TF/DustDetector/U/<id>/I
@@ -1676,6 +1741,7 @@ TF/DustDetector/U/<id>/I
      option: String <[x, o, i, <, >]>
    movingAverage: null
    movingAverage: Number <from: 0 to: 100>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1712,45 +1778,44 @@ TF/DustDetector/U/<id>/S/position
 ### GPS
 ```
 TF/GPS/U/<id>/E/altitude
-   - timestamp: [0..9223372036854775807]
-     value:
-       altitude: [-2147483648..2147483647]
-       geoidalSeparation: [-2147483648..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2147483648 to: 2147483647>
+   
 ```
 ```
 TF/GPS/U/<id>/E/coordinates
-   - timestamp: [0..9223372036854775807]
-     value:
-       latitude: [-9223372036854775808..9223372036854775807]
-       ns: ['N'|'S']
-       longitude: [-9223372036854775808..9223372036854775807]
-    ew: ['E'|'W']
-    pdop: [-2147483648..2147483647]
-    hdop: [-2147483648..2147483647]
-       vdop: [-2147483648..2147483647]
-        epe: [-2147483648..2147483647]
+   epe: Number <from: -2147483648 to: 2147483647>
+   ew: String <[E, W]>
+   hdop: Number <from: -2147483648 to: 2147483647>
+   latitude: Number <from: -9223372036854775808 to: 9223372036854775807>
+   longitude: Number <from: -9223372036854775808 to: 9223372036854775807>
+   ns: String <[N, S]>
+   pdop: Number <from: -2147483648 to: 2147483647>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   vdop: Number <from: -2147483648 to: 2147483647>
+   
 ```
 ```
 TF/GPS/U/<id>/E/dateTime
-   - timestamp: [0..9223372036854775807]
-     value:
-       date: [[d|dd]mmyy]
-       time: [hhmmssxxx]
+   date: Number <from: 100 to: 311299>
+   time: Number <from: 0 to: 235959999>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/GPS/U/<id>/E/motion
-   - timestamp: [0..9223372036854775807]
-     value:
-       course: [0..36000]
-       speed: [0..9223372036854775807]
+   course: Number <from: 0 to: 36000>
+   speed: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/GPS/U/<id>/E/status
-   - timestamp: [0..9223372036854775807]
-     value:
-       fix: [1|2|3]]
-       satellitesView: [0..32767]
-       satellitesUsed: [0..32767]
+   fix: String <[1, 2, 3]>
+   satellitesUsed: Number <from: 0 to: 32767>
+   satellitesView: Number <from: 0 to: 32767>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/GPS/U/<id>/I
@@ -1766,6 +1831,7 @@ TF/GPS/U/<id>/I
    RestartType: String <hot,warm,cold,factoryReset>
    statusCallbackPeriod: null
    statusCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1800,40 +1866,40 @@ TF/GPS/U/<id>/S/position
 ### GPSv2
 ```
 TF/GPSv2/U/<id>/E/altitude
-   - timestamp: [0..9223372036854775807]
-    value:
-      altitude: [-2147483648..2147483647]
-      geoidalSeparation: [-2147483648..2147483647]
+   altitude: Number <from: -2147483648 to: 2147483647>
+   geoidalSeparation: Number <from: -2147483648 to: 2147483647>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/GPSv2/U/<id>/E/coordinates
-   - timestamp: [0..9223372036854775807]
-    value:
-     latitude: [-9223372036854775808..9223372036854775807]
-      ns: ['N'|'S']
-      longitude: [-9223372036854775808..9223372036854775807]
-    ew: ['E'|'W']
+   ew: String <[E, W]>
+   latitude: Number <from: -9223372036854775808 to: 9223372036854775807>
+   longitude: Number <from: -9223372036854775808 to: 9223372036854775807>
+   ns: String <[N, S]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/GPSv2/U/<id>/E/dateTime
-   - timestamp: [0..9223372036854775807]
-    value:
-     date: [[d|dd]mmyy]
-     time: [hhmmssxxx]
+   date: Number <from: 100 to: 311299>
+   time: Number <from: 0 to: 235959999>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/GPSv2/U/<id>/E/motion
-   - timestamp: [0..9223372036854775807]
-    value:
-     course: [0..36000]
-     speed: [0..9223372036854775807]
+   course: Number <from: 0 to: 36000>
+   speed: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/GPSv2/U/<id>/E/status
-   - timestamp: [0..9223372036854775807]
-    value:
-     fix: [true|false]]
-     satellitesView: [0..32767]
+   fix: Boolean <true,false> 
+   satellitesView: Number <from: 0 to: 32767>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/GPSv2/U/<id>/I
@@ -1853,6 +1919,7 @@ TF/GPSv2/U/<id>/I
    statusCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    statusLEDConfig: null
    StatusLEDConfig: String <OFF,ON,HEARTBEAT,STATUS>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1895,15 +1962,19 @@ TF/GPSv2/U/<id>/S/status/led
 ### HallEffect
 ```
 TF/HallEffect/U/<id>/E/edgeCount
-   - timestamp: [0..9223372036854775807]
-     value:
-       count: [0..9223372036854775807]
-       greater35Gauss: [true|false]
+   count: Number <from: 0 to: 9223372036854775807>
+   greater35Gauss: null
+   greater35Gauss: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/HallEffect/U/<id>/E/edgeCount/reset
-   - timestamp: [0..9223372036854775807]
-     value:    [0..9223372036854775807]
+   count: Number <from: 0 to: 9223372036854775807>
+   greater35Gauss: null
+   greater35Gauss: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/HallEffect/U/<id>/I
@@ -1914,6 +1985,7 @@ TF/HallEffect/U/<id>/I
    edgeCountInterrupt: Number <from: 0 to: 9223372036854775807>
    edgeCountReset: null
    edgeCountReset: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -1946,23 +2018,27 @@ TF/HallEffect/U/<id>/S/position
 ### Humidity
 ```
 TF/Humidity/U/<id>/E/analogValue
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/Humidity/U/<id>/E/analogValue/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/Humidity/U/<id>/E/humidity
-   - timestamp: [0..9223372036854775807]
-     value: [0..1000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 1000>
+   
 ```
 ```
 TF/Humidity/U/<id>/E/humidity/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..1000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 1000>
+   
 ```
 ```
 TF/Humidity/U/<id>/I
@@ -1982,6 +2058,7 @@ TF/Humidity/U/<id>/I
      max: Number <from: 0 to: 1000>
      min: Number <from: 0 to: 1000>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -2024,43 +2101,49 @@ TF/Humidity/U/<id>/S/position
 ### Joystick
 ```
 TF/Joystick/U/<id>/E/analogValue
-   - timestamp: [0..9223372036854775807]
-     value:
-       x: [0..4095]
-       y: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: 0 to: 4095>
+   y: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/Joystick/U/<id>/E/analogValue/reached
-   - timestamp: [0..9223372036854775807]
-     value:
-       x: [0..4095]
-       y: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: 0 to: 4095>
+   y: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/Joystick/U/<id>/E/calibrate
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
 ```
 ```
 TF/Joystick/U/<id>/E/position
-   - timestamp: [0..9223372036854775807]
-     value:
-       x: [-100..100]
-       y: [-100..100]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -100 to: 100>
+   y: Number <from: -100 to: 100>
+   
 ```
 ```
 TF/Joystick/U/<id>/E/position/reached
-   - timestamp: [0..9223372036854775807]
-     value:
-       x: [-100..100]
-       y: [-100..100]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -100 to: 100>
+   y: Number <from: -100 to: 100>
+   
 ```
 ```
 TF/Joystick/U/<id>/E/pressed
-   [0..9223372036854775807]
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Joystick/U/<id>/E/released
-   [0..9223372036854775807]
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Joystick/U/<id>/I
@@ -2086,6 +2169,7 @@ TF/Joystick/U/<id>/I
      minX: Number <from: -100 to: 100>
      minY: Number <from: -100 to: 100>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -2132,23 +2216,27 @@ TF/Joystick/U/<id>/S/position/threshold
 ### LaserRangeFinder
 ```
 TF/LaserRangeFinder/U/<id>/E/distance
-   - timestamp: [0..9223372036854775807]
-     value: [0..4000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4000>
+   
 ```
 ```
 TF/LaserRangeFinder/U/<id>/E/distance/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..4000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4000>
+   
 ```
 ```
 TF/LaserRangeFinder/U/<id>/E/velocity
-   - timestamp: [-127..9223372036854775807]
-     value: [0..127]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -127 to: 127>
+   
 ```
 ```
 TF/LaserRangeFinder/U/<id>/E/velocity/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-127..127]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -127 to: 127>
+   
 ```
 ```
 TF/LaserRangeFinder/U/<id>/I
@@ -2176,6 +2264,7 @@ TF/LaserRangeFinder/U/<id>/I
    movingAverage: 
      averagingDistance: Number <from: 0 to: 30>
      averagingVelocity: Number <from: 0 to: 30>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    velocityCallbackPeriod: null
    velocityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    velocityCallbackThreshold: null
@@ -2249,13 +2338,15 @@ TF/LaserRangeFinder/U/<id>/S/velocity/threshold
 ### LEDStrip
 ```
 TF/LEDStrip/U/<id>/E/frame/rendered
-   - timestamp: [0..9223372036854775807]
-     value: [0..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
 TF/LEDStrip/U/<id>/E/laging
-   - timestamp: [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
 ```
 ```
 TF/LEDStrip/U/<id>/I
@@ -2275,6 +2366,7 @@ TF/LEDStrip/U/<id>/I
      LEDFrame: 
        channels: Arrays: <[min: 1 max: 4,min: 1 max: 320]>
        channels: Number <from: 0 to: 255>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -2301,13 +2393,15 @@ TF/LEDStrip/U/<id>/S/position
 ### Line
 ```
 TF/Line/U/<id>/E/reflectivity
-   - timestamp: [0..9223372036854775807]
-     value: [[0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/Line/U/<id>/E/reflectivity/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/Line/U/<id>/I
@@ -2320,6 +2414,7 @@ TF/Line/U/<id>/I
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -2352,23 +2447,27 @@ TF/Line/U/<id>/S/reflectivity/threshold
 ### LinearPoti
 ```
 TF/LinearPoti/U/<id>/E/analogValue
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/LinearPoti/U/<id>/E/analogValue/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/LinearPoti/U/<id>/E/position
-   - timestamp: [0..9223372036854775807]
-     value: [0..100]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 100>
+   
 ```
 ```
 TF/LinearPoti/U/<id>/E/position/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..100]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 100>
+   
 ```
 ```
 TF/LinearPoti/U/<id>/I
@@ -2388,6 +2487,7 @@ TF/LinearPoti/U/<id>/I
      max: Number <from: 0 to: 100>
      min: Number <from: 0 to: 100>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -2430,13 +2530,15 @@ TF/LinearPoti/U/<id>/S/position/threshold
 ### LoadCell
 ```
 TF/LoadCell/U/<id>/E/weight
-   - timestamp: [0..9223372036854775807]
-     value: [-50001..50001]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -50001 to: 50001>
+   
 ```
 ```
 TF/LoadCell/U/<id>/E/weight/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-50001..50001]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -50001 to: 50001>
+   
 ```
 ```
 TF/LoadCell/U/<id>/I
@@ -2453,6 +2555,7 @@ TF/LoadCell/U/<id>/I
    statusLED: Boolean <true,false> 
    tare: null
    tare: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    weightCallbackPeriod: null
    weightCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    weightCallbackThreshold: null
@@ -2505,37 +2608,44 @@ TF/LoadCell/U/<id>/S/weight/threshold
 ### Master
 ```
 TF/Master/U/<id>/E/USB/voltage
-   - timestamp: [0..9223372036854775807]
-     value: [-2147483648..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2147483648 to: 2147483647>
+   
 ```
 ```
 TF/Master/U/<id>/E/USB/voltage/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-2147483648..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2147483648 to: 2147483647>
+   
 ```
 ```
 TF/Master/U/<id>/E/reset
-   - timestamp: [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Master/U/<id>/E/stack/current
-   - timestamp: [0..9223372036854775807]
-     value: [0..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2147483647>
+   
 ```
 ```
 TF/Master/U/<id>/E/stack/current/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2147483647>
+   
 ```
 ```
 TF/Master/U/<id>/E/stack/voltage
-   - timestamp: [0..9223372036854775807]
-     value: [-2147483648..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2147483648 to: 2147483647>
+   
 ```
 ```
 TF/Master/U/<id>/E/stack/voltage/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-2147483648..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2147483648 to: 2147483647>
+   
 ```
 ```
 TF/Master/U/<id>/I
@@ -2559,6 +2669,7 @@ TF/Master/U/<id>/I
      option: String <[x, o, i, <, >]>
    statusLED: null
    statusLED: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    usbVoltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    usbVoltageCallbackThreshold: null
    usbVoltageCallbackThreshold: 
@@ -2615,13 +2726,15 @@ TF/Master/U/<id>/S/statusLED/enabled
 ### Moisture
 ```
 TF/Moisture/U/<id>/E/moisture
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/Moisture/U/<id>/E/moisture/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
 ```
 ```
 TF/Moisture/U/<id>/I
@@ -2636,6 +2749,7 @@ TF/Moisture/U/<id>/I
      option: String <[x, o, i, <, >]>
    movingAverage: null
    movingAverage: Number <from: 0 to: 100>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -2672,13 +2786,13 @@ TF/Moisture/U/<id>/S/position
 ### MotionDetector
 ```
 TF/MotionDetector/U/<id>/E/eventDetectionCycleEnded
-   - timestamp: [0..9223372036854775807]
-     value: true
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/MotionDetector/U/<id>/E/motionDetected
-   - timestamp: [0..9223372036854775807]
-     value: true
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/MotionDetector/U/<id>/I
@@ -2700,13 +2814,14 @@ TF/MotionDetector/U/<id>/S/position
 ### MultiTouch
 ```
 TF/MultiTouch/U/<id>/E/recalibrated
-   - timestamp: [0..9223372036854775807]
-     value: true
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/MultiTouch/U/<id>/E/touchState
-   - timestamp: [0..9223372036854775807]
-     value: [0..8191]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 8191>
+   
 ```
 ```
 TF/MultiTouch/U/<id>/I
@@ -2716,6 +2831,7 @@ TF/MultiTouch/U/<id>/I
    recalibration: Boolean <true,false> 
    sensitivity: null
    sensitivity: Number <from: 5 to: 201>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -2742,32 +2858,32 @@ TF/MultiTouch/U/<id>/S/position
 ### NfcRfid
 ```
 TF/NfcRfid/U/<id>/E/tag/discovered
-   - timestamp: [0..9223372036854775807]
-     value:
-       id: [00..FF]_9
-       type: [MifareClassic|Type1|Type2]
+   id: String <regEx: [0-9A-F]{8-14}>
+   latestDiscoveryTimeStamp: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   NFCType: String <MifareClassic,Type1,Type2>
+   
 ```
 ```
 TF/NfcRfid/U/<id>/E/tag/read
-   - timestamp: [0..9223372036854775807]
-     value:
-       id: [00..FF]_9
-       value: [00..FF]_*
+   id: String <regEx: [0-9A-F]{8-14}>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/NfcRfid/U/<id>/E/tag/vanished
-   - timestamp: [0..9223372036854775807]
-     value:
-       id: [00..FF]_9
-       type: [MifareClassic|Type1|Type2]
+   id: String <regEx: [0-9A-F]{8-14}>
+   latestDiscoveryTimeStamp: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   NFCType: String <MifareClassic,Type1,Type2>
+   
 ```
 ```
 TF/NfcRfid/U/<id>/E/tag/written
-   - timestamp: [0..9223372036854775807]
-     value:
-       id: [00..FF]_9
-       state: [WritePageError|WritePageReady]
-       value: [00..FF]_*
+   id: String <regEx: [0-9A-F]{8-14}>
+   NFCRFIDReaderState: String <WritePageError,WritePageReady>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/NfcRfid/U/<id>/I
@@ -2779,6 +2895,7 @@ TF/NfcRfid/U/<id>/I
    scanningInterval: Number <from: 0 to: 9223372036854775807>
    tagID: null
    tagID: String <regEx: [0-9A-F]{8-14}>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -2801,18 +2918,26 @@ TF/NfcRfid/U/<id>/S/scanning/callbackPeriod
 ### PiezoSpeaker
 ```
 TF/PiezoSpeaker/U/<id>/E/calibrated
-   - timestamp: [0..9223372036854775807]
-     value: true
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/PiezoSpeaker/U/<id>/E/finished
-   - timestamp: [0..9223372036854775807]
-     value: true
+   morseCodeParameter: null
+   morseCodeParameter: 
+     frequency: Number <from: 585 to: 7100>
+     string: String <regEx: [\.\s-]{1,60}>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/PiezoSpeaker/U/<id>/E/started
-   - timestamp: [0..9223372036854775807]
-     value: true
+   morseCodeParameter: null
+   morseCodeParameter: 
+     frequency: Number <from: 585 to: 7100>
+     string: String <regEx: [\.\s-]{1,60}>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/PiezoSpeaker/U/<id>/I
@@ -2826,6 +2951,7 @@ TF/PiezoSpeaker/U/<id>/I
    morseCodeParameter: 
      frequency: Number <from: 585 to: 7100>
      string: String <regEx: [\.\s-]{1,60}>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -2844,23 +2970,53 @@ TF/PiezoSpeaker/U/<id>/S/position
 ### PTC
 ```
 TF/PTC/U/<id>/E/resistance
-   - timestamp: [0..9223372036854775807]
-     value: [0..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 32767>
+   
 ```
 ```
 TF/PTC/U/<id>/E/resistance/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 32767>
+   
 ```
 ```
 TF/PTC/U/<id>/E/temperature
-   - timestamp: [0..9223372036854775807]
-     value: [-24600..84900]
+   debouncePeriod: null
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   mode: null
+   mode: 
+     Mode: String <Fast,Slow>
+   resistanceCallbackPeriod: null
+   resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureCallbackPeriod: null
+   temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureThreshold: null
+   temperatureThreshold: 
+     max: Number <from: -2500 to: 8500>
+     min: Number <from: -2500 to: 8500>
+     option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/PTC/U/<id>/E/temperature/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-24600..84900]
+   debouncePeriod: null
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   mode: null
+   mode: 
+     Mode: String <Fast,Slow>
+   resistanceCallbackPeriod: null
+   resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureCallbackPeriod: null
+   temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   temperatureThreshold: null
+   temperatureThreshold: 
+     max: Number <from: -2500 to: 8500>
+     min: Number <from: -2500 to: 8500>
+     option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/PTC/U/<id>/I
@@ -2875,6 +3031,7 @@ TF/PTC/U/<id>/I
    temperatureCallbackPeriod: null
    temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    temperatureThreshold: null
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    wireMode: null
    wireMode: String <[2, 3, 4]>
    
@@ -2927,29 +3084,33 @@ TF/PTC/U/<id>/S/wireMode
 ### RealTimeClock
 ```
 TF/RealTimeClock/U/<id>/E/alarm
-   - timestamp: [0..9223372036854775807]
-     value:
-       year: [2000..2099]
-       month: [1..12]
-       day: [1..31]
-       hour: [0..23]
-       minute: [0..59]
-       second: [0..59]
-       centisecond: [0..9]
-       weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]
+   alarm: Boolean <true,false> 
+   dateTimeParameter: 
+     centisecond: Number <from: 0 to: 10>
+     day: Number <from: 1 to: 31>
+     hour: Number <from: 0 to: 59>
+     minute: Number <from: 0 to: 59>
+     month: Number <from: 1 to: 12>
+     second: Number <from: 0 to: 59>
+     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
+     year: Number <from: 2000 to: 2099>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RealTimeClock/U/<id>/E/dateTime
-   - timestamp: [0..9223372036854775807]
-     value:
-       year: [2000..2099]
-       month: [1..12]
-       day: [1..31]
-       hour: [0..23]
-       minute: [0..59]
-       second: [0..59]
-       centisecond: [0..9]
-       weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]
+   alarm: Boolean <true,false> 
+   dateTimeParameter: 
+     centisecond: Number <from: 0 to: 10>
+     day: Number <from: 1 to: 31>
+     hour: Number <from: 0 to: 59>
+     minute: Number <from: 0 to: 59>
+     month: Number <from: 1 to: 12>
+     second: Number <from: 0 to: 59>
+     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
+     year: Number <from: 2000 to: 2099>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RealTimeClock/U/<id>/I
@@ -2962,6 +3123,8 @@ TF/RealTimeClock/U/<id>/I
      month: Number <from: 1 to: 12>
      second: Number <from: 0 to: 59>
      WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday,disabled>
+   dateTimeCallbackPeriod: null
+   dateTimeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    dateTimeParameter: null
    dateTimeParameter: 
      centisecond: Number <from: 0 to: 10>
@@ -2974,8 +3137,7 @@ TF/RealTimeClock/U/<id>/I
      year: Number <from: 2000 to: 2099>
    offset: null
    offset: Number <from: -128 to: 127>
-   period: null
-   period: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3023,17 +3185,8 @@ TF/RealTimeClock/U/<id>/S/position
 ### RemoteSwitch
 ```
 TF/RemoteSwitch/U/<id>/E/switchingDone
-   - timestamp: [0..9223372036854775807]
-     value:
-       [houseCode: [0..31]
-       receiverCode:    [0..31]
-       switchingValue: [ON|OFF] | address: [0..67108863]
-       unit: [0..15]
-       switchingValue: [ON|OFF] | systemCode: ['A'..'P']
-       deviceCode: [1..16]
-       switchingValue: [ON|OFF] | address:    [0..67108863]
-       unit: [0..15]
-       dimValue: [0..15]]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RemoteSwitch/U/<id>/I
@@ -3059,6 +3212,7 @@ TF/RemoteSwitch/U/<id>/I
      deviceCode: Number <from: 1 to: 16>
      SwitchTo: String <switchOn,switchOff>
      systemCode: Number <from: 65 to: 80>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3081,28 +3235,36 @@ TF/RemoteSwitch/U/<id>/S/repeats
 ### RotaryEncoder
 ```
 TF/RotaryEncoder/U/<id>/E/count
-   - timestamp: [0..9223372036854775807]
-     value: [0..9000]
+   reset: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -900 to: 900>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/E/count/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-150..150]
+   reset: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -900 to: 900>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/E/count/reset
-   - timestamp: [0..9223372036854775807]
-     value: [-92233720368547758080..9223372036854775807]
+   reset: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -900 to: 900>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/E/pressed
-   - timestamp: [0..9223372036854775807]
-     value: true
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/E/released
-   - timestamp: [0..9223372036854775807]
-     value: true
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/I
@@ -3117,6 +3279,7 @@ TF/RotaryEncoder/U/<id>/I
      option: String <[x, o, i, <, >]>
    debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3149,32 +3312,33 @@ TF/RotaryEncoder/U/<id>/S/position
 ### RotaryPoti
 ```
 TF/RotaryPoti/U/<id>/E/analogValue
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
    
 ```
 ```
 TF/RotaryPoti/U/<id>/E/analogValue/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
    
 ```
 ```
 TF/RotaryPoti/U/<id>/E/position
-   - timestamp: [0..9223372036854775807]
-     value: [0..9000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 100>
    
 ```
 ```
 TF/RotaryPoti/U/<id>/E/position/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-150..150]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 100>
    
 ```
 ```
 TF/RotaryPoti/U/<id>/I
    analogValueCallbackPeriod: null
    analogValueCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   analogValueCallbackThreshold: null
    analogValueCallbackThreshold: 
      max: Number <from: 0 to: 4095>
      min: Number <from: 0 to: 4095>
@@ -3183,10 +3347,12 @@ TF/RotaryPoti/U/<id>/I
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    positionCallbackPeriod: null
    positionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   positionCallbackThreshold: null
    positionCallbackThreshold: 
      max: Number <from: -150 to: 150>
      min: Number <from: -150 to: 150>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3229,13 +3395,27 @@ TF/RotaryPoti/U/<id>/S/position/threshold
 ### SegmentDisplay4x7
 ```
 TF/SegmentDisplay4x7/U/<id>/E/counterFinished
-   - timestamp: [0..9223372036854775807]
-     value: true
+   counterParameters: null
+   counterParameters: 
+     from: Number <from: -999 to: 9999>
+     increment: Number <from: -999 to: 9999>
+     length: Number <from: 0 to: 9223372036854775807>
+     to: Number <from: -999 to: 9999>
+   finished: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/E/counterStarted
-   - timestamp: [0..9223372036854775807]
-     value: true
+   counterParameters: null
+   counterParameters: 
+     from: Number <from: -999 to: 9999>
+     increment: Number <from: -999 to: 9999>
+     length: Number <from: 0 to: 9223372036854775807>
+     to: Number <from: -999 to: 9999>
+   finished: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/I
@@ -3251,6 +3431,7 @@ TF/SegmentDisplay4x7/U/<id>/I
      bits: Number <from: 0 to: 128>
      brightness: Number <from: 0 to: 7>
      colon: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3275,22 +3456,21 @@ TF/SegmentDisplay4x7/U/<id>/S/segments
 ### Servo
 ```
 TF/Servo/U/<id>/E/positionReached
-   - timestamp: [0..9223372036854775807]
-     value:
-       id: [0..6]
-       position: [-32767..32767]
+   id: Number <from: 0 to: 6>
+   position: Number <from: -32767 to: 32767>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Servo/U/<id>/E/undervoltage
-   - timestamp: [0..9223372036854775807]
-     value: [0..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 32767>
+   
 ```
 ```
 TF/Servo/U/<id>/E/velocityReached
-   - timestamp: [0..9223372036854775807]
-     value:
-       id: [0..6]
-       value: [0..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Servo/U/<id>/I
@@ -3315,6 +3495,7 @@ TF/Servo/U/<id>/I
     velocity: Number <from: 0 to: 65536>
    statusLED: null
    statusLED: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3363,8 +3544,9 @@ TF/Servo/U/<id>/S/statusLED
 ### SolidState
 ```
 TF/SolidState/U/<id>/E/monoflopDone
-   - timestamp: [0..9223372036854775807]
-     value: [true|false]
+   state: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/SolidState/U/<id>/I
@@ -3374,6 +3556,7 @@ TF/SolidState/U/<id>/I
      state: Boolean <true,false> 
    state: null
    state: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3396,14 +3579,14 @@ TF/SolidState/U/<id>/S/state
 ### SoundIntensity
 ```
 TF/SoundIntensity/U/<id>/E/soundIntensity
-   - timestamp: [0..9223372036854775807]
-     value: [0..10000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 10000>
    
 ```
 ```
 TF/SoundIntensity/U/<id>/E/soundIntensity/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..10000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 10000>
    
 ```
 ```
@@ -3417,6 +3600,7 @@ TF/SoundIntensity/U/<id>/I
      max: Number <from: 0 to: 10000>
      min: Number <from: 0 to: 10000>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3449,13 +3633,15 @@ TF/SoundIntensity/U/<id>/S/soundIntensity/threshold
 ### Temperature
 ```
 TF/Temperature/U/<id>/E/temperature
-   - timestamp: [0..9223372036854775807]
-     value: [-2500..8500]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2500 to: 8500>
+   
 ```
 ```
 TF/Temperature/U/<id>/E/temperature/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-2500..8500]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -2500 to: 8500>
+   
 ```
 ```
 TF/Temperature/U/<id>/I
@@ -3473,6 +3659,7 @@ TF/Temperature/U/<id>/I
      max: Number <from: -2500 to: 8500>
      min: Number <from: -2500 to: 8500>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3508,26 +3695,6 @@ TF/Temperature/U/<id>/S/temperature/threshold
 
 ### TemperatureIR
 ```
-TF/TemperatureIR/U/<id>/E/ambientTemperature
-   - timestamp: [0..9223372036854775807]
-     value: [-400..1250]
-```
-```
-TF/TemperatureIR/U/<id>/E/ambientTemperature/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-400..1250]
-```
-```
-TF/TemperatureIR/U/<id>/E/objectTemperature
-   - timestamp: [0..9223372036854775807]
-     value: [-700..3800]
-```
-```
-TF/TemperatureIR/U/<id>/E/objectTemperature/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-700..3800]
-```
-```
 TF/TemperatureIR/U/<id>/I
    ambientTemperatureCallbackPeriod: null
    ambientTemperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -3545,6 +3712,7 @@ TF/TemperatureIR/U/<id>/I
      max: Number <from: -700 to: 3800>
      min: Number <from: -700 to: 3800>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3586,14 +3754,23 @@ TF/TemperatureIR/U/<id>/S/position
 
 ### ThermoCouple
 ```
+TF/ThermoCouple/U/<id>/E/error
+   openCircuit: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   voltage: Boolean <true,false> 
+   
+```
+```
 TF/ThermoCouple/U/<id>/E/temperature
-   - timestamp: [0..9223372036854775807]
-     value: [-21000..180000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -21000 to: 180000>
+   
 ```
 ```
 TF/ThermoCouple/U/<id>/E/temperature/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-21000..180000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -21000 to: 180000>
+   
 ```
 ```
 TF/ThermoCouple/U/<id>/I
@@ -3611,6 +3788,7 @@ TF/ThermoCouple/U/<id>/I
      max: Number <from: -21000 to: 180000>
      min: Number <from: -21000 to: 180000>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -3649,8 +3827,9 @@ TF/ThermoCouple/U/<id>/S/temperature/threshold
 ### Tilt
 ```
 TF/Tilt/U/<id>/E/tiltState
-   - timestamp: [0..9223372036854775807]
-     value:  [0..2]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2>
+   
 ```
 ```
 TF/Tilt/U/<id>/I
@@ -3672,13 +3851,15 @@ TF/Tilt/U/<id>/S/position
 ### UVLight
 ```
 TF/UVLight/U/<id>/E/uvLight
-   - timestamp: [0..9223372036854775807]
-     value: [0..328000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 328000>
+   
 ```
 ```
 TF/UVLight/U/<id>/E/uvLight/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..328000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 328000>
+   
 ```
 ```
 TF/UVLight/U/<id>/I
@@ -3686,6 +3867,7 @@ TF/UVLight/U/<id>/I
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    movingAverage: null
    movingAverage: Number <from: 0 to: 100>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    uvLightCallbackPeriod: null
    uvLightCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    uvLightCallbackThreshold: null
@@ -3725,33 +3907,39 @@ TF/UVLight/U/<id>/S/uvLight/threshold
 ### VoltageCurrent
 ```
 TF/VoltageCurrent/U/<id>/E/current
-   - timestamp: [0..9223372036854775807]
-     value: [0..36000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 36000>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/E/current/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..36000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 36000>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/E/power
-   - timestamp: [0..9223372036854775807]
-     value: [0..720000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 720000>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/E/power/reached
-   - timestamp: [0..9223372036854775807]
-     value: [0..720000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 720000>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/E/voltage
-   - timestamp: [0..9223372036854775807]
-     value: [-50001..50001]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -50001 to: 50001>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/E/voltage/reached
-   - timestamp: [0..9223372036854775807]
-     value: [-50001..50001]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -50001 to: 50001>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/I
@@ -3780,6 +3968,7 @@ TF/VoltageCurrent/U/<id>/I
      max: Number <from: 0 to: 720000>
      min: Number <from: 0 to: 720000>
      option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    voltageCallbackPeriod: null
    voltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    voltageCallbackThreshold: null
@@ -3850,32 +4039,24 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
 
 ### Manager
 ```
-TF/Manager/U/<id>/E/device/connected
-   - timestamp: [0..9223372036854775807]
-     value:
-       hostName: <String>
-       port: [0..4223..65536]
-```
-```
-TF/Manager/U/<id>/E/device/disconnected
-   - timestamp: [0..9223372036854775807]
-     value:
-       hostName: <String>
-       port: [0..4223..65536]
-```
-```
 TF/Manager/U/<id>/E/stack/address/added
-   - timestamp: [0..9223372036854775807]
-     value:
-       hostName: <String>
-       port: [0..4223..65536]
+   stackAddress: 
+     hostName: String <min: 1 max: 255>
+     hostName: String <regEx: \w+(\.\w+){0,3}>
+     port: Number <from: 1024 to: 65535>
+   state: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Manager/U/<id>/E/stack/address/removed
-   - timestamp: [0..9223372036854775807]
-     value:
-       hostName: <String>
-       port: [0..4223..65536]
+   stackAddress: 
+     hostName: String <min: 1 max: 255>
+     hostName: String <regEx: \w+(\.\w+){0,3}>
+     port: Number <from: 1024 to: 65535>
+   state: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Manager/U/<id>/I
@@ -3884,6 +4065,7 @@ TF/Manager/U/<id>/I
      hostName: String <regEx: \w+(\.\w+){0,3}>
      port: Number <from: 1024 to: 65535>
    connect: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```

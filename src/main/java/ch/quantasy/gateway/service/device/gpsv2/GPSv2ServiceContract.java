@@ -42,7 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.gpsv2;
 
-import ch.quantasy.gateway.intent.gpsv2.GPSv2Intent;
+import ch.quantasy.gateway.message.event.gps.AltitudeEvent;
+import ch.quantasy.gateway.message.event.gps.DateTimeEvent;
+import ch.quantasy.gateway.message.event.gps.MotionEvent;
+import ch.quantasy.gateway.message.event.gpsV2.CoordinatesEvent;
+import ch.quantasy.gateway.message.event.gpsV2.StatusEvent;
+import ch.quantasy.gateway.message.intent.gpsv2.GPSv2Intent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.gpsV2.GPSv2Device;
@@ -118,6 +123,11 @@ public class GPSv2ServiceContract extends DeviceServiceContract {
         LED_CONFIG = "led";
         STATUS_STATE_LED_CONFIG = STATUS + "/" + STATE + "/" + LED_CONFIG;
         STATUS_FIX_LED_CONFIG = STATUS + "/" + "fix" + "/" + LED_CONFIG;
+        addMessageTopic(EVENT_ALTITUDE, AltitudeEvent.class);
+        addMessageTopic(EVENT_DATE_TIME, DateTimeEvent.class);
+        addMessageTopic(EVENT_MOTION, MotionEvent.class);
+        addMessageTopic(EVENT_STATE, StatusEvent.class);
+        addMessageTopic(EVENT_COORDINATES, CoordinatesEvent.class);
 
     }
 
@@ -132,12 +142,6 @@ public class GPSv2ServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_STATE_LED_CONFIG, "[OFF|ON|HEARTBEAT|STATUS]");
 
         descriptions.put(STATUS_FIX_LED_CONFIG, "[OFF|ON|HEARTBEAT|FIX|PPS]");
-
-        descriptions.put(EVENT_ALTITUDE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n   altitude: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n   geoidalSeparation: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_DATE_TIME, "- timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  date: [[d|dd]mmyy]\n  time: [hhmmssxxx]");
-        descriptions.put(EVENT_MOTION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  course: [0..36000]\n  speed: [0.." + Long.MAX_VALUE + "]");
-        descriptions.put(EVENT_STATE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  fix: [true|false]]\n  satellitesView: [0.." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_COORDINATES, "- timestamp: [0.." + Long.MAX_VALUE + "]\n value:\n  latitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n   ns: ['N'|'S']\n   longitude: [" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]\n ew: ['E'|'W']");
 
     }
 }

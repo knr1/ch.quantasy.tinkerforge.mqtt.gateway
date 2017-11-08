@@ -42,10 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.LCD16x2;
 
-import ch.quantasy.gateway.intent.LCD16x2.DeviceConfigParameters;
-import ch.quantasy.gateway.intent.LCD16x2.DeviceCustomCharacter;
-import ch.quantasy.gateway.intent.LCD16x2.DeviceWriteLine;
-import ch.quantasy.gateway.intent.LCD16x2.LCD16x2Intent;
+import ch.quantasy.gateway.message.intent.LCD16x2.DeviceConfigParameters;
+import ch.quantasy.gateway.message.intent.LCD16x2.DeviceCustomCharacter;
+import ch.quantasy.gateway.message.intent.LCD16x2.DeviceWriteLine;
+import ch.quantasy.gateway.message.intent.LCD16x2.LCD16x2Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLCD16x2;

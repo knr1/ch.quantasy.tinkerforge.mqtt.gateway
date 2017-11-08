@@ -42,7 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.hallEffect;
 
-import ch.quantasy.gateway.intent.hallEffect.HallEffectIntent;
+import ch.quantasy.gateway.message.event.hallEffect.EdgeCountEvent;
+import ch.quantasy.gateway.message.intent.hallEffect.HallEffectIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
@@ -97,12 +98,13 @@ public class HallEffectServiceContract extends DeviceServiceContract {
 
         RESET = "reset";
         EVENT_EDGE_COUNT_RESET = EVENT_EDGE_COUNT + "/" + RESET;
+        addMessageTopic(EVENT_EDGE_COUNT, EdgeCountEvent.class);
+        addMessageTopic(EVENT_EDGE_COUNT_RESET, EdgeCountEvent.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(EVENT_EDGE_COUNT, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    count: [0.." + Long.MAX_VALUE + "]\n    greater35Gauss: [true|false]");
-        descriptions.put(EVENT_EDGE_COUNT_RESET, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:    [0.." + Long.MAX_VALUE + "]");
 
         descriptions.put(STATUS_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");

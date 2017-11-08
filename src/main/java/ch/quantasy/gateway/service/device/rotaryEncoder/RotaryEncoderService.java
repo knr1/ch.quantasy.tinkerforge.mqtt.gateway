@@ -42,9 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.rotaryEncoder;
 
+import ch.quantasy.gateway.message.event.rotaryEncoder.ButtonEvent;
+import ch.quantasy.gateway.message.event.rotaryEncoder.CountEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.rotaryEncoder.DeviceCountCallbackThreshold;
-import ch.quantasy.gateway.intent.rotaryEncoder.RotaryEncoderIntent;
+import ch.quantasy.gateway.message.intent.rotaryEncoder.DeviceCountCallbackThreshold;
+import ch.quantasy.gateway.message.intent.rotaryEncoder.RotaryEncoderIntent;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDeviceCallback;
 
@@ -63,12 +65,12 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     @Override
     public void count(int i) {
-        publishEvent(getContract().EVENT_COUNT, i);
+        publishEvent(getContract().EVENT_COUNT, new CountEvent(i));
     }
 
     @Override
     public void countReached(int i) {
-        publishEvent(getContract().EVENT_COUNT_REACHED, i);
+        publishEvent(getContract().EVENT_COUNT_REACHED, new CountEvent(i));
     }
 
     @Override
@@ -89,17 +91,17 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     @Override
     public void countReset(long latestCount) {
-        publishEvent(getContract().EVENT_COUNT_RESET, latestCount);
+        publishEvent(getContract().EVENT_COUNT_RESET, new CountEvent(latestCount,true));
     }
 
     @Override
     public void pressed() {
-        publishEvent(getContract().EVENT_PRESSED, true);
+        publishEvent(getContract().EVENT_PRESSED, new ButtonEvent(true));
     }
 
     @Override
     public void released() {
-        publishEvent(getContract().EVENT_RELEASED, true);
+        publishEvent(getContract().EVENT_RELEASED, new ButtonEvent(false));
     }
 
 }

@@ -42,12 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.accelerometer;
 
-import ch.quantasy.gateway.intent.accelerometer.AccelerometerIntent;
+import ch.quantasy.gateway.message.event.IMU.AccelerationEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDeviceCallback;
-import ch.quantasy.gateway.intent.accelerometer.DeviceAccelerationCallbackThreshold;
-import ch.quantasy.gateway.intent.accelerometer.DeviceConfiguration;
+import ch.quantasy.gateway.message.intent.accelerometer.DeviceAccelerationCallbackThreshold;
+import ch.quantasy.gateway.message.intent.accelerometer.DeviceConfiguration;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -58,7 +58,6 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class AccelerometerService extends AbstractDeviceService<AccelerometerDevice, AccelerometerServiceContract> implements AccelerometerDeviceCallback {
 
     public AccelerometerService(AccelerometerDevice device, URI mqttURI) throws MqttException {
-
         super(mqttURI, device, new AccelerometerServiceContract(device));
     }
 
@@ -84,41 +83,11 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
 
     @Override
     public void acceleration(short x, short y, short z) {
-        publishEvent(getContract().EVENT_ACCELERATION, new Acceleration(x, y, z));
+        super.publishEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(x, y, z));
     }
 
     @Override
     public void accelerationReached(short x, short y, short z) {
-        publishEvent(getContract().EVENT_ACCELERATION_REACHED, new Acceleration(x, y, z));
+        super.publishEvent(getContract().EVENT_ACCELERATION_REACHED, new AccelerationEvent(x, y, z));
     }
-
-    public static class Acceleration {
-
-        protected short x;
-        protected short y;
-        protected short z;
-
-        private Acceleration() {
-        }
-
-        public Acceleration(short x, short y, short z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        public short getX() {
-            return x;
-        }
-
-        public short getY() {
-            return y;
-        }
-
-        public short getZ() {
-            return z;
-        }
-
-    }
-
 }

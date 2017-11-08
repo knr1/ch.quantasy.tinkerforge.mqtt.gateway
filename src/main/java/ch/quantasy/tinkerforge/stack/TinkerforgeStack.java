@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.stack;
 
-import ch.quantasy.gateway.intent.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.message.intent.stack.TinkerforgeStackAddress;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;

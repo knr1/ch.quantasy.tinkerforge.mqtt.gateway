@@ -42,7 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.dc;
 
-import ch.quantasy.gateway.intent.dc.DCIntent;
+import ch.quantasy.gateway.message.event.dc.EmergencyShutdownEvent;
+import ch.quantasy.gateway.message.event.dc.FullBrakeEvent;
+import ch.quantasy.gateway.message.event.dc.UnderVoltageEvent;
+import ch.quantasy.gateway.message.event.dc.VelocityEvent;
+import ch.quantasy.gateway.message.intent.dc.DCIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
@@ -135,17 +139,17 @@ public class DCServiceContract extends DeviceServiceContract {
 
         PWM_FREQUENCY = "pwmFrequency";
         STATUS_PWM_FREQUENCY = STATUS + "/" + PWM_FREQUENCY;
+
+        addMessageTopic(EVENT_FULL_BRAKE, FullBrakeEvent.class);
+        addMessageTopic(EVENT_UNDERVOLTAGE, UnderVoltageEvent.class);
+        addMessageTopic(EVENT_VELOCITY, VelocityEvent.class);
+        addMessageTopic(EVENT_VELOCITY_REACHED, VelocityEvent.class);
+        addMessageTopic(EVENT_EMERGENCY_SHUTDOWN, EmergencyShutdownEvent.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(EVENT_FULL_BRAKE, "- timestamp: [0.." + Long.MAX_VALUE + "] \n  value: [0.." + Long.MAX_VALUE + "]");
-        descriptions.put(EVENT_UNDERVOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_VELOCITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_VELOCITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Short.MAX_VALUE + "]");
-
-        descriptions.put(EVENT_EMERGENCY_SHUTDOWN, "- timestamp: [0.." + Long.MAX_VALUE + "] \n  value: [0.." + Long.MAX_VALUE + "]");
 
         descriptions.put(STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
         descriptions.put(STATUS_DRIVER_MODE, "[0|1]");

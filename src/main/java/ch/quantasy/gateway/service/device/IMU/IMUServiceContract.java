@@ -42,12 +42,17 @@
  */
 package ch.quantasy.gateway.service.device.IMU;
 
-import ch.quantasy.gateway.intent.IMU.IMUIntent;
+import ch.quantasy.gateway.message.event.IMU.AccelerationEvent;
+import ch.quantasy.gateway.message.event.IMU.AllDataEvent;
+import ch.quantasy.gateway.message.event.IMU.AngularVelocityEvent;
+import ch.quantasy.gateway.message.event.IMU.MagneticFieldEvent;
+import ch.quantasy.gateway.message.event.IMU.OrientationEvent;
+import ch.quantasy.gateway.message.event.IMU.QuaternionEvent;
+import ch.quantasy.gateway.message.intent.IMU.IMUIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  *
@@ -55,16 +60,16 @@ import java.util.TreeMap;
  */
 public class IMUServiceContract extends DeviceServiceContract {
 
-    public final String PERIOD;
-    public final String CALLBACK_PERIOD;
-    public final String ACCELRATION;
-    public final String ALL_DATA;
-    public final String ANGULAR_VELOCITY;
-    public final String MAGNETIC_FIELD;
-    public final String ORIENTATION;
-    public final String ORIENTATION_CALCULATION;
-    public final String QUATERNION;
-    public final String LEDS;
+    private final String PERIOD;
+    private final String CALLBACK_PERIOD;
+    private final String ACCELRATION;
+    private final String ALL_DATA;
+    private final String ANGULAR_VELOCITY;
+    private final String MAGNETIC_FIELD;
+    private final String ORIENTATION;
+    private final String ORIENTATION_CALCULATION;
+    private final String QUATERNION;
+    private final String LEDS;
     public final String STATUS_ORIENTATION_CALCULATION;
     public final String STATUS_LED;
     public final String STATUS_STATUS_LED;
@@ -128,6 +133,13 @@ public class IMUServiceContract extends DeviceServiceContract {
 
         ORIENTATION_CALCULATION = ORIENTATION + "/" + "calculation";
         STATUS_ORIENTATION_CALCULATION = STATUS + "/" + ORIENTATION_CALCULATION;
+        addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
+        addMessageTopic(EVENT_ANGULAR_VELOCITY, AngularVelocityEvent.class);
+        addMessageTopic(EVENT_MAGNETIC_FIELD, MagneticFieldEvent.class);
+        addMessageTopic(EVENT_ORIENTATION, OrientationEvent.class);
+        addMessageTopic(EVENT_QUATERNION, QuaternionEvent.class);
+        addMessageTopic(EVENT_ALL_DATA, AllDataEvent.class);
+
     }
 
     @Override
@@ -143,11 +155,5 @@ public class IMUServiceContract extends DeviceServiceContract {
         descriptions.put(STATUS_LEDS, "[true|false]");
         descriptions.put(STATUS_ORIENTATION_CALCULATION, "[true|false]");
 
-        descriptions.put(EVENT_ACCELERATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_ANGULAR_VELOCITY, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_MAGNETIC_FIELD, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_ORIENTATION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     heading: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     roll: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     pitch: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_QUATERNION, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     w: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     x: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     y: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n     z: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(EVENT_ALL_DATA, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n     @acceleration\n     @magneticField\n     @angularVelocity\n     @orientation\n     @quaternion\n     @linearAcceleration\n     @gravityVector\n     @temperature\n     calibrationStatus: [0..255]");
     }
 }

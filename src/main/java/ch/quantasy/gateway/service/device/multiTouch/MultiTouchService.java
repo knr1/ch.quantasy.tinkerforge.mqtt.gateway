@@ -42,7 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.multiTouch;
 
-import ch.quantasy.gateway.intent.multiTouch.MultiTouchIntent;
+import ch.quantasy.gateway.message.event.multiTouch.RecalibratedEvent;
+import ch.quantasy.gateway.message.event.multiTouch.TouchStateEvent;
+import ch.quantasy.gateway.message.intent.multiTouch.MultiTouchIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDeviceCallback;
@@ -72,12 +74,12 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
 
     @Override
     public void recalibrated() {
-        publishEvent(getContract().EVENT_RECALIBRATED, true);
+        publishEvent(getContract().EVENT_RECALIBRATED, new RecalibratedEvent());
     }
 
     @Override
     public void touchState(int i) {
-        publishEvent(getContract().EVENT_TOUCH_STATE, i);
+        publishEvent(getContract().EVENT_TOUCH_STATE, new TouchStateEvent(i));
     }
 
 }

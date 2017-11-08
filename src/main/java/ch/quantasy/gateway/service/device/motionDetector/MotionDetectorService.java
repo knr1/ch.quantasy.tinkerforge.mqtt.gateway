@@ -42,6 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.motionDetector;
 
+import ch.quantasy.gateway.message.event.motionDetector.MotionDetectionCycleEndedEvent;
+import ch.quantasy.gateway.message.event.motionDetector.MotionDetectionDetected;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
@@ -60,12 +62,12 @@ public class MotionDetectorService extends AbstractDeviceService<MotionDetectorD
 
     @Override
     public void detectionCycleEnded() {
-        publishEvent(getContract().EVENT_DETECTION_CYCLE_ENDED, true);
+        publishEvent(getContract().EVENT_DETECTION_CYCLE_ENDED, new MotionDetectionCycleEndedEvent());
 
     }
 
     @Override
     public void motionDetected() {
-        publishEvent(getContract().EVENT_MOTION_DETECTED, true);
+        publishEvent(getContract().EVENT_MOTION_DETECTED, new MotionDetectionDetected());
     }
 }

@@ -42,9 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.color;
 
-import ch.quantasy.gateway.intent.color.ColorIntent;
-import ch.quantasy.gateway.intent.color.DeviceColorCallbackThreshold;
-import ch.quantasy.gateway.intent.color.DeviceConfiguration;
+import ch.quantasy.gateway.message.event.color.ColorEvent;
+import ch.quantasy.gateway.message.event.color.ColorTemperatureEvent;
+import ch.quantasy.gateway.message.event.color.IlluminanceEvent;
+import ch.quantasy.gateway.message.intent.color.ColorIntent;
+import ch.quantasy.gateway.message.intent.color.DeviceColorCallbackThreshold;
+import ch.quantasy.gateway.message.intent.color.DeviceConfiguration;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
 import ch.quantasy.tinkerforge.device.color.ColorDeviceCallback;
@@ -64,22 +67,22 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
     @Override
     public void color(int i, int i1, int i2, int i3) {
-        publishEvent(getContract().EVENT_COLOR, new Color(i, i1, i2, i3));
+        publishEvent(getContract().EVENT_COLOR, new ColorEvent(i, i1, i2, i3));
     }
 
     @Override
     public void colorReached(int i, int i1, int i2, int i3) {
-        publishEvent(getContract().EVENT_COLOR_REACHED, new Color(i, i1, i2, i3));
+        publishEvent(getContract().EVENT_COLOR_REACHED, new ColorEvent(i, i1, i2, i3));
     }
 
     @Override
     public void illuminance(long i) {
-        publishEvent(getContract().EVENT_ILLUMINANCE, i);
+        publishEvent(getContract().EVENT_ILLUMINANCE, new IlluminanceEvent(i));
     }
 
     @Override
     public void colorTemperature(int i) {
-        publishEvent(getContract().EVENT_COLOR_TEMPERATURE_REACHED, i);
+        publishEvent(getContract().EVENT_COLOR_TEMPERATURE_REACHED, new ColorTemperatureEvent(i));
     }
 
     @Override
@@ -117,44 +120,5 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
         publishStatus(getContract().STATUS_COLOR_THRESHOLD, threshold);
     }
 
-    public static class Color {
-
-        private long timestamp;
-        private int red;
-        private int green;
-        private int blue;
-        private int clear;
-
-        private Color() {
-        }
-
-        public Color(int red, int green, int blue, int clear) {
-            this.timestamp = timestamp;
-            this.red = red;
-            this.green = green;
-            this.blue = blue;
-            this.clear = clear;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public int getBlue() {
-            return blue;
-        }
-
-        public int getClear() {
-            return clear;
-        }
-
-        public int getGreen() {
-            return green;
-        }
-
-        public int getRed() {
-            return red;
-        }
-
-    }
+    
 }

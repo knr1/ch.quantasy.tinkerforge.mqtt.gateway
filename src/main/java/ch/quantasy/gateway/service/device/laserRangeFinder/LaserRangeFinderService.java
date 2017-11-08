@@ -42,16 +42,18 @@
  */
 package ch.quantasy.gateway.service.device.laserRangeFinder;
 
+import ch.quantasy.gateway.message.event.laserRangeFinder.DistanceEvent;
+import ch.quantasy.gateway.message.event.laserRangeFinder.VelocityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.laserRangeFinder.DeviceAveraging;
-import ch.quantasy.gateway.intent.laserRangeFinder.DeviceConfiguration;
-import ch.quantasy.gateway.intent.laserRangeFinder.DeviceDistanceCallbackThreshold;
-import ch.quantasy.gateway.intent.laserRangeFinder.DeviceMode;
-import ch.quantasy.gateway.intent.laserRangeFinder.DeviceVelocityCallbackThreshold;
-import ch.quantasy.gateway.intent.laserRangeFinder.LaserRangeFinderIntent;
+import ch.quantasy.gateway.message.intent.laserRangeFinder.DeviceAveraging;
+import ch.quantasy.gateway.message.intent.laserRangeFinder.DeviceConfiguration;
+import ch.quantasy.gateway.message.intent.laserRangeFinder.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.message.intent.laserRangeFinder.DeviceMode;
+import ch.quantasy.gateway.message.intent.laserRangeFinder.DeviceVelocityCallbackThreshold;
+import ch.quantasy.gateway.message.intent.laserRangeFinder.LaserRangeFinderIntent;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDeviceCallback;
-import ch.quantasy.gateway.intent.laserRangeFinder.SensorHardware;
+import ch.quantasy.gateway.message.intent.laserRangeFinder.SensorHardware;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -67,22 +69,22 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
 
     @Override
     public void distance(int i) {
-        publishEvent(getContract().EVENT_DISTANCE, i);
+        publishEvent(getContract().EVENT_DISTANCE, new DistanceEvent(i));
     }
 
     @Override
     public void distanceReached(int i) {
-        publishEvent(getContract().EVENT_DISTANCE_REACHED, i);
+        publishEvent(getContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
     }
 
     @Override
     public void velocity(short i) {
-        publishEvent(getContract().EVENT_VELOCITY, i);
+        publishEvent(getContract().EVENT_VELOCITY, new VelocityEvent(i));
     }
 
     @Override
     public void velocityReached(short i) {
-        publishEvent(getContract().EVENT_VELOCITY_REACHED, i);
+        publishEvent(getContract().EVENT_VELOCITY_REACHED, new VelocityEvent(i));
     }
 
     @Override

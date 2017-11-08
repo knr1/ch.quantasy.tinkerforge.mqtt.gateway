@@ -42,10 +42,13 @@
  */
 package ch.quantasy.gateway.service;
 
+import ch.quantasy.gateway.message.event.AnEvent;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
+import ch.quantasy.mqtt.gateway.client.message.MessageCollector;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import ch.quantasy.mqtt.gateway.client.MessageReceiver;
+import ch.quantasy.mqtt.gateway.client.message.MessageReceiver;
+import ch.quantasy.mqtt.gateway.client.message.PublishingMessageCollector;
 
 /**
  *
@@ -54,10 +57,15 @@ import ch.quantasy.mqtt.gateway.client.MessageReceiver;
  */
 public abstract class AbstractService<S extends TinkerForgeServiceContract> extends GatewayClient<S> implements MessageReceiver {
 
+    private final MessageCollector collector;
+    private PublishingMessageCollector<S> eventCollector;
+
     public AbstractService(URI mqttURI, String clientID, S contract) throws MqttException {
         super(mqttURI, clientID, contract);
+        collector = new MessageCollector();
         connect();
         subscribe(contract.INTENT + "/#", this);
+        eventCollector = new PublishingMessageCollector<S>(collector, this);
     }
 
     /**
@@ -72,4 +80,9 @@ public abstract class AbstractService<S extends TinkerForgeServiceContract> exte
      * AbstractService.
      */
     public abstract void messageReceived(String topic, byte[] payload) throws Exception;
+
+    //Change it back to readyToPublishEvent
+    public void publishEvent(String topic, AnEvent event) {
+        this.eventCollector.readyToPublish(topic, event);
+    }
 }

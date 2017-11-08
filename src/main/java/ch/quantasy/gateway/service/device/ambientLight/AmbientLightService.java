@@ -42,12 +42,14 @@
  */
 package ch.quantasy.gateway.service.device.ambientLight;
 
-import ch.quantasy.gateway.intent.ambientLight.AmbientLightIntent;
+import ch.quantasy.gateway.message.event.ambientLight.AnalogValueEvent;
+import ch.quantasy.gateway.message.event.ambientLight.IlluminanceEvent;
+import ch.quantasy.gateway.message.intent.ambientLight.AmbientLightIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDeviceCallback;
-import ch.quantasy.gateway.intent.ambientLight.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.intent.ambientLight.DeviceIlluminanceCallbackThreshold;
+import ch.quantasy.gateway.message.intent.ambientLight.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.intent.ambientLight.DeviceIlluminanceCallbackThreshold;
 
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -64,22 +66,22 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
 
     @Override
     public void analogValue(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, i);
+        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void illuminance(int i) {
-        publishEvent(getContract().EVENT_ILLUMINANCE, i);
+        publishEvent(getContract().EVENT_ILLUMINANCE, new IlluminanceEvent(i));
     }
 
     @Override
     public void illuminanceReached(int i) {
-        publishEvent(getContract().EVENT_ILLUMINANCE_REACHED, i);
+        publishEvent(getContract().EVENT_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
     }
 
     @Override

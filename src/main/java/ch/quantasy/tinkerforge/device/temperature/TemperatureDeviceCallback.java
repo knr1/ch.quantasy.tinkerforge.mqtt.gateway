@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.temperature;
 
-import ch.quantasy.gateway.intent.temperature.DeviceI2CMode;
-import ch.quantasy.gateway.intent.temperature.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.intent.temperature.DeviceI2CMode;
+import ch.quantasy.gateway.message.intent.temperature.DeviceTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletTemperature;
 

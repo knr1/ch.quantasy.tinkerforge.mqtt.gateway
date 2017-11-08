@@ -42,7 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.servo;
 
-import ch.quantasy.gateway.intent.servo.ServoIntent;
+import ch.quantasy.gateway.message.event.servo.UnderVoltageEvent;
+import ch.quantasy.gateway.message.event.servo.VelocityEvent;
+import ch.quantasy.gateway.message.event.servo.PositionEvent;
+import ch.quantasy.gateway.message.intent.servo.ServoIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.servo.ServoDevice;
@@ -112,14 +115,14 @@ public class ServoServiceContract extends DeviceServiceContract {
 
         OUTPUT_VOLTAGE = "outputVoltage";
         STATUS_OUTPUT_VOLTAGE = STATUS + "/" + OUTPUT_VOLTAGE;
+        addMessageTopic(EVENT_POSITION_REACHED, PositionEvent.class);
+        addMessageTopic(EVENT_UNDERVOLTAGE, UnderVoltageEvent.class);
+        addMessageTopic(EVENT_VELOCITY_REACHED, VelocityEvent.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(EVENT_POSITION_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [0..6]\n    position: [-32767..32767]");
-        descriptions.put(EVENT_UNDERVOLTAGE, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value: [0.." + Integer.MAX_VALUE + "]");
-        descriptions.put(EVENT_VELOCITY_REACHED, "- timestamp: [0.." + Long.MAX_VALUE + "]\n  value:\n    id: [0..6]\n    value: [0.." + Short.MAX_VALUE + "]");
 
         descriptions.put(STATUS_SERVOS, "--- \n  {- \n  id: [0..6]\n  enabled: [true|false|null]\n  position: [-32767..32767|null]\n  acceleration: [0..65536|null]\n  velocity: [0..65535|null]\n  degree: [[\n    min: [-32767..32767]\n    max: [-32767..32767]\n]|null]\n  period: [1..65535|null]\n  pulseWidth: [[\n    min: [1..65535]\n    max: [1..65535]]|null]}_7");
         descriptions.put(STATUS_STATUS_LED, "[true|false]");

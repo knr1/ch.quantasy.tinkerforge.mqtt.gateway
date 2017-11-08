@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.dc;
 
-import ch.quantasy.gateway.intent.dc.DCIntent;
+import ch.quantasy.gateway.message.intent.dc.DCIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickDC;

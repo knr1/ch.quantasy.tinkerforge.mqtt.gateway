@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.line;
 
-import ch.quantasy.gateway.intent.line.DeviceReflectivityCallbackThreshold;
-import ch.quantasy.gateway.intent.line.LineIntent;
+import ch.quantasy.gateway.message.intent.line.DeviceReflectivityCallbackThreshold;
+import ch.quantasy.gateway.message.intent.line.LineIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLine;

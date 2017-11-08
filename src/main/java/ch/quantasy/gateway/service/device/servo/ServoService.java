@@ -42,9 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.servo;
 
+import ch.quantasy.gateway.message.event.servo.PositionEvent;
+import ch.quantasy.gateway.message.event.servo.UnderVoltageEvent;
+import ch.quantasy.gateway.message.event.servo.VelocityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.intent.servo.Servo;
-import ch.quantasy.gateway.intent.servo.ServoIntent;
+import ch.quantasy.gateway.message.intent.servo.Servo;
 import ch.quantasy.tinkerforge.device.servo.ServoDevice;
 import ch.quantasy.tinkerforge.device.servo.ServoDeviceCallback;
 import java.net.URI;
@@ -69,7 +71,7 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
 
     @Override
     public void underVoltage(int i) {
-        publishEvent(getContract().EVENT_UNDERVOLTAGE, i);
+        publishEvent(getContract().EVENT_UNDERVOLTAGE, new UnderVoltageEvent(i));
     }
 
     @Override
@@ -85,64 +87,18 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
 
     @Override
     public void positionReached(short s, short s1) {
-        publishEvent(getContract().EVENT_POSITION_REACHED, new Position(s, s1));
+        publishEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(s, s1));
     }
 
     @Override
     public void velocityReached(short s, short s1) {
-        publishEvent(getContract().EVENT_VELOCITY_REACHED, new Velocity(s, s1));
+        publishEvent(getContract().EVENT_VELOCITY_REACHED, new VelocityEvent(s, s1));
 
     }
 
     @Override
     public void servosChanged(Collection<Servo> values) {
         publishStatus(getContract().STATUS_SERVOS, values);
-    }
-
-    public static class Position {
-
-        private short id;
-        private short position;
-
-        private Position() {
-        }
-
-        public Position(short id, short position) {
-            this.id = id;
-            this.position = position;
-        }
-
-        public short getId() {
-            return id;
-        }
-
-        public short getPosition() {
-            return position;
-        }
-
-    }
-
-    public static class Velocity {
-
-        private short id;
-        private short velocity;
-
-        private Velocity() {
-        }
-
-        public Velocity(short id, short velocity) {
-            this.id = id;
-            this.velocity = velocity;
-        }
-
-        public short getId() {
-            return id;
-        }
-
-        public short getVelocity() {
-            return velocity;
-        }
-
     }
 
 }
