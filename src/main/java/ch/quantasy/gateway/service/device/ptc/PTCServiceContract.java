@@ -43,6 +43,7 @@
 package ch.quantasy.gateway.service.device.ptc;
 
 import ch.quantasy.gateway.message.event.ptc.ResistanceEvent;
+import ch.quantasy.gateway.message.event.ptc.TemperatureEvent;
 import ch.quantasy.gateway.message.intent.ptc.PTCIntent;
 import ch.quantasy.gateway.message.intent.temperature.TemperatureIntent;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
@@ -126,8 +127,8 @@ public class PTCServiceContract extends DeviceServiceContract {
 
         WIRE_MODE = "wireMode";
         STATUS_WIRE_MODE = STATUS + "/" + WIRE_MODE;
-        addMessageTopic(EVENT_TEMPERATURE, TemperatureIntent.class);
-        addMessageTopic(EVENT_TEMPERATURE_REACHED, TemperatureIntent.class);
+        addMessageTopic(EVENT_TEMPERATURE, TemperatureEvent.class);
+        addMessageTopic(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
         addMessageTopic(EVENT_RESISTANCE, ResistanceEvent.class);
         addMessageTopic(EVENT_RESISTANCE_REACHED, ResistanceEvent.class);
 

@@ -2982,40 +2982,14 @@ TF/PTC/U/<id>/E/resistance/reached
 ```
 ```
 TF/PTC/U/<id>/E/temperature
-   debouncePeriod: null
-   debouncePeriod: Number <from: 0 to: 9223372036854775807>
-   mode: null
-   mode: 
-     Mode: String <Fast,Slow>
-   resistanceCallbackPeriod: null
-   resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   temperatureCallbackPeriod: null
-   temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   temperatureThreshold: null
-   temperatureThreshold: 
-     max: Number <from: -2500 to: 8500>
-     min: Number <from: -2500 to: 8500>
-     option: String <[x, o, i, <, >]>
    timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -24600 to: 84900>
    
 ```
 ```
 TF/PTC/U/<id>/E/temperature/reached
-   debouncePeriod: null
-   debouncePeriod: Number <from: 0 to: 9223372036854775807>
-   mode: null
-   mode: 
-     Mode: String <Fast,Slow>
-   resistanceCallbackPeriod: null
-   resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   temperatureCallbackPeriod: null
-   temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   temperatureThreshold: null
-   temperatureThreshold: 
-     max: Number <from: -2500 to: 8500>
-     min: Number <from: -2500 to: 8500>
-     option: String <[x, o, i, <, >]>
    timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -24600 to: 84900>
    
 ```
 ```
@@ -3694,6 +3668,30 @@ TF/Temperature/U/<id>/S/temperature/threshold
 ```
 
 ### TemperatureIR
+```
+TF/TemperatureIR/U/<id>/E/ambientTemperature
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -400 to: 1250>
+   
+```
+```
+TF/TemperatureIR/U/<id>/E/ambientTemperature/reached
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -400 to: 1250>
+   
+```
+```
+TF/TemperatureIR/U/<id>/E/objectTemperature
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -700 to: 3800>
+   
+```
+```
+TF/TemperatureIR/U/<id>/E/objectTemperature/reached
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -700 to: 3800>
+   
+```
 ```
 TF/TemperatureIR/U/<id>/I
    ambientTemperatureCallbackPeriod: null

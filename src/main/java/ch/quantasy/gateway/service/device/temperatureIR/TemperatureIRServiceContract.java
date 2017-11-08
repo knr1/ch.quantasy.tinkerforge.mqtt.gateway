@@ -114,14 +114,15 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-    }
-
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
         addMessageTopic(EVENT_AMBIENT_TEMPERATURE, AmbientTemperatureEvent.class);
         addMessageTopic(EVENT_OBJECT_TEMPERATURE, ObjectTemperatureEvent.class);
         addMessageTopic(EVENT_AMBIENT_TEMPERATURE_REACHED, AmbientTemperatureEvent.class);
         addMessageTopic(EVENT_OBJECT_TEMPERATURE_REACHED, ObjectTemperatureEvent.class);
+    }
+
+    @Override
+    protected void descirbeMore(Map<String, String> descriptions) {
+
         descriptions.put(STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
         descriptions.put(STATUS_AMBIENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-400..1250]\n max: [-400..1250]");

@@ -42,7 +42,6 @@
  */
 package ch.quantasy.tinkerforge.device.segment4x7;
 
-import ch.quantasy.gateway.message.intent.segment4x7.DeviceCounterParameters;
 import ch.quantasy.gateway.message.intent.segment4x7.DeviceSegments;
 import ch.quantasy.gateway.message.intent.segment4x7.Segment4x7Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
