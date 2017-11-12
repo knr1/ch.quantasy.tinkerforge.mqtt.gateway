@@ -87,22 +87,22 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
 
     @Override
     public void temperature(int i) {
-        publishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
+        readyToPublishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
     }
 
     @Override
     public void temperatureReached(int i) {
-        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
+        readyToPublishEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
     }
 
     @Override
     public void resistance(int i) {
-        publishEvent(getContract().EVENT_RESISTANCE, new ResistanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_RESISTANCE, new ResistanceEvent(i));
     }
 
     @Override
     public void resistanceReached(int i) {
-        publishEvent(getContract().EVENT_RESISTANCE_REACHED, new ResistanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_RESISTANCE_REACHED, new ResistanceEvent(i));
     }
 
     @Override

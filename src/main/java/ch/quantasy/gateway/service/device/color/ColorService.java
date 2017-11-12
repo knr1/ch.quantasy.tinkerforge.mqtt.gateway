@@ -67,22 +67,22 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
     @Override
     public void color(int i, int i1, int i2, int i3) {
-        publishEvent(getContract().EVENT_COLOR, new ColorEvent(i, i1, i2, i3));
+        readyToPublishEvent(getContract().EVENT_COLOR, new ColorEvent(i, i1, i2, i3));
     }
 
     @Override
     public void colorReached(int i, int i1, int i2, int i3) {
-        publishEvent(getContract().EVENT_COLOR_REACHED, new ColorEvent(i, i1, i2, i3));
+        readyToPublishEvent(getContract().EVENT_COLOR_REACHED, new ColorEvent(i, i1, i2, i3));
     }
 
     @Override
     public void illuminance(long i) {
-        publishEvent(getContract().EVENT_ILLUMINANCE, new IlluminanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_ILLUMINANCE, new IlluminanceEvent(i));
     }
 
     @Override
     public void colorTemperature(int i) {
-        publishEvent(getContract().EVENT_COLOR_TEMPERATURE_REACHED, new ColorTemperatureEvent(i));
+        readyToPublishEvent(getContract().EVENT_COLOR_TEMPERATURE_REACHED, new ColorTemperatureEvent(i));
     }
 
     @Override

@@ -68,22 +68,22 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
     @Override
     public void airPressure(int i) {
 
-        publishEvent(getContract().EVENT_AIR_PRESSURE, new AirPressureEvent(i));
+        readyToPublishEvent(getContract().EVENT_AIR_PRESSURE, new AirPressureEvent(i));
     }
 
     @Override
     public void airPressureReached(int i) {
-        publishEvent(getContract().EVENT_AIR_PRESSURE_REACHED, new AirPressureEvent(i));
+        readyToPublishEvent(getContract().EVENT_AIR_PRESSURE_REACHED, new AirPressureEvent(i));
     }
 
     @Override
     public void altitude(int i) {
-        publishEvent(getContract().EVENT_ALTITUDE, new AltitudeEvent(i));
+        readyToPublishEvent(getContract().EVENT_ALTITUDE, new AltitudeEvent(i));
     }
 
     @Override
     public void altitudeReached(int i) {
-        publishEvent(getContract().EVENT_ALTITUDE_REACHED, new AltitudeEvent(i));
+        readyToPublishEvent(getContract().EVENT_ALTITUDE_REACHED, new AltitudeEvent(i));
     }
 
     @Override

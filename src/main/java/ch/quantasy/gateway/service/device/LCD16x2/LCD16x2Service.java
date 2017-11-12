@@ -80,12 +80,12 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     @Override
     public void buttonPressed(short s) {
-        publishEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s,true));
+        readyToPublishEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s,true));
     }
 
     @Override
     public void buttonReleased(short s) {
-        publishEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s,false));
+        readyToPublishEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s,false));
     }
 
 }

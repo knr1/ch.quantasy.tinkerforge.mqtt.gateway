@@ -83,12 +83,12 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
     @Override
     public void dustDensity(int i) {
-        publishEvent(getContract().EVENT_DUST_DENSITY, new DustDensityEvent(i));
+        readyToPublishEvent(getContract().EVENT_DUST_DENSITY, new DustDensityEvent(i));
     }
 
     @Override
     public void dustDensityReached(int i) {
-        publishEvent(getContract().EVENT_DUST_DENSITY_REACHED, new DustDensityEvent(i));
+        readyToPublishEvent(getContract().EVENT_DUST_DENSITY_REACHED, new DustDensityEvent(i));
     }
 
 }

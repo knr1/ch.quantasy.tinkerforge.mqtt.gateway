@@ -128,12 +128,12 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     @Override
     public void acceleration(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(s, s1, s2));
+        readyToPublishEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(s, s1, s2));
     }
 
     @Override
     public void allData(short[] shorts, short[] shorts1, short[] shorts2, short[] shorts3, short[] shorts4, short[] shorts5, short[] shorts6, byte b, short s) {
-        publishEvent(getContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts[0], shorts[1], shorts[2]),
+        readyToPublishEvent(getContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts[0], shorts[1], shorts[2]),
                 new MagneticFieldEvent(shorts1[0], shorts1[1], shorts1[2]),
                 new AngularVelocityEvent(shorts2[0], shorts2[1], shorts2[2]),
                 new QuaternionEvent(shorts4[0], shorts4[1], shorts4[2], shorts4[3]),
@@ -144,41 +144,41 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     @Override
     public void angularVelocity(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocityEvent(s, s1, s2));
+        readyToPublishEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocityEvent(s, s1, s2));
     }
 
     @Override
     public void gravityVector(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_GRAVITY_VECTOR, new GravityVectorEvent(s, s1, s2));
+        readyToPublishEvent(getContract().EVENT_GRAVITY_VECTOR, new GravityVectorEvent(s, s1, s2));
     }
 
     @Override
     public void linearAcceleration(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_LINEAR_ACCELERATION, new LinearAccelerationEvent(s, s1, s2));
+        readyToPublishEvent(getContract().EVENT_LINEAR_ACCELERATION, new LinearAccelerationEvent(s, s1, s2));
     }
 
     @Override
     public void magneticField(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticFieldEvent(s, s1, s2));
+        readyToPublishEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticFieldEvent(s, s1, s2));
     }
 
     @Override
     public void orientation(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_ORIENTATION, new OrientationEvent(s, s1, s2));
+        readyToPublishEvent(getContract().EVENT_ORIENTATION, new OrientationEvent(s, s1, s2));
     }
 
     @Override
     public void quaternion(short s, short s1, short s2, short s3) {
-        publishEvent(getContract().EVENT_QUATERNION, new QuaternionEvent(s, s1, s2, s3));
+        readyToPublishEvent(getContract().EVENT_QUATERNION, new QuaternionEvent(s, s1, s2, s3));
     }
 
     @Override
     public void temperature(byte b) {
-        publishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(b));
+        readyToPublishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(b));
     }
 
     @Override
     public void sensorFusionModeChanged(Short sensorFusionMode) {
-        publishEvent(getContract().STATUS_SENSOR_FUSION_MODE, new SensorFusionModeEvent(sensorFusionMode));
+        readyToPublishEvent(getContract().STATUS_SENSOR_FUSION_MODE, new SensorFusionModeEvent(sensorFusionMode));
     }
 }

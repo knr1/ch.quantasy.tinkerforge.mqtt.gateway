@@ -66,27 +66,27 @@ public class PiezoSpeakerService extends AbstractDeviceService<PiezoSpeakerDevic
 
     @Override
     public void beepInvoked(BeepParameter beepParameter) {
-        publishEvent(getContract().EVENT_BEEP_STARTED, new BeepEvent(beepParameter));
+        readyToPublishEvent(getContract().EVENT_BEEP_STARTED, new BeepEvent(beepParameter));
     }
 
     @Override
     public void morseCodeInvoked(MorseCodeParameter morseCodeParameter) {
-        publishEvent(getContract().EVENT_MORSE_STARTED, new MorseEvent(morseCodeParameter));
+        readyToPublishEvent(getContract().EVENT_MORSE_STARTED, new MorseEvent(morseCodeParameter));
     }
 
     @Override
     public void calibrationInvoked() {
-        publishEvent(getContract().EVENT_CALIBRATED, new CalibratedEvent());
+        readyToPublishEvent(getContract().EVENT_CALIBRATED, new CalibratedEvent());
     }
 
     @Override
     public void beepFinished() {
-        publishEvent(getContract().EVENT_BEEP_FINISHED, new BeepEvent());
+        readyToPublishEvent(getContract().EVENT_BEEP_FINISHED, new BeepEvent());
     }
 
     @Override
     public void morseCodeFinished() {
-        publishEvent(getContract().EVENT_MORSE_FINISHED, new MorseEvent());
+        readyToPublishEvent(getContract().EVENT_MORSE_FINISHED, new MorseEvent());
     }
 
 }

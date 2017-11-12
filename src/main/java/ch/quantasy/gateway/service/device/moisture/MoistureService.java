@@ -84,12 +84,12 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
 
     @Override
     public void moisture(int i) {
-        publishEvent(getContract().EVENT_MOISTURE, new MoistureEvent(i));
+        readyToPublishEvent(getContract().EVENT_MOISTURE, new MoistureEvent(i));
     }
 
     @Override
     public void moistureReached(int i) {
-        publishEvent(getContract().EVENT_MOISTURE_REACHED, new MoistureEvent(i));
+        readyToPublishEvent(getContract().EVENT_MOISTURE_REACHED, new MoistureEvent(i));
     }
 
 }

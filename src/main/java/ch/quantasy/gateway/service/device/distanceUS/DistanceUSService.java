@@ -84,12 +84,12 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
 
     @Override
     public void distance(int i) {
-        publishEvent(getContract().EVENT_DISTANCE, new DistanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_DISTANCE, new DistanceEvent(i));
     }
 
     @Override
     public void distanceReached(int i) {
-        publishEvent(getContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
     }
 
 }

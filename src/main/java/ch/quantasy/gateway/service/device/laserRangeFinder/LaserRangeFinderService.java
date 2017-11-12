@@ -69,22 +69,22 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
 
     @Override
     public void distance(int i) {
-        publishEvent(getContract().EVENT_DISTANCE, new DistanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_DISTANCE, new DistanceEvent(i));
     }
 
     @Override
     public void distanceReached(int i) {
-        publishEvent(getContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
     }
 
     @Override
     public void velocity(short i) {
-        publishEvent(getContract().EVENT_VELOCITY, new VelocityEvent(i));
+        readyToPublishEvent(getContract().EVENT_VELOCITY, new VelocityEvent(i));
     }
 
     @Override
     public void velocityReached(short i) {
-        publishEvent(getContract().EVENT_VELOCITY_REACHED, new VelocityEvent(i));
+        readyToPublishEvent(getContract().EVENT_VELOCITY_REACHED, new VelocityEvent(i));
     }
 
     @Override

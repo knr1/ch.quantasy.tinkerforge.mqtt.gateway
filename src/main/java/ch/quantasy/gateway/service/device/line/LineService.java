@@ -78,12 +78,12 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
 
     @Override
     public void reflectivity(int i) {
-        publishEvent(getContract().EVENT_REFLECTIVITY, new ReflectivityEvent(i));
+        readyToPublishEvent(getContract().EVENT_REFLECTIVITY, new ReflectivityEvent(i));
     }
 
     @Override
     public void reflectivityReached(int i) {
-        publishEvent(getContract().EVENT_REFLECTIVITY_REACHED, new ReflectivityEvent(i));
+        readyToPublishEvent(getContract().EVENT_REFLECTIVITY_REACHED, new ReflectivityEvent(i));
     }
 
 }

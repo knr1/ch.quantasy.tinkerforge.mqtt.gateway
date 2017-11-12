@@ -78,12 +78,12 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
 
     @Override
     public void uvLight(long i) {
-        publishEvent(getContract().EVENT_UV_LIGHT, new UVLightEvent(i));
+        readyToPublishEvent(getContract().EVENT_UV_LIGHT, new UVLightEvent(i));
     }
 
     @Override
     public void uvLightReached(long i) {
-        publishEvent(getContract().EVENT_UV_LIGHT_REACHED, new UVLightEvent(i));
+        readyToPublishEvent(getContract().EVENT_UV_LIGHT_REACHED, new UVLightEvent(i));
     }
 
 }

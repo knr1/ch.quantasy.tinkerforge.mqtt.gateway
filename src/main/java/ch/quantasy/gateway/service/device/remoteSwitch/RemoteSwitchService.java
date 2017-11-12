@@ -73,6 +73,6 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
 
     @Override
     public void switchingDone(SocketParameters socketParameters) {
-        publishEvent(getContract().EVENT_SWITCHING_DONE, new SwitchingEvent(socketParameters));
+        readyToPublishEvent(getContract().EVENT_SWITCHING_DONE, new SwitchingEvent(socketParameters));
     }
 }

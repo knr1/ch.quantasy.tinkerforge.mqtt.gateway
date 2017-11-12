@@ -108,9 +108,13 @@ public abstract class AValidator implements Validator {
                     }
                     if (field.isAnnotationPresent(Range.class)) {
                         Range annotation = field.getAnnotation(Range.class);
-                        Long value = ((Number) object).longValue();
-                        if (value < annotation.from() || value > annotation.to()) {
-                            return false;
+                        if (field.isAnnotationPresent(ArraySize.class)) {
+                            //Well check if each entry is within Range...
+                        } else {
+                            Long value = ((Number) object).longValue();
+                            if (value < annotation.from() || value > annotation.to()) {
+                                return false;
+                            }
                         }
                     }
                     if (field.isAnnotationPresent(Choice.class)) {
@@ -149,28 +153,28 @@ public abstract class AValidator implements Validator {
                         if (object instanceof boolean[]) {
                             size = ((boolean[]) (object)).length;
                         }
-                        if (object instanceof byte[]) {
+                        else if (object instanceof byte[]) {
                             size = ((byte[]) (object)).length;
                         }
-                        if (object instanceof char[]) {
+                        else if (object instanceof char[]) {
                             size = ((char[]) (object)).length;
                         }
-                        if (object instanceof short[]) {
+                        else if (object instanceof short[]) {
                             size = ((short[]) (object)).length;
                         }
-                        if (object instanceof int[]) {
+                        else if (object instanceof int[]) {
                             size = ((int[]) (object)).length;
                         }
-                        if (object instanceof long[]) {
+                        else if (object instanceof long[]) {
                             size = ((long[]) (object)).length;
                         }
-                        if (object instanceof float[]) {
+                        else if (object instanceof float[]) {
                             size = ((float[]) (object)).length;
                         }
-                        if (object instanceof double[]) {
+                        else if (object instanceof double[]) {
                             size = ((double[]) (object)).length;
                         }
-                        if (object instanceof Object[]) {
+                        else if (object instanceof Object[]) {
                             size = ((Object[]) (object)).length;
                         }
 

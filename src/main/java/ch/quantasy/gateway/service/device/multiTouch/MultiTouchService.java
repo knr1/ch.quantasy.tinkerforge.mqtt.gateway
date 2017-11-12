@@ -74,12 +74,12 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
 
     @Override
     public void recalibrated() {
-        publishEvent(getContract().EVENT_RECALIBRATED, new RecalibratedEvent());
+        readyToPublishEvent(getContract().EVENT_RECALIBRATED, new RecalibratedEvent());
     }
 
     @Override
     public void touchState(int i) {
-        publishEvent(getContract().EVENT_TOUCH_STATE, new TouchStateEvent(i));
+        readyToPublishEvent(getContract().EVENT_TOUCH_STATE, new TouchStateEvent(i));
     }
 
 }

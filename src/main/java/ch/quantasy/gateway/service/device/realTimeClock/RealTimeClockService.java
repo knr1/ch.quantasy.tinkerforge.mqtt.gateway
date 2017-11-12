@@ -84,12 +84,12 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
 
     @Override
     public void alarm(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-        publishEvent(getContract().EVENT_ALARM, new DateTimeEvent(true,new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday),timestamp));
+        readyToPublishEvent(getContract().EVENT_ALARM, new DateTimeEvent(true,new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday),timestamp));
     }
 
     @Override
     public void dateTime(int year, short month, short day, short hour, short minute, short second, short centisecond, short weekday, long timestamp) {
-        publishEvent(getContract().EVENT_DATE_TIME, new DateTimeEvent(new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday),timestamp));
+        readyToPublishEvent(getContract().EVENT_DATE_TIME, new DateTimeEvent(new DateTimeParameter(year, month, day, hour, minute, second, centisecond, weekday),timestamp));
     }
 
 }

@@ -67,22 +67,22 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
     @Override
     public void analogValue(int i) {
 
-        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
+        readyToPublishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
+        readyToPublishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void voltage(int i) {
-        publishEvent(getContract().EVENT_VOLTAGE, new VoltageEvent(i));
+        readyToPublishEvent(getContract().EVENT_VOLTAGE, new VoltageEvent(i));
     }
 
     @Override
     public void voltageReached(int i) {
-        publishEvent(getContract().EVENT_VOLTAGE_REACHED, new VoltageEvent(i));
+        readyToPublishEvent(getContract().EVENT_VOLTAGE_REACHED, new VoltageEvent(i));
     }
 
     @Override

@@ -86,12 +86,12 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
 
     @Override
     public void temperature(short i) {
-        publishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
+        readyToPublishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
     }
 
     @Override
     public void temperatureReached(short i) {
-        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
+        readyToPublishEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
     }
 
 }

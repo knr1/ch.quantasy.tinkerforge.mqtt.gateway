@@ -97,12 +97,12 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
 
     @Override
     public void weight(int i) {
-        publishEvent(getContract().EVENT_WEIGHT, new WeightEvent(i));
+        readyToPublishEvent(getContract().EVENT_WEIGHT, new WeightEvent(i));
     }
 
     @Override
     public void weightReached(int i) {
-        publishEvent(getContract().EVENT_WEIGHT_REACHED, new WeightEvent(i));
+        readyToPublishEvent(getContract().EVENT_WEIGHT_REACHED, new WeightEvent(i));
     }
 
 }

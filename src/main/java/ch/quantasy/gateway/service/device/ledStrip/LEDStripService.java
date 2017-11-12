@@ -74,12 +74,12 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     @Override
     public void frameRendered(int remainingFramesInQueue) {
-        publishEvent(getContract().EVENT_LEDs_RENDERED, new RenderedEvent(remainingFramesInQueue));
+        readyToPublishEvent(getContract().EVENT_LEDs_RENDERED, new RenderedEvent(remainingFramesInQueue));
 
     }
 
     @Override
     public void isLaging() {
-        publishEvent(getContract().EVENT_LAGING, new LagingEvent(true));
+        readyToPublishEvent(getContract().EVENT_LAGING, new LagingEvent(true));
     }
 }

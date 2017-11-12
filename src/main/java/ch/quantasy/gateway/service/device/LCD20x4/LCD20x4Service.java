@@ -92,12 +92,12 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     @Override
     public void buttonPressed(short s) {
-        publishEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s, true));
+        readyToPublishEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s, true));
     }
 
     @Override
     public void buttonReleased(short s) {
-        publishEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s,false));
+        readyToPublishEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s,false));
     }
 
 }

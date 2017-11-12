@@ -78,12 +78,12 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
 
     @Override
     public void edgeCountReset(long latestEdgeCount) {
-        publishEvent(getContract().EVENT_EDGE_COUNT_RESET, new EdgeCountEvent(latestEdgeCount));
+        readyToPublishEvent(getContract().EVENT_EDGE_COUNT_RESET, new EdgeCountEvent(latestEdgeCount));
     }
 
     @Override
     public void edgeCount(long l, boolean bln) {
-        publishEvent(getContract().EVENT_EDGE_COUNT, new EdgeCountEvent(l, bln));
+        readyToPublishEvent(getContract().EVENT_EDGE_COUNT, new EdgeCountEvent(l, bln));
     }
 
     

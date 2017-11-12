@@ -66,22 +66,22 @@ public class LinearPotiService extends AbstractDeviceService<LinearPotiDevice, L
 
     @Override
     public void analogValue(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
+        readyToPublishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
+        readyToPublishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void position(int i) {
-        publishEvent(getContract().EVENT_POSITION, new PositionEvent(i));
+        readyToPublishEvent(getContract().EVENT_POSITION, new PositionEvent(i));
     }
 
     @Override
     public void positionReached(int i) {
-        publishEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(i));
+        readyToPublishEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(i));
     }
 
     @Override

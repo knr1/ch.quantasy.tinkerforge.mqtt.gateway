@@ -114,32 +114,32 @@ public class VoltageCurrentService extends AbstractDeviceService<VoltageCurrentD
 
     @Override
     public void current(int i) {
-        publishEvent(getContract().EVENT_CURRENT, new CurrentEvent(i));
+        readyToPublishEvent(getContract().EVENT_CURRENT, new CurrentEvent(i));
     }
 
     @Override
     public void currentReached(int i) {
-        publishEvent(getContract().EVENT_CURRENT_REACHED, new CurrentEvent(i));
+        readyToPublishEvent(getContract().EVENT_CURRENT_REACHED, new CurrentEvent(i));
     }
 
     @Override
     public void power(int i) {
-        publishEvent(getContract().EVENT_POWER, new PowerEvent(i));
+        readyToPublishEvent(getContract().EVENT_POWER, new PowerEvent(i));
     }
 
     @Override
     public void powerReached(int i) {
-        publishEvent(getContract().EVENT_POWER_REACHED, new PowerEvent(i));
+        readyToPublishEvent(getContract().EVENT_POWER_REACHED, new PowerEvent(i));
     }
 
     @Override
     public void voltage(int i) {
-        publishEvent(getContract().EVENT_VOLTAGE, new VoltageEvent(i));
+        readyToPublishEvent(getContract().EVENT_VOLTAGE, new VoltageEvent(i));
     }
 
     @Override
     public void voltageReached(int i) {
-        publishEvent(getContract().EVENT_VOLTAGE_REACHED, new VoltageEvent(i));
+        readyToPublishEvent(getContract().EVENT_VOLTAGE_REACHED, new VoltageEvent(i));
     }
 
 }

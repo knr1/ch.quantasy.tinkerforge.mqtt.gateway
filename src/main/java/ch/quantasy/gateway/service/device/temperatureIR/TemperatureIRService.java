@@ -64,22 +64,22 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
 
     @Override
     public void ambientTemperature(short s) {
-        publishEvent(getContract().EVENT_AMBIENT_TEMPERATURE, new AmbientTemperatureEvent(s));
+        readyToPublishEvent(getContract().EVENT_AMBIENT_TEMPERATURE, new AmbientTemperatureEvent(s));
     }
 
     @Override
     public void ambientTemperatureReached(short s) {
-        publishEvent(getContract().EVENT_AMBIENT_TEMPERATURE_REACHED, new AmbientTemperatureEvent(s));
+        readyToPublishEvent(getContract().EVENT_AMBIENT_TEMPERATURE_REACHED, new AmbientTemperatureEvent(s));
     }
 
     @Override
     public void objectTemperature(short s) {
-        publishEvent(getContract().EVENT_OBJECT_TEMPERATURE, new ObjectTemperatureEvent(s));
+        readyToPublishEvent(getContract().EVENT_OBJECT_TEMPERATURE, new ObjectTemperatureEvent(s));
     }
 
     @Override
     public void objectTemperatureReached(short s) {
-        publishEvent(getContract().EVENT_OBJECT_TEMPERATURE_REACHED, new ObjectTemperatureEvent(s));
+        readyToPublishEvent(getContract().EVENT_OBJECT_TEMPERATURE_REACHED, new ObjectTemperatureEvent(s));
     }
 
     @Override

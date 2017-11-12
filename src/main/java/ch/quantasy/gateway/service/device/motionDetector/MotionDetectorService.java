@@ -62,12 +62,12 @@ public class MotionDetectorService extends AbstractDeviceService<MotionDetectorD
 
     @Override
     public void detectionCycleEnded() {
-        publishEvent(getContract().EVENT_DETECTION_CYCLE_ENDED, new MotionDetectionCycleEndedEvent());
+        readyToPublishEvent(getContract().EVENT_DETECTION_CYCLE_ENDED, new MotionDetectionCycleEndedEvent());
 
     }
 
     @Override
     public void motionDetected() {
-        publishEvent(getContract().EVENT_MOTION_DETECTED, new MotionDetectionDetected());
+        readyToPublishEvent(getContract().EVENT_MOTION_DETECTED, new MotionDetectionDetected());
     }
 }

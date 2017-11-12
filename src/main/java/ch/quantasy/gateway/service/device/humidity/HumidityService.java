@@ -66,22 +66,22 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
 
     @Override
     public void analogValue(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
+        readyToPublishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
+        readyToPublishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void humidity(int i) {
-        publishEvent(getContract().EVENT_HUMIDITY, new HumidityEvent(i));
+        readyToPublishEvent(getContract().EVENT_HUMIDITY, new HumidityEvent(i));
     }
 
     @Override
     public void humidityReached(int i) {
-        publishEvent(getContract().EVENT_HUMIDITY_REACHED, new HumidityEvent(i));
+        readyToPublishEvent(getContract().EVENT_HUMIDITY_REACHED, new HumidityEvent(i));
     }
 
     @Override

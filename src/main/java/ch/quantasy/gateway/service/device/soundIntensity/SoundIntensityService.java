@@ -79,12 +79,12 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
 
     @Override
     public void intensity(int i) {
-        publishEvent(getContract().EVENT_INTENSITY, new SoundIntensityEvent(i));
+        readyToPublishEvent(getContract().EVENT_INTENSITY, new SoundIntensityEvent(i));
     }
 
     @Override
     public void intensityReached(int i) {
-        publishEvent(getContract().EVENT_INTENSITY_REACHED, new SoundIntensityEvent(i));
+        readyToPublishEvent(getContract().EVENT_INTENSITY_REACHED, new SoundIntensityEvent(i));
     }
 
 }

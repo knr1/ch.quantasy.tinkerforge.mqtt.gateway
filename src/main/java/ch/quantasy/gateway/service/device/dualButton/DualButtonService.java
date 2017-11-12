@@ -67,7 +67,7 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
     @Override
     public void stateChanged(short s, short s1, short s2, short s3) {
-        publishEvent(getContract().EVENT_STATE_CHANGED, new StateChangedEvent(s, s1, s2, s3));
+        readyToPublishEvent(getContract().EVENT_STATE_CHANGED, new StateChangedEvent(s, s1, s2, s3));
     }
 
 }

@@ -96,22 +96,22 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void currentVelocity(short s) {
-        publishEvent(getContract().EVENT_VELOCITY, new VelocityEvent(s));
+        readyToPublishEvent(getContract().EVENT_VELOCITY, new VelocityEvent(s));
     }
 
     @Override
     public void emergencyShutdown() {
-        publishEvent(getContract().EVENT_EMERGENCY_SHUTDOWN, new EmergencyShutdownEvent());
+        readyToPublishEvent(getContract().EVENT_EMERGENCY_SHUTDOWN, new EmergencyShutdownEvent());
     }
 
     @Override
     public void underVoltage(int i) {
-        publishEvent(getContract().EVENT_UNDERVOLTAGE, new UnderVoltageEvent(i));
+        readyToPublishEvent(getContract().EVENT_UNDERVOLTAGE, new UnderVoltageEvent(i));
     }
 
     @Override
     public void velocityReached(short s) {
-        publishEvent(getContract().EVENT_VELOCITY_REACHED, new VoltageEvent(s));
+        readyToPublishEvent(getContract().EVENT_VELOCITY_REACHED, new VoltageEvent(s));
     }
 
     @Override
@@ -121,7 +121,7 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void fullBrake() {
-        publishEvent(getContract().EVENT_FULL_BRAKE, new FullBrakeEvent());
+        readyToPublishEvent(getContract().EVENT_FULL_BRAKE, new FullBrakeEvent());
     }
 
 }

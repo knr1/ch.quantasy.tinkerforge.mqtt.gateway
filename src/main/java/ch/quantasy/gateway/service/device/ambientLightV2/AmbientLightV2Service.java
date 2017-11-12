@@ -84,12 +84,12 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
 
     @Override
     public void illuminance(long i) {
-        publishEvent(getContract().EVENT_IllUMINANCE, new IlluminanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_IllUMINANCE, new IlluminanceEvent(i));
     }
 
     @Override
     public void illuminanceReached(long i) {
-        publishEvent(getContract().EVENT_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_ILLUMINANCE_REACHED, new IlluminanceEvent(i));
     }
 
 }

@@ -93,36 +93,36 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
 
     @Override
     public void calibrated() {
-        publishEvent(getContract().EVENT_CALIBRATE, new CalibratedEvent(true));
+        readyToPublishEvent(getContract().EVENT_CALIBRATE, new CalibratedEvent(true));
     }
 
     @Override
     public void analogValue(int i, int i1) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i, i1));
+        readyToPublishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i, i1));
     }
 
     @Override
     public void analogValueReached(int i, int i1) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i, i1));
+        readyToPublishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i, i1));
     }
 
     @Override
     public void position(short s, short s1) {
-        publishEvent(getContract().EVENT_POSITION, new PositionEvent(s, s1));
+        readyToPublishEvent(getContract().EVENT_POSITION, new PositionEvent(s, s1));
     }
 
     @Override
     public void positionReached(short s, short s1) {
-        publishEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(s, s1));
+        readyToPublishEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(s, s1));
     }
 
     @Override
     public void pressed() {
-        publishEvent(getContract().EVENT_PRESSED, new ButtonEvent(true));
+        readyToPublishEvent(getContract().EVENT_PRESSED, new ButtonEvent(true));
     }
 
     @Override
     public void released() {
-        publishEvent(getContract().EVENT_PRESSED, new ButtonEvent(false));
+        readyToPublishEvent(getContract().EVENT_PRESSED, new ButtonEvent(false));
     }
 }

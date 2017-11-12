@@ -67,7 +67,7 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     @Override
     public void monoflopDone(short relay, boolean state) {
-        publishEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(relay, state));
+        readyToPublishEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(relay, state));
 
     }
 

@@ -66,7 +66,7 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
 
     @Override
     public void monoflopDone(boolean state) {
-        publishEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(state));
+        readyToPublishEvent(getContract().EVENT_MONOFLOP_DONE, new MonoflopDoneEvent(state));
     }
 
 }

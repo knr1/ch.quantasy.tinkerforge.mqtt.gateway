@@ -104,7 +104,7 @@ public class MasterService extends AbstractDeviceService<MasterDevice, MasterSer
 
     @Override
     public void reset() {
-        publishEvent(getContract().EVENT_RESET, new ResetEvent());
+        readyToPublishEvent(getContract().EVENT_RESET, new ResetEvent());
     }
 
     @Override
@@ -114,32 +114,32 @@ public class MasterService extends AbstractDeviceService<MasterDevice, MasterSer
 
     @Override
     public void stackCurrent(int i) {
-        publishEvent(getContract().EVENT_STACK_CURRENT, new StackCurrentEvent(i));
+        readyToPublishEvent(getContract().EVENT_STACK_CURRENT, new StackCurrentEvent(i));
     }
 
     @Override
     public void stackCurrentReached(int i) {
-        publishEvent(getContract().EVENT_STACK_CURRENT_REACHED, new StackCurrentEvent(i));
+        readyToPublishEvent(getContract().EVENT_STACK_CURRENT_REACHED, new StackCurrentEvent(i));
     }
 
     @Override
     public void stackVoltage(int i) {
-        publishEvent(getContract().EVENT_STACK_VOLTAGE, new StackVoltageEvent(i));
+        readyToPublishEvent(getContract().EVENT_STACK_VOLTAGE, new StackVoltageEvent(i));
     }
 
     @Override
     public void stackVoltageReached(int i) {
-        publishEvent(getContract().EVENT_STACK_VOLTAGE_REACHED, new StackVoltageEvent(i));
+        readyToPublishEvent(getContract().EVENT_STACK_VOLTAGE_REACHED, new StackVoltageEvent(i));
     }
 
     @Override
     public void usbVoltage(int i) {
-        publishEvent(getContract().EVENT_USB_VOLTAGE, new USBVoltageEvent(i));
+        readyToPublishEvent(getContract().EVENT_USB_VOLTAGE, new USBVoltageEvent(i));
     }
 
     @Override
     public void usbVoltageReached(int i) {
-        publishEvent(getContract().EVENT_USB_VOLTAGE_REACHED, new USBVoltageEvent(i));
+        readyToPublishEvent(getContract().EVENT_USB_VOLTAGE_REACHED, new USBVoltageEvent(i));
     }
 
 }

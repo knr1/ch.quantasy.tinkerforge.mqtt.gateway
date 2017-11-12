@@ -113,12 +113,12 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     @Override
     public void acceleration(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(s, s1, s2));
+        readyToPublishEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(s, s1, s2));
     }
 
     @Override
     public void allData(short shorts, short shorts1, short shorts2, short shorts3, short shorts4, short shorts5, short shorts6, short short7, short s8, short s9) {
-        publishEvent(getContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts, shorts1, shorts2),
+        readyToPublishEvent(getContract().EVENT_ALL_DATA, new AllDataEvent(new AccelerationEvent(shorts, shorts1, shorts2),
                 new MagneticFieldEvent(shorts3, shorts4, shorts5),
                 new AngularVelocityEvent(shorts6, short7, s8),
                 new TemperatureEvent(s9)));
@@ -126,22 +126,22 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     @Override
     public void angularVelocity(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocityEvent(s, s1, s2));
+        readyToPublishEvent(getContract().EVENT_ANGULAR_VELOCITY, new AngularVelocityEvent(s, s1, s2));
     }
 
     @Override
     public void magneticField(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticFieldEvent(s, s1, s2));
+        readyToPublishEvent(getContract().EVENT_MAGNETIC_FIELD, new MagneticFieldEvent(s, s1, s2));
     }
 
     @Override
     public void orientation(short s, short s1, short s2) {
-        publishEvent(getContract().EVENT_ORIENTATION, new OrientationEvent(s, s1, s2));
+        readyToPublishEvent(getContract().EVENT_ORIENTATION, new OrientationEvent(s, s1, s2));
     }
 
     @Override
     public void quaternion(float s, float s1, float s2, float s3) {
-        publishEvent(getContract().EVENT_QUATERNION, new QuaternionEvent(s, s1, s2, s3));
+        readyToPublishEvent(getContract().EVENT_QUATERNION, new QuaternionEvent(s, s1, s2, s3));
     }
 
 

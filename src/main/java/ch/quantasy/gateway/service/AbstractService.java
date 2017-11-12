@@ -43,6 +43,7 @@
 package ch.quantasy.gateway.service;
 
 import ch.quantasy.gateway.message.event.AnEvent;
+import ch.quantasy.gateway.message.intent.AnIntent;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
 import ch.quantasy.mqtt.gateway.client.message.MessageCollector;
 import java.net.URI;
@@ -82,7 +83,8 @@ public abstract class AbstractService<S extends TinkerForgeServiceContract> exte
     public abstract void messageReceived(String topic, byte[] payload) throws Exception;
 
     //Change it back to readyToPublishEvent
-    public void publishEvent(String topic, AnEvent event) {
+    public void readyToPublishEvent(String topic, AnEvent event) {
         this.eventCollector.readyToPublish(topic, event);
     }
+    
 }

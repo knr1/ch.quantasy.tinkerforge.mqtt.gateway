@@ -65,12 +65,12 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     @Override
     public void count(int i) {
-        publishEvent(getContract().EVENT_COUNT, new CountEvent(i));
+        readyToPublishEvent(getContract().EVENT_COUNT, new CountEvent(i));
     }
 
     @Override
     public void countReached(int i) {
-        publishEvent(getContract().EVENT_COUNT_REACHED, new CountEvent(i));
+        readyToPublishEvent(getContract().EVENT_COUNT_REACHED, new CountEvent(i));
     }
 
     @Override
@@ -91,17 +91,17 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     @Override
     public void countReset(long latestCount) {
-        publishEvent(getContract().EVENT_COUNT_RESET, new CountEvent(latestCount,true));
+        readyToPublishEvent(getContract().EVENT_COUNT_RESET, new CountEvent(latestCount,true));
     }
 
     @Override
     public void pressed() {
-        publishEvent(getContract().EVENT_PRESSED, new ButtonEvent(true));
+        readyToPublishEvent(getContract().EVENT_PRESSED, new ButtonEvent(true));
     }
 
     @Override
     public void released() {
-        publishEvent(getContract().EVENT_RELEASED, new ButtonEvent(false));
+        readyToPublishEvent(getContract().EVENT_RELEASED, new ButtonEvent(false));
     }
 
 }

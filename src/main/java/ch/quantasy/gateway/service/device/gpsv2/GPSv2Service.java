@@ -96,27 +96,27 @@ public class GPSv2Service extends AbstractDeviceService<GPSv2Device, GPSv2Servic
 
     @Override
     public void altitude(int altitude, int geoidalSeparation) {
-        super.publishEvent(getContract().EVENT_ALTITUDE, new AltitudeEvent(altitude, geoidalSeparation));
+        super.readyToPublishEvent(getContract().EVENT_ALTITUDE, new AltitudeEvent(altitude, geoidalSeparation));
     }
 
     @Override
     public void coordinates(long latitude, char ns, long longitude, char ew) {
-        super.publishEvent(getContract().EVENT_COORDINATES, new CoordinatesEvent(latitude, ns, longitude, ew));
+        super.readyToPublishEvent(getContract().EVENT_COORDINATES, new CoordinatesEvent(latitude, ns, longitude, ew));
     }
 
     @Override
     public void dateTime(long date, long time) {
-        super.publishEvent(getContract().EVENT_DATE_TIME, new DateTimeEvent(date, time));
+        super.readyToPublishEvent(getContract().EVENT_DATE_TIME, new DateTimeEvent(date, time));
     }
 
     @Override
     public void motion(long course, long speed) {
-        super.publishEvent(getContract().EVENT_MOTION, new MotionEvent(course, speed));
+        super.readyToPublishEvent(getContract().EVENT_MOTION, new MotionEvent(course, speed));
     }
 
     @Override
     public void status(boolean fix, int satellitesView) {
-        super.publishEvent(getContract().EVENT_STATE, new StatusEvent(fix, satellitesView));
+        super.readyToPublishEvent(getContract().EVENT_STATE, new StatusEvent(fix, satellitesView));
     }
 
     @Override

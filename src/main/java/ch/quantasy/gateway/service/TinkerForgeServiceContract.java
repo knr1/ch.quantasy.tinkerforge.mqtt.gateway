@@ -54,7 +54,6 @@ import ch.quantasy.gateway.message.annotations.Ranges;
 import ch.quantasy.gateway.message.annotations.SetSize;
 import ch.quantasy.gateway.message.annotations.StringForm;
 import ch.quantasy.gateway.message.annotations.StringSize;
-import ch.quantasy.gateway.message.intent.dualRelay.DualRelayIntent;
 
 import ch.quantasy.mqtt.gateway.client.contract.AyamlServiceContract;
 import ch.quantasy.mqtt.gateway.client.message.Message;
@@ -80,12 +79,10 @@ import java.util.Map.Entry;
  */
 public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
 
-    private Class<? extends Intent> intentClass;
    
     public TinkerForgeServiceContract(String baseClass, String instance, Class<? extends Intent> intentClass) {
         super("TF", baseClass, instance);
-        this.intentClass = intentClass;
-       
+        addMessageTopic(INTENT, intentClass);
     }
 
     public static String getDataFormatDescription(Class o) {
@@ -298,7 +295,6 @@ public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
 
     @Override
     protected void describe(Map<String, String> descriptions) {
-        descriptions.put(INTENT, getDataFormatDescription(intentClass));
         for(Entry<String,Class<? extends Message>> entry:getMessageTopicMap().entrySet()){
             descriptions.put(entry.getKey(), getDataFormatDescription(entry.getValue()));
         }

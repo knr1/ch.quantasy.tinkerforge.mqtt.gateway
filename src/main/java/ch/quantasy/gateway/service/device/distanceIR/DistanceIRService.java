@@ -65,22 +65,22 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
 
     @Override
     public void analogValue(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
+        readyToPublishEvent(getContract().EVENT_ANALOG_VALUE, new AnalogValueEvent(i));
     }
 
     @Override
     public void analogValueReached(int i) {
-        publishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
+        readyToPublishEvent(getContract().EVENT_ANALOG_VALUE_REACHED, new AnalogValueEvent(i));
     }
 
     @Override
     public void distance(int i) {
-        publishEvent(getContract().EVENT_DISTANCE, new DistanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_DISTANCE, new DistanceEvent(i));
     }
 
     @Override
     public void distanceReached(int i) {
-        publishEvent(getContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
+        readyToPublishEvent(getContract().EVENT_DISTANCE_REACHED, new DistanceEvent(i));
     }
 
     @Override

@@ -85,17 +85,17 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
 
     @Override
     public void temperature(int i) {
-        publishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
+        readyToPublishEvent(getContract().EVENT_TEMPERATURE, new TemperatureEvent(i));
     }
 
     @Override
     public void temperatureReached(int i) {
-        publishEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
+        readyToPublishEvent(getContract().EVENT_TEMPERATURE_REACHED, new TemperatureEvent(i));
     }
 
     @Override
     public void errorState(boolean bln, boolean bln1) {
-        publishEvent(getContract().EVENT_ERROR, new ErrorEvent(bln, bln1));
+        readyToPublishEvent(getContract().EVENT_ERROR, new ErrorEvent(bln, bln1));
     }
 
 }

@@ -52,9 +52,13 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.gateway.message.intent.stack.TinkerforgeStackAddress;
+import ch.quantasy.mqtt.gateway.client.message.Intent;
+import ch.quantasy.mqtt.gateway.client.message.Message;
+import ch.quantasy.mqtt.gateway.client.message.MessageCollector;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackListener;
 import java.net.URI;
 import java.net.UnknownHostException;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,23 +85,44 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
 
     public StackManagerService(TinkerForgeManager manager, URI mqttURI) throws MqttException {
         super(mqttURI, "TinkerforgeStackManager", new StackManagerServiceContract(computerName));
+        intentCollector = new MessageCollector(new Comparator<Message>() {
+            @Override
+            public int compare(Message o1, Message o2) {
+                return (int) (o1.getTimeStamp() - o2.getTimeStamp());
+            }
+        });
         this.manager = manager;
         manager.addListener(this);
         updateStatus();
     }
+    private final MessageCollector intentCollector;
 
     @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-        TinkerforgeStackIntent intent = getMapper().readValue(payload, TinkerforgeStackIntent.class);
-        if (!intent.isValid()) {
+    public void messageReceived(String topic, byte[] payload) throws Exception {
+        Class messageClass = TinkerforgeStackIntent.class;
+        if (messageClass == null) {
             return;
         }
-        if (intent.connect) {
-            manager.addStack(intent.address);
-        }
-        if (!intent.connect) {
-            manager.removeStack(intent.address);
-            //System.out.println(">>" + getMapper().readValue(payload, String.class));
+        Set<Message> messages = super.toMessageSet(payload, messageClass);
+        intentCollector.add(topic, messages);
+        while (true) {
+            Message message = intentCollector.retrieveFirstMessage(topic);
+            if (message == null) {
+                break;
+            }
+            if (message instanceof TinkerforgeStackIntent) {
+                TinkerforgeStackIntent intent = (TinkerforgeStackIntent) message;
+                if (!intent.isValid()) {
+                    return;
+                }
+                if (intent.connect) {
+                    manager.addStack(intent.address);
+                }
+                if (!intent.connect) {
+                    manager.removeStack(intent.address);
+                    //System.out.println(">>" + getMapper().readValue(payload, String.class));
+                }
+            }
         }
     }
 
@@ -110,7 +135,8 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
     }
 
     @Override
-    public void disconnected(TinkerforgeStack stack) {
+    public void disconnected(TinkerforgeStack stack
+    ) {
         TinkerforgeStackAddress address = stack.getStackAddress();
         String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
         publishStatus(topic, stack.isConnected());
@@ -131,7 +157,7 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
 
         TinkerforgeStackAddress address = stack.getStackAddress();
         publishStatus(getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort(), stack.isConnected());
-        publishEvent(getContract().EVENT_STACK_ADDRESS_ADDED, new StackAddressEvent(true, address));
+        readyToPublishEvent(getContract().EVENT_STACK_ADDRESS_ADDED, new StackAddressEvent(true, address));
     }
 
     @Override
@@ -145,7 +171,7 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
             TinkerforgeStackAddress address = stack.getStackAddress();
             String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
             publishStatus(topic, null);
-            publishEvent(getContract().EVENT_STACK_ADDRESS_REMOVED, new StackAddressEvent(false, address));
+            readyToPublishEvent(getContract().EVENT_STACK_ADDRESS_REMOVED, new StackAddressEvent(false, address));
         }
         for (TinkerforgeDevice device : stack.getDevices()) {
             device.removeListener(this);

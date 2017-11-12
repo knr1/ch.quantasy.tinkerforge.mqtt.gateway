@@ -83,11 +83,11 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
 
     @Override
     public void acceleration(short x, short y, short z) {
-        super.publishEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(x, y, z));
+        super.readyToPublishEvent(getContract().EVENT_ACCELERATION, new AccelerationEvent(x, y, z));
     }
 
     @Override
     public void accelerationReached(short x, short y, short z) {
-        super.publishEvent(getContract().EVENT_ACCELERATION_REACHED, new AccelerationEvent(x, y, z));
+        super.readyToPublishEvent(getContract().EVENT_ACCELERATION_REACHED, new AccelerationEvent(x, y, z));
     }
 }

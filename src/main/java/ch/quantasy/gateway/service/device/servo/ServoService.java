@@ -71,7 +71,7 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
 
     @Override
     public void underVoltage(int i) {
-        publishEvent(getContract().EVENT_UNDERVOLTAGE, new UnderVoltageEvent(i));
+        readyToPublishEvent(getContract().EVENT_UNDERVOLTAGE, new UnderVoltageEvent(i));
     }
 
     @Override
@@ -87,12 +87,12 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
 
     @Override
     public void positionReached(short s, short s1) {
-        publishEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(s, s1));
+        readyToPublishEvent(getContract().EVENT_POSITION_REACHED, new PositionEvent(s, s1));
     }
 
     @Override
     public void velocityReached(short s, short s1) {
-        publishEvent(getContract().EVENT_VELOCITY_REACHED, new VelocityEvent(s, s1));
+        readyToPublishEvent(getContract().EVENT_VELOCITY_REACHED, new VelocityEvent(s, s1));
 
     }
 

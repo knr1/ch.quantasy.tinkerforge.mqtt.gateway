@@ -71,21 +71,21 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
 
     @Override
     public void tagDiscovered(NFCTag nfcTag) {
-        publishEvent(getContract().EVENT_TAG_DISCOVERD, new TagIDEvent(nfcTag));
+        readyToPublishEvent(getContract().EVENT_TAG_DISCOVERD, new TagIDEvent(nfcTag));
     }
 
     @Override
     public void tagVanished(NFCTag nfcTag) {
-        publishEvent(getContract().EVENT_TAG_VANISHED, new TagIDEvent(nfcTag));
+        readyToPublishEvent(getContract().EVENT_TAG_VANISHED, new TagIDEvent(nfcTag));
     }
 
     @Override
     public void tagRead(NFCTag tag) {
-        publishEvent(getContract().EVENT_TAG_READ, new TagReadEvent(tag));
+        readyToPublishEvent(getContract().EVENT_TAG_READ, new TagReadEvent(tag));
     }
 
     @Override
     public void tagWritten(NFCTag tag) {
-        publishEvent(getContract().EVENT_TAG_WRITTEN, new TagWrittenEvent(tag));
+        readyToPublishEvent(getContract().EVENT_TAG_WRITTEN, new TagWrittenEvent(tag));
     }
 }

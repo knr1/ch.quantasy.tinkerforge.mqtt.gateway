@@ -78,12 +78,12 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
 
     @Override
     public void co2Concentration(int i) {
-        publishEvent(getContract().EVENT_CO2_CONCENTRATION, new CO2ConcentrationEvent(i));
+        readyToPublishEvent(getContract().EVENT_CO2_CONCENTRATION, new CO2ConcentrationEvent(i));
     }
 
     @Override
     public void co2ConcentrationReached(int i) {
-        publishEvent(getContract().EVENT_CO2_CONCENTRATION_REACHED, new CO2ConcentrationEvent(i));
+        readyToPublishEvent(getContract().EVENT_CO2_CONCENTRATION_REACHED, new CO2ConcentrationEvent(i));
     }
 
 }

@@ -43,9 +43,14 @@
 package ch.quantasy.gateway.service.device;
 
 import ch.quantasy.gateway.service.AbstractService;
+import ch.quantasy.mqtt.gateway.client.message.Intent;
+import ch.quantasy.mqtt.gateway.client.message.Message;
+import ch.quantasy.mqtt.gateway.client.message.MessageCollector;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import java.net.URI;
+import java.util.Comparator;
+import java.util.Set;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -58,10 +63,17 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public abstract class AbstractDeviceService<G extends GenericDevice, S extends DeviceServiceContract> extends AbstractService<S> implements DeviceCallback {
 
     private final G device;
+    private final MessageCollector intentCollector;
 
     public AbstractDeviceService(URI mqttURI, G device, S serviceContract) throws MqttException {
         super(mqttURI, serviceContract.CANONICAL_TOPIC, serviceContract);
         this.device = device;
+        intentCollector = new MessageCollector(new Comparator<Message>() {
+            @Override
+            public int compare(Message o1, Message o2) {
+                return (int) (o1.getTimeStamp() - o2.getTimeStamp());
+            }
+        });
         device.setCallback(this);
 
         publishStatus(getContract().STATUS_POSITION, device.getPosition());
@@ -71,12 +83,25 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
     }
 
     @Override
-    public void messageReceived(String string, byte[] payload) throws Exception {
-        //Check if the device handles intents at all
-        if (getDevice().getIntent() == null) {
+    public void messageReceived(String topic, byte[] payload) throws Exception {
+        //Problem: topic is fully qualified, but we neeed root (without /#)
+        //Class messageClass = super.getContract().getMessageTopicMap().get(topic);
+        //This solution is dangerous, if there are multiple Intents for a device.
+        Class messageClass=getDevice().getIntent().getClass();
+        if (messageClass == null) {
             return;
         }
-        getDevice().update(getMapper().readValue(payload, getDevice().getIntent().getClass()));
+        Set<Message> messages = super.toMessageSet(payload, messageClass);
+        intentCollector.add(topic, messages);
+        while (true) {
+            Message message = intentCollector.retrieveFirstMessage(topic);
+            if (message == null) {
+                break;
+            }
+            if (message instanceof Intent) {
+                getDevice().update((Intent) message);
+            }
+        }
     }
 
     public G getDevice() {
