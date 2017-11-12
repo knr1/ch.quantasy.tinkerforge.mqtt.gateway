@@ -51,8 +51,11 @@ import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import java.net.URI;
 import java.util.Comparator;
 import java.util.Set;
-
+import java.util.Arrays;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.HashSet;
 
 /**
  *
@@ -82,21 +85,32 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
 
     }
 
+    private final Set<String> workingSet = new HashSet();
+
     @Override
     public void messageReceived(String topic, byte[] payload) throws Exception {
         //Problem: topic is fully qualified, but we neeed root (without /#)
         //Class messageClass = super.getContract().getMessageTopicMap().get(topic);
         //This solution is dangerous, if there are multiple Intents for a device.
-        Class messageClass=getDevice().getIntent().getClass();
+        Class messageClass = getDevice().getIntent().getClass();
         if (messageClass == null) {
             return;
         }
         Set<Message> messages = super.toMessageSet(payload, messageClass);
         intentCollector.add(topic, messages);
+        synchronized (workingSet) {
+            if (!workingSet.add(topic)) {
+                return;
+            }
+        }
+        //Horribly ugly! This has to be done elsewhere in a worker'thread'
         while (true) {
             Message message = intentCollector.retrieveFirstMessage(topic);
-            if (message == null) {
-                break;
+            synchronized (workingSet) {
+                if (message == null) {
+                    workingSet.remove(topic);
+                    break;
+                }
             }
             if (message instanceof Intent) {
                 getDevice().update((Intent) message);

@@ -79,4 +79,11 @@ public class LCD20x4Intent extends AnIntent {
         this.lines = new HashSet<>();
     }
 
+    @Override
+    public String toString() {
+        return "Timestamp: "+super.getTimeStamp()+" LCD20x4Intent{" + "backlight=" + backlight + ", clearDisplay=" + clearDisplay + ", parameters=" + parameters + ", customCharacters=" + customCharacters + ", defaultTexts=" + defaultTexts + ", defaultTextCounter=" + defaultTextCounter + ", lines=" + lines + '}';
+    }
+    
+    
+
 }
