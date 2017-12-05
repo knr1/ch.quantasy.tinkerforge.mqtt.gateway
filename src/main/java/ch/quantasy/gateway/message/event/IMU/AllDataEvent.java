@@ -41,9 +41,9 @@
  */
 package ch.quantasy.gateway.message.event.IMU;
 
-import ch.quantasy.gateway.message.annotations.Nullable;
-import ch.quantasy.gateway.message.annotations.Range;
-import ch.quantasy.gateway.message.event.AnEvent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 
 /**
  *

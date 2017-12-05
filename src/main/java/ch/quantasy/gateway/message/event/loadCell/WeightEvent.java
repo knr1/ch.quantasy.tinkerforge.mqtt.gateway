@@ -43,8 +43,8 @@ package ch.quantasy.gateway.message.event.loadCell;
 
 import ch.quantasy.gateway.message.event.linearPoti.*;
 import ch.quantasy.gateway.message.event.ambientLight.*;
-import ch.quantasy.gateway.message.annotations.Range;
-import ch.quantasy.gateway.message.event.AnEvent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 
 /**
  *

@@ -45,6 +45,12 @@ package ch.quantasy.gateway.service.device.analogInV2;
 import ch.quantasy.gateway.message.event.analogInV2.AnalogValueEvent;
 import ch.quantasy.gateway.message.event.analogInV2.VoltageEvent;
 import ch.quantasy.gateway.message.intent.analogInV2.AnalogInV2Intent;
+import ch.quantasy.gateway.message.status.analogInV2.AnalogValueCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.analogInV2.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.analogInV2.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.analogInV2.VoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.analogInV2.VoltageCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.loadCell.MovingAverageStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
@@ -125,17 +131,16 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_VOLTAGE, VoltageEvent.class);
         addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
         addMessageTopic(EVENT_VOLTAGE_REACHED, VoltageEvent.class);
-
+        addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogValueCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_VOLTAGE_CALLBACK_PERIOD, VoltageCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_VOLTAGE_THRESHOLD, VoltageCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..42000]\n max: [0..42000]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_MOVING_AVERAGE, "[1..50]");
     }
 }

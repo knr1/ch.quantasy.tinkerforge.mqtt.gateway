@@ -41,7 +41,7 @@
  */
 package ch.quantasy.gateway.message.intent.io16;
 
-import ch.quantasy.gateway.message.intent.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
 
 /**
  *

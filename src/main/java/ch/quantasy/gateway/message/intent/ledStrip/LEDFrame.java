@@ -42,11 +42,11 @@
  */
 package ch.quantasy.gateway.message.intent.ledStrip;
 
-import ch.quantasy.gateway.message.annotations.AValidator;
-import ch.quantasy.gateway.message.annotations.ArraySize;
-import ch.quantasy.gateway.message.annotations.MultiArraySize;
-import ch.quantasy.gateway.message.annotations.NonNull;
-import ch.quantasy.gateway.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.ArraySize;
+import ch.quantasy.mqtt.gateway.client.message.annotations.MultiArraySize;
+import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;

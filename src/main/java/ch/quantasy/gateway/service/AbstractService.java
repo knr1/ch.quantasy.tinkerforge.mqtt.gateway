@@ -42,8 +42,7 @@
  */
 package ch.quantasy.gateway.service;
 
-import ch.quantasy.gateway.message.event.AnEvent;
-import ch.quantasy.gateway.message.intent.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
 import ch.quantasy.mqtt.gateway.client.message.MessageCollector;
 import java.net.URI;

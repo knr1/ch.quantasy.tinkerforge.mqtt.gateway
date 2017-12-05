@@ -142,7 +142,7 @@ public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceC
                         getDevice().setCustomCharacter(character.getIndex(), character.getPixels());
                         getIntent().customCharacters.add(new DeviceCustomCharacter(character.getIndex(), getDevice().getCustomCharacter(character.getIndex())));
                     }
-                    super.getCallback().customCharactersChanged(getIntent().customCharacters.toArray(new DeviceCustomCharacter[0]));
+                    super.getCallback().customCharactersChanged(getIntent().customCharacters);
                 } catch (TimeoutException | NotConnectedException ex) {
                     Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
                 }

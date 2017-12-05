@@ -42,7 +42,7 @@
  */
 package ch.quantasy.gateway.message.intent.loadCell;
 
-import ch.quantasy.gateway.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
 import ch.quantasy.mqtt.gateway.client.message.Validator;
 import com.tinkerforge.BrickletLoadCell;
 

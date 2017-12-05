@@ -42,8 +42,8 @@
 package ch.quantasy.gateway.message.event.soundIntensity;
 
 import ch.quantasy.gateway.message.event.line.*;
-import ch.quantasy.gateway.message.annotations.Range;
-import ch.quantasy.gateway.message.event.AnEvent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 
 /**
  *

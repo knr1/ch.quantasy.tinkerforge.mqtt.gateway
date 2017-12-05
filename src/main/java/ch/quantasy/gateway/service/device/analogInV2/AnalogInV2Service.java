@@ -44,12 +44,17 @@ package ch.quantasy.gateway.service.device.analogInV2;
 
 import ch.quantasy.gateway.message.event.analogInV2.AnalogValueEvent;
 import ch.quantasy.gateway.message.event.analogInV2.VoltageEvent;
-import ch.quantasy.gateway.message.intent.analogInV2.AnalogInV2Intent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2DeviceCallback;
 import ch.quantasy.gateway.message.intent.analogInV2.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.gateway.message.intent.analogInV2.DeviceVoltageCallbackThreshold;
+import ch.quantasy.gateway.message.status.analogInV2.AnalogValueCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.analogInV2.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.analogInV2.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.analogInV2.MovingAverageStatus;
+import ch.quantasy.gateway.message.status.analogInV2.VoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.analogInV2.VoltageCallbackThresholdStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -87,32 +92,32 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogValueCallbackPeriodStatus(period));
     }
 
     @Override
     public void voltageCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, new VoltageCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void voltageCallbackThresholdChanged(DeviceVoltageCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_VOLTAGE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_VOLTAGE_THRESHOLD, new VoltageCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void movingAverageChanged(Short averaging) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, averaging);
+        publishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(averaging));
     }
 
 }

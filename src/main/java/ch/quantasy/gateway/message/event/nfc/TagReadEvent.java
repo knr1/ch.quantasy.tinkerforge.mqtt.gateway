@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.message.event.nfc;
 
-import ch.quantasy.gateway.message.annotations.StringForm;
-import ch.quantasy.gateway.message.event.AnEvent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.StringForm;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 import ch.quantasy.tinkerforge.device.nfc.NFCTag;
 
 /**

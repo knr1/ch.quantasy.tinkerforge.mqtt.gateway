@@ -44,6 +44,10 @@ package ch.quantasy.gateway.service.device.distanceUS;
 
 import ch.quantasy.gateway.message.event.distanceUS.DistanceEvent;
 import ch.quantasy.gateway.message.intent.distanceUS.DistanceUSIntent;
+import ch.quantasy.gateway.message.status.distanceUS.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.distanceUS.DistanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.distanceUS.DistanceCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.distanceUS.MovingAverageStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
@@ -106,18 +110,17 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
 
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-         addMessageTopic(EVENT_DISTANCE, DistanceEvent.class);
+        addMessageTopic(EVENT_DISTANCE, DistanceEvent.class);
         addMessageTopic(EVENT_DISTANCE_REACHED, DistanceEvent.class);
-       
 
+        addMessageTopic(STATUS_DISTANCE_CALLBACK_PERIOD, DistanceCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_DISTANCE_THRESHOLD, DistanceCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_MOVING_AVERAGE, "[0..100]");
     }
 }

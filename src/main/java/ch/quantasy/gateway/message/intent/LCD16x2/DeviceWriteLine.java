@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.message.intent.LCD16x2;
 
-import ch.quantasy.gateway.message.annotations.AValidator;
-import ch.quantasy.gateway.message.annotations.Range;
-import ch.quantasy.gateway.message.annotations.StringSize;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.annotations.StringSize;
 
 /**
  *

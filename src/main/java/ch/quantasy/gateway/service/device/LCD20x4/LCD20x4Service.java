@@ -47,10 +47,15 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.LCD20x4.DeviceConfigParameters;
 import ch.quantasy.gateway.message.intent.LCD20x4.DeviceCustomCharacter;
 import ch.quantasy.gateway.message.intent.LCD20x4.DeviceDefaultText;
+import ch.quantasy.gateway.message.status.LCD20x4.BacklightStatus;
+import ch.quantasy.gateway.message.status.LCD20x4.DefaultTextCounterStatus;
+import ch.quantasy.gateway.message.status.LCD20x4.DefaultTextsStatus;
+import ch.quantasy.gateway.message.status.LCD20x4.ParametersStatus;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4DeviceCallback;
 import java.net.URI;
 import java.util.Arrays;
+import java.util.Set;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
@@ -65,39 +70,37 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     @Override
     public void backlightChanged(Boolean isBacklightEnabled) {
-        publishStatus(getContract().STATUS_BACKLIGHT, isBacklightEnabled);
+        publishStatus(getContract().STATUS_BACKLIGHT, new BacklightStatus(isBacklightEnabled));
     }
 
     @Override
     public void configurationChanged(DeviceConfigParameters configParameters) {
-        publishStatus(getContract().STATUS_CONFIG_PARAMETERS, configParameters);
+        publishStatus(getContract().STATUS_CONFIG_PARAMETERS, new ParametersStatus(configParameters));
     }
 
     @Override
-    public void customCharactersChanged(DeviceCustomCharacter... customCharacters) {
-        Arrays.sort(customCharacters);
+    public void customCharactersChanged(Set<DeviceCustomCharacter> customCharacters) {
         publishStatus(getContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
     }
 
     @Override
-    public void defaultTextsChanged(DeviceDefaultText... defaultTexts) {
-        Arrays.sort(defaultTexts);
-        publishStatus(getContract().STATUS_DEFAULT_TEXT_TEXTS, defaultTexts);
+    public void defaultTextsChanged(Set<DeviceDefaultText> defaultTexts) {
+        publishStatus(getContract().STATUS_DEFAULT_TEXT_TEXTS, new DefaultTextsStatus(defaultTexts));
     }
 
     @Override
     public void defaultTextCounterChanged(Integer defaultTextCounter) {
-        publishStatus(getContract().STATUS_DEFAULT_TEXT_COUNTER, defaultTextCounter);
+        publishStatus(getContract().STATUS_DEFAULT_TEXT_COUNTER, new DefaultTextCounterStatus(defaultTextCounter));
     }
 
     @Override
     public void buttonPressed(short s) {
-        readyToPublishEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s, true));
+        readyToPublishEvent(getContract().EVENT_BUTTON, new ButtonEvent(s, true));
     }
 
     @Override
     public void buttonReleased(short s) {
-        readyToPublishEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s,false));
+        readyToPublishEvent(getContract().EVENT_BUTTON, new ButtonEvent(s,false));
     }
 
 }

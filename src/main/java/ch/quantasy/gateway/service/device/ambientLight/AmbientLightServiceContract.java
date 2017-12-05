@@ -45,6 +45,10 @@ package ch.quantasy.gateway.service.device.ambientLight;
 import ch.quantasy.gateway.message.event.ambientLight.AnalogValueEvent;
 import ch.quantasy.gateway.message.event.ambientLight.IlluminanceEvent;
 import ch.quantasy.gateway.message.intent.ambientLight.AmbientLightIntent;
+import ch.quantasy.gateway.message.status.ambientLight.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.ambientLight.AnalogValueThresholdStatus;
+import ch.quantasy.gateway.message.status.ambientLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.ambientLight.IlluminanceCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
@@ -117,15 +121,15 @@ public class AmbientLightServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_ILLUMINANCE, IlluminanceEvent.class);
         addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
         addMessageTopic(EVENT_ILLUMINANCE_REACHED, IlluminanceEvent.class);
+        addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ILLUMINANCE_CALLBACK_PERIOD, IlluminanceCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueThresholdStatus.class);
+        addMessageTopic(STATUS_ILLUMINANCE_THRESHOLD, IlluminanceCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
         
-        descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(STATUS_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..9000]\n max: [0..9000]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 }

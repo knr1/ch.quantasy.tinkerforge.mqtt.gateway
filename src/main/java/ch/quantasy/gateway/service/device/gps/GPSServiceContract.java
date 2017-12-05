@@ -42,12 +42,16 @@
  */
 package ch.quantasy.gateway.service.device.gps;
 
-import ch.quantasy.gateway.message.event.barometer.AltitudeEvent;
+import ch.quantasy.gateway.message.event.gps.AltitudeEvent;
 import ch.quantasy.gateway.message.event.gps.CoordinatesEvent;
 import ch.quantasy.gateway.message.event.gps.DateTimeEvent;
 import ch.quantasy.gateway.message.event.gps.MotionEvent;
 import ch.quantasy.gateway.message.event.gps.StatusEvent;
 import ch.quantasy.gateway.message.intent.gps.GPSIntent;
+import ch.quantasy.gateway.message.status.gps.AltitudeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.CoordinatesCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.DateTimeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.MotionCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
@@ -125,10 +129,10 @@ public class GPSServiceContract extends DeviceServiceContract {
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addMessageTopic(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
 
-        descriptions.put(STATUS_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addMessageTopic(STATUS_MOTION_CALLBACK_PERIOD, MotionCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ALTITUDE_CALLBACK_PERIOD, AltitudeCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_COORDINATES_CALLBACK_PERIOD, CoordinatesCallbackPeriodStatus.class);
     }
 }

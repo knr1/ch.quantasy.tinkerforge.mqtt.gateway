@@ -41,7 +41,7 @@
  */
 package ch.quantasy.gateway.message.event.servo;
 
-import ch.quantasy.gateway.message.event.AnEvent;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 
 /**
  *

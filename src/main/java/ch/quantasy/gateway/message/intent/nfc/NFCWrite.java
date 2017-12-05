@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.message.intent.nfc;
 
-import ch.quantasy.gateway.message.annotations.AValidator;
-import ch.quantasy.gateway.message.annotations.ArraySize;
-import ch.quantasy.gateway.message.annotations.StringForm;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.ArraySize;
+import ch.quantasy.mqtt.gateway.client.message.annotations.StringForm;
 
 /**
  *

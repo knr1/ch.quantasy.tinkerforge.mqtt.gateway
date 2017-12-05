@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.message.intent.ledStrip;
 
-import ch.quantasy.gateway.message.annotations.AValidator;
-import ch.quantasy.gateway.message.annotations.NonNull;
-import ch.quantasy.gateway.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 import ch.quantasy.mqtt.gateway.client.message.Validator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tinkerforge.BrickletLEDStrip;

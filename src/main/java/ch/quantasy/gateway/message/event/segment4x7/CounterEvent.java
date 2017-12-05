@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.message.event.segment4x7;
 
-import ch.quantasy.gateway.message.annotations.Nullable;
-import ch.quantasy.gateway.message.event.AnEvent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 import ch.quantasy.gateway.message.intent.segment4x7.DeviceCounterParameters;
 
 /**

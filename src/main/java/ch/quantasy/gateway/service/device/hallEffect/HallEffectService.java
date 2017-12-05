@@ -46,6 +46,9 @@ import ch.quantasy.gateway.message.event.hallEffect.EdgeCountEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.hallEffect.DeviceConfiguration;
 import ch.quantasy.gateway.message.intent.hallEffect.HallEffectIntent;
+import ch.quantasy.gateway.message.status.hallEffect.EdgeCountCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.hallEffect.EdgeCountConfigurationStatus;
+import ch.quantasy.gateway.message.status.hallEffect.EdgeCountInterruptStatus;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -63,17 +66,17 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
 
     @Override
     public void edgeInterruptChanged(long period) {
-        publishStatus(getContract().STATUS_EDGE_COUNT_INTERRUPT, period);
+        publishStatus(getContract().STATUS_EDGE_COUNT_INTERRUPT, new EdgeCountInterruptStatus(period));
     }
 
     @Override
     public void edgeCountCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, new EdgeCountCallbackPeriodStatus(period));
     }
 
     @Override
     public void edgeCountConfigChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_CONFIGURATION, configuration);
+        publishStatus(getContract().STATUS_CONFIGURATION, new EdgeCountConfigurationStatus(configuration));
     }
 
     @Override

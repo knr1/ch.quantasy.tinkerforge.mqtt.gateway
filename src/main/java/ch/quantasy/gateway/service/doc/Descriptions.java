@@ -41,6 +41,7 @@
  */
 package ch.quantasy.gateway.service.doc;
 
+import static ch.quantasy.gateway.service.doc.ClassFinder.find;
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.gateway.service.device.IMU.IMUServiceContract;
@@ -92,10 +93,14 @@ import ch.quantasy.gateway.service.device.tilt.TiltServiceContract;
 import ch.quantasy.gateway.service.device.uvLight.UVLightServiceContract;
 import ch.quantasy.gateway.service.device.voltageCurrent.VoltageCurrentServiceContract;
 import ch.quantasy.gateway.service.stackManager.StackManagerServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.*;
 
 /**
  *
@@ -104,60 +109,24 @@ import java.util.TreeSet;
 public class Descriptions {
 
     public static void main(String[] args) throws Exception {
-        SortedSet<String> ContractClasses = new TreeSet<>();
-        ContractClasses.add(StackManagerServiceContract.class.getName());
-        ContractClasses.add(IMUServiceContract.class.getName());
-        ContractClasses.add(IMUV2ServiceContract.class.getName());
-        ContractClasses.add(LCD16x2ServiceContract.class.getName());
-        ContractClasses.add(LCD20x4ServiceContract.class.getName());
-        ContractClasses.add(AccelerometerServiceContract.class.getName());
-        ContractClasses.add(AmbientLightServiceContract.class.getName());
-        ContractClasses.add(AmbientLightV2ServiceContract.class.getName());
-        ContractClasses.add(AnalogInV2ServiceContract.class.getName());
-        ContractClasses.add(AnalogOutV2ServiceContract.class.getName());
-        ContractClasses.add(BarometerServiceContract.class.getName());
-        ContractClasses.add(CO2ServiceContract.class.getName());
-        ContractClasses.add(ColorServiceContract.class.getName());
-        ContractClasses.add(DCServiceContract.class.getName());
-        ContractClasses.add(DistanceIRServiceContract.class.getName());
-        ContractClasses.add(DistanceUSServiceContract.class.getName());
-        ContractClasses.add(DualButtonServiceContract.class.getName());
-        ContractClasses.add(DustDetectorServiceContract.class.getName());
-        ContractClasses.add(GPSServiceContract.class.getName());
-        ContractClasses.add(GPSv2ServiceContract.class.getName());
-        ContractClasses.add(HallEffectServiceContract.class.getName());
-        ContractClasses.add(HumidityServiceContract.class.getName());
-        ContractClasses.add(JoystickServiceContract.class.getName());
-        ContractClasses.add(LaserRangeFinderServiceContract.class.getName());
-        ContractClasses.add(LEDStripServiceContract.class.getName());
-        ContractClasses.add(LineServiceContract.class.getName());
-        ContractClasses.add(LinearPotiServiceContract.class.getName());
-        ContractClasses.add(LoadCellServiceContract.class.getName());
-        ContractClasses.add(MasterServiceContract.class.getName());
-        ContractClasses.add(MoistureServiceContract.class.getName());
-        ContractClasses.add(MotionDetectorServiceContract.class.getName());
-        ContractClasses.add(MultiTouchServiceContract.class.getName());
-        ContractClasses.add(NFCServiceContract.class.getName());
-        ContractClasses.add(PiezoSpeakerServiceContract.class.getName());
-        ContractClasses.add(PTCServiceContract.class.getName());
-        ContractClasses.add(RealTimeClockServiceContract.class.getName());
-        ContractClasses.add(RemoteSwitchServiceContract.class.getName());
-        ContractClasses.add(RotaryEncoderServiceContract.class.getName());
-        ContractClasses.add(RotaryPotiServiceContract.class.getName());
-        ContractClasses.add(Segment4x7ServiceContract.class.getName());
-        ContractClasses.add(ServoServiceContract.class.getName());
-        ContractClasses.add(SolidStateRelayServiceContract.class.getName());
-        ContractClasses.add(SoundIntensityServiceContract.class.getName());
-        ContractClasses.add(TemperatureServiceContract.class.getName());
-        ContractClasses.add(TemperatureIRServiceContract.class.getName());
-        ContractClasses.add(ThermoCoupleServiceContract.class.getName());
-        ContractClasses.add(TiltServiceContract.class.getName());
-        ContractClasses.add(UVLightServiceContract.class.getName());
-        ContractClasses.add(VoltageCurrentServiceContract.class.getName());
+        List<Class<?>> classes = find("ch.quantasy.gateway.service");
+        SortedSet<String> contractClassNames = new TreeSet();
+        for (Class singleClass : classes) {
+            if (DeviceServiceContract.class.equals(singleClass.getSuperclass())) {
+                contractClassNames.add(singleClass.getName());
+            }
+            if (TinkerForgeServiceContract.class.equals(singleClass.getSuperclass())) {
+                contractClassNames.add(singleClass.getName());
 
-        for (String contractClassName : ContractClasses) {
-            TinkerForgeServiceContract contract = (TinkerForgeServiceContract) (Class.forName(contractClassName).getConstructor(String.class).newInstance("<id>"));
-            System.out.println(contract.toMD());
+            }
+        }
+
+        for (String contractClassName : contractClassNames) {
+            try {
+                TinkerForgeServiceContract contract = (TinkerForgeServiceContract) (Class.forName(contractClassName).getConstructor(String.class).newInstance("<id>"));
+                System.out.println(contract.toMD());
+            } catch (Exception ex) {
+            }
         }
     }
 }

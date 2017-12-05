@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.message.event.IMUV2;
 
-import ch.quantasy.gateway.message.annotations.Choice;
-import ch.quantasy.gateway.message.event.AnEvent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 
 /**
  *

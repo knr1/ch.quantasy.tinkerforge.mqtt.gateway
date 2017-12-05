@@ -44,6 +44,11 @@ package ch.quantasy.gateway.service.device.LCD20x4;
 
 import ch.quantasy.gateway.message.event.LCD20x4.ButtonEvent;
 import ch.quantasy.gateway.message.intent.LCD20x4.LCD20x4Intent;
+import ch.quantasy.gateway.message.status.LCD20x4.BacklightStatus;
+import ch.quantasy.gateway.message.status.LCD20x4.CustomCharactersStatus;
+import ch.quantasy.gateway.message.status.LCD20x4.DefaultTextCounterStatus;
+import ch.quantasy.gateway.message.status.LCD20x4.DefaultTextsStatus;
+import ch.quantasy.gateway.message.status.LCD20x4.ParametersStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
@@ -68,10 +73,7 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
     public final String STATUS_DEFAULT_TEXT_COUNTER;
     public final String WRITE_LINES;
     public final String BUTTON;
-    public final String PRESSED;
-    public final String RELEASED;
-    public final String EVENT_BUTTON_RELEASED;
-    public final String EVENT_BUTTON_PRESSED;
+    public final String EVENT_BUTTON;
     public final String TEXT;
 
     public LCD20x4ServiceContract(LCD20x4Device device) {
@@ -106,22 +108,20 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
         WRITE_LINES = "writeLines";
 
         BUTTON = "button";
-        PRESSED = "pressed";
-        RELEASED = "released";
-        EVENT_BUTTON_RELEASED = EVENT + "/" + BUTTON + "/" + RELEASED;
-        EVENT_BUTTON_PRESSED = EVENT + "/" + BUTTON + "/" + PRESSED;
-          addMessageTopic(EVENT_BUTTON_PRESSED, ButtonEvent.class);
-        addMessageTopic(EVENT_BUTTON_RELEASED, ButtonEvent.class);
+
+        EVENT_BUTTON = EVENT + "/" + BUTTON;
+        
+        addMessageTopic(EVENT_BUTTON, ButtonEvent.class);
+        addMessageTopic(STATUS_BACKLIGHT, BacklightStatus.class);
+        addMessageTopic(STATUS_CONFIG_PARAMETERS, ParametersStatus.class);
+        addMessageTopic(STATUS_CUSTOM_CHARACTERS, CustomCharactersStatus.class);
+        addMessageTopic(STATUS_DEFAULT_TEXT_TEXTS, DefaultTextsStatus.class);
+        addMessageTopic(STATUS_DEFAULT_TEXT_COUNTER, DefaultTextCounterStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_BACKLIGHT, "[true|false]");
-        descriptions.put(STATUS_CONFIG_PARAMETERS, "cursor: [true|false]\n blinking: [true|false]");
-        descriptions.put(STATUS_CUSTOM_CHARACTERS, "[index: [0..15]\n pixels: [[" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]]_[1..8]]");
-        descriptions.put(STATUS_DEFAULT_TEXT_TEXTS, "[line: [0..3]\n text: [String]_[1..20]]");
-        descriptions.put(STATUS_DEFAULT_TEXT_COUNTER, "[-1.." + Integer.MAX_VALUE + "]");
-     
+        
 
     }
 }

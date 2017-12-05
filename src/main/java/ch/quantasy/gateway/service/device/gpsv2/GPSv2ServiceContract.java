@@ -48,6 +48,12 @@ import ch.quantasy.gateway.message.event.gps.MotionEvent;
 import ch.quantasy.gateway.message.event.gpsV2.CoordinatesEvent;
 import ch.quantasy.gateway.message.event.gpsV2.StatusEvent;
 import ch.quantasy.gateway.message.intent.gpsv2.GPSv2Intent;
+import ch.quantasy.gateway.message.status.gps.AltitudeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.CoordinatesCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.DateTimeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.MotionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gpsv2.FixLEDConfigStatus;
+import ch.quantasy.gateway.message.status.gpsv2.StatusLEDConfigStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.gpsV2.GPSv2Device;
@@ -128,20 +134,19 @@ public class GPSv2ServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_MOTION, MotionEvent.class);
         addMessageTopic(EVENT_STATE, StatusEvent.class);
         addMessageTopic(EVENT_COORDINATES, CoordinatesEvent.class);
+        addMessageTopic(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
 
+        addMessageTopic(STATUS_MOTION_CALLBACK_PERIOD, MotionCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ALTITUDE_CALLBACK_PERIOD, AltitudeCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_COORDINATES_CALLBACK_PERIOD, CoordinatesCallbackPeriodStatus.class);
+
+        addMessageTopic(STATUS_STATE_LED_CONFIG, StatusLEDConfigStatus.class);
+
+        addMessageTopic(STATUS_FIX_LED_CONFIG, FixLEDConfigStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-
-        descriptions.put(STATUS_MOTION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_COORDINATES_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-
-        descriptions.put(STATUS_STATE_LED_CONFIG, "[OFF|ON|HEARTBEAT|STATUS]");
-
-        descriptions.put(STATUS_FIX_LED_CONFIG, "[OFF|ON|HEARTBEAT|FIX|PPS]");
 
     }
 }

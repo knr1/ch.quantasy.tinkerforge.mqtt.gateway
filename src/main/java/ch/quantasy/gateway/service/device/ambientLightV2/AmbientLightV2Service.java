@@ -49,6 +49,10 @@ import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2DeviceCallbac
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.gateway.message.intent.ambientLightV2.DeviceIlluminanceCallbackThreshold;
 import ch.quantasy.gateway.message.intent.ambientLightV2.DeviceConfiguration;
+import ch.quantasy.gateway.message.status.ambientLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.ambientLightV2.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.ambientLightV2.IlluminanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.ambientLightV2.IlluminanceCallbackThresholdStatus;
 import java.net.URI;
 
 /**
@@ -64,22 +68,22 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, new IlluminanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, new IlluminanceCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_CONFIGURATION, configuration);
+        publishStatus(getContract().STATUS_CONFIGURATION, new ConfigurationStatus(configuration));
     }
 
     @Override

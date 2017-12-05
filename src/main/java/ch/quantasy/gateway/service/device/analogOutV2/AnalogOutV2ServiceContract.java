@@ -43,6 +43,7 @@
 package ch.quantasy.gateway.service.device.analogOutV2;
 
 import ch.quantasy.gateway.message.intent.analogOutV2.AnalogOutV2Intent;
+import ch.quantasy.gateway.message.status.analogOutV2.OutputVoltageStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
@@ -69,10 +70,11 @@ public class AnalogOutV2ServiceContract extends DeviceServiceContract {
         super(id, device, AnalogOutV2Intent.class);
         OUTPUT_VOLTAGE = "outputVoltage";
         STATUS_OUTPUT_VOLTAGE = STATUS + "/" + OUTPUT_VOLTAGE;
+        addMessageTopic(STATUS_OUTPUT_VOLTAGE, OutputVoltageStatus.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_OUTPUT_VOLTAGE, "[0..12000]");
     }
 }

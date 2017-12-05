@@ -49,8 +49,14 @@ import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
 import ch.quantasy.gateway.message.intent.humidity.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.gateway.message.intent.humidity.DevicePositionCallbackThreshold;
 import ch.quantasy.gateway.message.intent.humidity.HumidityIntent;
+import ch.quantasy.gateway.message.status.humidity.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.humidity.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.humidity.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.humidity.HumidityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.humidity.HumidityCallbackThresholdStatus;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDeviceCallback;
+import com.tinkerforge.BrickletHumidity;
 import java.net.URI;
 
 /**
@@ -86,27 +92,27 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
     }
 
     @Override
     public void humidityCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_HUMIDITY_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_HUMIDITY_CALLBACK_PERIOD, new HumidityCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void humidityCallbackThresholdChanged(DevicePositionCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_HUMIDITY_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_HUMIDITY_THRESHOLD, new HumidityCallbackThresholdStatus(threshold));
     }
 
 }

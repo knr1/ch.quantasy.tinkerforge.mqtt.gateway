@@ -42,8 +42,8 @@
  */
 package ch.quantasy.gateway.message.intent.voltageCurrent;
 
-import ch.quantasy.gateway.message.annotations.AValidator;
-import ch.quantasy.gateway.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 import com.tinkerforge.BrickletVoltageCurrent;
 
 /**

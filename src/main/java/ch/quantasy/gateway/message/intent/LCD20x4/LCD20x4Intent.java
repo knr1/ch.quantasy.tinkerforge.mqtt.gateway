@@ -41,10 +41,10 @@
  */
 package ch.quantasy.gateway.message.intent.LCD20x4;
 
-import ch.quantasy.gateway.message.intent.AnIntent;
-import ch.quantasy.gateway.message.annotations.Nullable;
-import ch.quantasy.gateway.message.annotations.Period;
-import ch.quantasy.gateway.message.annotations.SetSize;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Period;
+import ch.quantasy.mqtt.gateway.client.message.annotations.SetSize;
 import java.util.HashSet;
 import java.util.Set;
 

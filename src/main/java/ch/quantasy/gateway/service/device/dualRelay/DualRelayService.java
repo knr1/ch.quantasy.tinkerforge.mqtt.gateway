@@ -47,6 +47,7 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDeviceCallback;
 import ch.quantasy.gateway.message.intent.dualRelay.DeviceRelayState;
+import ch.quantasy.gateway.message.status.dualRelay.RelayStateStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -62,7 +63,7 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     @Override
     public void stateChanged(DeviceRelayState state) {
-        publishStatus(getContract().STATUS_STATE, state);
+        publishStatus(getContract().STATUS_STATE, new RelayStateStatus(state));
     }
 
     @Override

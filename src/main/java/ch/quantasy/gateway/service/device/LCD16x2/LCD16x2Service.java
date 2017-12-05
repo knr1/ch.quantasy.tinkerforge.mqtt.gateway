@@ -45,12 +45,16 @@ package ch.quantasy.gateway.service.device.LCD16x2;
 import ch.quantasy.gateway.message.event.LCD16x2.ButtonEvent;
 import ch.quantasy.gateway.message.intent.LCD16x2.DeviceConfigParameters;
 import ch.quantasy.gateway.message.intent.LCD16x2.DeviceCustomCharacter;
+import ch.quantasy.gateway.message.status.LCD16x2.BacklightStatus;
+import ch.quantasy.gateway.message.status.LCD16x2.CustomCharactersStatus;
+import ch.quantasy.gateway.message.status.LCD16x2.ParametersStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2DeviceCallback;
 import java.net.URI;
 import java.util.Arrays;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import java.util.Set;
 
 /**
  *
@@ -64,18 +68,17 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     @Override
     public void backlightChanged(Boolean isBacklightEnabled) {
-        publishStatus(getContract().STATUS_BACKLIGHT, isBacklightEnabled);
+        publishStatus(getContract().STATUS_BACKLIGHT, new BacklightStatus(isBacklightEnabled));
     }
 
     @Override
     public void configurationChanged(DeviceConfigParameters configParameters) {
-        publishStatus(getContract().STATUS_CONFIG_PARAMETERS, configParameters);
+        publishStatus(getContract().STATUS_CONFIG_PARAMETERS, new ParametersStatus(configParameters));
     }
 
     @Override
-    public void customCharactersChanged(DeviceCustomCharacter... customCharacters) {
-        Arrays.sort(customCharacters);
-        publishStatus(getContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
+    public void customCharactersChanged(Set<DeviceCustomCharacter> customCharacters) {
+        publishStatus(getContract().STATUS_CUSTOM_CHARACTERS, new CustomCharactersStatus(customCharacters));
     }
 
     @Override

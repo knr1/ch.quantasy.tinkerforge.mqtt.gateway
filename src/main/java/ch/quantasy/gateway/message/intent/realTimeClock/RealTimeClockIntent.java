@@ -41,12 +41,12 @@
  */
 package ch.quantasy.gateway.message.intent.realTimeClock;
 
-import ch.quantasy.gateway.message.annotations.AValidator;
-import ch.quantasy.gateway.message.intent.AnIntent;
-import ch.quantasy.gateway.message.annotations.Choice;
-import ch.quantasy.gateway.message.annotations.Nullable;
-import ch.quantasy.gateway.message.annotations.Period;
-import ch.quantasy.gateway.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Period;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 
 /**
  *

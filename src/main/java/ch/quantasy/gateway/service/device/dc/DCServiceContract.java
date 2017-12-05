@@ -47,6 +47,13 @@ import ch.quantasy.gateway.message.event.dc.FullBrakeEvent;
 import ch.quantasy.gateway.message.event.dc.UnderVoltageEvent;
 import ch.quantasy.gateway.message.event.dc.VelocityEvent;
 import ch.quantasy.gateway.message.intent.dc.DCIntent;
+import ch.quantasy.gateway.message.status.dc.AccelerationStatus;
+import ch.quantasy.gateway.message.status.dc.DriveModeStatus;
+import ch.quantasy.gateway.message.status.dc.EnableStatus;
+import ch.quantasy.gateway.message.status.dc.MinimumVoltageStatus;
+import ch.quantasy.gateway.message.status.dc.PwmFrequencyStatus;
+import ch.quantasy.gateway.message.status.dc.VelocityStatus;
+import ch.quantasy.gateway.message.status.dc.VelocityPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
@@ -145,18 +152,17 @@ public class DCServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_VELOCITY, VelocityEvent.class);
         addMessageTopic(EVENT_VELOCITY_REACHED, VelocityEvent.class);
         addMessageTopic(EVENT_EMERGENCY_SHUTDOWN, EmergencyShutdownEvent.class);
-
+        addMessageTopic(STATUS_ACCELERATION, AccelerationStatus.class);
+        addMessageTopic(STATUS_DRIVER_MODE, DriveModeStatus.class);
+        addMessageTopic(STATUS_ENABLED, EnableStatus.class);
+        addMessageTopic(STATUS_MINIMUM_VOLTAGE, MinimumVoltageStatus.class);
+        addMessageTopic(STATUS_PWM_FREQUENCY, PwmFrequencyStatus.class);
+        addMessageTopic(STATUS_VELOCITY_VELOCITY, VelocityStatus.class);
+        addMessageTopic(STATUS_VELOCITY_CALLBACK_PERIOD, VelocityPeriodStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(STATUS_ACCELERATION, "[0.." + Integer.MAX_VALUE + "]");
-        descriptions.put(STATUS_DRIVER_MODE, "[0|1]");
-        descriptions.put(STATUS_ENABLED, "[true|false]");
-        descriptions.put(STATUS_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
-        descriptions.put(STATUS_PWM_FREQUENCY, "[1..20000]");
-        descriptions.put(STATUS_VELOCITY_VELOCITY, "-32767..32767");
-        descriptions.put(STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Integer.MAX_VALUE + "]");
     }
 }

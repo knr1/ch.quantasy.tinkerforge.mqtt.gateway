@@ -44,6 +44,10 @@ package ch.quantasy.gateway.service.device.accelerometer;
 
 import ch.quantasy.gateway.message.event.IMU.AccelerationEvent;
 import ch.quantasy.gateway.message.intent.accelerometer.AccelerometerIntent;
+import ch.quantasy.gateway.message.status.IMU.AccelerationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.accelerometer.AccelerationThresholdStatus;
+import ch.quantasy.gateway.message.status.accelerometer.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.accelerometer.DebouncePeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
@@ -88,13 +92,12 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";
 
-
         ACCELERATION = "acceleration";
         STATUS_ACCELERATION = STATUS + "/" + ACCELERATION;
         STATUS_ACCELERATION_THRESHOLD = STATUS_ACCELERATION + "/" + THRESHOLD;
         STATUS_ACCELERATION_CALLBACK_PERIOD = STATUS_ACCELERATION + "/" + CALLBACK_PERIOD;
         EVENT_ACCELERATION = EVENT + "/" + ACCELERATION;
-        EVENT_ACCELERATION_REACHED = EVENT +"/"+"accelerationReached";
+        EVENT_ACCELERATION_REACHED = EVENT + "/" + "accelerationReached";
 
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
@@ -102,23 +105,21 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
 
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-        
-        super.addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
-        super.addMessageTopic(EVENT_ACCELERATION_REACHED, AccelerationEvent.class);
-
+addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
+        addMessageTopic(EVENT_ACCELERATION_REACHED, AccelerationEvent.class);
+        addMessageTopic(STATUS_ACCELERATION_CALLBACK_PERIOD, AccelerationCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ACCELERATION_THRESHOLD, AccelerationThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ACCELERATION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n minY: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n minZ: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxX: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxY: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]\n maxZ: [" + Short.MIN_VALUE + ".." + Short.MAX_VALUE + "]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_CONFIGURATION, "dataRate: [OFF|Hz3|Hz6|Hz12|Hz25|Hz50|Hz100|Hz400|Hz800|Hz1600]\n fullScale: [G2|G4|G6|G8|G16\n filterBandwidth: [Hz800|Hz400|Hz200|Hz50]");
+        
     }
-    
+
     public static void main(String[] args) {
-        AccelerometerServiceContract c=new AccelerometerServiceContract("<id>");
+        AccelerometerServiceContract c = new AccelerometerServiceContract("<id>");
         System.out.println(c.toMD());
     }
 }

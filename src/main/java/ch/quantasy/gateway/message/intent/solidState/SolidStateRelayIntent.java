@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.message.intent.solidState;
 
-import ch.quantasy.gateway.message.intent.AnIntent;
-import ch.quantasy.gateway.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
 
 /**
  *

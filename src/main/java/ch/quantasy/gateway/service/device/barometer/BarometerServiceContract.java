@@ -45,6 +45,13 @@ package ch.quantasy.gateway.service.device.barometer;
 import ch.quantasy.gateway.message.event.barometer.AirPressureEvent;
 import ch.quantasy.gateway.message.event.barometer.AltitudeEvent;
 import ch.quantasy.gateway.message.intent.barometer.BarometerIntent;
+import ch.quantasy.gateway.message.status.barometer.AirPressureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.barometer.AirPressureCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.barometer.AltitudeCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.barometer.AveragingStatus;
+import ch.quantasy.gateway.message.status.barometer.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.barometer.ReferenceAirPressureStatus;
+import ch.quantasy.gateway.message.status.barometer.AltitudeCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
@@ -131,18 +138,18 @@ public class BarometerServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_ALTITUDE, AltitudeEvent.class);
         addMessageTopic(EVENT_AIR_PRESSURE_REACHED, AirPressureEvent.class);
         addMessageTopic(EVENT_ALTITUDE_REACHED, AltitudeEvent.class);
+        addMessageTopic(STATUS_AIR_PRESSURE_CALLBACK_PERIOD, AirPressureCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ALTITUDE_CALLBACK_PERIOD, AltitudeCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_AIR_PRESSURE_THRESHOLD, AirPressureCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_ALTITUDE_THRESHOLD, AltitudeCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_AVERAGING, AveragingStatus.class);
+        addMessageTopic(STATUS_REFERENCE_AIR_PRESSURE, ReferenceAirPressureStatus.class);
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(STATUS_AIR_PRESSURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ALTITUDE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_AIR_PRESSURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [10000..1200000]\n max: [10000..1200000]");
-        descriptions.put(STATUS_ALTITUDE_THRESHOLD, "option: [x|o|i|<|>]\n min: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]\n max: [" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_AVERAGING, "averagingPressure: [0..10]\n averagingTemperature: [0..255]\n movingAveragePressure: [0..25]");
-        descriptions.put(STATUS_REFERENCE_AIR_PRESSURE, "[" + Integer.MIN_VALUE + ".." + Integer.MAX_VALUE + "]");
     }
 }

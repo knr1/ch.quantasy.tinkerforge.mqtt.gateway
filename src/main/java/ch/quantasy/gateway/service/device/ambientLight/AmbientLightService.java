@@ -49,6 +49,11 @@ import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDeviceCallback;
 import ch.quantasy.gateway.message.intent.ambientLight.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.gateway.message.intent.ambientLight.DeviceIlluminanceCallbackThreshold;
+import ch.quantasy.gateway.message.status.ambientLight.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.ambientLight.AnalogValueThresholdStatus;
+import ch.quantasy.gateway.message.status.ambientLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.ambientLight.IlluminanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.ambientLight.IlluminanceThresholdStatus;
 
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -85,27 +90,27 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
     }
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, new IlluminanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueThresholdStatus(threshold));
     }
 
     @Override
     public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, new IlluminanceThresholdStatus(threshold));
 
     }
 

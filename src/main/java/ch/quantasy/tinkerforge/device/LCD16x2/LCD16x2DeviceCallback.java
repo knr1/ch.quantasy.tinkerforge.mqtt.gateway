@@ -46,6 +46,7 @@ import ch.quantasy.gateway.message.intent.LCD16x2.DeviceConfigParameters;
 import ch.quantasy.gateway.message.intent.LCD16x2.DeviceCustomCharacter;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletLCD16x2;
+import java.util.Set;
 
 /**
  *
@@ -57,5 +58,5 @@ public interface LCD16x2DeviceCallback extends DeviceCallback, BrickletLCD16x2.B
 
     public void configurationChanged(DeviceConfigParameters configParameters);
 
-    public void customCharactersChanged(DeviceCustomCharacter... customCharacters);
+    public void customCharactersChanged(Set<DeviceCustomCharacter> customCharacters);
 }

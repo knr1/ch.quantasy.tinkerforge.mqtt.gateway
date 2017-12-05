@@ -48,6 +48,13 @@ import ch.quantasy.gateway.message.event.color.IlluminanceEvent;
 import ch.quantasy.gateway.message.intent.color.ColorIntent;
 import ch.quantasy.gateway.message.intent.color.DeviceColorCallbackThreshold;
 import ch.quantasy.gateway.message.intent.color.DeviceConfiguration;
+import ch.quantasy.gateway.message.status.color.ColorCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.color.ColorCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.color.ColorTemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.color.ConfigStatus;
+import ch.quantasy.gateway.message.status.color.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.color.IlluminanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.color.LightStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
 import ch.quantasy.tinkerforge.device.color.ColorDeviceCallback;
@@ -87,37 +94,37 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
     @Override
     public void colorTemperatureCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, new ColorTemperatureCallbackPeriodStatus(period));
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration config) {
-        publishStatus(getContract().STATUS_CONFIGURATION, config);
+        publishStatus(getContract().STATUS_CONFIGURATION, new ConfigStatus(config));
     }
 
     @Override
     public void lightStatusChanged(boolean isLightOn) {
-        publishStatus(getContract().STATUS_LIGHT_STATE, isLightOn);
+        publishStatus(getContract().STATUS_LIGHT_STATE, new LightStatus(isLightOn));
     }
 
     @Override
     public void colorCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, new ColorCallbackPeriodStatus(period));
     }
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, new IlluminanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void colorCallbackThresholdChanged(DeviceColorCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_COLOR_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_COLOR_THRESHOLD, new ColorCallbackThresholdStatus(threshold));
     }
 
     

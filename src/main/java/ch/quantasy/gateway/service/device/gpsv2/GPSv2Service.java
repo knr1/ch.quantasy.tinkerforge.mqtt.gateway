@@ -54,6 +54,13 @@ import ch.quantasy.tinkerforge.device.gpsV2.GPSv2Device;
 import ch.quantasy.tinkerforge.device.gpsV2.GPSv2DeviceCallback;
 import ch.quantasy.gateway.message.intent.gpsv2.RestartType;
 import ch.quantasy.gateway.message.intent.gpsv2.StatusLEDConfig;
+import ch.quantasy.gateway.message.status.gps.AltitudeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.CoordinatesCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.DateTimeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.MotionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.StatusCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gpsv2.FixLEDConfigStatus;
+import ch.quantasy.gateway.message.status.gpsv2.StatusLEDConfigStatus;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;
@@ -71,27 +78,27 @@ public class GPSv2Service extends AbstractDeviceService<GPSv2Device, GPSv2Servic
 
     @Override
     public void altitudeCallbackPeriodChanged(long period) {
-        super.publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, period);
+        super.publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, new AltitudeCallbackPeriodStatus(period));
     }
 
     @Override
     public void coordinatesCallbackPeriodChanged(Long coordinatesCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, coordinatesCallbackPeriod);
+        super.publishStatus(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, new CoordinatesCallbackPeriodStatus(coordinatesCallbackPeriod));
     }
 
     @Override
     public void dateTimeCallbackPeriodChanged(Long dateTimeCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, dateTimeCallbackPeriod);
+        super.publishStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, new DateTimeCallbackPeriodStatus(dateTimeCallbackPeriod));
     }
 
     @Override
     public void motionCallbackPeriodChanged(Long motionCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_MOTION_CALLBACK_PERIOD, motionCallbackPeriod);
+        super.publishStatus(getContract().STATUS_MOTION_CALLBACK_PERIOD, new MotionCallbackPeriodStatus(motionCallbackPeriod));
     }
 
     @Override
     public void statusCallbackPeriodChanged(Long statusCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_STATE_CALLBACK_PERIOD, statusCallbackPeriod);
+        super.publishStatus(getContract().STATUS_STATE_CALLBACK_PERIOD, new StatusCallbackPeriodStatus(statusCallbackPeriod));
     }
 
     @Override
@@ -121,18 +128,20 @@ public class GPSv2Service extends AbstractDeviceService<GPSv2Device, GPSv2Servic
 
     @Override
     public void fixLEDConfigChanged(FixLEDConfig fixLEDConfig) {
-        super.publishStatus(getContract().STATUS_FIX_LED_CONFIG, fixLEDConfig);
+        super.publishStatus(getContract().STATUS_FIX_LED_CONFIG, new FixLEDConfigStatus(fixLEDConfig));
     }
 
     @Override
     public void statusLEDConfigChanged(StatusLEDConfig statusLEDConfig) {
-        super.publishStatus(getContract().STATUS_STATE_LED_CONFIG, statusLEDConfig);
+        super.publishStatus(getContract().STATUS_STATE_LED_CONFIG, new StatusLEDConfigStatus(statusLEDConfig));
     }
 
     @Override
     public void pulsePerSecond() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //new EVENT
     }
+
+   
 
     
   

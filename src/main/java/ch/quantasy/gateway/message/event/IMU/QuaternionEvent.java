@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.message.event.IMU;
 
-import ch.quantasy.gateway.message.annotations.Fraction;
-import ch.quantasy.gateway.message.event.AnEvent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Fraction;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 
 /**
  *

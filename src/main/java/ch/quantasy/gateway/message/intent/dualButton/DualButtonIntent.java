@@ -41,9 +41,9 @@
  */
 package ch.quantasy.gateway.message.intent.dualButton;
 
-import ch.quantasy.gateway.message.intent.AnIntent;
-import ch.quantasy.gateway.message.annotations.Nullable;
-import ch.quantasy.gateway.message.annotations.SetSize;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.SetSize;
 import java.util.Set;
 import java.util.HashSet;
 

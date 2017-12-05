@@ -46,6 +46,10 @@ import ch.quantasy.gateway.message.event.distanceUS.DistanceEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.distanceUS.DeviceDistanceCallbackThreshold;
 import ch.quantasy.gateway.message.intent.distanceUS.DistanceUSIntent;
+import ch.quantasy.gateway.message.status.distanceUS.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.distanceUS.DistanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.distanceUS.DistanceCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.distanceUS.MovingAverageStatus;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDeviceCallback;
 import java.net.URI;
@@ -64,22 +68,22 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, new DistanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, new DistanceCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void movingAverageChanged(short movingAverage) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, movingAverage);
+        publishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(movingAverage));
     }
 
     @Override

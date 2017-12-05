@@ -47,6 +47,12 @@ import ch.quantasy.gateway.message.event.dc.EmergencyShutdownEvent;
 import ch.quantasy.gateway.message.event.dc.FullBrakeEvent;
 import ch.quantasy.gateway.message.event.dc.UnderVoltageEvent;
 import ch.quantasy.gateway.message.event.dc.VelocityEvent;
+import ch.quantasy.gateway.message.status.dc.AccelerationStatus;
+import ch.quantasy.gateway.message.status.dc.DriveModeStatus;
+import ch.quantasy.gateway.message.status.dc.MinimumVoltageStatus;
+import ch.quantasy.gateway.message.status.dc.PwmFrequencyStatus;
+import ch.quantasy.gateway.message.status.dc.VelocityPeriodStatus;
+import ch.quantasy.gateway.message.status.dc.VelocityStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import ch.quantasy.tinkerforge.device.dc.DCDeviceCallback;
@@ -65,33 +71,33 @@ public class DCService extends AbstractDeviceService<DCDevice, DCServiceContract
 
     @Override
     public void PWMFrequencyChanged(Integer pwmFrequency) {
-        publishStatus(getContract().STATUS_PWM_FREQUENCY, pwmFrequency);
+        publishStatus(getContract().STATUS_PWM_FREQUENCY, new PwmFrequencyStatus(pwmFrequency));
     }
 
     @Override
     public void accelerationChanged(Integer acceleration) {
-        publishStatus(getContract().STATUS_ACCELERATION, acceleration);
+        publishStatus(getContract().STATUS_ACCELERATION, new AccelerationStatus(acceleration));
     }
 
     @Override
     public void driveModeChanged(Short driverMode) {
-        publishStatus(getContract().STATUS_DRIVER_MODE, driverMode);
+        publishStatus(getContract().STATUS_DRIVER_MODE, new DriveModeStatus(driverMode));
     }
 
     @Override
     public void minimumVoltageChanged(Integer minimumVoltage) {
-        publishStatus(getContract().STATUS_MINIMUM_VOLTAGE, minimumVoltage);
+        publishStatus(getContract().STATUS_MINIMUM_VOLTAGE, new MinimumVoltageStatus(minimumVoltage));
 
     }
 
     @Override
     public void velocityPeriodChanged(Integer velocityPeriod) {
-        publishStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, velocityPeriod);
+        publishStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, new VelocityPeriodStatus(velocityPeriod));
     }
 
     @Override
     public void velocityChanged(Short velocity) {
-        publishStatus(getContract().STATUS_VELOCITY_VELOCITY, velocity);
+        publishStatus(getContract().STATUS_VELOCITY_VELOCITY, new VelocityStatus(velocity));
     }
 
     @Override

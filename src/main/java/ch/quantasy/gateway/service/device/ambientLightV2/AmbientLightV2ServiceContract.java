@@ -44,6 +44,10 @@ package ch.quantasy.gateway.service.device.ambientLightV2;
 
 import ch.quantasy.gateway.message.event.ambinetLightV2.IlluminanceEvent;
 import ch.quantasy.gateway.message.intent.ambientLightV2.AmbientLightV2Intent;
+import ch.quantasy.gateway.message.status.ambientLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.ambientLight.IlluminanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.ambientLightV2.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.ambientLightV2.IlluminanceCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
@@ -103,20 +107,20 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        
+
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
         addMessageTopic(EVENT_IllUMINANCE, IlluminanceEvent.class);
         addMessageTopic(EVENT_ILLUMINANCE_REACHED, IlluminanceEvent.class);
+        addMessageTopic(STATUS_ILLUMINANCE_CALLBACK_PERIOD, IlluminanceCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ILLUMINANCE_THRESHOLD, IlluminanceCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-       
-        descriptions.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ILLUMINANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..100000]\n max: [0..100000]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_CONFIGURATION, "illuminanceRange:[lx_unlimitted|lx_64000|lx_32000|lx_16000|lx_8000|lx_13000|lx_600]\n integrationTime: [ms_50|ms_100|ms_150|ms_200|ms_250|ms_300|ms_350|ms_400]\n");
+        
     }
 }

@@ -46,6 +46,10 @@ import ch.quantasy.gateway.message.event.color.ColorEvent;
 import ch.quantasy.gateway.message.event.color.ColorTemperatureEvent;
 import ch.quantasy.gateway.message.event.color.IlluminanceEvent;
 import ch.quantasy.gateway.message.intent.color.ColorIntent;
+import ch.quantasy.gateway.message.status.color.ColorCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.color.ColorTemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.color.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.color.IlluminanceCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
@@ -123,18 +127,18 @@ public class ColorServiceContract extends DeviceServiceContract {
 
         LED_STATE = "ledState";
         STATUS_LIGHT_STATE = STATUS + "/" + LED_STATE;
-        addMessageTopic(EVENT_COLOR,ColorEvent.class);
+        addMessageTopic(EVENT_COLOR, ColorEvent.class);
         addMessageTopic(EVENT_ILLUMINANCE, IlluminanceEvent.class);
         addMessageTopic(EVENT_COLOR_REACHED, ColorEvent.class);
         addMessageTopic(EVENT_COLOR_TEMPERATURE_REACHED, ColorTemperatureEvent.class);
-        
+        addMessageTopic(STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, ColorTemperatureCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ILLUMINANCE_CALLBACK_PERIOD, IlluminanceCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_COLOR_THRESHOLD, ColorCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_COLOR_THRESHOLD, "option: [x|o|i|<|>]\n minR: [0..65535]\n maxR: [0..65535]\n minG: [0..65535]\n maxG: [0..65535]\n minB: [0..65535]\n maxB: [0..65535]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+
     }
 }

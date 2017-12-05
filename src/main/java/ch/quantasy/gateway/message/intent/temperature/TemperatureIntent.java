@@ -41,9 +41,9 @@
  */
 package ch.quantasy.gateway.message.intent.temperature;
 
-import ch.quantasy.gateway.message.intent.AnIntent;
-import ch.quantasy.gateway.message.annotations.Nullable;
-import ch.quantasy.gateway.message.annotations.Period;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Period;
 
 /**
  *

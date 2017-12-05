@@ -45,6 +45,11 @@ package ch.quantasy.gateway.service.device.humidity;
 import ch.quantasy.gateway.message.event.humidity.AnalogValueEvent;
 import ch.quantasy.gateway.message.event.humidity.HumidityEvent;
 import ch.quantasy.gateway.message.intent.humidity.HumidityIntent;
+import ch.quantasy.gateway.message.status.humidity.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.humidity.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.humidity.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.humidity.HumidityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.humidity.HumidityCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;
@@ -117,15 +122,15 @@ public class HumidityServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_HUMIDITY, HumidityEvent.class);
         addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
         addMessageTopic(EVENT_HUMIDITY_REACHED, HumidityEvent.class);
-        
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_HUMIDITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(STATUS_HUMIDITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..1000]\n max: [0..1000]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
+        addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_HUMIDITY_CALLBACK_PERIOD, HumidityCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_HUMIDITY_THRESHOLD, HumidityCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 }

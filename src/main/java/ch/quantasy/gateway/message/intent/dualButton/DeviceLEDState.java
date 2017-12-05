@@ -42,8 +42,8 @@
  */
 package ch.quantasy.gateway.message.intent.dualButton;
 
-import ch.quantasy.gateway.message.annotations.AValidator;
-import ch.quantasy.gateway.message.annotations.NonNull;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
 import com.tinkerforge.BrickletDualButton;
 
 /**

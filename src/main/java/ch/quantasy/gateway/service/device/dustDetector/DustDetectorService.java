@@ -45,6 +45,10 @@ package ch.quantasy.gateway.service.device.dustDetector;
 import ch.quantasy.gateway.message.event.dustDensity.DustDensityEvent;
 import ch.quantasy.gateway.message.intent.dustDetector.DeviceDustDensityCallbackThreshold;
 import ch.quantasy.gateway.message.intent.dustDetector.DustDetectorIntent;
+import ch.quantasy.gateway.message.status.dustDetector.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.dustDetector.DustDensityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.dustDetector.DustDensityCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.dustDetector.MovingAverageStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDeviceCallback;
@@ -63,22 +67,22 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void movingAverageChanged(short movingAverage) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, movingAverage);
+        publishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(movingAverage));
     }
 
     @Override
     public void dustDensityCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, new DustDensityCallbackPeriodStatus(period));
     }
 
     @Override
     public void dustDensityCallbackThresholdChanged(DeviceDustDensityCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_DUST_DENSITY_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_DUST_DENSITY_THRESHOLD, new DustDensityCallbackThresholdStatus(threshold));
     }
 
     @Override

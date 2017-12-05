@@ -48,6 +48,10 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.distanceIR.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.gateway.message.intent.distanceIR.DeviceDistanceCallbackThreshold;
 import ch.quantasy.gateway.message.intent.distanceIR.DistanceIRIntent;
+import ch.quantasy.gateway.message.status.distanceIR.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.distanceIR.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.distanceIR.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.distanceIR.DistanceCallbackPeriodStatus;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDeviceCallback;
 import java.net.URI;
@@ -85,27 +89,27 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
     }
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, new DistanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, new DistanceCallbackPeriodStatus(Long.MIN_VALUE));
 
     }
 

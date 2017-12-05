@@ -41,7 +41,7 @@
  */
 package ch.quantasy.gateway.message.intent.gpsv2;
 
-import ch.quantasy.gateway.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
 import ch.quantasy.gateway.message.intent.gps.GPSIntent;
 
 /**

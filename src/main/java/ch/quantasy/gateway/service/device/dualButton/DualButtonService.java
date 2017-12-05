@@ -47,6 +47,8 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDeviceCallback;
 import ch.quantasy.gateway.message.intent.dualButton.DeviceLEDState;
+import ch.quantasy.gateway.message.intent.dualButton.LEDState;
+import ch.quantasy.gateway.message.status.dualButton.LedStateStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -62,7 +64,7 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
     @Override
     public void ledStateChanged(DeviceLEDState state) {
-        publishStatus(getContract().STATUS_LED_STATE, state);
+        publishStatus(getContract().STATUS_LED_STATE, new LedStateStatus(state));
     }
 
     @Override

@@ -52,6 +52,11 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
 import ch.quantasy.tinkerforge.device.gps.GPSDeviceCallback;
 import ch.quantasy.gateway.message.intent.gps.RestartType;
+import ch.quantasy.gateway.message.status.gps.AltitudeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.CoordinatesCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.DateTimeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.MotionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.gps.StatusCallbackPeriodStatus;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;
 
@@ -68,27 +73,27 @@ public class GPSService extends AbstractDeviceService<GPSDevice, GPSServiceContr
 
     @Override
     public void altitudeCallbackPeriodChanged(long period) {
-        super.publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, period);
+        super.publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, new AltitudeCallbackPeriodStatus(period));
     }
 
     @Override
     public void coordinatesCallbackPeriodChanged(Long coordinatesCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, coordinatesCallbackPeriod);
+        super.publishStatus(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, new CoordinatesCallbackPeriodStatus(coordinatesCallbackPeriod));
     }
 
     @Override
     public void dateTimeCallbackPeriodChanged(Long dateTimeCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, dateTimeCallbackPeriod);
+        super.publishStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, new DateTimeCallbackPeriodStatus(dateTimeCallbackPeriod));
     }
 
     @Override
     public void motionCallbackPeriodChanged(Long motionCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_MOTION_CALLBACK_PERIOD, motionCallbackPeriod);
+        super.publishStatus(getContract().STATUS_MOTION_CALLBACK_PERIOD, new MotionCallbackPeriodStatus(motionCallbackPeriod));
     }
 
     @Override
     public void statusCallbackPeriodChanged(Long statusCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_STATE_CALLBACK_PERIOD, statusCallbackPeriod);
+        super.publishStatus(getContract().STATUS_STATE_CALLBACK_PERIOD, new StatusCallbackPeriodStatus(statusCallbackPeriod));
     }
 
     @Override

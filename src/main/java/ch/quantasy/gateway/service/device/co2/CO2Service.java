@@ -48,6 +48,9 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
 import ch.quantasy.tinkerforge.device.co2.CO2DeviceCallback;
 import ch.quantasy.gateway.message.intent.co2.DeviceCO2ConcentrationCallbackThreshold;
+import ch.quantasy.gateway.message.status.co2.Co2ConcentrationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.co2.Co2ConcentrationCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.co2.DebouncePeriodStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -63,17 +66,17 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void co2ConcentrationCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, new Co2ConcentrationCallbackPeriodStatus(period));
     }
 
     @Override
     public void co2ConcentrationCallbackThresholdChanged(DeviceCO2ConcentrationCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_CO2_CONCENTRATION_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_CO2_CONCENTRATION_THRESHOLD, new Co2ConcentrationCallbackThresholdStatus(threshold));
     }
 
     @Override

@@ -42,8 +42,8 @@
  */
 package ch.quantasy.gateway.message.intent.barometer;
 
-import ch.quantasy.gateway.message.annotations.AValidator;
-import ch.quantasy.gateway.message.annotations.Choice;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
 import com.tinkerforge.BrickletBarometer;
 
 /**

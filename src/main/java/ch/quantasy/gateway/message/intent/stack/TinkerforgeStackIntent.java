@@ -41,8 +41,8 @@
  */
 package ch.quantasy.gateway.message.intent.stack;
 
-import ch.quantasy.gateway.message.intent.AnIntent;
-import ch.quantasy.gateway.message.annotations.NonNull;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
 
 /**
  *

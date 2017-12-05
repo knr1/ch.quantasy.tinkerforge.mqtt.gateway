@@ -49,6 +49,16 @@ import ch.quantasy.gateway.message.event.IMU.MagneticFieldEvent;
 import ch.quantasy.gateway.message.event.IMU.OrientationEvent;
 import ch.quantasy.gateway.message.event.IMU.QuaternionEvent;
 import ch.quantasy.gateway.message.intent.IMU.IMUIntent;
+import ch.quantasy.gateway.message.status.IMU.AccelerationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.AllDataCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.AngularVelocityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.LedsStatus;
+import ch.quantasy.gateway.message.status.IMU.MagneticFieldCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.OrientationCalculationStatus;
+import ch.quantasy.gateway.message.status.IMU.OrientationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.QuaternionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.StatusLEDStatus;
+import ch.quantasy.gateway.message.status.gps.StatusCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
@@ -133,27 +143,28 @@ public class IMUServiceContract extends DeviceServiceContract {
 
         ORIENTATION_CALCULATION = ORIENTATION + "/" + "calculation";
         STATUS_ORIENTATION_CALCULATION = STATUS + "/" + ORIENTATION_CALCULATION;
-        addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
+        
+         addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
         addMessageTopic(EVENT_ANGULAR_VELOCITY, AngularVelocityEvent.class);
         addMessageTopic(EVENT_MAGNETIC_FIELD, MagneticFieldEvent.class);
         addMessageTopic(EVENT_ORIENTATION, OrientationEvent.class);
         addMessageTopic(EVENT_QUATERNION, QuaternionEvent.class);
         addMessageTopic(EVENT_ALL_DATA, AllDataEvent.class);
+        addMessageTopic(STATUS_ACCELERATION_CALLBACK_PERIOD, AccelerationCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ALL_DATA_CALLBACK_PERIOD, AllDataCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, AngularVelocityCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, MagneticFieldCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ORIENTATION_CALLBACK_PERIOD, OrientationCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_QUATERNION_CALLBACK_PERIOD, QuaternionCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_STATUS_LED, StatusLEDStatus.class);
+        addMessageTopic(STATUS_LEDS, LedsStatus.class);
+        addMessageTopic(STATUS_ORIENTATION_CALCULATION, OrientationCalculationStatus.class);
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_STATUS_LED, "[true|false]");
-        descriptions.put(STATUS_LEDS, "[true|false]");
-        descriptions.put(STATUS_ORIENTATION_CALCULATION, "[true|false]");
+       
 
     }
 }

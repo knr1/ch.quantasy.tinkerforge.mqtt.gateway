@@ -42,8 +42,8 @@
  */
 package ch.quantasy.gateway.message.intent.ptc;
 
-import ch.quantasy.gateway.message.annotations.Choice;
-import ch.quantasy.gateway.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 import com.tinkerforge.BrickletPTC;
 
 /**

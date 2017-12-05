@@ -44,6 +44,9 @@ package ch.quantasy.gateway.service.device.hallEffect;
 
 import ch.quantasy.gateway.message.event.hallEffect.EdgeCountEvent;
 import ch.quantasy.gateway.message.intent.hallEffect.HallEffectIntent;
+import ch.quantasy.gateway.message.status.hallEffect.EdgeCountCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.hallEffect.EdgeCountConfigurationStatus;
+import ch.quantasy.gateway.message.status.hallEffect.EdgeCountInterruptStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
@@ -100,14 +103,13 @@ public class HallEffectServiceContract extends DeviceServiceContract {
         EVENT_EDGE_COUNT_RESET = EVENT_EDGE_COUNT + "/" + RESET;
         addMessageTopic(EVENT_EDGE_COUNT, EdgeCountEvent.class);
         addMessageTopic(EVENT_EDGE_COUNT_RESET, EdgeCountEvent.class);
-
+        addMessageTopic(STATUS_EDGE_COUNT_INTERRUPT, EdgeCountInterruptStatus.class);
+        addMessageTopic(STATUS_EDGE_COUNT_CALLBACK_PERIOD, EdgeCountCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_CONFIGURATION, EdgeCountConfigurationStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(STATUS_EDGE_COUNT_INTERRUPT, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_EDGE_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_CONFIGURATION, "edgeType: [RISING|FALLING|BOTH]\n debounce: [0..100]\n");
     }
 }

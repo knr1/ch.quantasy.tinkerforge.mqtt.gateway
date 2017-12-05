@@ -42,9 +42,9 @@
 package ch.quantasy.gateway.message.intent.IMUV2;
 
 import ch.quantasy.gateway.message.intent.IMU.IMUIntent;
-import ch.quantasy.gateway.message.annotations.Choice;
-import ch.quantasy.gateway.message.annotations.Nullable;
-import ch.quantasy.gateway.message.annotations.Period;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Period;
 
 /**
  *

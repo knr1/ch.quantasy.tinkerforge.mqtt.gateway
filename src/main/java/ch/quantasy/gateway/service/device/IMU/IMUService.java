@@ -49,6 +49,15 @@ import ch.quantasy.gateway.message.event.IMU.AngularVelocityEvent;
 import ch.quantasy.gateway.message.event.IMU.AccelerationEvent;
 import ch.quantasy.gateway.message.event.IMU.AllDataEvent;
 import ch.quantasy.gateway.message.event.IMU.TemperatureEvent;
+import ch.quantasy.gateway.message.status.IMU.AccelerationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.AllDataCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.AngularVelocityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.LedsStatus;
+import ch.quantasy.gateway.message.status.IMU.MagneticFieldCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.OrientationCalculationStatus;
+import ch.quantasy.gateway.message.status.IMU.OrientationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.QuaternionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.StatusLEDStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.imu.IMUDeviceCallback;
@@ -67,48 +76,48 @@ public class IMUService extends AbstractDeviceService<IMUDevice, IMUServiceContr
 
     @Override
     public void accelerationPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_ACCELERATION_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ACCELERATION_CALLBACK_PERIOD, new AccelerationCallbackPeriodStatus(period));
 
     }
 
     @Override
     public void allDataPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_ALL_DATA_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ALL_DATA_CALLBACK_PERIOD, new AllDataCallbackPeriodStatus(period));
     }
 
     @Override
     public void angularVelocityPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, new AngularVelocityCallbackPeriodStatus(period));
     }
 
     @Override
     public void magneticFieldPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, new MagneticFieldCallbackPeriodStatus(period));
     }
 
     @Override
     public void orientationPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_ORIENTATION_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ORIENTATION_CALLBACK_PERIOD, new OrientationCallbackPeriodStatus(period));
     }
 
     @Override
     public void quaternionPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_QUATERNION_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_QUATERNION_CALLBACK_PERIOD, new QuaternionCallbackPeriodStatus(period));
     }
 
     @Override
     public void statusLEDChanged(Boolean isEnabled) {
-        publishStatus(getContract().STATUS_STATUS_LED, isEnabled);
+        publishStatus(getContract().STATUS_STATUS_LED, new StatusLEDStatus(isEnabled));
     }
 
     @Override
     public void LEDsChanged(Boolean areEnabled) {
-        publishStatus(getContract().STATUS_LED, areEnabled);
+        publishStatus(getContract().STATUS_LED, new LedsStatus(areEnabled));
     }
 
     @Override
     public void orientationCalculationChanged(Boolean isEnabled) {
-        publishStatus(getContract().STATUS_ORIENTATION_CALCULATION, isEnabled);
+        publishStatus(getContract().STATUS_ORIENTATION_CALCULATION, new OrientationCalculationStatus(isEnabled));
     }
 
     @Override

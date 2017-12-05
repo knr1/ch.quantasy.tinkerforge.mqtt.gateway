@@ -51,6 +51,13 @@ import ch.quantasy.gateway.message.intent.barometer.DeviceAltitudeCallbackThresh
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDeviceCallback;
 import ch.quantasy.gateway.message.intent.barometer.DeviceAveraging;
+import ch.quantasy.gateway.message.status.barometer.AirPressureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.barometer.AirPressureCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.barometer.AltitudeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.barometer.AltitudeCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.barometer.AveragingStatus;
+import ch.quantasy.gateway.message.status.barometer.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.barometer.ReferenceAirPressureStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -88,37 +95,37 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
 
     @Override
     public void airPressureCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_AIR_PRESSURE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_AIR_PRESSURE_CALLBACK_PERIOD, new AirPressureCallbackPeriodStatus(period));
     }
 
     @Override
     public void altitudeCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, new AltitudeCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void airPressureCallbackThresholdChanged(DeviceAirPressureCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_AIR_PRESSURE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_AIR_PRESSURE_THRESHOLD, new AirPressureCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void altitudeCallbackThresholdChanged(DeviceAltitudeCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ALTITUDE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ALTITUDE_THRESHOLD, new AltitudeCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void averagingChanged(DeviceAveraging averaging) {
-        publishStatus(getContract().STATUS_AVERAGING, averaging);
+        publishStatus(getContract().STATUS_AVERAGING, new AveragingStatus(averaging));
     }
 
     @Override
     public void referenceAirPressureChanged(Integer referenceAirPressure) {
-        publishStatus(getContract().STATUS_REFERENCE_AIR_PRESSURE, referenceAirPressure);
+        publishStatus(getContract().STATUS_REFERENCE_AIR_PRESSURE, new ReferenceAirPressureStatus(referenceAirPressure));
     }
 
 }

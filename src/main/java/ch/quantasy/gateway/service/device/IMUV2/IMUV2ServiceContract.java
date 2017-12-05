@@ -52,6 +52,19 @@ import ch.quantasy.gateway.message.event.IMU.QuaternionEvent;
 import ch.quantasy.gateway.message.event.IMU.TemperatureEvent;
 import ch.quantasy.gateway.message.event.IMUV2.AllDataEvent;
 import ch.quantasy.gateway.message.intent.IMUV2.IMUV2Intent;
+import ch.quantasy.gateway.message.status.IMU.AccelerationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.AllDataCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.AngularVelocityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.LedsStatus;
+import ch.quantasy.gateway.message.status.IMU.MagneticFieldCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.OrientationCalculationStatus;
+import ch.quantasy.gateway.message.status.IMU.OrientationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.QuaternionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.StatusLEDStatus;
+import ch.quantasy.gateway.message.status.IMUV2.GravityVectorCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMUV2.LinearAccelerationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMUV2.SensorFusionModeStatus;
+import ch.quantasy.gateway.message.status.IMUV2.TemperatureCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.imuV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
@@ -167,24 +180,23 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_QUATERNION, QuaternionEvent.class);
         addMessageTopic(EVENT_TEMPERATURE, TemperatureEvent.class);
         addMessageTopic(EVENT_ALL_DATA, AllDataEvent.class);
-        
+        addMessageTopic(STATUS_ACCELERATION_CALLBACK_PERIOD, AccelerationCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ALL_DATA_CALLBACK_PERIOD, AllDataCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, AngularVelocityCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, MagneticFieldCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ORIENTATION_CALLBACK_PERIOD, OrientationCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_QUATERNION_CALLBACK_PERIOD, QuaternionCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_STATUS_LED, StatusLEDStatus.class);
+        addMessageTopic(STATUS_LEDS, LedsStatus.class);
+        addMessageTopic(STATUS_GRAVITY_VECTOR_CALLBACK_PERIOD, GravityVectorCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_LINEAR_ACCELERATION_CALLBACK_PERIOD, LinearAccelerationCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_SENSOR_FUSION_MODE, SensorFusionModeStatus.class);
+
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ALL_DATA_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_GRAVITY_VECTOR_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_LINEAR_ACCELERATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ORIENTATION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_QUATERNION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_STATUS_LED, "[true|false]");
-        descriptions.put(STATUS_LEDS, "[true|false]");
-        descriptions.put(STATUS_SENSOR_FUSION_MODE, "[0..2]");
-
+        
     }
 }

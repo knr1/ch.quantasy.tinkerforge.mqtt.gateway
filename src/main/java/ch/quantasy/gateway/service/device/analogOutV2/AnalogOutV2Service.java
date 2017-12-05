@@ -43,6 +43,7 @@
 package ch.quantasy.gateway.service.device.analogOutV2;
 
 import ch.quantasy.gateway.message.intent.analogOutV2.AnalogOutV2Intent;
+import ch.quantasy.gateway.message.status.analogOutV2.OutputVoltageStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2DeviceCallback;
@@ -62,7 +63,7 @@ public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device,
 
     @Override
     public void outputVoltageChanged(Integer voltage) {
-        publishStatus(getContract().STATUS_OUTPUT_VOLTAGE, voltage);
+        publishStatus(getContract().STATUS_OUTPUT_VOLTAGE, new OutputVoltageStatus(voltage));
     }
 
 }

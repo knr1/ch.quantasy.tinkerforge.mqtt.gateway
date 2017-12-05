@@ -41,10 +41,10 @@
  */
 package ch.quantasy.gateway.message.intent.servo;
 
-import ch.quantasy.gateway.message.intent.AnIntent;
-import ch.quantasy.gateway.message.annotations.Nullable;
-import ch.quantasy.gateway.message.annotations.Range;
-import ch.quantasy.gateway.message.annotations.SetSize;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.annotations.SetSize;
 import java.util.HashSet;
 import java.util.Set;
 

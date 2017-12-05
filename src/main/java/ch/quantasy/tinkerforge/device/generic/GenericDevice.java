@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.generic;
 
-import ch.quantasy.gateway.message.intent.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;

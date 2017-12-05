@@ -42,7 +42,7 @@
  */
 package ch.quantasy.gateway.message.intent.remoteSwitch;
 
-import ch.quantasy.gateway.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 
 /**
  *
