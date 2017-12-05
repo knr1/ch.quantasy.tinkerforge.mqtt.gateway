@@ -45,6 +45,9 @@ package ch.quantasy.gateway.service.device.line;
 import ch.quantasy.gateway.message.event.line.ReflectivityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.line.DeviceReflectivityCallbackThreshold;
+import ch.quantasy.gateway.message.status.line.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.line.ReflectivityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.line.ReflectivityCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.line.LineDeviceCallback;
 import java.net.URI;
@@ -63,17 +66,17 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void reflectivityCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, new ReflectivityCallbackPeriodStatus(period));
     }
 
     @Override
     public void reflectivityThresholdChanged(DeviceReflectivityCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_REFLECTIVITY_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_REFLECTIVITY_THRESHOLD, new ReflectivityCallbackThresholdStatus(threshold));
     }
 
     @Override

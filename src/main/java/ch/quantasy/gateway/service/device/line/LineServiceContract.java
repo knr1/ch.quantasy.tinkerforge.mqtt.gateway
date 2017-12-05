@@ -44,6 +44,9 @@ package ch.quantasy.gateway.service.device.line;
 
 import ch.quantasy.gateway.message.event.line.ReflectivityEvent;
 import ch.quantasy.gateway.message.intent.line.LineIntent;
+import ch.quantasy.gateway.message.status.line.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.line.ReflectivityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.line.ReflectivityCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
@@ -100,17 +103,15 @@ public class LineServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-   addMessageTopic(EVENT_REFLECTIVITY,ReflectivityEvent.class);
-       addMessageTopic(EVENT_REFLECTIVITY_REACHED,ReflectivityEvent.class);
-     
+        addMessageTopic(EVENT_REFLECTIVITY, ReflectivityEvent.class);
+        addMessageTopic(EVENT_REFLECTIVITY_REACHED, ReflectivityEvent.class);
+        addMessageTopic(STATUS_REFLECTIVITY_CALLBACK_PERIOD, ReflectivityCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_REFLECTIVITY_THRESHOLD, ReflectivityCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_REFLECTIVITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_REFLECTIVITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
 
     }
 }

@@ -49,6 +49,11 @@ import ch.quantasy.gateway.message.event.joystick.PositionEvent;
 import ch.quantasy.gateway.message.intent.joystick.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.gateway.message.intent.joystick.DevicePositionCallbackThreshold;
 import ch.quantasy.gateway.message.intent.joystick.JoystickIntent;
+import ch.quantasy.gateway.message.status.joystick.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.joystick.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.joystick.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.joystick.PositionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.joystick.PositionCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDeviceCallback;
@@ -68,27 +73,27 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
     }
 
     @Override
     public void positionCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_POSITION_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_POSITION_CALLBACK_PERIOD, new PositionCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void positionCallbackThresholdChanged(DevicePositionCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_POSITION_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_POSITION_THRESHOLD, new PositionCallbackThresholdStatus(threshold));
     }
 
     @Override

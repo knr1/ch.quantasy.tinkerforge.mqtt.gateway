@@ -47,6 +47,11 @@ import ch.quantasy.gateway.message.event.joystick.AnalogValueEvent;
 import ch.quantasy.gateway.message.event.joystick.CalibratedEvent;
 import ch.quantasy.gateway.message.event.joystick.PositionEvent;
 import ch.quantasy.gateway.message.intent.joystick.JoystickIntent;
+import ch.quantasy.gateway.message.status.joystick.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.joystick.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.joystick.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.joystick.PositionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.joystick.PositionCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
@@ -132,26 +137,24 @@ public class JoystickServiceContract extends DeviceServiceContract {
 
         RELEASED = "released";
         EVENT_RELEASED = EVENT + "/" + RELEASED;
-        
-          addMessageTopic(EVENT_CALIBRATE, CalibratedEvent.class);
+
+        addMessageTopic(EVENT_CALIBRATE, CalibratedEvent.class);
         addMessageTopic(EVENT_PRESSED, ButtonEvent.class);
         addMessageTopic(EVENT_RELEASED, ButtonEvent.class);
-addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
+        addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
         addMessageTopic(EVENT_POSITION, PositionEvent.class);
         addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
         addMessageTopic(EVENT_POSITION_REACHED, PositionEvent.class);
-        
 
+        addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_POSITION_CALLBACK_PERIOD, PositionCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_POSITION_THRESHOLD, PositionCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-      
-        descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n minX: [0..4095]\n maxX: [0..4095]\n minY: [0..4095]\n maxY: [0..4095]");
-        descriptions.put(STATUS_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n minX: [-100..100]\n maxX: [-100..100]\n minY: [-100..100]\n maxY: [-100..100]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 }

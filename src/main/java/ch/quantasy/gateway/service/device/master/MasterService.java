@@ -53,6 +53,13 @@ import ch.quantasy.tinkerforge.device.master.MasterDeviceCallback;
 import ch.quantasy.gateway.message.intent.master.StackCurrentCallbackThreshold;
 import ch.quantasy.gateway.message.intent.master.StackVoltageCallbackThreshold;
 import ch.quantasy.gateway.message.intent.master.USBVoltageCallbackThreshold;
+import ch.quantasy.gateway.message.status.master.CurrentCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.master.CurrentCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.master.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.master.StackVoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.master.StackVoltageCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.master.UsbVoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.master.UsbVoltageCallbackThresholdStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -69,37 +76,37 @@ public class MasterService extends AbstractDeviceService<MasterDevice, MasterSer
 
     @Override
     public void debouncePeriodChanged(Long debouncePeriod) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, debouncePeriod);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(debouncePeriod));
     }
 
     @Override
     public void stackCurrentCallbackThresholdChanged(StackCurrentCallbackThreshold stackCurrentCallbackThreshold) {
-        publishStatus(getContract().STATUS_CURRENT_CALLBACK_THRESHOLD, stackCurrentCallbackThreshold);
+        publishStatus(getContract().STATUS_CURRENT_CALLBACK_THRESHOLD, new CurrentCallbackThresholdStatus(stackCurrentCallbackThreshold));
     }
 
     @Override
     public void stackCurrentCallbackPeriodChanged(Long currentCallbackPeriod) {
-        publishStatus(getContract().STATUS_STACK_CURRENT_CALLBACK_PERIOD, currentCallbackPeriod);
+        publishStatus(getContract().STATUS_STACK_CURRENT_CALLBACK_PERIOD, new CurrentCallbackPeriodStatus(currentCallbackPeriod));
     }
 
     @Override
     public void stackVoltageCallbackPeriodChanged(long voltageCallbackPeriod) {
-        publishStatus(getContract().STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, voltageCallbackPeriod);
+        publishStatus(getContract().STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, new StackVoltageCallbackPeriodStatus(voltageCallbackPeriod));
     }
 
     @Override
     public void stackVoltageCallbackThresholdChanged(StackVoltageCallbackThreshold voltageCallbackThreshold) {
-        publishStatus(getContract().STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, voltageCallbackThreshold);
+        publishStatus(getContract().STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, new StackVoltageCallbackThresholdStatus(voltageCallbackThreshold));
     }
 
     @Override
     public void usbVoltageCallbackPeriodChanged(long usbVoltageCallbackPeriod) {
-        publishStatus(getContract().STATUS_USB_VOLTAGE_CALLBACK_PERIOD, usbVoltageCallbackPeriod);
+        publishStatus(getContract().STATUS_USB_VOLTAGE_CALLBACK_PERIOD, new UsbVoltageCallbackPeriodStatus(usbVoltageCallbackPeriod));
     }
 
     @Override
     public void USBVoltageCallbackThresholdChanged(USBVoltageCallbackThreshold usbVoltageCallbackThreshold) {
-        publishStatus(getContract().STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD, usbVoltageCallbackThreshold);
+        publishStatus(getContract().STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD, new UsbVoltageCallbackThresholdStatus(usbVoltageCallbackThreshold));
     }
 
     @Override

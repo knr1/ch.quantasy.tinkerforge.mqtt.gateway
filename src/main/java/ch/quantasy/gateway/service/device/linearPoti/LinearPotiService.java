@@ -47,7 +47,11 @@ import ch.quantasy.gateway.message.event.linearPoti.PositionEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.linearPoti.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.gateway.message.intent.linearPoti.DevicePositionCallbackThreshold;
-import ch.quantasy.gateway.message.intent.linearPoti.LinearPotiIntent;
+import ch.quantasy.gateway.message.status.linearPoti.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.linearPoti.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.linearPoti.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.linearPoti.PositionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.linearPoti.PositionCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDeviceCallback;
 
@@ -86,27 +90,27 @@ public class LinearPotiService extends AbstractDeviceService<LinearPotiDevice, L
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
     }
 
     @Override
     public void positionCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_POSITION_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_POSITION_CALLBACK_PERIOD, new PositionCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void positionCallbackThresholdChanged(DevicePositionCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_POSITION_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_POSITION_THRESHOLD, new PositionCallbackThresholdStatus(threshold));
 
     }
 

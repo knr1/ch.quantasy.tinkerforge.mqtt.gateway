@@ -63,7 +63,7 @@ import java.util.logging.Logger;
  */
 public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFinder, LaserRangeFinderDeviceCallback, LaserRangeFinderIntent> {
 
-    private SensorHardware.Version sensorHardwareVersion;
+    private SensorHardware sensorHardware;
 
     public LaserRangeFinderDevice(TinkerforgeStack stack, BrickletLaserRangeFinder device) throws NotConnectedException, TimeoutException {
         super(stack, device, new LaserRangeFinderIntent());
@@ -75,7 +75,7 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
         device.addDistanceReachedListener(super.getCallback());
         device.addVelocityListener(super.getCallback());
         device.addVelocityReachedListener(super.getCallback());
-        if (sensorHardwareVersion == null) {
+        if (sensorHardware == null) {
             updateSensorHardwareVersion();
         }
 
@@ -91,8 +91,8 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
 
     private void updateSensorHardwareVersion() {
         try {
-            this.sensorHardwareVersion = SensorHardware.Version.getVersionFor(getDevice().getSensorHardwareVersion());
-            super.getCallback().sensorHardwareVersion(this.sensorHardwareVersion);
+            this.sensorHardware = new SensorHardware(getDevice().getSensorHardwareVersion());
+            super.getCallback().sensorHardware(this.sensorHardware);
 
         } catch (NotConnectedException | TimeoutException ex) {
             Logger.getLogger(LaserRangeFinderDevice.class.getName()).log(Level.SEVERE, null, ex);

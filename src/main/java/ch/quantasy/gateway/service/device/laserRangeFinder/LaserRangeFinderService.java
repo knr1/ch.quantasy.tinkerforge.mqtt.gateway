@@ -54,6 +54,16 @@ import ch.quantasy.gateway.message.intent.laserRangeFinder.LaserRangeFinderInten
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDeviceCallback;
 import ch.quantasy.gateway.message.intent.laserRangeFinder.SensorHardware;
+import ch.quantasy.gateway.message.status.laserRangeFinder.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.DistanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.DistanceCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.LaserEnabledStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.ModeStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.MovingAverageStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.SensorHardwareStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.VelocityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.VelocityCallbackThresholdStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -89,52 +99,52 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, new DistanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void velocityCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, new VelocityCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, new DistanceCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void velocityCallbackThresholdChanged(DeviceVelocityCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_VELOCITY_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_VELOCITY_THRESHOLD, new VelocityCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void laserStatusChanged(boolean laserEnabled) {
-        publishStatus(getContract().STATUS_LASER, laserEnabled);
+        publishStatus(getContract().STATUS_LASER, new LaserEnabledStatus(laserEnabled));
     }
 
     @Override
     public void movingAverageChanged(DeviceAveraging averaging) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, averaging);
+        publishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(averaging));
     }
 
     @Override
     public void deviceModeChanged(DeviceMode deviceMode) {
-        publishStatus(getContract().STATUS_DEVICE_MODE, deviceMode);
+        publishStatus(getContract().STATUS_DEVICE_MODE, new ModeStatus(deviceMode));
     }
 
     @Override
     public void deviceConfigurationChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_DEVICE_CONFIGURATION, configuration);
+        publishStatus(getContract().STATUS_DEVICE_CONFIGURATION, new ConfigurationStatus(configuration));
     }
 
     @Override
-    public void sensorHardwareVersion(SensorHardware.Version version) {
-        publishStatus(getContract().STATUS_SENSOR_HARDWARE_VERSION, version);
+    public void sensorHardware(SensorHardware sensorHardware) {
+        publishStatus(getContract().STATUS_SENSOR_HARDWARE, new SensorHardwareStatus(sensorHardware));
     }
 
 }

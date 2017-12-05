@@ -45,6 +45,16 @@ package ch.quantasy.gateway.service.device.laserRangeFinder;
 import ch.quantasy.gateway.message.event.laserRangeFinder.VelocityEvent;
 import ch.quantasy.gateway.message.event.laserRangeFinder.DistanceEvent;
 import ch.quantasy.gateway.message.intent.laserRangeFinder.LaserRangeFinderIntent;
+import ch.quantasy.gateway.message.status.laserRangeFinder.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.DistanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.DistanceCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.LaserEnabledStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.ModeStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.MovingAverageStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.SensorHardwareStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.VelocityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.laserRangeFinder.VelocityCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
@@ -91,8 +101,8 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
     public final String DEVICE_CONFIGURATION;
     public final String STATUS_DEVICE_CONFIGURATION;
 
-    public final String SENSOR_HARDWARE_VERSION;
-    public final String STATUS_SENSOR_HARDWARE_VERSION;
+    public final String SENSOR_HARDWARE;
+    public final String STATUS_SENSOR_HARDWARE;
 
     public LaserRangeFinderServiceContract(LaserRangeFinderDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
@@ -140,27 +150,26 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
         DEVICE_CONFIGURATION = "deviceConfiguration";
         STATUS_DEVICE_CONFIGURATION = STATUS + "/" + DEVICE_CONFIGURATION;
 
-        SENSOR_HARDWARE_VERSION = "sensorHardwareVersion";
-        STATUS_SENSOR_HARDWARE_VERSION = STATUS + "/" + SENSOR_HARDWARE_VERSION;
-         addMessageTopic(EVENT_DISTANCE, DistanceEvent.class);
+        SENSOR_HARDWARE = "sensorHardware";
+        STATUS_SENSOR_HARDWARE = STATUS + "/" + SENSOR_HARDWARE;
+        addMessageTopic(EVENT_DISTANCE, DistanceEvent.class);
         addMessageTopic(EVENT_VELOCITY, VelocityEvent.class);
         addMessageTopic(EVENT_DISTANCE_REACHED, DistanceEvent.class);
         addMessageTopic(EVENT_VELOCITY_REACHED, VelocityEvent.class);
-      
+        addMessageTopic(STATUS_DISTANCE_CALLBACK_PERIOD, DistanceCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_VELOCITY_CALLBACK_PERIOD, VelocityCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_DISTANCE_THRESHOLD, DistanceCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_VELOCITY_THRESHOLD, VelocityCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_DEVICE_MODE, ModeStatus.class);
+        addMessageTopic(STATUS_DEVICE_CONFIGURATION, ConfigurationStatus.class);
+        addMessageTopic(STATUS_SENSOR_HARDWARE, SensorHardwareStatus.class);
+        addMessageTopic(STATUS_LASER, LaserEnabledStatus.class);
+        addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-         descriptions.put(STATUS_DISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_VELOCITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_DISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4000]\n max: [0..4000]");
-        descriptions.put(STATUS_VELOCITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [-127..-127]\n max: [-127..127]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_DEVICE_MODE, "mode: [distance|velocity_12_7|velocity_31_75|velocity_63_5|velocity_127]");
-        descriptions.put(STATUS_DEVICE_CONFIGURATION, "acquisition: [1..255]\n quickTermination: [true|false]\n thresholdValue: [0..255]\n measurementFrequency: [0|10..500]");
-        descriptions.put(STATUS_SENSOR_HARDWARE_VERSION, "[v1|v3]");
-        descriptions.put(STATUS_LASER, "[true|false]");
-        descriptions.put(STATUS_MOVING_AVERAGE, "averagingDistance:[0..30]\n averagingVelocity:[0..30]");
     }
 }

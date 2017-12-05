@@ -44,6 +44,12 @@ package ch.quantasy.gateway.service.device.loadCell;
 
 import ch.quantasy.gateway.message.event.loadCell.WeightEvent;
 import ch.quantasy.gateway.message.intent.loadCell.LoadCellIntent;
+import ch.quantasy.gateway.message.status.loadCell.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.loadCell.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.loadCell.MovingAverageStatus;
+import ch.quantasy.gateway.message.status.loadCell.StatusLEDStatus;
+import ch.quantasy.gateway.message.status.loadCell.WeightCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.loadCell.WeightCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
@@ -128,18 +134,17 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         CALIBRATE = "calibrate";
         addMessageTopic(EVENT_WEIGHT, WeightEvent.class);
         addMessageTopic(EVENT_WEIGHT_REACHED, WeightEvent.class);
-        
+        addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
+
+        addMessageTopic(STATUS_WEIGHT_CALLBACK_PERIOD, WeightCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_WEIGHT_THRESHOLD, WeightCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
+        addMessageTopic(STATUS_LED, StatusLEDStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_MOVING_AVERAGE, "[1..40]");
-
-        descriptions.put(STATUS_WEIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_WEIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..50001]\n max: [-50001..50001]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_CONFIGURATION, "gain:[gain128X|gain64X|gain32X]\n rate: [rate10Hz|rate80Hz]");
-        descriptions.put(STATUS_LED, "[true|false]");
 
     }
 }

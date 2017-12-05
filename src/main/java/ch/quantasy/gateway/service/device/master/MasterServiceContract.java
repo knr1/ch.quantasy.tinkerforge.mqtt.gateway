@@ -47,6 +47,14 @@ import ch.quantasy.gateway.message.event.master.StackCurrentEvent;
 import ch.quantasy.gateway.message.event.master.StackVoltageEvent;
 import ch.quantasy.gateway.message.event.master.USBVoltageEvent;
 import ch.quantasy.gateway.message.intent.master.MasterIntent;
+import ch.quantasy.gateway.message.status.master.CurrentCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.master.CurrentCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.master.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.master.StackVoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.master.StackVoltageCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.master.StatusLEDStatus;
+import ch.quantasy.gateway.message.status.master.UsbVoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.master.UsbVoltageCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.master.MasterDevice;
@@ -150,7 +158,7 @@ public class MasterServiceContract extends DeviceServiceContract {
         STATUS_USB_VOLTAGE = STATUS + "/" + USB_VOLTAGE;
         STATUS_USB_VOLTAGE_CALLBACK_PERIOD = STATUS_USB_VOLTAGE + "/" + CALLBACK_PERIOD;
         STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD = STATUS_USB_VOLTAGE + "/" + CALLBACK_THRESHOLD;
-        addMessageTopic(EVENT_RESET,ResetEvent.class);
+        addMessageTopic(EVENT_RESET, ResetEvent.class);
         addMessageTopic(EVENT_STACK_VOLTAGE, StackVoltageEvent.class);
         addMessageTopic(EVENT_STACK_VOLTAGE_REACHED, StackVoltageEvent.class);
 
@@ -159,19 +167,19 @@ public class MasterServiceContract extends DeviceServiceContract {
 
         addMessageTopic(EVENT_STACK_CURRENT, StackCurrentEvent.class);
         addMessageTopic(EVENT_STACK_CURRENT_REACHED, StackCurrentEvent.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_STACK_CURRENT_CALLBACK_PERIOD, CurrentCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_STATUS_LED_ENABLED, StatusLEDStatus.class);
+        addMessageTopic(STATUS_CURRENT_CALLBACK_THRESHOLD, CurrentCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, StackVoltageCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, StackVoltageCallbackThresholdStatus.class);
 
+        addMessageTopic(STATUS_USB_VOLTAGE_CALLBACK_PERIOD, UsbVoltageCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD, UsbVoltageCallbackThresholdStatus.class);
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
 
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_STACK_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_STATUS_LED_ENABLED, "[true|false]");
-        descriptions.put(STATUS_CURRENT_CALLBACK_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, "[" + Long.MIN_VALUE + ".." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, "[option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-
-        descriptions.put(STATUS_USB_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
     }
 }

@@ -47,6 +47,12 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.loadCell.DeviceConfiguration;
 import ch.quantasy.gateway.message.intent.loadCell.DeviceWeightCallbackThreshold;
 import ch.quantasy.gateway.message.intent.loadCell.LoadCellIntent;
+import ch.quantasy.gateway.message.status.loadCell.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.loadCell.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.loadCell.MovingAverageStatus;
+import ch.quantasy.gateway.message.status.loadCell.StatusLEDStatus;
+import ch.quantasy.gateway.message.status.loadCell.WeightCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.loadCell.WeightCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDeviceCallback;
 
@@ -67,32 +73,32 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void weightCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_WEIGHT_CALLBACK_PERIOD, period);
+        publishStatus(getContract().STATUS_WEIGHT_CALLBACK_PERIOD, new WeightCallbackPeriodStatus(period));
     }
 
     @Override
     public void weightCallbackThresholdChanged(DeviceWeightCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_WEIGHT_THRESHOLD, threshold);
+        publishStatus(getContract().STATUS_WEIGHT_THRESHOLD, new WeightCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_CONFIGURATION, configuration);
+        publishStatus(getContract().STATUS_CONFIGURATION, new ConfigurationStatus(configuration));
     }
 
     @Override
     public void movingAverageChanged(short average) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, average);
+        publishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(average));
     }
 
     @Override
     public void statusLEDChanged(boolean led) {
-        publishStatus(getContract().STATUS_LED, led);
+        publishStatus(getContract().STATUS_LED, new StatusLEDStatus(led));
     }
 
     @Override

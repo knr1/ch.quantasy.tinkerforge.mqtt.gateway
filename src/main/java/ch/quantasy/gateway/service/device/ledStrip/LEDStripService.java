@@ -52,6 +52,7 @@ import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDeviceCallback;
 import ch.quantasy.gateway.message.intent.ledStrip.LEDStripDeviceConfig;
 import ch.quantasy.gateway.message.intent.ledStrip.LEDFrame;
 import ch.quantasy.gateway.message.intent.ledStrip.LedStripIntent;
+import ch.quantasy.gateway.message.status.ledStrip.ConfigStatus;
 
 import java.net.URI;
 import java.util.Deque;
@@ -69,7 +70,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     @Override
     public void configurationChanged(LEDStripDeviceConfig config) {
-        publishStatus(getContract().STATUS_CONFIG, config);
+        publishStatus(getContract().STATUS_CONFIG, new ConfigStatus(config));
     }
 
     @Override

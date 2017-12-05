@@ -75,5 +75,5 @@ public interface LaserRangeFinderDeviceCallback extends DeviceCallback, Bricklet
 
     public void deviceConfigurationChanged(DeviceConfiguration configuration);
 
-    public void sensorHardwareVersion(SensorHardware.Version version);
+    public void sensorHardware(SensorHardware sensorHardware);
 }

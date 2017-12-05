@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.device.ledStrip;
 import ch.quantasy.gateway.message.event.ledStrip.LagingEvent;
 import ch.quantasy.gateway.message.event.ledStrip.RenderedEvent;
 import ch.quantasy.gateway.message.intent.ledStrip.LedStripIntent;
+import ch.quantasy.gateway.message.status.ledStrip.ConfigStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDevice;
@@ -94,11 +95,11 @@ public class LEDStripServiceContract extends DeviceServiceContract {
         EVENT_LAGING = EVENT + "/" + LAGING;
         addMessageTopic(EVENT_LEDs_RENDERED, RenderedEvent.class);
         addMessageTopic(EVENT_LAGING, LagingEvent.class);
+        addMessageTopic(STATUS_CONFIG, ConfigStatus.class);
 
     }
 
     @Override
     protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_CONFIG, "chipType: [WS2801|WS2811|WS2812|WS2812RGBW|LPD8806|APA102]\n frameDurationInMilliseconds: [0.." + Long.MAX_VALUE + "]\n clockFrequencyOfICsInHz: [10000..2000000]\n numberOfLEDs: [1..320]\n channelMapping: [rgb|rbg|grb|gbr|brg|bgr]");
     }
 }
