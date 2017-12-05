@@ -400,15 +400,6 @@ Message:
 ## API
 
 
-cd /home/reto/NetBeansProjects/ch.quantasy.tinkerforge.mqtt.gateway; JAVA_HOME=/usr/lib/jvm/default /usr/share/netbeans/java/maven/bin/mvn "-Dexec.args=-classpath %classpath ch.quantasy.gateway.service.doc.Descriptions" -Dexec.executable=/usr/lib/jvm/default/bin/java -Dexec.classpathScope=runtime org.codehaus.mojo:exec-maven-plugin:1.2.1:exec
-Running NetBeans Compile On Save execution. Phase execution is skipped and output directories of dependency projects (with Compile on Save turned on) will be used instead of their jar artifacts.
-Scanning for projects...
-                                                                        
-------------------------------------------------------------------------
-Building ch.quantasy.tinkerforge.mqtt.gateway 1.0-SNAPSHOT
-------------------------------------------------------------------------
-
---- exec-maven-plugin:1.2.1:exec (default-cli) @ ch.quantasy.tinkerforge.mqtt.gateway ---
 ### IMU
 ```
 TF/IMU/U/<id>/E/acceleration
