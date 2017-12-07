@@ -125,14 +125,12 @@ public class GPSServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_MOTION, MotionEvent.class);
         addMessageTopic(EVENT_STATE, StatusEvent.class);
         addMessageTopic(EVENT_COORDINATES, CoordinatesEvent.class);
-    }
-
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        addMessageTopic(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
+         addMessageTopic(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
 
         addMessageTopic(STATUS_MOTION_CALLBACK_PERIOD, MotionCallbackPeriodStatus.class);
         addMessageTopic(STATUS_ALTITUDE_CALLBACK_PERIOD, AltitudeCallbackPeriodStatus.class);
         addMessageTopic(STATUS_COORDINATES_CALLBACK_PERIOD, CoordinatesCallbackPeriodStatus.class);
     }
+
+   
 }

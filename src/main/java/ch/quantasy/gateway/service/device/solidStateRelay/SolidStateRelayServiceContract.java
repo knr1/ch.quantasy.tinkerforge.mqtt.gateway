@@ -44,6 +44,7 @@ package ch.quantasy.gateway.service.device.solidStateRelay;
 
 import ch.quantasy.gateway.message.event.solidStateRelay.MonoflopDoneEvent;
 import ch.quantasy.gateway.message.intent.solidState.SolidStateRelayIntent;
+import ch.quantasy.gateway.message.status.solidState.StateStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
@@ -81,11 +82,9 @@ public class SolidStateRelayServiceContract extends DeviceServiceContract {
         STATE = "state";
         STATUS_STATE = STATUS + "/" + STATE;
         addMessageTopic(EVENT_MONOFLOP_DONE, MonoflopDoneEvent.class);
+        addMessageTopic(STATUS_STATE, StateStatus.class);
 
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_STATE, "[true|false]");
-    }
+  
 }

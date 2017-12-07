@@ -58,6 +58,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -121,7 +122,7 @@ public class ServoDevice extends GenericDevice<BrickServo, ServoDeviceCallback, 
                 setDegree(deltaList);
                 setPulseWidth(deltaList);
                 setEnabled(deltaList);
-                getCallback().servosChanged(this.servoMap.values());
+                getCallback().servosChanged(new TreeSet(this.servoMap.values()));
             }
         }
         if (intent.statusLED != null) {

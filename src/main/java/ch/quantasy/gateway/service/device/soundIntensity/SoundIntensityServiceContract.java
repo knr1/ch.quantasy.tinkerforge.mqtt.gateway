@@ -44,6 +44,9 @@ package ch.quantasy.gateway.service.device.soundIntensity;
 
 import ch.quantasy.gateway.message.event.soundIntensity.SoundIntensityEvent;
 import ch.quantasy.gateway.message.intent.soundIntensity.SoundIntensityIntent;
+import ch.quantasy.gateway.message.status.soundIntensity.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.soundIntensity.IntensityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.soundIntensity.IntensityCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
@@ -102,13 +105,10 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
         addMessageTopic(EVENT_INTENSITY, SoundIntensityEvent.class);
         addMessageTopic(EVENT_INTENSITY_REACHED, SoundIntensityEvent.class);
-
+        addMessageTopic(STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, IntensityCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_SOUND_INTENSITY_THRESHOLD, IntensityCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_SOUND_INTENSITY_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..10000]\n max: [0..10000]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-    }
+   
 }

@@ -48,6 +48,7 @@ import ch.quantasy.gateway.message.intent.LCD20x4.DeviceConfigParameters;
 import ch.quantasy.gateway.message.intent.LCD20x4.DeviceCustomCharacter;
 import ch.quantasy.gateway.message.intent.LCD20x4.DeviceDefaultText;
 import ch.quantasy.gateway.message.status.LCD20x4.BacklightStatus;
+import ch.quantasy.gateway.message.status.LCD20x4.CustomCharactersStatus;
 import ch.quantasy.gateway.message.status.LCD20x4.DefaultTextCounterStatus;
 import ch.quantasy.gateway.message.status.LCD20x4.DefaultTextsStatus;
 import ch.quantasy.gateway.message.status.LCD20x4.ParametersStatus;
@@ -70,27 +71,27 @@ public class LCD20x4Service extends AbstractDeviceService<LCD20x4Device, LCD20x4
 
     @Override
     public void backlightChanged(Boolean isBacklightEnabled) {
-        publishStatus(getContract().STATUS_BACKLIGHT, new BacklightStatus(isBacklightEnabled));
+        readyToPublishStatus(getContract().STATUS_BACKLIGHT, new BacklightStatus(isBacklightEnabled));
     }
 
     @Override
     public void configurationChanged(DeviceConfigParameters configParameters) {
-        publishStatus(getContract().STATUS_CONFIG_PARAMETERS, new ParametersStatus(configParameters));
+        readyToPublishStatus(getContract().STATUS_CONFIG_PARAMETERS, new ParametersStatus(configParameters));
     }
 
     @Override
     public void customCharactersChanged(Set<DeviceCustomCharacter> customCharacters) {
-        publishStatus(getContract().STATUS_CUSTOM_CHARACTERS, customCharacters);
+        readyToPublishStatus(getContract().STATUS_CUSTOM_CHARACTERS, new CustomCharactersStatus(customCharacters));
     }
 
     @Override
     public void defaultTextsChanged(Set<DeviceDefaultText> defaultTexts) {
-        publishStatus(getContract().STATUS_DEFAULT_TEXT_TEXTS, new DefaultTextsStatus(defaultTexts));
+        readyToPublishStatus(getContract().STATUS_DEFAULT_TEXT_TEXTS, new DefaultTextsStatus(defaultTexts));
     }
 
     @Override
     public void defaultTextCounterChanged(Integer defaultTextCounter) {
-        publishStatus(getContract().STATUS_DEFAULT_TEXT_COUNTER, new DefaultTextCounterStatus(defaultTextCounter));
+        readyToPublishStatus(getContract().STATUS_DEFAULT_TEXT_COUNTER, new DefaultTextCounterStatus(defaultTextCounter));
     }
 
     @Override

@@ -89,27 +89,27 @@ public class DistanceIRService extends AbstractDeviceService<DistanceIRDevice, D
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
     }
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, new DistanceCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, new DistanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, new DistanceCallbackPeriodStatus(Long.MIN_VALUE));
+        readyToPublishStatus(getContract().STATUS_DISTANCE_THRESHOLD, new DistanceCallbackPeriodStatus(Long.MIN_VALUE));
 
     }
 

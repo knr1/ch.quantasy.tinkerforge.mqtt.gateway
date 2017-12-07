@@ -45,6 +45,11 @@ package ch.quantasy.gateway.service.device.rotaryPoti;
 import ch.quantasy.gateway.message.event.rotaryPoti.AnalogValueEvent;
 import ch.quantasy.gateway.message.event.rotaryPoti.PositionEvent;
 import ch.quantasy.gateway.message.intent.rotaryPoti.RotaryPotiIntent;
+import ch.quantasy.gateway.message.status.rotaryPoti.AnalogValueCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.rotaryPoti.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.rotaryPoti.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.rotaryPoti.PositionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.rotaryPoti.PositionCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
@@ -116,15 +121,12 @@ public class RotaryPotiServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_POSITION, PositionEvent.class);
         addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
         addMessageTopic(EVENT_POSITION_REACHED, PositionEvent.class);
-        
+        addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogValueCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_POSITION_CALLBACK_PERIOD, PositionCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_POSITION_THRESHOLD, PositionCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_POSITION_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ANALOG_VALUE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..4095]\n max: [0..4095]");
-        descriptions.put(STATUS_POSITION_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-    }
+    
 }

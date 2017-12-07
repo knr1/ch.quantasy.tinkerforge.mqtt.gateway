@@ -95,37 +95,37 @@ public class BarometerService extends AbstractDeviceService<BarometerDevice, Bar
 
     @Override
     public void airPressureCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_AIR_PRESSURE_CALLBACK_PERIOD, new AirPressureCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_AIR_PRESSURE_CALLBACK_PERIOD, new AirPressureCallbackPeriodStatus(period));
     }
 
     @Override
     public void altitudeCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, new AltitudeCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, new AltitudeCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void airPressureCallbackThresholdChanged(DeviceAirPressureCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_AIR_PRESSURE_THRESHOLD, new AirPressureCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_AIR_PRESSURE_THRESHOLD, new AirPressureCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void altitudeCallbackThresholdChanged(DeviceAltitudeCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ALTITUDE_THRESHOLD, new AltitudeCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_ALTITUDE_THRESHOLD, new AltitudeCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void averagingChanged(DeviceAveraging averaging) {
-        publishStatus(getContract().STATUS_AVERAGING, new AveragingStatus(averaging));
+        readyToPublishStatus(getContract().STATUS_AVERAGING, new AveragingStatus(averaging));
     }
 
     @Override
     public void referenceAirPressureChanged(Integer referenceAirPressure) {
-        publishStatus(getContract().STATUS_REFERENCE_AIR_PRESSURE, new ReferenceAirPressureStatus(referenceAirPressure));
+        readyToPublishStatus(getContract().STATUS_REFERENCE_AIR_PRESSURE, new ReferenceAirPressureStatus(referenceAirPressure));
     }
 
 }

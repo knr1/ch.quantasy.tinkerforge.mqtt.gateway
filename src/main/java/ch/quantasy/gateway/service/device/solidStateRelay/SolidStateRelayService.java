@@ -43,6 +43,7 @@
 package ch.quantasy.gateway.service.device.solidStateRelay;
 
 import ch.quantasy.gateway.message.event.solidStateRelay.MonoflopDoneEvent;
+import ch.quantasy.gateway.message.status.solidState.StateStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDeviceCallback;
@@ -61,7 +62,7 @@ public class SolidStateRelayService extends AbstractDeviceService<SolidStateRela
 
     @Override
     public void stateChanged(Boolean state) {
-        publishStatus(getContract().STATUS_STATE, state);
+        readyToPublishStatus(getContract().STATUS_STATE, new StateStatus(state));
     }
 
     @Override

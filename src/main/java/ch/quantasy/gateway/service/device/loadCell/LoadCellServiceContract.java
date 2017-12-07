@@ -143,8 +143,5 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_LED, StatusLEDStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-    }
+    
 }

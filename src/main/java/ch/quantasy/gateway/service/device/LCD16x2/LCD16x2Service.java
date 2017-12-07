@@ -68,17 +68,17 @@ public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2
 
     @Override
     public void backlightChanged(Boolean isBacklightEnabled) {
-        publishStatus(getContract().STATUS_BACKLIGHT, new BacklightStatus(isBacklightEnabled));
+        readyToPublishStatus(getContract().STATUS_BACKLIGHT, new BacklightStatus(isBacklightEnabled));
     }
 
     @Override
     public void configurationChanged(DeviceConfigParameters configParameters) {
-        publishStatus(getContract().STATUS_CONFIG_PARAMETERS, new ParametersStatus(configParameters));
+        readyToPublishStatus(getContract().STATUS_CONFIG_PARAMETERS, new ParametersStatus(configParameters));
     }
 
     @Override
     public void customCharactersChanged(Set<DeviceCustomCharacter> customCharacters) {
-        publishStatus(getContract().STATUS_CUSTOM_CHARACTERS, new CustomCharactersStatus(customCharacters));
+        readyToPublishStatus(getContract().STATUS_CUSTOM_CHARACTERS, new CustomCharactersStatus(customCharacters));
     }
 
     @Override

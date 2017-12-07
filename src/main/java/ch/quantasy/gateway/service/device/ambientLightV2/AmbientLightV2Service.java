@@ -68,22 +68,22 @@ public class AmbientLightV2Service extends AbstractDeviceService<AmbientLightV2D
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, new IlluminanceCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, new IlluminanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, new IlluminanceCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, new IlluminanceCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_CONFIGURATION, new ConfigurationStatus(configuration));
+        readyToPublishStatus(getContract().STATUS_CONFIGURATION, new ConfigurationStatus(configuration));
     }
 
     @Override

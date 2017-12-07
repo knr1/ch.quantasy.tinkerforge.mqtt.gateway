@@ -73,32 +73,32 @@ public class LoadCellService extends AbstractDeviceService<LoadCellDevice, LoadC
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void weightCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_WEIGHT_CALLBACK_PERIOD, new WeightCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_WEIGHT_CALLBACK_PERIOD, new WeightCallbackPeriodStatus(period));
     }
 
     @Override
     public void weightCallbackThresholdChanged(DeviceWeightCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_WEIGHT_THRESHOLD, new WeightCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_WEIGHT_THRESHOLD, new WeightCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_CONFIGURATION, new ConfigurationStatus(configuration));
+        readyToPublishStatus(getContract().STATUS_CONFIGURATION, new ConfigurationStatus(configuration));
     }
 
     @Override
     public void movingAverageChanged(short average) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(average));
+        readyToPublishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(average));
     }
 
     @Override
     public void statusLEDChanged(boolean led) {
-        publishStatus(getContract().STATUS_LED, new StatusLEDStatus(led));
+        readyToPublishStatus(getContract().STATUS_LED, new StatusLEDStatus(led));
     }
 
     @Override

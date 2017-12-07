@@ -51,6 +51,15 @@ import ch.quantasy.gateway.message.intent.voltageCurrent.DeviceConfiguration;
 import ch.quantasy.gateway.message.intent.voltageCurrent.DeviceCurrentCallbackThreshold;
 import ch.quantasy.gateway.message.intent.voltageCurrent.DevicePowerCallbackThreshold;
 import ch.quantasy.gateway.message.intent.voltageCurrent.DeviceVoltagCallbackThreshold;
+import ch.quantasy.gateway.message.status.voltageCurrent.CalibrationStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.CurrentCalbackThresholdStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.CurrentCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.PowerCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.PowerCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.VoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.VoltageCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -69,47 +78,47 @@ public class VoltageCurrentService extends AbstractDeviceService<VoltageCurrentD
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_CONFIGURATION, configuration);
+        readyToPublishStatus(getContract().STATUS_CONFIGURATION, new ConfigurationStatus(configuration));
     }
 
     @Override
     public void currentCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_CURRENT_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_CURRENT_CALLBACK_PERIOD, new CurrentCallbackPeriodStatus(period));
     }
 
     @Override
     public void currentCallbackThresholdChanged(DeviceCurrentCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_CURRENT_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_CURRENT_THRESHOLD, new CurrentCalbackThresholdStatus(threshold));
     }
 
     @Override
     public void calibrationChanged(DeviceCalibration calibration) {
-        publishStatus(getContract().STATUS_CALIBRATION, calibration);
+        readyToPublishStatus(getContract().STATUS_CALIBRATION, new CalibrationStatus(calibration));
     }
 
     @Override
     public void voltageCallbackThresholdChanged(DeviceVoltagCallbackThreshold voltageThreshold) {
-        publishStatus(getContract().STATUS_VOLTAGE_THRESHOLD, voltageThreshold);
+        readyToPublishStatus(getContract().STATUS_VOLTAGE_THRESHOLD, new VoltageCallbackThresholdStatus(voltageThreshold));
     }
 
     @Override
     public void voltageCallbackPeriodChanged(long voltageCallbackPeriod) {
-        publishStatus(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, voltageCallbackPeriod);
+        readyToPublishStatus(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, new VoltageCallbackPeriodStatus(voltageCallbackPeriod));
     }
 
     @Override
     public void powerCallbackPeriodChanged(long powerCallbackPeriod) {
-        publishStatus(getContract().STATUS_POWER_CALLBACK_PERIOD, powerCallbackPeriod);
+        readyToPublishStatus(getContract().STATUS_POWER_CALLBACK_PERIOD, new PowerCallbackPeriodStatus(powerCallbackPeriod));
     }
 
     @Override
     public void powerCallbackThresholdChanged(DevicePowerCallbackThreshold powerThreshold) {
-        publishStatus(getContract().STATUS_POWER_THRESHOLD, powerThreshold);
+        readyToPublishStatus(getContract().STATUS_POWER_THRESHOLD, new PowerCallbackThresholdStatus(powerThreshold));
     }
 
     @Override

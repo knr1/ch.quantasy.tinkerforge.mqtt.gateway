@@ -67,22 +67,22 @@ public class DustDetectorService extends AbstractDeviceService<DustDetectorDevic
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void movingAverageChanged(short movingAverage) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(movingAverage));
+        readyToPublishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(movingAverage));
     }
 
     @Override
     public void dustDensityCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, new DustDensityCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DUST_DENSITY_CALLBACK_PERIOD, new DustDensityCallbackPeriodStatus(period));
     }
 
     @Override
     public void dustDensityCallbackThresholdChanged(DeviceDustDensityCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_DUST_DENSITY_THRESHOLD, new DustDensityCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_DUST_DENSITY_THRESHOLD, new DustDensityCallbackThresholdStatus(threshold));
     }
 
     @Override

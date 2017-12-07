@@ -119,8 +119,5 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-    }
+   
 }

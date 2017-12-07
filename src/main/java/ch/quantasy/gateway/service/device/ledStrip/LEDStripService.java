@@ -70,7 +70,7 @@ public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDSt
 
     @Override
     public void configurationChanged(LEDStripDeviceConfig config) {
-        publishStatus(getContract().STATUS_CONFIG, new ConfigStatus(config));
+        readyToPublishStatus(getContract().STATUS_CONFIG, new ConfigStatus(config));
     }
 
     @Override

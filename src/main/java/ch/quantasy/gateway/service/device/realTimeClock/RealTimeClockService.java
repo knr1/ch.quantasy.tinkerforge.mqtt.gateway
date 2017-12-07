@@ -46,6 +46,10 @@ import ch.quantasy.gateway.message.event.realTimeClock.DateTimeEvent;
 import ch.quantasy.gateway.message.intent.realTimeClock.AlarmParamter;
 import ch.quantasy.gateway.message.intent.realTimeClock.DateTimeParameter;
 import ch.quantasy.gateway.message.intent.realTimeClock.RealTimeClockIntent;
+import ch.quantasy.gateway.message.status.gps.DateTimeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.realTimeClock.AlarmParameterStatus;
+import ch.quantasy.gateway.message.status.realTimeClock.DateTimeParameterStatus;
+import ch.quantasy.gateway.message.status.realTimeClock.OffsetStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import java.net.URI;
@@ -64,22 +68,22 @@ public class RealTimeClockService extends AbstractDeviceService<RealTimeClockDev
 
     @Override
     public void dateTimeChanged(DateTimeParameter dateTimeParameter) {
-        publishStatus(getContract().STATUS_DATE_TIME, dateTimeParameter);
+        readyToPublishStatus(getContract().STATUS_DATE_TIME, new DateTimeParameterStatus(dateTimeParameter));
     }
 
     @Override
     public void offsetChanged(byte offset) {
-        publishStatus(getContract().STATUS_OFFSET, offset);
+        readyToPublishStatus(getContract().STATUS_OFFSET, new OffsetStatus(offset));
     }
 
     @Override
     public void dateTimeCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, new DateTimeCallbackPeriodStatus(period));
     }
 
     @Override
     public void alarmChanged(AlarmParamter alarmParameter) {
-        publishStatus(getContract().STATUS_ALARM, alarmParameter);
+        readyToPublishStatus(getContract().STATUS_ALARM, new AlarmParameterStatus(alarmParameter));
     }
 
     @Override

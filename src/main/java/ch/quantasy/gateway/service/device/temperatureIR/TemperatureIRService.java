@@ -47,6 +47,11 @@ import ch.quantasy.gateway.message.event.temperatureIR.ObjectTemperatureEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.temperatureIR.DeviceAmbientTemperatureCallbackThreshold;
 import ch.quantasy.gateway.message.intent.temperatureIR.DeviceObjectTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.status.temperatureIR.AmbientTemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.temperatureIR.AmbientTemperatureCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.temperatureIR.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.temperatureIR.ObjectTemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.temperatureIR.ObjectTemperatureCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDeviceCallback;
 import java.net.URI;
@@ -84,27 +89,27 @@ public class TemperatureIRService extends AbstractDeviceService<TemperatureIRDev
 
     @Override
     public void ambientTemperatureCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, new AmbientTemperatureCallbackPeriodStatus(period));
     }
 
     @Override
     public void objectTemperatureCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, new ObjectTemperatureCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void ambientTemperatureCallbackThresholdChanged(DeviceAmbientTemperatureCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_AMBIENT_TEMPERATURE_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_AMBIENT_TEMPERATURE_THRESHOLD, new AmbientTemperatureCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void objectTemperatureCallbackThresholdChanged(DeviceObjectTemperatureCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_OBJECT_TEMPERATURE_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_OBJECT_TEMPERATURE_THRESHOLD, new ObjectTemperatureCallbackThresholdStatus(threshold));
 
     }
 

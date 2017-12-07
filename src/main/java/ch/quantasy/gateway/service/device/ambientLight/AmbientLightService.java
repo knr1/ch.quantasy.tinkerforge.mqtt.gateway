@@ -90,27 +90,27 @@ public class AmbientLightService extends AbstractDeviceService<AmbientLightDevic
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
     }
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, new IlluminanceCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, new IlluminanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueThresholdStatus(threshold));
     }
 
     @Override
     public void illuminanceCallbackThresholdChanged(DeviceIlluminanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, new IlluminanceThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_ILLUMINANCE_THRESHOLD, new IlluminanceThresholdStatus(threshold));
 
     }
 

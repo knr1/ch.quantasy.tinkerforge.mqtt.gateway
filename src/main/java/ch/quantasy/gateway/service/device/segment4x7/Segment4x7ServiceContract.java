@@ -44,6 +44,7 @@ package ch.quantasy.gateway.service.device.segment4x7;
 
 import ch.quantasy.gateway.message.event.segment4x7.CounterEvent;
 import ch.quantasy.gateway.message.intent.segment4x7.Segment4x7Intent;
+import ch.quantasy.gateway.message.status.segment4x7.SegmentsStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
@@ -89,12 +90,9 @@ public class Segment4x7ServiceContract extends DeviceServiceContract {
         EVENT_COUNTER_FINISHED = EVENT + "/" + COUNTER_FINISHED;
         addMessageTopic(EVENT_COUNTER_STARTED, CounterEvent.class);
         addMessageTopic(EVENT_COUNTER_FINISHED, CounterEvent.class);
+        addMessageTopic(STATUS_SEGMENTS, SegmentsStatus.class);
 
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_SEGMENTS, "bits:[[0..128][0..128][0..128][0..128]]\n brightness: [0..7]\n colon: [true|false]");
-    }
+   
 }

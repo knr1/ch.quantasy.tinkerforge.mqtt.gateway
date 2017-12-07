@@ -45,6 +45,10 @@ package ch.quantasy.gateway.service.device.thermoCouple;
 import ch.quantasy.gateway.message.event.thermoCouple.TemperatureEvent;
 import ch.quantasy.gateway.message.event.thermoCouple.ErrorEvent;
 import ch.quantasy.gateway.message.intent.thermoCouple.ThermoCoupleIntent;
+import ch.quantasy.gateway.message.status.thermoCouple.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.thermoCouple.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.thermoCouple.TemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.thermoCouple.TemperatureCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
@@ -117,14 +121,11 @@ public class ThermoCoupleServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_TEMPERATURE, TemperatureEvent.class);
         addMessageTopic(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
         addMessageTopic(EVENT_ERROR, ErrorEvent.class);
+        addMessageTopic(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_TEMPERATURE_THRESHOLD, TemperatureCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-21000..180000]\n max: [-21000..180000]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_CONFIGURATION, "averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]\n type: [B|E|J|K|N|R|S|T|G8|G32]\n filter: [Hz_50|Hz_60]");
-    }
+   
 }

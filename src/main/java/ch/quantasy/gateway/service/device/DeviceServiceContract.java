@@ -42,6 +42,9 @@
  */
 package ch.quantasy.gateway.service.device;
 
+import ch.quantasy.gateway.message.status.device.Firmware;
+import ch.quantasy.gateway.message.status.device.Hardware;
+import ch.quantasy.gateway.message.status.device.Position;
 import ch.quantasy.mqtt.gateway.client.message.Event;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
@@ -68,16 +71,14 @@ public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
         STATUS_POSITION = STATUS + "/position";
         STATUS_FIRMWARE = STATUS + "/firmware";
         STATUS_HARDWARE = STATUS + "/hardware";
+        addMessageTopic(STATUS_POSITION, Position.class);
+        addMessageTopic(STATUS_FIRMWARE, Firmware.class);
+        addMessageTopic(STATUS_HARDWARE, Hardware.class);
     }
 
     @Override
     public void describe(Map<String, String> descriptions) {
-        super.describe(descriptions);
-        descriptions.put(STATUS_POSITION, "String: <0,1,2,3,4,5,6,7,8,a,b,c,d>");
-        descriptions.put(STATUS_FIRMWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
-        descriptions.put(STATUS_HARDWARE, "[[" + Short.MIN_VALUE + "..." + Short.MAX_VALUE + "]]_*");
-        descirbeMore(descriptions);
+        super.describe(descriptions);     
     }
 
-    protected abstract void descirbeMore(Map<String, String> descriptions);
 }

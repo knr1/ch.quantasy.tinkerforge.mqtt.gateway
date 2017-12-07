@@ -45,6 +45,9 @@ package ch.quantasy.gateway.service.device.uvLight;
 import ch.quantasy.gateway.message.event.uvLight.UVLightEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.uvLight.DeviceUVLightCallbackThreshold;
+import ch.quantasy.gateway.message.status.uvLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.uvLight.UvLightCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.uvLight.UvLightCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDeviceCallback;
 import java.net.URI;
@@ -63,17 +66,17 @@ public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLight
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void uvLightCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_UV_LIGHT_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_UV_LIGHT_CALLBACK_PERIOD, new UvLightCallbackPeriodStatus(period));
     }
 
     @Override
     public void uvLightCallbackThresholdChanged(DeviceUVLightCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_UV_LIGHT_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_UV_LIGHT_THRESHOLD, new UvLightCallbackThresholdStatus(threshold));
     }
 
     @Override

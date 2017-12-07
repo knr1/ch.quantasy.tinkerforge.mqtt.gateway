@@ -66,17 +66,17 @@ public class LineService extends AbstractDeviceService<LineDevice, LineServiceCo
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void reflectivityCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, new ReflectivityCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, new ReflectivityCallbackPeriodStatus(period));
     }
 
     @Override
     public void reflectivityThresholdChanged(DeviceReflectivityCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_REFLECTIVITY_THRESHOLD, new ReflectivityCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_REFLECTIVITY_THRESHOLD, new ReflectivityCallbackThresholdStatus(threshold));
     }
 
     @Override

@@ -45,6 +45,8 @@ package ch.quantasy.gateway.service.device.multiTouch;
 import ch.quantasy.gateway.message.event.multiTouch.RecalibratedEvent;
 import ch.quantasy.gateway.message.event.multiTouch.TouchStateEvent;
 import ch.quantasy.gateway.message.intent.multiTouch.MultiTouchIntent;
+import ch.quantasy.gateway.message.status.multiTouch.ElectrodeConfigStatus;
+import ch.quantasy.gateway.message.status.multiTouch.SensitivityStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDeviceCallback;
@@ -64,12 +66,12 @@ public class MultiTouchService extends AbstractDeviceService<MultiTouchDevice, M
 
     @Override
     public void electrodeConfigChanged(Integer electrodeConfig) {
-        publishStatus(getContract().STATUS_ELECTRODE_CONFIG, electrodeConfig);
+        readyToPublishStatus(getContract().STATUS_ELECTRODE_CONFIG, new ElectrodeConfigStatus(electrodeConfig));
     }
 
     @Override
     public void electrodeSensitivityChanged(Short electrodeSensitivity) {
-        publishStatus(getContract().STATUS_ELECTRODE_SENSITIVITY, electrodeSensitivity);
+        readyToPublishStatus(getContract().STATUS_ELECTRODE_SENSITIVITY, new SensitivityStatus(electrodeSensitivity));
     }
 
     @Override

@@ -66,17 +66,17 @@ public class HallEffectService extends AbstractDeviceService<HallEffectDevice, H
 
     @Override
     public void edgeInterruptChanged(long period) {
-        publishStatus(getContract().STATUS_EDGE_COUNT_INTERRUPT, new EdgeCountInterruptStatus(period));
+        readyToPublishStatus(getContract().STATUS_EDGE_COUNT_INTERRUPT, new EdgeCountInterruptStatus(period));
     }
 
     @Override
     public void edgeCountCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, new EdgeCountCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, new EdgeCountCallbackPeriodStatus(period));
     }
 
     @Override
     public void edgeCountConfigChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_CONFIGURATION, new EdgeCountConfigurationStatus(configuration));
+        readyToPublishStatus(getContract().STATUS_CONFIGURATION, new EdgeCountConfigurationStatus(configuration));
     }
 
     @Override

@@ -42,6 +42,9 @@
  */
 package ch.quantasy.gateway.service.device;
 
+import ch.quantasy.gateway.message.status.device.Firmware;
+import ch.quantasy.gateway.message.status.device.Hardware;
+import ch.quantasy.gateway.message.status.device.Position;
 import ch.quantasy.gateway.service.AbstractService;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.mqtt.gateway.client.message.Message;
@@ -79,9 +82,9 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
         });
         device.setCallback(this);
 
-        publishStatus(getContract().STATUS_POSITION, device.getPosition());
-        publishStatus(getContract().STATUS_FIRMWARE, device.getFirmwareVersion());
-        publishStatus(getContract().STATUS_HARDWARE, device.getHardwareVersion());
+        readyToPublishStatus(getContract().STATUS_POSITION, new Position(device.getPosition()));
+        readyToPublishStatus(getContract().STATUS_FIRMWARE, new Firmware(device.getFirmwareVersion()));
+        readyToPublishStatus(getContract().STATUS_HARDWARE, new Hardware(device.getHardwareVersion()));
 
     }
 

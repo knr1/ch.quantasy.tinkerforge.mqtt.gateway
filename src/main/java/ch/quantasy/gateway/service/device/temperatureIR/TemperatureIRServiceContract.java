@@ -45,6 +45,11 @@ package ch.quantasy.gateway.service.device.temperatureIR;
 import ch.quantasy.gateway.message.event.temperatureIR.AmbientTemperatureEvent;
 import ch.quantasy.gateway.message.event.temperatureIR.ObjectTemperatureEvent;
 import ch.quantasy.gateway.message.intent.temperatureIR.TemperatureIRIntent;
+import ch.quantasy.gateway.message.status.temperatureIR.AmbientTemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.temperatureIR.AmbientTemperatureCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.temperatureIR.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.temperatureIR.ObjectTemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.temperatureIR.ObjectTemperatureCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
@@ -118,15 +123,12 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_OBJECT_TEMPERATURE, ObjectTemperatureEvent.class);
         addMessageTopic(EVENT_AMBIENT_TEMPERATURE_REACHED, AmbientTemperatureEvent.class);
         addMessageTopic(EVENT_OBJECT_TEMPERATURE_REACHED, ObjectTemperatureEvent.class);
+           addMessageTopic(STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, AmbientTemperatureCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, ObjectTemperatureCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_AMBIENT_TEMPERATURE_THRESHOLD, AmbientTemperatureCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_OBJECT_TEMPERATURE_THRESHOLD, ObjectTemperatureCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_AMBIENT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-400..1250]\n max: [-400..1250]");
-        descriptions.put(STATUS_OBJECT_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-700..3800]\n max: [-700..3800]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-    }
+   
 }

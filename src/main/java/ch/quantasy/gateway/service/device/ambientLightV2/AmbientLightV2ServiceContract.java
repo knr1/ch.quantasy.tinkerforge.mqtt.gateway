@@ -118,9 +118,5 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-        
-    }
+   
 }

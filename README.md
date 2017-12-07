@@ -65,8 +65,13 @@ Then, if you subscribe to TF/# you will immediately get the description info for
 
 In order to interact with some specific Tinkerforge-Stack (e.g. localhost), the following message has to be sent to the following topic:
 ```sh
-Topic: TF/Manager/I/stack/address/add
-Message: hostName: localhost
+Topic
+TF/Manager/U/computer/I
+
+Message
+address:
+  hostName: localhost
+connect: true
 ```
 or any other address IP or name will work, if there is an actual Tinkerforge stack accessible.
 
@@ -76,20 +81,29 @@ In order to see who is calling, the intent will always end with '/quickshot' as 
  
 **Setting backlight of LCD-Display (uid: lcd):**
 ```
-Topic: TF/LCD20x4/U/lcd/I/quickshot
-Message: backlight: true
+Topic
+TF/LCD20x4/U/lcd/I/quickshot
+
+Message
+backlight: true
 ```
 
 **Measuring the temperature once per second on temperature bricklet (uid: red):**
 ```
-Topic: TF/Temperature/U/red/I/quickshot
-Message: temperatureCallbackPeriod: 1000
+Topic
+TF/Temperature/U/red/I/quickshot
+
+Message
+temperatureCallbackPeriod: 1000
 ```
 
 **Detecting NFC-Tags once per second on NFCRFID bricklet (uid: ouu):**
 ```
-Topic: TF/NfcRfid/U/ouu/I/quickshot
-Message: scanningCallbackPeriod: 1000
+Topic
+TF/NfcRfid/U/ouu/I/quickshot
+
+Message
+scanningCallbackPeriod: 1000
 ```
 
 
@@ -186,10 +200,13 @@ TF
 As the description explains, we now have to tell TiMqWay where to look for the Master Bricks (Stacks). Hence, we want to attach Master-Brick-1 (say, its 
 network-name is master-brick-1). Therefore the following message has to be sent to the following topic:
 ```
-Topic: TF/Manager/U/pc/I
-Message: address:
-           hostName: master-brick-1
-           connect: true
+Topic
+TF/Manager/U/pc/I
+
+Message
+address:
+  hostName: master-brick-1
+connect: true
 ```
 
 Looking into the mqtt-broker, the following can be seen:
@@ -238,8 +255,11 @@ TF
 If you want to switch on the backlight of the device called 'lcd' which is an instance of the 20x4LCD class then you publish the following message to
 the following topic:
 ```
-Topic: TF/LCD20x4/U/lcd/I
-Message: backlight: true
+Topic
+TF/LCD20x4/U/lcd/I
+
+Message
+backlight: true
 ```
 What happenes is that the backlight is now switched to on at the specific 20x4LCD device. In the mqtt-broker, some topics changed as well.
 ```
@@ -274,10 +294,13 @@ TF
  
 Now, let us connect the second master-brick (stack). This one is connected via USB, hence, its address is `localhost`:
 ```
-Topic: TF/Manager/U/pc/I
-Message: address:
-          hostName: localhost
-          connect: true
+Topic
+TF/Manager/U/pc/I
+
+Message
+address:
+  hostName: localhost
+connect: true
 ```
 The TiMqWay-manager now knows two stacks and manages one temperature device more
 ```
@@ -337,10 +360,13 @@ TF
 
 If we want to have a temperature reading every second for `red`, we provide the following message to the following topic:
 ```
-Topic: TF/Temperature/U/red/I
-Message: temperatureCallbackPeriod: 1000
+Topic
+TF/Temperature/U/red/I
+
+Message
+temperatureCallbackPeriod: 1000
 ```
-Now, there is a reading every second, that will be promoted as an event to `TF/Temperature/red/event/temperature`
+Now, there is a reading every second, that will be promoted as an event to `TF/Temperature/red/E/temperature`
 
 ```
 TF
@@ -385,20 +411,25 @@ TF/LCD20x4/U/lcd/I
    lines: Set <min: 0 max: 80>
 ```
 ```
-Topic: TF/LCD20x4/U/lcd/I
+Topic
+TF/LCD20x4/U/lcd/I
 
-Message:
-  lines: 
-    - line: 0
-      position: 0
-      text: "RED: 22°C"
-    - line: 1
-      position: 0
-      text: "BLUE: 18°C"
+Message
+lines: 
+  - line: 0
+    position: 0
+    text: "RED: 22°C
+  - line: 1
+    position: 0
+    text: "BLUE: 18°C"
 ```
 
 ## API
+Intent (I) is as straight forward and as concise as possible. You simply put into the intent what you want and omit the rest.
+Event (E) is as fine granular as possible, so you can subscribe to your needs and will receive nothing more
+Status (S) is as fine granular as possible, so you can subscribe to your needs and will receive nothing more
 
+No message is lost! It is delivered as fast as possible. If the channel is slower than the message creation, the messages will be delivered as an array. 
 
 ### IMU
 ```
@@ -514,11 +545,17 @@ TF/IMU/U/<id>/S/angularVelocity/callbackPeriod
 ```
 ```
 TF/IMU/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMU/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMU/U/<id>/S/magneticField/callbackPeriod
@@ -540,7 +577,9 @@ TF/IMU/U/<id>/S/orientation/callbackPeriod
 ```
 ```
 TF/IMU/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/IMU/U/<id>/S/quaternion/callbackPeriod
@@ -715,7 +754,10 @@ TF/IMUV2/U/<id>/S/angularVelocity/callbackPeriod
 ```
 ```
 TF/IMUV2/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMUV2/U/<id>/S/gravityVector/callbackPeriod
@@ -725,7 +767,10 @@ TF/IMUV2/U/<id>/S/gravityVector/callbackPeriod
 ```
 ```
 TF/IMUV2/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/IMUV2/U/<id>/S/linearAcceleration/callbackPeriod
@@ -747,7 +792,9 @@ TF/IMUV2/U/<id>/S/orientation/callbackPeriod
 ```
 ```
 TF/IMUV2/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/IMUV2/U/<id>/S/quaternion/callbackPeriod
@@ -832,15 +879,23 @@ TF/LCD16x2/U/<id>/S/customCharacters
 ```
 ```
 TF/LCD16x2/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LCD16x2/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LCD16x2/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### LCD20x4
@@ -916,15 +971,23 @@ TF/LCD20x4/U/<id>/S/defaultText/texts
 ```
 ```
 TF/LCD20x4/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LCD20x4/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LCD20x4/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### <id>
@@ -991,15 +1054,23 @@ TF/<id>/U/Accelerometer/S/debounce/period
 ```
 ```
 TF/<id>/U/Accelerometer/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/<id>/U/Accelerometer/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/<id>/U/Accelerometer/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### AmbientLight
@@ -1071,11 +1142,17 @@ TF/AmbientLight/U/<id>/S/debounce/period
 ```
 ```
 TF/AmbientLight/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/AmbientLight/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/AmbientLight/U/<id>/S/illuminance/callbackPeriod
@@ -1091,7 +1168,9 @@ TF/AmbientLight/U/<id>/S/illuminance/threshold
 ```
 ```
 TF/AmbientLight/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### AmbientLightV2
@@ -1141,11 +1220,17 @@ TF/AmbientLightV2/U/<id>/S/debounce/period
 ```
 ```
 TF/AmbientLightV2/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/AmbientLightV2/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/AmbientLightV2/U/<id>/S/illuminance/callbackPeriod
@@ -1164,7 +1249,9 @@ TF/AmbientLightV2/U/<id>/S/illuminance/threshold
 ```
 ```
 TF/AmbientLightV2/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### AnalogInV2
@@ -1238,11 +1325,17 @@ TF/AnalogInV2/U/<id>/S/debounce/period
 ```
 ```
 TF/AnalogInV2/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/AnalogInV2/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/AnalogInV2/U/<id>/S/movingAverage
@@ -1252,7 +1345,9 @@ TF/AnalogInV2/U/<id>/S/movingAverage
 ```
 ```
 TF/AnalogInV2/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/AnalogInV2/U/<id>/S/voltage/callbackPeriod
@@ -1280,11 +1375,17 @@ TF/AnalogOutV2/U/<id>/I
 ```
 ```
 TF/AnalogOutV2/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/AnalogOutV2/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/AnalogOutV2/U/<id>/S/outputVoltage
@@ -1294,7 +1395,9 @@ TF/AnalogOutV2/U/<id>/S/outputVoltage
 ```
 ```
 TF/AnalogOutV2/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### Barometer
@@ -1392,15 +1495,23 @@ TF/Barometer/U/<id>/S/debounce/period
 ```
 ```
 TF/Barometer/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Barometer/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Barometer/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/Barometer/U/<id>/S/referenceAirPressure
@@ -1458,15 +1569,23 @@ TF/CO2/U/<id>/S/debounce/period
 ```
 ```
 TF/CO2/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/CO2/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/CO2/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### Color
@@ -1559,11 +1678,17 @@ TF/Color/U/<id>/S/debounce/period
 ```
 ```
 TF/Color/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Color/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Color/U/<id>/S/illuminance/callbackPeriod
@@ -1573,7 +1698,9 @@ TF/Color/U/<id>/S/illuminance/callbackPeriod
 ```
 ```
 TF/Color/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### DC
@@ -1646,11 +1773,17 @@ TF/DC/U/<id>/S/enabled
 ```
 ```
 TF/DC/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DC/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DC/U/<id>/S/minimumVoltage
@@ -1660,7 +1793,9 @@ TF/DC/U/<id>/S/minimumVoltage
 ```
 ```
 TF/DC/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/DC/U/<id>/S/pwmFrequency
@@ -1765,15 +1900,23 @@ TF/DistanceIR/U/<id>/S/distance/threshold
 ```
 ```
 TF/DistanceIR/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DistanceIR/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DistanceIR/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### DistanceUS
@@ -1828,11 +1971,17 @@ TF/DistanceUS/U/<id>/S/distance/threshold
 ```
 ```
 TF/DistanceUS/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DistanceUS/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DistanceUS/U/<id>/S/movingAverage
@@ -1842,7 +1991,9 @@ TF/DistanceUS/U/<id>/S/movingAverage
 ```
 ```
 TF/DistanceUS/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### DualButton
@@ -1879,15 +2030,23 @@ TF/DualButton/U/<id>/S/LEDState
 ```
 ```
 TF/DualButton/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DualButton/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DualButton/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### DualRelay
@@ -1920,15 +2079,23 @@ TF/DualRelay/U/<id>/I
 ```
 ```
 TF/DualRelay/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DualRelay/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DualRelay/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/DualRelay/U/<id>/S/state
@@ -1991,11 +2158,17 @@ TF/DustDetector/U/<id>/S/dustDensity/threshold
 ```
 ```
 TF/DustDetector/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DustDetector/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/DustDetector/U/<id>/S/movingAverage
@@ -2005,7 +2178,9 @@ TF/DustDetector/U/<id>/S/movingAverage
 ```
 ```
 TF/DustDetector/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### GPS
@@ -2069,16 +2244,48 @@ TF/GPS/U/<id>/I
    
 ```
 ```
+TF/GPS/U/<id>/S/altitude/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/GPS/U/<id>/S/coordinates/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/GPS/U/<id>/S/dateTime/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
 TF/GPS/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/GPS/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/GPS/U/<id>/S/motion/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/GPS/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### GPSv2
@@ -2160,7 +2367,10 @@ TF/GPSv2/U/<id>/S/dateTime/callbackPeriod
 ```
 ```
 TF/GPSv2/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/GPSv2/U/<id>/S/fix/led
@@ -2170,7 +2380,10 @@ TF/GPSv2/U/<id>/S/fix/led
 ```
 ```
 TF/GPSv2/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/GPSv2/U/<id>/S/motion/callbackPeriod
@@ -2180,7 +2393,9 @@ TF/GPSv2/U/<id>/S/motion/callbackPeriod
 ```
 ```
 TF/GPSv2/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/GPSv2/U/<id>/S/status/led
@@ -2237,15 +2452,23 @@ TF/HallEffect/U/<id>/S/edgeCount/interrupt
 ```
 ```
 TF/HallEffect/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/HallEffect/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/HallEffect/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### Humidity
@@ -2295,16 +2518,60 @@ TF/Humidity/U/<id>/I
    
 ```
 ```
+TF/Humidity/U/<id>/S/analogValue/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Humidity/U/<id>/S/analogValue/threshold
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   
+```
+```
+TF/Humidity/U/<id>/S/debounce/period
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
 TF/Humidity/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Humidity/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/Humidity/U/<id>/S/humidity/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Humidity/U/<id>/S/humidity/threshold
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 1000>
+     min: Number <from: 0 to: 1000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/Humidity/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### Joystick
@@ -2406,15 +2673,23 @@ TF/Joystick/U/<id>/S/debounce/period
 ```
 ```
 TF/Joystick/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Joystick/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Joystick/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/Joystick/U/<id>/S/position/callbackPeriod
@@ -2535,11 +2810,17 @@ TF/LaserRangeFinder/U/<id>/S/distance/threshold
 ```
 ```
 TF/LaserRangeFinder/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LaserRangeFinder/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LaserRangeFinder/U/<id>/S/laser
@@ -2557,7 +2838,9 @@ TF/LaserRangeFinder/U/<id>/S/movingAverage
 ```
 ```
 TF/LaserRangeFinder/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/LaserRangeFinder/U/<id>/S/sensorHardware
@@ -2629,15 +2912,23 @@ TF/LEDStrip/U/<id>/S/config
 ```
 ```
 TF/LEDStrip/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LEDStrip/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LEDStrip/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### Line
@@ -2675,15 +2966,23 @@ TF/Line/U/<id>/S/debounce/period
 ```
 ```
 TF/Line/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Line/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Line/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/Line/U/<id>/S/reflectivity/callbackPeriod
@@ -2748,16 +3047,60 @@ TF/LinearPoti/U/<id>/I
    
 ```
 ```
+TF/LinearPoti/U/<id>/S/analogValue/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/LinearPoti/U/<id>/S/analogValue/threshold
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   
+```
+```
+TF/LinearPoti/U/<id>/S/debounce/period
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
 TF/LinearPoti/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LinearPoti/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LinearPoti/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+```
+TF/LinearPoti/U/<id>/S/position/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/LinearPoti/U/<id>/S/position/threshold
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 100>
+     min: Number <from: 0 to: 100>
+     option: String <[x, o, i, <, >]>
+   
 ```
 
 ### LoadCell
@@ -2820,11 +3163,17 @@ TF/LoadCell/U/<id>/S/debounce/period
 ```
 ```
 TF/LoadCell/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LoadCell/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/LoadCell/U/<id>/S/movingAverage
@@ -2834,7 +3183,9 @@ TF/LoadCell/U/<id>/S/movingAverage
 ```
 ```
 TF/LoadCell/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/LoadCell/U/<id>/S/weight/callbackPeriod
@@ -2948,15 +3299,23 @@ TF/Master/U/<id>/S/debounce/period
 ```
 ```
 TF/Master/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Master/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Master/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/Master/U/<id>/S/stack/current/callbackPeriod
@@ -3026,33 +3385,50 @@ TF/Moisture/U/<id>/I
 ```
 ```
 TF/Moisture/U/<id>/S/debounce/period
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Moisture/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Moisture/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Moisture/U/<id>/S/moisture/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Moisture/U/<id>/S/moisture/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/Moisture/U/<id>/S/movingAverage
-   [0..100]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 100>
+   
 ```
 ```
 TF/Moisture/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### MotionDetector
@@ -3072,15 +3448,23 @@ TF/MotionDetector/U/<id>/I
 ```
 ```
 TF/MotionDetector/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/MotionDetector/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/MotionDetector/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### MultiTouch
@@ -3108,23 +3492,35 @@ TF/MultiTouch/U/<id>/I
 ```
 ```
 TF/MultiTouch/U/<id>/S/electrode/config
-   [0..8191]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 8191>
+   
 ```
 ```
 TF/MultiTouch/U/<id>/S/electrode/sensitivity
-   [5..201]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 5 to: 201>
+   
 ```
 ```
 TF/MultiTouch/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/MultiTouch/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/MultiTouch/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### NfcRfid
@@ -3172,19 +3568,29 @@ TF/NfcRfid/U/<id>/I
 ```
 ```
 TF/NfcRfid/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/NfcRfid/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/NfcRfid/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/NfcRfid/U/<id>/S/scanning/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 
 ### PiezoSpeaker
@@ -3228,15 +3634,23 @@ TF/PiezoSpeaker/U/<id>/I
 ```
 ```
 TF/PiezoSpeaker/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/PiezoSpeaker/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/PiezoSpeaker/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### PTC
@@ -3284,47 +3698,64 @@ TF/PTC/U/<id>/I
 ```
 ```
 TF/PTC/U/<id>/S/debounce/period
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/PTC/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/PTC/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/PTC/U/<id>/S/noiseReductionFilter
-   filter: [Hz_50|Hz_60]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     Filter: String <Hz_50,Hz_60>
+   
 ```
 ```
 TF/PTC/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/PTC/U/<id>/S/resistance/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/PTC/U/<id>/S/resistance/threshold
-   option: [x|o|i|<|>]
-    min: [0..32767]
-    max: [0..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/PTC/U/<id>/S/temperature/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/PTC/U/<id>/S/temperature/threshold
-   option: [x|o|i|<|>]
-    min: [-24600..84900]
-    max: [-24600..84900]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/PTC/U/<id>/S/wireMode
-   [2|3|4]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[2, 3, 4]>
+   
 ```
 
 ### RealTimeClock
@@ -3388,44 +3819,62 @@ TF/RealTimeClock/U/<id>/I
 ```
 ```
 TF/RealTimeClock/U/<id>/S/alarm
-   month: [-1|1..12]
-    day: [-1|1..31]
-    hour: [-1|0..23]
-    minute: [-1|0..59]
-    second: [-1|0..59]
-    weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]
-    interval:[-1|0..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     day: Number <from: 1 to: 31>
+     hour: Number <from: 0 to: 23>
+     interval: Number <from: -1 to: 2147483647>
+     minute: Number <from: 0 to: 59>
+     month: Number <from: 1 to: 12>
+     second: Number <from: 0 to: 59>
+     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday,disabled>
+   
 ```
 ```
 TF/RealTimeClock/U/<id>/S/dateTime
-   year: [2000..2099]
-    month: [1..12]
-    day: [1..31]
-    hour: [0..23]
-    minute: [0..59]
-    second: [0..59]
-    centisecond: [0..9]
-    weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     centisecond: Number <from: 0 to: 10>
+     day: Number <from: 1 to: 31>
+     hour: Number <from: 0 to: 59>
+     minute: Number <from: 0 to: 59>
+     month: Number <from: 1 to: 12>
+     second: Number <from: 0 to: 59>
+     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
+     year: Number <from: 2000 to: 2099>
+   
 ```
 ```
 TF/RealTimeClock/U/<id>/S/dateTime/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RealTimeClock/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/RealTimeClock/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/RealTimeClock/U/<id>/S/offset
-   [-128..127]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -128 to: 127>
+   
 ```
 ```
 TF/RealTimeClock/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### RemoteSwitch
@@ -3463,19 +3912,29 @@ TF/RemoteSwitch/U/<id>/I
 ```
 ```
 TF/RemoteSwitch/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/RemoteSwitch/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/RemoteSwitch/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/RemoteSwitch/U/<id>/S/repeats
-   [0..32767]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 32767>
+   
 ```
 
 ### RotaryEncoder
@@ -3530,29 +3989,44 @@ TF/RotaryEncoder/U/<id>/I
 ```
 ```
 TF/RotaryEncoder/U/<id>/S/count/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/S/count/threshold
-   option: [x|o|i|<|>]
-    min: [-150..150]
-    max: [-150..150]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: -150 to: 150>
+     min: Number <from: -150 to: 150>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/S/debounce/period
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/RotaryEncoder/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### RotaryPoti
@@ -3603,39 +4077,59 @@ TF/RotaryPoti/U/<id>/I
 ```
 ```
 TF/RotaryPoti/U/<id>/S/analogValue/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RotaryPoti/U/<id>/S/analogValue/threshold
-   option: [x|o|i|<|>]
-    min: [0..4095]
-    max: [0..4095]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/RotaryPoti/U/<id>/S/debounce/period
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RotaryPoti/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/RotaryPoti/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/RotaryPoti/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/RotaryPoti/U/<id>/S/position/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/RotaryPoti/U/<id>/S/position/threshold
-   option: [x|o|i|<|>]
-    min: [-150..150]
-    max: [-150..150]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: -150 to: 150>
+     min: Number <from: -150 to: 150>
+     option: String <[x, o, i, <, >]>
+   
 ```
 
 ### SegmentDisplay4x7
@@ -3682,21 +4176,33 @@ TF/SegmentDisplay4x7/U/<id>/I
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/S/segments
-   bits:[[0..128][0..128][0..128][0..128]]
-    brightness: [0..7]
-    colon: [true|false]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     bits: Array <min: 4 max: 4>
+     bits: Number <from: 0 to: 128>
+     brightness: Number <from: 0 to: 7>
+     colon: Boolean <true,false> 
+   
 ```
 
 ### Servo
@@ -3746,45 +4252,60 @@ TF/Servo/U/<id>/I
 ```
 ```
 TF/Servo/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Servo/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Servo/U/<id>/S/minimumVoltage
-   [6..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 5000 to: 2147483647>
+   
 ```
 ```
 TF/Servo/U/<id>/S/outputVoltage
-   [1..20000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 2000 to: 9000>
+   
 ```
 ```
 TF/Servo/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/Servo/U/<id>/S/servos
-   --- 
-     {- 
-     id: [0..6]
-     enabled: [true|false|null]
-     position: [-32767..32767|null]
-     acceleration: [0..65536|null]
-     velocity: [0..65535|null]
-     degree: [[
-       min: [-32767..32767]
-       max: [-32767..32767]
-   ]|null]
-     period: [1..65535|null]
-     pulseWidth: [[
-       min: [1..65535]
-       max: [1..65535]]|null]}_7
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Set <min: 0 max: 7>
+   value: 
+    acceleration: Number <from: 0 to: 65536>
+    degree: 
+      max: Number <from: -32767 to: 32767>
+      min: Number <from: -32767 to: 32767>
+    enabled: Boolean <true,false> 
+    id: Number <from: 0 to: 6>
+    period: Number <from: 1 to: 65536>
+    position: Number <from: -32767 to: 32767>
+    pulseWidth: 
+      max: Number <from: -32767 to: 32767>
+      min: Number <from: -32767 to: 32767>
+    velocity: Number <from: 0 to: 65536>
+   
 ```
 ```
 TF/Servo/U/<id>/S/statusLED
-   [true|false]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
 ```
 
 ### SolidState
@@ -3807,19 +4328,29 @@ TF/SolidState/U/<id>/I
 ```
 ```
 TF/SolidState/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/SolidState/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/SolidState/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/SolidState/U/<id>/S/state
-   [true|false]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
 ```
 
 ### SoundIntensity
@@ -3851,29 +4382,44 @@ TF/SoundIntensity/U/<id>/I
 ```
 ```
 TF/SoundIntensity/U/<id>/S/debounce/period
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/SoundIntensity/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/SoundIntensity/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/SoundIntensity/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/SoundIntensity/U/<id>/S/soundIntensity/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/SoundIntensity/U/<id>/S/soundIntensity/threshold
-   option: [x|o|i|<|>]
-    min: [0..10000]
-    max: [0..10000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 10000>
+     min: Number <from: 0 to: 10000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 
 ### Temperature
@@ -3910,33 +4456,51 @@ TF/Temperature/U/<id>/I
 ```
 ```
 TF/Temperature/U/<id>/S/debounce/period
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Temperature/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Temperature/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Temperature/U/<id>/S/mode
-   mode:[Slow|Fast]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     Mode: String <Fast,Slow>
+   
 ```
 ```
 TF/Temperature/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/Temperature/U/<id>/S/temperature/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/Temperature/U/<id>/S/temperature/threshold
-   option: [x|o|i|<|>]
-    min: [-2500..8500]
-    max: [-2500..8500]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: -2500 to: 8500>
+     min: Number <from: -2500 to: 8500>
+     option: String <[x, o, i, <, >]>
+   
 ```
 
 ### TemperatureIR
@@ -3987,39 +4551,59 @@ TF/TemperatureIR/U/<id>/I
 ```
 ```
 TF/TemperatureIR/U/<id>/S/ambientTemperature/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/TemperatureIR/U/<id>/S/ambientTemperature/threshold
-   option: [x|o|i|<|>]
-    min: [-400..1250]
-    max: [-400..1250]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: -400 to: 1250>
+     min: Number <from: -400 to: 1250>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/TemperatureIR/U/<id>/S/debounce/period
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/TemperatureIR/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/TemperatureIR/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/TemperatureIR/U/<id>/S/objectTemperature/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/TemperatureIR/U/<id>/S/objectTemperature/threshold
-   option: [x|o|i|<|>]
-    min: [-700..3800]
-    max: [-700..3800]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: -700 to: 3800>
+     min: Number <from: -700 to: 3800>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/TemperatureIR/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### ThermoCouple
@@ -4063,35 +4647,53 @@ TF/ThermoCouple/U/<id>/I
 ```
 ```
 TF/ThermoCouple/U/<id>/S/configuration
-   averaging:[sample_1|sample_2|sample_4|smaple_8|sample_16]
-    type: [B|E|J|K|N|R|S|T|G8|G32]
-    filter: [Hz_50|Hz_60]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     Averaging: String <sample_1,sample_2,sample_4,sample_8,sample_16>
+     Filter: String <Hz_50,Hz_60>
+     Type: String <B,E,J,K,N,R,S,T,G8,G32>
+   
 ```
 ```
 TF/ThermoCouple/U/<id>/S/debounce/period
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/ThermoCouple/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/ThermoCouple/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/ThermoCouple/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/ThermoCouple/U/<id>/S/temperature/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/ThermoCouple/U/<id>/S/temperature/threshold
-   option: [x|o|i|<|>]
-    min: [-21000..180000]
-    max: [-21000..180000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: -21000 to: 180000>
+     min: Number <from: -21000 to: 180000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 
 ### Tilt
@@ -4107,15 +4709,23 @@ TF/Tilt/U/<id>/I
 ```
 ```
 TF/Tilt/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Tilt/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/Tilt/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 
 ### UVLight
@@ -4149,29 +4759,44 @@ TF/UVLight/U/<id>/I
 ```
 ```
 TF/UVLight/U/<id>/S/debounce/period
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/UVLight/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/UVLight/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/UVLight/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/UVLight/U/<id>/S/uvLight/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/UVLight/U/<id>/S/uvLight/threshold
-   option: [x|o|i|<|>]
-    min: [0..328000]
-    max: [0..328000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 328000>
+     min: Number <from: 0 to: 328000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 
 ### VoltageCurrent
@@ -4250,61 +4875,91 @@ TF/VoltageCurrent/U/<id>/I
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/calibration
-   gainMultiplier: [1..2147483647]
-    gainDivisor: [1..2147483647]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     gainDivisor: Number <from: 1 to: 2147483647>
+     gainMultiplier: Number <from: 1 to: 2147483647>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/configuration
-   averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]
-    voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]
-    currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     Averaging: String <AVERAGING_1,AVERAGING_4,AVERAGING_16,AVERAGING_64,AVERAGING_128,AVERAGING_256,AVERAGING_512,AVERAGING_1024>
+     Conversion: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
+     Conversion: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
    
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/current/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/current/threshold
-   option: [x|o|i|<|>]
-    min: [0..36000]
-    max: [0..36000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 36000>
+     min: Number <from: 0 to: 36000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/debounce/period
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/firmware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/hardware
-   [[-32768...32767]]_*
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/position
-   String: <0,1,2,3,4,5,6,7,8,a,b,c,d>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/power/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/power/threshold
-   option: [x|o|i|<|>]
-    min: [0..720000]
-    max: [0..720000]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 720000>
+     min: Number <from: 0 to: 720000>
+     option: String <[x, o, i, <, >]>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/voltage/callbackPeriod
-   [0..9223372036854775807]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
 ```
 ```
 TF/VoltageCurrent/U/<id>/S/voltage/threshold
-   option: [x|o|i|<|>]
-    min: [-50001..50001]
-    max: [-50001..50001]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: -5001 to: 5001>
+     min: Number <from: -5001 to: 5001>
+     option: String <[x, o, i, <, >]>
+   
 ```
 
 ### Manager

@@ -46,6 +46,10 @@ import ch.quantasy.gateway.message.event.servo.UnderVoltageEvent;
 import ch.quantasy.gateway.message.event.servo.VelocityEvent;
 import ch.quantasy.gateway.message.event.servo.PositionEvent;
 import ch.quantasy.gateway.message.intent.servo.ServoIntent;
+import ch.quantasy.gateway.message.status.servo.MinimumVoltageStatus;
+import ch.quantasy.gateway.message.status.servo.OutputVoltageStatus;
+import ch.quantasy.gateway.message.status.servo.ServosStatus;
+import ch.quantasy.gateway.message.status.servo.StatusLEDStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.servo.ServoDevice;
@@ -118,15 +122,11 @@ public class ServoServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_POSITION_REACHED, PositionEvent.class);
         addMessageTopic(EVENT_UNDERVOLTAGE, UnderVoltageEvent.class);
         addMessageTopic(EVENT_VELOCITY_REACHED, VelocityEvent.class);
-
+        addMessageTopic(STATUS_SERVOS, ServosStatus.class);
+        addMessageTopic(STATUS_STATUS_LED, StatusLEDStatus.class);
+        addMessageTopic(STATUS_MINIMUM_VOLTAGE, MinimumVoltageStatus.class);
+        addMessageTopic(STATUS_OUTPUT_VOLTAGE, OutputVoltageStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_SERVOS, "--- \n  {- \n  id: [0..6]\n  enabled: [true|false|null]\n  position: [-32767..32767|null]\n  acceleration: [0..65536|null]\n  velocity: [0..65535|null]\n  degree: [[\n    min: [-32767..32767]\n    max: [-32767..32767]\n]|null]\n  period: [1..65535|null]\n  pulseWidth: [[\n    min: [1..65535]\n    max: [1..65535]]|null]}_7");
-        descriptions.put(STATUS_STATUS_LED, "[true|false]");
-        descriptions.put(STATUS_MINIMUM_VOLTAGE, "[6.." + Integer.MAX_VALUE + "]");
-        descriptions.put(STATUS_OUTPUT_VOLTAGE, "[1..20000]");
-    }
+    
 }

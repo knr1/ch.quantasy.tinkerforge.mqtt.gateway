@@ -52,6 +52,7 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.gateway.message.intent.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.message.status.stackManager.ConnectStatus;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.mqtt.gateway.client.message.MessageCollector;
@@ -130,7 +131,7 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
     public void connected(TinkerforgeStack stack) {
         TinkerforgeStackAddress address = stack.getStackAddress();
         String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
-        publishStatus(topic, stack.isConnected());
+        readyToPublishStatus(topic, new ConnectStatus(stack.isConnected()));
 
     }
 
@@ -139,7 +140,7 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
     ) {
         TinkerforgeStackAddress address = stack.getStackAddress();
         String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
-        publishStatus(topic, stack.isConnected());
+        readyToPublishStatus(topic, new ConnectStatus(stack.isConnected()));
     }
 
     public void updateStatus() {
@@ -156,7 +157,7 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
         stack.addListener((TinkerforgeDeviceListener) this);
 
         TinkerforgeStackAddress address = stack.getStackAddress();
-        publishStatus(getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort(), stack.isConnected());
+        readyToPublishStatus(getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort(), new ConnectStatus(stack.isConnected()));
         readyToPublishEvent(getContract().EVENT_STACK_ADDRESS_ADDED, new StackAddressEvent(true, address));
     }
 
@@ -170,13 +171,13 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
             stack.removeListener((TinkerforgeStackListener) this);
             TinkerforgeStackAddress address = stack.getStackAddress();
             String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
-            publishStatus(topic, null);
+            readyToPublishStatus(topic, null);
             readyToPublishEvent(getContract().EVENT_STACK_ADDRESS_REMOVED, new StackAddressEvent(false, address));
         }
         for (TinkerforgeDevice device : stack.getDevices()) {
             device.removeListener(this);
             String topic = getContract().STATUS_DEVICE + "/" + device.getStack().getStackAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
-            publishStatus(topic, null);
+            readyToPublishStatus(topic, null);
         }
     }
 
@@ -188,23 +189,23 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
 //        } catch (Exception ex) {
 //            connection = ex.getMessage();
 //        }
-//        publishStatus(topic, connection + "updated");
+//        readyToPublishStatus(topic, connection + "updated");
 //    }
     @Override
     public void connected(TinkerforgeDevice device) {
         String topic = getContract().STATUS_DEVICE + "/" + device.getStack().getStackAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
-        publishStatus(topic, true);
+        readyToPublishStatus(topic, new ConnectStatus(true));
     }
 
     @Override
     public void reConnected(TinkerforgeDevice device) {
         String topic = getContract().STATUS_DEVICE + "/" + device.getStack().getStackAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
-        publishStatus(topic, true);
+        readyToPublishStatus(topic, new ConnectStatus(true));
     }
 
     @Override
     public void disconnected(TinkerforgeDevice device) {
         String topic = getContract().STATUS_DEVICE + "/" + device.getStack().getStackAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
-        publishStatus(topic, false);
+        readyToPublishStatus(topic, new ConnectStatus(false));
     }
 }

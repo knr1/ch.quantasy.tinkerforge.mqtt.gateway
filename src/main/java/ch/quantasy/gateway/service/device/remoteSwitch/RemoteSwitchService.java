@@ -50,6 +50,7 @@ import ch.quantasy.gateway.message.intent.remoteSwitch.RemoteSwitchIntent;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDeviceCallback;
 import ch.quantasy.gateway.message.intent.remoteSwitch.SocketParameters;
+import ch.quantasy.gateway.message.status.remoteSwitch.RepeatsStatus;
 import ch.quantasy.mqtt.gateway.client.contract.AyamlServiceContract;
 import java.io.IOException;
 import java.net.URI;
@@ -68,7 +69,7 @@ public class RemoteSwitchService extends AbstractDeviceService<RemoteSwitchDevic
 
     @Override
     public void repeatsChanged(short period) {
-        publishStatus(getContract().STATUS_REPEATS, period);
+        readyToPublishStatus(getContract().STATUS_REPEATS, new RepeatsStatus(period));
     }
 
     @Override

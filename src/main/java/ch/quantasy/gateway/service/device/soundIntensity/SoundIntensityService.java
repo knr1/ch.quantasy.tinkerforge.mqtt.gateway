@@ -46,6 +46,9 @@ import ch.quantasy.gateway.message.event.soundIntensity.SoundIntensityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.soundIntensity.DeviceSoundIntensityCallbackThreshold;
 import ch.quantasy.gateway.message.intent.soundIntensity.SoundIntensityIntent;
+import ch.quantasy.gateway.message.status.soundIntensity.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.soundIntensity.IntensityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.soundIntensity.IntensityCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDeviceCallback;
 import java.net.URI;
@@ -64,17 +67,17 @@ public class SoundIntensityService extends AbstractDeviceService<SoundIntensityD
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void soundIntensityCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, new IntensityCallbackPeriodStatus(period));
     }
 
     @Override
     public void soundIntensityCallbackThresholdChanged(DeviceSoundIntensityCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_SOUND_INTENSITY_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_SOUND_INTENSITY_THRESHOLD, new IntensityCallbackThresholdStatus(threshold));
     }
 
     @Override

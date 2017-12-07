@@ -46,6 +46,15 @@ import ch.quantasy.gateway.message.event.voltageCurrent.CurrentEvent;
 import ch.quantasy.gateway.message.event.voltageCurrent.PowerEvent;
 import ch.quantasy.gateway.message.event.voltageCurrent.VoltageEvent;
 import ch.quantasy.gateway.message.intent.voltageCurrent.VoltageCurrentIntent;
+import ch.quantasy.gateway.message.status.voltageCurrent.CalibrationStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.CurrentCalbackThresholdStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.CurrentCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.PowerCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.PowerCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.VoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.voltageCurrent.VoltageCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
@@ -149,23 +158,16 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_VOLTAGE_REACHED, VoltageEvent.class);
         addMessageTopic(EVENT_CURRENT, CurrentEvent.class);
         addMessageTopic(EVENT_CURRENT_REACHED, CurrentEvent.class);
+        addMessageTopic(STATUS_CALIBRATION, CalibrationStatus.class);
+        addMessageTopic(STATUS_VOLTAGE_CALLBACK_PERIOD, VoltageCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_VOLTAGE_THRESHOLD, VoltageCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_CURRENT_CALLBACK_PERIOD, CurrentCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_CURRENT_THRESHOLD, CurrentCalbackThresholdStatus.class);
+        addMessageTopic(STATUS_POWER_CALLBACK_PERIOD, PowerCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_POWER_THRESHOLD, PowerCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
 
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_CALIBRATION, "gainMultiplier: [1.." + Integer.MAX_VALUE + "]\n gainDivisor: [1.." + Integer.MAX_VALUE + "]");
-
-        descriptions.put(STATUS_VOLTAGE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_VOLTAGE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-50001..50001]\n max: [-50001..50001]");
-        descriptions.put(STATUS_CURRENT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_CURRENT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..36000]\n max: [0..36000]");
-        descriptions.put(STATUS_POWER_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_POWER_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..720000]\n max: [0..720000]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_CONFIGURATION, "averaging: [AVERAGING_1|AVERAGING_4|AVERAGING_16|AVERAGING_64|AVERAGING_128|AVERAGING_256|AVERAGING_512|AVERAGING_1024]\n"
-                + " voltageConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n"
-                + " currentConversionTime: [CONVERSION_140us|CONVERSION_204us|CONVERSION_332us|CONVERSION_588us|CONVERSION_1100us|CONVERSION_2116us|CONVERSION_4156us|CONVERSION_8244us]\n");
-
-    }
 }

@@ -51,6 +51,7 @@ import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDeviceCallback;
 import ch.quantasy.tinkerforge.device.nfc.NFCTag;
 import ch.quantasy.gateway.message.intent.nfc.NFCWrite;
+import ch.quantasy.gateway.message.status.nfc.ScanningIntervalStatus;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;
 
@@ -66,7 +67,7 @@ public class NFCService extends AbstractDeviceService<NFCRFIDDevice, NFCServiceC
 
     @Override
     public void scanningCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_SCANNING_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_SCANNING_CALLBACK_PERIOD, new ScanningIntervalStatus(period));
     }
 
     @Override

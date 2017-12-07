@@ -45,6 +45,9 @@ package ch.quantasy.gateway.service.device.rotaryEncoder;
 import ch.quantasy.gateway.message.event.rotaryEncoder.ButtonEvent;
 import ch.quantasy.gateway.message.event.rotaryEncoder.CountEvent;
 import ch.quantasy.gateway.message.intent.rotaryEncoder.RotaryEncoderIntent;
+import ch.quantasy.gateway.message.status.rotaryEncoder.CountCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.rotaryEncoder.CountThresholdStatus;
+import ch.quantasy.gateway.message.status.rotaryEncoder.DebouncePeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
@@ -121,13 +124,9 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
 
         addMessageTopic(EVENT_COUNT, CountEvent.class);
         addMessageTopic(EVENT_COUNT_REACHED, CountEvent.class);
-
+        addMessageTopic(STATUS_COUNT_CALLBACK_PERIOD, CountCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_COUNT_THRESHOLD, CountThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_COUNT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_COUNT_THRESHOLD, "option: [x|o|i|<|>]\n min: [-150..150]\n max: [-150..150]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-    }
 }

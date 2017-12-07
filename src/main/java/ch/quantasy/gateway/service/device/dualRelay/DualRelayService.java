@@ -63,7 +63,7 @@ public class DualRelayService extends AbstractDeviceService<DualRelayDevice, Dua
 
     @Override
     public void stateChanged(DeviceRelayState state) {
-        publishStatus(getContract().STATUS_STATE, new RelayStateStatus(state));
+        readyToPublishStatus(getContract().STATUS_STATE, new RelayStateStatus(state));
     }
 
     @Override

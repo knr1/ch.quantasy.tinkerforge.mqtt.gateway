@@ -44,6 +44,10 @@ package ch.quantasy.gateway.service.device.temperature;
 
 import ch.quantasy.gateway.message.event.temperature.TemperatureEvent;
 import ch.quantasy.gateway.message.intent.temperature.TemperatureIntent;
+import ch.quantasy.gateway.message.status.temperature.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.temperature.ModeStatus;
+import ch.quantasy.gateway.message.status.temperature.TemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.temperature.TemperatureThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
@@ -108,14 +112,11 @@ public class TemperatureServiceContract extends DeviceServiceContract {
         STATUS_I2CMODE = STATUS + "/" + MODE;
         addMessageTopic(EVENT_TEMPERATURE, TemperatureEvent.class);
         addMessageTopic(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
+        addMessageTopic(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_TEMPERATURE_THRESHOLD, TemperatureThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_I2CMODE, ModeStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-2500..8500]\n max: [-2500..8500]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_I2CMODE, "mode:[Slow|Fast]");
-    }
+   
 }

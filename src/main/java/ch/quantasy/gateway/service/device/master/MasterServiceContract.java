@@ -178,8 +178,5 @@ public class MasterServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD, UsbVoltageCallbackThresholdStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-    }
+   
 }

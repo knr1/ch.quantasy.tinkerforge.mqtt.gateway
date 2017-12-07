@@ -68,22 +68,22 @@ public class DistanceUSService extends AbstractDeviceService<DistanceUSDevice, D
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, new DistanceCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, new DistanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, new DistanceCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_DISTANCE_THRESHOLD, new DistanceCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void movingAverageChanged(short movingAverage) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(movingAverage));
+        readyToPublishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(movingAverage));
     }
 
     @Override

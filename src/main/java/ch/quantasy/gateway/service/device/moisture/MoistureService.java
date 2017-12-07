@@ -49,6 +49,10 @@ import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDeviceCallback;
 import ch.quantasy.gateway.message.intent.moisture.DeviceMoistureCallbackThreshold;
 import ch.quantasy.gateway.message.intent.moisture.MoistureIntent;
+import ch.quantasy.gateway.message.status.moisture.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.moisture.MoistureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.moisture.MoistureCallbackThresholdStatus;
+import ch.quantasy.gateway.message.status.moisture.MovingAverageStatus;
 import java.net.URI;
 
 /**
@@ -64,22 +68,22 @@ public class MoistureService extends AbstractDeviceService<MoistureDevice, Moist
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void moistureCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_MOISTURE_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_MOISTURE_CALLBACK_PERIOD, new MoistureCallbackPeriodStatus(period));
     }
 
     @Override
     public void moistureCallbackThresholdChanged(DeviceMoistureCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_MOISTURE_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_MOISTURE_THRESHOLD, new MoistureCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void movingAverageChanged(short average) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, average);
+        readyToPublishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(average));
     }
 
     @Override

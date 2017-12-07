@@ -67,22 +67,22 @@ public class AccelerometerService extends AbstractDeviceService<AccelerometerDev
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void accelerationCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ACCELERATION_CALLBACK_PERIOD, new AccelerationCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_ACCELERATION_CALLBACK_PERIOD, new AccelerationCallbackPeriodStatus(period));
     }
 
     @Override
     public void accelerationCallbackThresholdChanged(DeviceAccelerationCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ACCELERATION_THRESHOLD, new AccelerationThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_ACCELERATION_THRESHOLD, new AccelerationThresholdStatus(threshold));
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_CONFIGURATION, new ConfigurationStatus(configuration));
+        readyToPublishStatus(getContract().STATUS_CONFIGURATION, new ConfigurationStatus(configuration));
     }
 
     @Override

@@ -47,6 +47,9 @@ import ch.quantasy.gateway.message.event.rotaryEncoder.CountEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.rotaryEncoder.DeviceCountCallbackThreshold;
 import ch.quantasy.gateway.message.intent.rotaryEncoder.RotaryEncoderIntent;
+import ch.quantasy.gateway.message.status.rotaryEncoder.CountCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.rotaryEncoder.CountThresholdStatus;
+import ch.quantasy.gateway.message.status.rotaryEncoder.DebouncePeriodStatus;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDeviceCallback;
 
@@ -75,17 +78,17 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
 
     @Override
     public void countCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_COUNT_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_COUNT_CALLBACK_PERIOD, new CountCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void countCallbackThresholdChanged(DeviceCountCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_COUNT_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_COUNT_THRESHOLD, new CountThresholdStatus(threshold));
 
     }
 

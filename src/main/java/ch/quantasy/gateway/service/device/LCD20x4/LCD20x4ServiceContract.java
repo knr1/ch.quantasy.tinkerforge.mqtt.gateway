@@ -119,9 +119,5 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_DEFAULT_TEXT_COUNTER, DefaultTextCounterStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        
-
-    }
+   
 }

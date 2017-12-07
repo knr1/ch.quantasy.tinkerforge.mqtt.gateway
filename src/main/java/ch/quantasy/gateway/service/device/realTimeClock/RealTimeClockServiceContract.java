@@ -44,6 +44,10 @@ package ch.quantasy.gateway.service.device.realTimeClock;
 
 import ch.quantasy.gateway.message.event.realTimeClock.DateTimeEvent;
 import ch.quantasy.gateway.message.intent.realTimeClock.RealTimeClockIntent;
+import ch.quantasy.gateway.message.status.realTimeClock.AlarmParameterStatus;
+import ch.quantasy.gateway.message.status.realTimeClock.DateTimeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.realTimeClock.DateTimeParameterStatus;
+import ch.quantasy.gateway.message.status.realTimeClock.OffsetStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
@@ -94,14 +98,11 @@ public class RealTimeClockServiceContract extends DeviceServiceContract {
         EVENT_DATE_TIME = EVENT + "/" + DATE_TIME;
         addMessageTopic(EVENT_DATE_TIME, DateTimeEvent.class);
         addMessageTopic(EVENT_ALARM, DateTimeEvent.class);
-
+        addMessageTopic(STATUS_DATE_TIME, DateTimeParameterStatus.class);
+        addMessageTopic(STATUS_OFFSET, OffsetStatus.class);
+        addMessageTopic(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_ALARM, AlarmParameterStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_DATE_TIME, "year: [2000..2099]\n month: [1..12]\n day: [1..31]\n hour: [0..23]\n minute: [0..59]\n second: [0..59]\n centisecond: [0..9]\n weekday: [monday|tuesday|wednesday|thursday|friday|saturday|sunday]");
-        descriptions.put(STATUS_OFFSET, "[-128..127]");
-        descriptions.put(STATUS_DATE_TIME_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_ALARM, "month: [-1|1..12]\n day: [-1|1..31]\n hour: [-1|0..23]\n minute: [-1|0..59]\n second: [-1|0..59]\n weekday: [disabled|monday|tuesday|wednesday|thursday|friday|saturday|sunday]\n interval:[-1|0.." + Integer.MAX_VALUE + "]");
-    }
+    
 }

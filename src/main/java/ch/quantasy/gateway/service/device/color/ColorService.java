@@ -94,37 +94,37 @@ public class ColorService extends AbstractDeviceService<ColorDevice, ColorServic
 
     @Override
     public void colorTemperatureCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, new ColorTemperatureCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, new ColorTemperatureCallbackPeriodStatus(period));
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration config) {
-        publishStatus(getContract().STATUS_CONFIGURATION, new ConfigStatus(config));
+        readyToPublishStatus(getContract().STATUS_CONFIGURATION, new ConfigStatus(config));
     }
 
     @Override
     public void lightStatusChanged(boolean isLightOn) {
-        publishStatus(getContract().STATUS_LIGHT_STATE, new LightStatus(isLightOn));
+        readyToPublishStatus(getContract().STATUS_LIGHT_STATE, new LightStatus(isLightOn));
     }
 
     @Override
     public void colorCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, new ColorCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, new ColorCallbackPeriodStatus(period));
     }
 
     @Override
     public void illuminanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, new IlluminanceCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_ILLUMINANCE_CALLBACK_PERIOD, new IlluminanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void colorCallbackThresholdChanged(DeviceColorCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_COLOR_THRESHOLD, new ColorCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_COLOR_THRESHOLD, new ColorCallbackThresholdStatus(threshold));
     }
 
     

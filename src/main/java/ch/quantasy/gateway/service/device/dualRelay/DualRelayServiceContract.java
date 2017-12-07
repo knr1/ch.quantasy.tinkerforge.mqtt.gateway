@@ -90,7 +90,5 @@ public class DualRelayServiceContract extends DeviceServiceContract {
 
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-    }
+   
 }

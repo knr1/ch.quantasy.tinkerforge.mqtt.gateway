@@ -92,32 +92,32 @@ public class AnalogInV2Service extends AbstractDeviceService<AnalogInV2Device, A
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogValueCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogValueCallbackPeriodStatus(period));
     }
 
     @Override
     public void voltageCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, new VoltageCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_VOLTAGE_CALLBACK_PERIOD, new VoltageCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void voltageCallbackThresholdChanged(DeviceVoltageCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_VOLTAGE_THRESHOLD, new VoltageCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_VOLTAGE_THRESHOLD, new VoltageCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void movingAverageChanged(Short averaging) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(averaging));
+        readyToPublishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(averaging));
     }
 
 }

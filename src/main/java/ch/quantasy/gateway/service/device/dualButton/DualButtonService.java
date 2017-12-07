@@ -64,7 +64,7 @@ public class DualButtonService extends AbstractDeviceService<DualButtonDevice, D
 
     @Override
     public void ledStateChanged(DeviceLEDState state) {
-        publishStatus(getContract().STATUS_LED_STATE, new LedStateStatus(state));
+        readyToPublishStatus(getContract().STATUS_LED_STATE, new LedStateStatus(state));
     }
 
     @Override

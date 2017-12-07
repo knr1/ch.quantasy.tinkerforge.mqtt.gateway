@@ -162,9 +162,5 @@ public class IMUServiceContract extends DeviceServiceContract {
 
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-       
-
-    }
+    
 }

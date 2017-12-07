@@ -47,10 +47,15 @@ import ch.quantasy.gateway.message.event.servo.UnderVoltageEvent;
 import ch.quantasy.gateway.message.event.servo.VelocityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.servo.Servo;
+import ch.quantasy.gateway.message.status.dc.MinimumVoltageStatus;
+import ch.quantasy.gateway.message.status.servo.OutputVoltageStatus;
+import ch.quantasy.gateway.message.status.servo.ServosStatus;
+import ch.quantasy.gateway.message.status.servo.StatusLEDStatus;
 import ch.quantasy.tinkerforge.device.servo.ServoDevice;
 import ch.quantasy.tinkerforge.device.servo.ServoDeviceCallback;
 import java.net.URI;
 import java.util.Collection;
+import java.util.Set;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
@@ -65,7 +70,7 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
 
     @Override
     public void minimumVoltageChanged(Integer minimumVoltage) {
-        publishStatus(getContract().STATUS_MINIMUM_VOLTAGE, minimumVoltage);
+        readyToPublishStatus(getContract().STATUS_MINIMUM_VOLTAGE, new MinimumVoltageStatus(minimumVoltage));
 
     }
 
@@ -76,12 +81,12 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
 
     @Override
     public void statusLEDChanged(Boolean statusLED) {
-        publishStatus(getContract().STATUS_STATUS_LED, statusLED);
+        readyToPublishStatus(getContract().STATUS_STATUS_LED, new StatusLEDStatus(statusLED));
     }
 
     @Override
     public void outputVoltageChanged(Integer outputVoltage) {
-        publishStatus(getContract().STATUS_OUTPUT_VOLTAGE, outputVoltage);
+        readyToPublishStatus(getContract().STATUS_OUTPUT_VOLTAGE, new OutputVoltageStatus(outputVoltage));
 
     }
 
@@ -97,8 +102,8 @@ public class ServoService extends AbstractDeviceService<ServoDevice, ServoServic
     }
 
     @Override
-    public void servosChanged(Collection<Servo> values) {
-        publishStatus(getContract().STATUS_SERVOS, values);
+    public void servosChanged(Set<Servo> values) {
+        readyToPublishStatus(getContract().STATUS_SERVOS, new ServosStatus(values));
     }
 
 }

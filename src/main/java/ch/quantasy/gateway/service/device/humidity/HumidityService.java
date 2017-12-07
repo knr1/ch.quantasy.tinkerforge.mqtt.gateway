@@ -92,27 +92,27 @@ public class HumidityService extends AbstractDeviceService<HumidityDevice, Humid
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
     }
 
     @Override
     public void humidityCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_HUMIDITY_CALLBACK_PERIOD, new HumidityCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_HUMIDITY_CALLBACK_PERIOD, new HumidityCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void humidityCallbackThresholdChanged(DevicePositionCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_HUMIDITY_THRESHOLD, new HumidityCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_HUMIDITY_THRESHOLD, new HumidityCallbackThresholdStatus(threshold));
     }
 
 }

@@ -44,6 +44,7 @@ package ch.quantasy.gateway.service.device.remoteSwitch;
 
 import ch.quantasy.gateway.message.event.remoteSwitch.SwitchingEvent;
 import ch.quantasy.gateway.message.intent.remoteSwitch.RemoteSwitchIntent;
+import ch.quantasy.gateway.message.status.remoteSwitch.RepeatsStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
@@ -91,11 +92,9 @@ public class RemoteSwitchServiceContract extends DeviceServiceContract {
         SWITCH_SOCKET_C = "switchSocketC";
         DIM_SOCKET_B = "dimSocketB";
         addMessageTopic(EVENT_SWITCHING_DONE, SwitchingEvent.class);
-        
+        addMessageTopic(STATUS_REPEATS, RepeatsStatus.class);
+
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_REPEATS, "[0.." + Short.MAX_VALUE + "]");
-    }
+  
 }

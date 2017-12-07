@@ -145,8 +145,5 @@ public class GPSv2ServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_FIX_LED_CONFIG, FixLEDConfigStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-    }
+   
 }

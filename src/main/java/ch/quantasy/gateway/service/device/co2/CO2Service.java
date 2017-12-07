@@ -66,17 +66,17 @@ public class CO2Service extends AbstractDeviceService<CO2Device, CO2ServiceContr
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void co2ConcentrationCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, new Co2ConcentrationCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, new Co2ConcentrationCallbackPeriodStatus(period));
     }
 
     @Override
     public void co2ConcentrationCallbackThresholdChanged(DeviceCO2ConcentrationCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_CO2_CONCENTRATION_THRESHOLD, new Co2ConcentrationCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_CO2_CONCENTRATION_THRESHOLD, new Co2ConcentrationCallbackThresholdStatus(threshold));
     }
 
     @Override

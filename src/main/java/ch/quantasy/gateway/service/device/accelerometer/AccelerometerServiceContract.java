@@ -113,10 +113,7 @@ addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
         addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        
-    }
+   
 
     public static void main(String[] args) {
         AccelerometerServiceContract c = new AccelerometerServiceContract("<id>");

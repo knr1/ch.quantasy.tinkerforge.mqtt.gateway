@@ -122,15 +122,13 @@ public class HumidityServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_HUMIDITY, HumidityEvent.class);
         addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
         addMessageTopic(EVENT_HUMIDITY_REACHED, HumidityEvent.class);
-
-    }
-
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
+         addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
         addMessageTopic(STATUS_HUMIDITY_CALLBACK_PERIOD, HumidityCallbackPeriodStatus.class);
         addMessageTopic(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
         addMessageTopic(STATUS_HUMIDITY_THRESHOLD, HumidityCallbackThresholdStatus.class);
         addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+
     }
+
+    
 }

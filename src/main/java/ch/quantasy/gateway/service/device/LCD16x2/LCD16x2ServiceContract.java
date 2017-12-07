@@ -108,8 +108,5 @@ public class LCD16x2ServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_CUSTOM_CHARACTERS, CustomCharactersStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-    }
+   
 }

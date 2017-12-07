@@ -131,8 +131,5 @@ public class DistanceIRServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-    }
+    
 }

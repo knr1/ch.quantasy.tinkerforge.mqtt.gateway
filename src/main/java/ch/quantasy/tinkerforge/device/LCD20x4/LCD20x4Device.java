@@ -151,7 +151,7 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
             if (intent.defaultTexts != null && !intent.defaultTexts.isEmpty()) {
                 try {
                     for (DeviceDefaultText text : intent.defaultTexts) {
-                        getDevice().setDefaultText(text.getLine(), text.getText());
+                        getDevice().setDefaultText(text.getLine(), utf16ToKS0066U(text.getText()));
                         getIntent().defaultTexts.add(new DeviceDefaultText(text.getLine(), getDevice().getDefaultText(text.getLine())));
                     }
                     super.getCallback().defaultTextsChanged(getIntent().defaultTexts);
@@ -163,7 +163,7 @@ public class LCD20x4Device extends GenericDevice<BrickletLCD20x4, LCD20x4DeviceC
                 try {
 
                     getDevice().setDefaultTextCounter(intent.defaultTextCounter);
-                    intent.defaultTextCounter = getDevice().getDefaultTextCounter();
+                    getIntent().defaultTextCounter = getDevice().getDefaultTextCounter();
                     super.getCallback().defaultTextCounterChanged(getIntent().defaultTextCounter);
                 } catch (TimeoutException | NotConnectedException ex) {
                     Logger.getLogger(LCD20x4Device.class.getName()).log(Level.SEVERE, null, ex);

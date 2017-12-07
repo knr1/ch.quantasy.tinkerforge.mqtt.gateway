@@ -47,6 +47,10 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.temperature.DeviceI2CMode;
 import ch.quantasy.gateway.message.intent.temperature.DeviceTemperatureCallbackThreshold;
 import ch.quantasy.gateway.message.intent.temperature.TemperatureIntent;
+import ch.quantasy.gateway.message.status.temperature.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.temperature.ModeStatus;
+import ch.quantasy.gateway.message.status.temperature.TemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.temperature.TemperatureThresholdStatus;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -66,22 +70,22 @@ public class TemperatureService extends AbstractDeviceService<TemperatureDevice,
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void temperatureCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, new TemperatureCallbackPeriodStatus(period));
     }
 
     @Override
     public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, new TemperatureThresholdStatus(threshold));
     }
 
     @Override
     public void i2CModeChanged(DeviceI2CMode mode) {
-        publishStatus(getContract().STATUS_I2CMODE, mode);
+        readyToPublishStatus(getContract().STATUS_I2CMODE, new ModeStatus(mode));
     }
 
     @Override

@@ -161,8 +161,5 @@ public class DCServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_VELOCITY_CALLBACK_PERIOD, VelocityPeriodStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-    }
+   
 }

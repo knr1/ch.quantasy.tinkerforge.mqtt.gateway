@@ -46,6 +46,7 @@ import ch.quantasy.gateway.message.event.segment4x7.CounterEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.segment4x7.DeviceCounterParameters;
 import ch.quantasy.gateway.message.intent.segment4x7.DeviceSegments;
+import ch.quantasy.gateway.message.status.segment4x7.SegmentsStatus;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7DeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -70,7 +71,7 @@ public class Segment4x7Service extends AbstractDeviceService<Segment4x7Device, S
 
     @Override
     public void segmentsChanged(DeviceSegments segments) {
-        publishStatus(getContract().STATUS_SEGMENTS, segments);
+        readyToPublishStatus(getContract().STATUS_SEGMENTS, new SegmentsStatus(segments));
     }
 
     @Override

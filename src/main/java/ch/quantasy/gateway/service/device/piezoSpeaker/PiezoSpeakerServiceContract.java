@@ -97,7 +97,5 @@ public class PiezoSpeakerServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_MORSE_STARTED, MorseEvent.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-    }
+   
 }

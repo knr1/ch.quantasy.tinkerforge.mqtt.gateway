@@ -73,27 +73,27 @@ public class JoystickService extends AbstractDeviceService<JoystickDevice, Joyst
 
     @Override
     public void analogValueCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_ANALOG_VALUE_CALLBACK_PERIOD, new AnalogCallbackPeriodStatus(period));
     }
 
     @Override
     public void positionCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_POSITION_CALLBACK_PERIOD, new PositionCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_POSITION_CALLBACK_PERIOD, new PositionCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void analogValueCallbackThresholdChanged(DeviceAnalogValueCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_ANALOG_VALUE_THRESHOLD, new AnalogValueCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void positionCallbackThresholdChanged(DevicePositionCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_POSITION_THRESHOLD, new PositionCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_POSITION_THRESHOLD, new PositionCallbackThresholdStatus(threshold));
     }
 
     @Override

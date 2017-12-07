@@ -44,6 +44,9 @@ package ch.quantasy.gateway.service.device.uvLight;
 
 import ch.quantasy.gateway.message.event.uvLight.UVLightEvent;
 import ch.quantasy.gateway.message.intent.uvLight.UVLightIntent;
+import ch.quantasy.gateway.message.status.uvLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.uvLight.UvLightCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.uvLight.UvLightCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
@@ -101,14 +104,10 @@ public class UVLightServiceContract extends DeviceServiceContract {
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
         addMessageTopic(EVENT_UV_LIGHT, UVLightEvent.class);
         addMessageTopic(EVENT_UV_LIGHT_REACHED, UVLightEvent.class);
-
+        addMessageTopic(STATUS_UV_LIGHT_CALLBACK_PERIOD, UvLightCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_UV_LIGHT_THRESHOLD, UvLightCallbackThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_UV_LIGHT_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_UV_LIGHT_THRESHOLD, "option: [x|o|i|<|>]\n min: [0..328000]\n max: [0..328000]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-    }
+    
 }

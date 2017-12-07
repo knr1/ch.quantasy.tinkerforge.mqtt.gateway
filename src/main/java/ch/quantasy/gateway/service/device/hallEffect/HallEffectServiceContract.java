@@ -108,8 +108,5 @@ public class HallEffectServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_CONFIGURATION, EdgeCountConfigurationStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-    }
+   
 }

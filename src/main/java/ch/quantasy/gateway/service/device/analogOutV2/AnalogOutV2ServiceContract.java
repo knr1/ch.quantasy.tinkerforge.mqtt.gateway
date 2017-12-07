@@ -74,7 +74,5 @@ public class AnalogOutV2ServiceContract extends DeviceServiceContract {
 
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-    }
+   
 }

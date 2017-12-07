@@ -52,6 +52,17 @@ import ch.quantasy.gateway.message.event.IMU.OrientationEvent;
 import ch.quantasy.gateway.message.event.IMU.QuaternionEvent;
 import ch.quantasy.gateway.message.event.IMU.TemperatureEvent;
 import ch.quantasy.gateway.message.event.IMUV2.SensorFusionModeEvent;
+import ch.quantasy.gateway.message.status.IMU.AccelerationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.AllDataCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.AngularVelocityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.LedsStatus;
+import ch.quantasy.gateway.message.status.IMU.MagneticFieldCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.OrientationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.QuaternionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMU.StatusLEDStatus;
+import ch.quantasy.gateway.message.status.IMUV2.GravityVectorCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMUV2.LinearAccelerationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.IMUV2.TemperatureCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.imuV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.imuV2.IMUV2DeviceCallback;
@@ -72,58 +83,58 @@ public class IMUV2Service extends AbstractDeviceService<IMUV2Device, IMUV2Servic
 
     @Override
     public void accelerationPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_ACCELERATION_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_ACCELERATION_CALLBACK_PERIOD, new AccelerationCallbackPeriodStatus(period));
 
     }
 
     @Override
     public void allDataPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_ALL_DATA_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_ALL_DATA_CALLBACK_PERIOD, new AllDataCallbackPeriodStatus(period));
     }
 
     @Override
     public void angularVelocityPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, new AngularVelocityCallbackPeriodStatus(period));
     }
 
     @Override
     public void gravityVectorPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_GRAVITY_VECTOR_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_GRAVITY_VECTOR_CALLBACK_PERIOD, new GravityVectorCallbackPeriodStatus(period));
     }
 
     @Override
     public void linearAccelerationPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_LINEAR_ACCELERATION_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_LINEAR_ACCELERATION_CALLBACK_PERIOD, new LinearAccelerationCallbackPeriodStatus(period));
     }
 
     @Override
     public void magneticFieldPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, new MagneticFieldCallbackPeriodStatus(period));
     }
 
     @Override
     public void orientationPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_ORIENTATION_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_ORIENTATION_CALLBACK_PERIOD, new OrientationCallbackPeriodStatus(period));
     }
 
     @Override
     public void quaternionPeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_QUATERNION_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_QUATERNION_CALLBACK_PERIOD, new QuaternionCallbackPeriodStatus(period));
     }
 
     @Override
     public void temperaturePeriodChanged(Long period) {
-        publishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, new TemperatureCallbackPeriodStatus(period));
     }
 
     @Override
     public void statusLEDChanged(Boolean isEnabled) {
-        publishStatus(getContract().STATUS_STATUS_LED, isEnabled);
+        readyToPublishStatus(getContract().STATUS_STATUS_LED, new StatusLEDStatus(isEnabled));
     }
 
     @Override
     public void LEDsChanged(Boolean areEnabled) {
-        publishStatus(getContract().STATUS_LED, areEnabled);
+        readyToPublishStatus(getContract().STATUS_LED, new LedsStatus(areEnabled));
     }
 
     @Override

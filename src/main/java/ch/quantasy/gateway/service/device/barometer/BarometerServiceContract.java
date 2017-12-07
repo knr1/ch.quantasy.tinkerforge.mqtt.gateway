@@ -148,8 +148,5 @@ public class BarometerServiceContract extends DeviceServiceContract {
 
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-    }
+   
 }

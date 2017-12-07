@@ -46,6 +46,7 @@ import ch.quantasy.gateway.message.event.nfc.TagIDEvent;
 import ch.quantasy.gateway.message.event.nfc.TagReadEvent;
 import ch.quantasy.gateway.message.event.nfc.TagWrittenEvent;
 import ch.quantasy.gateway.message.intent.nfc.NFCIntent;
+import ch.quantasy.gateway.message.status.nfc.ScanningIntervalStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
@@ -92,13 +93,9 @@ public class NFCServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_TAG_READ, TagReadEvent.class);
         addMessageTopic(EVENT_TAG_VANISHED, TagIDEvent.class);
         addMessageTopic(EVENT_TAG_WRITTEN, TagWrittenEvent.class);
+        addMessageTopic(STATUS_SCANNING_CALLBACK_PERIOD, ScanningIntervalStatus.class);
 
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-
-        descriptions.put(STATUS_SCANNING_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-
-    }
+   
 }

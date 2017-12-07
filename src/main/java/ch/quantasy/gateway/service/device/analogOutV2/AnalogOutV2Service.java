@@ -63,7 +63,7 @@ public class AnalogOutV2Service extends AbstractDeviceService<AnalogOutV2Device,
 
     @Override
     public void outputVoltageChanged(Integer voltage) {
-        publishStatus(getContract().STATUS_OUTPUT_VOLTAGE, new OutputVoltageStatus(voltage));
+        readyToPublishStatus(getContract().STATUS_OUTPUT_VOLTAGE, new OutputVoltageStatus(voltage));
     }
 
 }

@@ -48,6 +48,13 @@ import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.ptc.DeviceNoiseReductionFilter;
 import ch.quantasy.gateway.message.intent.ptc.DeviceResistanceCallbackThreshold;
 import ch.quantasy.gateway.message.intent.ptc.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.status.ptc.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.ptc.NoiseReductionFilterStatus;
+import ch.quantasy.gateway.message.status.ptc.ResistanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.ptc.ResistanceThresholdStatus;
+import ch.quantasy.gateway.message.status.ptc.TemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.ptc.TemperatureThresholdStatus;
+import ch.quantasy.gateway.message.status.ptc.WireModeStatus;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
 import ch.quantasy.tinkerforge.device.ptc.PTCDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -67,22 +74,22 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void temperatureCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, new TemperatureCallbackPeriodStatus(period));
     }
 
     @Override
     public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, new TemperatureThresholdStatus(threshold));
     }
 
     @Override
     public void noiseReductionFilterChanged(DeviceNoiseReductionFilter filter) {
-        publishStatus(getContract().STATUS_NOISE_REDUCTION_FILTER, filter);
+        readyToPublishStatus(getContract().STATUS_NOISE_REDUCTION_FILTER, new NoiseReductionFilterStatus(filter));
     }
 
     @Override
@@ -107,17 +114,17 @@ public class PTCService extends AbstractDeviceService<PTCDevice, PTCServiceContr
 
     @Override
     public void resistanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_RESISTANCE_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_RESISTANCE_CALLBACK_PERIOD, new ResistanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void resistanceCallbackThresholdChanged(DeviceResistanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_RESISTANCE_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_RESISTANCE_THRESHOLD, new ResistanceThresholdStatus(threshold));
     }
 
     @Override
     public void wireModeChanged(short wireMode) {
-        publishStatus(getContract().STATUS_WIRE_MODE, wireMode);
+        readyToPublishStatus(getContract().STATUS_WIRE_MODE, new WireModeStatus(wireMode));
     }
 
 }

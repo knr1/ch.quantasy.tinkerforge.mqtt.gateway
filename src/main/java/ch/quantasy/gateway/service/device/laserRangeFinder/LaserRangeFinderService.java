@@ -99,52 +99,52 @@ public class LaserRangeFinderService extends AbstractDeviceService<LaserRangeFin
 
     @Override
     public void distanceCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, new DistanceCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DISTANCE_CALLBACK_PERIOD, new DistanceCallbackPeriodStatus(period));
     }
 
     @Override
     public void velocityCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, new VelocityCallbackPeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_VELOCITY_CALLBACK_PERIOD, new VelocityCallbackPeriodStatus(period));
     }
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void distanceCallbackThresholdChanged(DeviceDistanceCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_DISTANCE_THRESHOLD, new DistanceCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_DISTANCE_THRESHOLD, new DistanceCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void velocityCallbackThresholdChanged(DeviceVelocityCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_VELOCITY_THRESHOLD, new VelocityCallbackThresholdStatus(threshold));
+        readyToPublishStatus(getContract().STATUS_VELOCITY_THRESHOLD, new VelocityCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void laserStatusChanged(boolean laserEnabled) {
-        publishStatus(getContract().STATUS_LASER, new LaserEnabledStatus(laserEnabled));
+        readyToPublishStatus(getContract().STATUS_LASER, new LaserEnabledStatus(laserEnabled));
     }
 
     @Override
     public void movingAverageChanged(DeviceAveraging averaging) {
-        publishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(averaging));
+        readyToPublishStatus(getContract().STATUS_MOVING_AVERAGE, new MovingAverageStatus(averaging));
     }
 
     @Override
     public void deviceModeChanged(DeviceMode deviceMode) {
-        publishStatus(getContract().STATUS_DEVICE_MODE, new ModeStatus(deviceMode));
+        readyToPublishStatus(getContract().STATUS_DEVICE_MODE, new ModeStatus(deviceMode));
     }
 
     @Override
     public void deviceConfigurationChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_DEVICE_CONFIGURATION, new ConfigurationStatus(configuration));
+        readyToPublishStatus(getContract().STATUS_DEVICE_CONFIGURATION, new ConfigurationStatus(configuration));
     }
 
     @Override
     public void sensorHardware(SensorHardware sensorHardware) {
-        publishStatus(getContract().STATUS_SENSOR_HARDWARE, new SensorHardwareStatus(sensorHardware));
+        readyToPublishStatus(getContract().STATUS_SENSOR_HARDWARE, new SensorHardwareStatus(sensorHardware));
     }
 
 }

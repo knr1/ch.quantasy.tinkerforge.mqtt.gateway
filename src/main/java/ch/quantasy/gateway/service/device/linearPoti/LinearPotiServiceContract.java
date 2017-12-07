@@ -122,15 +122,13 @@ public class LinearPotiServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_POSITION, PositionEvent.class);
         addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
         addMessageTopic(EVENT_POSITION_REACHED, PositionEvent.class);
-
-    }
-
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
+         addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
         addMessageTopic(STATUS_POSITION_CALLBACK_PERIOD, PositionCallbackPeriodStatus.class);
         addMessageTopic(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
         addMessageTopic(STATUS_POSITION_THRESHOLD, PositionCallbackThresholdStatus.class);
         addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+
     }
+
+    
 }

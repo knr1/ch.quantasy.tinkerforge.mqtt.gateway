@@ -78,27 +78,27 @@ public class GPSv2Service extends AbstractDeviceService<GPSv2Device, GPSv2Servic
 
     @Override
     public void altitudeCallbackPeriodChanged(long period) {
-        super.publishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, new AltitudeCallbackPeriodStatus(period));
+        super.readyToPublishStatus(getContract().STATUS_ALTITUDE_CALLBACK_PERIOD, new AltitudeCallbackPeriodStatus(period));
     }
 
     @Override
     public void coordinatesCallbackPeriodChanged(Long coordinatesCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, new CoordinatesCallbackPeriodStatus(coordinatesCallbackPeriod));
+        super.readyToPublishStatus(getContract().STATUS_COORDINATES_CALLBACK_PERIOD, new CoordinatesCallbackPeriodStatus(coordinatesCallbackPeriod));
     }
 
     @Override
     public void dateTimeCallbackPeriodChanged(Long dateTimeCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, new DateTimeCallbackPeriodStatus(dateTimeCallbackPeriod));
+        super.readyToPublishStatus(getContract().STATUS_DATE_TIME_CALLBACK_PERIOD, new DateTimeCallbackPeriodStatus(dateTimeCallbackPeriod));
     }
 
     @Override
     public void motionCallbackPeriodChanged(Long motionCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_MOTION_CALLBACK_PERIOD, new MotionCallbackPeriodStatus(motionCallbackPeriod));
+        super.readyToPublishStatus(getContract().STATUS_MOTION_CALLBACK_PERIOD, new MotionCallbackPeriodStatus(motionCallbackPeriod));
     }
 
     @Override
     public void statusCallbackPeriodChanged(Long statusCallbackPeriod) {
-        super.publishStatus(getContract().STATUS_STATE_CALLBACK_PERIOD, new StatusCallbackPeriodStatus(statusCallbackPeriod));
+        super.readyToPublishStatus(getContract().STATUS_STATE_CALLBACK_PERIOD, new StatusCallbackPeriodStatus(statusCallbackPeriod));
     }
 
     @Override
@@ -128,12 +128,12 @@ public class GPSv2Service extends AbstractDeviceService<GPSv2Device, GPSv2Servic
 
     @Override
     public void fixLEDConfigChanged(FixLEDConfig fixLEDConfig) {
-        super.publishStatus(getContract().STATUS_FIX_LED_CONFIG, new FixLEDConfigStatus(fixLEDConfig));
+        super.readyToPublishStatus(getContract().STATUS_FIX_LED_CONFIG, new FixLEDConfigStatus(fixLEDConfig));
     }
 
     @Override
     public void statusLEDConfigChanged(StatusLEDConfig statusLEDConfig) {
-        super.publishStatus(getContract().STATUS_STATE_LED_CONFIG, new StatusLEDConfigStatus(statusLEDConfig));
+        super.readyToPublishStatus(getContract().STATUS_STATE_LED_CONFIG, new StatusLEDConfigStatus(statusLEDConfig));
     }
 
     @Override

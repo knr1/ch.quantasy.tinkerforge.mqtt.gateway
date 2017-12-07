@@ -46,6 +46,13 @@ import ch.quantasy.gateway.message.event.ptc.ResistanceEvent;
 import ch.quantasy.gateway.message.event.ptc.TemperatureEvent;
 import ch.quantasy.gateway.message.intent.ptc.PTCIntent;
 import ch.quantasy.gateway.message.intent.temperature.TemperatureIntent;
+import ch.quantasy.gateway.message.status.ptc.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.ptc.NoiseReductionFilterStatus;
+import ch.quantasy.gateway.message.status.ptc.ResistanceThresholdStatus;
+import ch.quantasy.gateway.message.status.ptc.TemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.ptc.TemperatureThresholdStatus;
+import ch.quantasy.gateway.message.status.ptc.WireModeStatus;
+import ch.quantasy.gateway.message.status.temperature.ResistanceCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
@@ -131,17 +138,14 @@ public class PTCServiceContract extends DeviceServiceContract {
         addMessageTopic(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
         addMessageTopic(EVENT_RESISTANCE, ResistanceEvent.class);
         addMessageTopic(EVENT_RESISTANCE_REACHED, ResistanceEvent.class);
-
+        addMessageTopic(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_TEMPERATURE_THRESHOLD, TemperatureThresholdStatus.class);
+        addMessageTopic(STATUS_RESISTANCE_CALLBACK_PERIOD, ResistanceCallbackPeriodStatus.class);
+        addMessageTopic(STATUS_RESISTANCE_THRESHOLD, ResistanceThresholdStatus.class);
+        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        addMessageTopic(STATUS_NOISE_REDUCTION_FILTER, NoiseReductionFilterStatus.class);
+        addMessageTopic(STATUS_WIRE_MODE, WireModeStatus.class);
     }
 
-    @Override
-    protected void descirbeMore(Map<String, String> descriptions) {
-        descriptions.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_TEMPERATURE_THRESHOLD, "option: [x|o|i|<|>]\n min: [-24600..84900]\n max: [-24600..84900]");
-        descriptions.put(STATUS_RESISTANCE_CALLBACK_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_RESISTANCE_THRESHOLD, "option: [x|o|i|<|>]\n min: [0.." + Short.MAX_VALUE + "]\n max: [0.." + Short.MAX_VALUE + "]");
-        descriptions.put(STATUS_DEBOUNCE_PERIOD, "[0.." + Long.MAX_VALUE + "]");
-        descriptions.put(STATUS_NOISE_REDUCTION_FILTER, "filter: [Hz_50|Hz_60]");
-        descriptions.put(STATUS_WIRE_MODE, "[2|3|4]");
-    }
+   
 }

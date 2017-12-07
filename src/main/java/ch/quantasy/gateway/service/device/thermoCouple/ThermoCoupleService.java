@@ -47,6 +47,10 @@ import ch.quantasy.gateway.message.event.thermoCouple.TemperatureEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.intent.thermoCouple.DeviceConfiguration;
 import ch.quantasy.gateway.message.intent.thermoCouple.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.status.thermoCouple.ConfigurationStatus;
+import ch.quantasy.gateway.message.status.thermoCouple.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.status.thermoCouple.TemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.status.thermoCouple.TemperatureCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -65,22 +69,22 @@ public class ThermoCoupleService extends AbstractDeviceService<ThermoCoupleDevic
 
     @Override
     public void debouncePeriodChanged(long period) {
-        publishStatus(getContract().STATUS_DEBOUNCE_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
     }
 
     @Override
     public void temperatureCallbackPeriodChanged(long period) {
-        publishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, period);
+        readyToPublishStatus(getContract().STATUS_TEMPERATURE_CALLBACK_PERIOD, new TemperatureCallbackPeriodStatus(period));
     }
 
     @Override
     public void temperatureCallbackThresholdChanged(DeviceTemperatureCallbackThreshold threshold) {
-        publishStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, threshold);
+        readyToPublishStatus(getContract().STATUS_TEMPERATURE_THRESHOLD, new TemperatureCallbackThresholdStatus(threshold));
     }
 
     @Override
     public void configurationChanged(DeviceConfiguration configuration) {
-        publishStatus(getContract().STATUS_CONFIGURATION, configuration);
+        readyToPublishStatus(getContract().STATUS_CONFIGURATION, new ConfigurationStatus(configuration));
     }
 
     @Override
