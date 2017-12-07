@@ -431,6 +431,7 @@ Status (S) is as fine granular as possible, so you can subscribe to your needs a
 
 No message is lost! It is delivered as fast as possible. If the channel is slower than the message creation, the messages will be delivered as an array. 
 
+
 ### IMU
 ```
 TF/IMU/U/<id>/E/acceleration
@@ -1016,9 +1017,9 @@ TF/<id>/U/Accelerometer/I
    callbackPeriod: Number <from: 0 to: 9223372036854775807>
    configuration: null
    configuration: 
-     DataRate: String <OFF,Hz3,Hz6,Hz12,Hz25,Hz50,Hz100,Hz400,Hz800,Hz1600>
-     FilterBandwidth: String <Hz800,Hz400,Hz200,Hz50>
-     FullScale: String <G2,G4,G6,G8,G16>
+     dataRate: String <OFF,Hz3,Hz6,Hz12,Hz25,Hz50,Hz100,Hz400,Hz800,Hz1600>
+     filterBandwidth: String <Hz800,Hz400,Hz200,Hz50>
+     fullScale: String <G2,G4,G6,G8,G16>
    debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    timeStamp: Number <from: 0 to: 9223372036854775807>
@@ -1041,9 +1042,9 @@ TF/<id>/U/Accelerometer/S/acceleration/threshold
 TF/<id>/U/Accelerometer/S/configuration
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     DataRate: String <OFF,Hz3,Hz6,Hz12,Hz25,Hz50,Hz100,Hz400,Hz800,Hz1600>
-     FilterBandwidth: String <Hz800,Hz400,Hz200,Hz50>
-     FullScale: String <G2,G4,G6,G8,G16>
+     dataRate: String <OFF,Hz3,Hz6,Hz12,Hz25,Hz50,Hz100,Hz400,Hz800,Hz1600>
+     filterBandwidth: String <Hz800,Hz400,Hz200,Hz50>
+     fullScale: String <G2,G4,G6,G8,G16>
    
 ```
 ```
@@ -1190,8 +1191,8 @@ TF/AmbientLightV2/U/<id>/E/illuminance/reached
 TF/AmbientLightV2/U/<id>/I
    configuration: null
    configuration: 
-     IlluminanceRange: String <lx_unlimitted,lx_64000,lx_32000,lx_16000,lx_8000,lx_1300,lx_600>
-     IntegrationTime: String <ms_50,ms_100,ms_150,ms_200,ms_250,ms_300,ms_350,ms_400>
+     illuminanceRange: String <lx_unlimitted,lx_64000,lx_32000,lx_16000,lx_8000,lx_1300,lx_600>
+     integrationTime: String <ms_50,ms_100,ms_150,ms_200,ms_250,ms_300,ms_350,ms_400>
    debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    illuminanceCallbackPeriod: null
@@ -1208,8 +1209,8 @@ TF/AmbientLightV2/U/<id>/I
 TF/AmbientLightV2/U/<id>/S/configuration
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     IlluminanceRange: String <lx_unlimitted,lx_64000,lx_32000,lx_16000,lx_8000,lx_1300,lx_600>
-     IntegrationTime: String <ms_50,ms_100,ms_150,ms_200,ms_250,ms_300,ms_350,ms_400>
+     illuminanceRange: String <lx_unlimitted,lx_64000,lx_32000,lx_16000,lx_8000,lx_1300,lx_600>
+     integrationTime: String <ms_50,ms_100,ms_150,ms_200,ms_250,ms_300,ms_350,ms_400>
    
 ```
 ```
@@ -1638,8 +1639,8 @@ TF/Color/U/<id>/I
    colorTemperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    config: null
    config: 
-     Gain: String <x1,x4,x16,Hz60>
-     IntegrationTime: String <ms2_4,ms24,ms101,ms154,ms700>
+     gain: String <x1,x4,x16,Hz60>
+     integrationTime: String <ms2_4,ms24,ms101,ms154,ms700>
    debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    illuminanceCallbackPeriod: null
@@ -1999,8 +2000,8 @@ TF/DistanceUS/U/<id>/S/position
 ### DualButton
 ```
 TF/DualButton/U/<id>/E/stateChanged
-   LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
-   LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+   led1: String <AutoToggleOn,AutoToggleOff,On,Off>
+   led2: String <AutoToggleOn,AutoToggleOff,On,Off>
    switch1: String <[0, 1]>
    switch2: String <[0, 1]>
    timeStamp: Number <from: 0 to: 9223372036854775807>
@@ -2010,13 +2011,13 @@ TF/DualButton/U/<id>/E/stateChanged
 TF/DualButton/U/<id>/I
    ledState: null
    ledState: 
-     LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
-     LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+     led1: String <AutoToggleOn,AutoToggleOff,On,Off>
+     led2: String <AutoToggleOn,AutoToggleOff,On,Off>
    selectedLEDStates: null
    selectedLEDStates: Set <min: 0 max: 2>
    selectedLEDStates: 
     led: String <[1, 2]>
-    LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+    state: String <AutoToggleOn,AutoToggleOff,On,Off>
    timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -2024,8 +2025,8 @@ TF/DualButton/U/<id>/I
 TF/DualButton/U/<id>/S/LEDState
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
-     LEDState: String <AutoToggleOn,AutoToggleOff,On,Off>
+     led1: String <AutoToggleOn,AutoToggleOff,On,Off>
+     led2: String <AutoToggleOn,AutoToggleOff,On,Off>
    
 ```
 ```
@@ -2237,7 +2238,7 @@ TF/GPS/U/<id>/I
    motionCallbackPeriod: null
    motionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    restart: null
-   RestartType: String <hot,warm,cold,factoryReset>
+   restart: String <hot,warm,cold,factoryReset>
    statusCallbackPeriod: null
    statusCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    timeStamp: Number <from: 0 to: 9223372036854775807>
@@ -2335,15 +2336,15 @@ TF/GPSv2/U/<id>/I
    dateTimeCallbackPeriod: null
    dateTimeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    fixLEDConfig: null
-   FixLEDConfig: String <OFF,ON,HEARTBEAT,FIX,PPS>
+   fixLEDConfig: String <OFF,ON,HEARTBEAT,FIX,PPS>
    motionCallbackPeriod: null
    motionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    restart: null
-   RestartType: String <hot,warm,cold,factoryReset>
+   restart: String <hot,warm,cold,factoryReset>
    statusCallbackPeriod: null
    statusCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    statusLEDConfig: null
-   StatusLEDConfig: String <OFF,ON,HEARTBEAT,STATUS>
+   statusLEDConfig: String <OFF,ON,HEARTBEAT,STATUS>
    timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -2375,7 +2376,7 @@ TF/GPSv2/U/<id>/S/firmware
 ```
 TF/GPSv2/U/<id>/S/fix/led
    timeStamp: Number <from: 0 to: 9223372036854775807>
-   FixLEDConfig: String <OFF,ON,HEARTBEAT,FIX,PPS>
+   value: String <OFF,ON,HEARTBEAT,FIX,PPS>
    
 ```
 ```
@@ -2400,7 +2401,7 @@ TF/GPSv2/U/<id>/S/position
 ```
 TF/GPSv2/U/<id>/S/status/led
    timeStamp: Number <from: 0 to: 9223372036854775807>
-   StatusLEDConfig: String <OFF,ON,HEARTBEAT,STATUS>
+   value: String <OFF,ON,HEARTBEAT,STATUS>
    
 ```
 
@@ -2755,7 +2756,7 @@ TF/LaserRangeFinder/U/<id>/I
    laserEnabled: Boolean <true,false> 
    mode: null
    mode: 
-     Mode: String <distance,velocity_12_7,velocity_31_75,velocity_63_5,velocity_127>
+     mode: String <distance,velocity_12_7,velocity_31_75,velocity_63_5,velocity_127>
    movingAverage: null
    movingAverage: 
      averagingDistance: Number <from: 0 to: 30>
@@ -2790,7 +2791,7 @@ TF/LaserRangeFinder/U/<id>/S/deviceConfiguration
 TF/LaserRangeFinder/U/<id>/S/deviceMode
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     Mode: String <distance,velocity_12_7,velocity_31_75,velocity_63_5,velocity_127>
+     mode: String <distance,velocity_12_7,velocity_31_75,velocity_63_5,velocity_127>
    
 ```
 ```
@@ -2846,7 +2847,7 @@ TF/LaserRangeFinder/U/<id>/S/position
 TF/LaserRangeFinder/U/<id>/S/sensorHardware
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     Version: String <v1,v3>
+     version: String <v1,v3>
    
 ```
 ```
@@ -2882,8 +2883,8 @@ TF/LEDStrip/U/<id>/E/laging
 TF/LEDStrip/U/<id>/I
    config: null
    config: 
-     ChannelMapping: String <BGR,BGRW,BGWR,BRG,BRGW,BRWG,BWGR,BWRG,GBR,GBRW,GBWR,GRB,GRBW,GRWB,GWBR,GWRB,RBG,RBGW,RBWG,RGB,RGBW,RGWB,RWBG,RWGB>
-     ChipType: String <WS2801,WS2811,WS2812,WS2812RGBW,LPD8806,APA102>
+     channelMapping: String <BGR,BGRW,BGWR,BRG,BRGW,BRWG,BWGR,BWRG,GBR,GBRW,GBWR,GRB,GRBW,GRWB,GWBR,GWRB,RBG,RBGW,RBWG,RGB,RGBW,RGWB,RWBG,RWGB>
+     chipType: String <WS2801,WS2811,WS2812,WS2812RGBW,LPD8806,APA102>
      clockFrequencyOfICsInHz: Number <from: 10000 to: 2000000>
      frameDurationInMilliseconds: Number <from: 0 to: 9223372036854775807>
      numberOfLEDs: Number <from: 0 to: 320>
@@ -2903,8 +2904,8 @@ TF/LEDStrip/U/<id>/I
 TF/LEDStrip/U/<id>/S/config
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     ChannelMapping: String <BGR,BGRW,BGWR,BRG,BRGW,BRWG,BWGR,BWRG,GBR,GBRW,GBWR,GRB,GRBW,GRWB,GWBR,GWRB,RBG,RBGW,RBWG,RGB,RGBW,RGWB,RWBG,RWGB>
-     ChipType: String <WS2801,WS2811,WS2812,WS2812RGBW,LPD8806,APA102>
+     channelMapping: String <BGR,BGRW,BGWR,BRG,BRGW,BRWG,BWGR,BWRG,GBR,GBRW,GBWR,GRB,GRBW,GRWB,GWBR,GWRB,RBG,RBGW,RBWG,RGB,RGBW,RGWB,RWBG,RWGB>
+     chipType: String <WS2801,WS2811,WS2812,WS2812RGBW,LPD8806,APA102>
      clockFrequencyOfICsInHz: Number <from: 10000 to: 2000000>
      frameDurationInMilliseconds: Number <from: 0 to: 9223372036854775807>
      numberOfLEDs: Number <from: 0 to: 320>
@@ -3121,8 +3122,8 @@ TF/LoadCell/U/<id>/I
    calibrate: null
    configuration: null
    configuration: 
-     Gain: String <gain128X,gain64X,gain32X>
-     Rate: String <rate10Hz,rate80Hz>
+     gain: String <gain128X,gain64X,gain32X>
+     rate: String <rate10Hz,rate80Hz>
    debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    movingAverage: null
@@ -3151,8 +3152,8 @@ TF/LoadCell/U/<id>/S/LED
 TF/LoadCell/U/<id>/S/configuration
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     Gain: String <gain128X,gain64X,gain32X>
-     Rate: String <rate10Hz,rate80Hz>
+     gain: String <gain128X,gain64X,gain32X>
+     rate: String <rate10Hz,rate80Hz>
    
 ```
 ```
@@ -3529,7 +3530,7 @@ TF/NfcRfid/U/<id>/E/tag/discovered
    id: String <regEx: [0-9A-F]{8-14}>
    latestDiscoveryTimeStamp: Number <from: 0 to: 9223372036854775807>
    timeStamp: Number <from: 0 to: 9223372036854775807>
-   NFCType: String <MifareClassic,Type1,Type2>
+   type: String <MifareClassic,Type1,Type2>
    
 ```
 ```
@@ -3543,13 +3544,13 @@ TF/NfcRfid/U/<id>/E/tag/vanished
    id: String <regEx: [0-9A-F]{8-14}>
    latestDiscoveryTimeStamp: Number <from: 0 to: 9223372036854775807>
    timeStamp: Number <from: 0 to: 9223372036854775807>
-   NFCType: String <MifareClassic,Type1,Type2>
+   type: String <MifareClassic,Type1,Type2>
    
 ```
 ```
 TF/NfcRfid/U/<id>/E/tag/written
    id: String <regEx: [0-9A-F]{8-14}>
-   NFCRFIDReaderState: String <WritePageError,WritePageReady>
+   state: String <WritePageError,WritePageReady>
    timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -3684,7 +3685,7 @@ TF/PTC/U/<id>/I
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    noiseReductionFilter: null
    noiseReductionFilter: 
-     Filter: String <Hz_50,Hz_60>
+     filter: String <Hz_50,Hz_60>
    resistanceCallbackPeriod: null
    resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    resistanceThreshold: null
@@ -3720,7 +3721,7 @@ TF/PTC/U/<id>/S/hardware
 TF/PTC/U/<id>/S/noiseReductionFilter
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     Filter: String <Hz_50,Hz_60>
+     filter: String <Hz_50,Hz_60>
    
 ```
 ```
@@ -3769,7 +3770,7 @@ TF/RealTimeClock/U/<id>/E/alarm
      minute: Number <from: 0 to: 59>
      month: Number <from: 1 to: 12>
      second: Number <from: 0 to: 59>
-     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
+     weekday: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
      year: Number <from: 2000 to: 2099>
    timeStamp: Number <from: 0 to: 9223372036854775807>
    
@@ -3784,7 +3785,7 @@ TF/RealTimeClock/U/<id>/E/dateTime
      minute: Number <from: 0 to: 59>
      month: Number <from: 1 to: 12>
      second: Number <from: 0 to: 59>
-     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
+     weekday: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
      year: Number <from: 2000 to: 2099>
    timeStamp: Number <from: 0 to: 9223372036854775807>
    
@@ -3799,7 +3800,7 @@ TF/RealTimeClock/U/<id>/I
      minute: Number <from: 0 to: 59>
      month: Number <from: 1 to: 12>
      second: Number <from: 0 to: 59>
-     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday,disabled>
+     weekday: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday,disabled>
    dateTimeCallbackPeriod: null
    dateTimeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    dateTimeParameter: null
@@ -3810,7 +3811,7 @@ TF/RealTimeClock/U/<id>/I
      minute: Number <from: 0 to: 59>
      month: Number <from: 1 to: 12>
      second: Number <from: 0 to: 59>
-     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
+     weekday: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
      year: Number <from: 2000 to: 2099>
    offset: null
    offset: Number <from: -128 to: 127>
@@ -3827,7 +3828,7 @@ TF/RealTimeClock/U/<id>/S/alarm
      minute: Number <from: 0 to: 59>
      month: Number <from: 1 to: 12>
      second: Number <from: 0 to: 59>
-     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday,disabled>
+     weekday: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday,disabled>
    
 ```
 ```
@@ -3840,7 +3841,7 @@ TF/RealTimeClock/U/<id>/S/dateTime
      minute: Number <from: 0 to: 59>
      month: Number <from: 1 to: 12>
      second: Number <from: 0 to: 59>
-     WeekDay: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
+     weekday: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
      year: Number <from: 2000 to: 2099>
    
 ```
@@ -3896,16 +3897,16 @@ TF/RemoteSwitch/U/<id>/I
    switchSocketAParameters: 
      houseCode: Number <from: 0 to: 31>
      receiverCode: Number <from: 0 to: 31>
-     SwitchTo: String <switchOn,switchOff>
+     switchingValue: String <switchOn,switchOff>
    switchSocketBParameters: null
    switchSocketBParameters: 
      address: Number <from: 0 to: 67108863>
-     SwitchTo: String <switchOn,switchOff>
+     switchingValue: String <switchOn,switchOff>
      unit: Number <from: 0 to: 15>
    switchSocketCParameters: null
    switchSocketCParameters: 
      deviceCode: Number <from: 1 to: 16>
-     SwitchTo: String <switchOn,switchOff>
+     switchingValue: String <switchOn,switchOff>
      systemCode: Number <from: 65 to: 80>
    timeStamp: Number <from: 0 to: 9223372036854775807>
    
@@ -4441,7 +4442,7 @@ TF/Temperature/U/<id>/I
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    mode: null
    mode: 
-     Mode: String <Fast,Slow>
+     mode: String <Fast,Slow>
    resistanceCallbackPeriod: null
    resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    temperatureCallbackPeriod: null
@@ -4478,7 +4479,7 @@ TF/Temperature/U/<id>/S/hardware
 TF/Temperature/U/<id>/S/mode
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     Mode: String <Fast,Slow>
+     mode: String <Fast,Slow>
    
 ```
 ```
@@ -4630,9 +4631,9 @@ TF/ThermoCouple/U/<id>/E/temperature/reached
 TF/ThermoCouple/U/<id>/I
    configuration: null
    configuration: 
-     Averaging: String <sample_1,sample_2,sample_4,sample_8,sample_16>
-     Filter: String <Hz_50,Hz_60>
-     Type: String <B,E,J,K,N,R,S,T,G8,G32>
+     averaging: String <sample_1,sample_2,sample_4,sample_8,sample_16>
+     filter: String <Hz_50,Hz_60>
+     type: String <B,E,J,K,N,R,S,T,G8,G32>
    debouncePeriod: null
    debouncePeriod: Number <from: 0 to: 9223372036854775807>
    temperatureCallbackPeriod: null
@@ -4649,9 +4650,9 @@ TF/ThermoCouple/U/<id>/I
 TF/ThermoCouple/U/<id>/S/configuration
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     Averaging: String <sample_1,sample_2,sample_4,sample_8,sample_16>
-     Filter: String <Hz_50,Hz_60>
-     Type: String <B,E,J,K,N,R,S,T,G8,G32>
+     averaging: String <sample_1,sample_2,sample_4,sample_8,sample_16>
+     filter: String <Hz_50,Hz_60>
+     type: String <B,E,J,K,N,R,S,T,G8,G32>
    
 ```
 ```
@@ -4844,9 +4845,9 @@ TF/VoltageCurrent/U/<id>/I
      gainMultiplier: Number <from: 1 to: 2147483647>
    configuration: null
    configuration: 
-     Averaging: String <AVERAGING_1,AVERAGING_4,AVERAGING_16,AVERAGING_64,AVERAGING_128,AVERAGING_256,AVERAGING_512,AVERAGING_1024>
-     Conversion: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
-     Conversion: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
+     averaging: String <AVERAGING_1,AVERAGING_4,AVERAGING_16,AVERAGING_64,AVERAGING_128,AVERAGING_256,AVERAGING_512,AVERAGING_1024>
+     currentConversionTime: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
+     voltageConversionTime: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
    currentCalbackThreshold: null
    currentCalbackThreshold: 
      max: Number <from: 0 to: 36000>
@@ -4885,9 +4886,9 @@ TF/VoltageCurrent/U/<id>/S/calibration
 TF/VoltageCurrent/U/<id>/S/configuration
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
-     Averaging: String <AVERAGING_1,AVERAGING_4,AVERAGING_16,AVERAGING_64,AVERAGING_128,AVERAGING_256,AVERAGING_512,AVERAGING_1024>
-     Conversion: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
-     Conversion: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
+     averaging: String <AVERAGING_1,AVERAGING_4,AVERAGING_16,AVERAGING_64,AVERAGING_128,AVERAGING_256,AVERAGING_512,AVERAGING_1024>
+     currentConversionTime: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
+     voltageConversionTime: String <CONVERSION_140us,CONVERSION_204us,CONVERSION_332us,CONVERSION_588us,CONVERSION_1100us,CONVERSION_2116us,CONVERSION_4156us,CONVERSION_8244us>
    
 ```
 ```
@@ -4995,5 +4996,7 @@ TF/Manager/U/<id>/I
 ```
 ```
 TF/Manager/U/<id>/S/stack/address/<address>/connected
-   [true|false]
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
 ```
