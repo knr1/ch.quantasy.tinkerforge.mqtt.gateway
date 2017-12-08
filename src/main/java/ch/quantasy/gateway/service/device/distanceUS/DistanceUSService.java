@@ -42,14 +42,14 @@
  */
 package ch.quantasy.gateway.service.device.distanceUS;
 
-import ch.quantasy.gateway.message.event.distanceUS.DistanceEvent;
+import ch.quantasy.gateway.message.distanceUS.DistanceEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.distanceUS.DeviceDistanceCallbackThreshold;
-import ch.quantasy.gateway.message.intent.distanceUS.DistanceUSIntent;
-import ch.quantasy.gateway.message.status.distanceUS.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.distanceUS.DistanceCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.distanceUS.DistanceCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.distanceUS.MovingAverageStatus;
+import ch.quantasy.gateway.message.distanceUS.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.message.distanceUS.DistanceUSIntent;
+import ch.quantasy.gateway.message.distanceUS.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.distanceUS.DistanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.distanceUS.DistanceCallbackThresholdStatus;
+import ch.quantasy.gateway.message.distanceUS.MovingAverageStatus;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDeviceCallback;
 import java.net.URI;

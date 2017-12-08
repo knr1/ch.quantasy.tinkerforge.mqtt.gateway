@@ -42,28 +42,28 @@
  */
 package ch.quantasy.gateway.service.device.laserRangeFinder;
 
-import ch.quantasy.gateway.message.event.laserRangeFinder.DistanceEvent;
-import ch.quantasy.gateway.message.event.laserRangeFinder.VelocityEvent;
+import ch.quantasy.gateway.message.laserRangeFinder.DistanceEvent;
+import ch.quantasy.gateway.message.laserRangeFinder.VelocityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.laserRangeFinder.DeviceAveraging;
-import ch.quantasy.gateway.message.intent.laserRangeFinder.DeviceConfiguration;
-import ch.quantasy.gateway.message.intent.laserRangeFinder.DeviceDistanceCallbackThreshold;
-import ch.quantasy.gateway.message.intent.laserRangeFinder.DeviceMode;
-import ch.quantasy.gateway.message.intent.laserRangeFinder.DeviceVelocityCallbackThreshold;
-import ch.quantasy.gateway.message.intent.laserRangeFinder.LaserRangeFinderIntent;
+import ch.quantasy.gateway.message.laserRangeFinder.DeviceAveraging;
+import ch.quantasy.gateway.message.laserRangeFinder.DeviceConfiguration;
+import ch.quantasy.gateway.message.laserRangeFinder.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.message.laserRangeFinder.DeviceMode;
+import ch.quantasy.gateway.message.laserRangeFinder.DeviceVelocityCallbackThreshold;
+import ch.quantasy.gateway.message.laserRangeFinder.LaserRangeFinderIntent;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDeviceCallback;
-import ch.quantasy.gateway.message.intent.laserRangeFinder.SensorHardware;
-import ch.quantasy.gateway.message.status.laserRangeFinder.ConfigurationStatus;
-import ch.quantasy.gateway.message.status.laserRangeFinder.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.laserRangeFinder.DistanceCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.laserRangeFinder.DistanceCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.laserRangeFinder.LaserEnabledStatus;
-import ch.quantasy.gateway.message.status.laserRangeFinder.ModeStatus;
-import ch.quantasy.gateway.message.status.laserRangeFinder.MovingAverageStatus;
-import ch.quantasy.gateway.message.status.laserRangeFinder.SensorHardwareStatus;
-import ch.quantasy.gateway.message.status.laserRangeFinder.VelocityCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.laserRangeFinder.VelocityCallbackThresholdStatus;
+import ch.quantasy.gateway.message.laserRangeFinder.SensorHardware;
+import ch.quantasy.gateway.message.laserRangeFinder.ConfigurationStatus;
+import ch.quantasy.gateway.message.laserRangeFinder.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.laserRangeFinder.DistanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.laserRangeFinder.DistanceCallbackThresholdStatus;
+import ch.quantasy.gateway.message.laserRangeFinder.LaserEnabledStatus;
+import ch.quantasy.gateway.message.laserRangeFinder.ModeStatus;
+import ch.quantasy.gateway.message.laserRangeFinder.MovingAverageStatus;
+import ch.quantasy.gateway.message.laserRangeFinder.SensorHardwareStatus;
+import ch.quantasy.gateway.message.laserRangeFinder.VelocityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.laserRangeFinder.VelocityCallbackThresholdStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 

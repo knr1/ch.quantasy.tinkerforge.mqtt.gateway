@@ -42,11 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.uvLight;
 
-import ch.quantasy.gateway.message.event.uvLight.UVLightEvent;
-import ch.quantasy.gateway.message.intent.uvLight.UVLightIntent;
-import ch.quantasy.gateway.message.status.uvLight.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.uvLight.UvLightCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.uvLight.UvLightCallbackThresholdStatus;
+import ch.quantasy.gateway.message.uvLight.UVLightEvent;
+import ch.quantasy.gateway.message.uvLight.UVLightIntent;
+import ch.quantasy.gateway.message.uvLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.uvLight.UvLightCallbackPeriodStatus;
+import ch.quantasy.gateway.message.uvLight.UvLightCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;

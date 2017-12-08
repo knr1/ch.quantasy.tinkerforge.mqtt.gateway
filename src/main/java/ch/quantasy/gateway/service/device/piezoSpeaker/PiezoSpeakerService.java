@@ -42,13 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.piezoSpeaker;
 
-import ch.quantasy.gateway.message.event.piezoSpeaker.BeepEvent;
-import ch.quantasy.gateway.message.event.piezoSpeaker.CalibratedEvent;
-import ch.quantasy.gateway.message.event.piezoSpeaker.MorseEvent;
+import ch.quantasy.gateway.message.piezoSpeaker.BeepEvent;
+import ch.quantasy.gateway.message.piezoSpeaker.CalibratedEvent;
+import ch.quantasy.gateway.message.piezoSpeaker.MorseEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.piezoSpeaker.BeepParameter;
-import ch.quantasy.gateway.message.intent.piezoSpeaker.MorseCodeParameter;
-import ch.quantasy.gateway.message.intent.piezoSpeaker.PiezoSpeakerIntent;
+import ch.quantasy.gateway.message.piezoSpeaker.BeepParameter;
+import ch.quantasy.gateway.message.piezoSpeaker.MorseCodeParameter;
+import ch.quantasy.gateway.message.piezoSpeaker.PiezoSpeakerIntent;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDeviceCallback;
 import java.net.URI;

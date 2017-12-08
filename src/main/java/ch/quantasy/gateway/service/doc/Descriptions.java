@@ -115,9 +115,8 @@ public class Descriptions {
             if (DeviceServiceContract.class.equals(singleClass.getSuperclass())) {
                 contractClassNames.add(singleClass.getName());
             }
-            if (TinkerForgeServiceContract.class.equals(singleClass.getSuperclass())) {
+            if (TinkerForgeServiceContract.class.isAssignableFrom(singleClass)) {
                 contractClassNames.add(singleClass.getName());
-
             }
         }
 

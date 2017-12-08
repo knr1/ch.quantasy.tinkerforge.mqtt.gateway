@@ -42,10 +42,10 @@
  */
 package ch.quantasy.gateway.service.device.ledStrip;
 
-import ch.quantasy.gateway.message.event.ledStrip.LagingEvent;
-import ch.quantasy.gateway.message.event.ledStrip.RenderedEvent;
-import ch.quantasy.gateway.message.intent.ledStrip.LedStripIntent;
-import ch.quantasy.gateway.message.status.ledStrip.ConfigStatus;
+import ch.quantasy.gateway.message.ledStrip.LagingEvent;
+import ch.quantasy.gateway.message.ledStrip.RenderedEvent;
+import ch.quantasy.gateway.message.ledStrip.LedStripIntent;
+import ch.quantasy.gateway.message.ledStrip.ConfigStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDevice;

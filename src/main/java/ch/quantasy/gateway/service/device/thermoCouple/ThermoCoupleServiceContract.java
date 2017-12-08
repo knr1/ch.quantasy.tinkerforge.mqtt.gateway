@@ -42,13 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.thermoCouple;
 
-import ch.quantasy.gateway.message.event.thermoCouple.TemperatureEvent;
-import ch.quantasy.gateway.message.event.thermoCouple.ErrorEvent;
-import ch.quantasy.gateway.message.intent.thermoCouple.ThermoCoupleIntent;
-import ch.quantasy.gateway.message.status.thermoCouple.ConfigurationStatus;
-import ch.quantasy.gateway.message.status.thermoCouple.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.thermoCouple.TemperatureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.thermoCouple.TemperatureCallbackThresholdStatus;
+import ch.quantasy.gateway.message.thermoCouple.TemperatureEvent;
+import ch.quantasy.gateway.message.thermoCouple.ErrorEvent;
+import ch.quantasy.gateway.message.thermoCouple.ThermoCoupleIntent;
+import ch.quantasy.gateway.message.thermoCouple.ConfigurationStatus;
+import ch.quantasy.gateway.message.thermoCouple.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.thermoCouple.TemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.thermoCouple.TemperatureCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;

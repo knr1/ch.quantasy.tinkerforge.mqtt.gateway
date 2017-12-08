@@ -42,16 +42,16 @@
  */
 package ch.quantasy.gateway.service.device.distanceIR;
 
-import ch.quantasy.gateway.message.event.distanceIR.AnalogValueEvent;
-import ch.quantasy.gateway.message.event.distanceIR.DistanceEvent;
+import ch.quantasy.gateway.message.distanceIR.AnalogValueEvent;
+import ch.quantasy.gateway.message.distanceIR.DistanceEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.distanceIR.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.message.intent.distanceIR.DeviceDistanceCallbackThreshold;
-import ch.quantasy.gateway.message.intent.distanceIR.DistanceIRIntent;
-import ch.quantasy.gateway.message.status.distanceIR.AnalogCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.distanceIR.AnalogValueCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.distanceIR.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.distanceIR.DistanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.distanceIR.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.distanceIR.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.message.distanceIR.DistanceIRIntent;
+import ch.quantasy.gateway.message.distanceIR.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.distanceIR.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.distanceIR.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.distanceIR.DistanceCallbackPeriodStatus;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDeviceCallback;
 import java.net.URI;

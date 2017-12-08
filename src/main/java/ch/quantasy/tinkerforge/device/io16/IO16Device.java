@@ -42,11 +42,11 @@
  */
 package ch.quantasy.tinkerforge.device.io16;
 
-import ch.quantasy.gateway.message.intent.io16.DeviceConfiguration;
-import ch.quantasy.gateway.message.intent.io16.DeviceInterrupt;
-import ch.quantasy.gateway.message.intent.io16.DeviceMonoflopParameters;
-import ch.quantasy.gateway.message.intent.io16.DevicePortAEdgeCountConfig;
-import ch.quantasy.gateway.message.intent.io16.IO16Intent;
+import ch.quantasy.gateway.message.io16.DeviceConfiguration;
+import ch.quantasy.gateway.message.io16.DeviceInterrupt;
+import ch.quantasy.gateway.message.io16.DeviceMonoflopParameters;
+import ch.quantasy.gateway.message.io16.DevicePortAEdgeCountConfig;
+import ch.quantasy.gateway.message.io16.IO16Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletIO16;

@@ -42,19 +42,19 @@
  */
 package ch.quantasy.gateway.service.device.ptc;
 
-import ch.quantasy.gateway.message.event.ptc.ResistanceEvent;
-import ch.quantasy.gateway.message.event.ptc.TemperatureEvent;
+import ch.quantasy.gateway.message.ptc.ResistanceEvent;
+import ch.quantasy.gateway.message.ptc.TemperatureEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.ptc.DeviceNoiseReductionFilter;
-import ch.quantasy.gateway.message.intent.ptc.DeviceResistanceCallbackThreshold;
-import ch.quantasy.gateway.message.intent.ptc.DeviceTemperatureCallbackThreshold;
-import ch.quantasy.gateway.message.status.ptc.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.ptc.NoiseReductionFilterStatus;
-import ch.quantasy.gateway.message.status.ptc.ResistanceCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.ptc.ResistanceThresholdStatus;
-import ch.quantasy.gateway.message.status.ptc.TemperatureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.ptc.TemperatureThresholdStatus;
-import ch.quantasy.gateway.message.status.ptc.WireModeStatus;
+import ch.quantasy.gateway.message.ptc.DeviceNoiseReductionFilter;
+import ch.quantasy.gateway.message.ptc.DeviceResistanceCallbackThreshold;
+import ch.quantasy.gateway.message.ptc.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.ptc.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.ptc.NoiseReductionFilterStatus;
+import ch.quantasy.gateway.message.ptc.ResistanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.ptc.ResistanceThresholdStatus;
+import ch.quantasy.gateway.message.ptc.TemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.ptc.TemperatureThresholdStatus;
+import ch.quantasy.gateway.message.ptc.WireModeStatus;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
 import ch.quantasy.tinkerforge.device.ptc.PTCDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;

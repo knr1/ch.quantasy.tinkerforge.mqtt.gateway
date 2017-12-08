@@ -42,7 +42,7 @@
  */
 package ch.quantasy.gateway.service.device.tilt;
 
-import ch.quantasy.gateway.message.event.tilt.TiltEvent;
+import ch.quantasy.gateway.message.tilt.TiltEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import com.tinkerforge.BrickletTilt;

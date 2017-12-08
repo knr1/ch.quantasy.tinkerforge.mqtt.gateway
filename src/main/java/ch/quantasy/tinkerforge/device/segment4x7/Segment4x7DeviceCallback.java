@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.segment4x7;
 
-import ch.quantasy.gateway.message.intent.segment4x7.DeviceCounterParameters;
-import ch.quantasy.gateway.message.intent.segment4x7.DeviceSegments;
+import ch.quantasy.gateway.message.segment4x7.DeviceCounterParameters;
+import ch.quantasy.gateway.message.segment4x7.DeviceSegments;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletSegmentDisplay4x7;
 

@@ -42,15 +42,15 @@
  */
 package ch.quantasy.gateway.service.device.servo;
 
-import ch.quantasy.gateway.message.event.servo.PositionEvent;
-import ch.quantasy.gateway.message.event.servo.UnderVoltageEvent;
-import ch.quantasy.gateway.message.event.servo.VelocityEvent;
+import ch.quantasy.gateway.message.servo.PositionEvent;
+import ch.quantasy.gateway.message.servo.UnderVoltageEvent;
+import ch.quantasy.gateway.message.servo.VelocityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.servo.Servo;
-import ch.quantasy.gateway.message.status.dc.MinimumVoltageStatus;
-import ch.quantasy.gateway.message.status.servo.OutputVoltageStatus;
-import ch.quantasy.gateway.message.status.servo.ServosStatus;
-import ch.quantasy.gateway.message.status.servo.StatusLEDStatus;
+import ch.quantasy.gateway.message.servo.Servo;
+import ch.quantasy.gateway.message.dc.MinimumVoltageStatus;
+import ch.quantasy.gateway.message.servo.OutputVoltageStatus;
+import ch.quantasy.gateway.message.servo.ServosStatus;
+import ch.quantasy.gateway.message.servo.StatusLEDStatus;
 import ch.quantasy.tinkerforge.device.servo.ServoDevice;
 import ch.quantasy.tinkerforge.device.servo.ServoDeviceCallback;
 import java.net.URI;

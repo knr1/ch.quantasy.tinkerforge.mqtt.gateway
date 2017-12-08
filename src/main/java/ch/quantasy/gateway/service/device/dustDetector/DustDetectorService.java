@@ -42,13 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.dustDetector;
 
-import ch.quantasy.gateway.message.event.dustDensity.DustDensityEvent;
-import ch.quantasy.gateway.message.intent.dustDetector.DeviceDustDensityCallbackThreshold;
-import ch.quantasy.gateway.message.intent.dustDetector.DustDetectorIntent;
-import ch.quantasy.gateway.message.status.dustDetector.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.dustDetector.DustDensityCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.dustDetector.DustDensityCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.dustDetector.MovingAverageStatus;
+import ch.quantasy.gateway.message.dustDensity.DustDensityEvent;
+import ch.quantasy.gateway.message.dustDetector.DeviceDustDensityCallbackThreshold;
+import ch.quantasy.gateway.message.dustDetector.DustDetectorIntent;
+import ch.quantasy.gateway.message.dustDetector.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.dustDetector.DustDensityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.dustDetector.DustDensityCallbackThresholdStatus;
+import ch.quantasy.gateway.message.dustDetector.MovingAverageStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDeviceCallback;

@@ -42,21 +42,21 @@
  */
 package ch.quantasy.gateway.service.device.gps;
 
-import ch.quantasy.gateway.message.event.gps.AltitudeEvent;
-import ch.quantasy.gateway.message.event.gps.CoordinatesEvent;
-import ch.quantasy.gateway.message.event.gps.DateTimeEvent;
-import ch.quantasy.gateway.message.event.gps.MotionEvent;
-import ch.quantasy.gateway.message.event.gps.StatusEvent;
-import ch.quantasy.gateway.message.intent.gps.GPSIntent;
+import ch.quantasy.gateway.message.gps.AltitudeEvent;
+import ch.quantasy.gateway.message.gps.CoordinatesEvent;
+import ch.quantasy.gateway.message.gps.DateTimeEvent;
+import ch.quantasy.gateway.message.gps.MotionEvent;
+import ch.quantasy.gateway.message.gps.StatusEvent;
+import ch.quantasy.gateway.message.gps.GPSIntent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
 import ch.quantasy.tinkerforge.device.gps.GPSDeviceCallback;
-import ch.quantasy.gateway.message.intent.gps.RestartType;
-import ch.quantasy.gateway.message.status.gps.AltitudeCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.CoordinatesCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.DateTimeCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.MotionCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.StatusCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.RestartType;
+import ch.quantasy.gateway.message.gps.AltitudeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.CoordinatesCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.DateTimeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.MotionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.StatusCallbackPeriodStatus;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;
 

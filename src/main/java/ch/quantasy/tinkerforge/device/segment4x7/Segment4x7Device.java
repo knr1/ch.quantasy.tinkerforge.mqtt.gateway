@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.segment4x7;
 
-import ch.quantasy.gateway.message.intent.segment4x7.DeviceSegments;
-import ch.quantasy.gateway.message.intent.segment4x7.Segment4x7Intent;
+import ch.quantasy.gateway.message.segment4x7.DeviceSegments;
+import ch.quantasy.gateway.message.segment4x7.Segment4x7Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;

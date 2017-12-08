@@ -42,8 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.motionDetector;
 
-import ch.quantasy.gateway.message.event.motionDetector.MotionDetectionCycleEndedEvent;
-import ch.quantasy.gateway.message.event.motionDetector.MotionDetectionDetected;
+import ch.quantasy.gateway.message.motionDetector.MotionDetectionCycleEndedEvent;
+import ch.quantasy.gateway.message.motionDetector.MotionDetectionDetected;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;

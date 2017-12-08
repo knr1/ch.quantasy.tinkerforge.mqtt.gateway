@@ -42,13 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.dualButton;
 
-import ch.quantasy.gateway.message.event.dualButton.StateChangedEvent;
+import ch.quantasy.gateway.message.dualButton.StateChangedEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDeviceCallback;
-import ch.quantasy.gateway.message.intent.dualButton.DeviceLEDState;
-import ch.quantasy.gateway.message.intent.dualButton.LEDState;
-import ch.quantasy.gateway.message.status.dualButton.LedStateStatus;
+import ch.quantasy.gateway.message.dualButton.DeviceLEDState;
+import ch.quantasy.gateway.message.dualButton.LEDState;
+import ch.quantasy.gateway.message.dualButton.LedStateStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 

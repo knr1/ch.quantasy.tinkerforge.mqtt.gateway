@@ -42,17 +42,18 @@
  */
 package ch.quantasy.gateway.service.device.gps;
 
-import ch.quantasy.gateway.message.event.gps.AltitudeEvent;
-import ch.quantasy.gateway.message.event.gps.CoordinatesEvent;
-import ch.quantasy.gateway.message.event.gps.DateTimeEvent;
-import ch.quantasy.gateway.message.event.gps.MotionEvent;
-import ch.quantasy.gateway.message.event.gps.StatusEvent;
-import ch.quantasy.gateway.message.intent.gps.GPSIntent;
-import ch.quantasy.gateway.message.status.gps.AltitudeCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.CoordinatesCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.DateTimeCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.MotionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.AltitudeEvent;
+import ch.quantasy.gateway.message.gps.CoordinatesEvent;
+import ch.quantasy.gateway.message.gps.DateTimeEvent;
+import ch.quantasy.gateway.message.gps.MotionEvent;
+import ch.quantasy.gateway.message.gps.StatusEvent;
+import ch.quantasy.gateway.message.gps.GPSIntent;
+import ch.quantasy.gateway.message.gps.AltitudeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.CoordinatesCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.DateTimeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.MotionCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
 import java.util.Map;
@@ -92,9 +93,12 @@ public class GPSServiceContract extends DeviceServiceContract {
     public GPSServiceContract(String id) {
         this(id, TinkerforgeDeviceClass.GPS.toString());
     }
-
     public GPSServiceContract(String id, String device) {
-        super(id, device, GPSIntent.class);
+        this(id, device, GPSIntent.class);
+    }
+    
+    public GPSServiceContract(String instance, String baseClass, Class<? extends Intent> intentClass){
+        super(instance, baseClass, intentClass);
 
         CALLBACK_PERIOD = "callbackPeriod";
 

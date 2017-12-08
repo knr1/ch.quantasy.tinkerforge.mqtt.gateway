@@ -42,13 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.soundIntensity;
 
-import ch.quantasy.gateway.message.event.soundIntensity.SoundIntensityEvent;
+import ch.quantasy.gateway.message.soundIntensity.SoundIntensityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.soundIntensity.DeviceSoundIntensityCallbackThreshold;
-import ch.quantasy.gateway.message.intent.soundIntensity.SoundIntensityIntent;
-import ch.quantasy.gateway.message.status.soundIntensity.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.soundIntensity.IntensityCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.soundIntensity.IntensityCallbackThresholdStatus;
+import ch.quantasy.gateway.message.soundIntensity.DeviceSoundIntensityCallbackThreshold;
+import ch.quantasy.gateway.message.soundIntensity.SoundIntensityIntent;
+import ch.quantasy.gateway.message.soundIntensity.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.soundIntensity.IntensityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.soundIntensity.IntensityCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDeviceCallback;
 import java.net.URI;

@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.segment4x7;
 
-import ch.quantasy.gateway.message.event.segment4x7.CounterEvent;
-import ch.quantasy.gateway.message.intent.segment4x7.Segment4x7Intent;
-import ch.quantasy.gateway.message.status.segment4x7.SegmentsStatus;
+import ch.quantasy.gateway.message.segment4x7.CounterEvent;
+import ch.quantasy.gateway.message.segment4x7.Segment4x7Intent;
+import ch.quantasy.gateway.message.segment4x7.SegmentsStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;

@@ -42,16 +42,16 @@
  */
 package ch.quantasy.gateway.service.device.barometer;
 
-import ch.quantasy.gateway.message.event.barometer.AirPressureEvent;
-import ch.quantasy.gateway.message.event.barometer.AltitudeEvent;
-import ch.quantasy.gateway.message.intent.barometer.BarometerIntent;
-import ch.quantasy.gateway.message.status.barometer.AirPressureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.barometer.AirPressureCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.barometer.AltitudeCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.barometer.AveragingStatus;
-import ch.quantasy.gateway.message.status.barometer.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.barometer.ReferenceAirPressureStatus;
-import ch.quantasy.gateway.message.status.barometer.AltitudeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.barometer.AirPressureEvent;
+import ch.quantasy.gateway.message.barometer.AltitudeEvent;
+import ch.quantasy.gateway.message.barometer.BarometerIntent;
+import ch.quantasy.gateway.message.barometer.AirPressureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.barometer.AirPressureCallbackThresholdStatus;
+import ch.quantasy.gateway.message.barometer.AltitudeCallbackThresholdStatus;
+import ch.quantasy.gateway.message.barometer.AveragingStatus;
+import ch.quantasy.gateway.message.barometer.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.barometer.ReferenceAirPressureStatus;
+import ch.quantasy.gateway.message.barometer.AltitudeCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;

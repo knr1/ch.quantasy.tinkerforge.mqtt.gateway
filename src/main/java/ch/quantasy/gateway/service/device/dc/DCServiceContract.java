@@ -42,18 +42,18 @@
  */
 package ch.quantasy.gateway.service.device.dc;
 
-import ch.quantasy.gateway.message.event.dc.EmergencyShutdownEvent;
-import ch.quantasy.gateway.message.event.dc.FullBrakeEvent;
-import ch.quantasy.gateway.message.event.dc.UnderVoltageEvent;
-import ch.quantasy.gateway.message.event.dc.VelocityEvent;
-import ch.quantasy.gateway.message.intent.dc.DCIntent;
-import ch.quantasy.gateway.message.status.dc.AccelerationStatus;
-import ch.quantasy.gateway.message.status.dc.DriveModeStatus;
-import ch.quantasy.gateway.message.status.dc.EnableStatus;
-import ch.quantasy.gateway.message.status.dc.MinimumVoltageStatus;
-import ch.quantasy.gateway.message.status.dc.PwmFrequencyStatus;
-import ch.quantasy.gateway.message.status.dc.VelocityStatus;
-import ch.quantasy.gateway.message.status.dc.VelocityPeriodStatus;
+import ch.quantasy.gateway.message.dc.EmergencyShutdownEvent;
+import ch.quantasy.gateway.message.dc.FullBrakeEvent;
+import ch.quantasy.gateway.message.dc.UnderVoltageEvent;
+import ch.quantasy.gateway.message.dc.VelocityEvent;
+import ch.quantasy.gateway.message.dc.DCIntent;
+import ch.quantasy.gateway.message.dc.AccelerationStatus;
+import ch.quantasy.gateway.message.dc.DriveModeStatus;
+import ch.quantasy.gateway.message.dc.EnableStatus;
+import ch.quantasy.gateway.message.dc.MinimumVoltageStatus;
+import ch.quantasy.gateway.message.dc.PwmFrequencyStatus;
+import ch.quantasy.gateway.message.dc.VelocityStatus;
+import ch.quantasy.gateway.message.dc.VelocityPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;

@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.service.device;
 
-import ch.quantasy.gateway.message.status.device.Firmware;
-import ch.quantasy.gateway.message.status.device.Hardware;
-import ch.quantasy.gateway.message.status.device.Position;
+import ch.quantasy.gateway.message.device.Firmware;
+import ch.quantasy.gateway.message.device.Hardware;
+import ch.quantasy.gateway.message.device.Position;
 import ch.quantasy.gateway.service.AbstractService;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.mqtt.gateway.client.message.Message;

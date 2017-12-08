@@ -42,16 +42,15 @@
  */
 package ch.quantasy.gateway.service.device.ambientLightV2;
 
-import ch.quantasy.gateway.message.event.ambinetLightV2.IlluminanceEvent;
-import ch.quantasy.gateway.message.intent.ambientLightV2.AmbientLightV2Intent;
-import ch.quantasy.gateway.message.status.ambientLight.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.ambientLight.IlluminanceCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.ambientLightV2.ConfigurationStatus;
-import ch.quantasy.gateway.message.status.ambientLightV2.IlluminanceCallbackThresholdStatus;
+import ch.quantasy.gateway.message.ambientLightV2.AmbientLightV2Intent;
+import ch.quantasy.gateway.message.ambientLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.ambientLight.IlluminanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.ambientLight.IlluminanceEvent;
+import ch.quantasy.gateway.message.ambientLightV2.ConfigurationStatus;
+import ch.quantasy.gateway.message.ambientLightV2.IlluminanceCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
-import java.util.Map;
 
 /**
  *
@@ -68,7 +67,7 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
     public final String STATUS_ILLUMINANCE;
     public final String STATUS_ILLUMINANCE_THRESHOLD;
     public final String STATUS_ILLUMINANCE_CALLBACK_PERIOD;
-    public final String EVENT_IllUMINANCE;
+    public final String EVENT_ILLUMINANCE;
     public final String EVENT_ILLUMINANCE_REACHED;
 
     public final String DEBOUNCE;
@@ -100,8 +99,8 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
         STATUS_ILLUMINANCE = STATUS + "/" + ILLUMINANCE;
         STATUS_ILLUMINANCE_THRESHOLD = STATUS_ILLUMINANCE + "/" + THRESHOLD;
         STATUS_ILLUMINANCE_CALLBACK_PERIOD = STATUS_ILLUMINANCE + "/" + CALLBACK_PERIOD;
-        EVENT_IllUMINANCE = EVENT + "/" + ILLUMINANCE;
-        EVENT_ILLUMINANCE_REACHED = EVENT_IllUMINANCE + "/" + REACHED;
+        EVENT_ILLUMINANCE = EVENT + "/" + ILLUMINANCE;
+        EVENT_ILLUMINANCE_REACHED = EVENT_ILLUMINANCE + "/" + REACHED;
 
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
@@ -110,7 +109,7 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
 
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-        addMessageTopic(EVENT_IllUMINANCE, IlluminanceEvent.class);
+        addMessageTopic(EVENT_ILLUMINANCE, IlluminanceEvent.class);
         addMessageTopic(EVENT_ILLUMINANCE_REACHED, IlluminanceEvent.class);
         addMessageTopic(STATUS_ILLUMINANCE_CALLBACK_PERIOD, IlluminanceCallbackPeriodStatus.class);
         addMessageTopic(STATUS_ILLUMINANCE_THRESHOLD, IlluminanceCallbackThresholdStatus.class);

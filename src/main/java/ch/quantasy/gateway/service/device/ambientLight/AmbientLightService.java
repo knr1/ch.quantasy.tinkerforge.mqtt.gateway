@@ -42,18 +42,18 @@
  */
 package ch.quantasy.gateway.service.device.ambientLight;
 
-import ch.quantasy.gateway.message.event.ambientLight.AnalogValueEvent;
-import ch.quantasy.gateway.message.event.ambientLight.IlluminanceEvent;
+import ch.quantasy.gateway.message.ambientLight.AnalogValueEvent;
+import ch.quantasy.gateway.message.ambientLight.IlluminanceEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDeviceCallback;
-import ch.quantasy.gateway.message.intent.ambientLight.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.message.intent.ambientLight.DeviceIlluminanceCallbackThreshold;
-import ch.quantasy.gateway.message.status.ambientLight.AnalogCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.ambientLight.AnalogValueThresholdStatus;
-import ch.quantasy.gateway.message.status.ambientLight.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.ambientLight.IlluminanceCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.ambientLight.IlluminanceThresholdStatus;
+import ch.quantasy.gateway.message.ambientLight.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.ambientLight.DeviceIlluminanceCallbackThreshold;
+import ch.quantasy.gateway.message.ambientLight.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.ambientLight.AnalogValueThresholdStatus;
+import ch.quantasy.gateway.message.ambientLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.ambientLight.IlluminanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.ambientLight.IlluminanceThresholdStatus;
 
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;

@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.ambientLightV2;
 
-import ch.quantasy.gateway.message.intent.ambientLightV2.AmbientLightV2Intent;
-import ch.quantasy.gateway.message.intent.ambientLightV2.DeviceConfiguration;
-import ch.quantasy.gateway.message.intent.ambientLightV2.DeviceIlluminanceCallbackThreshold;
+import ch.quantasy.gateway.message.ambientLightV2.AmbientLightV2Intent;
+import ch.quantasy.gateway.message.ambientLightV2.DeviceConfiguration;
+import ch.quantasy.gateway.message.ambientLightV2.DeviceIlluminanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAmbientLightV2;

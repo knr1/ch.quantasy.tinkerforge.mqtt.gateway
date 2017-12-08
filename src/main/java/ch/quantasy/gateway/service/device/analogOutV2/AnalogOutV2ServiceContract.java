@@ -42,8 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.analogOutV2;
 
-import ch.quantasy.gateway.message.intent.analogOutV2.AnalogOutV2Intent;
-import ch.quantasy.gateway.message.status.analogOutV2.OutputVoltageStatus;
+import ch.quantasy.gateway.message.analogOutV2.AnalogOutV2Intent;
+import ch.quantasy.gateway.message.analogOutV2.OutputVoltageStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;

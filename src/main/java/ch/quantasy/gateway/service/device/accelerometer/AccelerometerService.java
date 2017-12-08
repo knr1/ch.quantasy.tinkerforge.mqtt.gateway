@@ -42,16 +42,16 @@
  */
 package ch.quantasy.gateway.service.device.accelerometer;
 
-import ch.quantasy.gateway.message.event.IMU.AccelerationEvent;
+import ch.quantasy.gateway.message.IMU.AccelerationEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDeviceCallback;
-import ch.quantasy.gateway.message.intent.accelerometer.DeviceAccelerationCallbackThreshold;
-import ch.quantasy.gateway.message.intent.accelerometer.DeviceConfiguration;
-import ch.quantasy.gateway.message.status.IMU.AccelerationCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.accelerometer.AccelerationThresholdStatus;
-import ch.quantasy.gateway.message.status.accelerometer.ConfigurationStatus;
-import ch.quantasy.gateway.message.status.accelerometer.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.accelerometer.DeviceAccelerationCallbackThreshold;
+import ch.quantasy.gateway.message.accelerometer.DeviceConfiguration;
+import ch.quantasy.gateway.message.IMU.AccelerationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.accelerometer.AccelerationThresholdStatus;
+import ch.quantasy.gateway.message.accelerometer.ConfigurationStatus;
+import ch.quantasy.gateway.message.accelerometer.DebouncePeriodStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 

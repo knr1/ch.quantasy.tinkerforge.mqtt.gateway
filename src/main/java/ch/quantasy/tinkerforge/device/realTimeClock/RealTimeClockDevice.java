@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.realTimeClock;
 
-import ch.quantasy.gateway.message.intent.realTimeClock.AlarmParamter;
-import ch.quantasy.gateway.message.intent.realTimeClock.DateTimeParameter;
-import ch.quantasy.gateway.message.intent.realTimeClock.RealTimeClockIntent;
+import ch.quantasy.gateway.message.realTimeClock.AlarmParamter;
+import ch.quantasy.gateway.message.realTimeClock.DateTimeParameter;
+import ch.quantasy.gateway.message.realTimeClock.RealTimeClockIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletRealTimeClock;

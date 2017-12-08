@@ -42,19 +42,19 @@
  */
 package ch.quantasy.gateway.service.device.master;
 
-import ch.quantasy.gateway.message.event.master.ResetEvent;
-import ch.quantasy.gateway.message.event.master.StackCurrentEvent;
-import ch.quantasy.gateway.message.event.master.StackVoltageEvent;
-import ch.quantasy.gateway.message.event.master.USBVoltageEvent;
-import ch.quantasy.gateway.message.intent.master.MasterIntent;
-import ch.quantasy.gateway.message.status.master.CurrentCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.master.CurrentCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.master.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.master.StackVoltageCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.master.StackVoltageCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.master.StatusLEDStatus;
-import ch.quantasy.gateway.message.status.master.UsbVoltageCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.master.UsbVoltageCallbackThresholdStatus;
+import ch.quantasy.gateway.message.master.ResetEvent;
+import ch.quantasy.gateway.message.master.StackCurrentEvent;
+import ch.quantasy.gateway.message.master.StackVoltageEvent;
+import ch.quantasy.gateway.message.master.USBVoltageEvent;
+import ch.quantasy.gateway.message.master.MasterIntent;
+import ch.quantasy.gateway.message.master.CurrentCallbackPeriodStatus;
+import ch.quantasy.gateway.message.master.CurrentCallbackThresholdStatus;
+import ch.quantasy.gateway.message.master.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.master.StackVoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.master.StackVoltageCallbackThresholdStatus;
+import ch.quantasy.gateway.message.master.StatusLEDStatus;
+import ch.quantasy.gateway.message.master.UsbVoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.master.UsbVoltageCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.master.MasterDevice;

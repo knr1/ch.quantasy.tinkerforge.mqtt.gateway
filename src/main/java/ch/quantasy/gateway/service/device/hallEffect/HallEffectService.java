@@ -42,13 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.hallEffect;
 
-import ch.quantasy.gateway.message.event.hallEffect.EdgeCountEvent;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.hallEffect.DeviceConfiguration;
-import ch.quantasy.gateway.message.intent.hallEffect.HallEffectIntent;
-import ch.quantasy.gateway.message.status.hallEffect.EdgeCountCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.hallEffect.EdgeCountConfigurationStatus;
-import ch.quantasy.gateway.message.status.hallEffect.EdgeCountInterruptStatus;
+import ch.quantasy.gateway.message.hallEffect.DeviceConfiguration;
+import ch.quantasy.gateway.message.hallEffect.HallEffectIntent;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountCallbackPeriodStatus;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountConfigurationStatus;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountInterruptStatus;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;

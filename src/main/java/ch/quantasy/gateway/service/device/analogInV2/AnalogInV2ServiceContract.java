@@ -42,15 +42,15 @@
  */
 package ch.quantasy.gateway.service.device.analogInV2;
 
-import ch.quantasy.gateway.message.event.analogInV2.AnalogValueEvent;
-import ch.quantasy.gateway.message.event.analogInV2.VoltageEvent;
-import ch.quantasy.gateway.message.intent.analogInV2.AnalogInV2Intent;
-import ch.quantasy.gateway.message.status.analogInV2.AnalogValueCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.analogInV2.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.analogInV2.AnalogValueCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.analogInV2.VoltageCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.analogInV2.VoltageCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.loadCell.MovingAverageStatus;
+import ch.quantasy.gateway.message.analogInV2.AnalogValueEvent;
+import ch.quantasy.gateway.message.analogInV2.VoltageEvent;
+import ch.quantasy.gateway.message.analogInV2.AnalogInV2Intent;
+import ch.quantasy.gateway.message.analogInV2.AnalogValueCallbackPeriodStatus;
+import ch.quantasy.gateway.message.analogInV2.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.analogInV2.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.analogInV2.VoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.analogInV2.VoltageCallbackThresholdStatus;
+import ch.quantasy.gateway.message.loadCell.MovingAverageStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;

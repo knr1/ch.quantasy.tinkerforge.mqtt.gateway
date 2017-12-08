@@ -42,11 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.hallEffect;
 
-import ch.quantasy.gateway.message.event.hallEffect.EdgeCountEvent;
-import ch.quantasy.gateway.message.intent.hallEffect.HallEffectIntent;
-import ch.quantasy.gateway.message.status.hallEffect.EdgeCountCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.hallEffect.EdgeCountConfigurationStatus;
-import ch.quantasy.gateway.message.status.hallEffect.EdgeCountInterruptStatus;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountEvent;
+import ch.quantasy.gateway.message.hallEffect.HallEffectIntent;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountCallbackPeriodStatus;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountConfigurationStatus;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountInterruptStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;

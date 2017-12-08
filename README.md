@@ -1178,13 +1178,13 @@ TF/AmbientLight/U/<id>/S/position
 ```
 TF/AmbientLightV2/U/<id>/E/illuminance
    timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 100000>
+   value: Number <from: 0 to: 9000>
    
 ```
 ```
 TF/AmbientLightV2/U/<id>/E/illuminance/reached
    timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 100000>
+   value: Number <from: 0 to: 9000>
    
 ```
 ```
@@ -3465,6 +3465,84 @@ TF/MotionDetector/U/<id>/S/hardware
 TF/MotionDetector/U/<id>/S/position
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+
+### MotorizedLinearPoti
+```
+TF/MotorizedLinearPoti/U/<id>/E/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 100>
+   
+```
+```
+TF/MotorizedLinearPoti/U/<id>/E/position/reached
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 100>
+   
+```
+```
+TF/MotorizedLinearPoti/U/<id>/I
+   motorPosition: null
+   motorPosition: 
+     driveMode: String <FAST,SMOOTH>
+     holdPosition: Boolean <true,false> 
+     position: Number <from: 0 to: 100>
+   positionCallbackConfiguration: null
+   positionCallbackConfiguration: 
+     max: Number <from: 0 to: 100>
+     min: Number <from: 0 to: 100>
+     option: String <[x, o, i, <, >]>
+     period: Number <from: 0 to: 9223372036854775807>
+     valueHasToChange: Boolean <true,false> 
+   positionReachedCallbackConfiguration: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/MotorizedLinearPoti/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/MotorizedLinearPoti/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/MotorizedLinearPoti/U/<id>/S/motor/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     driveMode: String <FAST,SMOOTH>
+     holdPosition: Boolean <true,false> 
+     position: Number <from: 0 to: 100>
+   
+```
+```
+TF/MotorizedLinearPoti/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+```
+TF/MotorizedLinearPoti/U/<id>/S/position/callbackConfiguration
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 100>
+     min: Number <from: 0 to: 100>
+     option: String <[x, o, i, <, >]>
+     period: Number <from: 0 to: 9223372036854775807>
+     valueHasToChange: Boolean <true,false> 
+   
+```
+```
+TF/MotorizedLinearPoti/U/<id>/S/position/reached/callbackConfiguration
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
    
 ```
 

@@ -42,12 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.moisture;
 
-import ch.quantasy.gateway.message.event.moisture.MoistureEvent;
-import ch.quantasy.gateway.message.intent.moisture.MoistureIntent;
-import ch.quantasy.gateway.message.status.moisture.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.moisture.MoistureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.moisture.MoistureCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.moisture.MovingAverageStatus;
+import ch.quantasy.gateway.message.moisture.MoistureEvent;
+import ch.quantasy.gateway.message.moisture.MoistureIntent;
+import ch.quantasy.gateway.message.moisture.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.moisture.MoistureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.moisture.MoistureCallbackThresholdStatus;
+import ch.quantasy.gateway.message.moisture.MovingAverageStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;

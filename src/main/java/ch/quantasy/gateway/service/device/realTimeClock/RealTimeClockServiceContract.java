@@ -42,12 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.realTimeClock;
 
-import ch.quantasy.gateway.message.event.realTimeClock.DateTimeEvent;
-import ch.quantasy.gateway.message.intent.realTimeClock.RealTimeClockIntent;
-import ch.quantasy.gateway.message.status.realTimeClock.AlarmParameterStatus;
-import ch.quantasy.gateway.message.status.realTimeClock.DateTimeCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.realTimeClock.DateTimeParameterStatus;
-import ch.quantasy.gateway.message.status.realTimeClock.OffsetStatus;
+import ch.quantasy.gateway.message.realTimeClock.DateTimeEvent;
+import ch.quantasy.gateway.message.realTimeClock.RealTimeClockIntent;
+import ch.quantasy.gateway.message.realTimeClock.AlarmParameterStatus;
+import ch.quantasy.gateway.message.realTimeClock.DateTimeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.realTimeClock.DateTimeParameterStatus;
+import ch.quantasy.gateway.message.realTimeClock.OffsetStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;

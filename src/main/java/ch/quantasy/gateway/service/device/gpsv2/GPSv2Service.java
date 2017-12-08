@@ -42,25 +42,25 @@
  */
 package ch.quantasy.gateway.service.device.gpsv2;
 
-import ch.quantasy.gateway.message.event.gps.AltitudeEvent;
-import ch.quantasy.gateway.message.event.gps.DateTimeEvent;
-import ch.quantasy.gateway.message.event.gps.MotionEvent;
-import ch.quantasy.gateway.message.event.gpsV2.CoordinatesEvent;
-import ch.quantasy.gateway.message.event.gpsV2.StatusEvent;
+import ch.quantasy.gateway.message.gps.AltitudeEvent;
+import ch.quantasy.gateway.message.gps.DateTimeEvent;
+import ch.quantasy.gateway.message.gps.MotionEvent;
+import ch.quantasy.gateway.message.gpsV2.CoordinatesEvent;
+import ch.quantasy.gateway.message.gpsV2.StatusEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.gpsv2.FixLEDConfig;
-import ch.quantasy.gateway.message.intent.gpsv2.GPSv2Intent;
+import ch.quantasy.gateway.message.gpsv2.FixLEDConfig;
+import ch.quantasy.gateway.message.gpsv2.GPSv2Intent;
 import ch.quantasy.tinkerforge.device.gpsV2.GPSv2Device;
 import ch.quantasy.tinkerforge.device.gpsV2.GPSv2DeviceCallback;
-import ch.quantasy.gateway.message.intent.gpsv2.RestartType;
-import ch.quantasy.gateway.message.intent.gpsv2.StatusLEDConfig;
-import ch.quantasy.gateway.message.status.gps.AltitudeCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.CoordinatesCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.DateTimeCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.MotionCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gps.StatusCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.gpsv2.FixLEDConfigStatus;
-import ch.quantasy.gateway.message.status.gpsv2.StatusLEDConfigStatus;
+import ch.quantasy.gateway.message.gpsv2.RestartType;
+import ch.quantasy.gateway.message.gpsv2.StatusLEDConfig;
+import ch.quantasy.gateway.message.gps.AltitudeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.CoordinatesCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.DateTimeCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.MotionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gps.StatusCallbackPeriodStatus;
+import ch.quantasy.gateway.message.gpsv2.FixLEDConfigStatus;
+import ch.quantasy.gateway.message.gpsv2.StatusLEDConfigStatus;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import java.net.URI;

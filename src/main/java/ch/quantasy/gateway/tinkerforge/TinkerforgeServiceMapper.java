@@ -72,6 +72,7 @@ import ch.quantasy.gateway.service.device.loadCell.LoadCellService;
 import ch.quantasy.gateway.service.device.master.MasterService;
 import ch.quantasy.gateway.service.device.moisture.MoistureService;
 import ch.quantasy.gateway.service.device.motionDetector.MotionDetectorService;
+import ch.quantasy.gateway.service.device.motorizedLinearPoti.MotorizedLinearPotiService;
 import ch.quantasy.gateway.service.device.multiTouch.MultiTouchService;
 import ch.quantasy.gateway.service.device.nfc.NFCService;
 import ch.quantasy.gateway.service.device.piezoSpeaker.PiezoSpeakerService;
@@ -120,6 +121,7 @@ import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.master.MasterDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
+import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
@@ -287,6 +289,9 @@ public class TinkerforgeServiceMapper {
         }
         if (tinkerforgeDevice instanceof ServoDevice) {
             return new ServoService((ServoDevice) tinkerforgeDevice, mqttURI);
+        }
+        if(tinkerforgeDevice instanceof MotorizedLinearPotiDevice){
+            return new MotorizedLinearPotiService((MotorizedLinearPotiDevice)tinkerforgeDevice, mqttURI);
         }
         return null;
 

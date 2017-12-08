@@ -42,12 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.line;
 
-import ch.quantasy.gateway.message.event.line.ReflectivityEvent;
+import ch.quantasy.gateway.message.line.ReflectivityEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.line.DeviceReflectivityCallbackThreshold;
-import ch.quantasy.gateway.message.status.line.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.line.ReflectivityCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.line.ReflectivityCallbackThresholdStatus;
+import ch.quantasy.gateway.message.line.DeviceReflectivityCallbackThreshold;
+import ch.quantasy.gateway.message.line.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.line.ReflectivityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.line.ReflectivityCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import ch.quantasy.tinkerforge.device.line.LineDeviceCallback;
 import java.net.URI;

@@ -42,14 +42,14 @@
  */
 package ch.quantasy.gateway.service.device.color;
 
-import ch.quantasy.gateway.message.event.color.ColorEvent;
-import ch.quantasy.gateway.message.event.color.ColorTemperatureEvent;
-import ch.quantasy.gateway.message.event.color.IlluminanceEvent;
-import ch.quantasy.gateway.message.intent.color.ColorIntent;
-import ch.quantasy.gateway.message.status.color.ColorCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.color.ColorTemperatureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.color.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.color.IlluminanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.color.ColorEvent;
+import ch.quantasy.gateway.message.color.ColorTemperatureEvent;
+import ch.quantasy.gateway.message.color.IlluminanceEvent;
+import ch.quantasy.gateway.message.color.ColorIntent;
+import ch.quantasy.gateway.message.color.ColorCallbackThresholdStatus;
+import ch.quantasy.gateway.message.color.ColorTemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.color.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.color.IlluminanceCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;

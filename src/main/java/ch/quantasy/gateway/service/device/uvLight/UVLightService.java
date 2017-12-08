@@ -42,12 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.uvLight;
 
-import ch.quantasy.gateway.message.event.uvLight.UVLightEvent;
+import ch.quantasy.gateway.message.uvLight.UVLightEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.uvLight.DeviceUVLightCallbackThreshold;
-import ch.quantasy.gateway.message.status.uvLight.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.uvLight.UvLightCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.uvLight.UvLightCallbackThresholdStatus;
+import ch.quantasy.gateway.message.uvLight.DeviceUVLightCallbackThreshold;
+import ch.quantasy.gateway.message.uvLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.uvLight.UvLightCallbackPeriodStatus;
+import ch.quantasy.gateway.message.uvLight.UvLightCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDeviceCallback;
 import java.net.URI;

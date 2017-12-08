@@ -42,14 +42,14 @@
  */
 package ch.quantasy.gateway.service.device.rotaryEncoder;
 
-import ch.quantasy.gateway.message.event.rotaryEncoder.ButtonEvent;
-import ch.quantasy.gateway.message.event.rotaryEncoder.CountEvent;
+import ch.quantasy.gateway.message.rotaryEncoder.ButtonEvent;
+import ch.quantasy.gateway.message.rotaryEncoder.CountEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.rotaryEncoder.DeviceCountCallbackThreshold;
-import ch.quantasy.gateway.message.intent.rotaryEncoder.RotaryEncoderIntent;
-import ch.quantasy.gateway.message.status.rotaryEncoder.CountCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.rotaryEncoder.CountThresholdStatus;
-import ch.quantasy.gateway.message.status.rotaryEncoder.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.rotaryEncoder.DeviceCountCallbackThreshold;
+import ch.quantasy.gateway.message.rotaryEncoder.RotaryEncoderIntent;
+import ch.quantasy.gateway.message.rotaryEncoder.CountCallbackPeriodStatus;
+import ch.quantasy.gateway.message.rotaryEncoder.CountThresholdStatus;
+import ch.quantasy.gateway.message.rotaryEncoder.DebouncePeriodStatus;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDeviceCallback;
 

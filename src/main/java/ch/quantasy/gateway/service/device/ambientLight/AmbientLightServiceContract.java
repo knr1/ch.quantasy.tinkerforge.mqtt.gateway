@@ -42,14 +42,15 @@
  */
 package ch.quantasy.gateway.service.device.ambientLight;
 
-import ch.quantasy.gateway.message.event.ambientLight.AnalogValueEvent;
-import ch.quantasy.gateway.message.event.ambientLight.IlluminanceEvent;
-import ch.quantasy.gateway.message.intent.ambientLight.AmbientLightIntent;
-import ch.quantasy.gateway.message.status.ambientLight.AnalogCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.ambientLight.AnalogValueThresholdStatus;
-import ch.quantasy.gateway.message.status.ambientLight.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.ambientLight.IlluminanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.ambientLight.AnalogValueEvent;
+import ch.quantasy.gateway.message.ambientLight.IlluminanceEvent;
+import ch.quantasy.gateway.message.ambientLight.AmbientLightIntent;
+import ch.quantasy.gateway.message.ambientLight.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.ambientLight.AnalogValueThresholdStatus;
+import ch.quantasy.gateway.message.ambientLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.ambientLight.IlluminanceCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
 import java.util.Map;
@@ -92,8 +93,11 @@ public class AmbientLightServiceContract extends DeviceServiceContract {
     }
 
     public AmbientLightServiceContract(String id, String device) {
-        super(id, device, AmbientLightIntent.class);
+        this(id, device, AmbientLightIntent.class);
+    }
 
+    public AmbientLightServiceContract(String instance, String baseClass, Class<? extends Intent> intentClass) {
+        super(instance, baseClass, intentClass);
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
         THRESHOLD = "threshold";
@@ -116,7 +120,7 @@ public class AmbientLightServiceContract extends DeviceServiceContract {
         DEBOUNCE = "debounce";
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
-        
+
         addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
         addMessageTopic(EVENT_ILLUMINANCE, IlluminanceEvent.class);
         addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
@@ -128,5 +132,4 @@ public class AmbientLightServiceContract extends DeviceServiceContract {
         addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
-    
 }

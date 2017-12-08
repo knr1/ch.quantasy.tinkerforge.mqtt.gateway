@@ -42,19 +42,19 @@
  */
 package ch.quantasy.gateway.service.device.analogInV2;
 
-import ch.quantasy.gateway.message.event.analogInV2.AnalogValueEvent;
-import ch.quantasy.gateway.message.event.analogInV2.VoltageEvent;
+import ch.quantasy.gateway.message.analogInV2.AnalogValueEvent;
+import ch.quantasy.gateway.message.analogInV2.VoltageEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2DeviceCallback;
-import ch.quantasy.gateway.message.intent.analogInV2.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.message.intent.analogInV2.DeviceVoltageCallbackThreshold;
-import ch.quantasy.gateway.message.status.analogInV2.AnalogValueCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.analogInV2.AnalogValueCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.analogInV2.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.analogInV2.MovingAverageStatus;
-import ch.quantasy.gateway.message.status.analogInV2.VoltageCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.analogInV2.VoltageCallbackThresholdStatus;
+import ch.quantasy.gateway.message.analogInV2.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.analogInV2.DeviceVoltageCallbackThreshold;
+import ch.quantasy.gateway.message.analogInV2.AnalogValueCallbackPeriodStatus;
+import ch.quantasy.gateway.message.analogInV2.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.analogInV2.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.analogInV2.MovingAverageStatus;
+import ch.quantasy.gateway.message.analogInV2.VoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.analogInV2.VoltageCallbackThresholdStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 

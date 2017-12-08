@@ -42,19 +42,19 @@
  */
 package ch.quantasy.gateway.service.device.color;
 
-import ch.quantasy.gateway.message.event.color.ColorEvent;
-import ch.quantasy.gateway.message.event.color.ColorTemperatureEvent;
-import ch.quantasy.gateway.message.event.color.IlluminanceEvent;
-import ch.quantasy.gateway.message.intent.color.ColorIntent;
-import ch.quantasy.gateway.message.intent.color.DeviceColorCallbackThreshold;
-import ch.quantasy.gateway.message.intent.color.DeviceConfiguration;
-import ch.quantasy.gateway.message.status.color.ColorCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.color.ColorCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.color.ColorTemperatureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.color.ConfigStatus;
-import ch.quantasy.gateway.message.status.color.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.color.IlluminanceCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.color.LightStatus;
+import ch.quantasy.gateway.message.color.ColorEvent;
+import ch.quantasy.gateway.message.color.ColorTemperatureEvent;
+import ch.quantasy.gateway.message.color.IlluminanceEvent;
+import ch.quantasy.gateway.message.color.ColorIntent;
+import ch.quantasy.gateway.message.color.DeviceColorCallbackThreshold;
+import ch.quantasy.gateway.message.color.DeviceConfiguration;
+import ch.quantasy.gateway.message.color.ColorCallbackPeriodStatus;
+import ch.quantasy.gateway.message.color.ColorCallbackThresholdStatus;
+import ch.quantasy.gateway.message.color.ColorTemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.color.ConfigStatus;
+import ch.quantasy.gateway.message.color.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.color.IlluminanceCallbackPeriodStatus;
+import ch.quantasy.gateway.message.color.LightStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
 import ch.quantasy.tinkerforge.device.color.ColorDeviceCallback;

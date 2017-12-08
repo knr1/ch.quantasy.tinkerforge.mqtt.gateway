@@ -42,16 +42,16 @@
  */
 package ch.quantasy.gateway.service.device.joystick;
 
-import ch.quantasy.gateway.message.event.joystick.ButtonEvent;
-import ch.quantasy.gateway.message.event.joystick.AnalogValueEvent;
-import ch.quantasy.gateway.message.event.joystick.CalibratedEvent;
-import ch.quantasy.gateway.message.event.joystick.PositionEvent;
-import ch.quantasy.gateway.message.intent.joystick.JoystickIntent;
-import ch.quantasy.gateway.message.status.joystick.AnalogValueCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.joystick.AnalogCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.joystick.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.joystick.PositionCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.joystick.PositionCallbackThresholdStatus;
+import ch.quantasy.gateway.message.joystick.ButtonEvent;
+import ch.quantasy.gateway.message.joystick.AnalogValueEvent;
+import ch.quantasy.gateway.message.joystick.CalibratedEvent;
+import ch.quantasy.gateway.message.joystick.PositionEvent;
+import ch.quantasy.gateway.message.joystick.JoystickIntent;
+import ch.quantasy.gateway.message.joystick.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.joystick.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.joystick.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.joystick.PositionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.joystick.PositionCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;

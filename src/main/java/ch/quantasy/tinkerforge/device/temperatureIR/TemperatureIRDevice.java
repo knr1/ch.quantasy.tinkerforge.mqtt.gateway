@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.temperatureIR;
 
-import ch.quantasy.gateway.message.intent.temperatureIR.DeviceAmbientTemperatureCallbackThreshold;
-import ch.quantasy.gateway.message.intent.temperatureIR.DeviceObjectTemperatureCallbackThreshold;
-import ch.quantasy.gateway.message.intent.temperatureIR.TemperatureIRIntent;
+import ch.quantasy.gateway.message.temperatureIR.DeviceAmbientTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.temperatureIR.DeviceObjectTemperatureCallbackThreshold;
+import ch.quantasy.gateway.message.temperatureIR.TemperatureIRIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletTemperatureIR;

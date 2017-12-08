@@ -42,11 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.multiTouch;
 
-import ch.quantasy.gateway.message.event.multiTouch.RecalibratedEvent;
-import ch.quantasy.gateway.message.event.multiTouch.TouchStateEvent;
-import ch.quantasy.gateway.message.intent.multiTouch.MultiTouchIntent;
-import ch.quantasy.gateway.message.status.multiTouch.ElectrodeConfigStatus;
-import ch.quantasy.gateway.message.status.multiTouch.SensitivityStatus;
+import ch.quantasy.gateway.message.multiTouch.RecalibratedEvent;
+import ch.quantasy.gateway.message.multiTouch.TouchStateEvent;
+import ch.quantasy.gateway.message.multiTouch.MultiTouchIntent;
+import ch.quantasy.gateway.message.multiTouch.ElectrodeConfigStatus;
+import ch.quantasy.gateway.message.multiTouch.SensitivityStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;

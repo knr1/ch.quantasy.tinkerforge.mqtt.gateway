@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.remoteSwitch;
 
-import ch.quantasy.gateway.message.event.remoteSwitch.SwitchingEvent;
-import ch.quantasy.gateway.message.intent.remoteSwitch.RemoteSwitchIntent;
-import ch.quantasy.gateway.message.status.remoteSwitch.RepeatsStatus;
+import ch.quantasy.gateway.message.remoteSwitch.SwitchingEvent;
+import ch.quantasy.gateway.message.remoteSwitch.RemoteSwitchIntent;
+import ch.quantasy.gateway.message.remoteSwitch.RepeatsStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;

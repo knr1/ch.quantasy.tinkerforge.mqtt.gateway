@@ -42,8 +42,8 @@
  */
 package ch.quantasy.gateway.service.device.motionDetector;
 
-import ch.quantasy.gateway.message.event.motionDetector.MotionDetectionCycleEndedEvent;
-import ch.quantasy.gateway.message.event.motionDetector.MotionDetectionDetected;
+import ch.quantasy.gateway.message.motionDetector.MotionDetectionCycleEndedEvent;
+import ch.quantasy.gateway.message.motionDetector.MotionDetectionDetected;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;

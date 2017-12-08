@@ -42,11 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.nfc;
 
-import ch.quantasy.gateway.message.event.nfc.TagIDEvent;
-import ch.quantasy.gateway.message.event.nfc.TagReadEvent;
-import ch.quantasy.gateway.message.event.nfc.TagWrittenEvent;
-import ch.quantasy.gateway.message.intent.nfc.NFCIntent;
-import ch.quantasy.gateway.message.status.nfc.ScanningIntervalStatus;
+import ch.quantasy.gateway.message.nfc.TagIDEvent;
+import ch.quantasy.gateway.message.nfc.TagReadEvent;
+import ch.quantasy.gateway.message.nfc.TagWrittenEvent;
+import ch.quantasy.gateway.message.nfc.NFCIntent;
+import ch.quantasy.gateway.message.nfc.ScanningIntervalStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;

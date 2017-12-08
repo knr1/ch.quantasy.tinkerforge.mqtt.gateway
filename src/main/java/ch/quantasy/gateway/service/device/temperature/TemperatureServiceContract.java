@@ -42,12 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.temperature;
 
-import ch.quantasy.gateway.message.event.temperature.TemperatureEvent;
-import ch.quantasy.gateway.message.intent.temperature.TemperatureIntent;
-import ch.quantasy.gateway.message.status.temperature.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.temperature.ModeStatus;
-import ch.quantasy.gateway.message.status.temperature.TemperatureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.temperature.TemperatureThresholdStatus;
+import ch.quantasy.gateway.message.temperature.TemperatureEvent;
+import ch.quantasy.gateway.message.temperature.TemperatureIntent;
+import ch.quantasy.gateway.message.temperature.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.temperature.ModeStatus;
+import ch.quantasy.gateway.message.temperature.TemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.temperature.TemperatureThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;

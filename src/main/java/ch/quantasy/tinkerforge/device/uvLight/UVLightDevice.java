@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.uvLight;
 
-import ch.quantasy.gateway.message.intent.uvLight.DeviceUVLightCallbackThreshold;
-import ch.quantasy.gateway.message.intent.uvLight.UVLightIntent;
+import ch.quantasy.gateway.message.uvLight.DeviceUVLightCallbackThreshold;
+import ch.quantasy.gateway.message.uvLight.UVLightIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletUVLight;

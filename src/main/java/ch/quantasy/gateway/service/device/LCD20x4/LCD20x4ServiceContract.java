@@ -42,13 +42,13 @@
  */
 package ch.quantasy.gateway.service.device.LCD20x4;
 
-import ch.quantasy.gateway.message.event.LCD20x4.ButtonEvent;
-import ch.quantasy.gateway.message.intent.LCD20x4.LCD20x4Intent;
-import ch.quantasy.gateway.message.status.LCD20x4.BacklightStatus;
-import ch.quantasy.gateway.message.status.LCD20x4.CustomCharactersStatus;
-import ch.quantasy.gateway.message.status.LCD20x4.DefaultTextCounterStatus;
-import ch.quantasy.gateway.message.status.LCD20x4.DefaultTextsStatus;
-import ch.quantasy.gateway.message.status.LCD20x4.ParametersStatus;
+import ch.quantasy.gateway.message.LCD20x4.ButtonEvent;
+import ch.quantasy.gateway.message.LCD20x4.LCD20x4Intent;
+import ch.quantasy.gateway.message.LCD20x4.BacklightStatus;
+import ch.quantasy.gateway.message.LCD20x4.CustomCharactersStatus;
+import ch.quantasy.gateway.message.LCD20x4.DefaultTextCounterStatus;
+import ch.quantasy.gateway.message.LCD20x4.DefaultTextsStatus;
+import ch.quantasy.gateway.message.LCD20x4.ParametersStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;

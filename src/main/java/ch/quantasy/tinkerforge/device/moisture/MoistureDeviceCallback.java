@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.moisture;
 
-import ch.quantasy.gateway.message.intent.moisture.DeviceMoistureCallbackThreshold;
+import ch.quantasy.gateway.message.moisture.DeviceMoistureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletMoisture;
 

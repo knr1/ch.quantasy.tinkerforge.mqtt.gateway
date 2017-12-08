@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.solidStateRelay;
 
-import ch.quantasy.gateway.message.event.solidStateRelay.MonoflopDoneEvent;
-import ch.quantasy.gateway.message.intent.solidState.SolidStateRelayIntent;
-import ch.quantasy.gateway.message.status.solidState.StateStatus;
+import ch.quantasy.gateway.message.solidStateRelay.MonoflopDoneEvent;
+import ch.quantasy.gateway.message.solidState.SolidStateRelayIntent;
+import ch.quantasy.gateway.message.solidState.StateStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;

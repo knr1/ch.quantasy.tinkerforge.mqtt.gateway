@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.service.stackManager;
 
-import ch.quantasy.gateway.message.event.stackManager.StackAddressEvent;
-import ch.quantasy.gateway.message.intent.stack.TinkerforgeStackIntent;
-import ch.quantasy.gateway.message.status.stackManager.ConnectStatus;
+import ch.quantasy.gateway.message.stackManager.StackAddressEvent;
+import ch.quantasy.gateway.message.stack.TinkerforgeStackIntent;
+import ch.quantasy.gateway.message.stackManager.ConnectStatus;
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
 import java.util.Map;
 

@@ -42,17 +42,17 @@
  */
 package ch.quantasy.gateway.service.device.loadCell;
 
-import ch.quantasy.gateway.message.event.loadCell.WeightEvent;
+import ch.quantasy.gateway.message.loadCell.WeightEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.loadCell.DeviceConfiguration;
-import ch.quantasy.gateway.message.intent.loadCell.DeviceWeightCallbackThreshold;
-import ch.quantasy.gateway.message.intent.loadCell.LoadCellIntent;
-import ch.quantasy.gateway.message.status.loadCell.ConfigurationStatus;
-import ch.quantasy.gateway.message.status.loadCell.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.loadCell.MovingAverageStatus;
-import ch.quantasy.gateway.message.status.loadCell.StatusLEDStatus;
-import ch.quantasy.gateway.message.status.loadCell.WeightCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.loadCell.WeightCallbackThresholdStatus;
+import ch.quantasy.gateway.message.loadCell.DeviceConfiguration;
+import ch.quantasy.gateway.message.loadCell.DeviceWeightCallbackThreshold;
+import ch.quantasy.gateway.message.loadCell.LoadCellIntent;
+import ch.quantasy.gateway.message.loadCell.ConfigurationStatus;
+import ch.quantasy.gateway.message.loadCell.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.loadCell.MovingAverageStatus;
+import ch.quantasy.gateway.message.loadCell.StatusLEDStatus;
+import ch.quantasy.gateway.message.loadCell.WeightCallbackPeriodStatus;
+import ch.quantasy.gateway.message.loadCell.WeightCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDeviceCallback;
 

@@ -42,14 +42,14 @@
  */
 package ch.quantasy.gateway.service.device.temperatureIR;
 
-import ch.quantasy.gateway.message.event.temperatureIR.AmbientTemperatureEvent;
-import ch.quantasy.gateway.message.event.temperatureIR.ObjectTemperatureEvent;
-import ch.quantasy.gateway.message.intent.temperatureIR.TemperatureIRIntent;
-import ch.quantasy.gateway.message.status.temperatureIR.AmbientTemperatureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.temperatureIR.AmbientTemperatureCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.temperatureIR.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.temperatureIR.ObjectTemperatureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.temperatureIR.ObjectTemperatureCallbackThresholdStatus;
+import ch.quantasy.gateway.message.temperatureIR.AmbientTemperatureEvent;
+import ch.quantasy.gateway.message.temperatureIR.ObjectTemperatureEvent;
+import ch.quantasy.gateway.message.temperatureIR.TemperatureIRIntent;
+import ch.quantasy.gateway.message.temperatureIR.AmbientTemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.temperatureIR.AmbientTemperatureCallbackThresholdStatus;
+import ch.quantasy.gateway.message.temperatureIR.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.temperatureIR.ObjectTemperatureCallbackPeriodStatus;
+import ch.quantasy.gateway.message.temperatureIR.ObjectTemperatureCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;

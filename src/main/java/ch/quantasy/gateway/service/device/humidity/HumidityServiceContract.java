@@ -42,14 +42,14 @@
  */
 package ch.quantasy.gateway.service.device.humidity;
 
-import ch.quantasy.gateway.message.event.humidity.AnalogValueEvent;
-import ch.quantasy.gateway.message.event.humidity.HumidityEvent;
-import ch.quantasy.gateway.message.intent.humidity.HumidityIntent;
-import ch.quantasy.gateway.message.status.humidity.AnalogCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.humidity.AnalogValueCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.humidity.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.humidity.HumidityCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.humidity.HumidityCallbackThresholdStatus;
+import ch.quantasy.gateway.message.humidity.AnalogValueEvent;
+import ch.quantasy.gateway.message.humidity.HumidityEvent;
+import ch.quantasy.gateway.message.humidity.HumidityIntent;
+import ch.quantasy.gateway.message.humidity.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.humidity.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.humidity.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.humidity.HumidityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.humidity.HumidityCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.humidity.HumidityDevice;

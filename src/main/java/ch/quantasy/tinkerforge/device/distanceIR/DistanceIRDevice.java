@@ -42,10 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.distanceIR;
 
-import ch.quantasy.gateway.message.intent.barometer.BarometerIntent;
-import ch.quantasy.gateway.message.intent.distanceIR.DeviceDistanceCallbackThreshold;
-import ch.quantasy.gateway.message.intent.distanceIR.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.message.intent.distanceIR.DistanceIRIntent;
+import ch.quantasy.gateway.message.barometer.BarometerIntent;
+import ch.quantasy.gateway.message.distanceIR.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.message.distanceIR.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.distanceIR.DistanceIRIntent;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;

@@ -42,14 +42,14 @@
  */
 package ch.quantasy.gateway.service.device.servo;
 
-import ch.quantasy.gateway.message.event.servo.UnderVoltageEvent;
-import ch.quantasy.gateway.message.event.servo.VelocityEvent;
-import ch.quantasy.gateway.message.event.servo.PositionEvent;
-import ch.quantasy.gateway.message.intent.servo.ServoIntent;
-import ch.quantasy.gateway.message.status.servo.MinimumVoltageStatus;
-import ch.quantasy.gateway.message.status.servo.OutputVoltageStatus;
-import ch.quantasy.gateway.message.status.servo.ServosStatus;
-import ch.quantasy.gateway.message.status.servo.StatusLEDStatus;
+import ch.quantasy.gateway.message.servo.UnderVoltageEvent;
+import ch.quantasy.gateway.message.servo.VelocityEvent;
+import ch.quantasy.gateway.message.servo.PositionEvent;
+import ch.quantasy.gateway.message.servo.ServoIntent;
+import ch.quantasy.gateway.message.servo.MinimumVoltageStatus;
+import ch.quantasy.gateway.message.servo.OutputVoltageStatus;
+import ch.quantasy.gateway.message.servo.ServosStatus;
+import ch.quantasy.gateway.message.servo.StatusLEDStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.servo.ServoDevice;

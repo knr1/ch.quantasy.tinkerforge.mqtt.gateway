@@ -92,7 +92,8 @@ import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import ch.quantasy.gateway.message.intent.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.message.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDevice;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickIMU;
 import com.tinkerforge.BrickIMUV2;
@@ -125,6 +126,7 @@ import com.tinkerforge.BrickletLinearPoti;
 import com.tinkerforge.BrickletLoadCell;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
+import com.tinkerforge.BrickletMotorizedLinearPoti;
 import com.tinkerforge.BrickletMultiTouch;
 import com.tinkerforge.BrickletNFCRFID;
 import com.tinkerforge.BrickletPTC;
@@ -300,6 +302,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.Servo == TinkerforgeDeviceClass.getDevice(device)) {
             return new ServoDevice(stack, (BrickServo) device);
+        }
+        if(TinkerforgeDeviceClass.MotorizedLinearPoti==TinkerforgeDeviceClass.getDevice(device)){
+            return new MotorizedLinearPotiDevice(stack, (BrickletMotorizedLinearPoti)device);
         }
         return new TinkerforgeDevice(stack, device);
     }

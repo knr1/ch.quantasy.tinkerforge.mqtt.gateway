@@ -42,11 +42,11 @@
  */
 package ch.quantasy.gateway.service.device.line;
 
-import ch.quantasy.gateway.message.event.line.ReflectivityEvent;
-import ch.quantasy.gateway.message.intent.line.LineIntent;
-import ch.quantasy.gateway.message.status.line.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.line.ReflectivityCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.line.ReflectivityCallbackThresholdStatus;
+import ch.quantasy.gateway.message.line.ReflectivityEvent;
+import ch.quantasy.gateway.message.line.LineIntent;
+import ch.quantasy.gateway.message.line.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.line.ReflectivityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.line.ReflectivityCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.line.LineDevice;

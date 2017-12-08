@@ -42,12 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.LCD16x2;
 
-import ch.quantasy.gateway.message.event.LCD16x2.ButtonEvent;
-import ch.quantasy.gateway.message.intent.LCD16x2.DeviceConfigParameters;
-import ch.quantasy.gateway.message.intent.LCD16x2.DeviceCustomCharacter;
-import ch.quantasy.gateway.message.status.LCD16x2.BacklightStatus;
-import ch.quantasy.gateway.message.status.LCD16x2.CustomCharactersStatus;
-import ch.quantasy.gateway.message.status.LCD16x2.ParametersStatus;
+import ch.quantasy.gateway.message.LCD16x2.ButtonEvent;
+import ch.quantasy.gateway.message.LCD16x2.DeviceConfigParameters;
+import ch.quantasy.gateway.message.LCD16x2.DeviceCustomCharacter;
+import ch.quantasy.gateway.message.LCD16x2.BacklightStatus;
+import ch.quantasy.gateway.message.LCD16x2.CustomCharactersStatus;
+import ch.quantasy.gateway.message.LCD16x2.ParametersStatus;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2DeviceCallback;

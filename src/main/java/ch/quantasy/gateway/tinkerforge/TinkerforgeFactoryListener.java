@@ -42,7 +42,6 @@
  */
 package ch.quantasy.gateway.tinkerforge;
 
-import ch.quantasy.tinkerforge.factory.TinkerforgeStackFactory;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 
 /**

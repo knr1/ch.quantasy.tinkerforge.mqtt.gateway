@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.master;
 
-import ch.quantasy.gateway.message.intent.master.StackVoltageCallbackThreshold;
-import ch.quantasy.gateway.message.intent.master.USBVoltageCallbackThreshold;
-import ch.quantasy.gateway.message.intent.master.StackCurrentCallbackThreshold;
+import ch.quantasy.gateway.message.master.StackVoltageCallbackThreshold;
+import ch.quantasy.gateway.message.master.USBVoltageCallbackThreshold;
+import ch.quantasy.gateway.message.master.StackCurrentCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickMaster;
 

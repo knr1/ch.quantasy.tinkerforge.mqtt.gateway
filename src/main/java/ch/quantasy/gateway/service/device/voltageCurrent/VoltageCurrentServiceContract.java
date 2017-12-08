@@ -42,19 +42,19 @@
  */
 package ch.quantasy.gateway.service.device.voltageCurrent;
 
-import ch.quantasy.gateway.message.event.voltageCurrent.CurrentEvent;
-import ch.quantasy.gateway.message.event.voltageCurrent.PowerEvent;
-import ch.quantasy.gateway.message.event.voltageCurrent.VoltageEvent;
-import ch.quantasy.gateway.message.intent.voltageCurrent.VoltageCurrentIntent;
-import ch.quantasy.gateway.message.status.voltageCurrent.CalibrationStatus;
-import ch.quantasy.gateway.message.status.voltageCurrent.ConfigurationStatus;
-import ch.quantasy.gateway.message.status.voltageCurrent.CurrentCalbackThresholdStatus;
-import ch.quantasy.gateway.message.status.voltageCurrent.CurrentCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.voltageCurrent.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.voltageCurrent.PowerCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.voltageCurrent.PowerCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.voltageCurrent.VoltageCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.voltageCurrent.VoltageCallbackThresholdStatus;
+import ch.quantasy.gateway.message.voltageCurrent.CurrentEvent;
+import ch.quantasy.gateway.message.voltageCurrent.PowerEvent;
+import ch.quantasy.gateway.message.voltageCurrent.VoltageEvent;
+import ch.quantasy.gateway.message.voltageCurrent.VoltageCurrentIntent;
+import ch.quantasy.gateway.message.voltageCurrent.CalibrationStatus;
+import ch.quantasy.gateway.message.voltageCurrent.ConfigurationStatus;
+import ch.quantasy.gateway.message.voltageCurrent.CurrentCalbackThresholdStatus;
+import ch.quantasy.gateway.message.voltageCurrent.CurrentCallbackPeriodStatus;
+import ch.quantasy.gateway.message.voltageCurrent.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.voltageCurrent.PowerCallbackPeriodStatus;
+import ch.quantasy.gateway.message.voltageCurrent.PowerCallbackThresholdStatus;
+import ch.quantasy.gateway.message.voltageCurrent.VoltageCallbackPeriodStatus;
+import ch.quantasy.gateway.message.voltageCurrent.VoltageCallbackThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;

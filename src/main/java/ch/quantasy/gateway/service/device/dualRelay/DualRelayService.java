@@ -42,12 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.dualRelay;
 
-import ch.quantasy.gateway.message.event.dualRelay.MonoflopDoneEvent;
+import ch.quantasy.gateway.message.dualRelay.MonoflopDoneEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDeviceCallback;
-import ch.quantasy.gateway.message.intent.dualRelay.DeviceRelayState;
-import ch.quantasy.gateway.message.status.dualRelay.RelayStateStatus;
+import ch.quantasy.gateway.message.dualRelay.DeviceRelayState;
+import ch.quantasy.gateway.message.dualRelay.RelayStateStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 

@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.analogInV2;
 
-import ch.quantasy.gateway.message.intent.analogInV2.AnalogInV2Intent;
-import ch.quantasy.gateway.message.intent.analogInV2.DeviceVoltageCallbackThreshold;
-import ch.quantasy.gateway.message.intent.analogInV2.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.analogInV2.AnalogInV2Intent;
+import ch.quantasy.gateway.message.analogInV2.DeviceVoltageCallbackThreshold;
+import ch.quantasy.gateway.message.analogInV2.DeviceAnalogValueCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAnalogInV2;

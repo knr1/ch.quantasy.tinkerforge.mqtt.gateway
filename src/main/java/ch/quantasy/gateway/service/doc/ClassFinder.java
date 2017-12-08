@@ -95,7 +95,7 @@ public class ClassFinder {
     }
 
     public static void main(String[] args) {
-        List<Class<?>> classes = find("ch.quantasy.gateway.message.intent");
+        List<Class<?>> classes = find("ch.quantasy.gateway.message");
         List<Class> intentClasses = new ArrayList();
         for (Class singleClass : classes) {
             //if (singleClass.getEnclosingClass().isAssignableFrom(AnIntent.class)) {

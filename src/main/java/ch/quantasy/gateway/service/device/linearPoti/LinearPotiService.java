@@ -42,16 +42,16 @@
  */
 package ch.quantasy.gateway.service.device.linearPoti;
 
-import ch.quantasy.gateway.message.event.linearPoti.AnalogValueEvent;
-import ch.quantasy.gateway.message.event.linearPoti.PositionEvent;
+import ch.quantasy.gateway.message.linearPoti.AnalogValueEvent;
+import ch.quantasy.gateway.message.linearPoti.PositionEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
-import ch.quantasy.gateway.message.intent.linearPoti.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.message.intent.linearPoti.DevicePositionCallbackThreshold;
-import ch.quantasy.gateway.message.status.linearPoti.AnalogCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.linearPoti.AnalogValueCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.linearPoti.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.status.linearPoti.PositionCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.linearPoti.PositionCallbackThresholdStatus;
+import ch.quantasy.gateway.message.linearPoti.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.message.linearPoti.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.message.linearPoti.AnalogCallbackPeriodStatus;
+import ch.quantasy.gateway.message.linearPoti.AnalogValueCallbackThresholdStatus;
+import ch.quantasy.gateway.message.linearPoti.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.linearPoti.PositionCallbackPeriodStatus;
+import ch.quantasy.gateway.message.linearPoti.PositionCallbackThresholdStatus;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDevice;
 import ch.quantasy.tinkerforge.device.linearPoti.LinearPotiDeviceCallback;
 

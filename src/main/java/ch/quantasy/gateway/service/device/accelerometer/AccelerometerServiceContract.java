@@ -42,12 +42,12 @@
  */
 package ch.quantasy.gateway.service.device.accelerometer;
 
-import ch.quantasy.gateway.message.event.IMU.AccelerationEvent;
-import ch.quantasy.gateway.message.intent.accelerometer.AccelerometerIntent;
-import ch.quantasy.gateway.message.status.IMU.AccelerationCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.accelerometer.AccelerationThresholdStatus;
-import ch.quantasy.gateway.message.status.accelerometer.ConfigurationStatus;
-import ch.quantasy.gateway.message.status.accelerometer.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.IMU.AccelerationEvent;
+import ch.quantasy.gateway.message.accelerometer.AccelerometerIntent;
+import ch.quantasy.gateway.message.IMU.AccelerationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.accelerometer.AccelerationThresholdStatus;
+import ch.quantasy.gateway.message.accelerometer.ConfigurationStatus;
+import ch.quantasy.gateway.message.accelerometer.DebouncePeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;

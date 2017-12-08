@@ -42,15 +42,15 @@
  */
 package ch.quantasy.gateway.service.device.co2;
 
-import ch.quantasy.gateway.message.event.co2.CO2ConcentrationEvent;
-import ch.quantasy.gateway.message.intent.co2.CO2Intent;
+import ch.quantasy.gateway.message.co2.CO2ConcentrationEvent;
+import ch.quantasy.gateway.message.co2.CO2Intent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
 import ch.quantasy.tinkerforge.device.co2.CO2DeviceCallback;
-import ch.quantasy.gateway.message.intent.co2.DeviceCO2ConcentrationCallbackThreshold;
-import ch.quantasy.gateway.message.status.co2.Co2ConcentrationCallbackPeriodStatus;
-import ch.quantasy.gateway.message.status.co2.Co2ConcentrationCallbackThresholdStatus;
-import ch.quantasy.gateway.message.status.co2.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.co2.DeviceCO2ConcentrationCallbackThreshold;
+import ch.quantasy.gateway.message.co2.Co2ConcentrationCallbackPeriodStatus;
+import ch.quantasy.gateway.message.co2.Co2ConcentrationCallbackThresholdStatus;
+import ch.quantasy.gateway.message.co2.DebouncePeriodStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 

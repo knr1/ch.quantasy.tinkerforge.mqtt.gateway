@@ -42,9 +42,9 @@
  */
 package ch.quantasy.gateway.service.device.dualRelay;
 
-import ch.quantasy.gateway.message.event.dualRelay.MonoflopDoneEvent;
-import ch.quantasy.gateway.message.intent.dualRelay.DualRelayIntent;
-import ch.quantasy.gateway.message.status.dualRelay.RelayStateStatus;
+import ch.quantasy.gateway.message.dualRelay.MonoflopDoneEvent;
+import ch.quantasy.gateway.message.dualRelay.DualRelayIntent;
+import ch.quantasy.gateway.message.dualRelay.RelayStateStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;

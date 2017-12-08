@@ -41,7 +41,6 @@
  */
 package ch.quantasy.gateway.service.doc;
 
-import ch.quantasy.gateway.message.intent.voltageCurrent.VoltageCurrentIntent;
 import static ch.quantasy.gateway.service.doc.ClassFinder.find;
 import ch.quantasy.mqtt.gateway.client.message.AnIntent;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
@@ -50,9 +49,7 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.Period;
 import java.lang.reflect.Field;
 import java.lang.annotation.Annotation;
 import java.io.OutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
-import java.util.ServiceLoader;
 import java.lang.*;
 import java.io.*;
 import java.util.*;
@@ -61,7 +58,6 @@ import java.util.*;
  *
  * @author reto
  */
-import ch.quantasy.mqtt.gateway.client.message.AStatus;
 public class IntentToStatus {
 
     public static String createStatus(Class<? extends Intent> intent, File path) throws IOException {
@@ -127,7 +123,7 @@ public class IntentToStatus {
     }
 
     public static void main(String[] args) throws IOException {
-        List<Class<?>> classes = find("ch.quantasy.gateway.message.intent");
+        List<Class<?>> classes = find("ch.quantasy.gateway.message");
         List<Class> intentClasses = new ArrayList();
         for (Class singleClass : classes) {
             //if (singleClass.getEnclosingClass().isAssignableFrom(AnIntent.class)) {
