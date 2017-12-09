@@ -76,9 +76,4 @@ public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
         addMessageTopic(STATUS_HARDWARE, Hardware.class);
     }
 
-    @Override
-    public void describe(Map<String, String> descriptions) {
-        super.describe(descriptions);     
-    }
-
 }

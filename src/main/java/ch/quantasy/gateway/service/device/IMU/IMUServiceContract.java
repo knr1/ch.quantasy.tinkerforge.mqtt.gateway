@@ -58,11 +58,9 @@ import ch.quantasy.gateway.message.IMU.OrientationCalculationStatus;
 import ch.quantasy.gateway.message.IMU.OrientationCallbackPeriodStatus;
 import ch.quantasy.gateway.message.IMU.QuaternionCallbackPeriodStatus;
 import ch.quantasy.gateway.message.IMU.StatusLEDStatus;
-import ch.quantasy.gateway.message.gps.StatusCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import java.util.Map;
 
 /**
  *

@@ -45,9 +45,6 @@ package ch.quantasy.gateway.service;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
 
 import ch.quantasy.mqtt.gateway.client.contract.AyamlServiceContract;
-import ch.quantasy.mqtt.gateway.client.message.Message;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  *
@@ -55,18 +52,9 @@ import java.util.Map.Entry;
  */
 public abstract class TinkerForgeServiceContract extends AyamlServiceContract {
 
-   
     public TinkerForgeServiceContract(String baseClass, String instance, Class<? extends Intent> intentClass) {
         super("TF", baseClass, instance);
         addMessageTopic(INTENT, intentClass);
     }
 
-    
-
-    @Override
-    protected void describe(Map<String, String> descriptions) {
-        for(Entry<String,Class<? extends Message>> entry:getMessageTopicMap().entrySet()){
-            descriptions.put(entry.getKey(), getDataFormatDescription(entry.getValue()));
-        }
-    }
 }
