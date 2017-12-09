@@ -2,8 +2,6 @@
 [Data-driven] [micro-service]s for the bricks and bricklets of the [Tinkerforge](tm) world, based on ch.quantasy.mqtt.gateway.
 ch.quantasy.tinkerforge.mqtt.gateway
 
-Please note, that this project depends on [https://github.com/knr1/ch.quantasy.mqtt.gateway]
-
 
 The underlying idea of TiMqWay is a set of micro-services with auto discovery and data definition using the mqtt protocol, providing a data-driven
 interface to the known Tinkerforge devices. This way, the implementation is agnostic to the programming-language and paradigm used for orchestration. Any language will do, as long as you master it.
@@ -28,9 +26,9 @@ Each Tinkerforge micro-service provides the following minimal contract:
 </a>
 * **Description** Each micro-service class describes its abilities and provides a data definition via the description topic.
 * **Status** Each micro-service instance describes its actual status via its specialized status topics.
-* **Event** Each micro-service instance provides all events via its specialized event topics.As there might be more events available than the mqtt broker is able to handle, all events are always covered within an array. Hence, there might be 0,1 or multiple events within one message.
+* **Event** Each micro-service instance provides all events via its specialized event topics.
 * **Intent** Each micro-service instance accepts _intentions_ via the intent topic. It is equivalent to the setter methods but allows _parallel_ and _concurrent_ 'requests'.
-
+As there might be more messages (i.e. Status / Events / Intents) available than the connection (mqtt broker plus network) is able to handle, the messages might be provided as an array of messages. No messige is lost!
 
 **Root topic** The root topic of TiMqWay, where all Tinkerforge micro-services can be reached: **TF/**.
 
@@ -39,32 +37,33 @@ Each Tinkerforge micro-service provides the following minimal contract:
 **No Connection between services** The services do not know each other and cannot 'learn' from other services (i.e. they are cohesive). What is needed is a software
 that orchestrates / choreographs the services. This can be written in any programming language (e.g. Node-Red, Java, js, Swift, ...), as long as you can access the mqtt-broker used.
 
+## Installation
+In order to run it, there are two ways: 
+* **Users way** download the latest [TiMqWay.jar] and you are ready to control Tinkerforge via the MQTT-Gateway
+* **Developers way** clone and build the project. Please note that it depends on [https://github.com/knr1/ch.quantasy.mqtt.gateway]
+
+
 ### Abstraction to Tinkerforge 
 Each micro-service is an instance of a Tinkerforge-Device class, accessible by its UID. Hence, devices are not represented within their 'stack', but loosely coupled and class-wise so
  a device might even change its stack but is still accessible in MQTT at the same location (TF/device-class/UID).
 
-
-## Installation
-In order to install TiMqWay 
-* **Developers way** clone and build the project. Please note that it depends on [https://github.com/knr1/ch.quantasy.mqtt.gateway]
-* **Users way** download the latest [TiMqWay.jar]
  
 ## Usage
-You need Java (7 or higher) and a running MQTT-Server. You can start TiMqWay with the MQTT-Server-Parameter.
+You need Java (7 or higher) and a running MQTT-Broker. You can start TiMqWay with the MQTT-Server-Parameter.
 
-Then run the following command in order to use an MQTT-Server at localhost
+Then run the following command in order to use an MQTT-Broker which is already running on localhost
 ```sh
 $ java -jar TiMqWay.jar tcp://127.0.0.1:1883
 ```
-Or, if you do not have any MQTT-Broker ready, use an existing one at iot.eclipse.org:1883 (Not recommended as it is an open server everyone can read and write into)
+Or, if you do not have any MQTT-Broker ready, you can start it use an existing one at iot.eclipse.org:1883 (Not recommended as it is an open server everyone can read and write into)
 ```sh
 $ java -jar TiMqWay.jar tcp://iot.eclipse.org:1883
 ```
 
-Then, if you subscribe to TF/# you will immediately get the description info for the TiMqWay-Manager, which does all the discovery stuff for you.
+Then, if you subscribe to TF/# you will immediately get the description info for the TiMqWay-Manager, which does all Tinkerforge stuff for you.
 
-In order to interact with some specific Tinkerforge-Stack (e.g. localhost), the following message has to be sent to the following topic:
-```sh
+In order to interact with some specific Tinkerforge-Stack (e.g. the one you have connected via USB cable to the same machine as you run TiMqWay), the following message has to be sent to the following topic:
+```
 Topic
 TF/Manager/U/computer/I
 
@@ -73,11 +72,29 @@ address:
   hostName: localhost
 connect: true
 ```
-or any other address IP or name will work, if there is an actual Tinkerforge stack accessible.
+or if you know a remote Tinkerforge stack reachable over an IP-address (e.g. the one in your 192.168.1.x network connected via WLAN-Brick extension as 192.168.1.77)
 
-### Quick Shots
+```
+Topic
+TF/Manager/U/computer/I
+
+Message
+address:
+  hostName: 192.168.1.77
+connect: true
+```
+
+All connected Bricks/Bricklets should now be accessible via MQTT... Have fun.
+
+ * [Quick shots](https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway#quick-shots)
+ * [Example](https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway#example)
+ * [API](https://github.com/knr1/ch.quantasy.tinkerforge.mqtt.gateway#api)
+
+---
+
+# Quick Shots
 In the following, some one-liners are shown in order to demonstrate how easy it is to get information from TF.
-In order to see who is calling, the intent will always end with '/quickshot' as the intending party (you can put anything (or nothing) there).
+In order to see who is calling, the intent will always end with '/quickshot' as the intending party (you can put anything (or nothing) there it helps in understanding who has sent an intent).
  
 **Setting backlight of LCD-Display (uid: lcd):**
 ```
@@ -108,7 +125,7 @@ scanningCallbackPeriod: 1000
 
 
 
-### Tip
+## Tip
 You might want to get an overview of TF using a graphical MQTT-Viewer i.e. [d3Viewer].
 
  [Data-driven]:<https://en.wikipedia.org/wiki/Data-driven_programming>
@@ -429,7 +446,7 @@ Intent (I) is as straight forward and as concise as possible. You simply put int
 Event (E) is as fine granular as possible, so you can subscribe to your needs and will receive nothing more
 Status (S) is as fine granular as possible, so you can subscribe to your needs and will receive nothing more
 
-No message is lost! It is delivered as fast as possible. If the channel is slower than the message creation, the messages will be delivered as an array. 
+No message is lost! It is delivered as fast as possible. If the channel is slower than the message creation, the messages will be delivered as an array of messages. 
 
 
 ### IMU
