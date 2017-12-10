@@ -39,39 +39,39 @@
  *
  *
  */
-package ch.quantasy.gateway.service.doc;
+package ch.quantasy.gateway.message.RGBLEDButton;
 
-import static ch.quantasy.gateway.service.doc.ClassFinder.find;
-import ch.quantasy.gateway.service.TinkerForgeServiceContract;
-import ch.quantasy.gateway.service.device.DeviceServiceContract;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
+import com.tinkerforge.BrickletRGBLED;
+import com.tinkerforge.BrickletRGBLEDButton;
 
 /**
  *
  * @author reto
  */
-public class Descriptions {
+public class RGBColor extends AValidator {
 
-    public static void main(String[] args) throws Exception {
-        List<Class<?>> classes = find("ch.quantasy.gateway.service.device");
-        SortedSet<String> contractClassNames = new TreeSet();
-        for (Class singleClass : classes) {
-            if (DeviceServiceContract.class.equals(singleClass.getSuperclass())) {
-                contractClassNames.add(singleClass.getName());
-            }
-            if (TinkerForgeServiceContract.class.isAssignableFrom(singleClass)) {
-                contractClassNames.add(singleClass.getName());
-            }
-        }
+    @Range(from = 0, to = 255)
+    public int blue;
+    @Range(from = 0, to = 255)
+    public int green;
+    @Range(from = 0, to = 255)
+    public int red;
 
-        for (String contractClassName : contractClassNames) {
-            try {
-                TinkerForgeServiceContract contract = (TinkerForgeServiceContract) (Class.forName(contractClassName).getConstructor(String.class).newInstance("<id>"));
-                System.out.println(contract.toMD());
-            } catch (Exception ex) {
-            }
-        }
+    public RGBColor(int blue, int green, int red) {
+        this.blue =  blue;
+        this.green =  green;
+        this.red =  red;
     }
+
+    public RGBColor(BrickletRGBLEDButton.Color value) {
+        this.blue = value.blue;
+        this.green = value.green;
+        this.red = value.red;
+    }
+
+    private RGBColor() {
+    }
+
 }

@@ -105,15 +105,13 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
 
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
+        addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
         addMessageTopic(EVENT_ACCELERATION_REACHED, AccelerationEvent.class);
         addMessageTopic(STATUS_ACCELERATION_CALLBACK_PERIOD, AccelerationCallbackPeriodStatus.class);
         addMessageTopic(STATUS_ACCELERATION_THRESHOLD, AccelerationThresholdStatus.class);
         addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
         addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
     }
-
-   
 
     public static void main(String[] args) {
         AccelerometerServiceContract c = new AccelerometerServiceContract("<id>");

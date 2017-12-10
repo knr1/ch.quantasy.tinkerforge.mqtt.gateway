@@ -46,6 +46,7 @@ import ch.quantasy.gateway.service.device.IMU.IMUService;
 import ch.quantasy.gateway.service.device.IMUV2.IMUV2Service;
 import ch.quantasy.gateway.service.device.LCD16x2.LCD16x2Service;
 import ch.quantasy.gateway.service.device.LCD20x4.LCD20x4Service;
+import ch.quantasy.gateway.service.device.RGBLEDButton.RGBLEDButtonService;
 import ch.quantasy.gateway.service.device.accelerometer.AccelerometerService;
 import ch.quantasy.gateway.service.device.ambientLight.AmbientLightService;
 import ch.quantasy.gateway.service.device.ambientLightV2.AmbientLightV2Service;
@@ -92,6 +93,7 @@ import ch.quantasy.gateway.service.device.uvLight.UVLightService;
 import ch.quantasy.gateway.service.device.voltageCurrent.VoltageCurrentService;
 import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
+import ch.quantasy.tinkerforge.device.RGBLEDButton.RGBLEDButtonDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import ch.quantasy.tinkerforge.device.ambientLight.AmbientLightDevice;
@@ -292,6 +294,9 @@ public class TinkerforgeServiceMapper {
         }
         if(tinkerforgeDevice instanceof MotorizedLinearPotiDevice){
             return new MotorizedLinearPotiService((MotorizedLinearPotiDevice)tinkerforgeDevice, mqttURI);
+        }
+        if(tinkerforgeDevice instanceof RGBLEDButtonDevice){
+            return new RGBLEDButtonService((RGBLEDButtonDevice)tinkerforgeDevice, mqttURI);
         }
         return null;
 

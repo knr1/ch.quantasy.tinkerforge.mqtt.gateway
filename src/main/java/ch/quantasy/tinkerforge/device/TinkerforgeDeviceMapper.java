@@ -93,6 +93,7 @@ import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.gateway.message.stack.TinkerforgeStackAddress;
+import ch.quantasy.tinkerforge.device.RGBLEDButton.RGBLEDButtonDevice;
 import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDevice;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickIMU;
@@ -131,6 +132,7 @@ import com.tinkerforge.BrickletMultiTouch;
 import com.tinkerforge.BrickletNFCRFID;
 import com.tinkerforge.BrickletPTC;
 import com.tinkerforge.BrickletPiezoSpeaker;
+import com.tinkerforge.BrickletRGBLEDButton;
 import com.tinkerforge.BrickletRealTimeClock;
 import com.tinkerforge.BrickletRemoteSwitch;
 import com.tinkerforge.BrickletRotaryEncoder;
@@ -305,6 +307,9 @@ public class TinkerforgeDeviceMapper {
         }
         if(TinkerforgeDeviceClass.MotorizedLinearPoti==TinkerforgeDeviceClass.getDevice(device)){
             return new MotorizedLinearPotiDevice(stack, (BrickletMotorizedLinearPoti)device);
+        }
+        if(TinkerforgeDeviceClass.RGBLEDButton==TinkerforgeDeviceClass.getDevice(device)){
+            return new RGBLEDButtonDevice(stack, (BrickletRGBLEDButton)device);
         }
         return new TinkerforgeDevice(stack, device);
     }

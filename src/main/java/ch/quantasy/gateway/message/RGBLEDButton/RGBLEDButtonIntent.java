@@ -39,39 +39,16 @@
  *
  *
  */
-package ch.quantasy.gateway.service.doc;
+package ch.quantasy.gateway.message.RGBLEDButton;
 
-import static ch.quantasy.gateway.service.doc.ClassFinder.find;
-import ch.quantasy.gateway.service.TinkerForgeServiceContract;
-import ch.quantasy.gateway.service.device.DeviceServiceContract;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import ch.quantasy.mqtt.gateway.client.message.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
 
 /**
  *
  * @author reto
  */
-public class Descriptions {
-
-    public static void main(String[] args) throws Exception {
-        List<Class<?>> classes = find("ch.quantasy.gateway.service.device");
-        SortedSet<String> contractClassNames = new TreeSet();
-        for (Class singleClass : classes) {
-            if (DeviceServiceContract.class.equals(singleClass.getSuperclass())) {
-                contractClassNames.add(singleClass.getName());
-            }
-            if (TinkerForgeServiceContract.class.isAssignableFrom(singleClass)) {
-                contractClassNames.add(singleClass.getName());
-            }
-        }
-
-        for (String contractClassName : contractClassNames) {
-            try {
-                TinkerForgeServiceContract contract = (TinkerForgeServiceContract) (Class.forName(contractClassName).getConstructor(String.class).newInstance("<id>"));
-                System.out.println(contract.toMD());
-            } catch (Exception ex) {
-            }
-        }
-    }
+public class RGBLEDButtonIntent extends AnIntent{
+    @Nullable
+    public RGBColor color;
 }

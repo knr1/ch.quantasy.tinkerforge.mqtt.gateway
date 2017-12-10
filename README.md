@@ -448,7 +448,6 @@ Status (S) is as fine granular as possible, so you can subscribe to your needs a
 
 No message is lost! It is delivered as fast as possible. If the channel is slower than the message creation, the messages will be delivered as an array of messages. 
 
-
 ### IMU
 ```
 TF/IMU/U/<id>/E/acceleration
@@ -1003,6 +1002,53 @@ TF/LCD20x4/U/<id>/S/hardware
 ```
 ```
 TF/LCD20x4/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+
+### RGBLEDButton
+```
+TF/RGBLEDButton/U/<id>/E/button
+   state: String <PRESSED,RELEASED>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/I
+   color: null
+   color: 
+     blue: Number <from: 0 to: 255>
+     green: Number <from: 0 to: 255>
+     red: Number <from: 0 to: 255>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/S/color
+   color: 
+     blue: Number <from: 0 to: 255>
+     green: Number <from: 0 to: 255>
+     red: Number <from: 0 to: 255>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/S/position
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
    
@@ -5055,43 +5101,5 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
      max: Number <from: -5001 to: 5001>
      min: Number <from: -5001 to: 5001>
      option: String <[x, o, i, <, >]>
-   
-```
-
-### Manager
-```
-TF/Manager/U/<id>/E/stack/address/added
-   stackAddress: 
-     hostName: String <min: 1 max: 255>
-     hostName: String <regEx: \w+(\.\w+){0,3}>
-     port: Number <from: 1024 to: 65535>
-   state: Boolean <true,false> 
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Manager/U/<id>/E/stack/address/removed
-   stackAddress: 
-     hostName: String <min: 1 max: 255>
-     hostName: String <regEx: \w+(\.\w+){0,3}>
-     port: Number <from: 1024 to: 65535>
-   state: Boolean <true,false> 
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Manager/U/<id>/I
-   address: 
-     hostName: String <min: 1 max: 255>
-     hostName: String <regEx: \w+(\.\w+){0,3}>
-     port: Number <from: 1024 to: 65535>
-   connect: Boolean <true,false> 
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Manager/U/<id>/S/stack/address/<address>/connected
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Boolean <true,false> 
    
 ```
