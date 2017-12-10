@@ -89,4 +89,8 @@ public abstract class AbstractService<S extends TinkerForgeServiceContract> exte
         this.publishingMessageCollector.readyToPublish(topic, status);
     }
     
+    public void clearPublish(String topic){
+        this.publishingMessageCollector.clearPublish(topic);
+    }
+    
 }

@@ -59,7 +59,7 @@ public class RGBColor extends AValidator {
     @Range(from = 0, to = 255)
     public int red;
 
-    public RGBColor(int blue, int green, int red) {
+    public RGBColor(int red, int green, int blue) {
         this.blue =  blue;
         this.green =  green;
         this.red =  red;

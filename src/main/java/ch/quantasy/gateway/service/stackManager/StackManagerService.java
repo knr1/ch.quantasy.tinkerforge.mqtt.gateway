@@ -171,13 +171,13 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
             stack.removeListener((TinkerforgeStackListener) this);
             TinkerforgeStackAddress address = stack.getStackAddress();
             String topic = getContract().STATUS_STACK_ADDRESS + "/" + address.getHostName() + ":" + address.getPort();
-            readyToPublishStatus(topic, null);
+            clearPublish(topic);
             readyToPublishEvent(getContract().EVENT_STACK_ADDRESS_REMOVED, new StackAddressEvent(false, address));
         }
         for (TinkerforgeDevice device : stack.getDevices()) {
             device.removeListener(this);
             String topic = getContract().STATUS_DEVICE + "/" + device.getStack().getStackAddress().getHostName() + "/" + TinkerforgeDeviceClass.getDevice(device.getDevice()) + "/" + device.getUid();
-            readyToPublishStatus(topic, null);
+            clearPublish(topic);
         }
     }
 

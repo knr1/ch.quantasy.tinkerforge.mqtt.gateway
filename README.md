@@ -1054,9 +1054,9 @@ TF/RGBLEDButton/U/<id>/S/position
    
 ```
 
-### <id>
+### Accelerometer
 ```
-TF/<id>/U/Accelerometer/E/acceleration
+TF/Accelerometer/U/<id>/E/acceleration
    timeStamp: Number <from: 0 to: 9223372036854775807>
    x: Number <from: -32768 to: 32767>
    y: Number <from: -32768 to: 32767>
@@ -1064,7 +1064,7 @@ TF/<id>/U/Accelerometer/E/acceleration
    
 ```
 ```
-TF/<id>/U/Accelerometer/E/accelerationReached
+TF/Accelerometer/U/<id>/E/accelerationReached
    timeStamp: Number <from: 0 to: 9223372036854775807>
    x: Number <from: -32768 to: 32767>
    y: Number <from: -32768 to: 32767>
@@ -1072,7 +1072,7 @@ TF/<id>/U/Accelerometer/E/accelerationReached
    
 ```
 ```
-TF/<id>/U/Accelerometer/I
+TF/Accelerometer/U/<id>/I
    accelerationThreshold: null
    accelerationThreshold: 
      option: String <[x, o, i, <, >]>
@@ -1089,20 +1089,20 @@ TF/<id>/U/Accelerometer/I
    
 ```
 ```
-TF/<id>/U/Accelerometer/S/acceleration/callbackPeriod
+TF/Accelerometer/U/<id>/S/acceleration/callbackPeriod
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
-TF/<id>/U/Accelerometer/S/acceleration/threshold
+TF/Accelerometer/U/<id>/S/acceleration/threshold
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
      option: String <[x, o, i, <, >]>
    
 ```
 ```
-TF/<id>/U/Accelerometer/S/configuration
+TF/Accelerometer/U/<id>/S/configuration
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: 
      dataRate: String <OFF,Hz3,Hz6,Hz12,Hz25,Hz50,Hz100,Hz400,Hz800,Hz1600>
@@ -1111,27 +1111,27 @@ TF/<id>/U/Accelerometer/S/configuration
    
 ```
 ```
-TF/<id>/U/Accelerometer/S/debounce/period
+TF/Accelerometer/U/<id>/S/debounce/period
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
-TF/<id>/U/Accelerometer/S/firmware
+TF/Accelerometer/U/<id>/S/firmware
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: Array <min: 0 max: 2147483647>
    value: Number <from: -32768 to: 32767>
    
 ```
 ```
-TF/<id>/U/Accelerometer/S/hardware
+TF/Accelerometer/U/<id>/S/hardware
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: Array <min: 0 max: 2147483647>
    value: Number <from: -32768 to: 32767>
    
 ```
 ```
-TF/<id>/U/Accelerometer/S/position
+TF/Accelerometer/U/<id>/S/position
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
    

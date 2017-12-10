@@ -86,7 +86,7 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
     }
 
     public AccelerometerServiceContract(String id, String device) {
-        super(device, id, AccelerometerIntent.class);
+        super(id, device, AccelerometerIntent.class);
 
         PERIOD = "period";
         CALLBACK_PERIOD = "callbackPeriod";
