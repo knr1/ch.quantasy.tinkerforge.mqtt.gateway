@@ -53,7 +53,6 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.gateway.message.stack.TinkerforgeStackAddress;
 import ch.quantasy.gateway.message.stackManager.ConnectStatus;
-import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.mqtt.gateway.client.message.MessageCollector;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStackListener;
