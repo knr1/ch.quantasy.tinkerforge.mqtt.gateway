@@ -60,14 +60,14 @@ public class DeviceMotorPosition extends AValidator {
     public DeviceMotorPosition() {
     }
 
-    public DeviceMotorPosition(int position, int driveMode, boolean holdPosition) {
+    public DeviceMotorPosition(int position, DriveMode driveMode, boolean holdPosition) {
         this.position = position;
-        this.driveMode = this.driveMode;
+        this.driveMode = driveMode;
         this.holdPosition = holdPosition;
     }
 
     public DeviceMotorPosition(BrickletMotorizedLinearPoti.MotorPosition motorPosition) {
-        this(motorPosition.position,motorPosition.driveMode,motorPosition.holdPosition);
+        this(motorPosition.position,DriveMode.getDriveModeFor(motorPosition.driveMode),motorPosition.holdPosition);
     }
 
     public int getPosition() {

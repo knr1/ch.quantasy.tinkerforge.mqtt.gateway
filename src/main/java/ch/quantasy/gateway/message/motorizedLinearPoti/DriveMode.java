@@ -61,7 +61,7 @@ public enum DriveMode implements Validator {
         return value;
     }
 
-    public DriveMode getDriveModeFor(int s) throws IllegalArgumentException {
+    public static DriveMode getDriveModeFor(int s) throws IllegalArgumentException {
         for (DriveMode range : values()) {
             if (range.value == s) {
                 return range;

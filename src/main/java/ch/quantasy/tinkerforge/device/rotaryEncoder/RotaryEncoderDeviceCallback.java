@@ -58,6 +58,6 @@ public interface RotaryEncoderDeviceCallback extends DeviceCallback, BrickletRot
 
     public void countCallbackThresholdChanged(DeviceCountCallbackThreshold threshold);
 
-    public void countReset(long latestCount);
+    public void countReset(int latestCount);
 
 }

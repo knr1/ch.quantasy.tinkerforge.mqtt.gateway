@@ -51,18 +51,18 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class CountEvent extends AnEvent {
 
     @Range(from = -900, to = 900)
-    private long value;
+    private int value;
 
     private boolean reset;
 
     private CountEvent() {
     }
 
-    public CountEvent(long value) {
+    public CountEvent(int value) {
         this(value, false);
     }
 
-    public CountEvent(long value, boolean reset) {
+    public CountEvent(int value, boolean reset) {
         this.value = value;
         this.reset = reset;
     }
@@ -71,7 +71,7 @@ public class CountEvent extends AnEvent {
         return reset;
     }
 
-    public long getValue() {
+    public int getValue() {
         return value;
     }
 

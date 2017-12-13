@@ -119,7 +119,7 @@ public class RotaryEncoderDevice extends GenericDevice<BrickletRotaryEncoder, Ro
             if (intent.countReset == true) {
 
                 try {
-                    long edgeCount = getDevice().getCount(intent.countReset);
+                    int edgeCount = getDevice().getCount(intent.countReset);
                     super.getCallback().countReset(edgeCount);
                 } catch (TimeoutException | NotConnectedException ex) {
                     Logger.getLogger(RotaryEncoderDevice.class.getName()).log(Level.SEVERE, null, ex);

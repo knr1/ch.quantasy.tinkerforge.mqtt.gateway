@@ -46,7 +46,6 @@ import ch.quantasy.gateway.message.rotaryEncoder.ButtonEvent;
 import ch.quantasy.gateway.message.rotaryEncoder.CountEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.gateway.message.rotaryEncoder.DeviceCountCallbackThreshold;
-import ch.quantasy.gateway.message.rotaryEncoder.RotaryEncoderIntent;
 import ch.quantasy.gateway.message.rotaryEncoder.CountCallbackPeriodStatus;
 import ch.quantasy.gateway.message.rotaryEncoder.CountThresholdStatus;
 import ch.quantasy.gateway.message.rotaryEncoder.DebouncePeriodStatus;
@@ -93,7 +92,7 @@ public class RotaryEncoderService extends AbstractDeviceService<RotaryEncoderDev
     }
 
     @Override
-    public void countReset(long latestCount) {
+    public void countReset(int latestCount) {
         readyToPublishEvent(getContract().EVENT_COUNT_RESET, new CountEvent(latestCount,true));
     }
 

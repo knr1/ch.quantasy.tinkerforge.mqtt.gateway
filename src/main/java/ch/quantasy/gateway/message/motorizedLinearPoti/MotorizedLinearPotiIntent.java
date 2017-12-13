@@ -43,7 +43,6 @@ package ch.quantasy.gateway.message.motorizedLinearPoti;
 
 import ch.quantasy.mqtt.gateway.client.message.AnIntent;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Period;
 
 /**
  *
@@ -55,6 +54,9 @@ public class MotorizedLinearPotiIntent extends AnIntent {
     public DeviceMotorPosition motorPosition;
     @Nullable
     public DevicePositionCallbackConfiguration positionCallbackConfiguration;
+    @Nullable
     public Boolean positionReachedCallbackConfiguration;
+    @Nullable
+    public Boolean calibration;
 
 }

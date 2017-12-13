@@ -84,6 +84,16 @@ public class MotorizedLinearPotiDevice extends GenericDevice<BrickletMotorizedLi
         if (!intent.isValid()) {
             return;
         }
+        if(intent.calibration!=null&&intent.calibration)
+        {
+            try {
+                getDevice().calibrate();
+            } catch (TimeoutException ex) {
+                Logger.getLogger(MotorizedLinearPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotConnectedException ex) {
+                Logger.getLogger(MotorizedLinearPotiDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         if (intent.motorPosition != null) {
             try {
