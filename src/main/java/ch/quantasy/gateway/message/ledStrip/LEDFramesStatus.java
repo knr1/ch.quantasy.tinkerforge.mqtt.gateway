@@ -1,6 +1,5 @@
 package ch.quantasy.gateway.message.ledStrip;
 
-import ch.quantasy.gateway.message.ledStrip.LEDFrame;
 import ch.quantasy.mqtt.gateway.client.message.annotations.ArraySize;
 
 import ch.quantasy.mqtt.gateway.client.message.AStatus;

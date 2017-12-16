@@ -150,11 +150,11 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
                             //Just wanted to make sure!
                             //Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        //Patch! Tinkerforge runs into a out of memory, as it allocates threads that are not removed...
-                        //@TODO: Remove, as soon as Tinkerforge has corrected that problem.
-                        Socket tmpSocket = new Socket(stack.getStackAddress().getHostName(), stack.getStackAddress().getPort());
-                        tmpSocket.close();
-                        // End of Patch!
+//                        //Patch! Tinkerforge runs into a out of memory, as it allocates threads that are not removed...
+//                        //@TODO: Remove, as soon as Tinkerforge has corrected that problem.
+//                        Socket tmpSocket = new Socket(stack.getStackAddress().getHostName(), stack.getStackAddress().getPort());
+//                        tmpSocket.close();
+//                        // End of Patch!
                         ipConnection = new IPConnection();
                         ipConnection.setAutoReconnect(true);
                         Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Got a new IP-Connection");
@@ -171,9 +171,9 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
                     }
                     actualConnectionException = null;
                     //} catch (final NetworkException e) {
-                } catch (final UnknownHostException e) {  //Patch-catch
-                    // This Host is not up! try again in some seconds...
-                    Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Host not up or not reachable, I try again in about " + getConnectionTimeoutInMilliseconds() + "ms.");
+//                } catch (final UnknownHostException e) {  //Patch-catch
+//                    // This Host is not up! try again in some seconds...
+//                    Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Host not up or not reachable, I try again in about " + getConnectionTimeoutInMilliseconds() + "ms.");
 
                 } catch (final Exception e) {
                     actualConnectionException = e;

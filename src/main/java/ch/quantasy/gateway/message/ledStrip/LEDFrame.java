@@ -46,7 +46,6 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
 import ch.quantasy.mqtt.gateway.client.message.annotations.ArraySize;
 import ch.quantasy.mqtt.gateway.client.message.annotations.MultiArraySize;
 import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -62,7 +61,7 @@ public class LEDFrame extends AValidator {
     @MultiArraySize(values = {
         @ArraySize(min = 1, max = 4)
         ,@ArraySize(min = 1, max = 320)})
-    @Range(from = 0, to = 255)
+    //@Range(from = 0, to = 255)
     private short[][] channels;
 
     private LEDFrame() {

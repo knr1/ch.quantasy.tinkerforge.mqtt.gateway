@@ -377,6 +377,8 @@ public class TinkerforgeStack implements EnumerateListener {
                 ipConnection.enumerate();
                 Thread.sleep(5000);
                 if (count > 0) {
+                    //TODO: Check for correctness
+                    System.out.println("Will reconnect");
                     ipConnectionHandler.reconnect();
                 }
             } catch (Exception ex) {

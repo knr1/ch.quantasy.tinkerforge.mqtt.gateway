@@ -95,33 +95,27 @@ public class StackManagerService extends AbstractService<StackManagerServiceCont
         manager.addListener(this);
         updateStatus();
     }
-    private final MessageCollector intentCollector;
+    private final MessageCollector<TinkerforgeStackIntent> intentCollector;
 
     @Override
     public void messageReceived(String topic, byte[] payload) throws Exception {
-        Class messageClass = TinkerforgeStackIntent.class;
-        if (messageClass == null) {
-            return;
-        }
-        Set<Message> messages = super.toMessageSet(payload, messageClass);
+        Set<TinkerforgeStackIntent> messages = super.toMessageSet(payload, TinkerforgeStackIntent.class);
         intentCollector.add(topic, messages);
         while (true) {
-            Message message = intentCollector.retrieveFirstMessage(topic);
+            TinkerforgeStackIntent message = intentCollector.retrieveFirstMessage(topic);
             if (message == null) {
                 break;
             }
-            if (message instanceof TinkerforgeStackIntent) {
-                TinkerforgeStackIntent intent = (TinkerforgeStackIntent) message;
-                if (!intent.isValid()) {
-                    return;
-                }
-                if (intent.connect) {
-                    manager.addStack(intent.address);
-                }
-                if (!intent.connect) {
-                    manager.removeStack(intent.address);
-                    //System.out.println(">>" + getMapper().readValue(payload, String.class));
-                }
+            TinkerforgeStackIntent intent = (TinkerforgeStackIntent) message;
+            if (!intent.isValid()) {
+                return;
+            }
+            if (intent.connect) {
+                manager.addStack(intent.address);
+            }
+            if (!intent.connect) {
+                manager.removeStack(intent.address);
+                //System.out.println(">>" + getMapper().readValue(payload, String.class));
             }
         }
     }
