@@ -75,13 +75,13 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     public static final LEDStripDeviceConfig.ChannelMapping DEFAULT_CHANNEL_MAPPING = LEDStripDeviceConfig.ChannelMapping.RGB;
 
-    private int numberOfWrites;
     private List<LEDFrame.Chunk> chunkList;
     private LEDFrame currentLEDFrame;
     private Thread publisherThread;
     private final Publisher publisher;
     private boolean readyToSend;
     private boolean sent;
+    private final Object deviceLock = new Object();
 
     public LEDStripDevice(TinkerforgeStack stack, BrickletLEDStrip device) throws NotConnectedException, TimeoutException {
         super(stack, device, new LedStripIntent());
@@ -109,7 +109,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     private void setup() throws TimeoutException, NotConnectedException {
         synchronized (this) {
-            this.notify();
+            this.notifyAll();
             this.readyToSend = true;
         }
 
@@ -131,14 +131,16 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
         if (intent.config != null) {
             try {
-                setNumberOfLEDs(intent.config.getNumberOfLEDs(), intent.config.getChipType().getNumberOfChannels(), intent.config.getNumberOfLEDsPerWrite());
-                setChipType(intent.config.getChipType().getType());
-                setClockFrequencyOfICsInHz(intent.config.getClockFrequencyOfICsInHz());
-                setFrameDurationInMilliseconds(intent.config.getFrameDurationInMilliseconds());
-                setChannelMapping(intent.config.getChannelMapping().getMapping());
-
-                LEDStripDeviceConfig.ChipType chipType = LEDStripDeviceConfig.ChipType.getChipTypeFor(getDevice().getChipType(), intent.config.getChipType().getNumberOfChannels());
-                getIntent().config = new LEDStripDeviceConfig(chipType, getDevice().getClockFrequency(), getDevice().getFrameDuration(), intent.config.getNumberOfLEDs(), intent.config.getChannelMapping());
+                LEDStripDeviceConfig config = intent.config;
+                setNumberOfLEDs(config.getNumberOfLEDs(), config.getChipType().getNumberOfChannels(), config.getNumberOfLEDsPerWrite());
+                setChipType(config.getChipType().getType());
+                setClockFrequencyOfICsInHz(config.getClockFrequencyOfICsInHz());
+                setFrameDurationInMilliseconds(config.getFrameDurationInMilliseconds());
+                setChannelMapping(config.getChannelMapping().getMapping());
+                synchronized (deviceLock) {
+                    LEDStripDeviceConfig.ChipType chipType = LEDStripDeviceConfig.ChipType.getChipTypeFor(getDevice().getChipType(), config.getChipType().getNumberOfChannels());
+                    getIntent().config = new LEDStripDeviceConfig(chipType, getDevice().getClockFrequency(), getDevice().getFrameDuration(), intent.config.getNumberOfLEDs(), intent.config.getChannelMapping());
+                }
                 super.getCallback().configurationChanged(getIntent().config);
             } catch (TimeoutException | NotConnectedException ex) {
                 Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,35 +157,44 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
     }
 
     private synchronized void setNumberOfLEDs(final int numberOfLEDs, final int numberOfChannels, final int numberOfLEDsPerWrite) {
-        this.numberOfWrites = (int) Math.ceil((double) numberOfLEDs / numberOfLEDsPerWrite);
+        //this.numberOfWrites = (int) Math.ceil((double) numberOfLEDs / numberOfLEDsPerWrite);
         currentLEDFrame = new LEDFrame(numberOfChannels, numberOfLEDs);
     }
 
     private void setFrameDurationInMilliseconds(
             final int frameDurationInMilliseconds) throws TimeoutException, NotConnectedException {
-        if (getDevice() != null) {
-            getDevice()
-                    .setFrameDuration(frameDurationInMilliseconds);
+        synchronized (deviceLock) {
+            if (getDevice() != null) {
+                getDevice()
+                        .setFrameDuration(frameDurationInMilliseconds);
 
+            }
         }
     }
 
     private void setChipType(int chipType) throws TimeoutException, NotConnectedException {
-        if (getDevice() != null) {
-            getDevice().setChipType(chipType);
+        synchronized (deviceLock) {
+            if (getDevice() != null) {
+                getDevice().setChipType(chipType);
+            }
         }
     }
 
     private void setClockFrequencyOfICsInHz(final long clockFrequencyOfICsInHz) throws TimeoutException, NotConnectedException {
-        if (getDevice() != null) {
-            getDevice().setClockFrequency(clockFrequencyOfICsInHz);
+        synchronized (deviceLock) {
+            if (getDevice() != null) {
+                getDevice().setClockFrequency(clockFrequencyOfICsInHz);
+            }
         }
     }
 
     private void setChannelMapping(short channelMapping) throws TimeoutException, NotConnectedException {
-        if (getDevice() != null) {
-            getDevice().setChannelMapping(channelMapping);
+        synchronized (deviceLock) {
+            if (getDevice() != null) {
+                getDevice().setChannelMapping(channelMapping);
+            }
         }
+
     }
 
     /**
@@ -191,9 +202,12 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
      *
      * @param leds
      */
-    public void setRGBLEDs(final LEDFrame leds) {
+    public synchronized void setRGBLEDs(final LEDFrame leds) {
         LEDStripDeviceConfig localConfig = getIntent().config;
         if (leds == null) {
+            return;
+        }
+        if (localConfig == null) {
             return;
         }
         if (localConfig.getNumberOfLEDs() != leds.getNumberOfLEDs()) {
@@ -203,7 +217,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
             return;
         }
 
-        this.chunkList = leds.getDeltaChunks(currentLEDFrame, getIntent().config.getNumberOfLEDsPerWrite());
+        this.chunkList = leds.getDeltaChunks(currentLEDFrame, localConfig.getNumberOfLEDsPerWrite());
         currentLEDFrame = leds;
         sendRGBLEDFrame();
     }
@@ -218,37 +232,51 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         synchronized (this) {
             while (!readyToSend) {
                 try {
-                    this.wait();
+                    this.wait(1000);
                 } catch (InterruptedException ex) {
                     //Fine, we just go on
+                    Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
-            readyToSend = false;
             sent = false;
         }
         try {
             LEDStripDeviceConfig localConfig = getIntent().config;
-            for (LEDFrame.Chunk chunk : chunkList) {
-                if (chunk.leds.length == 3) {
-                    getDevice()
-                            .setRGBValues(chunk.position, (short) (Math.min(chunk.leds[0].length, localConfig.getNumberOfLEDs() - chunk.position)),
-                                    chunk.leds[0], chunk.leds[1],
-                                    chunk.leds[2]);
-                } else if (chunk.leds.length == 4) {
-                    getDevice()
-                            .setRGBWValues(chunk.position, (short) (Math.min(chunk.leds[0].length, localConfig.getNumberOfLEDs() - chunk.position)),
-                                    chunk.leds[0], chunk.leds[1],
-                                    chunk.leds[2], chunk.leds[3]);
+            if (localConfig != null) {
+                for (LEDFrame.Chunk chunk : chunkList) {
+                    if (chunk.leds.length == 3) {
+                        synchronized (deviceLock) {
+                            getDevice()
+                                    .setRGBValues(chunk.position, (short) (Math.min(chunk.leds[0].length, localConfig.getNumberOfLEDs() - chunk.position)),
+                                            chunk.leds[0], chunk.leds[1],
+                                            chunk.leds[2]);
+                        }
+                        readyToSend = false;
+
+                    } else if (chunk.leds.length == 4) {
+                        synchronized (deviceLock) {
+                            getDevice()
+                                    .setRGBWValues(chunk.position, (short) (Math.min(chunk.leds[0].length, localConfig.getNumberOfLEDs() - chunk.position)),
+                                            chunk.leds[0], chunk.leds[1],
+                                            chunk.leds[2], chunk.leds[3]);
+                        }
+                        readyToSend = false;
+                    }
                 }
             }
             sent = true;
         } catch (final TimeoutException e) {
             // Eh... ok
+            Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, e);
+
         } catch (final NotConnectedException e) {
             // Well...
+            Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, e);
+
         } catch (final NullPointerException e) {
             // Uups, device vanished...
+            Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -301,10 +329,10 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         public void run() {
             while (true) {
                 try {
-                    synchronized (LEDStripDevice.this) {
-                        setRGBLEDs(publishingQueue.take());
+                    LEDFrame frame = publishingQueue.take();
+                    if (frame != null) {
+                        setRGBLEDs(frame);
                     }
-
                 } catch (Exception ex) {
                     Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
                 }

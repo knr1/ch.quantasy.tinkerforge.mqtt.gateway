@@ -88,7 +88,7 @@ public class LEDStripDeviceConfig extends AValidator {
         @Override
         public boolean isValid() {
             try {
-                getChipTypeFor(numberOfChannels, numberOfChannels);
+                getChipTypeFor(type, numberOfChannels);
                 return true;
             } catch (Exception ex) {
                 return false;

@@ -62,7 +62,7 @@ public class TinkerforgeDevice<D extends Device> {
     private final Set<TinkerforgeDeviceListener> deviceListeners;
     private IPConnection connection;
     private final TinkerforgeStack stack;
-    private transient D device;
+    public transient D device;
     private final String uid;
     private final char position;
     private final short[] firmwareVersion;

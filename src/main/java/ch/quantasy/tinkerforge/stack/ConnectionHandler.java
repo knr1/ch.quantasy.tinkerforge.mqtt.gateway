@@ -163,6 +163,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
                         ipConnection.connect(stack.getStackAddress().getHostName(), stack.getStackAddress().getPort());
                         Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "New IP-Connection connected");
                         timerFuture.cancel(false);
+                        timerFuture=null;
 
                     } catch (final AlreadyConnectedException e) {
                         // Oh, great, that is what we want!
@@ -210,7 +211,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
             this.ipConnection = null;
             Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "IP is disconnected");
 
-        } catch (final NotConnectedException e) {
+        } catch (final Exception e) {
             // So what
             Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, e);
         }
