@@ -51,4 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
 public class RGBLEDButtonIntent extends AnIntent{
     @Nullable
     public RGBColor color;
+
+    public RGBLEDButtonIntent() {
+    }
+
+    public RGBLEDButtonIntent(RGBColor color) {
+        this.color = color;
+    }
+    
+    
 }

@@ -103,7 +103,7 @@ public class DCDevice extends GenericDevice<BrickDC, DCDeviceCallback, DCIntent>
                 Logger.getLogger(DCDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (intent.enable) {
+        if (intent.enable!=null) {
             try {
                 if (intent.enable) {
                     getDevice().enable();

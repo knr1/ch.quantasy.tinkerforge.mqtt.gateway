@@ -28,6 +28,7 @@ Each Tinkerforge micro-service provides the following minimal contract:
 * **Status** Each micro-service instance describes its actual status via its specialized status topics.
 * **Event** Each micro-service instance provides all events via its specialized event topics.
 * **Intent** Each micro-service instance accepts _intentions_ via the intent topic. It is equivalent to the setter methods but allows _parallel_ and _concurrent_ 'requests'.
+
 As there might be more messages (i.e. Status / Events / Intents) available than the connection (mqtt broker plus network) is able to handle, the messages might be provided as an array of messages. No messige is lost!
 
 **Root topic** The root topic of TiMqWay, where all Tinkerforge micro-services can be reached: **TF/**.
@@ -440,6 +441,8 @@ lines:
     position: 0
     text: "BLUE: 18°C"
 ```
+
+---
 
 ## API
 Intent (I) is as straight forward and as concise as possible. You simply put into the intent what you want and omit the rest.
@@ -4278,7 +4281,7 @@ TF/RemoteSwitch/U/<id>/I
    switchSocketCParameters: 
      deviceCode: Number <from: 1 to: 16>
      switchingValue: String <switchOn,switchOff>
-     systemCode: Number <from: 65 to: 80>
+     systemCode: String <[A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P]>
    timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -4856,8 +4859,6 @@ TF/Temperature/U/<id>/I
    mode: null
    mode: 
      mode: String <Fast,Slow>
-   resistanceCallbackPeriod: null
-   resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    temperatureCallbackPeriod: null
    temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    temperatureThreshold: null

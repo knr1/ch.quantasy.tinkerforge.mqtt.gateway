@@ -40,42 +40,43 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.message.remoteSwitch;
+package ch.quantasy.gateway.message.thermalImage;
 
-import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.Validator;
+import com.tinkerforge.BrickletThermalImaging;
 
 /**
  *
  * @author reto
  */
-public class SwitchSocketCParameters extends SwitchSocketParameters implements SocketParameters {
+public enum Resolution implements Validator {
+    RESOLUTION_655K(BrickletThermalImaging.RESOLUTION_0_TO_655_KELVIN), RESOLUTION_6553K(BrickletThermalImaging.RESOLUTION_0_TO_6553_KELVIN);
+    private int value;
 
-    @Choice(values = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"})
-    private char systemCode;
-    @Range(from = 1, to = 16)
-    private short deviceCode;
-
-    private SwitchSocketCParameters() {
-        super();
+    private Resolution(int value) {
+        this.value = value;
     }
 
-    public SwitchSocketCParameters(char systemCode, short deviceCode, String switchingValue) {
-        this(systemCode, deviceCode, SwitchTo.valueOf(switchingValue));
+    public int getValue() {
+        return value;
     }
 
-    public SwitchSocketCParameters(char systemCode, short deviceCode, SwitchTo switchingValue) {
-        super(switchingValue);
-        this.systemCode = systemCode;
-        this.deviceCode = deviceCode;
+    public static Resolution getResolutionFor(int s) throws IllegalArgumentException {
+        for (Resolution range : values()) {
+            if (range.value == s) {
+                return range;
+            }
+        }
+        throw new IllegalArgumentException("Not supported: " + s);
     }
 
-    public short getDeviceCode() {
-        return deviceCode;
+    @Override
+    public boolean isValid() {
+        try {
+            getResolutionFor(value);
+            return true;
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
     }
-
-    public char getSystemCode() {
-        return systemCode;
-    }
-
 }

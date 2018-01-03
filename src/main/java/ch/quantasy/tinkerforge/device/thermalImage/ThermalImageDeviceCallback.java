@@ -40,42 +40,22 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.message.remoteSwitch;
+package ch.quantasy.tinkerforge.device.thermalImage;
 
-import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
+import ch.quantasy.gateway.message.thermalImage.ImageTransferConfig;
+import ch.quantasy.gateway.message.thermalImage.Resolution;
+import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
+import com.tinkerforge.BrickletThermalImaging;
 
 /**
  *
  * @author reto
  */
-public class SwitchSocketCParameters extends SwitchSocketParameters implements SocketParameters {
+public interface ThermalImageDeviceCallback extends DeviceCallback, BrickletThermalImaging.HighContrastImageListener,
+        BrickletThermalImaging.TemperatureImageListener
+{
+    public void imageTransferConfigChanged(ImageTransferConfig config);
 
-    @Choice(values = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"})
-    private char systemCode;
-    @Range(from = 1, to = 16)
-    private short deviceCode;
-
-    private SwitchSocketCParameters() {
-        super();
-    }
-
-    public SwitchSocketCParameters(char systemCode, short deviceCode, String switchingValue) {
-        this(systemCode, deviceCode, SwitchTo.valueOf(switchingValue));
-    }
-
-    public SwitchSocketCParameters(char systemCode, short deviceCode, SwitchTo switchingValue) {
-        super(switchingValue);
-        this.systemCode = systemCode;
-        this.deviceCode = deviceCode;
-    }
-
-    public short getDeviceCode() {
-        return deviceCode;
-    }
-
-    public char getSystemCode() {
-        return systemCode;
-    }
+    public void resolutionChanged(Resolution resolution);
 
 }

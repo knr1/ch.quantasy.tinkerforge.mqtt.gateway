@@ -56,6 +56,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class TiMqWay {
 
     public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
+        //URI mqttURI = URI.create("tcp://smarthome01:1883");
         URI mqttURI = URI.create("tcp://127.0.0.1:1883");
         //URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
 

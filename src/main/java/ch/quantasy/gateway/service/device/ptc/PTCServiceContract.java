@@ -45,7 +45,6 @@ package ch.quantasy.gateway.service.device.ptc;
 import ch.quantasy.gateway.message.ptc.ResistanceEvent;
 import ch.quantasy.gateway.message.ptc.TemperatureEvent;
 import ch.quantasy.gateway.message.ptc.PTCIntent;
-import ch.quantasy.gateway.message.temperature.TemperatureIntent;
 import ch.quantasy.gateway.message.ptc.DebouncePeriodStatus;
 import ch.quantasy.gateway.message.ptc.NoiseReductionFilterStatus;
 import ch.quantasy.gateway.message.ptc.ResistanceThresholdStatus;
@@ -56,7 +55,6 @@ import ch.quantasy.gateway.message.temperature.ResistanceCallbackPeriodStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
-import java.util.Map;
 
 /**
  *

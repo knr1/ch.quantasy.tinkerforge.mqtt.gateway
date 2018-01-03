@@ -39,10 +39,9 @@
  *
  *
  */
-package ch.quantasy.gateway.message.ptc;
+package ch.quantasy.gateway.message.thermalImage;
 
 import ch.quantasy.mqtt.gateway.client.message.AnIntent;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Period;
 
@@ -50,24 +49,14 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.Period;
  *
  * @author reto
  */
-public class PTCIntent extends AnIntent {
+public class ThermalImageIntent extends AnIntent {
 
     @Nullable
-    @Period
-    public Long debouncePeriod;
+    public Resolution resolution;
     @Nullable
-    @Choice(values = {"2", "3", "4"})
-    public Short wireMode;
+    public ImageTransferConfig imageTransferConfig;
     @Nullable
     @Period
-    public Long temperatureCallbackPeriod;
-    @Nullable
-    @Period
-    public Long resistanceCallbackPeriod;
-    @Nullable
-    public DeviceTemperatureCallbackThreshold temperatureThreshold;
-    @Nullable
-    public DeviceResistanceCallbackThreshold resistanceThreshold;
-    @Nullable
-    public DeviceNoiseReductionFilter noiseReductionFilter;
+    public Long objectTemperatureCallbackPeriod;
+
 }

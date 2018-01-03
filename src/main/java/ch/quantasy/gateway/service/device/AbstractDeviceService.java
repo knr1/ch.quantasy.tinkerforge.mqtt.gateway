@@ -61,6 +61,8 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.HashSet;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -118,7 +120,11 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
                 }
             }
             if (message instanceof Intent) {
-                getDevice().update((Intent) message);
+               try{
+                   getDevice().update((Intent) message);
+               }catch(Exception ex){
+                   Logger.getLogger(AbstractDeviceService.class.getName()).log(Level.SEVERE, null, ex);
+               }
             }
         }
     }

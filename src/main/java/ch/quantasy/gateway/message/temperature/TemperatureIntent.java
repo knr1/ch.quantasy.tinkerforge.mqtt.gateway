@@ -58,9 +58,6 @@ public class TemperatureIntent extends AnIntent {
     @Period
     public Long temperatureCallbackPeriod;
     @Nullable
-    @Period
-    public Long resistanceCallbackPeriod;
-    @Nullable
     public DeviceTemperatureCallbackThreshold temperatureThreshold;
     @Nullable
     public DeviceI2CMode mode;

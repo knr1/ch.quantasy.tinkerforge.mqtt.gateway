@@ -51,7 +51,6 @@ import ch.quantasy.gateway.message.temperature.TemperatureThresholdStatus;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
-import java.util.Map;
 
 /**
  *
