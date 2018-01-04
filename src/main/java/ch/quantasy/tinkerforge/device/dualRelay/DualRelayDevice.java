@@ -79,6 +79,14 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
 
     @Override
     public void update(DualRelayIntent intent) {
+        //Tinkerforge DualRelayDevice has a big problem when switching inductive loads.
+        //Thus, the stack will most likely reset (this is true even in January 2018)
+        //So at this point, ... usually after a reset... the internal state shall not be
+        //reflected back to the device... otherwise, the reset just happenes again.
+        if (intent == getIntent()){
+            return;
+        }
+        
         if (intent == null) {
             return;
         }
