@@ -95,6 +95,7 @@ import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.gateway.message.stack.TinkerforgeStackAddress;
 import ch.quantasy.tinkerforge.device.RGBLEDButton.RGBLEDButtonDevice;
 import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDevice;
+import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagingDevice;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickIMU;
 import com.tinkerforge.BrickIMUV2;
@@ -142,6 +143,7 @@ import com.tinkerforge.BrickletSolidStateRelay;
 import com.tinkerforge.BrickletSoundIntensity;
 import com.tinkerforge.BrickletTemperature;
 import com.tinkerforge.BrickletTemperatureIR;
+import com.tinkerforge.BrickletThermalImaging;
 import com.tinkerforge.BrickletThermocouple;
 import com.tinkerforge.BrickletTilt;
 import com.tinkerforge.BrickletUVLight;
@@ -310,6 +312,9 @@ public class TinkerforgeDeviceMapper {
         }
         if(TinkerforgeDeviceClass.RGBLEDButton==TinkerforgeDeviceClass.getDevice(device)){
             return new RGBLEDButtonDevice(stack, (BrickletRGBLEDButton)device);
+        }
+        if(TinkerforgeDeviceClass.ThermalImaging==TinkerforgeDeviceClass.getDevice(device)){
+            return new ThermalImagingDevice(stack, (BrickletThermalImaging)device);
         }
         return new TinkerforgeDevice(stack, device);
     }

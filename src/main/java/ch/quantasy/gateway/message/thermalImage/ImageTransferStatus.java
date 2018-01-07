@@ -41,17 +41,22 @@
  */
 package ch.quantasy.gateway.message.thermalImage;
 
-import ch.quantasy.mqtt.gateway.client.message.AnIntent;
+import ch.quantasy.mqtt.gateway.client.message.AStatus;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
 
 /**
  *
  * @author reto
  */
-public class ThermalImageIntent extends AnIntent {
+public class ImageTransferStatus extends AStatus {
+    @Nullable
+    public ImageTransferConfig value;
 
-    @Nullable
-    public ImageResolution resolution;
-    @Nullable
-    public ImageTransferConfig imageTransferConfig;
+    public ImageTransferStatus() {
+    }
+
+    public ImageTransferStatus(ImageTransferConfig value) {
+        this.value = value;
+    }
+    
 }

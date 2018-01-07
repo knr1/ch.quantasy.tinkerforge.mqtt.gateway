@@ -102,6 +102,7 @@ import com.tinkerforge.BrickletSolidStateRelay;
 import com.tinkerforge.BrickletSoundIntensity;
 import com.tinkerforge.BrickletTemperature;
 import com.tinkerforge.BrickletTemperatureIR;
+import com.tinkerforge.BrickletThermalImaging;
 import com.tinkerforge.BrickletThermocouple;
 import com.tinkerforge.BrickletTilt;
 import com.tinkerforge.BrickletUVLight;
@@ -138,7 +139,7 @@ public enum TinkerforgeDeviceClass {
             BrickletPiezoSpeaker.class), MotorizedLinearPoti(BrickletMotorizedLinearPoti.class),PTC(BrickletPTC.class), RealTimeClock(BrickletRealTimeClock.class), RemoteSwitch(BrickletRemoteSwitch.class), RGBLEDButton(BrickletRGBLEDButton.class), RotaryEncoder(
             BrickletRotaryEncoder.class), RotaryPoti(BrickletRotaryPoti.class), RS232(BrickletRS232.class), SegmentDisplay4x7(
             BrickletSegmentDisplay4x7.class), SolidState(BrickletSolidStateRelay.class), SoundIntensity(BrickletSoundIntensity.class), Temperature(
-            BrickletTemperature.class), TemperatureIR(BrickletTemperatureIR.class), ThermoCouple(BrickletThermocouple.class), Tilt(BrickletTilt.class), UVLight(BrickletUVLight.class), Voltage(
+            BrickletTemperature.class), TemperatureIR(BrickletTemperatureIR.class), ThermalImaging(BrickletThermalImaging.class),ThermoCouple(BrickletThermocouple.class), Tilt(BrickletTilt.class), UVLight(BrickletUVLight.class), Voltage(
             BrickletVoltage.class), VoltageCurrent(BrickletVoltageCurrent.class);
 
     public final int identifier;

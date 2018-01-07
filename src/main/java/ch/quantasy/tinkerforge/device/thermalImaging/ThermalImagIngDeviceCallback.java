@@ -40,10 +40,10 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.thermalImage;
+package ch.quantasy.tinkerforge.device.thermalImaging;
 
 import ch.quantasy.gateway.message.thermalImage.ImageTransferConfig;
-import ch.quantasy.gateway.message.thermalImage.Resolution;
+import ch.quantasy.gateway.message.thermalImage.ImageResolution;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletThermalImaging;
 
@@ -51,11 +51,11 @@ import com.tinkerforge.BrickletThermalImaging;
  *
  * @author reto
  */
-public interface ThermalImageDeviceCallback extends DeviceCallback, BrickletThermalImaging.HighContrastImageListener,
+public interface ThermalImagIngDeviceCallback extends DeviceCallback, BrickletThermalImaging.HighContrastImageListener,
         BrickletThermalImaging.TemperatureImageListener
 {
     public void imageTransferConfigChanged(ImageTransferConfig config);
 
-    public void resolutionChanged(Resolution resolution);
+    public void resolutionChanged(ImageResolution resolution);
 
 }

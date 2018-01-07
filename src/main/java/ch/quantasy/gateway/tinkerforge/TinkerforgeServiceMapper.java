@@ -87,6 +87,7 @@ import ch.quantasy.gateway.service.device.solidStateRelay.SolidStateRelayService
 import ch.quantasy.gateway.service.device.soundIntensity.SoundIntensityService;
 import ch.quantasy.gateway.service.device.temperature.TemperatureService;
 import ch.quantasy.gateway.service.device.temperatureIR.TemperatureIRService;
+import ch.quantasy.gateway.service.device.thermalImaging.ThermalImagingService;
 import ch.quantasy.gateway.service.device.thermoCouple.ThermoCoupleService;
 import ch.quantasy.gateway.service.device.tilt.TiltService;
 import ch.quantasy.gateway.service.device.uvLight.UVLightService;
@@ -137,6 +138,7 @@ import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
+import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagingDevice;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
@@ -297,6 +299,9 @@ public class TinkerforgeServiceMapper {
         }
         if(tinkerforgeDevice instanceof RGBLEDButtonDevice){
             return new RGBLEDButtonService((RGBLEDButtonDevice)tinkerforgeDevice, mqttURI);
+        }
+        if(tinkerforgeDevice instanceof ThermalImagingDevice){
+            return new ThermalImagingService((ThermalImagingDevice)tinkerforgeDevice, mqttURI);
         }
         return null;
 

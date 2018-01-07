@@ -5033,6 +5033,69 @@ TF/TemperatureIR/U/<id>/S/position
    
 ```
 
+### ThermalImaging
+```
+TF/ThermalImaging/U/<id>/E/image/highContrast
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 4800 max: 4800>
+   
+```
+```
+TF/ThermalImaging/U/<id>/E/image/temperature
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 4800 max: 4800>
+   
+```
+```
+TF/ThermalImaging/U/<id>/I
+   imageTransferConfig: null
+   imageTransferConfig: String <none,contrast,temperature>
+   resolution: null
+   resolution: String <from_0_to_655K,from_0_to_6553K>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/ThermalImaging/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/ThermalImaging/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/ThermalImaging/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/ThermalImaging/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+```
+TF/ThermalImaging/U/<id>/S/resolution
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: null
+   value: String <from_0_to_655K,from_0_to_6553K>
+   
+```
+```
+TF/ThermalImaging/U/<id>/S/transferConfig
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: null
+   value: String <none,contrast,temperature>
+   
+```
+
 ### ThermoCouple
 ```
 TF/ThermoCouple/U/<id>/E/error

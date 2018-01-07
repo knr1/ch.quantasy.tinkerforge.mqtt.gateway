@@ -40,43 +40,48 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.message.thermalImage;
+package ch.quantasy.gateway.service.device.thermalImaging;
 
-import ch.quantasy.mqtt.gateway.client.message.Validator;
-import com.tinkerforge.BrickletThermalImaging;
+import ch.quantasy.gateway.message.thermalImage.HighContrastImageEvent;
+import ch.quantasy.gateway.message.thermalImage.ImageResolution;
+import ch.quantasy.gateway.message.thermalImage.ImageResolutionStatus;
+import ch.quantasy.gateway.message.thermalImage.ImageTransferConfig;
+import ch.quantasy.gateway.message.thermalImage.ImageTransferStatus;
+import ch.quantasy.gateway.message.thermalImage.TemperatureImageEvent;
+import ch.quantasy.gateway.service.device.AbstractDeviceService;
+import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagingDevice;
+import java.net.URI;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagIngDeviceCallback;
 
 /**
  *
  * @author reto
  */
-public enum ImageTransferConfig implements Validator {
-    none(BrickletThermalImaging.IMAGE_TRANSFER_MANUAL_HIGH_CONTRAST_IMAGE),contrast(BrickletThermalImaging.IMAGE_TRANSFER_CALLBACK_HIGH_CONTRAST_IMAGE), temperature(BrickletThermalImaging.IMAGE_TRANSFER_CALLBACK_TEMPERATURE_IMAGE);
-    private int value;
+public class ThermalImagingService extends AbstractDeviceService<ThermalImagingDevice, ThermalImagingServiceContract> implements ThermalImagIngDeviceCallback {
 
-    private ImageTransferConfig(int value) {
-        this.value = value;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public static ImageTransferConfig getTransferConfigFor(int s) throws IllegalArgumentException {
-        for (ImageTransferConfig range : values()) {
-            if (range.value == s) {
-                return range;
-            }
-        }
-        throw new IllegalArgumentException("Not supported: " + s);
+    public ThermalImagingService(ThermalImagingDevice device, URI mqttURI) throws MqttException {
+        super(mqttURI, device, new ThermalImagingServiceContract(device));
     }
 
     @Override
-    public boolean isValid() {
-        try {
-            getTransferConfigFor(value);
-            return true;
-        } catch (IllegalArgumentException ex) {
-            return false;
-        }
+    public void imageTransferConfigChanged(ImageTransferConfig config) {
+        readyToPublishStatus(getContract().STATUS_IMAGE_TRANSFER_CONFIG, new ImageTransferStatus(config));
     }
+
+    @Override
+    public void resolutionChanged(ImageResolution resolution) {
+        readyToPublishStatus(getContract().STATUS_IMAGE_RESOLUTION, new ImageResolutionStatus(resolution));
+    }
+
+    @Override
+    public void highContrastImage(int[] image) {
+        readyToPublishEvent(getContract().EVENT_IMAGE_HIGH_CONTRAST, new HighContrastImageEvent(image));
+    }
+
+    @Override
+    public void temperatureImage(int[] image) {
+        readyToPublishEvent(getContract().EVENT_IMAGE_TEMPERATURE, new TemperatureImageEvent(image));
+    }
+
 }

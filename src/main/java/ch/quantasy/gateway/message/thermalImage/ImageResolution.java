@@ -49,11 +49,11 @@ import com.tinkerforge.BrickletThermalImaging;
  *
  * @author reto
  */
-public enum Resolution implements Validator {
-    RESOLUTION_655K(BrickletThermalImaging.RESOLUTION_0_TO_655_KELVIN), RESOLUTION_6553K(BrickletThermalImaging.RESOLUTION_0_TO_6553_KELVIN);
+public enum ImageResolution implements Validator {
+    from_0_to_655K(BrickletThermalImaging.RESOLUTION_0_TO_655_KELVIN), from_0_to_6553K(BrickletThermalImaging.RESOLUTION_0_TO_6553_KELVIN);
     private int value;
 
-    private Resolution(int value) {
+    private ImageResolution(int value) {
         this.value = value;
     }
 
@@ -61,8 +61,8 @@ public enum Resolution implements Validator {
         return value;
     }
 
-    public static Resolution getResolutionFor(int s) throws IllegalArgumentException {
-        for (Resolution range : values()) {
+    public static ImageResolution getResolutionFor(int s) throws IllegalArgumentException {
+        for (ImageResolution range : values()) {
             if (range.value == s) {
                 return range;
             }

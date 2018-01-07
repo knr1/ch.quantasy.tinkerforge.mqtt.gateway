@@ -41,17 +41,28 @@
  */
 package ch.quantasy.gateway.message.thermalImage;
 
-import ch.quantasy.mqtt.gateway.client.message.AnIntent;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
+import ch.quantasy.mqtt.gateway.client.message.annotations.ArraySize;
 
 /**
  *
  * @author reto
  */
-public class ThermalImageIntent extends AnIntent {
+public class HighContrastImageEvent extends AnEvent {
 
-    @Nullable
-    public ImageResolution resolution;
-    @Nullable
-    public ImageTransferConfig imageTransferConfig;
+    @ArraySize(min = 4800,max = 4800)
+    //@Range(from = -400, to=1250)
+    private int[] value;
+
+    private HighContrastImageEvent() {
+    }
+
+    public HighContrastImageEvent(int[] value) {
+        this.value = value;
+    }
+
+    public int[] getValue() {
+        return value;
+    }
+
 }
