@@ -48,14 +48,14 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
  *
  * @author reto
  */
-public class ImageResolutionStatus extends AStatus {
+public class TemperatureResolutionStatus extends AStatus {
     @Nullable
-    public ImageResolution value;
+    public TemperatureResolution value;
 
-    public ImageResolutionStatus() {
+    public TemperatureResolutionStatus() {
     }
 
-    public ImageResolutionStatus(ImageResolution value) {
+    public TemperatureResolutionStatus(TemperatureResolution value) {
         this.value = value;
     }
     

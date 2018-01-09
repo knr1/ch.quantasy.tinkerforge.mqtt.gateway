@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.thermalImaging;
 
-import ch.quantasy.gateway.message.thermalImage.ImageResolution;
+import ch.quantasy.gateway.message.thermalImage.TemperatureResolution;
 import ch.quantasy.gateway.message.thermalImage.ThermalImageIntent;
 import ch.quantasy.gateway.message.thermalImage.ImageTransferConfig;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
@@ -57,7 +57,7 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class ThermalImagingDevice extends GenericDevice<BrickletThermalImaging, ThermalImagIngDeviceCallback, ThermalImageIntent> {
+public class ThermalImagingDevice extends GenericDevice<BrickletThermalImaging, ThermalImagIngDeviceCallback, ThermalImageIntent> implements BrickletThermalImaging.HighContrastImageListener, BrickletThermalImaging.TemperatureImageListener {
 
     public ThermalImagingDevice(TinkerforgeStack stack, BrickletThermalImaging device) throws NotConnectedException, TimeoutException {
         super(stack, device, new ThermalImageIntent());
@@ -67,12 +67,16 @@ public class ThermalImagingDevice extends GenericDevice<BrickletThermalImaging, 
     protected void addDeviceListeners(BrickletThermalImaging device) {
         device.addHighContrastImageListener(super.getCallback());
         device.addTemperatureImageListener(super.getCallback());
+        device.addHighContrastImageListener(this);
+        device.addTemperatureImageListener(this);
     }
 
     @Override
     protected void removeDeviceListeners(BrickletThermalImaging device) {
         device.removeHighContrastImageListener(super.getCallback());
         device.removeTemperatureImageListener(super.getCallback());
+        device.removeHighContrastImageListener(this);
+        device.removeTemperatureImageListener(this);
     }
 
     @Override
@@ -86,7 +90,7 @@ public class ThermalImagingDevice extends GenericDevice<BrickletThermalImaging, 
         if (intent.resolution != null) {
             try {
                 getDevice().setResolution(intent.resolution.getValue());
-                getIntent().resolution = ImageResolution.getResolutionFor(getDevice().getResolution());
+                getIntent().resolution = TemperatureResolution.getResolutionFor(getDevice().getResolution());
                 super.getCallback().resolutionChanged(getIntent().resolution);
             } catch (TimeoutException | NotConnectedException ex) {
                 Logger.getLogger(ThermalImagingDevice.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,6 +104,28 @@ public class ThermalImagingDevice extends GenericDevice<BrickletThermalImaging, 
             } catch (TimeoutException | NotConnectedException ex) {
                 Logger.getLogger(ThermalImagingDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    @Override
+    public void highContrastImage(int[] image) {
+        try {
+            super.getCallback().statisticsChanged(getDevice().getStatistics());
+        } catch (TimeoutException ex) {
+            Logger.getLogger(ThermalImagingDevice.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotConnectedException ex) {
+            Logger.getLogger(ThermalImagingDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void temperatureImage(int[] image) {
+        try {
+            super.getCallback().statisticsChanged(getDevice().getStatistics());
+        } catch (TimeoutException ex) {
+            Logger.getLogger(ThermalImagingDevice.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotConnectedException ex) {
+            Logger.getLogger(ThermalImagingDevice.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

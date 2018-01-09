@@ -41,17 +41,44 @@
  */
 package ch.quantasy.gateway.message.thermalImage;
 
-import ch.quantasy.mqtt.gateway.client.message.AnIntent;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
-
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 /**
  *
  * @author reto
  */
-public class ThermalImageIntent extends AnIntent {
+public class SpotMeterStatistics extends AValidator {
 
-    @Nullable
-    public TemperatureResolution resolution;
-    @Nullable
-    public ImageTransferConfig imageTransferConfig;
+    @Range(from = 0, to = 65535)
+    public int meanTemperature;
+    @Range(from = 0, to = 65535)
+    public int maximumTemperature;
+    @Range(from = 1, to = 65535)
+    public int minimumTemperature;
+    @Range(from = 1, to = 4800)
+    public int pixelCount;
+
+    public SpotMeterStatistics() {
+    }
+
+    public SpotMeterStatistics(int meanTemperature, int maximumTemperature, int minimumTemperature, int pixelCount) {
+        this.meanTemperature = meanTemperature;
+        this.maximumTemperature = maximumTemperature;
+        this.minimumTemperature = minimumTemperature;
+        this.pixelCount = pixelCount;
+    }
+
+    
+
+    public SpotMeterStatistics(int[] temperatures) {
+        if (temperatures == null || temperatures.length != 4) {
+            throw new IllegalArgumentException();
+        }
+        this.meanTemperature = temperatures[0];
+        this.maximumTemperature = temperatures[1];
+        this.minimumTemperature = temperatures[2];
+        this.pixelCount = temperatures[3];
+    }
+
 }
+

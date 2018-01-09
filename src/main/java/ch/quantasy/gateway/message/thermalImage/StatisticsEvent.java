@@ -41,17 +41,48 @@
  */
 package ch.quantasy.gateway.message.thermalImage;
 
-import ch.quantasy.mqtt.gateway.client.message.AnIntent;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.AnEvent;
+import com.tinkerforge.BrickletThermalImaging;
 
 /**
  *
  * @author reto
  */
-public class ThermalImageIntent extends AnIntent {
+public class StatisticsEvent extends AnEvent{
+    private FlatFieldCorrection flatFieldCorrection;
+    private TemperatureResolution imageResolution;
+    private SpotMeterStatistics spotMeterStatistics;
+    private TemperatureState temperatureState;
 
-    @Nullable
-    public TemperatureResolution resolution;
-    @Nullable
-    public ImageTransferConfig imageTransferConfig;
+    public StatisticsEvent(BrickletThermalImaging.Statistics statistics) {
+        this.flatFieldCorrection=FlatFieldCorrection.getStatusFor(statistics.ffcStatus);
+        this.imageResolution=TemperatureResolution.getResolutionFor(statistics.resolution);
+        this.spotMeterStatistics=new SpotMeterStatistics(statistics.spotmeterStatistics);
+        this.temperatureState=new TemperatureState(statistics.temperatures,statistics.temperatureWarning);
+    }
+
+    private StatisticsEvent() {
+    }
+    
+
+    public FlatFieldCorrection getFlatFieldCorrection() {
+        return flatFieldCorrection;
+    }
+
+    public TemperatureResolution getImageResolution() {
+        return imageResolution;
+    }
+
+    public SpotMeterStatistics getSpotMeterStatistics() {
+        return spotMeterStatistics;
+    }
+
+    public TemperatureState getTemperatureState() {
+        return temperatureState;
+    }
+    
+    
+    
+    
+    
 }

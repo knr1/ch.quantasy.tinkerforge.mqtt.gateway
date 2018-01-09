@@ -41,17 +41,50 @@
  */
 package ch.quantasy.gateway.message.thermalImage;
 
-import ch.quantasy.mqtt.gateway.client.message.AnIntent;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 
 /**
  *
  * @author reto
  */
-public class ThermalImageIntent extends AnIntent {
+public class TemperatureState extends AValidator {
 
-    @Nullable
-    public TemperatureResolution resolution;
-    @Nullable
-    public ImageTransferConfig imageTransferConfig;
+    @Range(from = 0, to = 6553)
+    public int focalPlainArrayTemperature;
+    @Range(from = 0, to = 6553)
+    public int ffcFocalPlainArrayTemperature;
+    @Range(from = 0, to = 6553)
+    public int housingTemperature;
+    @Range(from = 0, to = 6553)
+    public int ffcHousingTemperature;
+
+    public boolean shutterLockout;
+    public boolean overtemperature;
+
+    public TemperatureState() {
+    }
+
+    public TemperatureState(boolean shutterLockout, boolean overtemperature) {
+        this.shutterLockout = shutterLockout;
+        this.overtemperature = overtemperature;
+    }
+
+    public TemperatureState(int[] temperatures, boolean[] temperatureWarnings) {
+        if (temperatures == null || temperatures.length != 4) {
+            throw new IllegalArgumentException();
+        }
+        focalPlainArrayTemperature = temperatures[0];
+        ffcFocalPlainArrayTemperature = temperatures[1];
+        housingTemperature = temperatures[2];
+        ffcHousingTemperature = temperatures[3];
+
+        if (temperatureWarnings == null || temperatureWarnings.length != 2) {
+            throw new IllegalArgumentException();
+        }
+
+        this.shutterLockout = temperatureWarnings[0];
+        this.overtemperature = temperatureWarnings[1];
+    }
+
 }

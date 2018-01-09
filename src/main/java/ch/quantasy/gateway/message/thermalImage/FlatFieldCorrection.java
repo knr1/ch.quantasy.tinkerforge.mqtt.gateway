@@ -40,24 +40,43 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.thermalImaging;
+package ch.quantasy.gateway.message.thermalImage;
 
-import ch.quantasy.gateway.message.thermalImage.ImageTransferConfig;
-import ch.quantasy.gateway.message.thermalImage.TemperatureResolution;
-import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
+import ch.quantasy.mqtt.gateway.client.message.Validator;
 import com.tinkerforge.BrickletThermalImaging;
 
 /**
  *
  * @author reto
  */
-public interface ThermalImagIngDeviceCallback extends DeviceCallback, BrickletThermalImaging.HighContrastImageListener,
-        BrickletThermalImaging.TemperatureImageListener
-{
-    public void imageTransferConfigChanged(ImageTransferConfig config);
+public enum FlatFieldCorrection implements Validator {
+    neverCommanded(BrickletThermalImaging.FFC_STATUS_NEVER_COMMANDED), complete(BrickletThermalImaging.FFC_STATUS_COMPLETE), imminent(BrickletThermalImaging.FFC_STATUS_IMMINENT),inProgress(BrickletThermalImaging.FFC_STATUS_IN_PROGRESS);
+    private int value;
 
-    public void resolutionChanged(TemperatureResolution resolution);
-    
-    public void statisticsChanged(BrickletThermalImaging.Statistics statistics);
+    private FlatFieldCorrection(int value) {
+        this.value = value;
+    }
 
+    public int getValue() {
+        return value;
+    }
+
+    public static FlatFieldCorrection getStatusFor(int s) throws IllegalArgumentException {
+        for (FlatFieldCorrection range : values()) {
+            if (range.value == s) {
+                return range;
+            }
+        }
+        throw new IllegalArgumentException("Not supported: " + s);
+    }
+
+    @Override
+    public boolean isValid() {
+        try {
+            getStatusFor(value);
+            return true;
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
+    }
 }

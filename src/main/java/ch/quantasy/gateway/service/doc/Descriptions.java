@@ -44,6 +44,7 @@ package ch.quantasy.gateway.service.doc;
 import static ch.quantasy.gateway.service.doc.ClassFinder.find;
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
 import ch.quantasy.gateway.service.device.DeviceServiceContract;
+import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -56,7 +57,12 @@ public class Descriptions {
 
     public static void main(String[] args) throws Exception {
         List<Class<?>> classes = find("ch.quantasy.gateway.service.device");
-        SortedSet<String> contractClassNames = new TreeSet();
+        SortedSet<String> contractClassNames = new TreeSet(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareToIgnoreCase(o2);
+            }
+        });
         for (Class singleClass : classes) {
             if (DeviceServiceContract.class.isAssignableFrom(singleClass)) {
                 contractClassNames.add(singleClass.getName());

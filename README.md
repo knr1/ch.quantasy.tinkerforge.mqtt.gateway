@@ -452,642 +452,6 @@ Status (S) is as fine granular as possible, so you can subscribe to your needs a
 No message is lost! It is delivered as fast as possible. If the channel is slower than the message creation, the messages will be delivered as an array of messages. 
 
 
-### IMU
-```
-TF/IMU/U/<id>/E/acceleration
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   x: Number <from: -32768 to: 32767>
-   y: Number <from: -32768 to: 32767>
-   z: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMU/U/<id>/E/allData
-   acceleration: 
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-     x: Number <from: -32768 to: 32767>
-     y: Number <from: -32768 to: 32767>
-     z: Number <from: -32768 to: 32767>
-   angularVelocity: 
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-     x: Number <from: -32768 to: 32767>
-     y: Number <from: -32768 to: 32767>
-     z: Number <from: -32768 to: 32767>
-   magneticField: 
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-     x: Number <from: -32768 to: 32767>
-     y: Number <from: -32768 to: 32767>
-     z: Number <from: -32768 to: 32767>
-   temperature: 
-     temperature: Number <from: -32768 to: 32767>
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMU/U/<id>/E/angularVelocity
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   x: Number <from: -32768 to: 32767>
-   y: Number <from: -32768 to: 32767>
-   z: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMU/U/<id>/E/magneticField
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   x: Number <from: -32768 to: 32767>
-   y: Number <from: -32768 to: 32767>
-   z: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMU/U/<id>/E/orientation
-   heading: Number <from: -32768 to: 32767>
-   pitch: Number <from: -32768 to: 32767>
-   roll: Number <from: -32768 to: 32767>
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMU/U/<id>/E/quaternion
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   w: Fraction <from: -1.0 to: 1.0>
-   x: Fraction <from: -1.0 to: 1.0>
-   y: Fraction <from: -1.0 to: 1.0>
-   z: Fraction <from: -1.0 to: 1.0>
-   
-```
-```
-TF/IMU/U/<id>/I
-   accelerationCallbackPeriod: null
-   accelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   allDataCallbackPeriod: null
-   allDataCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   angularVelocityCallbackPeriod: null
-   angularVelocityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   leds: null
-   leds: Boolean <true,false> 
-   magneticFieldCallbackPeriod: null
-   magneticFieldCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   orientationCalculation: null
-   orientationCalculation: Boolean <true,false> 
-   orientationCallbackPeriod: null
-   orientationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   quaternionCallbackPeriod: null
-   quaternionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   statusLED: null
-   statusLED: Boolean <true,false> 
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMU/U/<id>/S/LEDs/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Boolean <true,false> 
-   
-```
-```
-TF/IMU/U/<id>/S/acceleration/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMU/U/<id>/S/allData/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMU/U/<id>/S/angularVelocity/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMU/U/<id>/S/connection
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[online, offline]>
-   
-```
-```
-TF/IMU/U/<id>/S/firmware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMU/U/<id>/S/hardware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMU/U/<id>/S/magneticField/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMU/U/<id>/S/orientation/calculation
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Boolean <true,false> 
-   
-```
-```
-TF/IMU/U/<id>/S/orientation/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMU/U/<id>/S/position
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
-   
-```
-```
-TF/IMU/U/<id>/S/quaternion/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMU/U/<id>/S/statusLED/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Boolean <true,false> 
-   
-```
-
-### IMUV2
-```
-TF/IMUV2/U/<id>/E/acceleration
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   x: Number <from: -32768 to: 32767>
-   y: Number <from: -32768 to: 32767>
-   z: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMUV2/U/<id>/E/allData
-   acceleration: 
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-     x: Number <from: -32768 to: 32767>
-     y: Number <from: -32768 to: 32767>
-     z: Number <from: -32768 to: 32767>
-   angularVelocity: 
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-     x: Number <from: -32768 to: 32767>
-     y: Number <from: -32768 to: 32767>
-     z: Number <from: -32768 to: 32767>
-   gravityVector: 
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-     x: Number <from: -32768 to: 32767>
-     y: Number <from: -32768 to: 32767>
-     z: Number <from: -32768 to: 32767>
-   linearAcceleration: 
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-     x: Number <from: -32768 to: 32767>
-     y: Number <from: -32768 to: 32767>
-     z: Number <from: -32768 to: 32767>
-   magneticField: 
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-     x: Number <from: -32768 to: 32767>
-     y: Number <from: -32768 to: 32767>
-     z: Number <from: -32768 to: 32767>
-   quaternion: 
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-     w: Fraction <from: -1.0 to: 1.0>
-     x: Fraction <from: -1.0 to: 1.0>
-     y: Fraction <from: -1.0 to: 1.0>
-     z: Fraction <from: -1.0 to: 1.0>
-   temperature: 
-     temperature: Number <from: -32768 to: 32767>
-     timeStamp: Number <from: 0 to: 9223372036854775807>
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/E/angularVelocity
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   x: Number <from: -32768 to: 32767>
-   y: Number <from: -32768 to: 32767>
-   z: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMUV2/U/<id>/E/gravityVector
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   x: Number <from: -32768 to: 32767>
-   y: Number <from: -32768 to: 32767>
-   z: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMUV2/U/<id>/E/linearAcceleration
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   x: Number <from: -32768 to: 32767>
-   y: Number <from: -32768 to: 32767>
-   z: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMUV2/U/<id>/E/magneticField
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   x: Number <from: -32768 to: 32767>
-   y: Number <from: -32768 to: 32767>
-   z: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMUV2/U/<id>/E/orientation
-   heading: Number <from: -32768 to: 32767>
-   pitch: Number <from: -32768 to: 32767>
-   roll: Number <from: -32768 to: 32767>
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/E/quaternion
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   w: Fraction <from: -1.0 to: 1.0>
-   x: Fraction <from: -1.0 to: 1.0>
-   y: Fraction <from: -1.0 to: 1.0>
-   z: Fraction <from: -1.0 to: 1.0>
-   
-```
-```
-TF/IMUV2/U/<id>/E/temperature
-   temperature: Number <from: -32768 to: 32767>
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/I
-   accelerationCallbackPeriod: null
-   accelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   allDataCallbackPeriod: null
-   allDataCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   angularVelocityCallbackPeriod: null
-   angularVelocityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   gravityVectorCallbackPeriod: null
-   gravityVectorCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   leds: null
-   leds: Boolean <true,false> 
-   linearAccelerationCallbackPeriod: null
-   linearAccelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   magneticFieldCallbackPeriod: null
-   magneticFieldCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   orientationCalculation: null
-   orientationCalculation: Boolean <true,false> 
-   orientationCallbackPeriod: null
-   orientationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   quaternionCallbackPeriod: null
-   quaternionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   sensorFusionMode: null
-   sensorFusionMode: String <[0, 1, 2]>
-   statusLED: null
-   statusLED: Boolean <true,false> 
-   temperatureCallbackPeriod: null
-   temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/S/LEDs/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Boolean <true,false> 
-   
-```
-```
-TF/IMUV2/U/<id>/S/acceleration/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/S/allData/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/S/angularVelocity/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/S/connection
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[online, offline]>
-   
-```
-```
-TF/IMUV2/U/<id>/S/firmware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMUV2/U/<id>/S/gravityVector/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/S/hardware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/IMUV2/U/<id>/S/linearAcceleration/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/S/magneticField/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/S/orientation/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/S/position
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
-   
-```
-```
-TF/IMUV2/U/<id>/S/quaternion/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/IMUV2/U/<id>/S/sensorFusionMode
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[0, 1, 2]>
-   
-```
-```
-TF/IMUV2/U/<id>/S/statusLED
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Boolean <true,false> 
-   
-```
-```
-TF/IMUV2/U/<id>/S/temperature/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-
-### LCD16x2
-```
-TF/LCD16x2/U/<id>/E/button/pressed
-   button: Number <from: 0 to: 2>
-   pressed: Boolean <true,false> 
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/LCD16x2/U/<id>/E/button/released
-   button: Number <from: 0 to: 2>
-   pressed: Boolean <true,false> 
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/LCD16x2/U/<id>/I
-   backlight: null
-   backlight: Boolean <true,false> 
-   clearDisplay: null
-   clearDisplay: Boolean <true,false> 
-   customCharacters: null
-   customCharacters: Set <min: 0 max: 8>
-   customCharacters: 
-    index: Number <from: 0 to: 7>
-    pixels: Array <min: 8 max: 8>
-   lines: null
-   lines: Set <min: 0 max: 32>
-   lines: 
-    line: Number <from: 0 to: 1>
-    position: Number <from: 0 to: 15>
-    text: String <min: 0 max: 16>
-   parameters: null
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/LCD16x2/U/<id>/S/backlight
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Boolean <true,false> 
-   
-```
-```
-TF/LCD16x2/U/<id>/S/configParameters
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/LCD16x2/U/<id>/S/connection
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[online, offline]>
-   
-```
-```
-TF/LCD16x2/U/<id>/S/customCharacters
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Set <min: 0 max: 8>
-   value: 
-    index: Number <from: 0 to: 7>
-    pixels: Array <min: 8 max: 8>
-   
-```
-```
-TF/LCD16x2/U/<id>/S/firmware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/LCD16x2/U/<id>/S/hardware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/LCD16x2/U/<id>/S/position
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
-   
-```
-
-### LCD20x4
-```
-TF/LCD20x4/U/<id>/E/button
-   button: Number <from: 0 to: 3>
-   pressed: Boolean <true,false> 
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/LCD20x4/U/<id>/I
-   backlight: null
-   backlight: Boolean <true,false> 
-   clearDisplay: null
-   clearDisplay: Boolean <true,false> 
-   customCharacters: null
-   customCharacters: Set <min: 0 max: 8>
-   customCharacters: 
-    index: Number <from: 0 to: 7>
-    pixels: Array <min: 8 max: 8>
-   defaultTextCounter: null
-   defaultTextCounter: Number <from: -1 to: 2147483647>
-   defaultTexts: null
-   defaultTexts: Set <min: 0 max: 4>
-   defaultTexts: 
-    line: Number <from: 0 to: 3>
-    text: String <min: 0 max: 20>
-   lines: null
-   lines: Set <min: 0 max: 80>
-   lines: 
-    line: Number <from: 0 to: 3>
-    position: Number <from: 0 to: 19>
-    text: String <min: 0 max: 20>
-   parameters: null
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/LCD20x4/U/<id>/S/backlight
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Boolean <true,false> 
-   
-```
-```
-TF/LCD20x4/U/<id>/S/configParameters
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/LCD20x4/U/<id>/S/connection
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[online, offline]>
-   
-```
-```
-TF/LCD20x4/U/<id>/S/customCharacters
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Set <min: 0 max: 8>
-   value: 
-    index: Number <from: 0 to: 7>
-    pixels: Array <min: 8 max: 8>
-   
-```
-```
-TF/LCD20x4/U/<id>/S/defaultText/counter
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: -1 to: 2147483647>
-   
-```
-```
-TF/LCD20x4/U/<id>/S/defaultText/texts
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Set <min: 0 max: 4>
-   value: 
-    line: Number <from: 0 to: 3>
-    text: String <min: 0 max: 20>
-   
-```
-```
-TF/LCD20x4/U/<id>/S/firmware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/LCD20x4/U/<id>/S/hardware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/LCD20x4/U/<id>/S/position
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
-   
-```
-
-### RGBLEDButton
-```
-TF/RGBLEDButton/U/<id>/E/button
-   state: String <PRESSED,RELEASED>
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/RGBLEDButton/U/<id>/I
-   color: null
-   color: 
-     blue: Number <from: 0 to: 255>
-     green: Number <from: 0 to: 255>
-     red: Number <from: 0 to: 255>
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/RGBLEDButton/U/<id>/S/color
-   color: 
-     blue: Number <from: 0 to: 255>
-     green: Number <from: 0 to: 255>
-     red: Number <from: 0 to: 255>
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/RGBLEDButton/U/<id>/S/connection
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[online, offline]>
-   
-```
-```
-TF/RGBLEDButton/U/<id>/S/firmware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/RGBLEDButton/U/<id>/S/hardware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/RGBLEDButton/U/<id>/S/position
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
-   
-```
-
 ### Accelerometer
 ```
 TF/Accelerometer/U/<id>/E/acceleration
@@ -2780,6 +2144,408 @@ TF/Humidity/U/<id>/S/position
    
 ```
 
+### IMU
+```
+TF/IMU/U/<id>/E/acceleration
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMU/U/<id>/E/allData
+   acceleration: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   angularVelocity: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   magneticField: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   temperature: 
+     temperature: Number <from: -32768 to: 32767>
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMU/U/<id>/E/angularVelocity
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMU/U/<id>/E/magneticField
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMU/U/<id>/E/orientation
+   heading: Number <from: -32768 to: 32767>
+   pitch: Number <from: -32768 to: 32767>
+   roll: Number <from: -32768 to: 32767>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMU/U/<id>/E/quaternion
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   w: Fraction <from: -1.0 to: 1.0>
+   x: Fraction <from: -1.0 to: 1.0>
+   y: Fraction <from: -1.0 to: 1.0>
+   z: Fraction <from: -1.0 to: 1.0>
+   
+```
+```
+TF/IMU/U/<id>/I
+   accelerationCallbackPeriod: null
+   accelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   allDataCallbackPeriod: null
+   allDataCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   angularVelocityCallbackPeriod: null
+   angularVelocityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   leds: null
+   leds: Boolean <true,false> 
+   magneticFieldCallbackPeriod: null
+   magneticFieldCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   orientationCalculation: null
+   orientationCalculation: Boolean <true,false> 
+   orientationCallbackPeriod: null
+   orientationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   quaternionCallbackPeriod: null
+   quaternionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   statusLED: null
+   statusLED: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMU/U/<id>/S/LEDs/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
+```
+```
+TF/IMU/U/<id>/S/acceleration/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMU/U/<id>/S/allData/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMU/U/<id>/S/angularVelocity/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMU/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/IMU/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMU/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMU/U/<id>/S/magneticField/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMU/U/<id>/S/orientation/calculation
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
+```
+```
+TF/IMU/U/<id>/S/orientation/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMU/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+```
+TF/IMU/U/<id>/S/quaternion/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMU/U/<id>/S/statusLED/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
+```
+
+### IMUV2
+```
+TF/IMUV2/U/<id>/E/acceleration
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMUV2/U/<id>/E/allData
+   acceleration: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   angularVelocity: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   gravityVector: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   linearAcceleration: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   magneticField: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     x: Number <from: -32768 to: 32767>
+     y: Number <from: -32768 to: 32767>
+     z: Number <from: -32768 to: 32767>
+   quaternion: 
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+     w: Fraction <from: -1.0 to: 1.0>
+     x: Fraction <from: -1.0 to: 1.0>
+     y: Fraction <from: -1.0 to: 1.0>
+     z: Fraction <from: -1.0 to: 1.0>
+   temperature: 
+     temperature: Number <from: -32768 to: 32767>
+     timeStamp: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/E/angularVelocity
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMUV2/U/<id>/E/gravityVector
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMUV2/U/<id>/E/linearAcceleration
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMUV2/U/<id>/E/magneticField
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   x: Number <from: -32768 to: 32767>
+   y: Number <from: -32768 to: 32767>
+   z: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMUV2/U/<id>/E/orientation
+   heading: Number <from: -32768 to: 32767>
+   pitch: Number <from: -32768 to: 32767>
+   roll: Number <from: -32768 to: 32767>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/E/quaternion
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   w: Fraction <from: -1.0 to: 1.0>
+   x: Fraction <from: -1.0 to: 1.0>
+   y: Fraction <from: -1.0 to: 1.0>
+   z: Fraction <from: -1.0 to: 1.0>
+   
+```
+```
+TF/IMUV2/U/<id>/E/temperature
+   temperature: Number <from: -32768 to: 32767>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/I
+   accelerationCallbackPeriod: null
+   accelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   allDataCallbackPeriod: null
+   allDataCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   angularVelocityCallbackPeriod: null
+   angularVelocityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   gravityVectorCallbackPeriod: null
+   gravityVectorCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   leds: null
+   leds: Boolean <true,false> 
+   linearAccelerationCallbackPeriod: null
+   linearAccelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   magneticFieldCallbackPeriod: null
+   magneticFieldCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   orientationCalculation: null
+   orientationCalculation: Boolean <true,false> 
+   orientationCallbackPeriod: null
+   orientationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   quaternionCallbackPeriod: null
+   quaternionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   sensorFusionMode: null
+   sensorFusionMode: String <[0, 1, 2]>
+   statusLED: null
+   statusLED: Boolean <true,false> 
+   temperatureCallbackPeriod: null
+   temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/S/LEDs/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
+```
+```
+TF/IMUV2/U/<id>/S/acceleration/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/S/allData/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/S/angularVelocity/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/IMUV2/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMUV2/U/<id>/S/gravityVector/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/IMUV2/U/<id>/S/linearAcceleration/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/S/magneticField/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/S/orientation/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+```
+TF/IMUV2/U/<id>/S/quaternion/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/IMUV2/U/<id>/S/sensorFusionMode
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2]>
+   
+```
+```
+TF/IMUV2/U/<id>/S/statusLED
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
+```
+```
+TF/IMUV2/U/<id>/S/temperature/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+
 ### Joystick
 ```
 TF/Joystick/U/<id>/E/analogValue
@@ -3080,6 +2846,187 @@ TF/LaserRangeFinder/U/<id>/S/velocity/threshold
      max: Number <from: -127 to: 127>
      min: Number <from: -127 to: 127>
      option: String <[x, o, i, <, >]>
+   
+```
+
+### LCD16x2
+```
+TF/LCD16x2/U/<id>/E/button/pressed
+   button: Number <from: 0 to: 2>
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/LCD16x2/U/<id>/E/button/released
+   button: Number <from: 0 to: 2>
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/LCD16x2/U/<id>/I
+   backlight: null
+   backlight: Boolean <true,false> 
+   clearDisplay: null
+   clearDisplay: Boolean <true,false> 
+   customCharacters: null
+   customCharacters: Set <min: 0 max: 8>
+   customCharacters: 
+    index: Number <from: 0 to: 7>
+    pixels: Array <min: 8 max: 8>
+   lines: null
+   lines: Set <min: 0 max: 32>
+   lines: 
+    line: Number <from: 0 to: 1>
+    position: Number <from: 0 to: 15>
+    text: String <min: 0 max: 16>
+   parameters: null
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/LCD16x2/U/<id>/S/backlight
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
+```
+```
+TF/LCD16x2/U/<id>/S/configParameters
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/LCD16x2/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/LCD16x2/U/<id>/S/customCharacters
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Set <min: 0 max: 8>
+   value: 
+    index: Number <from: 0 to: 7>
+    pixels: Array <min: 8 max: 8>
+   
+```
+```
+TF/LCD16x2/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/LCD16x2/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/LCD16x2/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+
+### LCD20x4
+```
+TF/LCD20x4/U/<id>/E/button
+   button: Number <from: 0 to: 3>
+   pressed: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/LCD20x4/U/<id>/I
+   backlight: null
+   backlight: Boolean <true,false> 
+   clearDisplay: null
+   clearDisplay: Boolean <true,false> 
+   customCharacters: null
+   customCharacters: Set <min: 0 max: 8>
+   customCharacters: 
+    index: Number <from: 0 to: 7>
+    pixels: Array <min: 8 max: 8>
+   defaultTextCounter: null
+   defaultTextCounter: Number <from: -1 to: 2147483647>
+   defaultTexts: null
+   defaultTexts: Set <min: 0 max: 4>
+   defaultTexts: 
+    line: Number <from: 0 to: 3>
+    text: String <min: 0 max: 20>
+   lines: null
+   lines: Set <min: 0 max: 80>
+   lines: 
+    line: Number <from: 0 to: 3>
+    position: Number <from: 0 to: 19>
+    text: String <min: 0 max: 20>
+   parameters: null
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/LCD20x4/U/<id>/S/backlight
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
+```
+```
+TF/LCD20x4/U/<id>/S/configParameters
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/LCD20x4/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/LCD20x4/U/<id>/S/customCharacters
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Set <min: 0 max: 8>
+   value: 
+    index: Number <from: 0 to: 7>
+    pixels: Array <min: 8 max: 8>
+   
+```
+```
+TF/LCD20x4/U/<id>/S/defaultText/counter
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -1 to: 2147483647>
+   
+```
+```
+TF/LCD20x4/U/<id>/S/defaultText/texts
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Set <min: 0 max: 4>
+   value: 
+    line: Number <from: 0 to: 3>
+    text: String <min: 0 max: 20>
+   
+```
+```
+TF/LCD20x4/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/LCD20x4/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/LCD20x4/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
    
 ```
 
@@ -4318,6 +4265,59 @@ TF/RemoteSwitch/U/<id>/S/repeats
    
 ```
 
+### RGBLEDButton
+```
+TF/RGBLEDButton/U/<id>/E/button
+   state: String <PRESSED,RELEASED>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/I
+   color: null
+   color: 
+     blue: Number <from: 0 to: 255>
+     green: Number <from: 0 to: 255>
+     red: Number <from: 0 to: 255>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/S/color
+   color: 
+     blue: Number <from: 0 to: 255>
+     green: Number <from: 0 to: 255>
+     red: Number <from: 0 to: 255>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/RGBLEDButton/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+
 ### RotaryEncoder
 ```
 TF/RotaryEncoder/U/<id>/E/count
@@ -5047,6 +5047,25 @@ TF/ThermalImaging/U/<id>/E/image/temperature
    
 ```
 ```
+TF/ThermalImaging/U/<id>/E/statistics
+   flatFieldCorrection: String <neverCommanded,complete,imminent,inProgress>
+   imageResolution: String <from_0_to_655K,from_0_to_6553K>
+   spotMeterStatistics: 
+     maximumTemperature: Number <from: 0 to: 65535>
+     meanTemperature: Number <from: 0 to: 65535>
+     minimumTemperature: Number <from: 1 to: 65535>
+     pixelCount: Number <from: 1 to: 4800>
+   temperatureState: 
+     ffcFocalPlainArrayTemperature: Number <from: 0 to: 6553>
+     ffcHousingTemperature: Number <from: 0 to: 6553>
+     focalPlainArrayTemperature: Number <from: 0 to: 6553>
+     housingTemperature: Number <from: 0 to: 6553>
+     overtemperature: Boolean <true,false> 
+     shutterLockout: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
 TF/ThermalImaging/U/<id>/I
    imageTransferConfig: null
    imageTransferConfig: String <none,contrast,temperature>
@@ -5475,3 +5494,4 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
      option: String <[x, o, i, <, >]>
    
 ```
+

@@ -43,16 +43,18 @@
 package ch.quantasy.gateway.service.device.thermalImaging;
 
 import ch.quantasy.gateway.message.thermalImage.HighContrastImageEvent;
-import ch.quantasy.gateway.message.thermalImage.ImageResolution;
-import ch.quantasy.gateway.message.thermalImage.ImageResolutionStatus;
+import ch.quantasy.gateway.message.thermalImage.TemperatureResolution;
+import ch.quantasy.gateway.message.thermalImage.TemperatureResolutionStatus;
 import ch.quantasy.gateway.message.thermalImage.ImageTransferConfig;
 import ch.quantasy.gateway.message.thermalImage.ImageTransferStatus;
+import ch.quantasy.gateway.message.thermalImage.StatisticsEvent;
 import ch.quantasy.gateway.message.thermalImage.TemperatureImageEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
 import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagingDevice;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagIngDeviceCallback;
+import com.tinkerforge.BrickletThermalImaging;
 
 /**
  *
@@ -70,8 +72,8 @@ public class ThermalImagingService extends AbstractDeviceService<ThermalImagingD
     }
 
     @Override
-    public void resolutionChanged(ImageResolution resolution) {
-        readyToPublishStatus(getContract().STATUS_IMAGE_RESOLUTION, new ImageResolutionStatus(resolution));
+    public void resolutionChanged(TemperatureResolution resolution) {
+        readyToPublishStatus(getContract().STATUS_TEMPERATURE_RESOLUTION, new TemperatureResolutionStatus(resolution));
     }
 
     @Override
@@ -82,6 +84,11 @@ public class ThermalImagingService extends AbstractDeviceService<ThermalImagingD
     @Override
     public void temperatureImage(int[] image) {
         readyToPublishEvent(getContract().EVENT_IMAGE_TEMPERATURE, new TemperatureImageEvent(image));
+    }
+
+    @Override
+    public void statisticsChanged(BrickletThermalImaging.Statistics statistics) {
+        readyToPublishEvent(getContract().EVENT_STATISTICS,new StatisticsEvent(statistics));
     }
 
 }
