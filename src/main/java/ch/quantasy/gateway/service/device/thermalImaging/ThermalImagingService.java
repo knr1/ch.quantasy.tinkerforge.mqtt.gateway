@@ -47,6 +47,8 @@ import ch.quantasy.gateway.message.thermalImage.TemperatureResolution;
 import ch.quantasy.gateway.message.thermalImage.TemperatureResolutionStatus;
 import ch.quantasy.gateway.message.thermalImage.ImageTransferConfig;
 import ch.quantasy.gateway.message.thermalImage.ImageTransferStatus;
+import ch.quantasy.gateway.message.thermalImage.SpotMeterConfig;
+import ch.quantasy.gateway.message.thermalImage.SpotMeterConfigStatus;
 import ch.quantasy.gateway.message.thermalImage.StatisticsEvent;
 import ch.quantasy.gateway.message.thermalImage.TemperatureImageEvent;
 import ch.quantasy.gateway.service.device.AbstractDeviceService;
@@ -89,6 +91,11 @@ public class ThermalImagingService extends AbstractDeviceService<ThermalImagingD
     @Override
     public void statisticsChanged(BrickletThermalImaging.Statistics statistics) {
         readyToPublishEvent(getContract().EVENT_STATISTICS,new StatisticsEvent(statistics));
+    }
+
+    @Override
+    public void spotMeterConfigChanged(SpotMeterConfig spotMeterConfig) {
+        readyToPublishStatus(getContract().STATUS_SPOT_METER_CONFIG, new SpotMeterConfigStatus(spotMeterConfig));
     }
 
 }

@@ -54,4 +54,6 @@ public class ThermalImageIntent extends AnIntent {
     public TemperatureResolution resolution;
     @Nullable
     public ImageTransferConfig imageTransferConfig;
+    @Nullable
+    public SpotMeterConfig spotMeterConfig;
 }

@@ -42,6 +42,7 @@
 package ch.quantasy.gateway.message.thermalImage;
 
 import ch.quantasy.mqtt.gateway.client.message.AStatus;
+import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
 
 /**
@@ -49,7 +50,7 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
  * @author reto
  */
 public class ImageTransferStatus extends AStatus {
-    @Nullable
+    @NonNull
     public ImageTransferConfig value;
 
     public ImageTransferStatus() {

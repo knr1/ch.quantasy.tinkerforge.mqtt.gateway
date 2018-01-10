@@ -5056,10 +5056,10 @@ TF/ThermalImaging/U/<id>/E/statistics
      minimumTemperature: Number <from: 1 to: 65535>
      pixelCount: Number <from: 1 to: 4800>
    temperatureState: 
-     ffcFocalPlainArrayTemperature: Number <from: 0 to: 6553>
-     ffcHousingTemperature: Number <from: 0 to: 6553>
-     focalPlainArrayTemperature: Number <from: 0 to: 6553>
-     housingTemperature: Number <from: 0 to: 6553>
+     ffcFocalPlainArrayTemperature: Number <from: 0 to: 65535>
+     ffcHousingTemperature: Number <from: 0 to: 65535>
+     focalPlainArrayTemperature: Number <from: 0 to: 65535>
+     housingTemperature: Number <from: 0 to: 65535>
      overtemperature: Boolean <true,false> 
      shutterLockout: Boolean <true,false> 
    timeStamp: Number <from: 0 to: 9223372036854775807>
@@ -5071,6 +5071,12 @@ TF/ThermalImaging/U/<id>/I
    imageTransferConfig: String <none,contrast,temperature>
    resolution: null
    resolution: String <from_0_to_655K,from_0_to_6553K>
+   spotMeterConfig: null
+   spotMeterConfig: 
+     columnEnd: Number <from: 1 to: 79>
+     columnStart: Number <from: 0 to: 78>
+     rowEnd: Number <from: 1 to: 59>
+     rowStart: Number <from: 0 to: 58>
    timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -5108,9 +5114,18 @@ TF/ThermalImaging/U/<id>/S/resolution
    
 ```
 ```
+TF/ThermalImaging/U/<id>/S/spotMeterConfig
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     columnEnd: Number <from: 1 to: 79>
+     columnStart: Number <from: 0 to: 78>
+     rowEnd: Number <from: 1 to: 59>
+     rowStart: Number <from: 0 to: 58>
+   
+```
+```
 TF/ThermalImaging/U/<id>/S/transferConfig
    timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: null
    value: String <none,contrast,temperature>
    
 ```
@@ -5494,4 +5509,3 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
      option: String <[x, o, i, <, >]>
    
 ```
-

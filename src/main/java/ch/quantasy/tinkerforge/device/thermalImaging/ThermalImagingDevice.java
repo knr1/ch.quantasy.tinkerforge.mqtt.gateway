@@ -45,6 +45,7 @@ package ch.quantasy.tinkerforge.device.thermalImaging;
 import ch.quantasy.gateway.message.thermalImage.TemperatureResolution;
 import ch.quantasy.gateway.message.thermalImage.ThermalImageIntent;
 import ch.quantasy.gateway.message.thermalImage.ImageTransferConfig;
+import ch.quantasy.gateway.message.thermalImage.SpotMeterConfig;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletThermalImaging;
@@ -104,6 +105,18 @@ public class ThermalImagingDevice extends GenericDevice<BrickletThermalImaging, 
             } catch (TimeoutException | NotConnectedException ex) {
                 Logger.getLogger(ThermalImagingDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        if(intent.spotMeterConfig!=null){
+            try {
+                getDevice().setSpotmeterConfig(intent.spotMeterConfig.getSpotMeterConfigAsArray());
+                getIntent().spotMeterConfig=new SpotMeterConfig(getDevice().getSpotmeterConfig());
+                super.getCallback().spotMeterConfigChanged(getIntent().spotMeterConfig);
+            } catch (TimeoutException ex) {
+                Logger.getLogger(ThermalImagingDevice.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NotConnectedException ex) {
+                Logger.getLogger(ThermalImagingDevice.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
         }
     }
 

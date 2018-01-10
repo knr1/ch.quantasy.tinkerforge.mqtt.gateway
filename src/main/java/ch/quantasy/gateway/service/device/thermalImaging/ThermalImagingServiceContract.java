@@ -54,6 +54,7 @@ import ch.quantasy.gateway.message.temperatureIR.ObjectTemperatureCallbackThresh
 import ch.quantasy.gateway.message.thermalImage.HighContrastImageEvent;
 import ch.quantasy.gateway.message.thermalImage.TemperatureResolutionStatus;
 import ch.quantasy.gateway.message.thermalImage.ImageTransferStatus;
+import ch.quantasy.gateway.message.thermalImage.SpotMeterConfigStatus;
 import ch.quantasy.gateway.message.thermalImage.StatisticsEvent;
 import ch.quantasy.gateway.message.thermalImage.TemperatureImageEvent;
 import ch.quantasy.gateway.message.thermalImage.ThermalImageIntent;
@@ -71,6 +72,7 @@ public class ThermalImagingServiceContract extends DeviceServiceContract {
 
     public final String STATUS_TEMPERATURE_RESOLUTION;
     public final String STATUS_IMAGE_TRANSFER_CONFIG;
+    public final String STATUS_SPOT_METER_CONFIG;
     public final String EVENT_IMAGE_HIGH_CONTRAST;
     public final String EVENT_IMAGE_TEMPERATURE;
     public final String EVENT_STATISTICS;
@@ -89,6 +91,7 @@ public class ThermalImagingServiceContract extends DeviceServiceContract {
 
         STATUS_IMAGE_TRANSFER_CONFIG=STATUS+"/transferConfig";
         STATUS_TEMPERATURE_RESOLUTION=STATUS+"/resolution";
+        STATUS_SPOT_METER_CONFIG=STATUS+"/spotMeterConfig";
         
         EVENT_IMAGE_HIGH_CONTRAST=EVENT+"/image/highContrast";
         EVENT_IMAGE_TEMPERATURE=EVENT+"/image/temperature";
@@ -96,6 +99,7 @@ public class ThermalImagingServiceContract extends DeviceServiceContract {
         
         addMessageTopic(STATUS_IMAGE_TRANSFER_CONFIG, ImageTransferStatus.class);
         addMessageTopic(STATUS_TEMPERATURE_RESOLUTION, TemperatureResolutionStatus.class);
+        addMessageTopic(STATUS_SPOT_METER_CONFIG, SpotMeterConfigStatus.class);
         addMessageTopic(EVENT_IMAGE_HIGH_CONTRAST, HighContrastImageEvent.class);
         addMessageTopic(EVENT_IMAGE_TEMPERATURE, TemperatureImageEvent.class);
         addMessageTopic(EVENT_STATISTICS, StatisticsEvent.class);

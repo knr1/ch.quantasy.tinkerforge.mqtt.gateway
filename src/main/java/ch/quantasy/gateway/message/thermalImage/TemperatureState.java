@@ -50,13 +50,13 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
  */
 public class TemperatureState extends AValidator {
 
-    @Range(from = 0, to = 6553)
+    @Range(from = 0, to = 65535)
     public int focalPlainArrayTemperature;
-    @Range(from = 0, to = 6553)
+    @Range(from = 0, to = 65535)
     public int ffcFocalPlainArrayTemperature;
-    @Range(from = 0, to = 6553)
+    @Range(from = 0, to = 65535)
     public int housingTemperature;
-    @Range(from = 0, to = 6553)
+    @Range(from = 0, to = 65535)
     public int ffcHousingTemperature;
 
     public boolean shutterLockout;

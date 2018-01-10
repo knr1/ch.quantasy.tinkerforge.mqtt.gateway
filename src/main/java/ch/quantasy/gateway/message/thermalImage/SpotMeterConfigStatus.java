@@ -41,50 +41,23 @@
  */
 package ch.quantasy.gateway.message.thermalImage;
 
-import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
+import ch.quantasy.mqtt.gateway.client.message.AStatus;
+import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
 
 /**
  *
  * @author reto
  */
-public class SpotMeterConfig extends AValidator {
+public class SpotMeterConfigStatus extends AStatus {
+    @NonNull
+    public SpotMeterConfig value;
 
-    @Range(from = 0, to = 78)
-    public int columnStart;
-    @Range(from = 0, to = 58)
-    public int rowStart;
-    @Range(from = 1, to = 79)
-    public int columnEnd;
-    @Range(from = 1, to = 59)
-    public int rowEnd;
-
-    public SpotMeterConfig(int columnStart, int rowStart, int columnEnd, int rowEnd) {
-        this.columnStart = columnStart;
-        this.rowStart = rowStart;
-        this.columnEnd = columnEnd;
-        this.rowEnd = rowEnd;
+    public SpotMeterConfigStatus() {
     }
 
-    public SpotMeterConfig() {
+    public SpotMeterConfigStatus(SpotMeterConfig value) {
+        this.value = value;
     }
-
-    public SpotMeterConfig(int[] spotMeterStatistics) {
-        if (spotMeterStatistics == null || spotMeterStatistics.length != 4) {
-            throw new IllegalArgumentException();
-        }
-        this.columnStart = spotMeterStatistics[0];
-        this.rowStart = spotMeterStatistics[1];
-        this.columnEnd = spotMeterStatistics[2];
-        this.rowEnd = spotMeterStatistics[3];
-    }
-    public int[] getSpotMeterConfigAsArray(){
-        int[] config=new int[4];
-        config[0]=columnStart;
-        config[1]=rowStart;
-        config[2]=columnEnd;
-        config[3]=rowEnd;
-        return config;
-    }
-
+    
 }

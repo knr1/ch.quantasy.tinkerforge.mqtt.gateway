@@ -43,6 +43,7 @@
 package ch.quantasy.tinkerforge.device.thermalImaging;
 
 import ch.quantasy.gateway.message.thermalImage.ImageTransferConfig;
+import ch.quantasy.gateway.message.thermalImage.SpotMeterConfig;
 import ch.quantasy.gateway.message.thermalImage.TemperatureResolution;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletThermalImaging;
@@ -59,5 +60,7 @@ public interface ThermalImagIngDeviceCallback extends DeviceCallback, BrickletTh
     public void resolutionChanged(TemperatureResolution resolution);
     
     public void statisticsChanged(BrickletThermalImaging.Statistics statistics);
+
+    public void spotMeterConfigChanged(SpotMeterConfig spotMeterConfig);
 
 }
