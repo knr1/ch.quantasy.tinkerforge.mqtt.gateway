@@ -40,38 +40,44 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.RGBLEDButton;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.gateway.message.RGBLEDButton.ButtonEvent;
+import ch.quantasy.gateway.message.RGBLEDButton.RGBColorStatus;
+import ch.quantasy.gateway.message.RGBLEDButton.RGBLEDButtonIntent;
+import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.RGBLEDButton.RGBLEDButtonDevice;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import static ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass.RGBLEDButton;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public class RGBLEDButtonServiceContract extends DeviceServiceContract {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public final String COLOR;
+    public final String STATUS_COLOR;
+    public final String BUTTON;
+    public final String EVENT_BUTTON;
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public RGBLEDButtonServiceContract(RGBLEDButtonDevice device) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
+
+    public RGBLEDButtonServiceContract(String id) {
+        this(id, RGBLEDButton.toString());
+    }
+
+    public RGBLEDButtonServiceContract(String id, String device) {
+        super(id, device, RGBLEDButtonIntent.class);
+        COLOR = "color";
+        STATUS_COLOR = STATUS + "/" + COLOR;
+        BUTTON = "button";
+        EVENT_BUTTON = EVENT + "/" + BUTTON;
+
+        addMessageTopic(STATUS_COLOR, RGBColorStatus.class);
+        addMessageTopic(EVENT_BUTTON, ButtonEvent.class);
+    }
+
 }

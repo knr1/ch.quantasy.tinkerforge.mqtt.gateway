@@ -40,38 +40,40 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.gateway.message.device.Firmware;
+import ch.quantasy.gateway.message.device.Hardware;
+import ch.quantasy.gateway.message.device.Position;
+import ch.quantasy.mqtt.gateway.client.message.Event;
+import ch.quantasy.mqtt.gateway.client.message.Intent;
+import ch.quantasy.gateway.service.TinkerForgeServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.generic.GenericDevice;
+import java.util.Map;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public final String STATUS_POSITION;
+    public final String STATUS_FIRMWARE;
+    public final String STATUS_HARDWARE;
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public DeviceServiceContract(GenericDevice device, Class<? extends Intent> intentClass,Map<String,Class<? extends Event>> eventClassMap) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString(), intentClass);
     }
+
+    public DeviceServiceContract(String instance, String baseClass, Class<? extends Intent> intentClass) {
+        super(baseClass, instance, intentClass);
+        STATUS_POSITION = STATUS + "/position";
+        STATUS_FIRMWARE = STATUS + "/firmware";
+        STATUS_HARDWARE = STATUS + "/hardware";
+        addMessageTopic(STATUS_POSITION, Position.class);
+        addMessageTopic(STATUS_FIRMWARE, Firmware.class);
+        addMessageTopic(STATUS_HARDWARE, Hardware.class);
+    }
+
 }

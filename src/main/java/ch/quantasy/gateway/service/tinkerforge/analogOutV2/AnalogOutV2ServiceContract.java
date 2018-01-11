@@ -40,38 +40,39 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.analogOutV2;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.gateway.message.analogOutV2.AnalogOutV2Intent;
+import ch.quantasy.gateway.message.analogOutV2.OutputVoltageStatus;
+import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
+import java.util.Map;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public class AnalogOutV2ServiceContract extends DeviceServiceContract {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public final String OUTPUT_VOLTAGE;
+    public final String STATUS_OUTPUT_VOLTAGE;
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public AnalogOutV2ServiceContract(AnalogOutV2Device device) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
+
+    public AnalogOutV2ServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.AnalogOutV2.toString());
+    }
+
+    public AnalogOutV2ServiceContract(String id, String device) {
+        super(id, device, AnalogOutV2Intent.class);
+        OUTPUT_VOLTAGE = "outputVoltage";
+        STATUS_OUTPUT_VOLTAGE = STATUS + "/" + OUTPUT_VOLTAGE;
+        addMessageTopic(STATUS_OUTPUT_VOLTAGE, OutputVoltageStatus.class);
+
+    }
+
+   
 }

@@ -40,38 +40,39 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.tilt;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.gateway.message.tilt.TiltEvent;
+import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
+import java.util.Map;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public class TiltServiceContract extends DeviceServiceContract {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public final String TILT_STATE;
+    public final String EVENT_TILT_STATE;
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public TiltServiceContract(TiltDevice device) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
+
+    public TiltServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.Tilt.toString());
+    }
+
+    public TiltServiceContract(String id, String device) {
+        super(id, device, null);
+
+        TILT_STATE = "tiltState";
+        EVENT_TILT_STATE = EVENT + "/" + TILT_STATE;
+        addMessageTopic(EVENT_TILT_STATE, TiltEvent.class);
+
+    }
+
+   
 }

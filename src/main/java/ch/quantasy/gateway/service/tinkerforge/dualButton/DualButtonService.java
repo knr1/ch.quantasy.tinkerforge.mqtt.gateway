@@ -40,12 +40,15 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.dualButton;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
+import ch.quantasy.gateway.message.dualButton.StateChangedEvent;
+import ch.quantasy.gateway.service.tinkerforge.AbstractDeviceService;
+import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
+import ch.quantasy.tinkerforge.device.dualButton.DualButtonDeviceCallback;
+import ch.quantasy.gateway.message.dualButton.DeviceLEDState;
+import ch.quantasy.gateway.message.dualButton.LEDState;
+import ch.quantasy.gateway.message.dualButton.LedStateStatus;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -53,25 +56,20 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author reto
  */
-public class TiMqWay {
+public class DualButtonService extends AbstractDeviceService<DualButtonDevice, DualButtonServiceContract> implements DualButtonDeviceCallback {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
-
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public DualButtonService(DualButtonDevice device, URI mqttURI) throws MqttException {
+        super(mqttURI, device, new DualButtonServiceContract(device));
     }
+
+    @Override
+    public void ledStateChanged(DeviceLEDState state) {
+        readyToPublishStatus(getContract().STATUS_LED_STATE, new LedStateStatus(state));
+    }
+
+    @Override
+    public void stateChanged(short s, short s1, short s2, short s3) {
+        readyToPublishEvent(getContract().EVENT_STATE_CHANGED, new StateChangedEvent(s, s1, s2, s3));
+    }
+
 }

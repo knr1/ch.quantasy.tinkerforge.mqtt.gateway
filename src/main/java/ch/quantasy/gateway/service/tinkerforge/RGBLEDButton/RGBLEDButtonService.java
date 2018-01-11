@@ -40,12 +40,14 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
-
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
+package ch.quantasy.gateway.service.tinkerforge.RGBLEDButton;
+import ch.quantasy.gateway.message.RGBLEDButton.ButtonEvent;
+import ch.quantasy.gateway.message.RGBLEDButton.ButtonState;
+import ch.quantasy.gateway.message.RGBLEDButton.RGBColor;
+import ch.quantasy.gateway.message.RGBLEDButton.RGBColorStatus;
+import ch.quantasy.gateway.service.tinkerforge.AbstractDeviceService;
+import ch.quantasy.tinkerforge.device.RGBLEDButton.RGBLEDButtonCallback;
+import ch.quantasy.tinkerforge.device.RGBLEDButton.RGBLEDButtonDevice;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -53,25 +55,19 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author reto
  */
-public class TiMqWay {
+public class RGBLEDButtonService extends AbstractDeviceService<RGBLEDButtonDevice, RGBLEDButtonServiceContract> implements RGBLEDButtonCallback {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
-
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public RGBLEDButtonService(RGBLEDButtonDevice device, URI mqttURI) throws MqttException {
+        super(mqttURI, device, new RGBLEDButtonServiceContract(device));
     }
+
+    @Override
+    public void RGBColorChanged(RGBColor color) {
+        readyToPublishStatus(getContract().STATUS_COLOR, new RGBColorStatus(color));
+    }
+
+    @Override
+    public void buttonStateChanged(int i) {
+        readyToPublishEvent(getContract().EVENT_BUTTON, new ButtonEvent(ButtonState.getButtonStateFor(i)));    }
+
 }

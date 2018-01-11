@@ -40,12 +40,12 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.tilt;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
+import ch.quantasy.gateway.message.tilt.TiltEvent;
+import ch.quantasy.gateway.service.tinkerforge.AbstractDeviceService;
+import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
+import com.tinkerforge.BrickletTilt;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -53,25 +53,14 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author reto
  */
-public class TiMqWay {
+public class TiltService extends AbstractDeviceService<TiltDevice, TiltServiceContract> implements BrickletTilt.TiltStateListener {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public TiltService(TiltDevice device, URI mqttURI) throws MqttException {
+        super(mqttURI, device, new TiltServiceContract(device));
+    }
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    @Override
+    public void tiltState(short s) {
+        readyToPublishEvent(getContract().EVENT_TILT_STATE, new TiltEvent(s));
     }
 }

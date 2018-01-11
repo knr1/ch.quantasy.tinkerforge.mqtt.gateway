@@ -40,38 +40,47 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.ledStrip;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
+import ch.quantasy.gateway.message.ledStrip.LagingEvent;
+import ch.quantasy.gateway.message.ledStrip.RenderedEvent;
+import ch.quantasy.gateway.message.laserRangeFinder.LaserRangeFinderIntent;
+import ch.quantasy.gateway.service.tinkerforge.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDevice;
+import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDeviceCallback;
+import ch.quantasy.gateway.message.ledStrip.LEDStripDeviceConfig;
+import ch.quantasy.gateway.message.ledStrip.LEDFrame;
+import ch.quantasy.gateway.message.ledStrip.LedStripIntent;
+import ch.quantasy.gateway.message.ledStrip.ConfigStatus;
+
+import java.net.URI;
+import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public class LEDStripService extends AbstractDeviceService<LEDStripDevice, LEDStripServiceContract> implements LEDStripDeviceCallback {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public LEDStripService(LEDStripDevice device, URI mqttURI) throws MqttException {
+        super(mqttURI, device, new LEDStripServiceContract(device));
+    }
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
+    @Override
+    public void configurationChanged(LEDStripDeviceConfig config) {
+        readyToPublishStatus(getContract().STATUS_CONFIG, new ConfigStatus(config));
+    }
 
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    @Override
+    public void frameRendered(int remainingFramesInQueue) {
+        readyToPublishEvent(getContract().EVENT_LEDs_RENDERED, new RenderedEvent(remainingFramesInQueue));
+
+    }
+
+    @Override
+    public void isLaging() {
+        readyToPublishEvent(getContract().EVENT_LAGING, new LagingEvent(true));
     }
 }

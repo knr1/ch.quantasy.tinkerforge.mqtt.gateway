@@ -40,38 +40,55 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.LCD16x2;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
+import ch.quantasy.gateway.message.LCD16x2.ButtonEvent;
+import ch.quantasy.gateway.message.LCD16x2.DeviceConfigParameters;
+import ch.quantasy.gateway.message.LCD16x2.DeviceCustomCharacter;
+import ch.quantasy.gateway.message.LCD16x2.BacklightStatus;
+import ch.quantasy.gateway.message.LCD16x2.CustomCharactersStatus;
+import ch.quantasy.gateway.message.LCD16x2.ParametersStatus;
+import ch.quantasy.gateway.service.tinkerforge.AbstractDeviceService;
+import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2Device;
+import ch.quantasy.tinkerforge.device.LCD16x2.LCD16x2DeviceCallback;
 import java.net.URI;
+import java.util.Arrays;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import java.util.Set;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public class LCD16x2Service extends AbstractDeviceService<LCD16x2Device, LCD16x2ServiceContract> implements LCD16x2DeviceCallback {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
-
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public LCD16x2Service(LCD16x2Device device, URI mqttURI) throws MqttException {
+        super(mqttURI, device, new LCD16x2ServiceContract(device));
     }
+
+    @Override
+    public void backlightChanged(Boolean isBacklightEnabled) {
+        readyToPublishStatus(getContract().STATUS_BACKLIGHT, new BacklightStatus(isBacklightEnabled));
+    }
+
+    @Override
+    public void configurationChanged(DeviceConfigParameters configParameters) {
+        readyToPublishStatus(getContract().STATUS_CONFIG_PARAMETERS, new ParametersStatus(configParameters));
+    }
+
+    @Override
+    public void customCharactersChanged(Set<DeviceCustomCharacter> customCharacters) {
+        readyToPublishStatus(getContract().STATUS_CUSTOM_CHARACTERS, new CustomCharactersStatus(customCharacters));
+    }
+
+    @Override
+    public void buttonPressed(short s) {
+        readyToPublishEvent(getContract().EVENT_BUTTON_PRESSED, new ButtonEvent(s,true));
+    }
+
+    @Override
+    public void buttonReleased(short s) {
+        readyToPublishEvent(getContract().EVENT_BUTTON_RELEASED, new ButtonEvent(s,false));
+    }
+
 }

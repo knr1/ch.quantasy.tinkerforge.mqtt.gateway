@@ -40,12 +40,17 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.soundIntensity;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
+import ch.quantasy.gateway.message.soundIntensity.SoundIntensityEvent;
+import ch.quantasy.gateway.service.tinkerforge.AbstractDeviceService;
+import ch.quantasy.gateway.message.soundIntensity.DeviceSoundIntensityCallbackThreshold;
+import ch.quantasy.gateway.message.soundIntensity.SoundIntensityIntent;
+import ch.quantasy.gateway.message.soundIntensity.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.soundIntensity.IntensityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.soundIntensity.IntensityCallbackThresholdStatus;
+import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
+import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDeviceCallback;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -53,25 +58,36 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author reto
  */
-public class TiMqWay {
+public class SoundIntensityService extends AbstractDeviceService<SoundIntensityDevice, SoundIntensityServiceContract> implements SoundIntensityDeviceCallback {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public SoundIntensityService(SoundIntensityDevice device, URI mqttURI) throws MqttException {
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+        super(mqttURI, device, new SoundIntensityServiceContract(device));
     }
+
+    @Override
+    public void debouncePeriodChanged(long period) {
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+    }
+
+    @Override
+    public void soundIntensityCallbackPeriodChanged(long period) {
+        readyToPublishStatus(getContract().STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, new IntensityCallbackPeriodStatus(period));
+    }
+
+    @Override
+    public void soundIntensityCallbackThresholdChanged(DeviceSoundIntensityCallbackThreshold threshold) {
+        readyToPublishStatus(getContract().STATUS_SOUND_INTENSITY_THRESHOLD, new IntensityCallbackThresholdStatus(threshold));
+    }
+
+    @Override
+    public void intensity(int i) {
+        readyToPublishEvent(getContract().EVENT_INTENSITY, new SoundIntensityEvent(i));
+    }
+
+    @Override
+    public void intensityReached(int i) {
+        readyToPublishEvent(getContract().EVENT_INTENSITY_REACHED, new SoundIntensityEvent(i));
+    }
+
 }

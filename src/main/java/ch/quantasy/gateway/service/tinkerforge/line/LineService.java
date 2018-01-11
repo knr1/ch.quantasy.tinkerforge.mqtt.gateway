@@ -40,12 +40,16 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.line;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
+import ch.quantasy.gateway.message.line.ReflectivityEvent;
+import ch.quantasy.gateway.service.tinkerforge.AbstractDeviceService;
+import ch.quantasy.gateway.message.line.DeviceReflectivityCallbackThreshold;
+import ch.quantasy.gateway.message.line.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.line.ReflectivityCallbackPeriodStatus;
+import ch.quantasy.gateway.message.line.ReflectivityCallbackThresholdStatus;
+import ch.quantasy.tinkerforge.device.line.LineDevice;
+import ch.quantasy.tinkerforge.device.line.LineDeviceCallback;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -53,25 +57,36 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author reto
  */
-public class TiMqWay {
+public class LineService extends AbstractDeviceService<LineDevice, LineServiceContract> implements LineDeviceCallback {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public LineService(LineDevice device, URI mqttURI) throws MqttException {
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+        super(mqttURI, device, new LineServiceContract(device));
     }
+
+    @Override
+    public void debouncePeriodChanged(long period) {
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+    }
+
+    @Override
+    public void reflectivityCallbackPeriodChanged(long period) {
+        readyToPublishStatus(getContract().STATUS_REFLECTIVITY_CALLBACK_PERIOD, new ReflectivityCallbackPeriodStatus(period));
+    }
+
+    @Override
+    public void reflectivityThresholdChanged(DeviceReflectivityCallbackThreshold threshold) {
+        readyToPublishStatus(getContract().STATUS_REFLECTIVITY_THRESHOLD, new ReflectivityCallbackThresholdStatus(threshold));
+    }
+
+    @Override
+    public void reflectivity(int i) {
+        readyToPublishEvent(getContract().EVENT_REFLECTIVITY, new ReflectivityEvent(i));
+    }
+
+    @Override
+    public void reflectivityReached(int i) {
+        readyToPublishEvent(getContract().EVENT_REFLECTIVITY_REACHED, new ReflectivityEvent(i));
+    }
+
 }

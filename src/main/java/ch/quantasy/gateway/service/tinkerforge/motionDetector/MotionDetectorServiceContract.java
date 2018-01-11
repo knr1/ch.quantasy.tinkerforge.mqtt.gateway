@@ -40,38 +40,47 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.motionDetector;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.gateway.message.motionDetector.MotionDetectionCycleEndedEvent;
+import ch.quantasy.gateway.message.motionDetector.MotionDetectionDetected;
+import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
+import java.util.Map;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public class MotionDetectorServiceContract extends DeviceServiceContract {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public final String DETECTION_CYCLE_ENDED;
+    public final String EVENT_DETECTION_CYCLE_ENDED;
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
+    public final String MOTION_DETECTED;
+    public final String EVENT_MOTION_DETECTED;
 
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public MotionDetectorServiceContract(MotionDetectorDevice device) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
+
+    public MotionDetectorServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.MotionDetector.toString());
+    }
+
+    public MotionDetectorServiceContract(String id, String device) {
+        super(id, device, null);
+
+        DETECTION_CYCLE_ENDED = "eventDetectionCycleEnded";
+        EVENT_DETECTION_CYCLE_ENDED = EVENT + "/" + DETECTION_CYCLE_ENDED;
+
+        MOTION_DETECTED = "motionDetected";
+        EVENT_MOTION_DETECTED = EVENT + "/" + MOTION_DETECTED;
+        addMessageTopic(EVENT_DETECTION_CYCLE_ENDED, MotionDetectionCycleEndedEvent.class);
+        addMessageTopic(EVENT_MOTION_DETECTED, MotionDetectionDetected.class);
+ 
+    }
+
+    
 }

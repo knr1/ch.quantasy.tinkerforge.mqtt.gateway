@@ -40,38 +40,55 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.dualRelay;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.gateway.message.dualRelay.MonoflopDoneEvent;
+import ch.quantasy.gateway.message.dualRelay.DualRelayIntent;
+import ch.quantasy.gateway.message.dualRelay.RelayStateStatus;
+import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.dualRelay.DualRelayDevice;
+import java.util.Map;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public class DualRelayServiceContract extends DeviceServiceContract {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public final String STATE;
+    public final String STATUS_STATE;
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
+    public final String SELECTED_STATE;
 
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public final String MONOFLOP_DONE;
+    public final String EVENT_MONOFLOP_DONE;
+
+    public final String MONOFLOP;
+
+    public DualRelayServiceContract(DualRelayDevice device) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
+
+    public DualRelayServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.DualRelay.toString());
+    }
+
+    public DualRelayServiceContract(String id, String device) {
+        super(id, device, DualRelayIntent.class);
+        MONOFLOP_DONE = "monoflopDone";
+        EVENT_MONOFLOP_DONE = EVENT + "/" + MONOFLOP_DONE;
+
+        MONOFLOP = "monoflop";
+
+        STATE = "state";
+        STATUS_STATE = STATUS + "/" + STATE;
+
+        SELECTED_STATE = "selectedState";
+        addMessageTopic(EVENT_MONOFLOP_DONE, MonoflopDoneEvent.class);
+        addMessageTopic(STATUS_STATE, RelayStateStatus.class);
+
+    }
+
+   
 }

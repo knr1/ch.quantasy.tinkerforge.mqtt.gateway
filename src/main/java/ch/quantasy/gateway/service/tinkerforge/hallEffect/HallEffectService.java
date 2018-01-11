@@ -40,38 +40,55 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.hallEffect;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountEvent;
+import ch.quantasy.gateway.service.tinkerforge.AbstractDeviceService;
+import ch.quantasy.gateway.message.hallEffect.DeviceConfiguration;
+import ch.quantasy.gateway.message.hallEffect.HallEffectIntent;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountCallbackPeriodStatus;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountConfigurationStatus;
+import ch.quantasy.gateway.message.hallEffect.EdgeCountInterruptStatus;
+import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDevice;
+import ch.quantasy.tinkerforge.device.hallEffect.HallEffectDeviceCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import java.net.URI;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public class HallEffectService extends AbstractDeviceService<HallEffectDevice, HallEffectServiceContract> implements HallEffectDeviceCallback {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
-
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public HallEffectService(HallEffectDevice device, URI mqttURI) throws MqttException {
+        super(mqttURI, device, new HallEffectServiceContract(device));
     }
+
+    @Override
+    public void edgeInterruptChanged(long period) {
+        readyToPublishStatus(getContract().STATUS_EDGE_COUNT_INTERRUPT, new EdgeCountInterruptStatus(period));
+    }
+
+    @Override
+    public void edgeCountCallbackPeriodChanged(long period) {
+        readyToPublishStatus(getContract().STATUS_EDGE_COUNT_CALLBACK_PERIOD, new EdgeCountCallbackPeriodStatus(period));
+    }
+
+    @Override
+    public void edgeCountConfigChanged(DeviceConfiguration configuration) {
+        readyToPublishStatus(getContract().STATUS_CONFIGURATION, new EdgeCountConfigurationStatus(configuration));
+    }
+
+    @Override
+    public void edgeCountReset(long latestEdgeCount) {
+        readyToPublishEvent(getContract().EVENT_EDGE_COUNT_RESET, new EdgeCountEvent(latestEdgeCount));
+    }
+
+    @Override
+    public void edgeCount(long l, boolean bln) {
+        readyToPublishEvent(getContract().EVENT_EDGE_COUNT, new EdgeCountEvent(l, bln));
+    }
+
+    
+
 }

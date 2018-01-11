@@ -40,38 +40,61 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.remoteSwitch;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
-import java.net.URI;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import ch.quantasy.gateway.message.remoteSwitch.SwitchingEvent;
+import ch.quantasy.gateway.message.remoteSwitch.RemoteSwitchIntent;
+import ch.quantasy.gateway.message.remoteSwitch.RepeatsStatus;
+import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
+import java.util.Map;
 
 /**
  *
  * @author reto
  */
-public class TiMqWay {
+public class RemoteSwitchServiceContract extends DeviceServiceContract {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public final String SWITCHING_DONE;
+    public final String EVENT_SWITCHING_DONE;
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
+    public final String REPEATS;
+    public final String STATUS_REPEATS;
 
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+    public final String SWITCH_SOCKET_A;
+
+    public final String SWITCH_SOCKET_B;
+
+    public final String SWITCH_SOCKET_C;
+
+    public final String DIM_SOCKET_B;
+
+    public RemoteSwitchServiceContract(RemoteSwitchDevice device) {
+        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
+
+    public RemoteSwitchServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.RemoteSwitch.toString());
+    }
+
+    public RemoteSwitchServiceContract(String id, String device) {
+        super(id, device, RemoteSwitchIntent.class);
+
+        SWITCHING_DONE = "switchingDone";
+        EVENT_SWITCHING_DONE = EVENT + "/" + SWITCHING_DONE;
+
+        REPEATS = "repeats";
+        STATUS_REPEATS = STATUS + "/" + REPEATS;
+
+        SWITCH_SOCKET_A = "switchSocketA";
+        SWITCH_SOCKET_B = "switchSocketB";
+        SWITCH_SOCKET_C = "switchSocketC";
+        DIM_SOCKET_B = "dimSocketB";
+        addMessageTopic(EVENT_SWITCHING_DONE, SwitchingEvent.class);
+        addMessageTopic(STATUS_REPEATS, RepeatsStatus.class);
+
+    }
+
+  
 }

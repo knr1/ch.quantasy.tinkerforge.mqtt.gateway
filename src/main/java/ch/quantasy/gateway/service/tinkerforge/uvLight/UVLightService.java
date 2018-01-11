@@ -40,12 +40,16 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway;
+package ch.quantasy.gateway.service.tinkerforge.uvLight;
 
-import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import java.io.IOException;
+import ch.quantasy.gateway.message.uvLight.UVLightEvent;
+import ch.quantasy.gateway.service.tinkerforge.AbstractDeviceService;
+import ch.quantasy.gateway.message.uvLight.DeviceUVLightCallbackThreshold;
+import ch.quantasy.gateway.message.uvLight.DebouncePeriodStatus;
+import ch.quantasy.gateway.message.uvLight.UvLightCallbackPeriodStatus;
+import ch.quantasy.gateway.message.uvLight.UvLightCallbackThresholdStatus;
+import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
+import ch.quantasy.tinkerforge.device.uvLight.UVLightDeviceCallback;
 import java.net.URI;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -53,25 +57,36 @@ import org.eclipse.paho.client.mqttv3.MqttException;
  *
  * @author reto
  */
-public class TiMqWay {
+public class UVLightService extends AbstractDeviceService<UVLightDevice, UVLightServiceContract> implements UVLightDeviceCallback {
 
-    public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
-        //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
-        // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
-        //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
-        URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+    public UVLightService(UVLightDevice device, URI mqttURI) throws MqttException {
 
-        if (args.length > 0) {
-            mqttURI = URI.create(args[0]);
-        } else {
-            System.out.printf("Per default, 'tcp://127.0.0.1:1883' is chosen.\nYou can provide another address as first argument i.e.: tcp://iot.eclipse.org:1883\n");
-        }
-        System.out.printf("\n%s will be used as broker address.\n", mqttURI);
-
-        TinkerForgeManager manager = new TinkerForgeManager(mqttURI);
-        StackManagerService managerService = new StackManagerService(manager, mqttURI);
-        System.out.println("" + managerService);
-        System.in.read();
+        super(mqttURI, device, new UVLightServiceContract(device));
     }
+
+    @Override
+    public void debouncePeriodChanged(long period) {
+        readyToPublishStatus(getContract().STATUS_DEBOUNCE_PERIOD, new DebouncePeriodStatus(period));
+    }
+
+    @Override
+    public void uvLightCallbackPeriodChanged(long period) {
+        readyToPublishStatus(getContract().STATUS_UV_LIGHT_CALLBACK_PERIOD, new UvLightCallbackPeriodStatus(period));
+    }
+
+    @Override
+    public void uvLightCallbackThresholdChanged(DeviceUVLightCallbackThreshold threshold) {
+        readyToPublishStatus(getContract().STATUS_UV_LIGHT_THRESHOLD, new UvLightCallbackThresholdStatus(threshold));
+    }
+
+    @Override
+    public void uvLight(long i) {
+        readyToPublishEvent(getContract().EVENT_UV_LIGHT, new UVLightEvent(i));
+    }
+
+    @Override
+    public void uvLightReached(long i) {
+        readyToPublishEvent(getContract().EVENT_UV_LIGHT_REACHED, new UVLightEvent(i));
+    }
+
 }

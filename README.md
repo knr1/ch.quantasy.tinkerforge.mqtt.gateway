@@ -451,6 +451,49 @@ Status (S) is as fine granular as possible, so you can subscribe to your needs a
 
 No message is lost! It is delivered as fast as possible. If the channel is slower than the message creation, the messages will be delivered as an array of messages. 
 
+### Manager
+```
+TF/Manager/U/<id>/E/stack/address/added
+   stackAddress: 
+     hostName: String <min: 1 max: 255>
+     hostName: String <regEx: \w+(\.\w+){0,3}>
+     port: Number <from: 1024 to: 65535>
+   state: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Manager/U/<id>/E/stack/address/removed
+   stackAddress: 
+     hostName: String <min: 1 max: 255>
+     hostName: String <regEx: \w+(\.\w+){0,3}>
+     port: Number <from: 1024 to: 65535>
+   state: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Manager/U/<id>/I
+   address: 
+     hostName: String <min: 1 max: 255>
+     hostName: String <regEx: \w+(\.\w+){0,3}>
+     port: Number <from: 1024 to: 65535>
+   connect: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Manager/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/Manager/U/<id>/S/stack/address/<address>/connected
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
+```
 
 ### Accelerometer
 ```
@@ -5509,3 +5552,4 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
      option: String <[x, o, i, <, >]>
    
 ```
+
