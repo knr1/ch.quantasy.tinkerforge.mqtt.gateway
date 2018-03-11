@@ -52,7 +52,7 @@ public class TemperatureImageEvent extends AnEvent {
 
     @ArraySize(min = 4800,max = 4800)
     //@Range(from = -400, to=1250)
-    private int[] value;
+    public int[] value;
 
     private TemperatureImageEvent() {
     }
@@ -61,8 +61,5 @@ public class TemperatureImageEvent extends AnEvent {
         this.value = value;
     }
 
-    public int[] getValue() {
-        return value;
-    }
 
 }

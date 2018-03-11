@@ -51,9 +51,9 @@ import ch.quantasy.tinkerforge.device.nfc.NFCTag;
  */
 public class TagReadEvent extends AnEvent {
 @StringForm(regEx = "[0-9A-F]{8-14}")
-    private String id;
-    private Short[] value;
-    private long latestDiscoveryTimeStamp;
+    public String id;
+    public Short[] value;
+    public long latestDiscoveryTimeStamp;
 
     public TagReadEvent(NFCTag tag) {
         this(tag.getTidAsHexString(), tag.getReadContent(),tag.getLatestDiscoveryTimeStamp());
@@ -66,19 +66,4 @@ public class TagReadEvent extends AnEvent {
         this.id = id;
         this.value = value;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public Short[] getValue() {
-        return value;
-    }
-
-    public long getLatestDiscoveryTimeStamp() {
-        return latestDiscoveryTimeStamp;
-    }
-    
-    
-
 }

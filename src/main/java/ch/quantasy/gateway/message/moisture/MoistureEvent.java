@@ -51,17 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class MoistureEvent extends AnEvent {
 
     @Range(from = 0, to = 4095)
-    private int value;
+    public int value;
 
     private MoistureEvent() {
     }
 
     public MoistureEvent(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
 }

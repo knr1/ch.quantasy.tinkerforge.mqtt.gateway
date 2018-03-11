@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class PositionEvent extends AnEvent {
 
     @Range(from = 0, to = 100)
-    private int value;
+    public int value;
 
     private PositionEvent() {
     }
@@ -60,8 +60,6 @@ public class PositionEvent extends AnEvent {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
+    
 
 }

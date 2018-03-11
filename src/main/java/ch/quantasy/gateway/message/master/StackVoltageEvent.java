@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class StackVoltageEvent extends AnEvent {
 
     @Range(from = Integer.MIN_VALUE, to = Integer.MAX_VALUE)
-    private int value;
+    public int value;
 
     private StackVoltageEvent() {
     }
@@ -60,8 +60,5 @@ public class StackVoltageEvent extends AnEvent {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
+    
 }

@@ -51,8 +51,8 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class CounterEvent extends AnEvent {
 
     @Nullable
-    private DeviceCounterParameters counterParameters;
-    private boolean finished;
+    public DeviceCounterParameters counterParameters;
+    public boolean finished;
 
     private CounterEvent() {
     }
@@ -66,13 +66,9 @@ public class CounterEvent extends AnEvent {
         this.finished = finished;
     }
 
-    public DeviceCounterParameters getCounterParameters() {
-        return counterParameters;
-    }
+    
 
-    public boolean getFinished() {
-        return finished;
-    }
+    
     
     
     

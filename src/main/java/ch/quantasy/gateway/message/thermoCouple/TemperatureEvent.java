@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class TemperatureEvent extends AnEvent {
 
     @Range(from = -21000, to = 180000)
-    private long value;
+    public long value;
 
     private TemperatureEvent() {
     }
@@ -60,8 +60,5 @@ public class TemperatureEvent extends AnEvent {
         this.value = value;
     }
 
-    public long getValue() {
-        return value;
-    }
-
+   
 }

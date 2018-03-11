@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class TiltEvent extends AnEvent {
 
     @Range(from = 0, to = 2)
-    private long value;
+    public long value;
 
     private TiltEvent() {
     }
@@ -60,8 +60,5 @@ public class TiltEvent extends AnEvent {
         this.value = value;
     }
 
-    public long getValue() {
-        return value;
-    }
 
 }

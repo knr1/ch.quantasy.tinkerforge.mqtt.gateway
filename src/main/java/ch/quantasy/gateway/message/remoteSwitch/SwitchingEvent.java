@@ -47,8 +47,9 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  *
  * @author reto
  */
-public class SwitchingEvent extends AnEvent{
-    private SocketParameters socketParameters;
+public class SwitchingEvent extends AnEvent {
+
+    public SocketParameters socketParameters;
 
     private SwitchingEvent() {
     }
@@ -57,10 +58,4 @@ public class SwitchingEvent extends AnEvent{
         this.socketParameters = socketParameters;
     }
 
-    public SocketParameters getSocketParameters() {
-        return socketParameters;
-    }
-    
-    
-    
 }

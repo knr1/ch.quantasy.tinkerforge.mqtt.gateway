@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class StackCurrentEvent extends AnEvent {
 
     @Range(from = 0, to = Integer.MAX_VALUE)
-    private int value;
+    public int value;
 
     private StackCurrentEvent() {
     }
@@ -59,9 +59,4 @@ public class StackCurrentEvent extends AnEvent {
     public StackCurrentEvent(int value) {
         this.value = value;
     }
-
-    public int getValue() {
-        return value;
-    }
-
 }

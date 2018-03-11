@@ -47,28 +47,15 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  *
  * @author reto
  */
-public class ButtonEvent extends AnEvent{
+public class ButtonEvent extends AnEvent {
 
-    private boolean pressed;
-    
-     
+    public boolean pressed;
 
     private ButtonEvent() {
     }
 
     public ButtonEvent(boolean pressed) {
-        this.pressed= pressed;
+        this.pressed = pressed;
     }
 
-  
-    public boolean getPressed() {
-        return pressed;
-    }
-    
-
-    
-    
-    
-
-   
 }

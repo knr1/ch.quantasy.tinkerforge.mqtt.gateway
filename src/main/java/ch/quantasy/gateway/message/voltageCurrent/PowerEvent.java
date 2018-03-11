@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class PowerEvent extends AnEvent {
 
     @Range(from = 0, to = 720000)
-    private long value;
+    public long value;
 
     private PowerEvent() {
     }
@@ -60,8 +60,5 @@ public class PowerEvent extends AnEvent {
         this.value = value;
     }
 
-    public long getValue() {
-        return value;
-    }
 
 }

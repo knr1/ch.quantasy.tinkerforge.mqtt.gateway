@@ -53,10 +53,10 @@ import ch.quantasy.tinkerforge.device.nfc.NFCTag;
 public class TagIDEvent extends AnEvent {
 
     @StringForm(regEx = "[0-9A-F]{8-14}")
-    private String id;
-    private NFCType type;
+    public String id;
+    public NFCType type;
     @Period
-    private long latestDiscoveryTimeStamp;
+    public long latestDiscoveryTimeStamp;
 
     private TagIDEvent() {
     }
@@ -70,17 +70,4 @@ public class TagIDEvent extends AnEvent {
         this.type = type;
         this.latestDiscoveryTimeStamp = latestDiscoveryTimeStamp;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public NFCType getType() {
-        return type;
-    }
-
-    public long getLatestDiscoveryTimeStamp() {
-        return latestDiscoveryTimeStamp;
-    }
-
 }

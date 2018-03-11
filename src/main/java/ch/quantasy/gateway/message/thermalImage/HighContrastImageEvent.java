@@ -52,17 +52,13 @@ public class HighContrastImageEvent extends AnEvent {
 
     @ArraySize(min = 4800,max = 4800)
     //@Range(from = -400, to=1250)
-    private int[] value;
+    public int[] value;
 
     private HighContrastImageEvent() {
     }
 
     public HighContrastImageEvent(int[] value) {
         this.value = value;
-    }
-
-    public int[] getValue() {
-        return value;
     }
 
 }

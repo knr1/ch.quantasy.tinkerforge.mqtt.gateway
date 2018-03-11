@@ -47,36 +47,23 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  *
  * @author reto
  */
-public class DateTimeEvent extends AnEvent{
-    private boolean alarm;
-    private DateTimeParameter dateTimeParameter;
-    private Long rtcTimestamp;
+public class DateTimeEvent extends AnEvent {
+
+    public boolean alarm;
+    public DateTimeParameter dateTimeParameter;
+    public Long rtcTimestamp;
 
     private DateTimeEvent() {
     }
 
-    public DateTimeEvent(DateTimeParameter dateTimeParameter,long rtcTimestamp) {
-        this(false,dateTimeParameter,rtcTimestamp);
+    public DateTimeEvent(DateTimeParameter dateTimeParameter, long rtcTimestamp) {
+        this(false, dateTimeParameter, rtcTimestamp);
     }
 
-    public DateTimeEvent(boolean alarm, DateTimeParameter dateTimeParameter,long rtcTimestamp) {
+    public DateTimeEvent(boolean alarm, DateTimeParameter dateTimeParameter, long rtcTimestamp) {
         this.alarm = alarm;
         this.dateTimeParameter = dateTimeParameter;
-        this.rtcTimestamp=rtcTimestamp;
+        this.rtcTimestamp = rtcTimestamp;
     }
 
-    public DateTimeParameter getDateTimeParameter() {
-        return dateTimeParameter;
-    }
-
-    public Long getRtcTimestamp() {
-        return rtcTimestamp;
-    }
-    
-    
-    
-    
-    
-    
-    
 }

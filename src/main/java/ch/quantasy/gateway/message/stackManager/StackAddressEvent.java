@@ -50,8 +50,8 @@ import ch.quantasy.gateway.message.stack.TinkerforgeStackAddress;
  */
 public class StackAddressEvent extends AnEvent{
 
-    private boolean state;
-    private TinkerforgeStackAddress stackAddress;
+    public boolean state;
+    public TinkerforgeStackAddress stackAddress;
     
      
 
@@ -62,20 +62,4 @@ public class StackAddressEvent extends AnEvent{
         this.state= state;
         this.stackAddress=stackAddress;
     }
-
-    public TinkerforgeStackAddress getStackAddress() {
-        return stackAddress;
-    }
-
-  
-    public boolean getState() {
-        return state;
-    }
-    
-
-    
-    
-    
-
-   
 }

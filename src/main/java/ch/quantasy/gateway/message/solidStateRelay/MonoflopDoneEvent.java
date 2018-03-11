@@ -49,7 +49,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class MonoflopDoneEvent extends AnEvent{
 
-    private boolean state;
+    public boolean state;
     
      
 
@@ -61,9 +61,6 @@ public class MonoflopDoneEvent extends AnEvent{
     }
 
   
-    public boolean getState() {
-        return state;
-    }
     
 
     

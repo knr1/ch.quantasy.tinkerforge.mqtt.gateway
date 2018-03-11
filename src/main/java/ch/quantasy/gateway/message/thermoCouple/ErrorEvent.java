@@ -49,20 +49,12 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class ErrorEvent extends AnEvent {
 
-    protected boolean voltage;
-    protected boolean openCircuit;
+    public boolean voltage;
+    public boolean openCircuit;
 
     public ErrorEvent(boolean voltage, boolean openCircuit) {
         this.voltage = voltage;
         this.openCircuit = openCircuit;
-    }
-
-    public boolean getVoltage() {
-        return voltage;
-    }
-
-    public boolean getOpenCircuit() {
-        return openCircuit;
     }
 
 }

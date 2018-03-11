@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class USBVoltageEvent extends AnEvent {
 
     @Range(from = Integer.MIN_VALUE, to = Integer.MAX_VALUE)
-    private int value;
+    public int value;
 
     private USBVoltageEvent() {
     }
@@ -59,9 +59,4 @@ public class USBVoltageEvent extends AnEvent {
     public USBVoltageEvent(int value) {
         this.value = value;
     }
-
-    public int getValue() {
-        return value;
-    }
-
 }

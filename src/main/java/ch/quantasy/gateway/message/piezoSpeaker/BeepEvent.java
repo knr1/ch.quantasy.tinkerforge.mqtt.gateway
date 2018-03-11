@@ -50,11 +50,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class BeepEvent extends AnEvent{
     @Nullable
-    private BeepParameter beepParameter;
-
-    public BeepParameter getBeepParameter() {
-        return beepParameter;
-    }
+    public BeepParameter beepParameter;
 
     public BeepEvent() {
     }

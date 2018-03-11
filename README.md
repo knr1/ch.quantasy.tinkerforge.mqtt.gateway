@@ -451,6 +451,10 @@ Status (S) is as fine granular as possible, so you can subscribe to your needs a
 
 No message is lost! It is delivered as fast as possible. If the channel is slower than the message creation, the messages will be delivered as an array of messages. 
 
+cd /home/reto/NetBeansProjects/ch.quantasy.tinkerforge.mqtt.gateway; JAVA_HOME=/usr/lib/jvm/default /usr/share/netbeans/java/maven/bin/mvn "-Dexec.args=-classpath %classpath ch.quantasy.gateway.service.doc.Descriptions" -Dexec.executable=/usr/lib/jvm/default/bin/java -Dexec.classpathScope=runtime org.codehaus.mojo:exec-maven-plugin:1.2.1:exec
+Running NetBeans Compile On Save execution. Phase execution is skipped and output directories of dependency projects (with Compile on Save turned on) will be used instead of their jar artifacts.
+Scanning for projects...
+ 
 ### Manager
 ```
 TF/Manager/U/<id>/E/stack/address/added
@@ -469,16 +473,6 @@ TF/Manager/U/<id>/E/stack/address/removed
      hostName: String <regEx: \w+(\.\w+){0,3}>
      port: Number <from: 1024 to: 65535>
    state: Boolean <true,false> 
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Manager/U/<id>/I
-   address: 
-     hostName: String <min: 1 max: 255>
-     hostName: String <regEx: \w+(\.\w+){0,3}>
-     port: Number <from: 1024 to: 65535>
-   connect: Boolean <true,false> 
    timeStamp: Number <from: 0 to: 9223372036854775807>
    
 ```
@@ -3948,7 +3942,6 @@ TF/PiezoSpeaker/U/<id>/E/calibrated
 ```
 ```
 TF/PiezoSpeaker/U/<id>/E/finished
-   morseCodeParameter: null
    morseCodeParameter: 
      frequency: Number <from: 585 to: 7100>
      string: String <regEx: [\.\s-]{1,60}>
@@ -3957,7 +3950,6 @@ TF/PiezoSpeaker/U/<id>/E/finished
 ```
 ```
 TF/PiezoSpeaker/U/<id>/E/started
-   morseCodeParameter: null
    morseCodeParameter: 
      frequency: Number <from: 585 to: 7100>
      string: String <regEx: [\.\s-]{1,60}>
@@ -4305,6 +4297,101 @@ TF/RemoteSwitch/U/<id>/S/position
 TF/RemoteSwitch/U/<id>/S/repeats
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: Number <from: 0 to: 32767>
+   
+```
+
+### RemoteSwitchV2
+```
+TF/RemoteSwitchV2/U/<id>/E/switch/A
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RemoteSwitchV2/U/<id>/E/switch/B
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RemoteSwitchV2/U/<id>/E/switch/C
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RemoteSwitchV2/U/<id>/E/switchingDone
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RemoteSwitchV2/U/<id>/I
+   dimSocketBParameters: null
+   dimSocketBParameters: 
+     address: Number <from: 0 to: 67108863>
+     dimValue: Number <from: 0 to: 15>
+     unit: Number <from: 0 to: 15>
+   remoteSwitchConfiguration: null
+   remoteSwitchConfiguration: 
+     callbackEnabled: Boolean <true,false> 
+     minimumRepeats: Number <from: 0 to: 2147483647>
+     remoteType: String <A,B,C>
+   repeats: null
+   repeats: Number <from: 0 to: 2147483647>
+   switchSocketAParameters: null
+   switchSocketAParameters: 
+     houseCode: Number <from: 0 to: 31>
+     receiverCode: Number <from: 0 to: 31>
+     switchingValue: String <switchOn,switchOff>
+   switchSocketBParameters: null
+   switchSocketBParameters: 
+     address: Number <from: 0 to: 67108863>
+     switchingValue: String <switchOn,switchOff>
+     unit: Number <from: 0 to: 15>
+   switchSocketCParameters: null
+   switchSocketCParameters: 
+     deviceCode: Number <from: 1 to: 16>
+     switchingValue: String <switchOn,switchOff>
+     systemCode: String <[A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/RemoteSwitchV2/U/<id>/S/config
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     callbackEnabled: Boolean <true,false> 
+     minimumRepeats: Number <from: 0 to: 2147483647>
+     remoteType: String <A,B,C>
+   
+```
+```
+TF/RemoteSwitchV2/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/RemoteSwitchV2/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/RemoteSwitchV2/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/RemoteSwitchV2/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+```
+TF/RemoteSwitchV2/U/<id>/S/repeats
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2147483647>
    
 ```
 
@@ -4879,6 +4966,199 @@ TF/SoundIntensity/U/<id>/S/soundIntensity/threshold
      max: Number <from: 0 to: 10000>
      min: Number <from: 0 to: 10000>
      option: String <[x, o, i, <, >]>
+   
+```
+
+### Stepper
+```
+TF/Stepper/U/<id>/E/emergencyShutdown
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Stepper/U/<id>/E/fullBrake
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Stepper/U/<id>/E/undervoltage
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 32767>
+   
+```
+```
+TF/Stepper/U/<id>/E/velocity
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -127 to: 127>
+   
+```
+```
+TF/Stepper/U/<id>/E/velocity/reached
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: -127 to: 127>
+   
+```
+```
+TF/Stepper/U/<id>/I
+   allDataPeriod: null
+   allDataPeriod: Number <from: 0 to: 9223372036854775807>
+   currentPosition: null
+   currentPosition: Number <from: 0 to: 2147483647>
+   decay: null
+   decay: Number <from: 0 to: 65535>
+   driveMode: null
+   driveMode: String <forward,backward,stop,fullBrake>
+   enable: null
+   enable: Boolean <true,false> 
+   maxVelocity: null
+   maxVelocity: Number <from: 0 to: 2147483647>
+   minimumVoltage: null
+   minimumVoltage: Number <from: 6000 to: 2147483647>
+   motorCurrent: null
+   motorCurrent: Number <from: 100 to: 2291>
+   speedRamp: null
+   speedRamp: 
+     acceleration: Number <from: 0 to: 2147483647>
+     deacceleration: Number <from: 0 to: 2147483647>
+   stepMode: null
+   stepMode: String <fullStep,halfStep,quarterStep,eighthStep>
+   steps: null
+   steps: Number <from: 0 to: 2147483647>
+   syncRect: null
+   syncRect: Boolean <true,false> 
+   targetPosition: null
+   targetPosition: Number <from: 0 to: 9223372036854775807>
+   timeBase: null
+   timeBase: Number <from: 0 to: 9223372036854775807>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Stepper/U/<id>/S/acceleration
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2147483647>
+   
+```
+```
+TF/Stepper/U/<id>/S/allDataPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Stepper/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/Stepper/U/<id>/S/currentPosition
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2147483647>
+   
+```
+```
+TF/Stepper/U/<id>/S/decay
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 65535>
+   
+```
+```
+TF/Stepper/U/<id>/S/driveMode
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <forward,backward,stop,fullBrake>
+   
+```
+```
+TF/Stepper/U/<id>/S/enabled
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
+```
+```
+TF/Stepper/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/Stepper/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/Stepper/U/<id>/S/minimumVoltage
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 6000 to: 2147483647>
+   
+```
+```
+TF/Stepper/U/<id>/S/motorCurrent
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 100 to: 2291>
+   
+```
+```
+TF/Stepper/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+```
+TF/Stepper/U/<id>/S/pwmFrequency
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 1 to: 20000>
+   
+```
+```
+TF/Stepper/U/<id>/S/rectification
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Boolean <true,false> 
+   
+```
+```
+TF/Stepper/U/<id>/S/stepMode
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <fullStep,halfStep,quarterStep,eighthStep>
+   
+```
+```
+TF/Stepper/U/<id>/S/steps
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2147483647>
+   
+```
+```
+TF/Stepper/U/<id>/S/targetPosition
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2147483647>
+   
+```
+```
+TF/Stepper/U/<id>/S/timeBase
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Stepper/U/<id>/S/velocity/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Stepper/U/<id>/S/velocity/velocity
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2147483647>
+   
+```
+```
+TF/Stepper/U/<id>/S/velocityMax
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 2147483647>
    
 ```
 
@@ -5552,4 +5832,3 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
      option: String <[x, o, i, <, >]>
    
 ```
-

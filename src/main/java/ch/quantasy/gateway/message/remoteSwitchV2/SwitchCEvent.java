@@ -41,6 +41,8 @@
  */
 package ch.quantasy.gateway.message.remoteSwitchV2;
 
+import ch.quantasy.gateway.message.remoteSwitch.SwitchSocketCParameters;
+import ch.quantasy.gateway.message.remoteSwitch.SwitchSocketParameters;
 import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 
 /**

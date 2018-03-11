@@ -49,8 +49,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  * @author reto
  */
 public class MorseEvent extends AnEvent{
-    @Nullable
-    private MorseCodeParameter morseCodeParameter;
+    public MorseCodeParameter morseCodeParameter;
 
     public MorseEvent() {
     }
@@ -58,12 +57,4 @@ public class MorseEvent extends AnEvent{
     public MorseEvent(MorseCodeParameter morseCodeParameter) {
         this.morseCodeParameter = morseCodeParameter;
     }
-
-    
-    
-    public MorseCodeParameter getMorseCodeParameter() {
-        return morseCodeParameter;
-    }
-    
-    
 }

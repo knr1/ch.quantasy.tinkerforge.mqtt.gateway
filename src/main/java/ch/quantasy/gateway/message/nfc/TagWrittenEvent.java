@@ -52,9 +52,9 @@ import ch.quantasy.tinkerforge.device.nfc.NFCTag;
 public class TagWrittenEvent extends AnEvent {
 
     @StringForm(regEx = "[0-9A-F]{8-14}")
-    private String id;
-    private NFCTag.NFCRFIDReaderState state;
-    private Short[] value;
+    public String id;
+    public NFCTag.NFCRFIDReaderState state;
+    public Short[] value;
 
     public TagWrittenEvent(NFCTag tag) {
         this(tag.getTidAsHexString(), tag.getLatestReaderState(), tag.getWriteContent());
@@ -67,18 +67,6 @@ public class TagWrittenEvent extends AnEvent {
         this.id = id;
         this.state = readerState;
         this.value = value;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Short[] getValue() {
-        return value;
-    }
-
-    public NFCTag.NFCRFIDReaderState getState() {
-        return state;
     }
 
 }

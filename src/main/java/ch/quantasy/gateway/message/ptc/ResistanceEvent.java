@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class ResistanceEvent extends AnEvent {
 
     @Range(from = 0, to = Short.MAX_VALUE)
-    private int value;
+    public int value;
 
     private ResistanceEvent() {
     }
@@ -60,8 +60,5 @@ public class ResistanceEvent extends AnEvent {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
+   
 }

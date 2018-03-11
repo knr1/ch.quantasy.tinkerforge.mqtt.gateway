@@ -51,17 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class UVLightEvent extends AnEvent {
 
     @Range(from = 0, to = 328000)
-    private long value;
+    public long value;
 
     private UVLightEvent() {
     }
 
     public UVLightEvent(long value) {
         this.value = value;
-    }
-
-    public long getValue() {
-        return value;
     }
 
 }

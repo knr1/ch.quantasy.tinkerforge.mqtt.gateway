@@ -51,17 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class TouchStateEvent extends AnEvent {
 
     @Range(from = 0, to = 8191)
-    private int value;
+    public int value;
 
     private TouchStateEvent() {
     }
 
     public TouchStateEvent(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
 }

@@ -49,8 +49,8 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class VelocityEvent extends AnEvent {
 
-        private short id;
-        private short velocity;
+        public short id;
+        public short velocity;
 
         private VelocityEvent() {
         }
@@ -60,13 +60,7 @@ public class VelocityEvent extends AnEvent {
             this.velocity = velocity;
         }
 
-        public short getId() {
-            return id;
-        }
-
-        public short getVelocity() {
-            return velocity;
-        }
+        
 
     }
 

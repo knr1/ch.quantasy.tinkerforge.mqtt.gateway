@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class SoundIntensityEvent extends AnEvent {
 
     @Range(from = 0, to = 10000)
-    private long value;
+    public long value;
 
     private SoundIntensityEvent() {
     }
@@ -60,8 +60,6 @@ public class SoundIntensityEvent extends AnEvent {
         this.value = value;
     }
 
-    public long getValue() {
-        return value;
-    }
+    
 
 }
