@@ -46,6 +46,7 @@ import ch.quantasy.gateway.message.dualButton.StateChangedEvent;
 import ch.quantasy.gateway.message.dualButton.DualButtonIntent;
 import ch.quantasy.gateway.message.dualButton.LedStateStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dualButton.DualButtonDevice;
 import java.util.Map;
@@ -86,9 +87,12 @@ public class DualButtonServiceContract extends DeviceServiceContract {
         STATUS_LED_STATE = STATUS + "/" + LED_STATE;
 
         SELECTED_LED_STATE = "selectedLEDState";
-        addMessageTopic(EVENT_STATE_CHANGED, StateChangedEvent.class);
-        addMessageTopic(STATUS_LED_STATE, LedStateStatus.class);
+    }
 
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_STATE_CHANGED, StateChangedEvent.class);
+        messageTopicMap.put(STATUS_LED_STATE, LedStateStatus.class);
     }
 
    

@@ -54,23 +54,23 @@ import com.tinkerforge.BrickletColor;
 public class DeviceColorCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 0, to = 65535)
-    private int minR;
+    public int minR;
     @Range(from = 0, to = 65535)
-    private int maxR;
+    public int maxR;
     @Range(from = 0, to = 65535)
-    private int minG;
+    public int minG;
     @Range(from = 0, to = 65535)
-    private int maxG;
+    public int maxG;
     @Range(from = 0, to = 65535)
-    private int minB;
+    public int minB;
     @Range(from = 0, to = 65535)
-    private int maxB;
+    public int maxB;
     @Range(from = 0, to = 65535)
-    private int minC;
+    public int minC;
     @Range(from = 0, to = 65535)
-    private int maxC;
+    public int maxC;
 
     public DeviceColorCallbackThreshold() {
     }
@@ -90,41 +90,4 @@ public class DeviceColorCallbackThreshold extends AValidator {
     public DeviceColorCallbackThreshold(BrickletColor.ColorCallbackThreshold threshold) {
         this(threshold.option, threshold.minR, threshold.maxR, threshold.minG, threshold.maxG, threshold.minB, threshold.maxB, threshold.minC, threshold.maxC);
     }
-
-    public int getMaxB() {
-        return maxB;
-    }
-
-    public int getMaxC() {
-        return maxC;
-    }
-
-    public int getMaxG() {
-        return maxG;
-    }
-
-    public int getMaxR() {
-        return maxR;
-    }
-
-    public int getMinB() {
-        return minB;
-    }
-
-    public int getMinC() {
-        return minC;
-    }
-
-    public int getMinG() {
-        return minG;
-    }
-
-    public int getMinR() {
-        return minR;
-    }
-
-    public char getOption() {
-        return option;
-    }
-
 }

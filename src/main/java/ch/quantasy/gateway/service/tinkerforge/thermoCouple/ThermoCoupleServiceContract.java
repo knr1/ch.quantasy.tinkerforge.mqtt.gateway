@@ -50,6 +50,7 @@ import ch.quantasy.gateway.message.thermoCouple.DebouncePeriodStatus;
 import ch.quantasy.gateway.message.thermoCouple.TemperatureCallbackPeriodStatus;
 import ch.quantasy.gateway.message.thermoCouple.TemperatureCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.thermoCouple.ThermoCoupleDevice;
 import java.util.Map;
@@ -117,14 +118,18 @@ public class ThermoCoupleServiceContract extends DeviceServiceContract {
 
         ERROR = "error";
         EVENT_ERROR = EVENT + "/" + ERROR;
+    }
 
-        addMessageTopic(EVENT_TEMPERATURE, TemperatureEvent.class);
-        addMessageTopic(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
-        addMessageTopic(EVENT_ERROR, ErrorEvent.class);
-        addMessageTopic(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_TEMPERATURE_THRESHOLD, TemperatureCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_TEMPERATURE, TemperatureEvent.class);
+        messageTopicMap.put(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
+        messageTopicMap.put(EVENT_ERROR, ErrorEvent.class);
+        messageTopicMap.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_TEMPERATURE_THRESHOLD, TemperatureCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_CONFIGURATION, ConfigurationStatus.class);
     }
 
    

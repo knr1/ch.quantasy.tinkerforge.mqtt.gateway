@@ -54,11 +54,11 @@ import com.tinkerforge.BrickletLoadCell;
 public class DeviceWeightCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = -50001, to = 50001)
-    private int min;
+    public int min;
     @Range(from = -50001, to = 50001)
-    private int max;
+    public int max;
 
     public DeviceWeightCallbackThreshold() {
     }
@@ -72,17 +72,4 @@ public class DeviceWeightCallbackThreshold extends AValidator {
     public DeviceWeightCallbackThreshold(BrickletLoadCell.WeightCallbackThreshold threshold) {
         this(threshold.option, threshold.min, threshold.max);
     }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
-    }
-
 }

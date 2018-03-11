@@ -52,21 +52,21 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class CoordinatesEvent extends AnEvent {
 
     @Range(from = Long.MIN_VALUE, to = Long.MAX_VALUE)
-    private long latitude;
+    public long latitude;
     @Choice(values = {"N", "S"})
-    private char ns;
+    public char ns;
     @Range(from = Long.MIN_VALUE, to = Long.MAX_VALUE)
-    private long longitude;
+    public long longitude;
     @Choice(values = {"E", "W"})
-    private char ew;
+    public char ew;
     @Range(from = Integer.MIN_VALUE, to = Integer.MAX_VALUE)
-    private int pdop;
+    public int pdop;
     @Range(from = Integer.MIN_VALUE, to = Integer.MAX_VALUE)
-    private int hdop;
+    public int hdop;
     @Range(from = Integer.MIN_VALUE, to = Integer.MAX_VALUE)
-    private int vdop;
+    public int vdop;
     @Range(from = Integer.MIN_VALUE, to = Integer.MAX_VALUE)
-    private int epe;
+    public int epe;
 
     private CoordinatesEvent() {
     }
@@ -81,37 +81,4 @@ public class CoordinatesEvent extends AnEvent {
         this.vdop = vdop;
         this.epe = epe;
     }
-
-    public int getEpe() {
-        return epe;
-    }
-
-    public char getEw() {
-        return ew;
-    }
-
-    public int getHdop() {
-        return hdop;
-    }
-
-    public long getLatitude() {
-        return latitude;
-    }
-
-    public long getLongitude() {
-        return longitude;
-    }
-
-    public char getNs() {
-        return ns;
-    }
-
-    public int getPdop() {
-        return pdop;
-    }
-
-    public int getVdop() {
-        return vdop;
-    }
-
 }

@@ -43,7 +43,6 @@ package ch.quantasy.gateway.message.dualRelay;
 
 import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
 import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 
 /**
@@ -52,10 +51,10 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class MonoflopDoneEvent extends AnEvent {
 
-    @Choice(values = {"1","2"})
-    private short relay;
+    @Choice(values = {"1", "2"})
+    public short relay;
     @NonNull
-    private boolean state;
+    public boolean state;
 
     private MonoflopDoneEvent() {
     }
@@ -63,14 +62,6 @@ public class MonoflopDoneEvent extends AnEvent {
     public MonoflopDoneEvent(short relay, boolean state) {
         this.relay = relay;
         this.state = state;
-    }
-
-    public short getRelay() {
-        return relay;
-    }
-
-    public boolean getState() {
-        return state;
     }
 
 }

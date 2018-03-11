@@ -51,17 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class ColorTemperatureEvent extends AnEvent {
 
     @Range(from = 0, to = 65535)
-    private long value;
+    public long value;
 
     private ColorTemperatureEvent() {
     }
 
     public ColorTemperatureEvent(long value) {
         this.value = value;
-    }
-
-    public long getValue() {
-        return value;
     }
 
 }

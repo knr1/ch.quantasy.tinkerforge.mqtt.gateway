@@ -54,10 +54,10 @@ import com.tinkerforge.BrickletDualRelay;
 public class DeviceMonoflopParameters extends AValidator {
 
     @Choice(values = {"1", "2"})
-    private short relay;
-    private boolean state;
+    public short relay;
+    public boolean state;
     @Period
-    private long period;
+    public long period;
 
     private DeviceMonoflopParameters() {
     }
@@ -78,17 +78,6 @@ public class DeviceMonoflopParameters extends AValidator {
         this(relay, monoflop.state, monoflop.timeRemaining);
     }
 
-    public short getRelay() {
-        return relay;
-    }
-
-    public long getPeriod() {
-        return period;
-    }
-
-    public boolean getState() {
-        return state;
-    }
 
     @Override
     public int hashCode() {

@@ -42,7 +42,6 @@
 package ch.quantasy.gateway.message.laserRangeFinder;
 
 import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Ranges;
 import com.tinkerforge.BrickletLaserRangeFinder;

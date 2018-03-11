@@ -42,7 +42,6 @@
 package ch.quantasy.gateway.message.distanceUS;
 
 import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Ranges;
 import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 
 /**
@@ -50,8 +49,9 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  * @author reto
  */
 public class DistanceEvent extends AnEvent {
+
     @Range(from = 0, to = 4095)
-    private long value;
+    public long value;
 
     private DistanceEvent() {
     }

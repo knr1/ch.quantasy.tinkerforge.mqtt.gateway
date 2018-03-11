@@ -43,7 +43,6 @@ package ch.quantasy.gateway.message.RGBLEDButton;
 
 import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
-import com.tinkerforge.BrickletRGBLED;
 import com.tinkerforge.BrickletRGBLEDButton;
 
 /**
@@ -60,9 +59,9 @@ public class RGBColor extends AValidator {
     public int red;
 
     public RGBColor(int red, int green, int blue) {
-        this.blue =  blue;
-        this.green =  green;
-        this.red =  red;
+        this.blue = blue;
+        this.green = green;
+        this.red = red;
     }
 
     public RGBColor(BrickletRGBLEDButton.Color value) {

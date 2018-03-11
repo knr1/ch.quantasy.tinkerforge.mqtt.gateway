@@ -48,6 +48,7 @@ import ch.quantasy.gateway.message.soundIntensity.DebouncePeriodStatus;
 import ch.quantasy.gateway.message.soundIntensity.IntensityCallbackPeriodStatus;
 import ch.quantasy.gateway.message.soundIntensity.IntensityCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
 import java.util.Map;
@@ -103,11 +104,16 @@ public class SoundIntensityServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        addMessageTopic(EVENT_INTENSITY, SoundIntensityEvent.class);
-        addMessageTopic(EVENT_INTENSITY_REACHED, SoundIntensityEvent.class);
-        addMessageTopic(STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, IntensityCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_SOUND_INTENSITY_THRESHOLD, IntensityCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_INTENSITY, SoundIntensityEvent.class);
+        messageTopicMap.put(EVENT_INTENSITY_REACHED, SoundIntensityEvent.class);
+        messageTopicMap.put(STATUS_SOUND_INTENSITY_CALLBACK_PERIOD, IntensityCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_SOUND_INTENSITY_THRESHOLD, IntensityCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
    

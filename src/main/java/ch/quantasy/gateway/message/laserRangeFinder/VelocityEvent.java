@@ -50,7 +50,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class VelocityEvent extends AnEvent{
      @Range(from = -127, to = 127)
-    private long value;
+    public long value;
 
     private VelocityEvent() {
     }
@@ -59,8 +59,4 @@ public class VelocityEvent extends AnEvent{
         this.value = value;
     }
 
-    public long getValue() {
-        return value;
-    }
-    
 }

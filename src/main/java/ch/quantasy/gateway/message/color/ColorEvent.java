@@ -51,13 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class ColorEvent extends AnEvent {
 
     @Range(from = 0, to = 65535)
-    private int red;
+    public int red;
     @Range(from = 0, to = 65535)
-    private int green;
+    public int green;
     @Range(from = 0, to = 65535)
-    private int blue;
+    public int blue;
     @Range(from = 0, to = 65535)
-    private int clear;
+    public int clear;
 
     private ColorEvent() {
     }
@@ -69,20 +69,5 @@ public class ColorEvent extends AnEvent {
         this.clear = clear;
     }
 
-    public int getBlue() {
-        return blue;
-    }
-
-    public int getClear() {
-        return clear;
-    }
-
-    public int getGreen() {
-        return green;
-    }
-
-    public int getRed() {
-        return red;
-    }
-
+    
 }

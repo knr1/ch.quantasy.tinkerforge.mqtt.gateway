@@ -54,11 +54,11 @@ import com.tinkerforge.BrickletLine;
 public class DeviceReflectivityCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 0, to = 4095)
-    private int min;
+    public int min;
     @Range(from = 0, to = 4095)
-    private int max;
+    public int max;
 
     public DeviceReflectivityCallbackThreshold() {
     }
@@ -68,17 +68,4 @@ public class DeviceReflectivityCallbackThreshold extends AValidator {
         this.min = threshold.min;
         this.max = threshold.max;
     }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
-    }
-
 }

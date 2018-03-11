@@ -103,7 +103,7 @@ public class DustDetectorDevice extends GenericDevice<BrickletDustDetector, Dust
         }
         if (intent.dustDensityCallbackThreshold != null) {
             try {
-                getDevice().setDustDensityCallbackThreshold(intent.dustDensityCallbackThreshold.getOption(), intent.dustDensityCallbackThreshold.getMin(), intent.dustDensityCallbackThreshold.getMax());
+                getDevice().setDustDensityCallbackThreshold(intent.dustDensityCallbackThreshold.option, intent.dustDensityCallbackThreshold.min, intent.dustDensityCallbackThreshold.max);
                 getIntent().dustDensityCallbackThreshold = new DeviceDustDensityCallbackThreshold(getDevice().getDustDensityCallbackThreshold());
                 super.getCallback().dustDensityCallbackThresholdChanged(getIntent().dustDensityCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

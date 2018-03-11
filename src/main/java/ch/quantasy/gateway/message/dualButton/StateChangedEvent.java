@@ -53,13 +53,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class StateChangedEvent extends AnEvent {
 
     @NonNull
-    private LEDState led1;
+    public LEDState led1;
     @NonNull
-    private LEDState led2;
+    public LEDState led2;
     @Choice(values = {"0", "1"})
-    private short switch1;
+    public short switch1;
     @Choice(values = {"0", "1"})
-    private short switch2;
+    public short switch2;
 
     private StateChangedEvent() {
     }
@@ -73,22 +73,6 @@ public class StateChangedEvent extends AnEvent {
         this.led2 = led2;
         this.switch1 = switch1;
         this.switch2 = switch2;
-    }
-
-    public LEDState getLed1() {
-        return led1;
-    }
-
-    public LEDState getLed2() {
-        return led2;
-    }
-
-    public short getSwitch1() {
-        return switch1;
-    }
-
-    public short getSwitch2() {
-        return switch2;
     }
 
 }

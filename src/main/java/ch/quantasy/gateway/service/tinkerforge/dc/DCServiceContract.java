@@ -55,6 +55,7 @@ import ch.quantasy.gateway.message.dc.PwmFrequencyStatus;
 import ch.quantasy.gateway.message.dc.VelocityStatus;
 import ch.quantasy.gateway.message.dc.VelocityPeriodStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dc.DCDevice;
 import java.util.Map;
@@ -147,19 +148,22 @@ public class DCServiceContract extends DeviceServiceContract {
         PWM_FREQUENCY = "pwmFrequency";
         STATUS_PWM_FREQUENCY = STATUS + "/" + PWM_FREQUENCY;
 
-        addMessageTopic(EVENT_FULL_BRAKE, FullBrakeEvent.class);
-        addMessageTopic(EVENT_UNDERVOLTAGE, UnderVoltageEvent.class);
-        addMessageTopic(EVENT_VELOCITY, VelocityEvent.class);
-        addMessageTopic(EVENT_VELOCITY_REACHED, VelocityEvent.class);
-        addMessageTopic(EVENT_EMERGENCY_SHUTDOWN, EmergencyShutdownEvent.class);
-        addMessageTopic(STATUS_ACCELERATION, AccelerationStatus.class);
-        addMessageTopic(STATUS_DRIVER_MODE, DriveModeStatus.class);
-        addMessageTopic(STATUS_ENABLED, EnableStatus.class);
-        addMessageTopic(STATUS_MINIMUM_VOLTAGE, MinimumVoltageStatus.class);
-        addMessageTopic(STATUS_PWM_FREQUENCY, PwmFrequencyStatus.class);
-        addMessageTopic(STATUS_VELOCITY_VELOCITY, VelocityStatus.class);
-        addMessageTopic(STATUS_VELOCITY_CALLBACK_PERIOD, VelocityPeriodStatus.class);
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_FULL_BRAKE, FullBrakeEvent.class);
+        messageTopicMap.put(EVENT_UNDERVOLTAGE, UnderVoltageEvent.class);
+        messageTopicMap.put(EVENT_VELOCITY, VelocityEvent.class);
+        messageTopicMap.put(EVENT_VELOCITY_REACHED, VelocityEvent.class);
+        messageTopicMap.put(EVENT_EMERGENCY_SHUTDOWN, EmergencyShutdownEvent.class);
+        messageTopicMap.put(STATUS_ACCELERATION, AccelerationStatus.class);
+        messageTopicMap.put(STATUS_DRIVER_MODE, DriveModeStatus.class);
+        messageTopicMap.put(STATUS_ENABLED, EnableStatus.class);
+        messageTopicMap.put(STATUS_MINIMUM_VOLTAGE, MinimumVoltageStatus.class);
+        messageTopicMap.put(STATUS_PWM_FREQUENCY, PwmFrequencyStatus.class);
+        messageTopicMap.put(STATUS_VELOCITY_VELOCITY, VelocityStatus.class);
+        messageTopicMap.put(STATUS_VELOCITY_CALLBACK_PERIOD, VelocityPeriodStatus.class);
+    }
+
 }

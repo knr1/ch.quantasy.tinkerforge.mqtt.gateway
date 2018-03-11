@@ -107,7 +107,7 @@ public class LoadCellDevice extends GenericDevice<BrickletLoadCell, LoadCellDevi
         }
         if (intent.weightCallbackThreshold != null) {
             try {
-                getDevice().setWeightCallbackThreshold(intent.weightCallbackThreshold.getOption(), intent.weightCallbackThreshold.getMin(), intent.weightCallbackThreshold.getMax());
+                getDevice().setWeightCallbackThreshold(intent.weightCallbackThreshold.option, intent.weightCallbackThreshold.min, intent.weightCallbackThreshold.max);
                 getIntent().weightCallbackThreshold = new DeviceWeightCallbackThreshold(getDevice().getWeightCallbackThreshold());
                 super.getCallback().weightCallbackThresholdChanged(getIntent().weightCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

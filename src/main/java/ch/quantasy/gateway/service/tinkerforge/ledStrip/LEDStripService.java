@@ -44,19 +44,14 @@ package ch.quantasy.gateway.service.tinkerforge.ledStrip;
 
 import ch.quantasy.gateway.message.ledStrip.LagingEvent;
 import ch.quantasy.gateway.message.ledStrip.RenderedEvent;
-import ch.quantasy.gateway.message.laserRangeFinder.LaserRangeFinderIntent;
 import ch.quantasy.gateway.service.tinkerforge.AbstractDeviceService;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDevice;
 import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDeviceCallback;
 import ch.quantasy.gateway.message.ledStrip.LEDStripDeviceConfig;
-import ch.quantasy.gateway.message.ledStrip.LEDFrame;
-import ch.quantasy.gateway.message.ledStrip.LedStripIntent;
 import ch.quantasy.gateway.message.ledStrip.ConfigStatus;
 
 import java.net.URI;
-import java.util.Deque;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  *

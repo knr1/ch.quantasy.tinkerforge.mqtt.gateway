@@ -51,6 +51,7 @@ import ch.quantasy.gateway.message.loadCell.StatusLEDStatus;
 import ch.quantasy.gateway.message.loadCell.WeightCallbackPeriodStatus;
 import ch.quantasy.gateway.message.loadCell.WeightCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import java.util.Map;
@@ -132,16 +133,19 @@ public class LoadCellServiceContract extends DeviceServiceContract {
         STATUS_LED = STATUS + "/" + LED;
 
         CALIBRATE = "calibrate";
-        addMessageTopic(EVENT_WEIGHT, WeightEvent.class);
-        addMessageTopic(EVENT_WEIGHT_REACHED, WeightEvent.class);
-        addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
-
-        addMessageTopic(STATUS_WEIGHT_CALLBACK_PERIOD, WeightCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_WEIGHT_THRESHOLD, WeightCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
-        addMessageTopic(STATUS_LED, StatusLEDStatus.class);
     }
 
-    
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+
+        messageTopicMap.put(EVENT_WEIGHT, WeightEvent.class);
+        messageTopicMap.put(EVENT_WEIGHT_REACHED, WeightEvent.class);
+        messageTopicMap.put(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
+        messageTopicMap.put(STATUS_WEIGHT_CALLBACK_PERIOD, WeightCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_WEIGHT_THRESHOLD, WeightCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_CONFIGURATION, ConfigurationStatus.class);
+        messageTopicMap.put(STATUS_LED, StatusLEDStatus.class);
+    }
+
 }

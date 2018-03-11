@@ -54,11 +54,11 @@ import com.tinkerforge.BrickletLaserRangeFinder;
 public class DeviceDistanceCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 0, to = 4000)
-    private int min;
+    public int min;
     @Range(from = 0, to = 4000)
-    private int max;
+    public int max;
 
     public DeviceDistanceCallbackThreshold() {
     }
@@ -71,18 +71,6 @@ public class DeviceDistanceCallbackThreshold extends AValidator {
         this.option = option;
         this.min = min;
         this.max = max;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
     }
 
 }

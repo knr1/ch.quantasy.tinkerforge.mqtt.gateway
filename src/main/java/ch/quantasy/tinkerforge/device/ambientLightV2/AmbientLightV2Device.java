@@ -105,7 +105,7 @@ public class AmbientLightV2Device extends GenericDevice<BrickletAmbientLightV2, 
         }
         if (intent.illuminanceCallbackThreshold != null) {
             try {
-                getDevice().setIlluminanceCallbackThreshold(intent.illuminanceCallbackThreshold.getOption(), intent.illuminanceCallbackThreshold.getMin(), intent.illuminanceCallbackThreshold.getMax());
+                getDevice().setIlluminanceCallbackThreshold(intent.illuminanceCallbackThreshold.option, intent.illuminanceCallbackThreshold.min, intent.illuminanceCallbackThreshold.max);
                 getIntent().illuminanceCallbackThreshold = new DeviceIlluminanceCallbackThreshold(getDevice().getIlluminanceCallbackThreshold());
                 super.getCallback().illuminanceCallbackThresholdChanged(getIntent().illuminanceCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

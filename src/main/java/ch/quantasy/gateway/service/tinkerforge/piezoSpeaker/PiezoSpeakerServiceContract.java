@@ -47,6 +47,7 @@ import ch.quantasy.gateway.message.piezoSpeaker.CalibratedEvent;
 import ch.quantasy.gateway.message.piezoSpeaker.MorseEvent;
 import ch.quantasy.gateway.message.piezoSpeaker.PiezoSpeakerIntent;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import java.util.Map;
@@ -90,12 +91,15 @@ public class PiezoSpeakerServiceContract extends DeviceServiceContract {
         EVENT_BEEP_FINISHED = EVENT + "/" + FINISHED;
         EVENT_MORSE_FINISHED = EVENT + "/" + FINISHED;
         EVENT_MORSE_STARTED = EVENT + "/" + STARTED;
-        addMessageTopic(EVENT_CALIBRATED, CalibratedEvent.class);
-        addMessageTopic(EVENT_BEEP_FINISHED, BeepEvent.class);
-        addMessageTopic(EVENT_BEEP_STARTED, BeepEvent.class);
-        addMessageTopic(EVENT_MORSE_FINISHED, MorseEvent.class);
-        addMessageTopic(EVENT_MORSE_STARTED, MorseEvent.class);
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_CALIBRATED, CalibratedEvent.class);
+        messageTopicMap.put(EVENT_BEEP_FINISHED, BeepEvent.class);
+        messageTopicMap.put(EVENT_BEEP_STARTED, BeepEvent.class);
+        messageTopicMap.put(EVENT_MORSE_FINISHED, MorseEvent.class);
+        messageTopicMap.put(EVENT_MORSE_STARTED, MorseEvent.class);
+    }
+
 }

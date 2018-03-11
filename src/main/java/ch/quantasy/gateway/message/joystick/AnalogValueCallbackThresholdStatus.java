@@ -1,10 +1,15 @@
 package ch.quantasy.gateway.message.joystick;
-import ch.quantasy.gateway.message.joystick.DeviceAnalogValueCallbackThreshold;
+
 import ch.quantasy.mqtt.gateway.client.message.AStatus;
-public class AnalogValueCallbackThresholdStatus extends AStatus{
-public DeviceAnalogValueCallbackThreshold value;
-private AnalogValueCallbackThresholdStatus(){}
-public AnalogValueCallbackThresholdStatus(DeviceAnalogValueCallbackThreshold value){
-  this.value=value;
-}
+
+public class AnalogValueCallbackThresholdStatus extends AStatus {
+
+    public DeviceAnalogValueCallbackThreshold value;
+
+    private AnalogValueCallbackThresholdStatus() {
+    }
+
+    public AnalogValueCallbackThresholdStatus(DeviceAnalogValueCallbackThreshold value) {
+        this.value = value;
+    }
 }

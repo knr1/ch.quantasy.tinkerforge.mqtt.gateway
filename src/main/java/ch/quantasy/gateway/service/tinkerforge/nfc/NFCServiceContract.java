@@ -48,6 +48,7 @@ import ch.quantasy.gateway.message.nfc.TagWrittenEvent;
 import ch.quantasy.gateway.message.nfc.NFCIntent;
 import ch.quantasy.gateway.message.nfc.ScanningIntervalStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import java.util.Map;
@@ -89,11 +90,16 @@ public class NFCServiceContract extends DeviceServiceContract {
         EVENT_TAG_READ = EVENT + "/" + TAG + "/" + READ;
         WRITE = "write";
         EVENT_TAG_WRITTEN = EVENT + "/" + TAG + "/written";
-        addMessageTopic(EVENT_TAG_DISCOVERD, TagIDEvent.class);
-        addMessageTopic(EVENT_TAG_READ, TagReadEvent.class);
-        addMessageTopic(EVENT_TAG_VANISHED, TagIDEvent.class);
-        addMessageTopic(EVENT_TAG_WRITTEN, TagWrittenEvent.class);
-        addMessageTopic(STATUS_SCANNING_CALLBACK_PERIOD, ScanningIntervalStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_TAG_DISCOVERD, TagIDEvent.class);
+        messageTopicMap.put(EVENT_TAG_READ, TagReadEvent.class);
+        messageTopicMap.put(EVENT_TAG_VANISHED, TagIDEvent.class);
+        messageTopicMap.put(EVENT_TAG_WRITTEN, TagWrittenEvent.class);
+        messageTopicMap.put(STATUS_SCANNING_CALLBACK_PERIOD, ScanningIntervalStatus.class);
 
     }
 

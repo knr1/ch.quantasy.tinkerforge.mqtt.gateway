@@ -54,11 +54,11 @@ import com.tinkerforge.BrickletAnalogInV2;
 public class DeviceVoltageCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 0, to = 42000)
-    private int min;
+    public int min;
     @Range(from = 0, to = 42000)
-    private int max;
+    public int max;
 
     public DeviceVoltageCallbackThreshold() {
     }
@@ -71,18 +71,6 @@ public class DeviceVoltageCallbackThreshold extends AValidator {
         this.option = option;
         this.min = min;
         this.max = max;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
     }
 
 }

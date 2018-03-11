@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class HumidityEvent extends AnEvent {
     @Range(from = 0, to = 1000)
-    private long value;
+    public long value;
 
     private HumidityEvent() {
     }
@@ -60,8 +60,5 @@ public class HumidityEvent extends AnEvent {
         this.value = value;
     }
 
-    public long getValue() {
-        return value;
-    }
 
 }

@@ -51,6 +51,7 @@ import ch.quantasy.gateway.message.distanceIR.DebouncePeriodStatus;
 import ch.quantasy.gateway.message.distanceIR.DistanceCallbackPeriodStatus;
 import ch.quantasy.gateway.message.distanceIR.DistanceCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.distanceIR.DistanceIRDevice;
 import java.util.Map;
@@ -119,17 +120,20 @@ public class DistanceIRServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-
-        addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
-        addMessageTopic(EVENT_DISTANCE, DistanceEvent.class);
-        addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
-        addMessageTopic(EVENT_DISTANCE_REACHED, DistanceEvent.class);
-        addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_DISTANCE_CALLBACK_PERIOD, DistanceCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DISTANCE_THRESHOLD, DistanceCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
-    
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+
+        messageTopicMap.put(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
+        messageTopicMap.put(EVENT_DISTANCE, DistanceEvent.class);
+        messageTopicMap.put(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
+        messageTopicMap.put(EVENT_DISTANCE_REACHED, DistanceEvent.class);
+        messageTopicMap.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_DISTANCE_CALLBACK_PERIOD, DistanceCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DISTANCE_THRESHOLD, DistanceCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+    }
+
 }

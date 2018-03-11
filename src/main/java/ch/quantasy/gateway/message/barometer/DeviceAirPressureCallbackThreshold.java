@@ -54,11 +54,11 @@ import com.tinkerforge.BrickletBarometer;
 public class DeviceAirPressureCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 10000, to = 1200000)
-    private int min;
+    public int min;
     @Range(from = 10000, to = 1200000)
-    private int max;
+    public int max;
 
     public DeviceAirPressureCallbackThreshold() {
     }
@@ -73,16 +73,5 @@ public class DeviceAirPressureCallbackThreshold extends AValidator {
         this(threshold.option, threshold.min, threshold.max);
     }
 
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
-    }
-
+   
 }

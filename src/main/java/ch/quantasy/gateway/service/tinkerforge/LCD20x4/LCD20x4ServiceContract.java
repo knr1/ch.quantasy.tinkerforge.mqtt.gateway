@@ -50,6 +50,7 @@ import ch.quantasy.gateway.message.LCD20x4.DefaultTextCounterStatus;
 import ch.quantasy.gateway.message.LCD20x4.DefaultTextsStatus;
 import ch.quantasy.gateway.message.LCD20x4.ParametersStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.LCD20x4.LCD20x4Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import java.util.Map;
@@ -110,14 +111,17 @@ public class LCD20x4ServiceContract extends DeviceServiceContract {
         BUTTON = "button";
 
         EVENT_BUTTON = EVENT + "/" + BUTTON;
-        
-        addMessageTopic(EVENT_BUTTON, ButtonEvent.class);
-        addMessageTopic(STATUS_BACKLIGHT, BacklightStatus.class);
-        addMessageTopic(STATUS_CONFIG_PARAMETERS, ParametersStatus.class);
-        addMessageTopic(STATUS_CUSTOM_CHARACTERS, CustomCharactersStatus.class);
-        addMessageTopic(STATUS_DEFAULT_TEXT_TEXTS, DefaultTextsStatus.class);
-        addMessageTopic(STATUS_DEFAULT_TEXT_COUNTER, DefaultTextCounterStatus.class);
+
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_BUTTON, ButtonEvent.class);
+        messageTopicMap.put(STATUS_BACKLIGHT, BacklightStatus.class);
+        messageTopicMap.put(STATUS_CONFIG_PARAMETERS, ParametersStatus.class);
+        messageTopicMap.put(STATUS_CUSTOM_CHARACTERS, CustomCharactersStatus.class);
+        messageTopicMap.put(STATUS_DEFAULT_TEXT_TEXTS, DefaultTextsStatus.class);
+        messageTopicMap.put(STATUS_DEFAULT_TEXT_COUNTER, DefaultTextCounterStatus.class);
+    }
+
 }

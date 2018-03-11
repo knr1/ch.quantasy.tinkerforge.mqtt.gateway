@@ -51,10 +51,10 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class AllDataEvent extends AnEvent{
     
-    private AccelerationEvent acceleration;
-    private MagneticFieldEvent magneticField;
-    private AngularVelocityEvent angularVelocity;
-    private TemperatureEvent temperature;
+    public AccelerationEvent acceleration;
+    public MagneticFieldEvent magneticField;
+    public AngularVelocityEvent angularVelocity;
+    public TemperatureEvent temperature;
 
     private AllDataEvent() {
     }
@@ -65,23 +65,5 @@ public class AllDataEvent extends AnEvent{
         this.angularVelocity = angularVelocity;
         this.temperature = temperature;
     }
-
-    public AccelerationEvent getAcceleration() {
-        return acceleration;
-    }
-
-    public MagneticFieldEvent getMagneticField() {
-        return magneticField;
-    }
-
-    public AngularVelocityEvent getAngularVelocity() {
-        return angularVelocity;
-    }
-
-    public TemperatureEvent getTemperature() {
-        return temperature;
-    }
-
-    
     
 }

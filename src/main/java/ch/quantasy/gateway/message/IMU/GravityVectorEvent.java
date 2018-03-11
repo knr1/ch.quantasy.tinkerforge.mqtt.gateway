@@ -48,14 +48,14 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  *
  * @author reto
  */
-public class GravityVectorEvent extends AnEvent{
-    
+public class GravityVectorEvent extends AnEvent {
+
     @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
-    private short x;
+    public short x;
     @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
-    private short y;
+    public short y;
     @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
-    private short z;
+    public short z;
 
     private GravityVectorEvent() {
     }
@@ -66,16 +66,4 @@ public class GravityVectorEvent extends AnEvent{
         this.z = z;
     }
 
-    public short getX() {
-        return x;
-    }
-
-    public short getY() {
-        return y;
-    }
-
-    public short getZ() {
-        return z;
-    }
-    
 }

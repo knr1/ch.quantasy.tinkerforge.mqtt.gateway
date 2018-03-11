@@ -55,8 +55,10 @@ import ch.quantasy.gateway.message.gps.MotionCallbackPeriodStatus;
 import ch.quantasy.gateway.message.gpsv2.FixLEDConfigStatus;
 import ch.quantasy.gateway.message.gpsv2.StatusLEDConfigStatus;
 import ch.quantasy.gateway.service.tinkerforge.gps.GPSServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.gpsV2.GPSv2Device;
+import java.util.Map;
 
 /**
  *
@@ -64,7 +66,7 @@ import ch.quantasy.tinkerforge.device.gpsV2.GPSv2Device;
  */
 public class GPSv2ServiceContract extends GPSServiceContract {
 
-     private final String LED_CONFIG;
+    private final String LED_CONFIG;
     public final String STATUS_FIX_LED_CONFIG;
     public final String STATUS_STATE_LED_CONFIG;
 
@@ -78,25 +80,28 @@ public class GPSv2ServiceContract extends GPSServiceContract {
 
     public GPSv2ServiceContract(String id, String device) {
         super(id, device, GPSv2Intent.class);
-    
+
         LED_CONFIG = "led";
         STATUS_STATE_LED_CONFIG = STATUS + "/" + STATE + "/" + LED_CONFIG;
         STATUS_FIX_LED_CONFIG = STATUS + "/" + "fix" + "/" + LED_CONFIG;
-        addMessageTopic(EVENT_ALTITUDE, AltitudeEvent.class);
-        addMessageTopic(EVENT_DATE_TIME, DateTimeEvent.class);
-        addMessageTopic(EVENT_MOTION, MotionEvent.class);
-        addMessageTopic(EVENT_STATE, StatusEvent.class);
-        addMessageTopic(EVENT_COORDINATES, CoordinatesEvent.class);
-        addMessageTopic(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
-
-        addMessageTopic(STATUS_MOTION_CALLBACK_PERIOD, MotionCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ALTITUDE_CALLBACK_PERIOD, AltitudeCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_COORDINATES_CALLBACK_PERIOD, CoordinatesCallbackPeriodStatus.class);
-
-        addMessageTopic(STATUS_STATE_LED_CONFIG, StatusLEDConfigStatus.class);
-
-        addMessageTopic(STATUS_FIX_LED_CONFIG, FixLEDConfigStatus.class);
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_ALTITUDE, AltitudeEvent.class);
+        messageTopicMap.put(EVENT_DATE_TIME, DateTimeEvent.class);
+        messageTopicMap.put(EVENT_MOTION, MotionEvent.class);
+        messageTopicMap.put(EVENT_STATE, StatusEvent.class);
+        messageTopicMap.put(EVENT_COORDINATES, CoordinatesEvent.class);
+        messageTopicMap.put(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
+
+        messageTopicMap.put(STATUS_MOTION_CALLBACK_PERIOD, MotionCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ALTITUDE_CALLBACK_PERIOD, AltitudeCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_COORDINATES_CALLBACK_PERIOD, CoordinatesCallbackPeriodStatus.class);
+
+        messageTopicMap.put(STATUS_STATE_LED_CONFIG, StatusLEDConfigStatus.class);
+
+        messageTopicMap.put(STATUS_FIX_LED_CONFIG, FixLEDConfigStatus.class);
+    }
+
 }

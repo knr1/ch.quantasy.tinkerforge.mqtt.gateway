@@ -51,13 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class QuaternionEvent extends AnEvent {
 
     @Fraction(from = -1.0, to = 1.0)
-    private float w;
+    public float w;
     @Fraction(from = -1.0, to = 1.0)
-    private float x;
+    public float x;
     @Fraction(from = -1.0, to = 1.0)
-    private float y;
+    public float y;
     @Fraction(from = -1.0, to = 1.0)
-    private float z;
+    public float z;
 
     private QuaternionEvent() {
     }
@@ -67,22 +67,6 @@ public class QuaternionEvent extends AnEvent {
         this.x = x;
         this.y = y;
         this.z = z;
-    }
-
-    public float getW() {
-        return w;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public float getZ() {
-        return z;
     }
 
 }

@@ -54,13 +54,13 @@ import com.tinkerforge.BrickletAccelerometer;
 public class DeviceAccelerationCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
-    private short minX;
-    private short maxX;
-    private short minY;
-    private short maxY;
-    private short minZ;
-    private short maxZ;
+    public char option;
+    public short minX;
+    public short maxX;
+    public short minY;
+    public short maxY;
+    public short minZ;
+    public short maxZ;
 
     public DeviceAccelerationCallbackThreshold() {
     }
@@ -77,34 +77,6 @@ public class DeviceAccelerationCallbackThreshold extends AValidator {
 
     public DeviceAccelerationCallbackThreshold(BrickletAccelerometer.AccelerationCallbackThreshold threshold) {
         this(threshold.option, threshold.minX, threshold.maxX, threshold.minY, threshold.maxY, threshold.minZ, threshold.maxZ);
-    }
-
-    public char getOption() {
-        return option;
-    }
-
-    public short getMaxX() {
-        return maxX;
-    }
-
-    public short getMaxY() {
-        return maxY;
-    }
-
-    public short getMaxZ() {
-        return maxZ;
-    }
-
-    public short getMinX() {
-        return minX;
-    }
-
-    public short getMinY() {
-        return minY;
-    }
-
-    public short getMinZ() {
-        return minZ;
     }
 
 }

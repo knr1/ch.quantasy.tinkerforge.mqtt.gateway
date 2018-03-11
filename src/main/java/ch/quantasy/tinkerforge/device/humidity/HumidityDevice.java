@@ -119,7 +119,7 @@ public class HumidityDevice extends GenericDevice<BrickletHumidity, HumidityDevi
         }
         if (intent.analogValueCallbackThreshold != null) {
             try {
-                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.getOption(), intent.analogValueCallbackThreshold.getMin(), intent.analogValueCallbackThreshold.getMax());
+                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.option, intent.analogValueCallbackThreshold.min, intent.analogValueCallbackThreshold.max);
                 getIntent().analogValueCallbackThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
                 super.getCallback().analogValueCallbackThresholdChanged(getIntent().analogValueCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {
@@ -128,7 +128,7 @@ public class HumidityDevice extends GenericDevice<BrickletHumidity, HumidityDevi
         }
         if (intent.humidityCallbackThreshold != null) {
             try {
-                getDevice().setHumidityCallbackThreshold(intent.humidityCallbackThreshold.getOption(), intent.humidityCallbackThreshold.getMin(), intent.humidityCallbackThreshold.getMax());
+                getDevice().setHumidityCallbackThreshold(intent.humidityCallbackThreshold.option, intent.humidityCallbackThreshold.min, intent.humidityCallbackThreshold.max);
                 getIntent().humidityCallbackThreshold = new DevicePositionCallbackThreshold(getDevice().getHumidityCallbackThreshold());
                 super.getCallback().humidityCallbackThresholdChanged(getIntent().humidityCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

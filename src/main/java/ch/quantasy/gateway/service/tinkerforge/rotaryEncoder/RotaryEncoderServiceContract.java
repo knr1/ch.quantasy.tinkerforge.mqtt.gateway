@@ -49,6 +49,7 @@ import ch.quantasy.gateway.message.rotaryEncoder.CountCallbackPeriodStatus;
 import ch.quantasy.gateway.message.rotaryEncoder.CountThresholdStatus;
 import ch.quantasy.gateway.message.rotaryEncoder.DebouncePeriodStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import java.util.Map;
@@ -118,15 +119,19 @@ public class RotaryEncoderServiceContract extends DeviceServiceContract {
 
         RESET = "reset";
         EVENT_COUNT_RESET = EVENT_COUNT + "/" + RESET;
-        addMessageTopic(EVENT_PRESSED, ButtonEvent.class);
-        addMessageTopic(EVENT_RELEASED, ButtonEvent.class);
-        addMessageTopic(EVENT_COUNT_RESET, CountEvent.class);
+    }
 
-        addMessageTopic(EVENT_COUNT, CountEvent.class);
-        addMessageTopic(EVENT_COUNT_REACHED, CountEvent.class);
-        addMessageTopic(STATUS_COUNT_CALLBACK_PERIOD, CountCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_COUNT_THRESHOLD, CountThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+
+        messageTopicMap.put(EVENT_PRESSED, ButtonEvent.class);
+        messageTopicMap.put(EVENT_RELEASED, ButtonEvent.class);
+        messageTopicMap.put(EVENT_COUNT_RESET, CountEvent.class);
+        messageTopicMap.put(EVENT_COUNT, CountEvent.class);
+        messageTopicMap.put(EVENT_COUNT_REACHED, CountEvent.class);
+        messageTopicMap.put(STATUS_COUNT_CALLBACK_PERIOD, CountCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_COUNT_THRESHOLD, CountThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
 }

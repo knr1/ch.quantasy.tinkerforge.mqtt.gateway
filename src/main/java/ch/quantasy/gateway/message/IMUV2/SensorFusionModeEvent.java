@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class SensorFusionModeEvent extends AnEvent{
 
     @Choice(values = {"0", "1", "2"})
-    public Short sensorFusionMode;
+    public short sensorFusionMode;
 
     private SensorFusionModeEvent() {
     }

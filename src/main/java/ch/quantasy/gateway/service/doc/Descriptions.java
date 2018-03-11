@@ -75,6 +75,7 @@ public class Descriptions {
         for (String contractClassName : contractClassNames) {
             try {
                 TinkerForgeServiceContract contract = (TinkerForgeServiceContract) (Class.forName(contractClassName).getConstructor(String.class).newInstance("<id>"));
+                contract.publishContracts();
                 System.out.println(contract.toMD());
             } catch (Exception ex) {
             }

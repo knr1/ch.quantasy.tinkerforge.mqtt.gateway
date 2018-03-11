@@ -52,6 +52,7 @@ import ch.quantasy.gateway.message.analogInV2.VoltageCallbackPeriodStatus;
 import ch.quantasy.gateway.message.analogInV2.VoltageCallbackThresholdStatus;
 import ch.quantasy.gateway.message.loadCell.MovingAverageStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogInV2.AnalogInV2Device;
 import java.util.Map;
@@ -126,18 +127,20 @@ public class AnalogInV2ServiceContract extends DeviceServiceContract {
 
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-
-        addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
-        addMessageTopic(EVENT_VOLTAGE, VoltageEvent.class);
-        addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
-        addMessageTopic(EVENT_VOLTAGE_REACHED, VoltageEvent.class);
-        addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogValueCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_VOLTAGE_CALLBACK_PERIOD, VoltageCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_VOLTAGE_THRESHOLD, VoltageCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
+        messageTopicMap.put(EVENT_VOLTAGE, VoltageEvent.class);
+        messageTopicMap.put(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
+        messageTopicMap.put(EVENT_VOLTAGE_REACHED, VoltageEvent.class);
+        messageTopicMap.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogValueCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_VOLTAGE_CALLBACK_PERIOD, VoltageCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_VOLTAGE_THRESHOLD, VoltageCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
+    }
+
 }

@@ -50,9 +50,9 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  * @author reto
  */
 public class StatusEvent extends AnEvent {
-    private boolean fix;
+    public boolean fix;
     @Range(from = 0, to = Short.MAX_VALUE)
-    private int satellitesView;
+    public int satellitesView;
    
 
     private StatusEvent() {
@@ -62,14 +62,4 @@ public class StatusEvent extends AnEvent {
         this.fix = fix;
         this.satellitesView = satellitesView;
     }
-
-    public boolean getFix() {
-        return fix;
-    }
-
-
-    public int getSatellitesView() {
-        return satellitesView;
-    }
-
 }

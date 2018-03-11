@@ -50,10 +50,11 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  * @author reto
  */
 public class EdgeCountEvent extends AnEvent {
-    @Range(from = 0,to = Long.MAX_VALUE)
-    private long count;
+
+    @Range(from = 0, to = Long.MAX_VALUE)
+    public long count;
     @Nullable
-    private Boolean greater35Gauss;
+    public Boolean greater35Gauss;
 
     private EdgeCountEvent() {
     }
@@ -65,14 +66,6 @@ public class EdgeCountEvent extends AnEvent {
     public EdgeCountEvent(long value, Boolean greater35Gauss) {
         this.count = value;
         this.greater35Gauss = greater35Gauss;
-    }
-
-    public long getCount() {
-        return count;
-    }
-
-    public Boolean getGreater35Gauss() {
-        return greater35Gauss;
     }
 
 }

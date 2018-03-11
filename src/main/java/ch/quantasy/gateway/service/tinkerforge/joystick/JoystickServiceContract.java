@@ -53,6 +53,7 @@ import ch.quantasy.gateway.message.joystick.DebouncePeriodStatus;
 import ch.quantasy.gateway.message.joystick.PositionCallbackPeriodStatus;
 import ch.quantasy.gateway.message.joystick.PositionCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.joystick.JoystickDevice;
 import java.util.Map;
@@ -137,20 +138,24 @@ public class JoystickServiceContract extends DeviceServiceContract {
 
         RELEASED = "released";
         EVENT_RELEASED = EVENT + "/" + RELEASED;
+    }
 
-        addMessageTopic(EVENT_CALIBRATE, CalibratedEvent.class);
-        addMessageTopic(EVENT_PRESSED, ButtonEvent.class);
-        addMessageTopic(EVENT_RELEASED, ButtonEvent.class);
-        addMessageTopic(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
-        addMessageTopic(EVENT_POSITION, PositionEvent.class);
-        addMessageTopic(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
-        addMessageTopic(EVENT_POSITION_REACHED, PositionEvent.class);
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_CALIBRATE, CalibratedEvent.class);
+        messageTopicMap.put(EVENT_PRESSED, ButtonEvent.class);
+        messageTopicMap.put(EVENT_RELEASED, ButtonEvent.class);
+        messageTopicMap.put(EVENT_ANALOG_VALUE, AnalogValueEvent.class);
+        messageTopicMap.put(EVENT_POSITION, PositionEvent.class);
+        messageTopicMap.put(EVENT_ANALOG_VALUE_REACHED, AnalogValueEvent.class);
+        messageTopicMap.put(EVENT_POSITION_REACHED, PositionEvent.class);
 
-        addMessageTopic(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_POSITION_CALLBACK_PERIOD, PositionCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_POSITION_THRESHOLD, PositionCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_ANALOG_VALUE_CALLBACK_PERIOD, AnalogCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_POSITION_CALLBACK_PERIOD, PositionCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ANALOG_VALUE_THRESHOLD, AnalogValueCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_POSITION_THRESHOLD, PositionCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
     

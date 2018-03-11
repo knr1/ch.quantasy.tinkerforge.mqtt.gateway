@@ -53,9 +53,9 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
 public class DeviceSelectedLEDStateParameters extends AValidator {
 
     @Choice(values = {"1", "2"})
-    private short led;
+    public short led;
     @NonNull
-    private LEDState state;
+    public LEDState state;
 
     public DeviceSelectedLEDStateParameters() {
     }
@@ -67,14 +67,6 @@ public class DeviceSelectedLEDStateParameters extends AValidator {
 
     public DeviceSelectedLEDStateParameters(short led, short state) throws IllegalArgumentException {
         this(led, LEDState.getLEDStateFor(state));
-    }
-
-    public short getLed() {
-        return led;
-    }
-
-    public LEDState getState() {
-        return state;
     }
 
     @Override

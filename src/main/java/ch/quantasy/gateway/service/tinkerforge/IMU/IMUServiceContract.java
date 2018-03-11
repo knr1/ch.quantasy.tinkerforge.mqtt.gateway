@@ -59,8 +59,10 @@ import ch.quantasy.gateway.message.IMU.OrientationCallbackPeriodStatus;
 import ch.quantasy.gateway.message.IMU.QuaternionCallbackPeriodStatus;
 import ch.quantasy.gateway.message.IMU.StatusLEDStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
+import java.util.Map;
 
 /**
  *
@@ -141,24 +143,27 @@ public class IMUServiceContract extends DeviceServiceContract {
 
         ORIENTATION_CALCULATION = ORIENTATION + "/" + "calculation";
         STATUS_ORIENTATION_CALCULATION = STATUS + "/" + ORIENTATION_CALCULATION;
-        
-         addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
-        addMessageTopic(EVENT_ANGULAR_VELOCITY, AngularVelocityEvent.class);
-        addMessageTopic(EVENT_MAGNETIC_FIELD, MagneticFieldEvent.class);
-        addMessageTopic(EVENT_ORIENTATION, OrientationEvent.class);
-        addMessageTopic(EVENT_QUATERNION, QuaternionEvent.class);
-        addMessageTopic(EVENT_ALL_DATA, AllDataEvent.class);
-        addMessageTopic(STATUS_ACCELERATION_CALLBACK_PERIOD, AccelerationCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ALL_DATA_CALLBACK_PERIOD, AllDataCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, AngularVelocityCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, MagneticFieldCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ORIENTATION_CALLBACK_PERIOD, OrientationCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_QUATERNION_CALLBACK_PERIOD, QuaternionCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_STATUS_LED, StatusLEDStatus.class);
-        addMessageTopic(STATUS_LEDS, LedsStatus.class);
-        addMessageTopic(STATUS_ORIENTATION_CALCULATION, OrientationCalculationStatus.class);
-
     }
 
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+  messageTopicMap.put(EVENT_ACCELERATION, AccelerationEvent.class);
+        messageTopicMap.put(EVENT_ANGULAR_VELOCITY, AngularVelocityEvent.class);
+        messageTopicMap.put(EVENT_MAGNETIC_FIELD, MagneticFieldEvent.class);
+        messageTopicMap.put(EVENT_ORIENTATION, OrientationEvent.class);
+        messageTopicMap.put(EVENT_QUATERNION, QuaternionEvent.class);
+        messageTopicMap.put(EVENT_ALL_DATA, AllDataEvent.class);
+        messageTopicMap.put(STATUS_ACCELERATION_CALLBACK_PERIOD, AccelerationCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ALL_DATA_CALLBACK_PERIOD, AllDataCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, AngularVelocityCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, MagneticFieldCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ORIENTATION_CALLBACK_PERIOD, OrientationCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_QUATERNION_CALLBACK_PERIOD, QuaternionCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_STATUS_LED, StatusLEDStatus.class);
+        messageTopicMap.put(STATUS_LEDS, LedsStatus.class);
+        messageTopicMap.put(STATUS_ORIENTATION_CALCULATION, OrientationCalculationStatus.class);
+    }
+
+    
     
 }

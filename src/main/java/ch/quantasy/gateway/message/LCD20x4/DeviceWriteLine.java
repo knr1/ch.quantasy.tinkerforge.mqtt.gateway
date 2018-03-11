@@ -53,11 +53,11 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.StringSize;
 public class DeviceWriteLine extends AValidator {
 
     @StringSize(max = 20)
-    private String text;
+    public String text;
     @Range(from = 0, to = 3)
-    private short line;
+    public short line;
     @Range(from = 0, to = 19)
-    private short position;
+    public short position;
 
     public DeviceWriteLine() {
     }
@@ -66,18 +66,6 @@ public class DeviceWriteLine extends AValidator {
         this.text = text;
         this.line = line;
         this.position = position;
-    }
-
-    public short getLine() {
-        return line;
-    }
-
-    public short getPosition() {
-        return position;
-    }
-
-    public String getText() {
-        return text;
     }
 
     @Override

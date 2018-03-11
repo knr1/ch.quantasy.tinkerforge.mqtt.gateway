@@ -54,13 +54,8 @@ import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import java.net.URI;
 import java.util.Comparator;
 import java.util.Set;
-import java.util.Arrays;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import java.util.Deque;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.HashSet;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

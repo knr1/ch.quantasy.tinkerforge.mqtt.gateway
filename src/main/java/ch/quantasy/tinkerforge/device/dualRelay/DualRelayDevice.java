@@ -96,10 +96,10 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
         if (intent.monoflopParameters != null && !intent.monoflopParameters.isEmpty()) {
             try {
                 for (DeviceMonoflopParameters parameters : intent.monoflopParameters) {
-                    getDevice().setMonoflop(parameters.getRelay(), parameters.getState(), parameters.getPeriod());
-                    BrickletDualRelay.Monoflop monoflop = getDevice().getMonoflop(parameters.getRelay());
+                    getDevice().setMonoflop(parameters.relay, parameters.state, parameters.period);
+                    BrickletDualRelay.Monoflop monoflop = getDevice().getMonoflop(parameters.relay);
                     // This is a patch, as Tinkerforge does not provide the relay.
-                    this.getIntent().monoflopParameters.add(new DeviceMonoflopParameters(parameters.getRelay(), monoflop));
+                    this.getIntent().monoflopParameters.add(new DeviceMonoflopParameters(parameters.relay, monoflop));
                 }
                 this.getIntent().relayState = new DeviceRelayState(getDevice().getState());
                 super.getCallback().stateChanged(this.getIntent().relayState);
@@ -110,7 +110,7 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
         if (intent.selectedRelayStates != null && !intent.selectedRelayStates.isEmpty()) {
             try {
                 for (DeviceSelectedRelayState parameters : intent.selectedRelayStates) {
-                    getDevice().setSelectedState(parameters.getRelay(), parameters.getState());
+                    getDevice().setSelectedState(parameters.relay, parameters.state);
                 }
                 this.getIntent().relayState = new DeviceRelayState(getDevice().getState());
                 super.getCallback().stateChanged(this.getIntent().relayState);
@@ -120,7 +120,7 @@ public class DualRelayDevice extends GenericDevice<BrickletDualRelay, DualRelayD
         }
         if (intent.relayState != null) {
             try {
-                getDevice().setState(intent.relayState.getRelay1(), intent.relayState.getRelay2());
+                getDevice().setState(intent.relayState.relay1, intent.relayState.relay2);
                 getIntent().relayState = new DeviceRelayState(getDevice().getState());
                 super.getCallback().stateChanged(getIntent().relayState);
             } catch (TimeoutException | NotConnectedException ex) {

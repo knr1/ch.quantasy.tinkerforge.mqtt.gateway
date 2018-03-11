@@ -57,7 +57,6 @@ import ch.quantasy.gateway.message.IMU.AllDataCallbackPeriodStatus;
 import ch.quantasy.gateway.message.IMU.AngularVelocityCallbackPeriodStatus;
 import ch.quantasy.gateway.message.IMU.LedsStatus;
 import ch.quantasy.gateway.message.IMU.MagneticFieldCallbackPeriodStatus;
-import ch.quantasy.gateway.message.IMU.OrientationCalculationStatus;
 import ch.quantasy.gateway.message.IMU.OrientationCallbackPeriodStatus;
 import ch.quantasy.gateway.message.IMU.QuaternionCallbackPeriodStatus;
 import ch.quantasy.gateway.message.IMU.StatusLEDStatus;
@@ -66,6 +65,7 @@ import ch.quantasy.gateway.message.IMUV2.LinearAccelerationCallbackPeriodStatus;
 import ch.quantasy.gateway.message.IMUV2.SensorFusionModeStatus;
 import ch.quantasy.gateway.message.IMUV2.TemperatureCallbackPeriodStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.imuV2.IMUV2Device;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import java.util.Map;
@@ -171,29 +171,31 @@ public class IMUV2ServiceContract extends DeviceServiceContract {
         SENSOR_FUSION_MODE = "sensorFusionMode";
         STATUS_SENSOR_FUSION_MODE = STATUS + "/" + SENSOR_FUSION_MODE;
 
-        addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
-        addMessageTopic(EVENT_ANGULAR_VELOCITY, AngularVelocityEvent.class);
-        addMessageTopic(EVENT_GRAVITY_VECTOR, GravityVectorEvent.class);
-        addMessageTopic(EVENT_LINEAR_ACCELERATION, LinearAccelerationEvent.class);
-        addMessageTopic(EVENT_MAGNETIC_FIELD, MagneticFieldEvent.class);
-        addMessageTopic(EVENT_ORIENTATION, OrientationEvent.class);
-        addMessageTopic(EVENT_QUATERNION, QuaternionEvent.class);
-        addMessageTopic(EVENT_TEMPERATURE, TemperatureEvent.class);
-        addMessageTopic(EVENT_ALL_DATA, AllDataEvent.class);
-        addMessageTopic(STATUS_ACCELERATION_CALLBACK_PERIOD, AccelerationCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ALL_DATA_CALLBACK_PERIOD, AllDataCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, AngularVelocityCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, MagneticFieldCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ORIENTATION_CALLBACK_PERIOD, OrientationCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_QUATERNION_CALLBACK_PERIOD, QuaternionCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_STATUS_LED, StatusLEDStatus.class);
-        addMessageTopic(STATUS_LEDS, LedsStatus.class);
-        addMessageTopic(STATUS_GRAVITY_VECTOR_CALLBACK_PERIOD, GravityVectorCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_LINEAR_ACCELERATION_CALLBACK_PERIOD, LinearAccelerationCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_SENSOR_FUSION_MODE, SensorFusionModeStatus.class);
-
     }
 
-    
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_ACCELERATION, AccelerationEvent.class);
+        messageTopicMap.put(EVENT_ANGULAR_VELOCITY, AngularVelocityEvent.class);
+        messageTopicMap.put(EVENT_GRAVITY_VECTOR, GravityVectorEvent.class);
+        messageTopicMap.put(EVENT_LINEAR_ACCELERATION, LinearAccelerationEvent.class);
+        messageTopicMap.put(EVENT_MAGNETIC_FIELD, MagneticFieldEvent.class);
+        messageTopicMap.put(EVENT_ORIENTATION, OrientationEvent.class);
+        messageTopicMap.put(EVENT_QUATERNION, QuaternionEvent.class);
+        messageTopicMap.put(EVENT_TEMPERATURE, TemperatureEvent.class);
+        messageTopicMap.put(EVENT_ALL_DATA, AllDataEvent.class);
+        messageTopicMap.put(STATUS_ACCELERATION_CALLBACK_PERIOD, AccelerationCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ALL_DATA_CALLBACK_PERIOD, AllDataCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ANGULAR_VELOCITY_CALLBACK_PERIOD, AngularVelocityCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_MAGNETIC_FIELD_CALLBACK_PERIOD, MagneticFieldCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ORIENTATION_CALLBACK_PERIOD, OrientationCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_QUATERNION_CALLBACK_PERIOD, QuaternionCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_STATUS_LED, StatusLEDStatus.class);
+        messageTopicMap.put(STATUS_LEDS, LedsStatus.class);
+        messageTopicMap.put(STATUS_GRAVITY_VECTOR_CALLBACK_PERIOD, GravityVectorCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_LINEAR_ACCELERATION_CALLBACK_PERIOD, LinearAccelerationCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_SENSOR_FUSION_MODE, SensorFusionModeStatus.class);
+    }
+
 }

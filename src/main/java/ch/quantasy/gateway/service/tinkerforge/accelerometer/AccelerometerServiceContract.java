@@ -49,6 +49,7 @@ import ch.quantasy.gateway.message.accelerometer.AccelerationThresholdStatus;
 import ch.quantasy.gateway.message.accelerometer.ConfigurationStatus;
 import ch.quantasy.gateway.message.accelerometer.DebouncePeriodStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.accelerometer.AccelerometerDevice;
 import java.util.Map;
@@ -105,12 +106,17 @@ public class AccelerometerServiceContract extends DeviceServiceContract {
 
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-        addMessageTopic(EVENT_ACCELERATION, AccelerationEvent.class);
-        addMessageTopic(EVENT_ACCELERATION_REACHED, AccelerationEvent.class);
-        addMessageTopic(STATUS_ACCELERATION_CALLBACK_PERIOD, AccelerationCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ACCELERATION_THRESHOLD, AccelerationThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
+
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_ACCELERATION, AccelerationEvent.class);
+        messageTopicMap.put(EVENT_ACCELERATION_REACHED, AccelerationEvent.class);
+        messageTopicMap.put(STATUS_ACCELERATION_CALLBACK_PERIOD, AccelerationCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ACCELERATION_THRESHOLD, AccelerationThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_CONFIGURATION, ConfigurationStatus.class);
     }
 
     public static void main(String[] args) {

@@ -3,7 +3,8 @@ package ch.quantasy.gateway.message.ledStrip;
 import ch.quantasy.mqtt.gateway.client.message.annotations.ArraySize;
 
 import ch.quantasy.mqtt.gateway.client.message.AStatus;
-public class LEDFramesStatus extends AStatus{
+
+public class LEDFramesStatus extends AStatus {
 
     @ArraySize(max = 2147483647, min = 1)
     public LEDFrame[] value;

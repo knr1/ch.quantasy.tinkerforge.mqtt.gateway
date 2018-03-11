@@ -73,6 +73,7 @@ import java.util.logging.Logger;
 public class TinkerforgeStack implements EnumerateListener {
 
     private int enumCount;
+    private final Object watchDogMonitor = new Object();
 
     public static final int DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS = 1000 * 10;
 
@@ -218,7 +219,7 @@ public class TinkerforgeStack implements EnumerateListener {
         if (timerFuture != null) {
             timerFuture.cancel(true);
         }
-        timerFuture = this.timerService.scheduleAtFixedRate(new WatchDog(1), 10000, 10000, TimeUnit.MILLISECONDS);
+        timerFuture = this.timerService.scheduleAtFixedRate(new WatchDog(3), 20000, 20000, TimeUnit.MILLISECONDS);
 
     }
 
@@ -241,7 +242,12 @@ public class TinkerforgeStack implements EnumerateListener {
     public void enumerate(final String uid, final String connectedUid, final char position,
             final short[] hardwareVersion, final short[] firmwareVersion, final int deviceIdentifier,
             final short enumerationType) {
-        count--;
+        synchronized (watchDogMonitor) {
+            count--;
+            if (count <= 0) {
+                watchDogMonitor.notifyAll();
+            }
+        }
         boolean isNewDevice = this.manageTinkerforgeDevice(deviceIdentifier, uid, ipConnection);
         switch (enumerationType) {
             case IPConnection.ENUMERATION_TYPE_AVAILABLE:
@@ -375,14 +381,20 @@ public class TinkerforgeStack implements EnumerateListener {
                 System.out.println(System.currentTimeMillis() + " deviceMap: " + deviceMap.size());
                 count = deviceMap.size();
                 ipConnection.enumerate();
-                Thread.sleep(5000);
+                synchronized (watchDogMonitor) {
+                    watchDogMonitor.wait(5000);
+                }
                 if (count > 0) {
                     //TODO: Check for correctness
                     System.out.println("Will reconnect");
                     ipConnectionHandler.reconnect();
+                } else {
+                    System.out.println("Stable");
                 }
             } catch (Exception ex) {
-                Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TinkerforgeStack.class.getName()).log(Level.SEVERE, "exception during einumeration", ex);
+                ipConnectionHandler.reconnect();
+
             }
         }
 

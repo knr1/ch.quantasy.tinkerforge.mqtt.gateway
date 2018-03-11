@@ -48,6 +48,7 @@ import ch.quantasy.gateway.message.co2.Co2ConcentrationCallbackPeriodStatus;
 import ch.quantasy.gateway.message.co2.Co2ConcentrationCallbackThresholdStatus;
 import ch.quantasy.gateway.message.co2.DebouncePeriodStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.co2.CO2Device;
 import java.util.Map;
@@ -103,13 +104,16 @@ public class CO2ServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        addMessageTopic(EVENT_CO2_CONCENTRATION, CO2ConcentrationEvent.class);
-        addMessageTopic(EVENT_CO2_CONCENTRATION_REACHED, CO2ConcentrationEvent.class);
-        addMessageTopic(STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, Co2ConcentrationCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_CO2_CONCENTRATION_THRESHOLD, Co2ConcentrationCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
 
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_CO2_CONCENTRATION, CO2ConcentrationEvent.class);
+        messageTopicMap.put(EVENT_CO2_CONCENTRATION_REACHED, CO2ConcentrationEvent.class);
+        messageTopicMap.put(STATUS_CO2_CONCENTRATION_CALLBACK_PERIOD, Co2ConcentrationCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_CO2_CONCENTRATION_THRESHOLD, Co2ConcentrationCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+    }
+
 }

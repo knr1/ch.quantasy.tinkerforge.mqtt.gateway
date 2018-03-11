@@ -49,6 +49,7 @@ import ch.quantasy.gateway.message.moisture.MoistureCallbackPeriodStatus;
 import ch.quantasy.gateway.message.moisture.MoistureCallbackThresholdStatus;
 import ch.quantasy.gateway.message.moisture.MovingAverageStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import java.util.Map;
@@ -111,13 +112,17 @@ public class MoistureServiceContract extends DeviceServiceContract {
 
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
+    }
 
-        addMessageTopic(EVENT_MOISTURE, MoistureEvent.class);
-        addMessageTopic(EVENT_MOISTURE_REACHED, MoistureEvent.class);
-        addMessageTopic(STATUS_MOISTURE_CALLBACK_PERIOD, MoistureCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_MOISTURE_THRESHOLD, MoistureCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_MOISTURE, MoistureEvent.class);
+        messageTopicMap.put(EVENT_MOISTURE_REACHED, MoistureEvent.class);
+        messageTopicMap.put(STATUS_MOISTURE_CALLBACK_PERIOD, MoistureCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_MOISTURE_THRESHOLD, MoistureCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
     }
 
     

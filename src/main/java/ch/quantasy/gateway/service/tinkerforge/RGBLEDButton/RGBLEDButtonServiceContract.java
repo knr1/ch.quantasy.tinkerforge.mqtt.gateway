@@ -46,9 +46,11 @@ import ch.quantasy.gateway.message.RGBLEDButton.ButtonEvent;
 import ch.quantasy.gateway.message.RGBLEDButton.RGBColorStatus;
 import ch.quantasy.gateway.message.RGBLEDButton.RGBLEDButtonIntent;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.RGBLEDButton.RGBLEDButtonDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import static ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass.RGBLEDButton;
+import java.util.Map;
 
 /**
  *
@@ -76,8 +78,12 @@ public class RGBLEDButtonServiceContract extends DeviceServiceContract {
         BUTTON = "button";
         EVENT_BUTTON = EVENT + "/" + BUTTON;
 
-        addMessageTopic(STATUS_COLOR, RGBColorStatus.class);
-        addMessageTopic(EVENT_BUTTON, ButtonEvent.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(STATUS_COLOR, RGBColorStatus.class);
+        messageTopicMap.put(EVENT_BUTTON, ButtonEvent.class);
     }
 
 }

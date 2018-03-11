@@ -118,7 +118,7 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
         }
         if (intent.analogValueThreshold != null) {
             try {
-                getDevice().setAnalogValueCallbackThreshold(intent.analogValueThreshold.getOption(), intent.analogValueThreshold.getMin(), intent.analogValueThreshold.getMax());
+                getDevice().setAnalogValueCallbackThreshold(intent.analogValueThreshold.option, intent.analogValueThreshold.min, intent.analogValueThreshold.max);
                 getIntent().analogValueThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
                 super.getCallback().analogValueCallbackThresholdChanged(getIntent().analogValueThreshold);
             } catch (TimeoutException | NotConnectedException ex) {
@@ -127,7 +127,7 @@ public class AmbientLightDevice extends GenericDevice<BrickletAmbientLight, Ambi
         }
         if (intent.illuminanceThreshold != null) {
             try {
-                getDevice().setIlluminanceCallbackThreshold(intent.illuminanceThreshold.getOption(), intent.illuminanceThreshold.getMin(), intent.illuminanceThreshold.getMax());
+                getDevice().setIlluminanceCallbackThreshold(intent.illuminanceThreshold.option, intent.illuminanceThreshold.min, intent.illuminanceThreshold.max);
                 getIntent().illuminanceThreshold = new DeviceIlluminanceCallbackThreshold(getDevice().getIlluminanceCallbackThreshold());
                 super.getCallback().illuminanceCallbackThresholdChanged(getIntent().illuminanceThreshold);
 

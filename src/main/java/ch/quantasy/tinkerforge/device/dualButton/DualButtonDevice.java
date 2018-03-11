@@ -84,7 +84,7 @@ public class DualButtonDevice extends GenericDevice<BrickletDualButton, DualButt
         }
         if (intent.ledState != null) {
             try {
-                getDevice().setLEDState(intent.ledState.getLed1().getValue(), intent.ledState.getLed2().getValue());
+                getDevice().setLEDState(intent.ledState.led1.getValue(), intent.ledState.led2.getValue());
                 getIntent().ledState = new DeviceLEDState(getDevice().getLEDState());
                 super.getCallback().ledStateChanged(getIntent().ledState);
             } catch (TimeoutException | NotConnectedException ex) {
@@ -94,7 +94,7 @@ public class DualButtonDevice extends GenericDevice<BrickletDualButton, DualButt
         if (intent.selectedLEDStates != null) {
             try {
                 for (DeviceSelectedLEDStateParameters selectedLEDState : intent.selectedLEDStates) {
-                    getDevice().setSelectedLEDState(selectedLEDState.getLed(), selectedLEDState.getState().getValue());
+                    getDevice().setSelectedLEDState(selectedLEDState.led, selectedLEDState.state.getValue());
                 }
                 getIntent().ledState = new DeviceLEDState(getDevice().getLEDState());
                 super.getCallback().ledStateChanged(getIntent().ledState);

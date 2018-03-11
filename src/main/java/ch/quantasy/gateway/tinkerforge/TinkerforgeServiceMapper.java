@@ -79,6 +79,7 @@ import ch.quantasy.gateway.service.tinkerforge.nfc.NFCService;
 import ch.quantasy.gateway.service.tinkerforge.piezoSpeaker.PiezoSpeakerService;
 import ch.quantasy.gateway.service.tinkerforge.realTimeClock.RealTimeClockService;
 import ch.quantasy.gateway.service.tinkerforge.remoteSwitch.RemoteSwitchService;
+import ch.quantasy.gateway.service.tinkerforge.remoteSwitchV2.RemoteSwitchV2Service;
 import ch.quantasy.gateway.service.tinkerforge.rotaryEncoder.RotaryEncoderService;
 import ch.quantasy.gateway.service.tinkerforge.rotaryPoti.RotaryPotiService;
 import ch.quantasy.gateway.service.tinkerforge.segment4x7.Segment4x7Service;
@@ -130,6 +131,7 @@ import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
+import ch.quantasy.tinkerforge.device.remoteSwitchV2.RemoteSwitchV2Device;
 import ch.quantasy.tinkerforge.device.rotaryEncoder.RotaryEncoderDevice;
 import ch.quantasy.tinkerforge.device.rotaryPoti.RotaryPotiDevice;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
@@ -173,6 +175,9 @@ public class TinkerforgeServiceMapper {
         }
         if (tinkerforgeDevice instanceof RemoteSwitchDevice) {
             return new RemoteSwitchService((RemoteSwitchDevice) tinkerforgeDevice, mqttURI);
+        }
+        if (tinkerforgeDevice instanceof RemoteSwitchV2Device) {
+            return new RemoteSwitchV2Service((RemoteSwitchV2Device) tinkerforgeDevice, mqttURI);
         }
         if (tinkerforgeDevice instanceof DualRelayDevice) {
             return new DualRelayService((DualRelayDevice) tinkerforgeDevice, mqttURI);

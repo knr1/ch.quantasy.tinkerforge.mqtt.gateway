@@ -42,7 +42,6 @@
  */
 package ch.quantasy.gateway.message.RGBLEDButton;
 
-import ch.quantasy.gateway.message.dualButton.*;
 import ch.quantasy.mqtt.gateway.client.message.Validator;
 import com.tinkerforge.BrickletRGBLEDButton;
 
@@ -52,14 +51,10 @@ import com.tinkerforge.BrickletRGBLEDButton;
  */
 public enum ButtonState implements Validator {
     PRESSED(BrickletRGBLEDButton.BUTTON_STATE_PRESSED), RELEASED(BrickletRGBLEDButton.BUTTON_STATE_RELEASED);
-    private int value;
+    public int value;
 
     private ButtonState(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public static ButtonState getButtonStateFor(int s) {

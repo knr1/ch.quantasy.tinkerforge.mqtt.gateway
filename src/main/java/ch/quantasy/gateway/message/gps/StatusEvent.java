@@ -50,12 +50,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  * @author reto
  */
 public class StatusEvent extends AnEvent {
+
     @Choice(values = {"1", "2", "3"})
-    private short fix;
+    public short fix;
     @Range(from = 0, to = Short.MAX_VALUE)
-    private short satellitesView;
+    public short satellitesView;
     @Range(from = 0, to = Short.MAX_VALUE)
-    private short satellitesUsed;
+    public short satellitesUsed;
 
     private StatusEvent() {
     }
@@ -64,18 +65,6 @@ public class StatusEvent extends AnEvent {
         this.fix = fix;
         this.satellitesView = satellitesView;
         this.satellitesUsed = satellitesUsed;
-    }
-
-    public short getFix() {
-        return fix;
-    }
-
-    public short getSatellitesUsed() {
-        return satellitesUsed;
-    }
-
-    public short getSatellitesView() {
-        return satellitesView;
     }
 
 }

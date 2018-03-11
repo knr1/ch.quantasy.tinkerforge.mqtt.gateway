@@ -49,7 +49,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class LagingEvent extends AnEvent{
 
-    private boolean value;
+    public boolean value;
     
      
 
@@ -58,17 +58,5 @@ public class LagingEvent extends AnEvent{
 
     public LagingEvent(boolean value) {
         this.value= value;
-    }
-
-  
-    public boolean getValue() {
-        return value;
-    }
-    
-
-    
-    
-    
-
-   
+    }   
 }

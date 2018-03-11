@@ -51,17 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class IlluminanceEvent extends AnEvent {
 
     @Range(from = 0, to = 9000)
-    private int value;
+    public int value;
 
     private IlluminanceEvent() {
     }
 
     public IlluminanceEvent(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
 }

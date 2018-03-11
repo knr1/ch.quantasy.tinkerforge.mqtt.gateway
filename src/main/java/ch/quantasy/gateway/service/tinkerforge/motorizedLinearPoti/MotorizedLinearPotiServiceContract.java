@@ -48,8 +48,10 @@ import ch.quantasy.gateway.message.motorizedLinearPoti.MotorPositionStatus;
 import ch.quantasy.gateway.message.motorizedLinearPoti.PositionCallbackConfigurationStatus;
 import ch.quantasy.gateway.message.motorizedLinearPoti.PositionReachedCallbackConfigurationStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDevice;
+import java.util.Map;
 
 /**
  *
@@ -61,7 +63,6 @@ public class MotorizedLinearPotiServiceContract extends DeviceServiceContract {
     public final String PERIOD;
     public final String CALLBACK_CONFIG;
     private final String MOTOR;
-  
 
     public final String POSITION;
     public final String STATUS_MOTOR;
@@ -84,26 +85,27 @@ public class MotorizedLinearPotiServiceContract extends DeviceServiceContract {
         super(id, device, MotorizedLinearPotiIntent.class);
 
         PERIOD = "period";
-        CALLBACK_CONFIG = "callbackConfiguration";        
+        CALLBACK_CONFIG = "callbackConfiguration";
 
         REACHED = "reached";
         POSITION = "position";
-        MOTOR="motor";
+        MOTOR = "motor";
         STATUS_MOTOR = STATUS + "/" + MOTOR;
         STATUS_MOTOR_POSITION = STATUS_MOTOR + "/" + POSITION;
         EVENT_POSITION = EVENT + "/" + POSITION;
         EVENT_POSITION_REACHED = EVENT_POSITION + "/" + REACHED;
-        STATUS_POSITION_REACHED_CALLBACK_CONFIGURATION=STATUS+"/"+POSITION+"/"+REACHED+"/"+CALLBACK_CONFIG;
-        STATUS_POSITION_CALLBACK_CONFIGURATION=STATUS+"/"+POSITION+"/"+CALLBACK_CONFIG;
+        STATUS_POSITION_REACHED_CALLBACK_CONFIGURATION = STATUS + "/" + POSITION + "/" + REACHED + "/" + CALLBACK_CONFIG;
+        STATUS_POSITION_CALLBACK_CONFIGURATION = STATUS + "/" + POSITION + "/" + CALLBACK_CONFIG;
+    }
 
-       
-        addMessageTopic(EVENT_POSITION, PositionEvent.class);
-        addMessageTopic(EVENT_POSITION_REACHED, PositionEvent.class);
-        addMessageTopic(STATUS_MOTOR_POSITION, MotorPositionStatus.class);
-        addMessageTopic(STATUS_POSITION_REACHED_CALLBACK_CONFIGURATION,PositionReachedCallbackConfigurationStatus.class);
-        addMessageTopic(STATUS_POSITION_CALLBACK_CONFIGURATION,PositionCallbackConfigurationStatus.class);
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_POSITION, PositionEvent.class);
+        messageTopicMap.put(EVENT_POSITION_REACHED, PositionEvent.class);
+        messageTopicMap.put(STATUS_MOTOR_POSITION, MotorPositionStatus.class);
+        messageTopicMap.put(STATUS_POSITION_REACHED_CALLBACK_CONFIGURATION, PositionReachedCallbackConfigurationStatus.class);
+        messageTopicMap.put(STATUS_POSITION_CALLBACK_CONFIGURATION, PositionCallbackConfigurationStatus.class);
 
     }
 
-    
 }

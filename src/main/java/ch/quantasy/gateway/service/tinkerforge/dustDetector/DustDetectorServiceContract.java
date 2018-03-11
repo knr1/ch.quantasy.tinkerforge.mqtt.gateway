@@ -49,6 +49,7 @@ import ch.quantasy.gateway.message.dustDetector.DustDensityCallbackPeriodStatus;
 import ch.quantasy.gateway.message.dustDetector.DustDensityCallbackThresholdStatus;
 import ch.quantasy.gateway.message.dustDetector.MovingAverageStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.dustDetector.DustDetectorDevice;
 import java.util.Map;
@@ -110,12 +111,16 @@ public class DustDetectorServiceContract extends DeviceServiceContract {
 
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-        addMessageTopic(EVENT_DUST_DENSITY, DustDensityEvent.class);
-        addMessageTopic(EVENT_DUST_DENSITY_REACHED, DustDensityEvent.class);
-        addMessageTopic(STATUS_DUST_DENSITY_CALLBACK_PERIOD, DustDensityCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_DUST_DENSITY_THRESHOLD, DustDensityCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_DUST_DENSITY, DustDensityEvent.class);
+        messageTopicMap.put(EVENT_DUST_DENSITY_REACHED, DustDensityEvent.class);
+        messageTopicMap.put(STATUS_DUST_DENSITY_CALLBACK_PERIOD, DustDensityCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_DUST_DENSITY_THRESHOLD, DustDensityCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
     }
 
    

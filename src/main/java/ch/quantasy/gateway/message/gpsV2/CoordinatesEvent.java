@@ -52,13 +52,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class CoordinatesEvent extends AnEvent {
 
    @Range(from = Long.MIN_VALUE, to = Long.MAX_VALUE)
-    private long latitude;
+    public long latitude;
     @Choice(values = {"N", "S"})
-    private char ns;
+    public char ns;
     @Range(from = Long.MIN_VALUE, to = Long.MAX_VALUE)
-    private long longitude;
+    public long longitude;
     @Choice(values = {"E", "W"})
-    private char ew;
+    public char ew;
     
 
     private CoordinatesEvent() {
@@ -71,21 +71,4 @@ public class CoordinatesEvent extends AnEvent {
         this.ew = ew;
 
     }
-
-    public char getEw() {
-        return ew;
-    }
-
-    public long getLatitude() {
-        return latitude;
-    }
-
-    public long getLongitude() {
-        return longitude;
-    }
-
-    public char getNs() {
-        return ns;
-    }
-
 }

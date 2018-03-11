@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class UnderVoltageEvent extends AnEvent {
 
     @Range(from = 0, to = Integer.MAX_VALUE)
-    private long value;
+    public long value;
 
     private UnderVoltageEvent() {
     }
@@ -60,8 +60,5 @@ public class UnderVoltageEvent extends AnEvent {
         this.value = value;
     }
 
-    public long getValue() {
-        return value;
-    }
-
+   
 }

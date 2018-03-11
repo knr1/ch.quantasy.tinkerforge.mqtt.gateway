@@ -52,8 +52,8 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
 public class DeviceSelectedRelayState extends AValidator {
 
     @Choice(values = {"1", "2"})
-    private short relay;
-    private boolean state;
+    public short relay;
+    public boolean state;
 
     private DeviceSelectedRelayState() {
     }
@@ -63,14 +63,7 @@ public class DeviceSelectedRelayState extends AValidator {
         this.state = state;
     }
 
-    public short getRelay() {
-        return relay;
-    }
-
-    public boolean getState() {
-        return state;
-    }
-
+   
     @Override
     public int hashCode() {
         int hash = 5;

@@ -53,9 +53,9 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.StringSize;
 public class DeviceDefaultText extends AValidator implements Comparable<DeviceDefaultText> {
 
     @Range(from = 0, to = 3)
-    private short line;
+    public short line;
     @StringSize(max = 20)
-    private String text;
+    public String text;
 
     public DeviceDefaultText() {
     }
@@ -63,14 +63,6 @@ public class DeviceDefaultText extends AValidator implements Comparable<DeviceDe
     public DeviceDefaultText(short line, String text) {
         this.line = line;
         this.text = text;
-    }
-
-    public short getLine() {
-        return line;
-    }
-
-    public String getText() {
-        return text;
     }
 
     @Override

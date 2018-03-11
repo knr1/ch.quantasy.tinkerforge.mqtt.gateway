@@ -51,9 +51,9 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class MotionEvent extends AnEvent {
 
     @Range(from = 0, to = 36000)
-    private long course;
+    public long course;
     @Range(from = 0, to = Long.MAX_VALUE)
-    private long speed;
+    public long speed;
 
     private MotionEvent() {
 
@@ -62,14 +62,6 @@ public class MotionEvent extends AnEvent {
     public MotionEvent(long course, long speed) {
         this.course = course;
         this.speed = speed;
-    }
-
-    public long getCourse() {
-        return course;
-    }
-
-    public long getSpeed() {
-        return speed;
     }
 
 }

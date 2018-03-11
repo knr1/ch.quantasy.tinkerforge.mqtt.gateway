@@ -54,6 +54,7 @@ import ch.quantasy.gateway.message.gps.DateTimeCallbackPeriodStatus;
 import ch.quantasy.gateway.message.gps.MotionCallbackPeriodStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.gps.GPSDevice;
 import java.util.Map;
@@ -93,11 +94,12 @@ public class GPSServiceContract extends DeviceServiceContract {
     public GPSServiceContract(String id) {
         this(id, TinkerforgeDeviceClass.GPS.toString());
     }
+
     public GPSServiceContract(String id, String device) {
         this(id, device, GPSIntent.class);
     }
-    
-    public GPSServiceContract(String instance, String baseClass, Class<? extends Intent> intentClass){
+
+    public GPSServiceContract(String instance, String baseClass, Class<? extends Intent> intentClass) {
         super(instance, baseClass, intentClass);
 
         CALLBACK_PERIOD = "callbackPeriod";
@@ -124,17 +126,19 @@ public class GPSServiceContract extends DeviceServiceContract {
         STATE = "status";
         STATUS_STATE_CALLBACK_PERIOD = STATUS + "/" + STATE + "/" + CALLBACK_PERIOD;
         EVENT_STATE = EVENT + "/" + STATE;
-        addMessageTopic(EVENT_ALTITUDE, AltitudeEvent.class);
-        addMessageTopic(EVENT_DATE_TIME, DateTimeEvent.class);
-        addMessageTopic(EVENT_MOTION, MotionEvent.class);
-        addMessageTopic(EVENT_STATE, StatusEvent.class);
-        addMessageTopic(EVENT_COORDINATES, CoordinatesEvent.class);
-         addMessageTopic(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
-
-        addMessageTopic(STATUS_MOTION_CALLBACK_PERIOD, MotionCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ALTITUDE_CALLBACK_PERIOD, AltitudeCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_COORDINATES_CALLBACK_PERIOD, CoordinatesCallbackPeriodStatus.class);
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_ALTITUDE, AltitudeEvent.class);
+        messageTopicMap.put(EVENT_DATE_TIME, DateTimeEvent.class);
+        messageTopicMap.put(EVENT_MOTION, MotionEvent.class);
+        messageTopicMap.put(EVENT_STATE, StatusEvent.class);
+        messageTopicMap.put(EVENT_COORDINATES, CoordinatesEvent.class);
+        messageTopicMap.put(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_MOTION_CALLBACK_PERIOD, MotionCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ALTITUDE_CALLBACK_PERIOD, AltitudeCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_COORDINATES_CALLBACK_PERIOD, CoordinatesCallbackPeriodStatus.class);
+    }
+
 }

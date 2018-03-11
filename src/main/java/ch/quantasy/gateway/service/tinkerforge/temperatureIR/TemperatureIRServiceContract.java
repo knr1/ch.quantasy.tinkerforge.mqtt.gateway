@@ -51,6 +51,7 @@ import ch.quantasy.gateway.message.temperatureIR.DebouncePeriodStatus;
 import ch.quantasy.gateway.message.temperatureIR.ObjectTemperatureCallbackPeriodStatus;
 import ch.quantasy.gateway.message.temperatureIR.ObjectTemperatureCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import java.util.Map;
@@ -119,16 +120,20 @@ public class TemperatureIRServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        addMessageTopic(EVENT_AMBIENT_TEMPERATURE, AmbientTemperatureEvent.class);
-        addMessageTopic(EVENT_OBJECT_TEMPERATURE, ObjectTemperatureEvent.class);
-        addMessageTopic(EVENT_AMBIENT_TEMPERATURE_REACHED, AmbientTemperatureEvent.class);
-        addMessageTopic(EVENT_OBJECT_TEMPERATURE_REACHED, ObjectTemperatureEvent.class);
-           addMessageTopic(STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, AmbientTemperatureCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, ObjectTemperatureCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_AMBIENT_TEMPERATURE_THRESHOLD, AmbientTemperatureCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_OBJECT_TEMPERATURE_THRESHOLD, ObjectTemperatureCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+
+        messageTopicMap.put(EVENT_AMBIENT_TEMPERATURE, AmbientTemperatureEvent.class);
+        messageTopicMap.put(EVENT_OBJECT_TEMPERATURE, ObjectTemperatureEvent.class);
+        messageTopicMap.put(EVENT_AMBIENT_TEMPERATURE_REACHED, AmbientTemperatureEvent.class);
+        messageTopicMap.put(EVENT_OBJECT_TEMPERATURE_REACHED, ObjectTemperatureEvent.class);
+        messageTopicMap.put(STATUS_AMBIENT_TEMPERATURE_CALLBACK_PERIOD, AmbientTemperatureCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_OBJECT_TEMPERATURE_CALLBACK_PERIOD, ObjectTemperatureCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_AMBIENT_TEMPERATURE_THRESHOLD, AmbientTemperatureCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_OBJECT_TEMPERATURE_THRESHOLD, ObjectTemperatureCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+    }
+
 }

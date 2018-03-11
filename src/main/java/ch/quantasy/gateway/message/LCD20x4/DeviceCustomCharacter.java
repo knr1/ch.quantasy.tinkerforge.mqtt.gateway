@@ -53,9 +53,9 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 public class DeviceCustomCharacter extends AValidator implements Comparable<DeviceCustomCharacter> {
 
     @Range(from = 0, to = 7)
-    private short index;
+    public short index;
     @ArraySize(min = 8, max = 8)
-    private short[] pixels;
+    public short[] pixels;
 
     public DeviceCustomCharacter() {
     }
@@ -63,14 +63,6 @@ public class DeviceCustomCharacter extends AValidator implements Comparable<Devi
     public DeviceCustomCharacter(short index, short[] pixels) {
         this.index = index;
         this.pixels = pixels;
-    }
-
-    public short getIndex() {
-        return index;
-    }
-
-    public short[] getPixels() {
-        return pixels;
     }
 
     @Override

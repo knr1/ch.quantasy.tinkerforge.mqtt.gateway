@@ -117,7 +117,7 @@ public class AnalogInV2Device extends GenericDevice<BrickletAnalogInV2, AnalogIn
         }
         if (intent.analogValueCallbackThreshold != null) {
             try {
-                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.getOption(), intent.analogValueCallbackThreshold.getMin(), intent.analogValueCallbackThreshold.getMax());
+                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.option, intent.analogValueCallbackThreshold.min, intent.analogValueCallbackThreshold.max);
                 getIntent().analogValueCallbackThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
                 super.getCallback().analogValueCallbackThresholdChanged(getIntent().analogValueCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {
@@ -126,7 +126,7 @@ public class AnalogInV2Device extends GenericDevice<BrickletAnalogInV2, AnalogIn
         }
         if (intent.voltageCallbackThreshold != null) {
             try {
-                getDevice().setVoltageCallbackThreshold(intent.voltageCallbackThreshold.getOption(), intent.voltageCallbackThreshold.getMin(), intent.voltageCallbackThreshold.getMax());
+                getDevice().setVoltageCallbackThreshold(intent.voltageCallbackThreshold.option, intent.voltageCallbackThreshold.min, intent.voltageCallbackThreshold.max);
                 getIntent().voltageCallbackThreshold = new DeviceVoltageCallbackThreshold(getDevice().getVoltageCallbackThreshold());
                 super.getCallback().voltageCallbackThresholdChanged(getIntent().voltageCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class ReflectivityEvent extends AnEvent {
 
     @Range(from = 0, to = 4095)
-    private long value;
+    public long value;
 
     private ReflectivityEvent() {
     }
@@ -59,9 +59,4 @@ public class ReflectivityEvent extends AnEvent {
     public ReflectivityEvent(long value) {
         this.value = value;
     }
-
-    public long getValue() {
-        return value;
-    }
-
 }

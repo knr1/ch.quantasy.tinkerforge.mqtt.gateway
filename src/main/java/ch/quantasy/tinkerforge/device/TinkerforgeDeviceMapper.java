@@ -95,6 +95,7 @@ import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.gateway.message.stack.TinkerforgeStackAddress;
 import ch.quantasy.tinkerforge.device.RGBLEDButton.RGBLEDButtonDevice;
 import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDevice;
+import ch.quantasy.tinkerforge.device.remoteSwitchV2.RemoteSwitchV2Device;
 import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagingDevice;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickIMU;
@@ -136,6 +137,7 @@ import com.tinkerforge.BrickletPiezoSpeaker;
 import com.tinkerforge.BrickletRGBLEDButton;
 import com.tinkerforge.BrickletRealTimeClock;
 import com.tinkerforge.BrickletRemoteSwitch;
+import com.tinkerforge.BrickletRemoteSwitchV2;
 import com.tinkerforge.BrickletRotaryEncoder;
 import com.tinkerforge.BrickletRotaryPoti;
 import com.tinkerforge.BrickletSegmentDisplay4x7;
@@ -179,6 +181,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.RemoteSwitch == TinkerforgeDeviceClass.getDevice(device)) {
             return new RemoteSwitchDevice(stack, (BrickletRemoteSwitch) device);
+        }
+        if (TinkerforgeDeviceClass.RemoteSwitchV2 == TinkerforgeDeviceClass.getDevice(device)) {
+            return new RemoteSwitchV2Device(stack, (BrickletRemoteSwitchV2) device);
         }
         if (TinkerforgeDeviceClass.DualRelay == TinkerforgeDeviceClass.getDevice(device)) {
             return new DualRelayDevice(stack, (BrickletDualRelay) device);

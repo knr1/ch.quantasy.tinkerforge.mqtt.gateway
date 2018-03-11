@@ -48,6 +48,7 @@ import ch.quantasy.gateway.message.multiTouch.MultiTouchIntent;
 import ch.quantasy.gateway.message.multiTouch.ElectrodeConfigStatus;
 import ch.quantasy.gateway.message.multiTouch.SensitivityStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import java.util.Map;
@@ -96,11 +97,15 @@ public class MultiTouchServiceContract extends DeviceServiceContract {
         RECALIBRATE = "recalibration";
         RECALIBRATED = "recalibrated";
         EVENT_RECALIBRATED = EVENT + "/" + RECALIBRATED;
+    }
 
-        addMessageTopic(EVENT_TOUCH_STATE, TouchStateEvent.class);
-        addMessageTopic(EVENT_RECALIBRATED, RecalibratedEvent.class);
-        addMessageTopic(STATUS_ELECTRODE_SENSITIVITY, SensitivityStatus.class);
-        addMessageTopic(STATUS_ELECTRODE_CONFIG, ElectrodeConfigStatus.class);
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_TOUCH_STATE, TouchStateEvent.class);
+        messageTopicMap.put(EVENT_RECALIBRATED, RecalibratedEvent.class);
+        messageTopicMap.put(STATUS_ELECTRODE_SENSITIVITY, SensitivityStatus.class);
+        messageTopicMap.put(STATUS_ELECTRODE_CONFIG, ElectrodeConfigStatus.class);
     }
 
     

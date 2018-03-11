@@ -48,14 +48,15 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  *
  * @author reto
  */
-public class OrientationEvent extends AnEvent{
-    
-     @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
-    private short heading;
+public class OrientationEvent extends AnEvent {
+
     @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
-    private short roll;
+    public short heading;
     @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
-    private short pitch;
+    public short roll;
+    @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
+    public short pitch;
+
     private OrientationEvent() {
     }
 
@@ -65,16 +66,4 @@ public class OrientationEvent extends AnEvent{
         this.pitch = pitch;
     }
 
-    public short getHeading() {
-        return heading;
-    }
-
-    public short getRoll() {
-        return roll;
-    }
-
-    public short getPitch() {
-        return pitch;
-    }
-    
 }

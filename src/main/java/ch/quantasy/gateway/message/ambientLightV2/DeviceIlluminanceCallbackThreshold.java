@@ -51,14 +51,14 @@ import com.tinkerforge.BrickletAmbientLightV2;
  *
  * @author reto
  */
-public class DeviceIlluminanceCallbackThreshold extends AValidator{
+public class DeviceIlluminanceCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 0, to = 100000)
-    private long min;
+    public long min;
     @Range(from = 0, to = 100000)
-    private long max;
+    public long max;
 
     public DeviceIlluminanceCallbackThreshold() {
     }
@@ -71,18 +71,6 @@ public class DeviceIlluminanceCallbackThreshold extends AValidator{
 
     public DeviceIlluminanceCallbackThreshold(BrickletAmbientLightV2.IlluminanceCallbackThreshold threshold) {
         this(threshold.option, threshold.min, threshold.max);
-    }
-
-    public long getMax() {
-        return max;
-    }
-
-    public long getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
     }
 
 }

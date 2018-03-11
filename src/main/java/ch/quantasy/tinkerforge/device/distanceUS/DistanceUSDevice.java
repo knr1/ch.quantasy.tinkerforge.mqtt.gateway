@@ -103,7 +103,7 @@ public class DistanceUSDevice extends GenericDevice<BrickletDistanceUS, Distance
         }
         if (intent.distanceCallbackThreshold != null) {
             try {
-                getDevice().setDistanceCallbackThreshold(intent.distanceCallbackThreshold.getOption(), intent.distanceCallbackThreshold.getMin(), intent.distanceCallbackThreshold.getMax());
+                getDevice().setDistanceCallbackThreshold(intent.distanceCallbackThreshold.option, intent.distanceCallbackThreshold.min, intent.distanceCallbackThreshold.max);
                 getIntent().distanceCallbackThreshold = new DeviceDistanceCallbackThreshold(getDevice().getDistanceCallbackThreshold());
                 super.getCallback().distanceCallbackThresholdChanged(getIntent().distanceCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

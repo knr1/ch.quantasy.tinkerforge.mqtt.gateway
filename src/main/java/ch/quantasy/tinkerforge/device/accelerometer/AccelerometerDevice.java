@@ -104,8 +104,8 @@ public class AccelerometerDevice extends GenericDevice<BrickletAccelerometer, Ac
         }
         if (intent.accelerationThreshold != null) {
             try {
-                getDevice().setAccelerationCallbackThreshold(intent.accelerationThreshold.getOption(), intent.accelerationThreshold.getMinX(), intent.accelerationThreshold.getMaxX(),
-                        intent.accelerationThreshold.getMinY(), intent.accelerationThreshold.getMaxY(), intent.accelerationThreshold.getMinZ(), intent.accelerationThreshold.getMaxZ());
+                getDevice().setAccelerationCallbackThreshold(intent.accelerationThreshold.option, intent.accelerationThreshold.minX, intent.accelerationThreshold.maxX,
+                        intent.accelerationThreshold.minY, intent.accelerationThreshold.maxY, intent.accelerationThreshold.minZ, intent.accelerationThreshold.maxZ);
                 getIntent().accelerationThreshold = new DeviceAccelerationCallbackThreshold(getDevice().getAccelerationCallbackThreshold());
                 super.getCallback().accelerationCallbackThresholdChanged(getIntent().accelerationThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

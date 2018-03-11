@@ -49,6 +49,7 @@ import ch.quantasy.gateway.message.distanceUS.DistanceCallbackPeriodStatus;
 import ch.quantasy.gateway.message.distanceUS.DistanceCallbackThresholdStatus;
 import ch.quantasy.gateway.message.distanceUS.MovingAverageStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.distanceUS.DistanceUSDevice;
 import java.util.Map;
@@ -110,13 +111,16 @@ public class DistanceUSServiceContract extends DeviceServiceContract {
 
         MOVING_AVERAGE = "movingAverage";
         STATUS_MOVING_AVERAGE = STATUS + "/" + MOVING_AVERAGE;
-        addMessageTopic(EVENT_DISTANCE, DistanceEvent.class);
-        addMessageTopic(EVENT_DISTANCE_REACHED, DistanceEvent.class);
+    }
 
-        addMessageTopic(STATUS_DISTANCE_CALLBACK_PERIOD, DistanceCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_DISTANCE_THRESHOLD, DistanceCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_DISTANCE, DistanceEvent.class);
+        messageTopicMap.put(EVENT_DISTANCE_REACHED, DistanceEvent.class);
+        messageTopicMap.put(STATUS_DISTANCE_CALLBACK_PERIOD, DistanceCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_DISTANCE_THRESHOLD, DistanceCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
     }
 
    

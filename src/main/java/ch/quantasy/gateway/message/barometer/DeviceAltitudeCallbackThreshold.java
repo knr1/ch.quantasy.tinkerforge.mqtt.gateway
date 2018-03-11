@@ -53,9 +53,9 @@ import com.tinkerforge.BrickletBarometer;
 public class DeviceAltitudeCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
-    private int min;
-    private int max;
+    public char option;
+    public int min;
+    public int max;
 
     public DeviceAltitudeCallbackThreshold() {
     }
@@ -68,18 +68,6 @@ public class DeviceAltitudeCallbackThreshold extends AValidator {
         this.option = option;
         this.min = min;
         this.max = max;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
     }
 
 }

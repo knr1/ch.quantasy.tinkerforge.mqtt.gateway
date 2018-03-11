@@ -128,7 +128,7 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
         }
         if (intent.airPressureCallbackThreshold != null) {
             try {
-                getDevice().setAirPressureCallbackThreshold(intent.airPressureCallbackThreshold.getOption(), intent.airPressureCallbackThreshold.getMin(), intent.airPressureCallbackThreshold.getMax());
+                getDevice().setAirPressureCallbackThreshold(intent.airPressureCallbackThreshold.option, intent.airPressureCallbackThreshold.min, intent.airPressureCallbackThreshold.max);
                 getIntent().airPressureCallbackThreshold = new DeviceAirPressureCallbackThreshold(getDevice().getAirPressureCallbackThreshold());
                 super.getCallback().airPressureCallbackThresholdChanged(getIntent().airPressureCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {
@@ -137,7 +137,7 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
         }
         if (intent.altitudeCallbackThreshold != null) {
             try {
-                getDevice().setAltitudeCallbackThreshold(intent.altitudeCallbackThreshold.getOption(), intent.altitudeCallbackThreshold.getMin(), intent.altitudeCallbackThreshold.getMax());
+                getDevice().setAltitudeCallbackThreshold(intent.altitudeCallbackThreshold.option, intent.altitudeCallbackThreshold.min, intent.altitudeCallbackThreshold.max);
                 getIntent().altitudeCallbackThreshold = new DeviceAltitudeCallbackThreshold(getDevice().getAltitudeCallbackThreshold());
                 super.getCallback().altitudeCallbackThresholdChanged(getIntent().altitudeCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {
@@ -146,7 +146,7 @@ public class BarometerDevice extends GenericDevice<BrickletBarometer, BarometerD
         }
         if (intent.averaging != null) {
             try {
-                getDevice().setAveraging(intent.averaging.getMovingAveragePressure(), intent.averaging.getAveragingPressure(), intent.averaging.getAveragingTemperature());
+                getDevice().setAveraging(intent.averaging.movingAveragePressure, intent.averaging.averagingPressure, intent.averaging.averagingTemperature);
                 getIntent().averaging = new DeviceAveraging(getDevice().getAveraging());
                 super.getCallback().averagingChanged(getIntent().averaging);
             } catch (TimeoutException | NotConnectedException ex) {

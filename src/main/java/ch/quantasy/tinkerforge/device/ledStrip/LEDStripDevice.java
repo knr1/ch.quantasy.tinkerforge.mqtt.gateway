@@ -120,6 +120,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         }
     }
 
+
     @Override
     public void update(LedStripIntent intent) {
         if (intent == null) {
@@ -128,7 +129,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         if (!intent.isValid()) {
             return;
         }
-
+        
         if (intent.config != null) {
             try {
                 LEDStripDeviceConfig config = intent.config;

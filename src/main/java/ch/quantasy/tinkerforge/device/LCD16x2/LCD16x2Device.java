@@ -128,7 +128,7 @@ public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceC
             }
             if (intent.parameters != null) {
                 try {
-                    getDevice().setConfig(intent.parameters.getCursor(), intent.parameters.getBlinking());
+                    getDevice().setConfig(intent.parameters.cursor, intent.parameters.blinking);
                     getIntent().parameters = new DeviceConfigParameters(getDevice().getConfig());
                     super.getCallback().configurationChanged(getIntent().parameters);
                 } catch (TimeoutException | NotConnectedException ex) {
@@ -139,8 +139,8 @@ public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceC
             if (intent.customCharacters != null && !intent.customCharacters.isEmpty()) {
                 try {
                     for (DeviceCustomCharacter character : intent.customCharacters) {
-                        getDevice().setCustomCharacter(character.getIndex(), character.getPixels());
-                        getIntent().customCharacters.add(new DeviceCustomCharacter(character.getIndex(), getDevice().getCustomCharacter(character.getIndex())));
+                        getDevice().setCustomCharacter(character.index, character.pixels);
+                        getIntent().customCharacters.add(new DeviceCustomCharacter(character.index, getDevice().getCustomCharacter(character.index)));
                     }
                     super.getCallback().customCharactersChanged(getIntent().customCharacters);
                 } catch (TimeoutException | NotConnectedException ex) {
@@ -151,8 +151,8 @@ public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceC
             if (intent.lines != null && !intent.lines.isEmpty()) {
                 try {
                     for (DeviceWriteLine line : intent.lines) {
-                        this.lines[line.getLine()].replace(line.getPosition(), line.getPosition() + Math.min(16 - line.getPosition(), line.getText().length()), line.getText());
-                        writer.readyToWrite(line.getLine());
+                        this.lines[line.line].replace(line.position, line.position+ Math.min(16 - line.position, line.text.length()), line.text);
+                        writer.readyToWrite(line.line);
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);
@@ -164,8 +164,8 @@ public class LCD16x2Device extends GenericDevice<BrickletLCD16x2, LCD16x2DeviceC
     public void write(DeviceWriteLine... lines) {
         try {
             for (DeviceWriteLine line : lines) {
-                this.lines[line.getLine()].replace(line.getPosition(), line.getPosition() + line.getText().length(), line.getText());
-                writer.readyToWrite(line.getLine());
+                this.lines[line.line].replace(line.position, line.position+ line.text.length(), line.text);
+                writer.readyToWrite(line.line);
             }
         } catch (Exception ex) {
             Logger.getLogger(LCD16x2Device.class.getName()).log(Level.SEVERE, null, ex);

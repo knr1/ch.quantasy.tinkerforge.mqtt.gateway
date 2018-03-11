@@ -56,6 +56,7 @@ import ch.quantasy.gateway.message.laserRangeFinder.SensorHardwareStatus;
 import ch.quantasy.gateway.message.laserRangeFinder.VelocityCallbackPeriodStatus;
 import ch.quantasy.gateway.message.laserRangeFinder.VelocityCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.laserRangeFinder.LaserRangeFinderDevice;
 import java.util.Map;
@@ -152,20 +153,25 @@ public class LaserRangeFinderServiceContract extends DeviceServiceContract {
 
         SENSOR_HARDWARE = "sensorHardware";
         STATUS_SENSOR_HARDWARE = STATUS + "/" + SENSOR_HARDWARE;
-        addMessageTopic(EVENT_DISTANCE, DistanceEvent.class);
-        addMessageTopic(EVENT_VELOCITY, VelocityEvent.class);
-        addMessageTopic(EVENT_DISTANCE_REACHED, DistanceEvent.class);
-        addMessageTopic(EVENT_VELOCITY_REACHED, VelocityEvent.class);
-        addMessageTopic(STATUS_DISTANCE_CALLBACK_PERIOD, DistanceCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_VELOCITY_CALLBACK_PERIOD, VelocityCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_DISTANCE_THRESHOLD, DistanceCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_VELOCITY_THRESHOLD, VelocityCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_DEVICE_MODE, ModeStatus.class);
-        addMessageTopic(STATUS_DEVICE_CONFIGURATION, ConfigurationStatus.class);
-        addMessageTopic(STATUS_SENSOR_HARDWARE, SensorHardwareStatus.class);
-        addMessageTopic(STATUS_LASER, LaserEnabledStatus.class);
-        addMessageTopic(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_DISTANCE, DistanceEvent.class);
+        messageTopicMap.put(EVENT_VELOCITY, VelocityEvent.class);
+        messageTopicMap.put(EVENT_DISTANCE_REACHED, DistanceEvent.class);
+        messageTopicMap.put(EVENT_VELOCITY_REACHED, VelocityEvent.class);
+        messageTopicMap.put(STATUS_DISTANCE_CALLBACK_PERIOD, DistanceCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_VELOCITY_CALLBACK_PERIOD, VelocityCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_DISTANCE_THRESHOLD, DistanceCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_VELOCITY_THRESHOLD, VelocityCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_DEVICE_MODE, ModeStatus.class);
+        messageTopicMap.put(STATUS_DEVICE_CONFIGURATION, ConfigurationStatus.class);
+        messageTopicMap.put(STATUS_SENSOR_HARDWARE, SensorHardwareStatus.class);
+        messageTopicMap.put(STATUS_LASER, LaserEnabledStatus.class);
+        messageTopicMap.put(STATUS_MOVING_AVERAGE, MovingAverageStatus.class);
     }
 
   

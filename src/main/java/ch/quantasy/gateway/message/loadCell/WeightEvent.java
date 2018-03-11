@@ -51,17 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class WeightEvent extends AnEvent {
 
     @Range(from = -50001, to = 50001)
-    private int value;
+    public int value;
 
     private WeightEvent() {
     }
 
     public WeightEvent(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
 }

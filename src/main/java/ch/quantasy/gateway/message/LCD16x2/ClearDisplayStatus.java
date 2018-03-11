@@ -1,10 +1,15 @@
 package ch.quantasy.gateway.message.LCD16x2;
-import java.lang.Boolean;
+
 import ch.quantasy.mqtt.gateway.client.message.AStatus;
-public class ClearDisplayStatus extends AStatus{
-public Boolean value;
-private ClearDisplayStatus(){}
-public ClearDisplayStatus(Boolean value){
-  this.value=value;
-}
+
+public class ClearDisplayStatus extends AStatus {
+
+    public boolean value;
+
+    private ClearDisplayStatus() {
+    }
+
+    public ClearDisplayStatus(boolean value) {
+        this.value = value;
+    }
 }

@@ -51,8 +51,8 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class ButtonEvent extends AnEvent{
 
     @Range(from = 0,to = 3)
-    private short button;
-    private boolean pressed;
+    public short button;
+    public boolean pressed;
     
      
 
@@ -62,20 +62,5 @@ public class ButtonEvent extends AnEvent{
     public ButtonEvent(short button,boolean pressed) {
         this.button = button;
         this.pressed= pressed;
-    }
-
-    public Short getButton() {
-        return button;
-    }
-
-    public boolean getPressed() {
-        return pressed;
-    }
-    
-
-    
-    
-    
-
-   
+    }   
 }

@@ -54,11 +54,11 @@ import com.tinkerforge.BrickletAmbientLight;
 public class DeviceAnalogValueCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 0, to = 4095)
-    private int min;
+    public int min;
     @Range(from = 0, to = 4095)
-    private int max;
+    public int max;
 
     public DeviceAnalogValueCallbackThreshold() {
     }
@@ -72,17 +72,4 @@ public class DeviceAnalogValueCallbackThreshold extends AValidator {
     public DeviceAnalogValueCallbackThreshold(BrickletAmbientLight.AnalogValueCallbackThreshold threshold) {
         this(threshold.option, threshold.min, threshold.max);
     }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
-    }
-
 }

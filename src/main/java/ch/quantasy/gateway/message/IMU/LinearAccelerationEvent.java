@@ -41,7 +41,6 @@
  */
 package ch.quantasy.gateway.message.IMU;
 
-import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 
@@ -49,14 +48,14 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  *
  * @author reto
  */
-public class LinearAccelerationEvent extends AnEvent{
-    
+public class LinearAccelerationEvent extends AnEvent {
+
     @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
-    private short x;
+    public short x;
     @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
-    private short y;
+    public short y;
     @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
-    private short z;
+    public short z;
 
     private LinearAccelerationEvent() {
     }
@@ -67,16 +66,4 @@ public class LinearAccelerationEvent extends AnEvent{
         this.z = z;
     }
 
-    public short getX() {
-        return x;
-    }
-
-    public short getY() {
-        return y;
-    }
-
-    public short getZ() {
-        return z;
-    }
-    
 }

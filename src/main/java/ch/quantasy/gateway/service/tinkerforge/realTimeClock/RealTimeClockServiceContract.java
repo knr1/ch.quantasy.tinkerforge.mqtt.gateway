@@ -49,6 +49,7 @@ import ch.quantasy.gateway.message.realTimeClock.DateTimeCallbackPeriodStatus;
 import ch.quantasy.gateway.message.realTimeClock.DateTimeParameterStatus;
 import ch.quantasy.gateway.message.realTimeClock.OffsetStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import java.util.Map;
@@ -96,12 +97,17 @@ public class RealTimeClockServiceContract extends DeviceServiceContract {
         STATUS_DATE_TIME_CALLBACK_PERIOD = STATUS_DATE_TIME + "/" + CALLBACK_PERIOD;
 
         EVENT_DATE_TIME = EVENT + "/" + DATE_TIME;
-        addMessageTopic(EVENT_DATE_TIME, DateTimeEvent.class);
-        addMessageTopic(EVENT_ALARM, DateTimeEvent.class);
-        addMessageTopic(STATUS_DATE_TIME, DateTimeParameterStatus.class);
-        addMessageTopic(STATUS_OFFSET, OffsetStatus.class);
-        addMessageTopic(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ALARM, AlarmParameterStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_DATE_TIME, DateTimeEvent.class);
+        messageTopicMap.put(EVENT_ALARM, DateTimeEvent.class);
+        messageTopicMap.put(STATUS_DATE_TIME, DateTimeParameterStatus.class);
+        messageTopicMap.put(STATUS_OFFSET, OffsetStatus.class);
+        messageTopicMap.put(STATUS_DATE_TIME_CALLBACK_PERIOD, DateTimeCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ALARM, AlarmParameterStatus.class);
     }
 
     

@@ -50,8 +50,8 @@ import com.tinkerforge.BrickletLCD20x4;
  */
 public class DeviceConfigParameters {
 
-    private boolean cursor;
-    private boolean blinking;
+    public boolean cursor;
+    public boolean blinking;
 
     public DeviceConfigParameters() {
     }
@@ -65,13 +65,4 @@ public class DeviceConfigParameters {
         this.cursor = cursor;
         this.blinking = blinking;
     }
-
-    public boolean getBlinking() {
-        return blinking;
-    }
-
-    public boolean getCursor() {
-        return cursor;
-    }
-
 }

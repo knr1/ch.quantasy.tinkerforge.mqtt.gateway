@@ -54,11 +54,11 @@ import com.tinkerforge.BrickletLinearPoti;
 public class DevicePositionCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 0, to = 100)
-    private int min;
+    public int min;
     @Range(from = 0, to = 100)
-    private int max;
+    public int max;
 
     public DevicePositionCallbackThreshold() {
     }
@@ -71,18 +71,6 @@ public class DevicePositionCallbackThreshold extends AValidator {
 
     public DevicePositionCallbackThreshold(BrickletLinearPoti.PositionCallbackThreshold threshold) {
         this(threshold.option, threshold.min, threshold.max);
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
     }
 
 }

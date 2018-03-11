@@ -53,11 +53,11 @@ import com.tinkerforge.BrickletBarometer;
 public class DeviceAveraging extends AValidator {
 
     @Range(from = 0, to = 10)
-    private short averagingPressure;
+    public short averagingPressure;
     @Range(from = 0, to = 255)
-    private short averagingTemperature;
+    public short averagingTemperature;
     @Range(from = 0, to = 25)
-    private short movingAveragePressure;
+    public short movingAveragePressure;
 
     public DeviceAveraging() {
     }
@@ -71,17 +71,4 @@ public class DeviceAveraging extends AValidator {
         this.averagingTemperature = averagingTemperature;
         this.movingAveragePressure = movingAveragePressure;
     }
-
-    public short getAveragingPressure() {
-        return averagingPressure;
-    }
-
-    public short getAveragingTemperature() {
-        return averagingTemperature;
-    }
-
-    public short getMovingAveragePressure() {
-        return movingAveragePressure;
-    }
-
 }

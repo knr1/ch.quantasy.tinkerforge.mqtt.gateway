@@ -53,6 +53,7 @@ import ch.quantasy.gateway.message.barometer.DebouncePeriodStatus;
 import ch.quantasy.gateway.message.barometer.ReferenceAirPressureStatus;
 import ch.quantasy.gateway.message.barometer.AltitudeCallbackPeriodStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.barometer.BarometerDevice;
 import java.util.Map;
@@ -134,19 +135,21 @@ public class BarometerServiceContract extends DeviceServiceContract {
         REFERENCE_AIR_PRESSURE = "referenceAirPressure";
         STATUS_REFERENCE_AIR_PRESSURE = STATUS + "/" + REFERENCE_AIR_PRESSURE;
 
-        addMessageTopic(EVENT_AIR_PRESSURE, AirPressureEvent.class);
-        addMessageTopic(EVENT_ALTITUDE, AltitudeEvent.class);
-        addMessageTopic(EVENT_AIR_PRESSURE_REACHED, AirPressureEvent.class);
-        addMessageTopic(EVENT_ALTITUDE_REACHED, AltitudeEvent.class);
-        addMessageTopic(STATUS_AIR_PRESSURE_CALLBACK_PERIOD, AirPressureCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ALTITUDE_CALLBACK_PERIOD, AltitudeCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_AIR_PRESSURE_THRESHOLD, AirPressureCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_ALTITUDE_THRESHOLD, AltitudeCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_AVERAGING, AveragingStatus.class);
-        addMessageTopic(STATUS_REFERENCE_AIR_PRESSURE, ReferenceAirPressureStatus.class);
-
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_AIR_PRESSURE, AirPressureEvent.class);
+        messageTopicMap.put(EVENT_ALTITUDE, AltitudeEvent.class);
+        messageTopicMap.put(EVENT_AIR_PRESSURE_REACHED, AirPressureEvent.class);
+        messageTopicMap.put(EVENT_ALTITUDE_REACHED, AltitudeEvent.class);
+        messageTopicMap.put(STATUS_AIR_PRESSURE_CALLBACK_PERIOD, AirPressureCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ALTITUDE_CALLBACK_PERIOD, AltitudeCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_AIR_PRESSURE_THRESHOLD, AirPressureCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_ALTITUDE_THRESHOLD, AltitudeCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_AVERAGING, AveragingStatus.class);
+        messageTopicMap.put(STATUS_REFERENCE_AIR_PRESSURE, ReferenceAirPressureStatus.class);
+    }
+
 }

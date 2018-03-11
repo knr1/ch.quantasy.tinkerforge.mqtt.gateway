@@ -51,17 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class VoltageEvent extends AnEvent {
 
     @Range(from = Integer.MIN_VALUE, to = Integer.MAX_VALUE)
-    private long value;
+    public long value;
 
     private VoltageEvent() {
     }
 
     public VoltageEvent(long value) {
         this.value = value;
-    }
-
-    public long getValue() {
-        return value;
     }
 
 }

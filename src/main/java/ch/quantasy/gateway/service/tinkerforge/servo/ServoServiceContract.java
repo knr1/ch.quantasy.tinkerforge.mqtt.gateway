@@ -51,6 +51,7 @@ import ch.quantasy.gateway.message.servo.OutputVoltageStatus;
 import ch.quantasy.gateway.message.servo.ServosStatus;
 import ch.quantasy.gateway.message.servo.StatusLEDStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.servo.ServoDevice;
 import java.util.Map;
@@ -119,13 +120,18 @@ public class ServoServiceContract extends DeviceServiceContract {
 
         OUTPUT_VOLTAGE = "outputVoltage";
         STATUS_OUTPUT_VOLTAGE = STATUS + "/" + OUTPUT_VOLTAGE;
-        addMessageTopic(EVENT_POSITION_REACHED, PositionEvent.class);
-        addMessageTopic(EVENT_UNDERVOLTAGE, UnderVoltageEvent.class);
-        addMessageTopic(EVENT_VELOCITY_REACHED, VelocityEvent.class);
-        addMessageTopic(STATUS_SERVOS, ServosStatus.class);
-        addMessageTopic(STATUS_STATUS_LED, StatusLEDStatus.class);
-        addMessageTopic(STATUS_MINIMUM_VOLTAGE, MinimumVoltageStatus.class);
-        addMessageTopic(STATUS_OUTPUT_VOLTAGE, OutputVoltageStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_POSITION_REACHED, PositionEvent.class);
+        messageTopicMap.put(EVENT_UNDERVOLTAGE, UnderVoltageEvent.class);
+        messageTopicMap.put(EVENT_VELOCITY_REACHED, VelocityEvent.class);
+        messageTopicMap.put(STATUS_SERVOS, ServosStatus.class);
+        messageTopicMap.put(STATUS_STATUS_LED, StatusLEDStatus.class);
+        messageTopicMap.put(STATUS_MINIMUM_VOLTAGE, MinimumVoltageStatus.class);
+        messageTopicMap.put(STATUS_OUTPUT_VOLTAGE, OutputVoltageStatus.class);
     }
 
     

@@ -51,17 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class DistanceEvent extends AnEvent {
     @Ranges(values = {@Range(from = 40, to = 300),@Range(from = 100, to = 800),@Range(from = 200, to = 1500)})
-    private long value;
+    public long value;
 
     private DistanceEvent() {
     }
 
     public DistanceEvent(long value) {
         this.value = value;
-    }
-
-    public long getValue() {
-        return value;
     }
 
 }

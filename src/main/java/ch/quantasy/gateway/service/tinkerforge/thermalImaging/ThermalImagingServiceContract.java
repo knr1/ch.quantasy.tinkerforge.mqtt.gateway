@@ -42,14 +42,6 @@
  */
 package ch.quantasy.gateway.service.tinkerforge.thermalImaging;
 
-import ch.quantasy.gateway.message.temperatureIR.AmbientTemperatureEvent;
-import ch.quantasy.gateway.message.temperatureIR.ObjectTemperatureEvent;
-import ch.quantasy.gateway.message.temperatureIR.TemperatureIRIntent;
-import ch.quantasy.gateway.message.temperatureIR.AmbientTemperatureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.temperatureIR.AmbientTemperatureCallbackThresholdStatus;
-import ch.quantasy.gateway.message.temperatureIR.DebouncePeriodStatus;
-import ch.quantasy.gateway.message.temperatureIR.ObjectTemperatureCallbackPeriodStatus;
-import ch.quantasy.gateway.message.temperatureIR.ObjectTemperatureCallbackThresholdStatus;
 import ch.quantasy.gateway.message.thermalImage.HighContrastImageEvent;
 import ch.quantasy.gateway.message.thermalImage.TemperatureResolutionStatus;
 import ch.quantasy.gateway.message.thermalImage.ImageTransferStatus;
@@ -58,8 +50,8 @@ import ch.quantasy.gateway.message.thermalImage.StatisticsEvent;
 import ch.quantasy.gateway.message.thermalImage.TemperatureImageEvent;
 import ch.quantasy.gateway.message.thermalImage.ThermalImageIntent;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagingDevice;
 import java.util.Map;
 
@@ -95,13 +87,17 @@ public class ThermalImagingServiceContract extends DeviceServiceContract {
         EVENT_IMAGE_HIGH_CONTRAST=EVENT+"/image/highContrast";
         EVENT_IMAGE_TEMPERATURE=EVENT+"/image/temperature";
         EVENT_STATISTICS=EVENT+"/statistics";
-        
-        addMessageTopic(STATUS_IMAGE_TRANSFER_CONFIG, ImageTransferStatus.class);
-        addMessageTopic(STATUS_TEMPERATURE_RESOLUTION, TemperatureResolutionStatus.class);
-        addMessageTopic(STATUS_SPOT_METER_CONFIG, SpotMeterConfigStatus.class);
-        addMessageTopic(EVENT_IMAGE_HIGH_CONTRAST, HighContrastImageEvent.class);
-        addMessageTopic(EVENT_IMAGE_TEMPERATURE, TemperatureImageEvent.class);
-        addMessageTopic(EVENT_STATISTICS, StatisticsEvent.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(STATUS_IMAGE_TRANSFER_CONFIG, ImageTransferStatus.class);
+        messageTopicMap.put(STATUS_TEMPERATURE_RESOLUTION, TemperatureResolutionStatus.class);
+        messageTopicMap.put(STATUS_SPOT_METER_CONFIG, SpotMeterConfigStatus.class);
+        messageTopicMap.put(EVENT_IMAGE_HIGH_CONTRAST, HighContrastImageEvent.class);
+        messageTopicMap.put(EVENT_IMAGE_TEMPERATURE, TemperatureImageEvent.class);
+        messageTopicMap.put(EVENT_STATISTICS, StatisticsEvent.class);
     }
 
    

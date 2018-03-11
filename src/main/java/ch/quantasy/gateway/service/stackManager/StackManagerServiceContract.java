@@ -46,6 +46,7 @@ import ch.quantasy.gateway.message.stackManager.StackAddressEvent;
 import ch.quantasy.gateway.message.stack.TinkerforgeStackIntent;
 import ch.quantasy.gateway.message.stackManager.ConnectStatus;
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import java.util.Map;
 
 /**
@@ -113,9 +114,14 @@ public class StackManagerServiceContract extends TinkerForgeServiceContract {
         DISCONNECTED = "disconnected";
 
         EVENT_ADDRESS_DISCONNECTED = EVENT_DEVICE + "/" + DISCONNECTED;
-        addMessageTopic(EVENT_STACK_ADDRESS_ADDED, StackAddressEvent.class);
-        addMessageTopic(EVENT_STACK_ADDRESS_REMOVED, StackAddressEvent.class);
-         addMessageTopic(STATUS_STACK_ADDRESS + "/<address>/connected", ConnectStatus.class);
 
     }
+
+    @Override
+    public void setMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_STACK_ADDRESS_ADDED, StackAddressEvent.class);
+        messageTopicMap.put(EVENT_STACK_ADDRESS_REMOVED, StackAddressEvent.class);
+        messageTopicMap.put(STATUS_STACK_ADDRESS + "/<address>/connected", ConnectStatus.class);
+    }
+
 }

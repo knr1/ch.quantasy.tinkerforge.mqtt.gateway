@@ -54,16 +54,16 @@ import com.tinkerforge.BrickletJoystick;
 public class DeviceAnalogValueCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 0, to = 4095)
-    private int minX;
+    public int minX;
     @Range(from = 0, to = 4095)
-    private int minY;
+    public int minY;
 
     @Range(from = 0, to = 4095)
-    private int maxX;
+    public int maxX;
     @Range(from = 0, to = 4095)
-    private int maxY;
+    public int maxY;
 
     public DeviceAnalogValueCallbackThreshold() {
     }
@@ -79,25 +79,4 @@ public class DeviceAnalogValueCallbackThreshold extends AValidator {
     public DeviceAnalogValueCallbackThreshold(BrickletJoystick.AnalogValueCallbackThreshold threshold) {
         this(threshold.option, threshold.minX, threshold.maxX, threshold.minY, threshold.maxY);
     }
-
-    public int getMaxX() {
-        return maxX;
-    }
-
-    public int getMinX() {
-        return minX;
-    }
-
-    public int getMaxY() {
-        return maxY;
-    }
-
-    public int getMinY() {
-        return minY;
-    }
-
-    public char getOption() {
-        return option;
-    }
-
 }

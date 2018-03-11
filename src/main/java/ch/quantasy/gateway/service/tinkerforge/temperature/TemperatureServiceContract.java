@@ -49,8 +49,10 @@ import ch.quantasy.gateway.message.temperature.ModeStatus;
 import ch.quantasy.gateway.message.temperature.TemperatureCallbackPeriodStatus;
 import ch.quantasy.gateway.message.temperature.TemperatureThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
+import java.util.Map;
 
 /**
  *
@@ -109,12 +111,17 @@ public class TemperatureServiceContract extends DeviceServiceContract {
 
         MODE = "mode";
         STATUS_I2CMODE = STATUS + "/" + MODE;
-        addMessageTopic(EVENT_TEMPERATURE, TemperatureEvent.class);
-        addMessageTopic(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
-        addMessageTopic(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_TEMPERATURE_THRESHOLD, TemperatureThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_I2CMODE, ModeStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_TEMPERATURE, TemperatureEvent.class);
+        messageTopicMap.put(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
+        messageTopicMap.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_TEMPERATURE_THRESHOLD, TemperatureThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_I2CMODE, ModeStatus.class);
     }
 
    

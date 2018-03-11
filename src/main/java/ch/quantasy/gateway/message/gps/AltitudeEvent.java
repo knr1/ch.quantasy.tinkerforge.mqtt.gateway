@@ -49,10 +49,11 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  * @author reto
  */
 public class AltitudeEvent extends AnEvent {
+
     @Range(from = Integer.MIN_VALUE, to = Integer.MAX_VALUE)
-    private int altitude;
+    public int altitude;
     @Range(from = Integer.MIN_VALUE, to = Integer.MAX_VALUE)
-    private int geoidalSeparation;
+    public int geoidalSeparation;
 
     private AltitudeEvent() {
     }
@@ -60,14 +61,6 @@ public class AltitudeEvent extends AnEvent {
     public AltitudeEvent(int altitude, int geoidalSeparation) {
         this.altitude = altitude;
         this.geoidalSeparation = geoidalSeparation;
-    }
-
-    public int getAltitude() {
-        return altitude;
-    }
-
-    public int getGeoidalSeparation() {
-        return geoidalSeparation;
     }
 
 }

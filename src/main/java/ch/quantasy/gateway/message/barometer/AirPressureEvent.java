@@ -50,7 +50,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class AirPressureEvent extends AnEvent {
     @Range(from = 10000, to = 1200000)
-    private long value;
+    public long value;
 
     private AirPressureEvent() {
     }
@@ -58,9 +58,4 @@ public class AirPressureEvent extends AnEvent {
     public AirPressureEvent(long value) {
         this.value = value;
     }
-
-    public long getValue() {
-        return value;
-    }
-
 }

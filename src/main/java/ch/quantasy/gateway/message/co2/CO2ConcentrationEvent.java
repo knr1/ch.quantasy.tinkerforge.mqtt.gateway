@@ -51,17 +51,13 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class CO2ConcentrationEvent extends AnEvent {
 
     @Range(from = 0, to = 10000)
-    private long value;
+    public long value;
 
     private CO2ConcentrationEvent() {
     }
 
     public CO2ConcentrationEvent(long value) {
         this.value = value;
-    }
-
-    public long getValue() {
-        return value;
     }
 
 }

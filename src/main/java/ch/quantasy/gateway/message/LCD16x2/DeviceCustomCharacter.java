@@ -45,7 +45,6 @@ package ch.quantasy.gateway.message.LCD16x2;
 import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
 import ch.quantasy.mqtt.gateway.client.message.annotations.ArraySize;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
-import ch.quantasy.mqtt.gateway.client.message.annotations.SetSize;
 
 /**
  *
@@ -54,9 +53,9 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.SetSize;
 public class DeviceCustomCharacter extends AValidator implements Comparable<DeviceCustomCharacter> {
 
     @Range(from = 0, to = 7)
-    private short index;
+    public short index;
     @ArraySize(min = 8, max = 8)
-    private short[] pixels;
+    public short[] pixels;
 
     public DeviceCustomCharacter() {
     }
@@ -66,14 +65,7 @@ public class DeviceCustomCharacter extends AValidator implements Comparable<Devi
         this.pixels = pixels;
     }
 
-    public short getIndex() {
-        return index;
-    }
-
-    public short[] getPixels() {
-        return pixels;
-    }
-
+   
     @Override
     public int hashCode() {
         int hash = 3;

@@ -54,11 +54,11 @@ import com.tinkerforge.BrickletLaserRangeFinder;
 public class DeviceVelocityCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = -127, to = 127)
-    private short min;
+    public short min;
     @Range(from = -127, to = 127)
-    private short max;
+    public short max;
 
     public DeviceVelocityCallbackThreshold() {
     }
@@ -72,17 +72,4 @@ public class DeviceVelocityCallbackThreshold extends AValidator {
         this.min = min;
         this.max = max;
     }
-
-    public short getMax() {
-        return max;
-    }
-
-    public short getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
-    }
-
 }

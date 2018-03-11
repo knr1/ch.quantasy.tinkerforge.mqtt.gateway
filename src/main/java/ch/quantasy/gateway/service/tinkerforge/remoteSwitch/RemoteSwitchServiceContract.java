@@ -46,6 +46,7 @@ import ch.quantasy.gateway.message.remoteSwitch.SwitchingEvent;
 import ch.quantasy.gateway.message.remoteSwitch.RemoteSwitchIntent;
 import ch.quantasy.gateway.message.remoteSwitch.RepeatsStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
 import java.util.Map;
@@ -91,8 +92,13 @@ public class RemoteSwitchServiceContract extends DeviceServiceContract {
         SWITCH_SOCKET_B = "switchSocketB";
         SWITCH_SOCKET_C = "switchSocketC";
         DIM_SOCKET_B = "dimSocketB";
-        addMessageTopic(EVENT_SWITCHING_DONE, SwitchingEvent.class);
-        addMessageTopic(STATUS_REPEATS, RepeatsStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_SWITCHING_DONE, SwitchingEvent.class);
+        messageTopicMap.put(STATUS_REPEATS, RepeatsStatus.class);
 
     }
 

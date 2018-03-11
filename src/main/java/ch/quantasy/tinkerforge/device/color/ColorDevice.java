@@ -116,7 +116,7 @@ public class ColorDevice extends GenericDevice<BrickletColor, ColorDeviceCallbac
         }
         if (intent.colorCallbackThreshold != null) {
             try {
-                getDevice().setColorCallbackThreshold(intent.colorCallbackThreshold.getOption(), intent.colorCallbackThreshold.getMinR(), intent.colorCallbackThreshold.getMaxR(), intent.colorCallbackThreshold.getMinG(), intent.colorCallbackThreshold.getMaxG(), intent.colorCallbackThreshold.getMinB(), intent.colorCallbackThreshold.getMaxB(), intent.colorCallbackThreshold.getMinC(), intent.colorCallbackThreshold.getMaxC());
+                getDevice().setColorCallbackThreshold(intent.colorCallbackThreshold.option, intent.colorCallbackThreshold.minR, intent.colorCallbackThreshold.maxR, intent.colorCallbackThreshold.minG, intent.colorCallbackThreshold.maxG, intent.colorCallbackThreshold.minB, intent.colorCallbackThreshold.maxB, intent.colorCallbackThreshold.minC, intent.colorCallbackThreshold.maxC);
                 getIntent().colorCallbackThreshold = new DeviceColorCallbackThreshold(getDevice().getColorCallbackThreshold());
                 super.getCallback().colorCallbackThresholdChanged(getIntent().colorCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

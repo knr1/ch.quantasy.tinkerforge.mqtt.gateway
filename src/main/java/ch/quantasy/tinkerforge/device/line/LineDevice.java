@@ -104,7 +104,7 @@ public class LineDevice extends GenericDevice<BrickletLine, LineDeviceCallback, 
 
         if (intent.reflectivityCallbackThreshold != null) {
             try {
-                getDevice().setReflectivityCallbackThreshold(intent.reflectivityCallbackThreshold.getOption(), intent.reflectivityCallbackThreshold.getMin(), intent.reflectivityCallbackThreshold.getMax());
+                getDevice().setReflectivityCallbackThreshold(intent.reflectivityCallbackThreshold.option, intent.reflectivityCallbackThreshold.min, intent.reflectivityCallbackThreshold.max);
                 getIntent().reflectivityCallbackThreshold = new DeviceReflectivityCallbackThreshold(getDevice().getReflectivityCallbackThreshold());
                 super.getCallback().reflectivityThresholdChanged(getIntent().reflectivityCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

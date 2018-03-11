@@ -53,35 +53,18 @@ import ch.quantasy.gateway.message.IMU.TemperatureEvent;
  *
  * @author reto
  */
-public class AllDataEvent extends ch.quantasy.gateway.message.IMU.AllDataEvent{
-    private QuaternionEvent quaternion;
-    private LinearAccelerationEvent linearAcceleration;
-    private GravityVectorEvent gravityVector;
-    
-    
-    public AllDataEvent(AccelerationEvent acceleration, MagneticFieldEvent magneticField, AngularVelocityEvent angularVelocity, QuaternionEvent quaternion, LinearAccelerationEvent linearAcceleration,GravityVectorEvent gravityVector,TemperatureEvent temperature) {
+public class AllDataEvent extends ch.quantasy.gateway.message.IMU.AllDataEvent {
+
+    public QuaternionEvent quaternion;
+    public LinearAccelerationEvent linearAcceleration;
+    public GravityVectorEvent gravityVector;
+
+    public AllDataEvent(AccelerationEvent acceleration, MagneticFieldEvent magneticField, AngularVelocityEvent angularVelocity, QuaternionEvent quaternion, LinearAccelerationEvent linearAcceleration, GravityVectorEvent gravityVector, TemperatureEvent temperature) {
         super(acceleration, magneticField, angularVelocity, temperature);
-        this.quaternion=quaternion;
-        this.linearAcceleration=linearAcceleration;
-        this.gravityVector=gravityVector;
-        
+        this.quaternion = quaternion;
+        this.linearAcceleration = linearAcceleration;
+        this.gravityVector = gravityVector;
+
     }
 
-    public QuaternionEvent getQuaternion() {
-        return quaternion;
-    }
-
-    public LinearAccelerationEvent getLinearAcceleration() {
-        return linearAcceleration;
-    }
-
-    public GravityVectorEvent getGravityVector() {
-        return gravityVector;
-    }
-    
-    
-    
-    
-    
-    
 }

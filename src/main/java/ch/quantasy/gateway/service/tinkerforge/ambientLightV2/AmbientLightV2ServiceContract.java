@@ -49,8 +49,10 @@ import ch.quantasy.gateway.message.ambientLight.IlluminanceEvent;
 import ch.quantasy.gateway.message.ambientLightV2.ConfigurationStatus;
 import ch.quantasy.gateway.message.ambientLightV2.IlluminanceCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ambientLightV2.AmbientLightV2Device;
+import java.util.Map;
 
 /**
  *
@@ -109,13 +111,17 @@ public class AmbientLightV2ServiceContract extends DeviceServiceContract {
 
         CONFIGURATION = "configuration";
         STATUS_CONFIGURATION = STATUS + "/" + CONFIGURATION;
-        addMessageTopic(EVENT_ILLUMINANCE, IlluminanceEvent.class);
-        addMessageTopic(EVENT_ILLUMINANCE_REACHED, IlluminanceEvent.class);
-        addMessageTopic(STATUS_ILLUMINANCE_CALLBACK_PERIOD, IlluminanceCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ILLUMINANCE_THRESHOLD, IlluminanceCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
+
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_ILLUMINANCE, IlluminanceEvent.class);
+        messageTopicMap.put(EVENT_ILLUMINANCE_REACHED, IlluminanceEvent.class);
+        messageTopicMap.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, IlluminanceCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ILLUMINANCE_THRESHOLD, IlluminanceCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_CONFIGURATION, ConfigurationStatus.class);
+    }
+
 }

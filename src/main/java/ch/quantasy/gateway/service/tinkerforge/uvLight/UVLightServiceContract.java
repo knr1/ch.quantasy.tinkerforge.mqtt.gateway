@@ -48,6 +48,7 @@ import ch.quantasy.gateway.message.uvLight.DebouncePeriodStatus;
 import ch.quantasy.gateway.message.uvLight.UvLightCallbackPeriodStatus;
 import ch.quantasy.gateway.message.uvLight.UvLightCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.uvLight.UVLightDevice;
 import java.util.Map;
@@ -102,11 +103,16 @@ public class UVLightServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        addMessageTopic(EVENT_UV_LIGHT, UVLightEvent.class);
-        addMessageTopic(EVENT_UV_LIGHT_REACHED, UVLightEvent.class);
-        addMessageTopic(STATUS_UV_LIGHT_CALLBACK_PERIOD, UvLightCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_UV_LIGHT_THRESHOLD, UvLightCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_UV_LIGHT, UVLightEvent.class);
+        messageTopicMap.put(EVENT_UV_LIGHT_REACHED, UVLightEvent.class);
+        messageTopicMap.put(STATUS_UV_LIGHT_CALLBACK_PERIOD, UvLightCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_UV_LIGHT_THRESHOLD, UvLightCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
     

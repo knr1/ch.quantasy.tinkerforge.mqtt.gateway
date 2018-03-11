@@ -51,6 +51,7 @@ import ch.quantasy.gateway.message.color.ColorTemperatureCallbackPeriodStatus;
 import ch.quantasy.gateway.message.color.DebouncePeriodStatus;
 import ch.quantasy.gateway.message.color.IlluminanceCallbackPeriodStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.color.ColorDevice;
 import java.util.Map;
@@ -127,15 +128,19 @@ public class ColorServiceContract extends DeviceServiceContract {
 
         LED_STATE = "ledState";
         STATUS_LIGHT_STATE = STATUS + "/" + LED_STATE;
-        addMessageTopic(EVENT_COLOR, ColorEvent.class);
-        addMessageTopic(EVENT_ILLUMINANCE, IlluminanceEvent.class);
-        addMessageTopic(EVENT_COLOR_REACHED, ColorEvent.class);
-        addMessageTopic(EVENT_COLOR_TEMPERATURE_REACHED, ColorTemperatureEvent.class);
-        addMessageTopic(STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, ColorTemperatureCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_ILLUMINANCE_CALLBACK_PERIOD, IlluminanceCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_COLOR_THRESHOLD, ColorCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(EVENT_COLOR, ColorEvent.class);
+        messageTopicMap.put(EVENT_ILLUMINANCE, IlluminanceEvent.class);
+        messageTopicMap.put(EVENT_COLOR_REACHED, ColorEvent.class);
+        messageTopicMap.put(EVENT_COLOR_TEMPERATURE_REACHED, ColorTemperatureEvent.class);
+        messageTopicMap.put(STATUS_COLOR_TEMPERATURE_CALLBACK_PERIOD, ColorTemperatureCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_ILLUMINANCE_CALLBACK_PERIOD, IlluminanceCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_COLOR_THRESHOLD, ColorCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+    }
+
 }

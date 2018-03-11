@@ -51,8 +51,8 @@ import com.tinkerforge.BrickletDualRelay;
  */
 public class DeviceRelayState extends AValidator {
 
-    private boolean relay1;
-    private boolean relay2;
+    public boolean relay1;
+    public boolean relay2;
 
     private DeviceRelayState() {
     }
@@ -64,14 +64,6 @@ public class DeviceRelayState extends AValidator {
 
     public DeviceRelayState(BrickletDualRelay.State state) {
         this(state.relay1, state.relay2);
-    }
-
-    public boolean getRelay1() {
-        return relay1;
-    }
-
-    public boolean getRelay2() {
-        return relay2;
     }
 
     @Override

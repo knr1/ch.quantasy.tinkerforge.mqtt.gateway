@@ -56,6 +56,7 @@ import ch.quantasy.gateway.message.master.StatusLEDStatus;
 import ch.quantasy.gateway.message.master.UsbVoltageCallbackPeriodStatus;
 import ch.quantasy.gateway.message.master.UsbVoltageCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.master.MasterDevice;
 import java.util.Map;
@@ -158,24 +159,29 @@ public class MasterServiceContract extends DeviceServiceContract {
         STATUS_USB_VOLTAGE = STATUS + "/" + USB_VOLTAGE;
         STATUS_USB_VOLTAGE_CALLBACK_PERIOD = STATUS_USB_VOLTAGE + "/" + CALLBACK_PERIOD;
         STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD = STATUS_USB_VOLTAGE + "/" + CALLBACK_THRESHOLD;
-        addMessageTopic(EVENT_RESET, ResetEvent.class);
-        addMessageTopic(EVENT_STACK_VOLTAGE, StackVoltageEvent.class);
-        addMessageTopic(EVENT_STACK_VOLTAGE_REACHED, StackVoltageEvent.class);
+    }
 
-        addMessageTopic(EVENT_USB_VOLTAGE, USBVoltageEvent.class);
-        addMessageTopic(EVENT_USB_VOLTAGE_REACHED, USBVoltageEvent.class);
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_RESET, ResetEvent.class);
+        messageTopicMap.put(EVENT_STACK_VOLTAGE, StackVoltageEvent.class);
+        messageTopicMap.put(EVENT_STACK_VOLTAGE_REACHED, StackVoltageEvent.class);
 
-        addMessageTopic(EVENT_STACK_CURRENT, StackCurrentEvent.class);
-        addMessageTopic(EVENT_STACK_CURRENT_REACHED, StackCurrentEvent.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_STACK_CURRENT_CALLBACK_PERIOD, CurrentCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_STATUS_LED_ENABLED, StatusLEDStatus.class);
-        addMessageTopic(STATUS_CURRENT_CALLBACK_THRESHOLD, CurrentCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, StackVoltageCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, StackVoltageCallbackThresholdStatus.class);
+        messageTopicMap.put(EVENT_USB_VOLTAGE, USBVoltageEvent.class);
+        messageTopicMap.put(EVENT_USB_VOLTAGE_REACHED, USBVoltageEvent.class);
 
-        addMessageTopic(STATUS_USB_VOLTAGE_CALLBACK_PERIOD, UsbVoltageCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD, UsbVoltageCallbackThresholdStatus.class);
+        messageTopicMap.put(EVENT_STACK_CURRENT, StackCurrentEvent.class);
+        messageTopicMap.put(EVENT_STACK_CURRENT_REACHED, StackCurrentEvent.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_STACK_CURRENT_CALLBACK_PERIOD, CurrentCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_STATUS_LED_ENABLED, StatusLEDStatus.class);
+        messageTopicMap.put(STATUS_CURRENT_CALLBACK_THRESHOLD, CurrentCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_STACK_VOLTAGE_CALLBACK_PERIOD, StackVoltageCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_STACK_VOLTAGE_CALLBACK_THRESHOLD, StackVoltageCallbackThresholdStatus.class);
+
+        messageTopicMap.put(STATUS_USB_VOLTAGE_CALLBACK_PERIOD, UsbVoltageCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_USB_VOLTAGE_CALLBACK_THRESHOLD, UsbVoltageCallbackThresholdStatus.class);
     }
 
    

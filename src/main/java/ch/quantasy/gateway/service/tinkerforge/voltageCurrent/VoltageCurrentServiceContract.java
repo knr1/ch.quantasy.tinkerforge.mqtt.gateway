@@ -56,6 +56,7 @@ import ch.quantasy.gateway.message.voltageCurrent.PowerCallbackThresholdStatus;
 import ch.quantasy.gateway.message.voltageCurrent.VoltageCallbackPeriodStatus;
 import ch.quantasy.gateway.message.voltageCurrent.VoltageCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import java.util.Map;
@@ -152,21 +153,26 @@ public class VoltageCurrentServiceContract extends DeviceServiceContract {
 
         CALIBRATION = "calibration";
         STATUS_CALIBRATION = STATUS + "/" + CALIBRATION;
-        addMessageTopic(EVENT_POWER, PowerEvent.class);
-        addMessageTopic(EVENT_POWER_REACHED, PowerEvent.class);
-        addMessageTopic(EVENT_VOLTAGE, VoltageEvent.class);
-        addMessageTopic(EVENT_VOLTAGE_REACHED, VoltageEvent.class);
-        addMessageTopic(EVENT_CURRENT, CurrentEvent.class);
-        addMessageTopic(EVENT_CURRENT_REACHED, CurrentEvent.class);
-        addMessageTopic(STATUS_CALIBRATION, CalibrationStatus.class);
-        addMessageTopic(STATUS_VOLTAGE_CALLBACK_PERIOD, VoltageCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_VOLTAGE_THRESHOLD, VoltageCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_CURRENT_CALLBACK_PERIOD, CurrentCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_CURRENT_THRESHOLD, CurrentCalbackThresholdStatus.class);
-        addMessageTopic(STATUS_POWER_CALLBACK_PERIOD, PowerCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_POWER_THRESHOLD, PowerCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_CONFIGURATION, ConfigurationStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_POWER, PowerEvent.class);
+        messageTopicMap.put(EVENT_POWER_REACHED, PowerEvent.class);
+        messageTopicMap.put(EVENT_VOLTAGE, VoltageEvent.class);
+        messageTopicMap.put(EVENT_VOLTAGE_REACHED, VoltageEvent.class);
+        messageTopicMap.put(EVENT_CURRENT, CurrentEvent.class);
+        messageTopicMap.put(EVENT_CURRENT_REACHED, CurrentEvent.class);
+        messageTopicMap.put(STATUS_CALIBRATION, CalibrationStatus.class);
+        messageTopicMap.put(STATUS_VOLTAGE_CALLBACK_PERIOD, VoltageCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_VOLTAGE_THRESHOLD, VoltageCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_CURRENT_CALLBACK_PERIOD, CurrentCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_CURRENT_THRESHOLD, CurrentCalbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_POWER_CALLBACK_PERIOD, PowerCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_POWER_THRESHOLD, PowerCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_CONFIGURATION, ConfigurationStatus.class);
 
     }
 

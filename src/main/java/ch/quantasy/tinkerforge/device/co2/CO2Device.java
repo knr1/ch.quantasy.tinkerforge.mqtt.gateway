@@ -103,7 +103,7 @@ public class CO2Device extends GenericDevice<BrickletCO2, CO2DeviceCallback, CO2
         }
         if (intent.co2ConcentrationCallbackThreshold != null) {
             try {
-                getDevice().setCO2ConcentrationCallbackThreshold(intent.co2ConcentrationCallbackThreshold.getOption(), intent.co2ConcentrationCallbackThreshold.getMin(), intent.co2ConcentrationCallbackThreshold.getMax());
+                getDevice().setCO2ConcentrationCallbackThreshold(intent.co2ConcentrationCallbackThreshold.option, intent.co2ConcentrationCallbackThreshold.min, intent.co2ConcentrationCallbackThreshold.max);
                 getIntent().co2ConcentrationCallbackThreshold = new DeviceCO2ConcentrationCallbackThreshold(getDevice().getCO2ConcentrationCallbackThreshold());
                 super.getCallback().co2ConcentrationCallbackThresholdChanged(getIntent().co2ConcentrationCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

@@ -48,10 +48,10 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  *
  * @author reto
  */
-public class TemperatureEvent extends AnEvent{
+public class TemperatureEvent extends AnEvent {
 
-    @Range(from = Short.MIN_VALUE,to = Short.MAX_VALUE)
-    private Short temperature;
+    @Range(from = Short.MIN_VALUE, to = Short.MAX_VALUE)
+    public Short temperature;
 
     private TemperatureEvent() {
     }
@@ -60,9 +60,4 @@ public class TemperatureEvent extends AnEvent{
         this.temperature = temperature;
     }
 
-    public Short getTemperature() {
-        return temperature;
-    }
-
-   
 }

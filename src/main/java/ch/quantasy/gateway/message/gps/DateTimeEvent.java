@@ -51,10 +51,10 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class DateTimeEvent extends AnEvent {
     //[[d|dd]mmyy]
     @Range(from = 100, to = 311299)
-    private long date;
+    public long date;
     //time: [hhmmssxxx]
     @Range(from = 0, to = 235959999)
-    private long time;
+    public long time;
 
     private DateTimeEvent() {
     }
@@ -63,13 +63,4 @@ public class DateTimeEvent extends AnEvent {
         this.date = date;
         this.time = time;
     }
-
-    public long getDate() {
-        return date;
-    }
-
-    public long getTime() {
-        return time;
-    }
-
 }

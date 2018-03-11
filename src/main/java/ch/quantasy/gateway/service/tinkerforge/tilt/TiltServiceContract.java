@@ -44,6 +44,7 @@ package ch.quantasy.gateway.service.tinkerforge.tilt;
 
 import ch.quantasy.gateway.message.tilt.TiltEvent;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.tilt.TiltDevice;
 import java.util.Map;
@@ -70,7 +71,12 @@ public class TiltServiceContract extends DeviceServiceContract {
 
         TILT_STATE = "tiltState";
         EVENT_TILT_STATE = EVENT + "/" + TILT_STATE;
-        addMessageTopic(EVENT_TILT_STATE, TiltEvent.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_TILT_STATE, TiltEvent.class);
 
     }
 

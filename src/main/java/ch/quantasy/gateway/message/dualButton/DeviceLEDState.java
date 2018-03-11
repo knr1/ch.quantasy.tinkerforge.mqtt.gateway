@@ -53,9 +53,9 @@ import com.tinkerforge.BrickletDualButton;
 public class DeviceLEDState extends AValidator {
 
     @NonNull
-    private LEDState led1;
+    public LEDState led1;
     @NonNull
-    private LEDState led2;
+    public LEDState led2;
 
     public DeviceLEDState() {
     }
@@ -73,12 +73,5 @@ public class DeviceLEDState extends AValidator {
         this(ledState.ledL, ledState.ledR);
     }
 
-    public LEDState getLed1() {
-        return led1;
-    }
-
-    public LEDState getLed2() {
-        return led2;
-    }
 
 }

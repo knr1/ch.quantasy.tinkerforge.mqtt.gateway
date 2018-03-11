@@ -51,7 +51,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class AltitudeEvent extends AnEvent {
 
     @Range(from = Integer.MIN_VALUE, to = Integer.MAX_VALUE)
-    private long value;
+    public long value;
 
     private AltitudeEvent() {
     }
@@ -60,8 +60,5 @@ public class AltitudeEvent extends AnEvent {
         this.value = value;
     }
 
-    public long getValue() {
-        return value;
-    }
 
 }

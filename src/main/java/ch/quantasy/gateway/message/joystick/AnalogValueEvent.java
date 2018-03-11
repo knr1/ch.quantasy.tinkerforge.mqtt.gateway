@@ -51,9 +51,9 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class AnalogValueEvent extends AnEvent {
 
     @Range(from = 0, to = 4095)
-    private int x;
+    public int x;
     @Range(from = 0, to = 4095)
-    private int y;
+    public int y;
 
     private AnalogValueEvent() {
     }
@@ -62,13 +62,4 @@ public class AnalogValueEvent extends AnEvent {
         this.x = x;
         this.y = y;
     }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
 }

@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.tinkerforge.analogOutV2;
 import ch.quantasy.gateway.message.analogOutV2.AnalogOutV2Intent;
 import ch.quantasy.gateway.message.analogOutV2.OutputVoltageStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.analogOutV2.AnalogOutV2Device;
 import java.util.Map;
@@ -70,9 +71,12 @@ public class AnalogOutV2ServiceContract extends DeviceServiceContract {
         super(id, device, AnalogOutV2Intent.class);
         OUTPUT_VOLTAGE = "outputVoltage";
         STATUS_OUTPUT_VOLTAGE = STATUS + "/" + OUTPUT_VOLTAGE;
-        addMessageTopic(STATUS_OUTPUT_VOLTAGE, OutputVoltageStatus.class);
 
     }
 
-   
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        messageTopicMap.put(STATUS_OUTPUT_VOLTAGE, OutputVoltageStatus.class);
+    }
+
 }

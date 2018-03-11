@@ -54,11 +54,11 @@ import com.tinkerforge.BrickletCO2;
 public class DeviceCO2ConcentrationCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 0, to = 10000)
-    private int min;
+    public int min;
     @Range(from = 0, to = 10000)
-    private int max;
+    public int max;
 
     public DeviceCO2ConcentrationCallbackThreshold() {
     }
@@ -71,18 +71,6 @@ public class DeviceCO2ConcentrationCallbackThreshold extends AValidator {
 
     public DeviceCO2ConcentrationCallbackThreshold(BrickletCO2.CO2ConcentrationCallbackThreshold threshold) {
         this(threshold.option, threshold.min, threshold.max);
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
     }
 
 }

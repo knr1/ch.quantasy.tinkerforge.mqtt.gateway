@@ -137,7 +137,7 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
         }
         if (intent.distanceCallbackThreshold != null) {
             try {
-                getDevice().setDistanceCallbackThreshold(intent.distanceCallbackThreshold.getOption(), intent.distanceCallbackThreshold.getMin(), intent.distanceCallbackThreshold.getMax());
+                getDevice().setDistanceCallbackThreshold(intent.distanceCallbackThreshold.option, intent.distanceCallbackThreshold.min, intent.distanceCallbackThreshold.max);
                 getIntent().distanceCallbackThreshold = new DeviceDistanceCallbackThreshold(getDevice().getDistanceCallbackThreshold());
                 super.getCallback().distanceCallbackThresholdChanged(getIntent().distanceCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {
@@ -146,7 +146,7 @@ public class LaserRangeFinderDevice extends GenericDevice<BrickletLaserRangeFind
         }
         if (intent.velocityCallbackThreshold != null) {
             try {
-                getDevice().setVelocityCallbackThreshold(intent.velocityCallbackThreshold.getOption(), intent.velocityCallbackThreshold.getMin(), intent.velocityCallbackThreshold.getMax());
+                getDevice().setVelocityCallbackThreshold(intent.velocityCallbackThreshold.option, intent.velocityCallbackThreshold.min, intent.velocityCallbackThreshold.max);
                 getIntent().velocityCallbackThreshold = new DeviceVelocityCallbackThreshold(getDevice().getVelocityCallbackThreshold());
                 super.getCallback().velocityCallbackThresholdChanged(getIntent().velocityCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

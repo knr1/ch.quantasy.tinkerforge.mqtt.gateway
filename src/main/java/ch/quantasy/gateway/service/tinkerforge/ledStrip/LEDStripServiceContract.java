@@ -47,6 +47,7 @@ import ch.quantasy.gateway.message.ledStrip.RenderedEvent;
 import ch.quantasy.gateway.message.ledStrip.LedStripIntent;
 import ch.quantasy.gateway.message.ledStrip.ConfigStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDevice;
 import java.util.Map;
@@ -93,9 +94,14 @@ public class LEDStripServiceContract extends DeviceServiceContract {
 
         LAGING = "laging";
         EVENT_LAGING = EVENT + "/" + LAGING;
-        addMessageTopic(EVENT_LEDs_RENDERED, RenderedEvent.class);
-        addMessageTopic(EVENT_LAGING, LagingEvent.class);
-        addMessageTopic(STATUS_CONFIG, ConfigStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_LEDs_RENDERED, RenderedEvent.class);
+        messageTopicMap.put(EVENT_LAGING, LagingEvent.class);
+        messageTopicMap.put(STATUS_CONFIG, ConfigStatus.class);
 
     }
 

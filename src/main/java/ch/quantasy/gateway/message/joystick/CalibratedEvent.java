@@ -49,7 +49,7 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  */
 public class CalibratedEvent extends AnEvent{
 
-    private boolean value;
+    public boolean value;
     
      
 
@@ -59,16 +59,5 @@ public class CalibratedEvent extends AnEvent{
     public CalibratedEvent(boolean value) {
         this.value= value;
     }
-
-  
-    public boolean getValue() {
-        return value;
-    }
-    
-
-    
-    
-    
-
    
 }

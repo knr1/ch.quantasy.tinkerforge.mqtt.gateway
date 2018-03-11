@@ -51,9 +51,9 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 public class PositionEvent extends AnEvent {
 
     @Range(from = -100, to = 100)
-    private short x;
+    public short x;
     @Range(from = -100, to = 100)
-    private short y;
+    public short y;
 
     private PositionEvent() {
     }
@@ -61,14 +61,6 @@ public class PositionEvent extends AnEvent {
     public PositionEvent(short x, short y) {
         this.x = x;
         this.y = y;
-    }
-
-    public short getX() {
-        return x;
-    }
-
-    public short getY() {
-        return y;
     }
 
 }

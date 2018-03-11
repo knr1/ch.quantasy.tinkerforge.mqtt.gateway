@@ -120,7 +120,7 @@ public class DistanceIRDevice extends GenericDevice<BrickletDistanceIR, Distance
 
         if (intent.analogValueCallbackThreshold != null) {
             try {
-                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.getOption(), intent.analogValueCallbackThreshold.getMin(), intent.analogValueCallbackThreshold.getMax());
+                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.option, intent.analogValueCallbackThreshold.min, intent.analogValueCallbackThreshold.max);
                 getIntent().analogValueCallbackThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
                 super.getCallback().analogValueCallbackThresholdChanged(getIntent().analogValueCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {
@@ -129,7 +129,7 @@ public class DistanceIRDevice extends GenericDevice<BrickletDistanceIR, Distance
         }
         if (intent.distanceCallbackThreshold != null) {
             try {
-                getDevice().setDistanceCallbackThreshold(intent.distanceCallbackThreshold.getOption(), intent.distanceCallbackThreshold.getMin(), intent.distanceCallbackThreshold.getMax());
+                getDevice().setDistanceCallbackThreshold(intent.distanceCallbackThreshold.option, intent.distanceCallbackThreshold.min, intent.distanceCallbackThreshold.max);
                 getIntent().distanceCallbackThreshold = new DeviceDistanceCallbackThreshold(getDevice().getDistanceCallbackThreshold());
                 super.getCallback().distanceCallbackThresholdChanged(getIntent().distanceCallbackThreshold);
 

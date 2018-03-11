@@ -45,6 +45,7 @@ package ch.quantasy.gateway.service.tinkerforge.motionDetector;
 import ch.quantasy.gateway.message.motionDetector.MotionDetectionCycleEndedEvent;
 import ch.quantasy.gateway.message.motionDetector.MotionDetectionDetected;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
 import java.util.Map;
@@ -77,8 +78,13 @@ public class MotionDetectorServiceContract extends DeviceServiceContract {
 
         MOTION_DETECTED = "motionDetected";
         EVENT_MOTION_DETECTED = EVENT + "/" + MOTION_DETECTED;
-        addMessageTopic(EVENT_DETECTION_CYCLE_ENDED, MotionDetectionCycleEndedEvent.class);
-        addMessageTopic(EVENT_MOTION_DETECTED, MotionDetectionDetected.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_DETECTION_CYCLE_ENDED, MotionDetectionCycleEndedEvent.class);
+        messageTopicMap.put(EVENT_MOTION_DETECTED, MotionDetectionDetected.class);
  
     }
 

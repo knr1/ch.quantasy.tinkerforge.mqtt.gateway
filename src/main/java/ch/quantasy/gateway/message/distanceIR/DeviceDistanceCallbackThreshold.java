@@ -55,19 +55,19 @@ import com.tinkerforge.BrickletDistanceIR;
 public class DeviceDistanceCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Ranges(values = {
         @Range(from = 0, to = 0)
         ,@Range(from = 40, to = 300)
         ,@Range(from = 100, to = 800)
         ,@Range(from = 200, to = 1500)})
-    private int min;
+    public int min;
     @Ranges(values = {
         @Range(from = 0, to = 0)
         ,@Range(from = 40, to = 300)
         ,@Range(from = 100, to = 800)
         ,@Range(from = 200, to = 1500)})
-    private int max;
+    public int max;
 
     public DeviceDistanceCallbackThreshold() {
     }
@@ -82,15 +82,4 @@ public class DeviceDistanceCallbackThreshold extends AValidator {
         this(threshold.option, threshold.min, threshold.max);
     }
 
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
-    }
 }

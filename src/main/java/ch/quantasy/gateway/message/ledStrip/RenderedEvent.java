@@ -48,9 +48,10 @@ import ch.quantasy.mqtt.gateway.client.message.AnEvent;
  *
  * @author reto
  */
-public class RenderedEvent extends AnEvent{
-     @Range(from = 0, to = Integer.MAX_VALUE)
-    private int value;
+public class RenderedEvent extends AnEvent {
+
+    @Range(from = 0, to = Integer.MAX_VALUE)
+    public int value;
 
     private RenderedEvent() {
     }
@@ -59,8 +60,4 @@ public class RenderedEvent extends AnEvent{
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
-    
 }

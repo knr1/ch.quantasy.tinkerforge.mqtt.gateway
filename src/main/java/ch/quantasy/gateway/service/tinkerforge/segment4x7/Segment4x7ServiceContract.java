@@ -46,6 +46,7 @@ import ch.quantasy.gateway.message.segment4x7.CounterEvent;
 import ch.quantasy.gateway.message.segment4x7.Segment4x7Intent;
 import ch.quantasy.gateway.message.segment4x7.SegmentsStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import java.util.Map;
@@ -88,9 +89,14 @@ public class Segment4x7ServiceContract extends DeviceServiceContract {
 
         COUNTER_FINISHED = COUNTER + "Finished";
         EVENT_COUNTER_FINISHED = EVENT + "/" + COUNTER_FINISHED;
-        addMessageTopic(EVENT_COUNTER_STARTED, CounterEvent.class);
-        addMessageTopic(EVENT_COUNTER_FINISHED, CounterEvent.class);
-        addMessageTopic(STATUS_SEGMENTS, SegmentsStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_COUNTER_STARTED, CounterEvent.class);
+        messageTopicMap.put(EVENT_COUNTER_FINISHED, CounterEvent.class);
+        messageTopicMap.put(STATUS_SEGMENTS, SegmentsStatus.class);
 
     }
 

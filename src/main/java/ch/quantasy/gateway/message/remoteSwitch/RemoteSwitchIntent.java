@@ -41,7 +41,6 @@
  */
 package ch.quantasy.gateway.message.remoteSwitch;
 
-import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
 import ch.quantasy.mqtt.gateway.client.message.AnIntent;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Range;

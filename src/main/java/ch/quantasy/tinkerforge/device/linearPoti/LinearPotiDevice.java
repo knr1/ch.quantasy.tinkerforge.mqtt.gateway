@@ -119,7 +119,7 @@ public class LinearPotiDevice extends GenericDevice<BrickletLinearPoti, LinearPo
         }
         if (intent.analogValueCallbackThreshold != null) {
             try {
-                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.getOption(), intent.analogValueCallbackThreshold.getMin(), intent.analogValueCallbackThreshold.getMax());
+                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.option, intent.analogValueCallbackThreshold.min, intent.analogValueCallbackThreshold.max);
                 getIntent().analogValueCallbackThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
                 super.getCallback().analogValueCallbackThresholdChanged(getIntent().analogValueCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {
@@ -128,7 +128,7 @@ public class LinearPotiDevice extends GenericDevice<BrickletLinearPoti, LinearPo
         }
         if (intent.positionCallbackThreshold != null) {
             try {
-                getDevice().setPositionCallbackThreshold(intent.positionCallbackThreshold.getOption(), intent.positionCallbackThreshold.getMin(), intent.positionCallbackThreshold.getMax());
+                getDevice().setPositionCallbackThreshold(intent.positionCallbackThreshold.option, intent.positionCallbackThreshold.min, intent.positionCallbackThreshold.max);
                 getIntent().positionCallbackThreshold = new DevicePositionCallbackThreshold(getDevice().getPositionCallbackThreshold());
                 super.getCallback().positionCallbackThresholdChanged(getIntent().positionCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {

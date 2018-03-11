@@ -48,9 +48,11 @@ import ch.quantasy.gateway.message.device.Position;
 import ch.quantasy.mqtt.gateway.client.message.Event;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.gateway.service.TinkerForgeServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import java.util.Map;
+import java.util.SortedMap;
 
 /**
  *
@@ -62,7 +64,7 @@ public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
     public final String STATUS_FIRMWARE;
     public final String STATUS_HARDWARE;
 
-    public DeviceServiceContract(GenericDevice device, Class<? extends Intent> intentClass,Map<String,Class<? extends Event>> eventClassMap) {
+    public DeviceServiceContract(GenericDevice device, Class<? extends Intent> intentClass, Map<String, Class<? extends Event>> eventClassMap) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString(), intentClass);
     }
 
@@ -71,9 +73,17 @@ public abstract class DeviceServiceContract extends TinkerForgeServiceContract {
         STATUS_POSITION = STATUS + "/position";
         STATUS_FIRMWARE = STATUS + "/firmware";
         STATUS_HARDWARE = STATUS + "/hardware";
-        addMessageTopic(STATUS_POSITION, Position.class);
-        addMessageTopic(STATUS_FIRMWARE, Firmware.class);
-        addMessageTopic(STATUS_HARDWARE, Hardware.class);
     }
+
+    @Override
+    public void setMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        super.setMessageTopics(messageTopicMap);
+        messageTopicMap.put(STATUS_POSITION, Position.class);
+        messageTopicMap.put(STATUS_FIRMWARE, Firmware.class);
+        messageTopicMap.put(STATUS_HARDWARE, Hardware.class);
+        setServiceMessageTopics(messageTopicMap);
+    }
+    
+    public abstract void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap);
 
 }

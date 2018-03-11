@@ -48,6 +48,7 @@ import ch.quantasy.gateway.message.line.DebouncePeriodStatus;
 import ch.quantasy.gateway.message.line.ReflectivityCallbackPeriodStatus;
 import ch.quantasy.gateway.message.line.ReflectivityCallbackThresholdStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.line.LineDevice;
 import java.util.Map;
@@ -103,11 +104,16 @@ public class LineServiceContract extends DeviceServiceContract {
         STATUS_DEBOUNCE = STATUS + "/" + DEBOUNCE;
         STATUS_DEBOUNCE_PERIOD = STATUS_DEBOUNCE + "/" + PERIOD;
         EVENT_DEBOUNCE = EVENT + "/" + DEBOUNCE;
-        addMessageTopic(EVENT_REFLECTIVITY, ReflectivityEvent.class);
-        addMessageTopic(EVENT_REFLECTIVITY_REACHED, ReflectivityEvent.class);
-        addMessageTopic(STATUS_REFLECTIVITY_CALLBACK_PERIOD, ReflectivityCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_REFLECTIVITY_THRESHOLD, ReflectivityCallbackThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_REFLECTIVITY, ReflectivityEvent.class);
+        messageTopicMap.put(EVENT_REFLECTIVITY_REACHED, ReflectivityEvent.class);
+        messageTopicMap.put(STATUS_REFLECTIVITY_CALLBACK_PERIOD, ReflectivityCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_REFLECTIVITY_THRESHOLD, ReflectivityCallbackThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
     }
 
     

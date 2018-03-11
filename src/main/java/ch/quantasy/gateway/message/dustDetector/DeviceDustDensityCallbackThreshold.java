@@ -45,7 +45,6 @@ package ch.quantasy.gateway.message.dustDetector;
 import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
-import ch.quantasy.tinkerforge.device.dustDetector.*;
 import com.tinkerforge.BrickletDustDetector;
 
 /**
@@ -55,11 +54,11 @@ import com.tinkerforge.BrickletDustDetector;
 public class DeviceDustDensityCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = 0, to = 500)
-    private int min;
+    public int min;
     @Range(from = 0, to = 500)
-    private int max;
+    public int max;
 
     public DeviceDustDensityCallbackThreshold() {
     }
@@ -72,18 +71,6 @@ public class DeviceDustDensityCallbackThreshold extends AValidator {
 
     public DeviceDustDensityCallbackThreshold(BrickletDustDetector.DustDensityCallbackThreshold threshold) {
         this(threshold.option, threshold.min, threshold.max);
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public char getOption() {
-        return option;
     }
 
 }

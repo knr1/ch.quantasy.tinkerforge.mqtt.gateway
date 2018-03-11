@@ -54,15 +54,15 @@ import com.tinkerforge.BrickletJoystick;
 public class DevicePositionCallbackThreshold extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
-    private char option;
+    public char option;
     @Range(from = -100, to = 100)
-    private short minX;
+    public short minX;
     @Range(from = -100, to = 100)
-    private short maxX;
+    public short maxX;
     @Range(from = -100, to = 100)
-    private short minY;
+    public short minY;
     @Range(from = -100, to = 100)
-    private short maxY;
+    public short maxY;
 
     public DevicePositionCallbackThreshold() {
     }
@@ -78,25 +78,4 @@ public class DevicePositionCallbackThreshold extends AValidator {
     public DevicePositionCallbackThreshold(BrickletJoystick.PositionCallbackThreshold threshold) {
         this(threshold.option, threshold.minX, threshold.maxX, threshold.minY, threshold.maxY);
     }
-
-    public short getMaxX() {
-        return maxX;
-    }
-
-    public short getMinX() {
-        return minX;
-    }
-
-    public short getMaxY() {
-        return maxY;
-    }
-
-    public short getMinY() {
-        return minY;
-    }
-
-    public char getOption() {
-        return option;
-    }
-
 }

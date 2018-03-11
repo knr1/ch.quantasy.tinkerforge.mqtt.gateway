@@ -53,8 +53,10 @@ import ch.quantasy.gateway.message.ptc.TemperatureThresholdStatus;
 import ch.quantasy.gateway.message.ptc.WireModeStatus;
 import ch.quantasy.gateway.message.temperature.ResistanceCallbackPeriodStatus;
 import ch.quantasy.gateway.service.tinkerforge.DeviceServiceContract;
+import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;
+import java.util.Map;
 
 /**
  *
@@ -132,17 +134,22 @@ public class PTCServiceContract extends DeviceServiceContract {
 
         WIRE_MODE = "wireMode";
         STATUS_WIRE_MODE = STATUS + "/" + WIRE_MODE;
-        addMessageTopic(EVENT_TEMPERATURE, TemperatureEvent.class);
-        addMessageTopic(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
-        addMessageTopic(EVENT_RESISTANCE, ResistanceEvent.class);
-        addMessageTopic(EVENT_RESISTANCE_REACHED, ResistanceEvent.class);
-        addMessageTopic(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_TEMPERATURE_THRESHOLD, TemperatureThresholdStatus.class);
-        addMessageTopic(STATUS_RESISTANCE_CALLBACK_PERIOD, ResistanceCallbackPeriodStatus.class);
-        addMessageTopic(STATUS_RESISTANCE_THRESHOLD, ResistanceThresholdStatus.class);
-        addMessageTopic(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
-        addMessageTopic(STATUS_NOISE_REDUCTION_FILTER, NoiseReductionFilterStatus.class);
-        addMessageTopic(STATUS_WIRE_MODE, WireModeStatus.class);
+    }
+
+    @Override
+    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+    
+        messageTopicMap.put(EVENT_TEMPERATURE, TemperatureEvent.class);
+        messageTopicMap.put(EVENT_TEMPERATURE_REACHED, TemperatureEvent.class);
+        messageTopicMap.put(EVENT_RESISTANCE, ResistanceEvent.class);
+        messageTopicMap.put(EVENT_RESISTANCE_REACHED, ResistanceEvent.class);
+        messageTopicMap.put(STATUS_TEMPERATURE_CALLBACK_PERIOD, TemperatureCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_TEMPERATURE_THRESHOLD, TemperatureThresholdStatus.class);
+        messageTopicMap.put(STATUS_RESISTANCE_CALLBACK_PERIOD, ResistanceCallbackPeriodStatus.class);
+        messageTopicMap.put(STATUS_RESISTANCE_THRESHOLD, ResistanceThresholdStatus.class);
+        messageTopicMap.put(STATUS_DEBOUNCE_PERIOD, DebouncePeriodStatus.class);
+        messageTopicMap.put(STATUS_NOISE_REDUCTION_FILTER, NoiseReductionFilterStatus.class);
+        messageTopicMap.put(STATUS_WIRE_MODE, WireModeStatus.class);
     }
 
    

@@ -123,7 +123,7 @@ public class JoystickDevice extends GenericDevice<BrickletJoystick, JoystickDevi
         }
         if (intent.analogValueCallbackThreshold != null) {
             try {
-                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.getOption(), intent.analogValueCallbackThreshold.getMinX(), intent.analogValueCallbackThreshold.getMaxX(), intent.analogValueCallbackThreshold.getMaxX(), intent.analogValueCallbackThreshold.getMaxY());
+                getDevice().setAnalogValueCallbackThreshold(intent.analogValueCallbackThreshold.option, intent.analogValueCallbackThreshold.minX, intent.analogValueCallbackThreshold.maxX, intent.analogValueCallbackThreshold.maxX, intent.analogValueCallbackThreshold.maxY);
                 getIntent().analogValueCallbackThreshold = new DeviceAnalogValueCallbackThreshold(getDevice().getAnalogValueCallbackThreshold());
                 super.getCallback().analogValueCallbackThresholdChanged(getIntent().analogValueCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {
@@ -132,7 +132,7 @@ public class JoystickDevice extends GenericDevice<BrickletJoystick, JoystickDevi
         }
         if (intent.positionCallbackThreshold != null) {
             try {
-                getDevice().setPositionCallbackThreshold(intent.positionCallbackThreshold.getOption(), intent.positionCallbackThreshold.getMinX(), intent.positionCallbackThreshold.getMaxX(), intent.positionCallbackThreshold.getMinY(), intent.positionCallbackThreshold.getMaxY());
+                getDevice().setPositionCallbackThreshold(intent.positionCallbackThreshold.option, intent.positionCallbackThreshold.minX, intent.positionCallbackThreshold.maxX, intent.positionCallbackThreshold.minY, intent.positionCallbackThreshold.maxY);
                 getIntent().positionCallbackThreshold = new DevicePositionCallbackThreshold(getDevice().getPositionCallbackThreshold());
                 super.getCallback().positionCallbackThresholdChanged(getIntent().positionCallbackThreshold);
             } catch (TimeoutException | NotConnectedException ex) {
