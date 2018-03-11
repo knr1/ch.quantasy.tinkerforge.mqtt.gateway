@@ -85,6 +85,7 @@ import com.tinkerforge.BrickletLinearPoti;
 import com.tinkerforge.BrickletLoadCell;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
+import com.tinkerforge.BrickletMotionDetectorV2;
 import com.tinkerforge.BrickletMotorizedLinearPoti;
 import com.tinkerforge.BrickletMultiTouch;
 import com.tinkerforge.BrickletNFCRFID;
@@ -136,7 +137,7 @@ public enum TinkerforgeDeviceClass {
             BrickletIO16.class), IO4(BrickletIO4.class), Joystick(BrickletJoystick.class), LaserRangeFinder(BrickletLaserRangeFinder.class), LCD16x2(
             BrickletLCD16x2.class), LCD20x4(BrickletLCD20x4.class), LEDStrip(BrickletLEDStrip.class), Line(
             BrickletLine.class), LinearPoti(BrickletLinearPoti.class), LoadCell(BrickletLoadCell.class), Moisture(BrickletMoisture.class), MotionDetector(
-            BrickletMotionDetector.class), MultiTouch(BrickletMultiTouch.class), NfcRfid(BrickletNFCRFID.class), PiezoBuzzer(BrickletPiezoBuzzer.class), PiezoSpeaker(
+            BrickletMotionDetector.class), MotionDetectorV2(BrickletMotionDetectorV2.class),MultiTouch(BrickletMultiTouch.class), NfcRfid(BrickletNFCRFID.class), PiezoBuzzer(BrickletPiezoBuzzer.class), PiezoSpeaker(
             BrickletPiezoSpeaker.class), MotorizedLinearPoti(BrickletMotorizedLinearPoti.class),PTC(BrickletPTC.class), RealTimeClock(BrickletRealTimeClock.class), RemoteSwitch(BrickletRemoteSwitch.class),RemoteSwitchV2(BrickletRemoteSwitchV2.class), RGBLEDButton(BrickletRGBLEDButton.class), RotaryEncoder(
             BrickletRotaryEncoder.class), RotaryPoti(BrickletRotaryPoti.class), RS232(BrickletRS232.class), SegmentDisplay4x7(
             BrickletSegmentDisplay4x7.class), SolidState(BrickletSolidStateRelay.class), SoundIntensity(BrickletSoundIntensity.class), Temperature(

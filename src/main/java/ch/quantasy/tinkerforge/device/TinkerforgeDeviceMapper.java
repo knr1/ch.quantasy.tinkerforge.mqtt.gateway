@@ -94,6 +94,7 @@ import ch.quantasy.tinkerforge.device.voltageCurrent.VoltageCurrentDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import ch.quantasy.gateway.message.stack.TinkerforgeStackAddress;
 import ch.quantasy.tinkerforge.device.RGBLEDButton.RGBLEDButtonDevice;
+import ch.quantasy.tinkerforge.device.motionDetectorV2.MotionDetectorV2Device;
 import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitchV2.RemoteSwitchV2Device;
 import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagingDevice;
@@ -129,6 +130,7 @@ import com.tinkerforge.BrickletLinearPoti;
 import com.tinkerforge.BrickletLoadCell;
 import com.tinkerforge.BrickletMoisture;
 import com.tinkerforge.BrickletMotionDetector;
+import com.tinkerforge.BrickletMotionDetectorV2;
 import com.tinkerforge.BrickletMotorizedLinearPoti;
 import com.tinkerforge.BrickletMultiTouch;
 import com.tinkerforge.BrickletNFCRFID;
@@ -172,6 +174,9 @@ public class TinkerforgeDeviceMapper {
         }
         if (TinkerforgeDeviceClass.MotionDetector == TinkerforgeDeviceClass.getDevice(device)) {
             return new MotionDetectorDevice(stack, (BrickletMotionDetector) device);
+        }
+        if (TinkerforgeDeviceClass.MotionDetectorV2 == TinkerforgeDeviceClass.getDevice(device)) {
+            return new MotionDetectorV2Device(stack, (BrickletMotionDetectorV2) device);
         }
         if (TinkerforgeDeviceClass.AmbientLight == TinkerforgeDeviceClass.getDevice(device)) {
             return new AmbientLightDevice(stack, (BrickletAmbientLight) device);

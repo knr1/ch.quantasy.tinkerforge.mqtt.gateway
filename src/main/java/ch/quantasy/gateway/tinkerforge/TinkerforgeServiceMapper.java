@@ -73,6 +73,7 @@ import ch.quantasy.gateway.service.tinkerforge.loadCell.LoadCellService;
 import ch.quantasy.gateway.service.tinkerforge.master.MasterService;
 import ch.quantasy.gateway.service.tinkerforge.moisture.MoistureService;
 import ch.quantasy.gateway.service.tinkerforge.motionDetector.MotionDetectorService;
+import ch.quantasy.gateway.service.tinkerforge.motionDetectorV2.MotionDetectorV2Service;
 import ch.quantasy.gateway.service.tinkerforge.motorizedLinearPoti.MotorizedLinearPotiService;
 import ch.quantasy.gateway.service.tinkerforge.multiTouch.MultiTouchService;
 import ch.quantasy.gateway.service.tinkerforge.nfc.NFCService;
@@ -125,6 +126,7 @@ import ch.quantasy.tinkerforge.device.loadCell.LoadCellDevice;
 import ch.quantasy.tinkerforge.device.master.MasterDevice;
 import ch.quantasy.tinkerforge.device.moisture.MoistureDevice;
 import ch.quantasy.tinkerforge.device.motionDetector.MotionDetectorDevice;
+import ch.quantasy.tinkerforge.device.motionDetectorV2.MotionDetectorV2Device;
 import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
@@ -163,6 +165,9 @@ public class TinkerforgeServiceMapper {
         }
         if (tinkerforgeDevice instanceof MotionDetectorDevice) {
             return new MotionDetectorService((MotionDetectorDevice) tinkerforgeDevice, mqttURI);
+        }
+        if (tinkerforgeDevice instanceof MotionDetectorV2Device) {
+            return new MotionDetectorV2Service((MotionDetectorV2Device) tinkerforgeDevice, mqttURI);
         }
         if (tinkerforgeDevice instanceof MoistureDevice) {
             return new MoistureService((MoistureDevice) tinkerforgeDevice, mqttURI);

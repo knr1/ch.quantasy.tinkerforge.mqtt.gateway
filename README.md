@@ -451,10 +451,7 @@ Status (S) is as fine granular as possible, so you can subscribe to your needs a
 
 No message is lost! It is delivered as fast as possible. If the channel is slower than the message creation, the messages will be delivered as an array of messages. 
 
-cd /home/reto/NetBeansProjects/ch.quantasy.tinkerforge.mqtt.gateway; JAVA_HOME=/usr/lib/jvm/default /usr/share/netbeans/java/maven/bin/mvn "-Dexec.args=-classpath %classpath ch.quantasy.gateway.service.doc.Descriptions" -Dexec.executable=/usr/lib/jvm/default/bin/java -Dexec.classpathScope=runtime org.codehaus.mojo:exec-maven-plugin:1.2.1:exec
-Running NetBeans Compile On Save execution. Phase execution is skipped and output directories of dependency projects (with Compile on Save turned on) will be used instead of their jar artifacts.
-Scanning for projects...
- 
+
 ### Manager
 ```
 TF/Manager/U/<id>/E/stack/address/added
@@ -3709,6 +3706,77 @@ TF/MotionDetector/U/<id>/S/position
    
 ```
 
+### MotionDetectorV2
+```
+TF/MotionDetectorV2/U/<id>/E/eventDetectionCycleEnded
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/MotionDetectorV2/U/<id>/E/motionDetected
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/MotionDetectorV2/U/<id>/I
+   indicator: null
+   indicator: 
+   bottom: null
+     bottom: Number <from: 0 to: 255>
+   topLeft: null
+     topLeft: Number <from: 0 to: 255>
+   topRight: null
+     topRight: Number <from: 0 to: 255>
+   sensitivity: null
+   sensitivity: Number <from: 0 to: 100>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/MotionDetectorV2/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/MotionDetectorV2/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/MotionDetectorV2/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/MotionDetectorV2/U/<id>/S/indicator
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+   bottom: null
+     bottom: Number <from: 0 to: 255>
+   topLeft: null
+     topLeft: Number <from: 0 to: 255>
+   topRight: null
+     topRight: Number <from: 0 to: 255>
+   
+```
+```
+TF/MotionDetectorV2/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+```
+TF/MotionDetectorV2/U/<id>/S/sensitivity
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 5 to: 201>
+   
+```
+
 ### MotorizedLinearPoti
 ```
 TF/MotorizedLinearPoti/U/<id>/E/position
@@ -5832,3 +5900,4 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
      option: String <[x, o, i, <, >]>
    
 ```
+
