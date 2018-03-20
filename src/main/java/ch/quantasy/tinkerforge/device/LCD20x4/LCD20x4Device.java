@@ -42,11 +42,11 @@
  */
 package ch.quantasy.tinkerforge.device.LCD20x4;
 
-import ch.quantasy.gateway.message.LCD20x4.DeviceConfigParameters;
-import ch.quantasy.gateway.message.LCD20x4.DeviceCustomCharacter;
-import ch.quantasy.gateway.message.LCD20x4.DeviceWriteLine;
-import ch.quantasy.gateway.message.LCD20x4.DeviceDefaultText;
-import ch.quantasy.gateway.message.LCD20x4.LCD20x4Intent;
+import ch.quantasy.gateway.binding.tinkerforge.LCD20x4.DeviceConfigParameters;
+import ch.quantasy.gateway.binding.tinkerforge.LCD20x4.DeviceCustomCharacter;
+import ch.quantasy.gateway.binding.tinkerforge.LCD20x4.DeviceWriteLine;
+import ch.quantasy.gateway.binding.tinkerforge.LCD20x4.DeviceDefaultText;
+import ch.quantasy.gateway.binding.tinkerforge.LCD20x4.LCD20x4Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLCD20x4;

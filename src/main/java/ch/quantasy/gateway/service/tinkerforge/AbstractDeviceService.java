@@ -42,9 +42,10 @@
  */
 package ch.quantasy.gateway.service.tinkerforge;
 
-import ch.quantasy.gateway.message.device.Firmware;
-import ch.quantasy.gateway.message.device.Hardware;
-import ch.quantasy.gateway.message.device.Position;
+import ch.quantasy.gateway.binding.tinkerforge.DeviceServiceContract;
+import ch.quantasy.gateway.binding.tinkerforge.device.Firmware;
+import ch.quantasy.gateway.binding.tinkerforge.device.Hardware;
+import ch.quantasy.gateway.binding.tinkerforge.device.Position;
 import ch.quantasy.gateway.service.AbstractService;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.mqtt.gateway.client.message.Message;
@@ -71,7 +72,7 @@ public abstract class AbstractDeviceService<G extends GenericDevice, S extends D
     private final MessageCollector intentCollector;
 
     public AbstractDeviceService(URI mqttURI, G device, S serviceContract) throws MqttException {
-        super(mqttURI, serviceContract.CANONICAL_TOPIC, serviceContract);
+        super(mqttURI, serviceContract);
         this.device = device;
         intentCollector = new MessageCollector(new Comparator<Message>() {
             @Override

@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.RGBLEDButton;
 
-import ch.quantasy.gateway.message.RGBLEDButton.RGBColor;
+import ch.quantasy.gateway.binding.tinkerforge.RGBLEDButton.RGBColor;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletRGBLEDButton;
 

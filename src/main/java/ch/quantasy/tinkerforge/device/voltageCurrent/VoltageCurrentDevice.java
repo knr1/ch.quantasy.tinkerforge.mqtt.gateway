@@ -42,12 +42,12 @@
  */
 package ch.quantasy.tinkerforge.device.voltageCurrent;
 
-import ch.quantasy.gateway.message.voltageCurrent.DeviceVoltagCallbackThreshold;
-import ch.quantasy.gateway.message.voltageCurrent.DeviceConfiguration;
-import ch.quantasy.gateway.message.voltageCurrent.DeviceCalibration;
-import ch.quantasy.gateway.message.voltageCurrent.DeviceCurrentCallbackThreshold;
-import ch.quantasy.gateway.message.voltageCurrent.DevicePowerCallbackThreshold;
-import ch.quantasy.gateway.message.voltageCurrent.VoltageCurrentIntent;
+import ch.quantasy.gateway.binding.tinkerforge.voltageCurrent.DeviceVoltagCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.voltageCurrent.DeviceConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.voltageCurrent.DeviceCalibration;
+import ch.quantasy.gateway.binding.tinkerforge.voltageCurrent.DeviceCurrentCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.voltageCurrent.DevicePowerCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.voltageCurrent.VoltageCurrentIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletVoltageCurrent;

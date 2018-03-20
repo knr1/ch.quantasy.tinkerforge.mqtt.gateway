@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.loadCell;
 
-import ch.quantasy.gateway.message.loadCell.DeviceWeightCallbackThreshold;
-import ch.quantasy.gateway.message.loadCell.DeviceConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.loadCell.DeviceWeightCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.loadCell.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletLoadCell;
 

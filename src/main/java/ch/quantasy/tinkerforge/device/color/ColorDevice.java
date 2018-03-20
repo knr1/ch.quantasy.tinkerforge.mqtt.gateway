@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.color;
 
-import ch.quantasy.gateway.message.color.ColorIntent;
-import ch.quantasy.gateway.message.color.DeviceColorCallbackThreshold;
-import ch.quantasy.gateway.message.color.DeviceConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.color.ColorIntent;
+import ch.quantasy.gateway.binding.tinkerforge.color.DeviceColorCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.color.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletColor;

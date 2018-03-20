@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.remoteSwitchV2;
 
-import ch.quantasy.gateway.message.remoteSwitch.SocketParameters;
-import ch.quantasy.gateway.message.remoteSwitchV2.RemoteSwitchConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.remoteSwitch.SocketParameters;
+import ch.quantasy.gateway.binding.tinkerforge.remoteSwitchV2.RemoteSwitchConfiguration;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletRemoteSwitchV2;
 

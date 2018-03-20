@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.RGBLEDButton;
 
-import ch.quantasy.gateway.message.RGBLEDButton.RGBColor;
-import ch.quantasy.gateway.message.RGBLEDButton.RGBLEDButtonIntent;
+import ch.quantasy.gateway.binding.tinkerforge.RGBLEDButton.RGBColor;
+import ch.quantasy.gateway.binding.tinkerforge.RGBLEDButton.RGBLEDButtonIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletRGBLEDButton;

@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.ledStrip;
 
-import ch.quantasy.gateway.message.ledStrip.LEDStripDeviceConfig;
+import ch.quantasy.gateway.binding.tinkerforge.ledStrip.LEDStripDeviceConfig;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 
 /**

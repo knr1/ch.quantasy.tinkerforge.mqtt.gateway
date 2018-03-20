@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.motionDetectorV2;
 
-import ch.quantasy.gateway.message.motionDetectorV2.Indicator;
-import ch.quantasy.gateway.message.motionDetectorV2.MotionDetectorV2Intent;
+import ch.quantasy.gateway.binding.tinkerforge.motionDetectorV2.Indicator;
+import ch.quantasy.gateway.binding.tinkerforge.motionDetectorV2.MotionDetectorV2Intent;
 import ch.quantasy.mqtt.gateway.client.message.Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;

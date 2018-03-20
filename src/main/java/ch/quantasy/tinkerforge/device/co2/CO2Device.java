@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.co2;
 
-import ch.quantasy.gateway.message.co2.CO2Intent;
-import ch.quantasy.gateway.message.co2.DeviceCO2ConcentrationCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.co2.CO2Intent;
+import ch.quantasy.gateway.binding.tinkerforge.co2.DeviceCO2ConcentrationCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletCO2;

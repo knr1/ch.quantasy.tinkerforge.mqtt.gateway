@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.solidState;
 
-import ch.quantasy.gateway.message.solidState.DeviceMonoflopParameters;
-import ch.quantasy.gateway.message.solidState.SolidStateRelayIntent;
+import ch.quantasy.gateway.binding.tinkerforge.solidStateRelay.DeviceMonoflopParameters;
+import ch.quantasy.gateway.binding.tinkerforge.solidStateRelay.SolidStateRelayIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletSolidStateRelay;

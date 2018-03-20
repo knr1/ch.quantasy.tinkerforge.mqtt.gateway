@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.multiTouch;
 
-import ch.quantasy.gateway.message.multiTouch.MultiTouchIntent;
+import ch.quantasy.gateway.binding.tinkerforge.multiTouch.MultiTouchIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletMultiTouch;

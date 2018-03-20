@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.remoteSwitch;
 
-import ch.quantasy.gateway.message.remoteSwitch.SocketParameters;
+import ch.quantasy.gateway.binding.tinkerforge.remoteSwitch.SocketParameters;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletRemoteSwitch;
 

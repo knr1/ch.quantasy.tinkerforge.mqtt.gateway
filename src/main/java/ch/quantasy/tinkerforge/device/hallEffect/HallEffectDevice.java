@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.hallEffect;
 
-import ch.quantasy.gateway.message.hallEffect.DeviceConfiguration;
-import ch.quantasy.gateway.message.hallEffect.HallEffectIntent;
+import ch.quantasy.gateway.binding.tinkerforge.hallEffect.DeviceConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.hallEffect.HallEffectIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletHallEffect;

@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.gpsV2;
 
-import ch.quantasy.gateway.message.gpsv2.StatusLEDConfig;
-import ch.quantasy.gateway.message.gpsv2.FixLEDConfig;
+import ch.quantasy.gateway.binding.tinkerforge.gpsV2.StatusLEDConfig;
+import ch.quantasy.gateway.binding.tinkerforge.gpsV2.FixLEDConfig;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletGPSV2;
 

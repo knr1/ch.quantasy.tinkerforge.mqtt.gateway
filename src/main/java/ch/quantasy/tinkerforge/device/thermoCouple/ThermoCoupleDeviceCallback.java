@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.thermoCouple;
 
-import ch.quantasy.gateway.message.thermoCouple.DeviceConfiguration;
-import ch.quantasy.gateway.message.thermoCouple.DeviceTemperatureCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.thermoCouple.DeviceConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.thermoCouple.DeviceTemperatureCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletThermocouple;
 

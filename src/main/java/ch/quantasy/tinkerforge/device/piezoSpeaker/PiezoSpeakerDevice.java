@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.piezoSpeaker;
 
-import ch.quantasy.gateway.message.piezoSpeaker.PiezoSpeakerIntent;
+import ch.quantasy.gateway.binding.tinkerforge.piezoSpeaker.PiezoSpeakerIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletPiezoSpeaker;

@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.joystick;
 
-import ch.quantasy.gateway.message.joystick.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.message.joystick.DevicePositionCallbackThreshold;
-import ch.quantasy.gateway.message.joystick.JoystickIntent;
+import ch.quantasy.gateway.binding.tinkerforge.joystick.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.joystick.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.joystick.JoystickIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletJoystick;

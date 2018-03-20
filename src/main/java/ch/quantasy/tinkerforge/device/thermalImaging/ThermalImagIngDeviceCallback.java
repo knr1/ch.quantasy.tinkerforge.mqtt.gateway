@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.thermalImaging;
 
-import ch.quantasy.gateway.message.thermalImage.ImageTransferConfig;
-import ch.quantasy.gateway.message.thermalImage.SpotMeterConfig;
-import ch.quantasy.gateway.message.thermalImage.TemperatureResolution;
+import ch.quantasy.gateway.binding.tinkerforge.thermalImage.ImageTransferConfig;
+import ch.quantasy.gateway.binding.tinkerforge.thermalImage.SpotMeterConfig;
+import ch.quantasy.gateway.binding.tinkerforge.thermalImage.TemperatureResolution;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletThermalImaging;
 

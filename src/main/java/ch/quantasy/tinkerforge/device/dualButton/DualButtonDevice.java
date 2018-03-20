@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.dualButton;
 
-import ch.quantasy.gateway.message.dualButton.DeviceLEDState;
-import ch.quantasy.gateway.message.dualButton.DeviceSelectedLEDStateParameters;
-import ch.quantasy.gateway.message.dualButton.DualButtonIntent;
+import ch.quantasy.gateway.binding.tinkerforge.dualButton.DeviceLEDState;
+import ch.quantasy.gateway.binding.tinkerforge.dualButton.DeviceSelectedLEDStateParameters;
+import ch.quantasy.gateway.binding.tinkerforge.dualButton.DualButtonIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDualButton;

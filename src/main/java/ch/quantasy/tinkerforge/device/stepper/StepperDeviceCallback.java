@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.stepper;
 
-import ch.quantasy.gateway.message.stepper.DeviceSpeedRamp;
-import ch.quantasy.gateway.message.stepper.DriveMode;
-import ch.quantasy.gateway.message.stepper.StepMode;
+import ch.quantasy.gateway.binding.tinkerforge.stepper.DeviceSpeedRamp;
+import ch.quantasy.gateway.binding.tinkerforge.stepper.DriveMode;
+import ch.quantasy.gateway.binding.tinkerforge.stepper.StepMode;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickStepper;
 

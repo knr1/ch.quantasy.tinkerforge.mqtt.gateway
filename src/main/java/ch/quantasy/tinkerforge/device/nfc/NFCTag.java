@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.nfc;
 
-import ch.quantasy.gateway.message.nfc.NFCType;
+import ch.quantasy.gateway.binding.tinkerforge.nfc.NFCType;
 import com.tinkerforge.BrickletNFCRFID;
 import java.util.HashMap;
 import java.util.Map;

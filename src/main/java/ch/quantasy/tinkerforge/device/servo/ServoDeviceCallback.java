@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.servo;
 
-import ch.quantasy.gateway.message.servo.Servo;
+import ch.quantasy.gateway.binding.tinkerforge.servo.Servo;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickServo;
 import java.util.Set;

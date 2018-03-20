@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.LCD16x2;
 
-import ch.quantasy.gateway.message.LCD16x2.DeviceConfigParameters;
-import ch.quantasy.gateway.message.LCD16x2.DeviceCustomCharacter;
+import ch.quantasy.gateway.binding.tinkerforge.LCD16x2.DeviceConfigParameters;
+import ch.quantasy.gateway.binding.tinkerforge.LCD16x2.DeviceCustomCharacter;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletLCD16x2;
 import java.util.Set;

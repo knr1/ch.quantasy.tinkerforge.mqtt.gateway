@@ -43,7 +43,7 @@
 package ch.quantasy.gateway;
 
 import ch.quantasy.gateway.service.stackManager.StackManagerService;
-import ch.quantasy.gateway.tinkerforge.TinkerForgeManager;
+import ch.quantasy.gateway.service.stackManager.TinkerForgeManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.net.URI;

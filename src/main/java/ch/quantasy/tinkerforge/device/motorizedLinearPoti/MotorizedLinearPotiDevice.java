@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.motorizedLinearPoti;
 
-import ch.quantasy.gateway.message.motorizedLinearPoti.DevicePositionCallbackConfiguration;
-import ch.quantasy.gateway.message.motorizedLinearPoti.DeviceMotorPosition;
-import ch.quantasy.gateway.message.motorizedLinearPoti.MotorizedLinearPotiIntent;
+import ch.quantasy.gateway.binding.tinkerforge.motorizedLinearPoti.DevicePositionCallbackConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.motorizedLinearPoti.DeviceMotorPosition;
+import ch.quantasy.gateway.binding.tinkerforge.motorizedLinearPoti.MotorizedLinearPotiIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletMotorizedLinearPoti;

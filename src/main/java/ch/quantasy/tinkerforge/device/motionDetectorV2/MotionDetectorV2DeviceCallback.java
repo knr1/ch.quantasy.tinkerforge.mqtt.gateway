@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.motionDetectorV2;
 
-import ch.quantasy.gateway.message.motionDetectorV2.Indicator;
+import ch.quantasy.gateway.binding.tinkerforge.motionDetectorV2.Indicator;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletMotionDetectorV2;
 

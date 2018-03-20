@@ -42,12 +42,12 @@
  */
 package ch.quantasy.tinkerforge.device.laserRangeFinder;
 
-import ch.quantasy.gateway.message.laserRangeFinder.SensorHardware;
-import ch.quantasy.gateway.message.laserRangeFinder.DeviceMode;
-import ch.quantasy.gateway.message.laserRangeFinder.DeviceVelocityCallbackThreshold;
-import ch.quantasy.gateway.message.laserRangeFinder.DeviceAveraging;
-import ch.quantasy.gateway.message.laserRangeFinder.DeviceConfiguration;
-import ch.quantasy.gateway.message.laserRangeFinder.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.laserRangeFinder.SensorHardware;
+import ch.quantasy.gateway.binding.tinkerforge.laserRangeFinder.DeviceMode;
+import ch.quantasy.gateway.binding.tinkerforge.laserRangeFinder.DeviceVelocityCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.laserRangeFinder.DeviceAveraging;
+import ch.quantasy.gateway.binding.tinkerforge.laserRangeFinder.DeviceConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.laserRangeFinder.DeviceDistanceCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletLaserRangeFinder;
 

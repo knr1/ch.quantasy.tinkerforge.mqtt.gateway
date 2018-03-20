@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.accelerometer;
 
-import ch.quantasy.gateway.message.accelerometer.AccelerometerIntent;
-import ch.quantasy.gateway.message.accelerometer.DeviceConfiguration;
-import ch.quantasy.gateway.message.accelerometer.DeviceAccelerationCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.accelerometer.AccelerometerIntent;
+import ch.quantasy.gateway.binding.tinkerforge.accelerometer.DeviceConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.accelerometer.DeviceAccelerationCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAccelerometer;

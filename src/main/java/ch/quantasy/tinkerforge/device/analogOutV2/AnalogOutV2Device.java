@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.analogOutV2;
 
-import ch.quantasy.gateway.message.analogOutV2.AnalogOutV2Intent;
+import ch.quantasy.gateway.binding.tinkerforge.analogOutV2.AnalogOutV2Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletAnalogOutV2;

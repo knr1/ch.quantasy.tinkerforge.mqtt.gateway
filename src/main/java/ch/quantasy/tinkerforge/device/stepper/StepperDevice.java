@@ -42,10 +42,10 @@
  */
 package ch.quantasy.tinkerforge.device.stepper;
 
-import ch.quantasy.gateway.message.motorizedLinearPoti.DriveMode;
-import ch.quantasy.gateway.message.stepper.DeviceSpeedRamp;
-import ch.quantasy.gateway.message.stepper.StepMode;
-import ch.quantasy.gateway.message.stepper.StepperIntent;
+import ch.quantasy.gateway.binding.tinkerforge.motorizedLinearPoti.DriveMode;
+import ch.quantasy.gateway.binding.tinkerforge.stepper.DeviceSpeedRamp;
+import ch.quantasy.gateway.binding.tinkerforge.stepper.StepMode;
+import ch.quantasy.gateway.binding.tinkerforge.stepper.StepperIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickStepper;

@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.soundIntensity;
 
-import ch.quantasy.gateway.message.soundIntensity.DeviceSoundIntensityCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.soundIntensity.DeviceSoundIntensityCallbackThreshold;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletSoundIntensity;
 

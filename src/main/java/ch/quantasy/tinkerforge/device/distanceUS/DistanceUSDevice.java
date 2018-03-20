@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.distanceUS;
 
-import ch.quantasy.gateway.message.distanceUS.DeviceDistanceCallbackThreshold;
-import ch.quantasy.gateway.message.distanceUS.DistanceUSIntent;
+import ch.quantasy.gateway.binding.tinkerforge.distanceUS.DeviceDistanceCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.distanceUS.DistanceUSIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletDistanceUS;

@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.hallEffect;
 
-import ch.quantasy.gateway.message.hallEffect.DeviceConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.hallEffect.DeviceConfiguration;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletHallEffect;
 

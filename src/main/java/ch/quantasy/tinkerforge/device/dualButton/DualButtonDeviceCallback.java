@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.dualButton;
 
-import ch.quantasy.gateway.message.dualButton.DeviceLEDState;
+import ch.quantasy.gateway.binding.tinkerforge.dualButton.DeviceLEDState;
 import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
 import com.tinkerforge.BrickletDualButton;
 

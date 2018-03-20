@@ -42,9 +42,9 @@
  */
 package ch.quantasy.tinkerforge.device.linearPoti;
 
-import ch.quantasy.gateway.message.linearPoti.DeviceAnalogValueCallbackThreshold;
-import ch.quantasy.gateway.message.linearPoti.DevicePositionCallbackThreshold;
-import ch.quantasy.gateway.message.linearPoti.LinearPotiIntent;
+import ch.quantasy.gateway.binding.tinkerforge.linearPoti.DeviceAnalogValueCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.linearPoti.DevicePositionCallbackThreshold;
+import ch.quantasy.gateway.binding.tinkerforge.linearPoti.LinearPotiIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletLinearPoti;

@@ -42,7 +42,7 @@
  */
 package ch.quantasy.tinkerforge.device.imu;
 
-import ch.quantasy.gateway.message.IMU.IMUIntent;
+import ch.quantasy.gateway.binding.tinkerforge.IMU.IMUIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickIMU;

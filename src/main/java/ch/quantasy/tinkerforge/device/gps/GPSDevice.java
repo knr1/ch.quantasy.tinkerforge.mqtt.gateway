@@ -42,8 +42,8 @@
  */
 package ch.quantasy.tinkerforge.device.gps;
 
-import ch.quantasy.gateway.message.gps.GPSIntent;
-import ch.quantasy.gateway.message.gps.RestartType;
+import ch.quantasy.gateway.binding.tinkerforge.gps.GPSIntent;
+import ch.quantasy.gateway.binding.tinkerforge.gps.RestartType;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
 import com.tinkerforge.BrickletGPS;

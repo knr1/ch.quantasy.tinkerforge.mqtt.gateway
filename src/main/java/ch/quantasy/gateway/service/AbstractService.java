@@ -42,6 +42,7 @@
  */
 package ch.quantasy.gateway.service;
 
+import ch.quantasy.gateway.binding.tinkerforge.TinkerForgeServiceContract;
 import ch.quantasy.mqtt.gateway.client.message.AnEvent;
 import ch.quantasy.mqtt.gateway.client.GatewayClient;
 import ch.quantasy.mqtt.gateway.client.message.AStatus;
@@ -61,6 +62,9 @@ public abstract class AbstractService<S extends TinkerForgeServiceContract> exte
     private final MessageCollector messageCollector;
     private PublishingMessageCollector<S> publishingMessageCollector;
 
+    public AbstractService(URI mqttURI, S contract)throws MqttException{
+        this(mqttURI,contract.CANONICAL_TOPIC,contract);
+    }
     public AbstractService(URI mqttURI, String clientID, S contract) throws MqttException {
         super(mqttURI, clientID, contract);
         messageCollector = new MessageCollector();
