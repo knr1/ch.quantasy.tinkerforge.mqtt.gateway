@@ -42,7 +42,6 @@
 package ch.quantasy.gateway.binding.stackManager;
 
 import ch.quantasy.mqtt.gateway.client.message.AnEvent;
-import ch.quantasy.gateway.binding.tinkerforge.stack.TinkerforgeStackAddress;
 
 /**
  *

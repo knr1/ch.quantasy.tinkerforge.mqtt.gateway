@@ -43,14 +43,14 @@
 package ch.quantasy.gateway.service.stackManager;
 
 import ch.quantasy.gateway.binding.stackManager.StackAddressEvent;
-import ch.quantasy.gateway.binding.tinkerforge.stack.TinkerforgeStackIntent;
+import ch.quantasy.gateway.binding.stackManager.TinkerforgeStackIntent;
 import ch.quantasy.gateway.service.stackManager.TinkerForgeManager;
 import ch.quantasy.gateway.service.stackManager.TinkerforgeFactoryListener;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import ch.quantasy.gateway.binding.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.binding.stackManager.TinkerforgeStackAddress;
 import ch.quantasy.gateway.binding.stackManager.ConnectStatus;
 import ch.quantasy.gateway.binding.stackManager.StackManagerServiceContract;
 import ch.quantasy.gateway.service.AbstractService;

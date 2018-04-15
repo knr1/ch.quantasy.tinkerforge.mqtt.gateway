@@ -47,7 +47,7 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
 import ch.quantasy.tinkerforge.factory.TinkerforgeStackFactory;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import ch.quantasy.gateway.binding.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.binding.stackManager.TinkerforgeStackAddress;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;

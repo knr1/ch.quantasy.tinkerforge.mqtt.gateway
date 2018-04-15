@@ -39,7 +39,7 @@
  *
  *
  */
-package ch.quantasy.gateway.binding.tinkerforge.stack;
+package ch.quantasy.gateway.binding.stackManager;
 
 import ch.quantasy.mqtt.gateway.client.message.AnIntent;
 import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;

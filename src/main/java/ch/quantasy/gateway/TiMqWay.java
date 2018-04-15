@@ -57,10 +57,12 @@ public class TiMqWay {
 
     public static void main(String[] args) throws MqttException, InterruptedException, JsonProcessingException, IOException {
         //URI mqttURI = URI.create("tcp://smarthome01:1883");
-        URI mqttURI = URI.create("tcp://127.0.0.1:1883");
+        //URI mqttURI = URI.create("tcp://127.0.0.1:1883");
         // slow URI mqttURI = URI.create("tcp://broker.hivemq.com:1883");
         //URI mqttURI = URI.create("tcp://147.87.112.225:1883");
         //URI mqttURI = URI.create("tcp://iot.eclipse.org:1883");
+        URI mqttURI = URI.create("tcp://147.87.116.3:1883");
+
 
         if (args.length > 0) {
             mqttURI = URI.create(args[0]);

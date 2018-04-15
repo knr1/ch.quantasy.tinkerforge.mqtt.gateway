@@ -43,7 +43,7 @@
 package ch.quantasy.tinkerforge.factory;
 
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import ch.quantasy.gateway.binding.tinkerforge.stack.TinkerforgeStackAddress;
+import ch.quantasy.gateway.binding.stackManager.TinkerforgeStackAddress;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;

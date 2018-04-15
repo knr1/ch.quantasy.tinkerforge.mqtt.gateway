@@ -43,23 +43,6 @@
 package ch.quantasy.gateway.binding.tinkerforge.IMU;
 
 import ch.quantasy.gateway.binding.tinkerforge.DeviceServiceContract;
-import ch.quantasy.gateway.binding.tinkerforge.DeviceServiceContract;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.AccelerationEvent;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.AllDataEvent;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.AngularVelocityEvent;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.MagneticFieldEvent;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.OrientationEvent;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.QuaternionEvent;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.IMUIntent;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.AccelerationCallbackPeriodStatus;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.AllDataCallbackPeriodStatus;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.AngularVelocityCallbackPeriodStatus;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.LedsStatus;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.MagneticFieldCallbackPeriodStatus;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.OrientationCalculationStatus;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.OrientationCallbackPeriodStatus;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.QuaternionCallbackPeriodStatus;
-import ch.quantasy.gateway.binding.tinkerforge.IMU.StatusLEDStatus;
 import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.imu.IMUDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;

@@ -43,7 +43,6 @@
 package ch.quantasy.gateway.binding.stackManager;
 
 import ch.quantasy.gateway.binding.tinkerforge.TinkerForgeServiceContract;
-import ch.quantasy.gateway.binding.tinkerforge.stack.TinkerforgeStackIntent;
 import ch.quantasy.mqtt.gateway.client.message.Message;
 import java.util.Map;
 
@@ -117,6 +116,7 @@ public class StackManagerServiceContract extends TinkerForgeServiceContract {
 
     @Override
     public void setMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
+        super.setMessageTopics(messageTopicMap);
         messageTopicMap.put(EVENT_STACK_ADDRESS_ADDED, StackAddressEvent.class);
         messageTopicMap.put(EVENT_STACK_ADDRESS_REMOVED, StackAddressEvent.class);
         messageTopicMap.put(STATUS_STACK_ADDRESS + "/<address>/connected", ConnectStatus.class);

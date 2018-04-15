@@ -474,6 +474,16 @@ TF/Manager/U/<id>/E/stack/address/removed
    
 ```
 ```
+TF/Manager/U/<id>/I
+   address: 
+     hostName: String <min: 1 max: 255>
+     hostName: String <regEx: \w+(\.\w+){0,3}>
+     port: Number <from: 1024 to: 65535>
+   connect: Boolean <true,false> 
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
 TF/Manager/U/<id>/S/connection
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: String <[online, offline]>
@@ -3134,81 +3144,6 @@ TF/LEDStrip/U/<id>/S/position
    
 ```
 
-### Line
-```
-TF/Line/U/<id>/E/reflectivity
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 4095>
-   
-```
-```
-TF/Line/U/<id>/E/reflectivity/reached
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 4095>
-   
-```
-```
-TF/Line/U/<id>/I
-   debouncePeriod: null
-   debouncePeriod: Number <from: 0 to: 9223372036854775807>
-   reflectivityCallbackPeriod: null
-   reflectivityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   reflectivityCallbackThreshold: null
-   reflectivityCallbackThreshold: 
-     max: Number <from: 0 to: 4095>
-     min: Number <from: 0 to: 4095>
-     option: String <[x, o, i, <, >]>
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Line/U/<id>/S/connection
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[online, offline]>
-   
-```
-```
-TF/Line/U/<id>/S/debounce/period
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Line/U/<id>/S/firmware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/Line/U/<id>/S/hardware
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Array <min: 0 max: 2147483647>
-   value: Number <from: -32768 to: 32767>
-   
-```
-```
-TF/Line/U/<id>/S/position
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
-   
-```
-```
-TF/Line/U/<id>/S/reflectivity/callbackPeriod
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Line/U/<id>/S/reflectivity/threshold
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: 
-     max: Number <from: 0 to: 4095>
-     min: Number <from: 0 to: 4095>
-     option: String <[x, o, i, <, >]>
-   
-```
-
 ### LinearPoti
 ```
 TF/LinearPoti/U/<id>/E/analogValue
@@ -3314,6 +3249,81 @@ TF/LinearPoti/U/<id>/S/position/threshold
    value: 
      max: Number <from: 0 to: 100>
      min: Number <from: 0 to: 100>
+     option: String <[x, o, i, <, >]>
+   
+```
+
+### Line
+```
+TF/Line/U/<id>/E/reflectivity
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
+```
+```
+TF/Line/U/<id>/E/reflectivity/reached
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 4095>
+   
+```
+```
+TF/Line/U/<id>/I
+   debouncePeriod: null
+   debouncePeriod: Number <from: 0 to: 9223372036854775807>
+   reflectivityCallbackPeriod: null
+   reflectivityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
+   reflectivityCallbackThreshold: null
+   reflectivityCallbackThreshold: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
+     option: String <[x, o, i, <, >]>
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Line/U/<id>/S/connection
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[online, offline]>
+   
+```
+```
+TF/Line/U/<id>/S/debounce/period
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Line/U/<id>/S/firmware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/Line/U/<id>/S/hardware
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Array <min: 0 max: 2147483647>
+   value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/Line/U/<id>/S/position
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+```
+TF/Line/U/<id>/S/reflectivity/callbackPeriod
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/Line/U/<id>/S/reflectivity/threshold
+   timeStamp: Number <from: 0 to: 9223372036854775807>
+   value: 
+     max: Number <from: 0 to: 4095>
+     min: Number <from: 0 to: 4095>
      option: String <[x, o, i, <, >]>
    
 ```
@@ -5039,34 +5049,6 @@ TF/SoundIntensity/U/<id>/S/soundIntensity/threshold
 
 ### Stepper
 ```
-TF/Stepper/U/<id>/E/emergencyShutdown
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Stepper/U/<id>/E/fullBrake
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Stepper/U/<id>/E/undervoltage
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 32767>
-   
-```
-```
-TF/Stepper/U/<id>/E/velocity
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: -127 to: 127>
-   
-```
-```
-TF/Stepper/U/<id>/E/velocity/reached
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: -127 to: 127>
-   
-```
-```
 TF/Stepper/U/<id>/I
    allDataPeriod: null
    allDataPeriod: Number <from: 0 to: 9223372036854775807>
@@ -5099,12 +5081,6 @@ TF/Stepper/U/<id>/I
    timeBase: null
    timeBase: Number <from: 0 to: 9223372036854775807>
    timeStamp: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Stepper/U/<id>/S/acceleration
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 2147483647>
    
 ```
 ```
@@ -5176,12 +5152,6 @@ TF/Stepper/U/<id>/S/position
    
 ```
 ```
-TF/Stepper/U/<id>/S/pwmFrequency
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 1 to: 20000>
-   
-```
-```
 TF/Stepper/U/<id>/S/rectification
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: Boolean <true,false> 
@@ -5207,12 +5177,6 @@ TF/Stepper/U/<id>/S/targetPosition
 ```
 ```
 TF/Stepper/U/<id>/S/timeBase
-   timeStamp: Number <from: 0 to: 9223372036854775807>
-   value: Number <from: 0 to: 9223372036854775807>
-   
-```
-```
-TF/Stepper/U/<id>/S/velocity/callbackPeriod
    timeStamp: Number <from: 0 to: 9223372036854775807>
    value: Number <from: 0 to: 9223372036854775807>
    

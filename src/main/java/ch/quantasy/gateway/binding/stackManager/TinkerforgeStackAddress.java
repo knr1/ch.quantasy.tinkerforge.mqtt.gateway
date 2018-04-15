@@ -40,7 +40,7 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.binding.tinkerforge.stack;
+package ch.quantasy.gateway.binding.stackManager;
 
 import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
