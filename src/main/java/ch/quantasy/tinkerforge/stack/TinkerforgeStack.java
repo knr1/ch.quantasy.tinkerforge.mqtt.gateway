@@ -43,6 +43,7 @@
 package ch.quantasy.tinkerforge.stack;
 
 import ch.quantasy.gateway.binding.stackManager.TinkerforgeStackAddress;
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
 import ch.quantasy.tinkerforge.device.TinkerforgeDevice;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceListener;
@@ -103,13 +104,7 @@ public class TinkerforgeStack implements EnumerateListener {
         this.tinkerforgeDeviceListeners = new HashSet<>();
         this.deviceMap = new HashMap<>();
         this.stackAddress = stackAddress;
-        this.timerService = Executors.newScheduledThreadPool(1, new ThreadFactory() {
-            public Thread newThread(Runnable r) {
-                Thread t = Executors.defaultThreadFactory().newThread(r);
-                t.setDaemon(true);
-                return t;
-            }
-        });
+        this.timerService = GatewayClient.getTIMER_SERVICE();
 
     }
 

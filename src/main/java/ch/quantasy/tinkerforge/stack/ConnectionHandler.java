@@ -41,6 +41,7 @@
  */
 package ch.quantasy.tinkerforge.stack;
 
+import ch.quantasy.mqtt.gateway.client.GatewayClient;
 import static ch.quantasy.tinkerforge.stack.TinkerforgeStack.DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS;
 import com.tinkerforge.AlreadyConnectedException;
 import com.tinkerforge.Device;
@@ -75,13 +76,7 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
     public ConnectionHandler(TinkerforgeStack stack) {
         this.connectionTimeoutInMilliseconds = DEFAULT_CONNECTION_TIMEOUT_IN_MILLISECONDS;
         this.stack = stack;
-        this.timerService = Executors.newScheduledThreadPool(1, new ThreadFactory() {
-            public Thread newThread(Runnable r) {
-                Thread t = Executors.defaultThreadFactory().newThread(r);
-                t.setDaemon(true);
-                return t;
-            }
-        });
+        this.timerService = GatewayClient.getTIMER_SERVICE();
     }
 
     @Override
