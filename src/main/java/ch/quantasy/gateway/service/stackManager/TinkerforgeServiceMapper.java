@@ -77,6 +77,7 @@ import ch.quantasy.gateway.service.tinkerforge.MotionDetectorV2Service;
 import ch.quantasy.gateway.service.tinkerforge.MotorizedLinearPotiService;
 import ch.quantasy.gateway.service.tinkerforge.MultiTouchService;
 import ch.quantasy.gateway.service.tinkerforge.NFCService;
+import ch.quantasy.gateway.service.tinkerforge.OutdoorWeatherService;
 import ch.quantasy.gateway.service.tinkerforge.PiezoSpeakerService;
 import ch.quantasy.gateway.service.tinkerforge.RealTimeClockService;
 import ch.quantasy.gateway.service.tinkerforge.RemoteSwitchService;
@@ -130,6 +131,7 @@ import ch.quantasy.tinkerforge.device.motionDetectorV2.MotionDetectorV2Device;
 import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDevice;
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
+import ch.quantasy.tinkerforge.device.outdoorWeather.OutdoorWeatherDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
@@ -312,6 +314,9 @@ public class TinkerforgeServiceMapper {
         }
         if(tinkerforgeDevice instanceof ThermalImagingDevice){
             return new ThermalImagingService((ThermalImagingDevice)tinkerforgeDevice, mqttURI);
+        }
+        if(tinkerforgeDevice instanceof OutdoorWeatherDevice){
+            return new OutdoorWeatherService((OutdoorWeatherDevice)tinkerforgeDevice, mqttURI);
         }
         return null;
 

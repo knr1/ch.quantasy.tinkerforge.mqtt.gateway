@@ -4164,7 +4164,7 @@ TF/MotionDetectorV2/U/<id>/S/position
 TF/MotionDetectorV2/U/<id>/S/sensitivity
    required: # this tag is not part of the data structure
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
-     value: Number <from: 5 to: 201>
+     value: Number <from: 0 to: 100>
    
 ```
 
@@ -4417,6 +4417,102 @@ TF/NfcRfid/U/<id>/S/scanning/callbackPeriod
    required: # this tag is not part of the data structure
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
      value: Number <from: 0 to: 9223372036854775807>
+   
+```
+
+### OutdoorWeather
+```
+TF/OutdoorWeather/U/<id>/E/batteryLow
+   required: # this tag is not part of the data structure
+     id: Number <from: 0 to: 255>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Boolean <true,false>
+   
+```
+```
+TF/OutdoorWeather/U/<id>/E/gustSpeed
+   required: # this tag is not part of the data structure
+     id: Number <from: 0 to: 255>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/OutdoorWeather/U/<id>/E/humidity
+   required: # this tag is not part of the data structure
+     id: Number <from: 0 to: 255>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Number <from: 0 to: 100>
+   
+```
+```
+TF/OutdoorWeather/U/<id>/E/rain
+   required: # this tag is not part of the data structure
+     id: Number <from: 0 to: 255>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/OutdoorWeather/U/<id>/E/temperature
+   required: # this tag is not part of the data structure
+     id: Number <from: 0 to: 255>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Number <from: -2147483648 to: 2147483647>
+   
+```
+```
+TF/OutdoorWeather/U/<id>/E/windDirection
+   required: # this tag is not part of the data structure
+     id: Number <from: 0 to: 255>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value:
+       required: # this tag is not part of the data structure
+         direction: String <E,ENE,ERROR,ESE,N,NE,NNE,NNW,NW,S,SE,SSE,SSW,SW,W,WNW,WSW>
+   
+```
+```
+TF/OutdoorWeather/U/<id>/E/windSpeed
+   required: # this tag is not part of the data structure
+     id: Number <from: 0 to: 255>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/OutdoorWeather/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+   
+```
+```
+TF/OutdoorWeather/U/<id>/S/connection
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: String <[online, offline]>
+   
+```
+```
+TF/OutdoorWeather/U/<id>/S/firmware
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Array <min: 0 max: 2147483647>
+     value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/OutdoorWeather/U/<id>/S/hardware
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Array <min: 0 max: 2147483647>
+     value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/OutdoorWeather/U/<id>/S/position
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
    
 ```
 
@@ -6501,3 +6597,4 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
          option: String <[x, o, i, <, >]>
    
 ```
+

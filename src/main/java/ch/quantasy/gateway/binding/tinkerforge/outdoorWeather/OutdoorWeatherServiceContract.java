@@ -40,55 +40,59 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.binding.tinkerforge.motionDetectorV2;
+package ch.quantasy.gateway.binding.tinkerforge.outdoorWeather;
 
 import ch.quantasy.gateway.binding.tinkerforge.DeviceServiceContract;
 import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.motionDetectorV2.MotionDetectorV2Device;
+import ch.quantasy.tinkerforge.device.outdoorWeather.OutdoorWeatherDevice;
 import java.util.Map;
 
 /**
  *
  * @author reto
  */
-public class MotionDetectorV2ServiceContract extends DeviceServiceContract {
+public class OutdoorWeatherServiceContract extends DeviceServiceContract {
+    public final String EVENT_TEMPERATURE;
+    public final String EVENT_HUMIDITY;
+    public final String EVENT_GUST_SPEED;
+    public final String EVENT_WIND_SPEED;
+    public final String EVENT_RAIN;
+    public final String EVENT_WIND_DIRECTION;
+    public final String EVENT_BATTERY_LOW;
+    
+   
 
-    public final String DETECTION_CYCLE_ENDED;
-    public final String EVENT_DETECTION_CYCLE_ENDED;
-
-    public final String MOTION_DETECTED;
-    public final String EVENT_MOTION_DETECTED;
-    public final String STATUS_INDICATOR;
-    public final String STATUS_SENSITIVITY;
-
-    public MotionDetectorV2ServiceContract(MotionDetectorV2Device device) {
+    public OutdoorWeatherServiceContract(OutdoorWeatherDevice device) {
         this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
     }
 
-    public MotionDetectorV2ServiceContract(String id) {
-        this(id, TinkerforgeDeviceClass.MotionDetectorV2.toString());
+    public OutdoorWeatherServiceContract(String id) {
+        this(id, TinkerforgeDeviceClass.OutdoorWeather.toString());
     }
 
-    public MotionDetectorV2ServiceContract(String id, String device) {
-        super(id, device, MotionDetectorV2Intent.class);
-
-        DETECTION_CYCLE_ENDED = "eventDetectionCycleEnded";
-        EVENT_DETECTION_CYCLE_ENDED = EVENT + "/" + DETECTION_CYCLE_ENDED;
-
-        MOTION_DETECTED = "motionDetected";
-        EVENT_MOTION_DETECTED = EVENT + "/" + MOTION_DETECTED;
-        STATUS_INDICATOR=STATUS+"/"+"indicator";
-        STATUS_SENSITIVITY=STATUS+"/"+"sensitivity";
+    public OutdoorWeatherServiceContract(String id, String device) {
+        super(id, device, OutdoorWeatherIntent.class);
+        EVENT_TEMPERATURE=EVENT+"/"+"temperature";
+        EVENT_HUMIDITY=EVENT+"/"+"humidity";
+        EVENT_GUST_SPEED=EVENT+"/"+"gustSpeed";
+        EVENT_WIND_SPEED=EVENT+"/"+"windSpeed";
+        EVENT_RAIN=EVENT+"/"+"rain";
+        EVENT_WIND_DIRECTION=EVENT+"/"+"windDirection";
+        EVENT_BATTERY_LOW=EVENT+"/"+"batteryLow";
     }
 
     @Override
     public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
-    
-        messageTopicMap.put(EVENT_DETECTION_CYCLE_ENDED, MotionDetectionCycleEndedEvent.class);
-        messageTopicMap.put(EVENT_MOTION_DETECTED, MotionDetectionDetected.class);
-        messageTopicMap.put(STATUS_SENSITIVITY, SensitivityStatus.class);
-        messageTopicMap.put(STATUS_INDICATOR, IndicatorStatus.class);
+        messageTopicMap.put(EVENT_TEMPERATURE, TemperatureEvent.class);
+        messageTopicMap.put(EVENT_HUMIDITY, HumidityEvent.class);
+        messageTopicMap.put(EVENT_GUST_SPEED, WindSpeedEvent.class);
+        messageTopicMap.put(EVENT_WIND_SPEED, WindSpeedEvent.class);
+        messageTopicMap.put(EVENT_RAIN, RainEvent.class);
+        messageTopicMap.put(EVENT_WIND_DIRECTION, WindDirectionEvent.class);
+        messageTopicMap.put(EVENT_BATTERY_LOW, BatteryLowEvent.class);
+        
+        
  
     }
 

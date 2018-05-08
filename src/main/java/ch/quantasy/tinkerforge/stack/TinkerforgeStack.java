@@ -51,6 +51,8 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDeviceMapper;
 import com.tinkerforge.Device;
 import com.tinkerforge.IPConnection;
 import com.tinkerforge.IPConnection.EnumerateListener;
+import com.tinkerforge.NotConnectedException;
+import com.tinkerforge.TimeoutException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

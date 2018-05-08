@@ -40,57 +40,16 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.binding.tinkerforge.motionDetectorV2;
+package ch.quantasy.tinkerforge.device.outdoorWeather;
 
-import ch.quantasy.gateway.binding.tinkerforge.DeviceServiceContract;
-import ch.quantasy.mqtt.gateway.client.message.Message;
-import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.motionDetectorV2.MotionDetectorV2Device;
-import java.util.Map;
+import ch.quantasy.gateway.binding.tinkerforge.motionDetectorV2.Indicator;
+import ch.quantasy.tinkerforge.device.generic.DeviceCallback;
+import com.tinkerforge.BrickletOutdoorWeather;
 
 /**
  *
  * @author reto
  */
-public class MotionDetectorV2ServiceContract extends DeviceServiceContract {
+public interface OutdoorWeatherDeviceCallback extends DeviceCallback, BrickletOutdoorWeather.SensorDataListener,BrickletOutdoorWeather.StationDataListener{
 
-    public final String DETECTION_CYCLE_ENDED;
-    public final String EVENT_DETECTION_CYCLE_ENDED;
-
-    public final String MOTION_DETECTED;
-    public final String EVENT_MOTION_DETECTED;
-    public final String STATUS_INDICATOR;
-    public final String STATUS_SENSITIVITY;
-
-    public MotionDetectorV2ServiceContract(MotionDetectorV2Device device) {
-        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
-    }
-
-    public MotionDetectorV2ServiceContract(String id) {
-        this(id, TinkerforgeDeviceClass.MotionDetectorV2.toString());
-    }
-
-    public MotionDetectorV2ServiceContract(String id, String device) {
-        super(id, device, MotionDetectorV2Intent.class);
-
-        DETECTION_CYCLE_ENDED = "eventDetectionCycleEnded";
-        EVENT_DETECTION_CYCLE_ENDED = EVENT + "/" + DETECTION_CYCLE_ENDED;
-
-        MOTION_DETECTED = "motionDetected";
-        EVENT_MOTION_DETECTED = EVENT + "/" + MOTION_DETECTED;
-        STATUS_INDICATOR=STATUS+"/"+"indicator";
-        STATUS_SENSITIVITY=STATUS+"/"+"sensitivity";
-    }
-
-    @Override
-    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
-    
-        messageTopicMap.put(EVENT_DETECTION_CYCLE_ENDED, MotionDetectionCycleEndedEvent.class);
-        messageTopicMap.put(EVENT_MOTION_DETECTED, MotionDetectionDetected.class);
-        messageTopicMap.put(STATUS_SENSITIVITY, SensitivityStatus.class);
-        messageTopicMap.put(STATUS_INDICATOR, IndicatorStatus.class);
- 
-    }
-
-    
 }

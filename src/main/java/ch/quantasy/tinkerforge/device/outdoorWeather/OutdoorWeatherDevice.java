@@ -40,57 +40,50 @@
  *  *
  *  *
  */
-package ch.quantasy.gateway.binding.tinkerforge.motionDetectorV2;
+package ch.quantasy.tinkerforge.device.outdoorWeather;
 
-import ch.quantasy.gateway.binding.tinkerforge.DeviceServiceContract;
-import ch.quantasy.mqtt.gateway.client.message.Message;
-import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
-import ch.quantasy.tinkerforge.device.motionDetectorV2.MotionDetectorV2Device;
-import java.util.Map;
+import ch.quantasy.gateway.binding.tinkerforge.outdoorWeather.OutdoorWeatherIntent;
+import ch.quantasy.tinkerforge.device.generic.GenericDevice;
+import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
+import com.tinkerforge.BrickletOutdoorWeather;
+import com.tinkerforge.NotConnectedException;
+import com.tinkerforge.TimeoutException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author reto
+ * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class MotionDetectorV2ServiceContract extends DeviceServiceContract {
+public class OutdoorWeatherDevice extends GenericDevice<BrickletOutdoorWeather, OutdoorWeatherDeviceCallback, OutdoorWeatherIntent> {
 
-    public final String DETECTION_CYCLE_ENDED;
-    public final String EVENT_DETECTION_CYCLE_ENDED;
-
-    public final String MOTION_DETECTED;
-    public final String EVENT_MOTION_DETECTED;
-    public final String STATUS_INDICATOR;
-    public final String STATUS_SENSITIVITY;
-
-    public MotionDetectorV2ServiceContract(MotionDetectorV2Device device) {
-        this(device.getUid(), TinkerforgeDeviceClass.getDevice(device.getDevice()).toString());
-    }
-
-    public MotionDetectorV2ServiceContract(String id) {
-        this(id, TinkerforgeDeviceClass.MotionDetectorV2.toString());
-    }
-
-    public MotionDetectorV2ServiceContract(String id, String device) {
-        super(id, device, MotionDetectorV2Intent.class);
-
-        DETECTION_CYCLE_ENDED = "eventDetectionCycleEnded";
-        EVENT_DETECTION_CYCLE_ENDED = EVENT + "/" + DETECTION_CYCLE_ENDED;
-
-        MOTION_DETECTED = "motionDetected";
-        EVENT_MOTION_DETECTED = EVENT + "/" + MOTION_DETECTED;
-        STATUS_INDICATOR=STATUS+"/"+"indicator";
-        STATUS_SENSITIVITY=STATUS+"/"+"sensitivity";
+    public OutdoorWeatherDevice(TinkerforgeStack stack, BrickletOutdoorWeather device) throws NotConnectedException, TimeoutException {
+        super(stack, device, new OutdoorWeatherIntent());
     }
 
     @Override
-    public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
-    
-        messageTopicMap.put(EVENT_DETECTION_CYCLE_ENDED, MotionDetectionCycleEndedEvent.class);
-        messageTopicMap.put(EVENT_MOTION_DETECTED, MotionDetectionDetected.class);
-        messageTopicMap.put(STATUS_SENSITIVITY, SensitivityStatus.class);
-        messageTopicMap.put(STATUS_INDICATOR, IndicatorStatus.class);
- 
+    protected void addDeviceListeners(BrickletOutdoorWeather device) {
+        try {
+            device.setSensorCallbackConfiguration(true);
+            device.setStationCallbackConfiguration(true);
+            device.addSensorDataListener(super.getCallback());
+            device.addStationDataListener(super.getCallback());
+        } catch (TimeoutException ex) {
+            Logger.getLogger(OutdoorWeatherDevice.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotConnectedException ex) {
+            Logger.getLogger(OutdoorWeatherDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    
+    @Override
+    protected void removeDeviceListeners(BrickletOutdoorWeather device) {
+        device.removeSensorDataListener(super.getCallback());
+        device.removeStationDataListener(super.getCallback());
+    }
+
+    @Override
+    public void update(OutdoorWeatherIntent intent) {
+
+    }
+
 }
