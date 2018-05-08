@@ -43,6 +43,7 @@
 package ch.quantasy.gateway.binding.stackManager;
 
 import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Default;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 import ch.quantasy.mqtt.gateway.client.message.annotations.StringForm;
 import ch.quantasy.mqtt.gateway.client.message.annotations.StringSize;
@@ -59,6 +60,7 @@ public class TinkerforgeStackAddress extends AValidator {
     @StringForm(regEx = "\\w+(\\.\\w+){0,3}")
     private String hostName;
     @Range(from = 1024, to = 65535)
+    @Default(value = ""+DEFAULT_PORT)
     private int port = DEFAULT_PORT;
 
     public TinkerforgeStackAddress(String hostName, int port) {
