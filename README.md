@@ -65,10 +65,8 @@ Then, if you subscribe to TF/# you will immediately get the description info for
 
 In order to interact with some specific Tinkerforge-Stack (e.g. the one you have connected via USB cable to the same machine as you run TiMqWay), the following message has to be sent to the following topic:
 ```
-Topic
 TF/Manager/U/computer/I
-
-Message
+---
 address:
   hostName: localhost
   port: 4223
@@ -77,10 +75,8 @@ connect: true
 or if you know a remote Tinkerforge stack reachable over an IP-address (e.g. the one in your 192.168.1.x network connected via WLAN-Brick extension as 192.168.1.77)
 
 ```
-Topic
 TF/Manager/U/computer/I
-
-Message
+---
 address:
   hostName: 192.168.1.77
   port: 4223
@@ -101,28 +97,22 @@ In order to see who is calling, the intent will always end with '/quickshot' as 
  
 **Setting backlight of LCD-Display (uid: lcd):**
 ```
-Topic
 TF/LCD20x4/U/lcd/I/quickshot
-
-Message
+---
 backlight: true
 ```
 
 **Measuring the temperature once per second on temperature bricklet (uid: red):**
 ```
-Topic
 TF/Temperature/U/red/I/quickshot
-
-Message
+---
 temperatureCallbackPeriod: 1000
 ```
 
 **Detecting NFC-Tags once per second on NFCRFID bricklet (uid: ouu):**
 ```
-Topic
 TF/NfcRfid/U/ouu/I/quickshot
-
-Message
+---
 scanningCallbackPeriod: 1000
 ```
 
