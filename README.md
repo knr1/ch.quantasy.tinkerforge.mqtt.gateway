@@ -464,7 +464,6 @@ All required tags have to be provided in order to create a correct message, opti
 
 As a special case, required tags with a default value do not have to be provided within an intent. They will be filled in implicitly by the service if not provided.
 
-
 ### Manager
 ```
 TF/Manager/U/<id>/E/stack/address/added
@@ -538,6 +537,8 @@ TF/Accelerometer/U/<id>/E/accelerationReached
 ```
 ```
 TF/Accelerometer/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      accelerationThreshold:
        required: # this tag is not part of the data structure
@@ -549,9 +550,6 @@ TF/Accelerometer/U/<id>/I
          filterBandwidth: String <Hz800,Hz400,Hz200,Hz50>
          fullScale: String <G2,G4,G6,G8,G16>
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -650,6 +648,8 @@ TF/AmbientLight/U/<id>/E/illuminance/reached
 ```
 ```
 TF/AmbientLight/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      analogValueThreshold:
@@ -664,9 +664,6 @@ TF/AmbientLight/U/<id>/I
          max: Number <from: 0 to: 9000>
          min: Number <from: 0 to: 9000>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -756,6 +753,8 @@ TF/AmbientLightV2/U/<id>/E/illuminance/reached
 ```
 ```
 TF/AmbientLightV2/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      configuration:
        required: # this tag is not part of the data structure
@@ -768,9 +767,6 @@ TF/AmbientLightV2/U/<id>/I
          max: Number <from: 0 to: 100000>
          min: Number <from: 0 to: 100000>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -870,6 +866,8 @@ TF/AnalogInV2/U/<id>/E/voltage/reached
 ```
 ```
 TF/AnalogInV2/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      analogValueCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      analogValueCallbackThreshold:
@@ -885,9 +883,6 @@ TF/AnalogInV2/U/<id>/I
          max: Number <from: 0 to: 42000>
          min: Number <from: 0 to: 42000>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -974,11 +969,10 @@ TF/AnalogInV2/U/<id>/S/voltage/threshold
 ### AnalogOutV2
 ```
 TF/AnalogOutV2/U/<id>/I
-   optional: # this tag is not part of the data structure
-     outputVoltage: Number <from: 0 to: 12000>
-   
    required: # this tag is not part of the data structure
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+   optional: # this tag is not part of the data structure
+     outputVoltage: Number <from: 0 to: 12000>
    
 ```
 ```
@@ -1050,6 +1044,8 @@ TF/Barometer/U/<id>/E/altitude/reached
 ```
 ```
 TF/Barometer/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      airPressureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      airPressureCallbackThreshold:
@@ -1067,9 +1063,6 @@ TF/Barometer/U/<id>/I
          averagingTemperature: Number <from: 0 to: 255>
          movingAveragePressure: Number <from: 0 to: 25>
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -1178,6 +1171,8 @@ TF/CO2/U/<id>/E/CO2Concentration/reached
 ```
 ```
 TF/CO2/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      co2ConcentrationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      co2ConcentrationCallbackThreshold:
@@ -1186,9 +1181,6 @@ TF/CO2/U/<id>/I
          min: Number <from: 0 to: 10000>
          option: String <[x, o, i, <, >]>
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -1284,6 +1276,8 @@ TF/Color/U/<id>/E/illuminance/reached
 ```
 ```
 TF/Color/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      colorCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      colorCallbackThreshold:
@@ -1305,9 +1299,6 @@ TF/Color/U/<id>/I
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
      illuminanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      light: Boolean <true,false>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -1415,6 +1406,8 @@ TF/DC/U/<id>/E/velocity/reached
 ```
 ```
 TF/DC/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      acceleration: Number <from: 0 to: 2147483647>
      driveMode: String <[1, 2]>
@@ -1424,9 +1417,6 @@ TF/DC/U/<id>/I
      pwmFrequency: Number <from: 1 to: 20000>
      velocity: Number <from: -32767 to: 32767>
      velocityPeriod: Number <from: 0 to: 9223372036854775807>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -1540,6 +1530,8 @@ TF/DistanceIR/U/<id>/E/distance/reached
 ```
 ```
 TF/DistanceIR/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      analogValueCallbackThreshold:
@@ -1554,9 +1546,6 @@ TF/DistanceIR/U/<id>/I
          max: Number <[from: 0 to: 0,from: 40 to: 300,from: 100 to: 800,from: 200 to: 1500]>
          min: Number <[from: 0 to: 0,from: 40 to: 300,from: 100 to: 800,from: 200 to: 1500]>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -1650,6 +1639,8 @@ TF/DistanceUS/U/<id>/E/distance/reached
 ```
 ```
 TF/DistanceUS/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
      distanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -1659,9 +1650,6 @@ TF/DistanceUS/U/<id>/I
          min: Number <from: 0 to: 4095>
          option: String <[x, o, i, <, >]>
      movingAverage: Number <from: 0 to: 100>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -1740,6 +1728,8 @@ TF/DualButton/U/<id>/E/stateChanged
 ```
 ```
 TF/DualButton/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      ledState:
        required: # this tag is not part of the data structure
@@ -1750,9 +1740,6 @@ TF/DualButton/U/<id>/I
       required: # this tag is not part of the data structure
         led: String <[1, 2]>
         state: String <AutoToggleOn,AutoToggleOff,On,Off>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -1807,6 +1794,8 @@ TF/DualRelay/U/<id>/E/monoflopDone
 ```
 ```
 TF/DualRelay/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      monoflopParameters: Set <min: 0 max: 2>
      monoflopParameters:
@@ -1823,9 +1812,6 @@ TF/DualRelay/U/<id>/I
       required: # this tag is not part of the data structure
         relay: String <[1, 2]>
         state: Boolean <true,false>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -1886,6 +1872,8 @@ TF/DustDetector/U/<id>/E/dustDensity/reached
 ```
 ```
 TF/DustDetector/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
      dustDensityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -1895,9 +1883,6 @@ TF/DustDetector/U/<id>/I
          min: Number <from: 0 to: 500>
          option: String <[x, o, i, <, >]>
      movingAverage: Number <from: 0 to: 100>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -2013,6 +1998,8 @@ TF/GPS/U/<id>/E/status
 ```
 ```
 TF/GPS/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      altitudeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      coordinatesCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -2020,9 +2007,6 @@ TF/GPS/U/<id>/I
      motionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      restart: String <hot,warm,cold,factoryReset>
      statusCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -2129,6 +2113,8 @@ TF/GPSv2/U/<id>/E/status
 ```
 ```
 TF/GPSv2/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      altitudeCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      coordinatesCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -2138,9 +2124,6 @@ TF/GPSv2/U/<id>/I
      restart: String <hot,warm,cold,factoryReset>
      statusCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      statusLEDConfig: String <OFF,ON,HEARTBEAT,STATUS>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -2219,33 +2202,30 @@ TF/GPSv2/U/<id>/S/status/led
 ### HallEffect
 ```
 TF/HallEffect/U/<id>/E/edgeCount
-   optional: # this tag is not part of the data structure
-     greater35Gauss: Boolean <true,false>
-   
    required: # this tag is not part of the data structure
      count: Number <from: 0 to: 9223372036854775807>
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+   optional: # this tag is not part of the data structure
+     greater35Gauss: Boolean <true,false>
    
 ```
 ```
 TF/HallEffect/U/<id>/E/edgeCount/reset
-   optional: # this tag is not part of the data structure
-     greater35Gauss: Boolean <true,false>
-   
    required: # this tag is not part of the data structure
      count: Number <from: 0 to: 9223372036854775807>
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+   optional: # this tag is not part of the data structure
+     greater35Gauss: Boolean <true,false>
    
 ```
 ```
 TF/HallEffect/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      edgeCountCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      edgeCountInterrupt: Number <from: 0 to: 9223372036854775807>
      edgeCountReset: Boolean <true,false>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -2330,6 +2310,8 @@ TF/Humidity/U/<id>/E/humidity/reached
 ```
 ```
 TF/Humidity/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      analogValueCallbackThreshold:
@@ -2344,9 +2326,6 @@ TF/Humidity/U/<id>/I
          max: Number <from: 0 to: 1000>
          min: Number <from: 0 to: 1000>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -2500,6 +2479,8 @@ TF/IMU/U/<id>/E/quaternion
 ```
 ```
 TF/IMU/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      accelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      allDataCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -2510,9 +2491,6 @@ TF/IMU/U/<id>/I
      orientationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      quaternionCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      statusLED: Boolean <true,false>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -2730,6 +2708,8 @@ TF/IMUV2/U/<id>/E/temperature
 ```
 ```
 TF/IMUV2/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      accelerationCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      allDataCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -2744,9 +2724,6 @@ TF/IMUV2/U/<id>/I
      sensorFusionMode: String <[0, 1, 2]>
      statusLED: Boolean <true,false>
      temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -2920,6 +2897,8 @@ TF/Joystick/U/<id>/E/released
 ```
 ```
 TF/Joystick/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      analogValueCallbackThreshold:
@@ -2939,9 +2918,6 @@ TF/Joystick/U/<id>/I
          minX: Number <from: -100 to: 100>
          minY: Number <from: -100 to: 100>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -3053,6 +3029,8 @@ TF/LaserRangeFinder/U/<id>/E/velocity/reached
 ```
 ```
 TF/LaserRangeFinder/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      configuration:
        required: # this tag is not part of the data structure
@@ -3081,9 +3059,6 @@ TF/LaserRangeFinder/U/<id>/I
          max: Number <from: -127 to: 127>
          min: Number <from: -127 to: 127>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -3226,6 +3201,8 @@ TF/LCD16x2/U/<id>/E/button/released
 ```
 ```
 TF/LCD16x2/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      backlight: Boolean <true,false>
      clearDisplay: Boolean <true,false>
@@ -3240,9 +3217,6 @@ TF/LCD16x2/U/<id>/I
         line: Number <from: 0 to: 1>
         position: Number <from: 0 to: 15>
         text: String <min: 0 max: 16>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -3311,6 +3285,8 @@ TF/LCD20x4/U/<id>/E/button
 ```
 ```
 TF/LCD20x4/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      backlight: Boolean <true,false>
      clearDisplay: Boolean <true,false>
@@ -3331,9 +3307,6 @@ TF/LCD20x4/U/<id>/I
         line: Number <from: 0 to: 3>
         position: Number <from: 0 to: 19>
         text: String <min: 0 max: 20>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -3426,6 +3399,8 @@ TF/LEDStrip/U/<id>/E/laging
 ```
 ```
 TF/LEDStrip/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      config:
        required: # this tag is not part of the data structure
@@ -3441,9 +3416,6 @@ TF/LEDStrip/U/<id>/I
        LEDFrame:
          required: # this tag is not part of the data structure
            channels: Arrays: <[min: 1 max: 4,min: 1 max: 320]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -3521,6 +3493,8 @@ TF/LinearPoti/U/<id>/E/position/reached
 ```
 ```
 TF/LinearPoti/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      analogCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      analogValueCallbackThreshold:
@@ -3535,9 +3509,6 @@ TF/LinearPoti/U/<id>/I
          max: Number <from: 0 to: 100>
          min: Number <from: 0 to: 100>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -3631,6 +3602,8 @@ TF/Line/U/<id>/E/reflectivity/reached
 ```
 ```
 TF/Line/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
      reflectivityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -3639,9 +3612,6 @@ TF/Line/U/<id>/I
          max: Number <from: 0 to: 4095>
          min: Number <from: 0 to: 4095>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -3717,6 +3687,8 @@ TF/LoadCell/U/<id>/E/weight/reached
 ```
 ```
 TF/LoadCell/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      configuration:
        required: # this tag is not part of the data structure
@@ -3732,9 +3704,6 @@ TF/LoadCell/U/<id>/I
          max: Number <from: -50001 to: 50001>
          min: Number <from: -50001 to: 50001>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -3868,6 +3837,9 @@ TF/Master/U/<id>/E/stack/voltage/reached
 ```
 ```
 TF/Master/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     usbVoltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    optional: # this tag is not part of the data structure
      currentCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      currentCallbackThreshold:
@@ -3889,10 +3861,6 @@ TF/Master/U/<id>/I
          max: Number <from: 0 to: 4095>
          min: Number <from: 0 to: 4095>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
-     usbVoltageCallbackPeriod: Number <from: 0 to: 9223372036854775807>
    
 ```
 ```
@@ -4011,6 +3979,8 @@ TF/Moisture/U/<id>/E/moisture/reached
 ```
 ```
 TF/Moisture/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
      moistureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -4020,9 +3990,6 @@ TF/Moisture/U/<id>/I
          min: Number <from: 0 to: 4095>
          option: String <[x, o, i, <, >]>
      movingAverage: Number <from: 0 to: 100>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -4151,6 +4118,8 @@ TF/MotionDetectorV2/U/<id>/E/motionDetected
 ```
 ```
 TF/MotionDetectorV2/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      indicator:
        optional: # this tag is not part of the data structure
@@ -4158,9 +4127,6 @@ TF/MotionDetectorV2/U/<id>/I
          topLeft: Number <from: 0 to: 255>
          topRight: Number <from: 0 to: 255>
      sensitivity: Number <from: 0 to: 100>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -4229,6 +4195,8 @@ TF/MotorizedLinearPoti/U/<id>/E/position/reached
 ```
 ```
 TF/MotorizedLinearPoti/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      calibration: Boolean <true,false>
      motorPosition:
@@ -4244,9 +4212,6 @@ TF/MotorizedLinearPoti/U/<id>/I
          period: Number <from: 0 to: 9223372036854775807>
          valueHasToChange: Boolean <true,false>
      positionReachedCallbackConfiguration: Boolean <true,false>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -4327,13 +4292,12 @@ TF/MultiTouch/U/<id>/E/touchState
 ```
 ```
 TF/MultiTouch/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      electrodeConfig: Number <from: 0 to: 8191>
      recalibration: Boolean <true,false>
      sensitivity: Number <from: 5 to: 201>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -4417,6 +4381,8 @@ TF/NfcRfid/U/<id>/E/tag/written
 ```
 ```
 TF/NfcRfid/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      nfcWrite:
        required: # this tag is not part of the data structure
@@ -4424,9 +4390,6 @@ TF/NfcRfid/U/<id>/I
          value: Array <min: 0 max: 2147483647>
      scanningInterval: Number <from: 0 to: 9223372036854775807>
      tagID: String <regEx: [0-9A-F]{8-14}>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -4496,6 +4459,8 @@ TF/PiezoSpeaker/U/<id>/E/started
 ```
 ```
 TF/PiezoSpeaker/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      beepParameter:
        required: # this tag is not part of the data structure
@@ -4506,9 +4471,6 @@ TF/PiezoSpeaker/U/<id>/I
        required: # this tag is not part of the data structure
          frequency: Number <from: 585 to: 7100>
          string: String <regEx: [\.\s-]{1,60}>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -4573,6 +4535,8 @@ TF/PTC/U/<id>/E/temperature/reached
 ```
 ```
 TF/PTC/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
      noiseReductionFilter:
@@ -4581,9 +4545,6 @@ TF/PTC/U/<id>/I
      resistanceCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      temperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      wireMode: String <[2, 3, 4]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -4703,6 +4664,8 @@ TF/RealTimeClock/U/<id>/E/dateTime
 ```
 ```
 TF/RealTimeClock/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      alarmParameter:
        required: # this tag is not part of the data structure
@@ -4725,9 +4688,6 @@ TF/RealTimeClock/U/<id>/I
          weekday: String <monday,tuesday,wednesday,thursday,friday,saturday,sunday>
          year: Number <from: 2000 to: 2099>
      offset: Number <from: -128 to: 127>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -4815,6 +4775,8 @@ TF/RemoteSwitch/U/<id>/E/switchingDone
 ```
 ```
 TF/RemoteSwitch/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      dimSocketBParameters:
        required: # this tag is not part of the data structure
@@ -4837,9 +4799,6 @@ TF/RemoteSwitch/U/<id>/I
          deviceCode: Number <from: 1 to: 16>
          switchingValue: String <switchOn,switchOff>
          systemCode: String <[A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -4907,6 +4866,8 @@ TF/RemoteSwitchV2/U/<id>/E/switchingDone
 ```
 ```
 TF/RemoteSwitchV2/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      dimSocketBParameters:
        required: # this tag is not part of the data structure
@@ -4934,9 +4895,6 @@ TF/RemoteSwitchV2/U/<id>/I
          deviceCode: Number <from: 1 to: 16>
          switchingValue: String <switchOn,switchOff>
          systemCode: String <[A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -4998,15 +4956,14 @@ TF/RGBLEDButton/U/<id>/E/button
 ```
 ```
 TF/RGBLEDButton/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      color:
        required: # this tag is not part of the data structure
          blue: Number <from: 0 to: 255>
          green: Number <from: 0 to: 255>
          red: Number <from: 0 to: 255>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -5092,6 +5049,8 @@ TF/RotaryEncoder/U/<id>/E/released
 ```
 ```
 TF/RotaryEncoder/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      countCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      countReset: Boolean <true,false>
@@ -5101,9 +5060,6 @@ TF/RotaryEncoder/U/<id>/I
          min: Number <from: -150 to: 150>
          option: String <[x, o, i, <, >]>
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -5193,6 +5149,8 @@ TF/RotaryPoti/U/<id>/E/position/reached
 ```
 ```
 TF/RotaryPoti/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      analogValueCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      analogValueCallbackThreshold:
@@ -5207,9 +5165,6 @@ TF/RotaryPoti/U/<id>/I
          max: Number <from: -150 to: 150>
          min: Number <from: -150 to: 150>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -5289,6 +5244,9 @@ TF/RotaryPoti/U/<id>/S/position/threshold
 ### SegmentDisplay4x7
 ```
 TF/SegmentDisplay4x7/U/<id>/E/counterFinished
+   required: # this tag is not part of the data structure
+     finished: Boolean <true,false>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      counterParameters:
        required: # this tag is not part of the data structure
@@ -5296,14 +5254,13 @@ TF/SegmentDisplay4x7/U/<id>/E/counterFinished
          increment: Number <from: -999 to: 9999>
          length: Number <from: 0 to: 9223372036854775807>
          to: Number <from: -999 to: 9999>
-   
-   required: # this tag is not part of the data structure
-     finished: Boolean <true,false>
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/E/counterStarted
+   required: # this tag is not part of the data structure
+     finished: Boolean <true,false>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      counterParameters:
        required: # this tag is not part of the data structure
@@ -5312,13 +5269,11 @@ TF/SegmentDisplay4x7/U/<id>/E/counterStarted
          length: Number <from: 0 to: 9223372036854775807>
          to: Number <from: -999 to: 9999>
    
-   required: # this tag is not part of the data structure
-     finished: Boolean <true,false>
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
-   
 ```
 ```
 TF/SegmentDisplay4x7/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      counterParameter:
        required: # this tag is not part of the data structure
@@ -5332,9 +5287,6 @@ TF/SegmentDisplay4x7/U/<id>/I
          bits: Number <from: 0 to: 128>
          brightness: Number <from: 0 to: 7>
          colon: Boolean <true,false>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -5404,6 +5356,8 @@ TF/Servo/U/<id>/E/velocityReached
 ```
 ```
 TF/Servo/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      minimumVoltage: Number <from: 5000 to: 2147483647>
      outputVoltage: Number <from: 2000 to: 9000>
@@ -5425,9 +5379,6 @@ TF/Servo/U/<id>/I
             min: Number <from: -32767 to: 32767>
         velocity: Number <from: 0 to: 65536>
      statusLED: Boolean <true,false>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -5515,15 +5466,14 @@ TF/SolidState/U/<id>/E/monoflopDone
 ```
 ```
 TF/SolidState/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      monoflopParameters:
        required: # this tag is not part of the data structure
          period: Number <from: 0 to: 9223372036854775807>
          state: Boolean <true,false>
      state: Boolean <true,false>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -5581,6 +5531,8 @@ TF/SoundIntensity/U/<id>/E/soundIntensity/reached
 ```
 ```
 TF/SoundIntensity/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
      intensityCallbackPeriod: Number <from: 0 to: 9223372036854775807>
@@ -5589,9 +5541,6 @@ TF/SoundIntensity/U/<id>/I
          max: Number <from: 0 to: 10000>
          min: Number <from: 0 to: 10000>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -5653,6 +5602,8 @@ TF/SoundIntensity/U/<id>/S/soundIntensity/threshold
 ### Stepper
 ```
 TF/Stepper/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      allDataPeriod: Number <from: 0 to: 9223372036854775807>
      currentPosition: Number <from: 0 to: 2147483647>
@@ -5671,9 +5622,6 @@ TF/Stepper/U/<id>/I
      syncRect: Boolean <true,false>
      targetPosition: Number <from: 0 to: 9223372036854775807>
      timeBase: Number <from: 0 to: 9223372036854775807>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -5822,6 +5770,8 @@ TF/Temperature/U/<id>/E/temperature/reached
 ```
 ```
 TF/Temperature/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
      mode:
@@ -5833,9 +5783,6 @@ TF/Temperature/U/<id>/I
          max: Number <from: -2500 to: 8500>
          min: Number <from: -2500 to: 8500>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -5934,6 +5881,8 @@ TF/TemperatureIR/U/<id>/E/objectTemperature/reached
 ```
 ```
 TF/TemperatureIR/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      ambientTemperatureCallbackPeriod: Number <from: 0 to: 9223372036854775807>
      ambientTemperatureCallbackThreshold:
@@ -5948,9 +5897,6 @@ TF/TemperatureIR/U/<id>/I
          max: Number <from: -700 to: 3800>
          min: Number <from: -700 to: 3800>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -6066,6 +6012,8 @@ TF/ThermalImaging/U/<id>/E/statistics
 ```
 ```
 TF/ThermalImaging/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      imageTransferConfig: String <none,contrast,temperature>
      resolution: String <from_0_to_655K,from_0_to_6553K>
@@ -6075,9 +6023,6 @@ TF/ThermalImaging/U/<id>/I
          columnStart: Number <from: 0 to: 78>
          rowEnd: Number <from: 1 to: 59>
          rowStart: Number <from: 0 to: 58>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -6112,11 +6057,10 @@ TF/ThermalImaging/U/<id>/S/position
 ```
 ```
 TF/ThermalImaging/U/<id>/S/resolution
-   optional: # this tag is not part of the data structure
-     value: String <from_0_to_655K,from_0_to_6553K>
-   
    required: # this tag is not part of the data structure
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+   optional: # this tag is not part of the data structure
+     value: String <from_0_to_655K,from_0_to_6553K>
    
 ```
 ```
@@ -6164,6 +6108,8 @@ TF/ThermoCouple/U/<id>/E/temperature/reached
 ```
 ```
 TF/ThermoCouple/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      configuration:
        required: # this tag is not part of the data structure
@@ -6177,9 +6123,6 @@ TF/ThermoCouple/U/<id>/I
          max: Number <from: -21000 to: 180000>
          min: Number <from: -21000 to: 180000>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -6309,6 +6252,8 @@ TF/UVLight/U/<id>/E/uvLight/reached
 ```
 ```
 TF/UVLight/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      debouncePeriod: Number <from: 0 to: 9223372036854775807>
      movingAverage: Number <from: 0 to: 100>
@@ -6318,9 +6263,6 @@ TF/UVLight/U/<id>/I
          max: Number <from: 0 to: 328000>
          min: Number <from: 0 to: 328000>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
@@ -6424,6 +6366,8 @@ TF/VoltageCurrent/U/<id>/E/voltage/reached
 ```
 ```
 TF/VoltageCurrent/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    optional: # this tag is not part of the data structure
      calibration:
        required: # this tag is not part of the data structure
@@ -6453,9 +6397,6 @@ TF/VoltageCurrent/U/<id>/I
          max: Number <from: -5001 to: 5001>
          min: Number <from: -5001 to: 5001>
          option: String <[x, o, i, <, >]>
-   
-   required: # this tag is not part of the data structure
-     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 ```
