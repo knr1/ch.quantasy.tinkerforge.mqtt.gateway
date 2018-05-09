@@ -4422,7 +4422,7 @@ TF/NfcRfid/U/<id>/S/scanning/callbackPeriod
 
 ### OutdoorWeather
 ```
-TF/OutdoorWeather/U/<id>/E/batteryLow
+TF/OutdoorWeather/U/<id>/E/batteryLow/<id>
    required: # this tag is not part of the data structure
      id: Number <from: 0 to: 255>
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
@@ -4430,7 +4430,7 @@ TF/OutdoorWeather/U/<id>/E/batteryLow
    
 ```
 ```
-TF/OutdoorWeather/U/<id>/E/gustSpeed
+TF/OutdoorWeather/U/<id>/E/gustSpeed/<id>
    required: # this tag is not part of the data structure
      id: Number <from: 0 to: 255>
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
@@ -4438,7 +4438,7 @@ TF/OutdoorWeather/U/<id>/E/gustSpeed
    
 ```
 ```
-TF/OutdoorWeather/U/<id>/E/humidity
+TF/OutdoorWeather/U/<id>/E/humidity/<id>
    required: # this tag is not part of the data structure
      id: Number <from: 0 to: 255>
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
@@ -4446,7 +4446,7 @@ TF/OutdoorWeather/U/<id>/E/humidity
    
 ```
 ```
-TF/OutdoorWeather/U/<id>/E/rain
+TF/OutdoorWeather/U/<id>/E/rain/<id>
    required: # this tag is not part of the data structure
      id: Number <from: 0 to: 255>
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
@@ -4454,7 +4454,7 @@ TF/OutdoorWeather/U/<id>/E/rain
    
 ```
 ```
-TF/OutdoorWeather/U/<id>/E/temperature
+TF/OutdoorWeather/U/<id>/E/temperature/<id>
    required: # this tag is not part of the data structure
      id: Number <from: 0 to: 255>
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
@@ -4462,7 +4462,7 @@ TF/OutdoorWeather/U/<id>/E/temperature
    
 ```
 ```
-TF/OutdoorWeather/U/<id>/E/windDirection
+TF/OutdoorWeather/U/<id>/E/windDirection/<id>
    required: # this tag is not part of the data structure
      id: Number <from: 0 to: 255>
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
@@ -4472,7 +4472,7 @@ TF/OutdoorWeather/U/<id>/E/windDirection
    
 ```
 ```
-TF/OutdoorWeather/U/<id>/E/windSpeed
+TF/OutdoorWeather/U/<id>/E/windSpeed/<id>
    required: # this tag is not part of the data structure
      id: Number <from: 0 to: 255>
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
@@ -6597,4 +6597,3 @@ TF/VoltageCurrent/U/<id>/S/voltage/threshold
          option: String <[x, o, i, <, >]>
    
 ```
-

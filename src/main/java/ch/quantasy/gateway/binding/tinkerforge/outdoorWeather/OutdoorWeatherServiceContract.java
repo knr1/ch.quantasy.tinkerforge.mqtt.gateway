@@ -84,13 +84,13 @@ public class OutdoorWeatherServiceContract extends DeviceServiceContract {
 
     @Override
     public void setServiceMessageTopics(Map<String, Class<? extends Message>> messageTopicMap) {
-        messageTopicMap.put(EVENT_TEMPERATURE, TemperatureEvent.class);
-        messageTopicMap.put(EVENT_HUMIDITY, HumidityEvent.class);
-        messageTopicMap.put(EVENT_GUST_SPEED, WindSpeedEvent.class);
-        messageTopicMap.put(EVENT_WIND_SPEED, WindSpeedEvent.class);
-        messageTopicMap.put(EVENT_RAIN, RainEvent.class);
-        messageTopicMap.put(EVENT_WIND_DIRECTION, WindDirectionEvent.class);
-        messageTopicMap.put(EVENT_BATTERY_LOW, BatteryLowEvent.class);
+        messageTopicMap.put(EVENT_TEMPERATURE+"/<id>", TemperatureEvent.class);
+        messageTopicMap.put(EVENT_HUMIDITY+"/<id>", HumidityEvent.class);
+        messageTopicMap.put(EVENT_GUST_SPEED+"/<id>", WindSpeedEvent.class);
+        messageTopicMap.put(EVENT_WIND_SPEED+"/<id>", WindSpeedEvent.class);
+        messageTopicMap.put(EVENT_RAIN+"/<id>", RainEvent.class);
+        messageTopicMap.put(EVENT_WIND_DIRECTION+"/<id>", WindDirectionEvent.class);
+        messageTopicMap.put(EVENT_BATTERY_LOW+"/<id>", BatteryLowEvent.class);
         
         
  

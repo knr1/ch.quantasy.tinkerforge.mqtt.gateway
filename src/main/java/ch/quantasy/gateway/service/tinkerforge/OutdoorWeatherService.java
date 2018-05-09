@@ -73,19 +73,19 @@ public class OutdoorWeatherService extends AbstractDeviceService<OutdoorWeatherD
 
     @Override
     public void sensorData(int identifier, int temperature, int humidity) {
-        readyToPublish(getContract().EVENT_TEMPERATURE, new TemperatureEvent(identifier, temperature));
-        readyToPublish(getContract().EVENT_HUMIDITY, new HumidityEvent(identifier, humidity));
+        readyToPublish(getContract().EVENT_TEMPERATURE+"/"+identifier, new TemperatureEvent(identifier, temperature));
+        readyToPublish(getContract().EVENT_HUMIDITY+"/"+identifier, new HumidityEvent(identifier, humidity));
     }
 
     @Override
     public void stationData(int identifier, int temperature, int humidity, long windSpeed, long gustSpeed, long rain, int windDirection, boolean batteryLow) {
-        readyToPublish(getContract().EVENT_TEMPERATURE, new TemperatureEvent(identifier, temperature));
-        readyToPublish(getContract().EVENT_HUMIDITY, new HumidityEvent(identifier, humidity));
-        readyToPublish(getContract().EVENT_WIND_SPEED, new WindSpeedEvent(identifier,windSpeed));
-        readyToPublish(getContract().EVENT_GUST_SPEED, new WindSpeedEvent(identifier, gustSpeed));
-        readyToPublish(getContract().EVENT_RAIN, new RainEvent(identifier, rain));
-        readyToPublish(getContract().EVENT_WIND_DIRECTION, new WindDirectionEvent(identifier, windDirection));
-        readyToPublish(getContract().EVENT_BATTERY_LOW, new BatteryLowEvent(identifier, batteryLow));
+        readyToPublish(getContract().EVENT_TEMPERATURE+"/"+identifier, new TemperatureEvent(identifier, temperature));
+        readyToPublish(getContract().EVENT_HUMIDITY+"/"+identifier, new HumidityEvent(identifier, humidity));
+        readyToPublish(getContract().EVENT_WIND_SPEED+"/"+identifier, new WindSpeedEvent(identifier,windSpeed));
+        readyToPublish(getContract().EVENT_GUST_SPEED+"/"+identifier, new WindSpeedEvent(identifier, gustSpeed));
+        readyToPublish(getContract().EVENT_RAIN+"/"+identifier, new RainEvent(identifier, rain));
+        readyToPublish(getContract().EVENT_WIND_DIRECTION+"/"+identifier, new WindDirectionEvent(identifier, windDirection));
+        readyToPublish(getContract().EVENT_BATTERY_LOW+"/"+identifier, new BatteryLowEvent(identifier, batteryLow));
         
 
     }
