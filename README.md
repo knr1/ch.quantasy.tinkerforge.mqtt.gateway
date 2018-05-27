@@ -454,6 +454,7 @@ All required tags have to be provided in order to create a correct message, opti
 
 As a special case, required tags with a default value do not have to be provided within an intent. They will be filled in implicitly by the service if not provided.
 
+
 ### Manager
 ```
 TF/Manager/U/<id>/E/stack/address/added
@@ -3402,10 +3403,14 @@ TF/LEDStrip/U/<id>/I
      LEDFrame:
        required: # this tag is not part of the data structure
          channels: Arrays: <[min: 1 max: 4,min: 1 max: 320]>
+       optional: # this tag is not part of the data structure
+         durationInMillis: Number <from: 0 to: 2147483647>
      LEDFrames: Array <min: 1 max: 2147483647>
        LEDFrame:
          required: # this tag is not part of the data structure
            channels: Arrays: <[min: 1 max: 4,min: 1 max: 320]>
+         optional: # this tag is not part of the data structure
+           durationInMillis: Number <from: 0 to: 2147483647>
    
 ```
 ```
