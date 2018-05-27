@@ -120,7 +120,6 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         }
     }
 
-
     @Override
     public void update(LedStripIntent intent) {
         if (intent == null) {
@@ -129,11 +128,11 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         if (!intent.isValid()) {
             return;
         }
-        
+
         if (intent.config != null) {
             try {
                 LEDStripDeviceConfig config = intent.config;
-                setNumberOfLEDs(config.getNumberOfLEDs(), config.getChipType().getNumberOfChannels(), config.getNumberOfLEDsPerWrite());
+                setNumberOfLEDs(config.getNumberOfLEDs(), config.getChipType().getNumberOfChannels());
                 setChipType(config.getChipType().getType());
                 setClockFrequencyOfICsInHz(config.getClockFrequencyOfICsInHz());
                 setFrameDurationInMilliseconds(config.getFrameDurationInMilliseconds());
@@ -157,9 +156,8 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     }
 
-    private synchronized void setNumberOfLEDs(final int numberOfLEDs, final int numberOfChannels, final int numberOfLEDsPerWrite) {
-        //this.numberOfWrites = (int) Math.ceil((double) numberOfLEDs / numberOfLEDsPerWrite);
-        currentLEDFrame = new LEDFrame(numberOfChannels, numberOfLEDs);
+    private void setNumberOfLEDs(final int numberOfLEDs, final int numberOfChannels) {
+        currentLEDFrame = new LEDFrame(numberOfChannels, numberOfLEDs, null);
     }
 
     private void setFrameDurationInMilliseconds(
@@ -203,24 +201,43 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
      *
      * @param leds
      */
-    public synchronized void setRGBLEDs(final LEDFrame leds) {
-        LEDStripDeviceConfig localConfig = getIntent().config;
-        if (leds == null) {
-            return;
-        }
-        if (localConfig == null) {
-            return;
-        }
-        if (localConfig.getNumberOfLEDs() != leds.getNumberOfLEDs()) {
-            return;
-        }
-        if (localConfig.getChipType().getNumberOfChannels() != leds.getNumberOfChannels()) {
-            return;
-        }
+    public synchronized void setRGBLEDs(BlockingDeque<LEDFrame> queue) {
+        try {
+            final LEDFrame leds = queue.take();
+            LEDStripDeviceConfig localConfig = getIntent().config;
+            if (leds == null) {
+                frameRendered(0);
+                return;
+            }
+            if (localConfig == null) {
+                frameRendered(0);
+                return;
+            }
+            if (localConfig.getNumberOfLEDs() != leds.getNumberOfLEDs()) {
+                frameRendered(0);
 
-        this.chunkList = leds.getDeltaChunks(currentLEDFrame, localConfig.getNumberOfLEDsPerWrite());
-        currentLEDFrame = leds;
-        sendRGBLEDFrame();
+                return;
+            }
+            if (localConfig.getChipType().getNumberOfChannels() != leds.getNumberOfChannels()) {
+                frameRendered(0);
+                return;
+            }
+
+            this.chunkList = leds.getDeltaChunks(currentLEDFrame, localConfig.getNumberOfLEDsPerWrite());
+            currentLEDFrame = leds;
+
+            if (currentLEDFrame.getDurationInMillis() != null) {
+
+                setFrameDurationInMilliseconds(leds.getDurationInMillis());
+
+            } else {
+                setFrameDurationInMilliseconds(localConfig.getFrameDurationInMilliseconds());
+            }
+
+            sendRGBLEDFrame();
+        } catch (Exception ex) {
+            Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -290,6 +307,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
             readyToSend = true;
             super.getCallback().frameRendered(publisher.getQueueSize());
         }
+
         synchronized (this) {
             this.notifyAll();
         }
@@ -308,21 +326,30 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         }
 
         public void add(LEDFrame frame) {
-            synchronized (this) {
-                if (publishingQueue != null) {
-                    publishingQueue.clear();
-                    publishingQueue.offer(frame);
+            //synchronized (publishingQueue) {
+            if (publishingQueue != null) {
+                publishingQueue.clear();
+                try {
+                    synchronized (deviceLock) {
+                        getDevice().setFrameDuration(1);
+                    }
+                } catch (TimeoutException ex) {
+                    Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NotConnectedException ex) {
+                    Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                publishingQueue.offer(frame);
             }
+            //}
 
         }
 
         public void add(LEDFrame[] frames) {
 
-            synchronized (this) {
-                for (LEDFrame frame : frames) {
-                    publishingQueue.offer(frame);
-                }
+            // synchronized (publishingQueue) {
+            for (LEDFrame frame : frames) {
+                publishingQueue.offer(frame);
+                //   }
             }
         }
 
@@ -330,10 +357,12 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         public void run() {
             while (true) {
                 try {
-                    LEDFrame frame = publishingQueue.take();
-                    if (frame != null) {
-                        setRGBLEDs(frame);
-                    }
+
+                    //LEDFrame frame = publishingQueue.take();
+                    //if (frame != null) {
+                    setRGBLEDs(publishingQueue);
+                    //}
+
                 } catch (Exception ex) {
                     Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
                 }

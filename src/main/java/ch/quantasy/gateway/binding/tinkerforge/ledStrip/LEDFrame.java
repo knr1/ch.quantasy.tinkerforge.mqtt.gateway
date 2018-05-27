@@ -46,6 +46,8 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
 import ch.quantasy.mqtt.gateway.client.message.annotations.ArraySize;
 import ch.quantasy.mqtt.gateway.client.message.annotations.MultiArraySize;
 import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -64,18 +66,24 @@ public class LEDFrame extends AValidator {
     //@Range(from = 0, to = 255)
     private short[][] channels;
 
+    @Nullable
+    @Range(from = 0, to = Integer.MAX_VALUE)
+    private Integer durationInMillis;
+
     private LEDFrame() {
     }
 
-    public LEDFrame(int amountOfChannels, int amountOfLEDs) {
-        channels = new short[amountOfChannels][amountOfLEDs];
+    public LEDFrame(int amountOfChannels, int amountOfLEDs,Integer durationInMillis) {
+        this.channels = new short[amountOfChannels][amountOfLEDs];
+        this.durationInMillis=durationInMillis;
     }
 
     public LEDFrame(LEDFrame frame) {
-        this(frame.channels);
+        this(frame.channels,frame.durationInMillis);
     }
 
-    public LEDFrame(short[][] channels) {
+    public LEDFrame(short[][] channels,Integer durationInMillis) {
+        this.durationInMillis=durationInMillis;
         this.channels = new short[channels.length][];
         this.channels[0] = channels[0].clone();
 
@@ -139,6 +147,15 @@ public class LEDFrame extends AValidator {
         return chunk;
     }
 
+    public Integer getDurationInMillis() {
+        return durationInMillis;
+    }
+
+    public void setDurationInMillis(Integer durationInMillis) {
+        this.durationInMillis = durationInMillis;
+    }
+    
+
     /**
      * Returns a new LEDFrame with all input-Frames combined (Max-Value)...
      *
@@ -146,6 +163,7 @@ public class LEDFrame extends AValidator {
      * @return
      */
     public LEDFrame combine(LEDFrame... ledFrames) {
+        Integer durationInMillis = this.durationInMillis;
         short[][] leds = new short[channels.length][];
 
         for (LEDFrame ledFrame : ledFrames) {
@@ -154,6 +172,9 @@ public class LEDFrame extends AValidator {
             }
             if (ledFrame.getNumberOfLEDs() != this.getNumberOfLEDs()) {
                 continue;
+            }
+            if (ledFrame.durationInMillis != null && ledFrame.durationInMillis < durationInMillis) {
+                durationInMillis = ledFrame.durationInMillis;
             }
             for (int c = 0; c < getNumberOfChannels(); c++) {
                 leds[c] = channels[c].clone();
@@ -165,7 +186,8 @@ public class LEDFrame extends AValidator {
         if (leds[0] == null) {
             return this;
         } else {
-            return new LEDFrame(leds);
+            LEDFrame frame=new LEDFrame(leds,durationInMillis);
+            return frame;
         }
     }
 
