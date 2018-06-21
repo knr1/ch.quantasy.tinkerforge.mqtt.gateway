@@ -454,7 +454,6 @@ All required tags have to be provided in order to create a correct message, opti
 
 As a special case, required tags with a default value do not have to be provided within an intent. They will be filled in implicitly by the service if not provided.
 
-
 ### Manager
 ```
 TF/Manager/U/<id>/E/stack/address/added
@@ -4515,6 +4514,102 @@ TF/OutdoorWeather/U/<id>/S/hardware
 ```
 ```
 TF/OutdoorWeather/U/<id>/S/position
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+
+### ParticulateMatter
+```
+TF/ParticulateMatter/U/<id>/E/concentration
+   required: # this tag is not part of the data structure
+     pm10: Number <from: 0 to: 2147483647>
+     pm100: Number <from: 0 to: 2147483647>
+     pm25: Number <from: 0 to: 2147483647>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+   
+```
+```
+TF/ParticulateMatter/U/<id>/E/count
+   required: # this tag is not part of the data structure
+     greater03um: Number <from: 0 to: 2147483647>
+     greater05um: Number <from: 0 to: 2147483647>
+     greater100um: Number <from: 0 to: 2147483647>
+     greater10um: Number <from: 0 to: 2147483647>
+     greater25um: Number <from: 0 to: 2147483647>
+     greater50um: Number <from: 0 to: 2147483647>
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+   
+```
+```
+TF/ParticulateMatter/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+   optional: # this tag is not part of the data structure
+     concentrationCallbackConfiguration:
+       required: # this tag is not part of the data structure
+         period: Number <from: 0 to: 9223372036854775807>
+         valueHasToChange: Boolean <true,false>
+     countCallbackConfiguration:
+       required: # this tag is not part of the data structure
+         period: Number <from: 0 to: 9223372036854775807>
+         valueHasToChange: Boolean <true,false>
+     enable: Boolean <true,false>
+   
+```
+```
+TF/ParticulateMatter/U/<id>/S/concentration
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value:
+       required: # this tag is not part of the data structure
+         period: Number <from: 0 to: 9223372036854775807>
+         valueHasToChange: Boolean <true,false>
+   
+```
+```
+TF/ParticulateMatter/U/<id>/S/connection
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: String <[online, offline]>
+   
+```
+```
+TF/ParticulateMatter/U/<id>/S/count
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value:
+       required: # this tag is not part of the data structure
+         period: Number <from: 0 to: 9223372036854775807>
+         valueHasToChange: Boolean <true,false>
+   
+```
+```
+TF/ParticulateMatter/U/<id>/S/enabled
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Boolean <true,false>
+   
+```
+```
+TF/ParticulateMatter/U/<id>/S/firmware
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Array <min: 0 max: 2147483647>
+     value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/ParticulateMatter/U/<id>/S/hardware
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Array <min: 0 max: 2147483647>
+     value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/ParticulateMatter/U/<id>/S/position
    required: # this tag is not part of the data structure
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
      value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>

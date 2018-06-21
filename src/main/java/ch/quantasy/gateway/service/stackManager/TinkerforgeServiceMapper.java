@@ -78,6 +78,7 @@ import ch.quantasy.gateway.service.tinkerforge.MotorizedLinearPotiService;
 import ch.quantasy.gateway.service.tinkerforge.MultiTouchService;
 import ch.quantasy.gateway.service.tinkerforge.NFCService;
 import ch.quantasy.gateway.service.tinkerforge.OutdoorWeatherService;
+import ch.quantasy.gateway.service.tinkerforge.ParticulateMatterService;
 import ch.quantasy.gateway.service.tinkerforge.PiezoSpeakerService;
 import ch.quantasy.gateway.service.tinkerforge.RealTimeClockService;
 import ch.quantasy.gateway.service.tinkerforge.RemoteSwitchService;
@@ -132,6 +133,7 @@ import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDev
 import ch.quantasy.tinkerforge.device.multiTouch.MultiTouchDevice;
 import ch.quantasy.tinkerforge.device.nfc.NFCRFIDDevice;
 import ch.quantasy.tinkerforge.device.outdoorWeather.OutdoorWeatherDevice;
+import ch.quantasy.tinkerforge.device.particulateMatter.ParticulateMatterDevice;
 import ch.quantasy.tinkerforge.device.piezoSpeaker.PiezoSpeakerDevice;
 import ch.quantasy.tinkerforge.device.realTimeClock.RealTimeClockDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitch.RemoteSwitchDevice;
@@ -317,6 +319,9 @@ public class TinkerforgeServiceMapper {
         }
         if(tinkerforgeDevice instanceof OutdoorWeatherDevice){
             return new OutdoorWeatherService((OutdoorWeatherDevice)tinkerforgeDevice, mqttURI);
+        }
+        if(tinkerforgeDevice instanceof ParticulateMatterDevice){
+            return new ParticulateMatterService((ParticulateMatterDevice)tinkerforgeDevice, mqttURI);
         }
         return null;
 

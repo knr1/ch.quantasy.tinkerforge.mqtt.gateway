@@ -91,6 +91,7 @@ import com.tinkerforge.BrickletMultiTouch;
 import com.tinkerforge.BrickletNFCRFID;
 import com.tinkerforge.BrickletOutdoorWeather;
 import com.tinkerforge.BrickletPTC;
+import com.tinkerforge.BrickletParticulateMatter;
 import com.tinkerforge.BrickletPiezoBuzzer;
 import com.tinkerforge.BrickletPiezoSpeaker;
 import com.tinkerforge.BrickletRGBLEDButton;
@@ -139,7 +140,7 @@ public enum TinkerforgeDeviceClass {
             BrickletLCD16x2.class), LCD20x4(BrickletLCD20x4.class), LEDStrip(BrickletLEDStrip.class), Line(
             BrickletLine.class), LinearPoti(BrickletLinearPoti.class), LoadCell(BrickletLoadCell.class), Moisture(BrickletMoisture.class), MotionDetector(
             BrickletMotionDetector.class), MotionDetectorV2(BrickletMotionDetectorV2.class),MultiTouch(BrickletMultiTouch.class), NfcRfid(BrickletNFCRFID.class), PiezoBuzzer(BrickletPiezoBuzzer.class), PiezoSpeaker(
-            BrickletPiezoSpeaker.class), MotorizedLinearPoti(BrickletMotorizedLinearPoti.class),OutdoorWeather(BrickletOutdoorWeather.class), PTC(BrickletPTC.class), RealTimeClock(BrickletRealTimeClock.class), RemoteSwitch(BrickletRemoteSwitch.class),RemoteSwitchV2(BrickletRemoteSwitchV2.class), RGBLEDButton(BrickletRGBLEDButton.class), RotaryEncoder(
+            BrickletPiezoSpeaker.class), MotorizedLinearPoti(BrickletMotorizedLinearPoti.class),OutdoorWeather(BrickletOutdoorWeather.class), ParticulateMatter(BrickletParticulateMatter.class), PTC(BrickletPTC.class), RealTimeClock(BrickletRealTimeClock.class), RemoteSwitch(BrickletRemoteSwitch.class),RemoteSwitchV2(BrickletRemoteSwitchV2.class), RGBLEDButton(BrickletRGBLEDButton.class), RotaryEncoder(
             BrickletRotaryEncoder.class), RotaryPoti(BrickletRotaryPoti.class), RS232(BrickletRS232.class), SegmentDisplay4x7(
             BrickletSegmentDisplay4x7.class), SolidState(BrickletSolidStateRelay.class), SoundIntensity(BrickletSoundIntensity.class), Temperature(
             BrickletTemperature.class), TemperatureIR(BrickletTemperatureIR.class), ThermalImaging(BrickletThermalImaging.class),ThermoCouple(BrickletThermocouple.class), Tilt(BrickletTilt.class), UVLight(BrickletUVLight.class), Voltage(

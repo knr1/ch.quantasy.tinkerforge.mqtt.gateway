@@ -77,6 +77,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     private List<LEDFrame.Chunk> chunkList;
     private LEDFrame currentLEDFrame;
+    private int frameDurationInMilliseconds;
     private Thread publisherThread;
     private final Publisher publisher;
     private boolean readyToSend;
@@ -87,7 +88,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         super(stack, device, new LedStripIntent());
         this.publisher = new Publisher();
         getIntent().config = new LEDStripDeviceConfig(LEDStripDevice.DEFAULT_CHIP_TYPE, LEDStripDevice.DEFAULT_CLOCK_FREQUENCY_OF_ICS_IN_HZ, LEDStripDevice.DEFAULT_FRAME_DURATION_IN_MILLISECONDS, LEDStripDevice.DEFAULT_NUMBER_OF_LEDS, LEDStripDevice.DEFAULT_CHANNEL_MAPPING);
-
+        frameDurationInMilliseconds=DEFAULT_FRAME_DURATION_IN_MILLISECONDS;
     }
 
     @Override
@@ -162,11 +163,13 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
 
     private void setFrameDurationInMilliseconds(
             final int frameDurationInMilliseconds) throws TimeoutException, NotConnectedException {
-        synchronized (deviceLock) {
-            if (getDevice() != null) {
-                getDevice()
-                        .setFrameDuration(frameDurationInMilliseconds);
-
+        if (getDevice() != null) {
+            if (this.frameDurationInMilliseconds != frameDurationInMilliseconds) {
+                this.frameDurationInMilliseconds = frameDurationInMilliseconds;
+                synchronized (deviceLock) {
+                    getDevice()
+                            .setFrameDuration(frameDurationInMilliseconds);
+                }
             }
         }
     }
@@ -201,7 +204,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
      *
      * @param leds
      */
-    public synchronized void setRGBLEDs(BlockingDeque<LEDFrame> queue) {
+    private synchronized void setRGBLEDs(BlockingDeque<LEDFrame> queue) {
         try {
             final LEDFrame leds = queue.take();
             LEDStripDeviceConfig localConfig = getIntent().config;
@@ -331,6 +334,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
                 publishingQueue.clear();
                 try {
                     synchronized (deviceLock) {
+                        //get rid of the displayed frame, hence speedup frameDuration
                         getDevice().setFrameDuration(1);
                     }
                 } catch (TimeoutException ex) {

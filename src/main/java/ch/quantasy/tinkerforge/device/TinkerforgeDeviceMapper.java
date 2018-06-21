@@ -97,6 +97,7 @@ import ch.quantasy.tinkerforge.device.RGBLEDButton.RGBLEDButtonDevice;
 import ch.quantasy.tinkerforge.device.motionDetectorV2.MotionDetectorV2Device;
 import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDevice;
 import ch.quantasy.tinkerforge.device.outdoorWeather.OutdoorWeatherDevice;
+import ch.quantasy.tinkerforge.device.particulateMatter.ParticulateMatterDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitchV2.RemoteSwitchV2Device;
 import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagingDevice;
 import com.tinkerforge.BrickDC;
@@ -137,6 +138,7 @@ import com.tinkerforge.BrickletMultiTouch;
 import com.tinkerforge.BrickletNFCRFID;
 import com.tinkerforge.BrickletOutdoorWeather;
 import com.tinkerforge.BrickletPTC;
+import com.tinkerforge.BrickletParticulateMatter;
 import com.tinkerforge.BrickletPiezoSpeaker;
 import com.tinkerforge.BrickletRGBLEDButton;
 import com.tinkerforge.BrickletRealTimeClock;
@@ -330,6 +332,9 @@ public class TinkerforgeDeviceMapper {
         }
         if(TinkerforgeDeviceClass.OutdoorWeather==TinkerforgeDeviceClass.getDevice(device)){
             return new OutdoorWeatherDevice(stack,(BrickletOutdoorWeather)device);
+        }
+        if(TinkerforgeDeviceClass.ParticulateMatter==TinkerforgeDeviceClass.getDevice(device)){
+            return new ParticulateMatterDevice(stack, (BrickletParticulateMatter)device);
         }
         return new TinkerforgeDevice(stack, device);
     }
