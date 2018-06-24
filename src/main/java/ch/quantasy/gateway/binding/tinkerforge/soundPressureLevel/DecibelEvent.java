@@ -49,7 +49,7 @@ import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
  * @author reto
  */
 public class DecibelEvent extends AnEvent{
-    @Range(from = -120,to = 30)
+    @Range(from = 0,to = 65535)
     public int value;
 
     public DecibelEvent() {

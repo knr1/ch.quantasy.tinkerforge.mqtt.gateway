@@ -54,9 +54,9 @@ public class DecibelCallbackConfiguration extends AValidator {
 
     @Choice(values = {"x", "o", "i", "<", ">"})
     public char option;
-    @Range(from = -120, to = 30)
+    @Range(from = 0, to = 65535)
     public int min;
-    @Range(from = -120, to = 30)
+    @Range(from = 0, to = 65535)
     public int max;
     @Range(from = 0, to = Long.MAX_VALUE)
     public long period;

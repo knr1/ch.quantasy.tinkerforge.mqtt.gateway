@@ -5790,7 +5790,7 @@ TF/SoundIntensity/U/<id>/S/soundIntensity/threshold
 TF/SoundPressureLevel/U/<id>/E/decibel
    required: # this tag is not part of the data structure
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
-     value: Number <from: -120 to: 30>
+     value: Number <from: 0 to: 65535>
    
 ```
 ```
@@ -5804,8 +5804,8 @@ TF/SoundPressureLevel/U/<id>/I
          weighting: String <A,B,C,D,Z,ITU_R_468>
      decibelCallbackConfiguration:
        required: # this tag is not part of the data structure
-         max: Number <from: -120 to: 30>
-         min: Number <from: -120 to: 30>
+         max: Number <from: 0 to: 65535>
+         min: Number <from: 0 to: 65535>
          option: String <[x, o, i, <, >]>
          period: Number <from: 0 to: 9223372036854775807>
          valueHasToChange: Boolean <true,false>
@@ -5835,8 +5835,8 @@ TF/SoundPressureLevel/U/<id>/S/decibel
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
      value:
        required: # this tag is not part of the data structure
-         max: Number <from: -120 to: 30>
-         min: Number <from: -120 to: 30>
+         max: Number <from: 0 to: 65535>
+         min: Number <from: 0 to: 65535>
          option: String <[x, o, i, <, >]>
          period: Number <from: 0 to: 9223372036854775807>
          valueHasToChange: Boolean <true,false>

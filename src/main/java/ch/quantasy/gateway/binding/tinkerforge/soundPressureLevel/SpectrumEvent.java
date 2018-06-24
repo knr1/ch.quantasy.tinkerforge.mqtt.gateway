@@ -57,9 +57,13 @@ public class SpectrumEvent extends AnEvent {
         ,@ArraySize(min = 20, max = 20)
         ,@ArraySize(min = 40, max = 40)
         ,@ArraySize(min = 80, max = 80)})
-    int[] spectrum;
+    public int[] value;
 
-    public SpectrumEvent(int[] spectrum) {
-        this.spectrum = spectrum;
+    public SpectrumEvent() {
+    }
+
+    
+    public SpectrumEvent(int[] value) {
+        this.value = value;
     }
 }
