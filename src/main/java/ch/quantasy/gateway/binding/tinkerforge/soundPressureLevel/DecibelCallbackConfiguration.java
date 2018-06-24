@@ -39,21 +39,47 @@
  *
  *
  */
-package ch.quantasy.gateway.binding.tinkerforge.particulateMatter;
+package ch.quantasy.gateway.binding.tinkerforge.soundPressureLevel;
 
-import ch.quantasy.mqtt.gateway.client.message.AnIntent;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Choice;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
+import com.tinkerforge.BrickletSoundPressureLevel;
 
 /**
  *
  * @author reto
  */
-public class ParticulateMatterIntent extends AnIntent {
+public class DecibelCallbackConfiguration extends AValidator {
 
-    @Nullable
-    public Boolean enabled;
-    @Nullable
-    public ConcentrationCallbackConfiguration concentrationCallbackConfiguration;
-    @Nullable
-    public CountCallbackConfiguration countCallbackConfiguration;
+    @Choice(values = {"x", "o", "i", "<", ">"})
+    public char option;
+    @Range(from = -120, to = 30)
+    public int min;
+    @Range(from = -120, to = 30)
+    public int max;
+    @Range(from = 0, to = Long.MAX_VALUE)
+    public long period;
+    public boolean valueHasToChange;
+
+    private DecibelCallbackConfiguration() {
+    }
+
+    public DecibelCallbackConfiguration(BrickletSoundPressureLevel.DecibelCallbackConfiguration decibelCallbackConfiguration) {
+        this.max = decibelCallbackConfiguration.max;
+        this.min = decibelCallbackConfiguration.min;
+        this.option = decibelCallbackConfiguration.option;
+        this.period = decibelCallbackConfiguration.period;
+        this.valueHasToChange = decibelCallbackConfiguration.valueHasToChange;
+
+    }
+
+    public DecibelCallbackConfiguration(char option, int min, int max, long period, boolean valueHasToChange) {
+        this.option = option;
+        this.min = min;
+        this.max = max;
+        this.period = period;
+        this.valueHasToChange = valueHasToChange;
+    }
+    
 }

@@ -39,21 +39,48 @@
  *
  *
  */
-package ch.quantasy.gateway.binding.tinkerforge.particulateMatter;
+package ch.quantasy.gateway.binding.tinkerforge.soundPressureLevel;
 
-import ch.quantasy.mqtt.gateway.client.message.AnIntent;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.Validator;
+import com.tinkerforge.BrickletSoundPressureLevel;
 
 /**
  *
  * @author reto
  */
-public class ParticulateMatterIntent extends AnIntent {
+public enum FFT implements Validator {
+    Size128(BrickletSoundPressureLevel.FFT_SIZE_128),
+    Size256(BrickletSoundPressureLevel.FFT_SIZE_256),
+    Size512(BrickletSoundPressureLevel.FFT_SIZE_512),
+    Size1024(BrickletSoundPressureLevel.FFT_SIZE_1024);
 
-    @Nullable
-    public Boolean enabled;
-    @Nullable
-    public ConcentrationCallbackConfiguration concentrationCallbackConfiguration;
-    @Nullable
-    public CountCallbackConfiguration countCallbackConfiguration;
+    private int value;
+
+    private FFT(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public static FFT getValueFor(int s) throws IllegalArgumentException {
+        for (FFT range : values()) {
+            if (range.value == s) {
+                return range;
+            }
+        }
+        throw new IllegalArgumentException("Not supported: " + s);
+    }
+
+    @Override
+    public boolean isValid() {
+        try {
+            getValueFor(value);
+            return true;
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
+    }
 }
+

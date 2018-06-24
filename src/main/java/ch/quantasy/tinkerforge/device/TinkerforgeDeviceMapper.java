@@ -99,6 +99,7 @@ import ch.quantasy.tinkerforge.device.motorizedLinearPoti.MotorizedLinearPotiDev
 import ch.quantasy.tinkerforge.device.outdoorWeather.OutdoorWeatherDevice;
 import ch.quantasy.tinkerforge.device.particulateMatter.ParticulateMatterDevice;
 import ch.quantasy.tinkerforge.device.remoteSwitchV2.RemoteSwitchV2Device;
+import ch.quantasy.tinkerforge.device.soundPressureLevel.SoundPressureLevelDevice;
 import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagingDevice;
 import com.tinkerforge.BrickDC;
 import com.tinkerforge.BrickIMU;
@@ -149,6 +150,7 @@ import com.tinkerforge.BrickletRotaryPoti;
 import com.tinkerforge.BrickletSegmentDisplay4x7;
 import com.tinkerforge.BrickletSolidStateRelay;
 import com.tinkerforge.BrickletSoundIntensity;
+import com.tinkerforge.BrickletSoundPressureLevel;
 import com.tinkerforge.BrickletTemperature;
 import com.tinkerforge.BrickletTemperatureIR;
 import com.tinkerforge.BrickletThermalImaging;
@@ -335,6 +337,9 @@ public class TinkerforgeDeviceMapper {
         }
         if(TinkerforgeDeviceClass.ParticulateMatter==TinkerforgeDeviceClass.getDevice(device)){
             return new ParticulateMatterDevice(stack, (BrickletParticulateMatter)device);
+        }
+        if(TinkerforgeDeviceClass.SoundPressureLevel==TinkerforgeDeviceClass.getDevice(device)){
+            return new SoundPressureLevelDevice(stack, (BrickletSoundPressureLevel)device);
         }
         return new TinkerforgeDevice(stack, device);
     }

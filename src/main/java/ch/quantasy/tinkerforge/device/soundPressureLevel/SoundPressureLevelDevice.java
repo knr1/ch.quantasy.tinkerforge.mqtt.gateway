@@ -40,14 +40,14 @@
  *  *
  *  *
  */
-package ch.quantasy.tinkerforge.device.particulateMatter;
+package ch.quantasy.tinkerforge.device.soundPressureLevel;
 
-import ch.quantasy.gateway.binding.tinkerforge.particulateMatter.ConcentrationCallbackConfiguration;
-import ch.quantasy.gateway.binding.tinkerforge.particulateMatter.CountCallbackConfiguration;
-import ch.quantasy.gateway.binding.tinkerforge.particulateMatter.ParticulateMatterIntent;
+import ch.quantasy.gateway.binding.tinkerforge.soundPressureLevel.Configuration;
+import ch.quantasy.gateway.binding.tinkerforge.soundPressureLevel.DecibelCallbackConfiguration;
+import ch.quantasy.gateway.binding.tinkerforge.soundPressureLevel.SoundPressureLevelIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import com.tinkerforge.BrickletParticulateMatter;
+import com.tinkerforge.BrickletSoundPressureLevel;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 import java.util.logging.Level;
@@ -57,57 +57,57 @@ import java.util.logging.Logger;
  *
  * @author Reto E. Koenig <reto.koenig@bfh.ch>
  */
-public class ParticulateMatterDevice extends GenericDevice<BrickletParticulateMatter, ParticulateMatterDeviceCallback, ParticulateMatterIntent> {
+public class SoundPressureLevelDevice extends GenericDevice<BrickletSoundPressureLevel, SoundPressureLevelDeviceCallback, SoundPressureLevelIntent> {
 
-    public ParticulateMatterDevice(TinkerforgeStack stack, BrickletParticulateMatter device) throws NotConnectedException, TimeoutException {
-        super(stack, device, new ParticulateMatterIntent());
+    public SoundPressureLevelDevice(TinkerforgeStack stack, BrickletSoundPressureLevel device) throws NotConnectedException, TimeoutException {
+        super(stack, device, new SoundPressureLevelIntent());
     }
 
     @Override
-    protected void addDeviceListeners(BrickletParticulateMatter device) {
-        device.addPMConcentrationListener(super.getCallback());
-        device.addPMCountListener(super.getCallback());
+    protected void addDeviceListeners(BrickletSoundPressureLevel device) {
+        device.addDecibelListener(super.getCallback());
+        device.addSpectrumListener(super.getCallback());
     }
 
     @Override
-    protected void removeDeviceListeners(BrickletParticulateMatter device) {
-        device.removePMConcentrationListener(super.getCallback());
-        device.removePMCountListener(super.getCallback());
+    protected void removeDeviceListeners(BrickletSoundPressureLevel device) {
+        device.removeDecibelListener(super.getCallback());
+        device.removeSpectrumListener(super.getCallback());
     }
 
     @Override
-    public void update(ParticulateMatterIntent intent) {
+    public void update(SoundPressureLevelIntent intent) {
         if (intent == null) {
             return;
         }
         if (!intent.isValid()) {
             return;
         }
-        if (intent.enabled != null) {
+        if (intent.configuration != null) {
             try {
-                getDevice().setEnable(intent.enabled);
-                getIntent().enabled = getDevice().getEnable();
-                super.getCallback().enableChanged(getIntent().enabled);
+                getDevice().setConfiguration(intent.configuration.fftSize.getValue(),intent.configuration.weighting.getValue());
+                getIntent().configuration = new Configuration(getDevice().getConfiguration());
+                super.getCallback().configurationChanged(getIntent().configuration);
             } catch (TimeoutException | NotConnectedException ex) {
-                Logger.getLogger(ParticulateMatterDevice.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SoundPressureLevelDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (intent.concentrationCallbackConfiguration != null) {
+        if (intent.decibelCallbackConfiguration != null) {
             try {
-                getDevice().setPMConcentrationCallbackConfiguration(intent.concentrationCallbackConfiguration.period, intent.concentrationCallbackConfiguration.valueHasToChange);
-                intent.concentrationCallbackConfiguration = new ConcentrationCallbackConfiguration(getDevice().getPMConcentrationCallbackConfiguration());
-                super.getCallback().concentrationCallbackConfigurationChanged(intent.concentrationCallbackConfiguration);
+                getDevice().setDecibelCallbackConfiguration(intent.decibelCallbackConfiguration.period,intent.decibelCallbackConfiguration.valueHasToChange,intent.decibelCallbackConfiguration.option,intent.decibelCallbackConfiguration.min,intent.decibelCallbackConfiguration.max);
+                intent.decibelCallbackConfiguration = new DecibelCallbackConfiguration(getDevice().getDecibelCallbackConfiguration());
+                super.getCallback().decibelCallbackConfigurationChanged(intent.decibelCallbackConfiguration);
             } catch (TimeoutException | NotConnectedException ex) {
-                Logger.getLogger(ParticulateMatterDevice.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SoundPressureLevelDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (intent.countCallbackConfiguration != null) {
+        if (intent.spectrumCallbackConfiguration != null) {
             try {
-                getDevice().setPMCountCallbackConfiguration(intent.countCallbackConfiguration.period, intent.countCallbackConfiguration.valueHasToChange);
-                getIntent().countCallbackConfiguration = new CountCallbackConfiguration(getDevice().getPMCountCallbackConfiguration());
-                super.getCallback().CountCallbackConfigurationChanged(getIntent().countCallbackConfiguration);
+                getDevice().setSpectrumCallbackConfiguration(intent.spectrumCallbackConfiguration);
+                getIntent().spectrumCallbackConfiguration = getDevice().getSpectrumCallbackConfiguration();
+                super.getCallback().spectrumCallbackConfigurationChanged(getIntent().spectrumCallbackConfiguration);
             } catch (TimeoutException | NotConnectedException ex) {
-                Logger.getLogger(ParticulateMatterDevice.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SoundPressureLevelDevice.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

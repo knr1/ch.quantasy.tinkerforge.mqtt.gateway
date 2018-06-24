@@ -39,21 +39,34 @@
  *
  *
  */
-package ch.quantasy.gateway.binding.tinkerforge.particulateMatter;
+package ch.quantasy.gateway.binding.tinkerforge.soundPressureLevel;
 
-import ch.quantasy.mqtt.gateway.client.message.AnIntent;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import com.tinkerforge.BrickletSoundPressureLevel;
 
 /**
  *
  * @author reto
  */
-public class ParticulateMatterIntent extends AnIntent {
+public class Configuration extends AValidator{
+    
+    public FFT fftSize;
+    public Weighting weighting;
 
-    @Nullable
-    public Boolean enabled;
-    @Nullable
-    public ConcentrationCallbackConfiguration concentrationCallbackConfiguration;
-    @Nullable
-    public CountCallbackConfiguration countCallbackConfiguration;
+    public Configuration(BrickletSoundPressureLevel.Configuration configuration) {
+        this(configuration.fftSize, configuration.weighting);
+    }
+
+    private Configuration() {
+    }
+
+    public Configuration(FFT fftSize, Weighting weighting) {
+        this.fftSize = fftSize;
+        this.weighting = weighting;
+    }
+
+    public Configuration(int fftSize, int weighting) {
+        this(FFT.getValueFor(fftSize), Weighting.getValueFor(weighting));
+    }
+
 }

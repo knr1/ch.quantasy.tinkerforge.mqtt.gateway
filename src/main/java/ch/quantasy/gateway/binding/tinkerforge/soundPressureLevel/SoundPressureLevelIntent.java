@@ -39,21 +39,23 @@
  *
  *
  */
-package ch.quantasy.gateway.binding.tinkerforge.particulateMatter;
+package ch.quantasy.gateway.binding.tinkerforge.soundPressureLevel;
 
 import ch.quantasy.mqtt.gateway.client.message.AnIntent;
 import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Period;
 
 /**
  *
  * @author reto
  */
-public class ParticulateMatterIntent extends AnIntent {
-
+public class SoundPressureLevelIntent extends AnIntent{
     @Nullable
-    public Boolean enabled;
+    public Configuration configuration;
     @Nullable
-    public ConcentrationCallbackConfiguration concentrationCallbackConfiguration;
+    public DecibelCallbackConfiguration decibelCallbackConfiguration;
     @Nullable
-    public CountCallbackConfiguration countCallbackConfiguration;
+    @Period(from = 0)
+    public Long spectrumCallbackConfiguration;
+    
 }

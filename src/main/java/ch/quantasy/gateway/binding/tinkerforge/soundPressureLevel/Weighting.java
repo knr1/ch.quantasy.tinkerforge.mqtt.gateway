@@ -39,21 +39,49 @@
  *
  *
  */
-package ch.quantasy.gateway.binding.tinkerforge.particulateMatter;
+package ch.quantasy.gateway.binding.tinkerforge.soundPressureLevel;
 
-import ch.quantasy.mqtt.gateway.client.message.AnIntent;
-import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
+import ch.quantasy.mqtt.gateway.client.message.Validator;
+import com.tinkerforge.BrickletSoundPressureLevel;
 
 /**
  *
  * @author reto
  */
-public class ParticulateMatterIntent extends AnIntent {
+public enum Weighting implements Validator {
+    A(BrickletSoundPressureLevel.WEIGHTING_A),
+    B(BrickletSoundPressureLevel.WEIGHTING_B),
+    C(BrickletSoundPressureLevel.WEIGHTING_C),
+    D(BrickletSoundPressureLevel.WEIGHTING_D),
+    Z(BrickletSoundPressureLevel.WEIGHTING_Z),
+    ITU_R_468(BrickletSoundPressureLevel.WEIGHTING_ITU_R_468);
 
-    @Nullable
-    public Boolean enabled;
-    @Nullable
-    public ConcentrationCallbackConfiguration concentrationCallbackConfiguration;
-    @Nullable
-    public CountCallbackConfiguration countCallbackConfiguration;
+    private int value;
+
+    private Weighting(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public static Weighting getValueFor(int s) throws IllegalArgumentException {
+        for (Weighting range : values()) {
+            if (range.value == s) {
+                return range;
+            }
+        }
+        throw new IllegalArgumentException("Not supported: " + s);
+    }
+
+    @Override
+    public boolean isValid() {
+        try {
+            getValueFor(value);
+            return true;
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
+    }
 }

@@ -89,6 +89,7 @@ import ch.quantasy.gateway.service.tinkerforge.Segment4x7Service;
 import ch.quantasy.gateway.service.tinkerforge.ServoService;
 import ch.quantasy.gateway.service.tinkerforge.SolidStateRelayService;
 import ch.quantasy.gateway.service.tinkerforge.SoundIntensityService;
+import ch.quantasy.gateway.service.tinkerforge.SoundPressureLevelService;
 import ch.quantasy.gateway.service.tinkerforge.TemperatureService;
 import ch.quantasy.gateway.service.tinkerforge.TemperatureIRService;
 import ch.quantasy.gateway.service.tinkerforge.ThermalImagingService;
@@ -144,6 +145,7 @@ import ch.quantasy.tinkerforge.device.segment4x7.Segment4x7Device;
 import ch.quantasy.tinkerforge.device.servo.ServoDevice;
 import ch.quantasy.tinkerforge.device.solidState.SolidStateRelayDevice;
 import ch.quantasy.tinkerforge.device.soundIntensity.SoundIntensityDevice;
+import ch.quantasy.tinkerforge.device.soundPressureLevel.SoundPressureLevelDevice;
 import ch.quantasy.tinkerforge.device.temperature.TemperatureDevice;
 import ch.quantasy.tinkerforge.device.temperatureIR.TemperatureIRDevice;
 import ch.quantasy.tinkerforge.device.thermalImaging.ThermalImagingDevice;
@@ -322,6 +324,9 @@ public class TinkerforgeServiceMapper {
         }
         if(tinkerforgeDevice instanceof ParticulateMatterDevice){
             return new ParticulateMatterService((ParticulateMatterDevice)tinkerforgeDevice, mqttURI);
+        }
+        if(tinkerforgeDevice instanceof SoundPressureLevelDevice){
+            return new SoundPressureLevelService((SoundPressureLevelDevice)tinkerforgeDevice,mqttURI);
         }
         return null;
 
