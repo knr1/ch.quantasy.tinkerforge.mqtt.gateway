@@ -4555,7 +4555,7 @@ TF/ParticulateMatter/U/<id>/I
        required: # this tag is not part of the data structure
          period: Number <from: 0 to: 9223372036854775807>
          valueHasToChange: Boolean <true,false>
-     enable: Boolean <true,false>
+     enabled: Boolean <true,false>
    
 ```
 ```
@@ -5782,6 +5782,93 @@ TF/SoundIntensity/U/<id>/S/soundIntensity/threshold
          max: Number <from: 0 to: 10000>
          min: Number <from: 0 to: 10000>
          option: String <[x, o, i, <, >]>
+   
+```
+
+### SoundPressureLevel
+```
+TF/SoundPressureLevel/U/<id>/E/decibel
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Number <from: -120 to: 30>
+   
+```
+```
+TF/SoundPressureLevel/U/<id>/I
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+   optional: # this tag is not part of the data structure
+     configuration:
+       required: # this tag is not part of the data structure
+         fftSize: String <Size128,Size256,Size512,Size1024>
+         weighting: String <A,B,C,D,Z,ITU_R_468>
+     decibelCallbackConfiguration:
+       required: # this tag is not part of the data structure
+         max: Number <from: -120 to: 30>
+         min: Number <from: -120 to: 30>
+         option: String <[x, o, i, <, >]>
+         period: Number <from: 0 to: 9223372036854775807>
+         valueHasToChange: Boolean <true,false>
+     spectrumCallbackConfiguration: Number <from: 0 to: 9223372036854775807>
+   
+```
+```
+TF/SoundPressureLevel/U/<id>/S/configuration
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value:
+       required: # this tag is not part of the data structure
+         fftSize: String <Size128,Size256,Size512,Size1024>
+         weighting: String <A,B,C,D,Z,ITU_R_468>
+   
+```
+```
+TF/SoundPressureLevel/U/<id>/S/connection
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: String <[online, offline]>
+   
+```
+```
+TF/SoundPressureLevel/U/<id>/S/decibel
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value:
+       required: # this tag is not part of the data structure
+         max: Number <from: -120 to: 30>
+         min: Number <from: -120 to: 30>
+         option: String <[x, o, i, <, >]>
+         period: Number <from: 0 to: 9223372036854775807>
+         valueHasToChange: Boolean <true,false>
+   
+```
+```
+TF/SoundPressureLevel/U/<id>/S/firmware
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Array <min: 0 max: 2147483647>
+     value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/SoundPressureLevel/U/<id>/S/hardware
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: Array <min: 0 max: 2147483647>
+     value: Number <from: -32768 to: 32767>
+   
+```
+```
+TF/SoundPressureLevel/U/<id>/S/position
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
+     value: String <[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d]>
+   
+```
+```
+TF/SoundPressureLevel/U/<id>/S/spectrum
+   required: # this tag is not part of the data structure
+     timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
    
 ```
 
