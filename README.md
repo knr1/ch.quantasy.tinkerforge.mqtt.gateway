@@ -3394,7 +3394,7 @@ TF/LEDStrip/U/<id>/I
    optional: # this tag is not part of the data structure
      config:
        required: # this tag is not part of the data structure
-         channelMapping: String <BGR,BGRW,BGWR,BRG,BRGW,BRWG,BWGR,BWRG,GBR,GBRW,GBWR,GRB,GRBW,GRWB,GWBR,GWRB,RBG,RBGW,RBWG,RGB,RGBW,RGWB,RWBG,RWGB>
+         channelMapping: String <BGR,BGRW,BGWR,BRG,BRGW,BRWG,BWGR,BWRG,GBR,GBRW,GBWR,GRB,GRBW,GRWB,GWBR,GWRB,RBG,RBGW,RBWG,RGB,RGBW,RGWB,RWBG,RWGB,WBGR,WBRG,WGBR,WGRB,WRBG,WRGB>
          chipType: String <WS2801,WS2811,WS2812,WS2812RGBW,LPD8806,APA102>
          clockFrequencyOfICsInHz: Number <from: 10000 to: 2000000>
          frameDurationInMilliseconds: Number <from: 0 to: 9223372036854775807>
@@ -3410,6 +3410,11 @@ TF/LEDStrip/U/<id>/I
            channels: Arrays: <[min: 1 max: 4,min: 1 max: 320]>
          optional: # this tag is not part of the data structure
            durationInMillis: Number <from: 0 to: 2147483647>
+     LEDs: Set <min: 0 max: 360>
+     LEDs:
+      required: # this tag is not part of the data structure
+        color: Number <from: -2147483648 to: 2147483647>
+        pos: Number <from: 0 to: 1024>
    
 ```
 ```
@@ -3418,7 +3423,7 @@ TF/LEDStrip/U/<id>/S/config
      timeStamp: Number <from: 0 to: 9223372036854775807> # default: Current time in nano seconds
      value:
        required: # this tag is not part of the data structure
-         channelMapping: String <BGR,BGRW,BGWR,BRG,BRGW,BRWG,BWGR,BWRG,GBR,GBRW,GBWR,GRB,GRBW,GRWB,GWBR,GWRB,RBG,RBGW,RBWG,RGB,RGBW,RGWB,RWBG,RWGB>
+         channelMapping: String <BGR,BGRW,BGWR,BRG,BRGW,BRWG,BWGR,BWRG,GBR,GBRW,GBWR,GRB,GRBW,GRWB,GWBR,GWRB,RBG,RBGW,RBWG,RGB,RGBW,RGWB,RWBG,RWGB,WBGR,WBRG,WGBR,WGRB,WRBG,WRGB>
          chipType: String <WS2801,WS2811,WS2812,WS2812RGBW,LPD8806,APA102>
          clockFrequencyOfICsInHz: Number <from: 10000 to: 2000000>
          frameDurationInMilliseconds: Number <from: 0 to: 9223372036854775807>

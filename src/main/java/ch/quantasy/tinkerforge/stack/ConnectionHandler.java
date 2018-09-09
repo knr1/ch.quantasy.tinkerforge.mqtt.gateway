@@ -47,14 +47,12 @@ import com.tinkerforge.AlreadyConnectedException;
 import com.tinkerforge.Device;
 import com.tinkerforge.IPConnection;
 import com.tinkerforge.IPConnectionBase;
+import com.tinkerforge.NetworkException;
 import com.tinkerforge.NotConnectedException;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -166,10 +164,10 @@ public class ConnectionHandler implements IPConnection.ConnectedListener, IPConn
 
                     }
                     actualConnectionException = null;
-                    //} catch (final NetworkException e) {
+                    } catch (final NetworkException e) {
 //                } catch (final UnknownHostException e) {  //Patch-catch
 //                    // This Host is not up! try again in some seconds...
-//                    Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Host not up or not reachable, I try again in about " + getConnectionTimeoutInMilliseconds() + "ms.");
+                    Logger.getLogger(ConnectionHandler.class.getName()).log(Level.INFO, "Host not up or not reachable, I try again in about " + getConnectionTimeoutInMilliseconds() + "ms.");
 
                 } catch (final Exception e) {
                     actualConnectionException = e;

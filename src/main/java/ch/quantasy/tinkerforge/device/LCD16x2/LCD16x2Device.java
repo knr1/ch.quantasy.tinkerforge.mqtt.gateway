@@ -48,7 +48,6 @@ import ch.quantasy.gateway.binding.tinkerforge.LCD16x2.DeviceWriteLine;
 import ch.quantasy.gateway.binding.tinkerforge.LCD16x2.LCD16x2Intent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
-import com.sun.corba.se.spi.orbutil.threadpool.ThreadPool;
 import com.tinkerforge.BrickletLCD16x2;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;

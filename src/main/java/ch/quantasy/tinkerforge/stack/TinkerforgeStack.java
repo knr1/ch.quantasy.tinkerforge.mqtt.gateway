@@ -51,17 +51,13 @@ import ch.quantasy.tinkerforge.device.TinkerforgeDeviceMapper;
 import com.tinkerforge.Device;
 import com.tinkerforge.IPConnection;
 import com.tinkerforge.IPConnection.EnumerateListener;
-import com.tinkerforge.NotConnectedException;
-import com.tinkerforge.TimeoutException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -239,6 +235,7 @@ public class TinkerforgeStack implements EnumerateListener {
     public void enumerate(final String uid, final String connectedUid, final char position,
             final short[] hardwareVersion, final short[] firmwareVersion, final int deviceIdentifier,
             final short enumerationType) {
+        System.out.println("yoo.");
         synchronized (watchDogMonitor) {
             count--;
             if (count <= 0) {
@@ -383,8 +380,8 @@ public class TinkerforgeStack implements EnumerateListener {
                 }
                 if (count > 0) {
                     //TODO: Check for correctness
-                    System.out.println("Will reconnect");
-                    ipConnectionHandler.reconnect();
+                    System.out.println("would reconnect, as count is off by: " + count+". However, Tinkerforge seems to have an error here, as enumerate does not get any callback?!");
+                    //     ipConnectionHandler.reconnect();
                 } else {
                     System.out.println("Stable");
                 }

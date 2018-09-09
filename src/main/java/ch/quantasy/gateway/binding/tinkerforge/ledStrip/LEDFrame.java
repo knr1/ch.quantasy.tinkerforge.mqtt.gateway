@@ -61,8 +61,8 @@ public class LEDFrame extends AValidator {
 
     @NonNull
     @MultiArraySize(values = {
-        @ArraySize(min = 1, max = 4)
-        ,@ArraySize(min = 1, max = 320)})
+        @ArraySize(min = 1, max = 4),
+        @ArraySize(min = 1, max = 320)})
     //@Range(from = 0, to = 255)
     private short[][] channels;
 
@@ -73,17 +73,17 @@ public class LEDFrame extends AValidator {
     private LEDFrame() {
     }
 
-    public LEDFrame(int amountOfChannels, int amountOfLEDs,Integer durationInMillis) {
+    public LEDFrame(int amountOfChannels, int amountOfLEDs, Integer durationInMillis) {
         this.channels = new short[amountOfChannels][amountOfLEDs];
-        this.durationInMillis=durationInMillis;
+        this.durationInMillis = durationInMillis;
     }
 
     public LEDFrame(LEDFrame frame) {
-        this(frame.channels,frame.durationInMillis);
+        this(frame.channels, frame.durationInMillis);
     }
 
-    public LEDFrame(short[][] channels,Integer durationInMillis) {
-        this.durationInMillis=durationInMillis;
+    public LEDFrame(short[][] channels, Integer durationInMillis) {
+        this.durationInMillis = durationInMillis;
         this.channels = new short[channels.length][];
         this.channels[0] = channels[0].clone();
 
@@ -135,6 +135,12 @@ public class LEDFrame extends AValidator {
         channels[channel][position] = color;
     }
 
+    public void setColor(int pos, int color) {
+        for (int i = 0; i < channels.length; i++) {
+            channels[i][pos] = (short) ((color >> (24 - (i * 8))) & 0xFF);
+        }
+    }
+
     public Chunk getChunk(int startPosition, int chunkLength) {
         Chunk chunk = new Chunk(startPosition, new short[getNumberOfChannels()][chunkLength]);
         for (int channel = 0; channel < getNumberOfChannels(); channel++) {
@@ -154,7 +160,6 @@ public class LEDFrame extends AValidator {
     public void setDurationInMillis(Integer durationInMillis) {
         this.durationInMillis = durationInMillis;
     }
-    
 
     /**
      * Returns a new LEDFrame with all input-Frames combined (Max-Value)...
@@ -186,7 +191,7 @@ public class LEDFrame extends AValidator {
         if (leds[0] == null) {
             return this;
         } else {
-            LEDFrame frame=new LEDFrame(leds,durationInMillis);
+            LEDFrame frame = new LEDFrame(leds, durationInMillis);
             return frame;
         }
     }

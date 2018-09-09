@@ -43,17 +43,6 @@
 package ch.quantasy.gateway.binding.tinkerforge.ptc;
 
 import ch.quantasy.gateway.binding.tinkerforge.DeviceServiceContract;
-import ch.quantasy.gateway.binding.tinkerforge.DeviceServiceContract;
-import ch.quantasy.gateway.binding.tinkerforge.ptc.ResistanceEvent;
-import ch.quantasy.gateway.binding.tinkerforge.ptc.TemperatureEvent;
-import ch.quantasy.gateway.binding.tinkerforge.ptc.PTCIntent;
-import ch.quantasy.gateway.binding.tinkerforge.ptc.DebouncePeriodStatus;
-import ch.quantasy.gateway.binding.tinkerforge.ptc.NoiseReductionFilterStatus;
-import ch.quantasy.gateway.binding.tinkerforge.ptc.ResistanceThresholdStatus;
-import ch.quantasy.gateway.binding.tinkerforge.ptc.TemperatureCallbackPeriodStatus;
-import ch.quantasy.gateway.binding.tinkerforge.ptc.TemperatureThresholdStatus;
-import ch.quantasy.gateway.binding.tinkerforge.ptc.WireModeStatus;
-import ch.quantasy.gateway.binding.tinkerforge.ptc.ResistanceCallbackPeriodStatus;
 import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ptc.PTCDevice;

@@ -41,27 +41,54 @@
  */
 package ch.quantasy.gateway.binding.tinkerforge.ledStrip;
 
-import ch.quantasy.mqtt.gateway.client.message.AnIntent;
-import ch.quantasy.mqtt.gateway.client.message.annotations.ArraySize;
-import ch.quantasy.mqtt.gateway.client.message.annotations.SetSize;
-
-import ch.quantasy.mqtt.gateway.client.message.annotations.Nullable;
-import java.util.Set;
+import ch.quantasy.mqtt.gateway.client.message.annotations.AValidator;
+import ch.quantasy.mqtt.gateway.client.message.annotations.NonNull;
+import ch.quantasy.mqtt.gateway.client.message.annotations.Range;
 
 /**
  *
  * @author reto
  */
-public class LedStripIntent extends AnIntent {
+public class LEDValue extends AValidator{
 
-    @Nullable
-    public LEDFrame LEDFrame;
-    @Nullable
-    @ArraySize(min = 1)
-    public LEDFrame[] LEDFrames;
-    @Nullable
-    public LEDStripDeviceConfig config;
-    @Nullable
-    @SetSize(min=0, max=360)
-    public Set<LEDValue> LEDs;
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + this.pos;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LEDValue other = (LEDValue) obj;
+        if (this.pos != other.pos) {
+            return false;
+        }
+        return true;
+    }
+    @Range(from = 0,to=1024)
+    @NonNull
+    public int pos;
+    @Range(from = Integer.MIN_VALUE, to=Integer.MAX_VALUE)
+    @NonNull
+    public int color;
+
+    private LEDValue() {
+    }
+
+    public LEDValue(int pos, Integer color) {
+        this.pos = pos;
+        this.color = color;
+    }
+    
+    
 }

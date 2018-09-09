@@ -104,7 +104,8 @@ public class LEDStripDeviceConfig extends AValidator {
         GRB(BrickletLEDStrip.CHANNEL_MAPPING_GRB), GRBW(BrickletLEDStrip.CHANNEL_MAPPING_GRBW), GRWB(BrickletLEDStrip.CHANNEL_MAPPING_GRWB), GWBR(BrickletLEDStrip.CHANNEL_MAPPING_GWBR),
         GWRB(BrickletLEDStrip.CHANNEL_MAPPING_GWRB), RBG(BrickletLEDStrip.CHANNEL_MAPPING_RBG), RBGW(BrickletLEDStrip.CHANNEL_MAPPING_RBGW), RBWG(BrickletLEDStrip.CHANNEL_MAPPING_RBWG),
         RGB(BrickletLEDStrip.CHANNEL_MAPPING_RGB), RGBW(BrickletLEDStrip.CHANNEL_MAPPING_RGBW), RGWB(BrickletLEDStrip.CHANNEL_MAPPING_RGWB), RWBG(BrickletLEDStrip.CHANNEL_MAPPING_RWBG),
-        RWGB(BrickletLEDStrip.CHANNEL_MAPPING_RWGB);
+        RWGB(BrickletLEDStrip.CHANNEL_MAPPING_RWGB), WBGR(BrickletLEDStrip.CHANNEL_MAPPING_WBGR), WBRG(BrickletLEDStrip.CHANNEL_MAPPING_WBRG), WGBR(BrickletLEDStrip.CHANNEL_MAPPING_WGBR),
+        WGRB(BrickletLEDStrip.CHANNEL_MAPPING_WGRB), WRBG(BrickletLEDStrip.CHANNEL_MAPPING_WRBG), WRGB(BrickletLEDStrip.CHANNEL_MAPPING_WRGB);
 
         public final short mapping;
 
@@ -185,7 +186,7 @@ public class LEDStripDeviceConfig extends AValidator {
     public long getClockFrequencyOfICsInHz() {
         return clockFrequencyOfICsInHz;
     }
-
+    
     public int getNumberOfLEDs() {
         return numberOfLEDs;
     }

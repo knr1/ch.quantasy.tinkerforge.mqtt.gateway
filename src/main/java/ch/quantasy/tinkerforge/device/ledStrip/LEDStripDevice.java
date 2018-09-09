@@ -44,6 +44,7 @@ package ch.quantasy.tinkerforge.device.ledStrip;
 
 import ch.quantasy.gateway.binding.tinkerforge.ledStrip.LEDFrame;
 import ch.quantasy.gateway.binding.tinkerforge.ledStrip.LEDStripDeviceConfig;
+import ch.quantasy.gateway.binding.tinkerforge.ledStrip.LEDValue;
 import ch.quantasy.gateway.binding.tinkerforge.ledStrip.LedStripIntent;
 import ch.quantasy.tinkerforge.device.generic.GenericDevice;
 import ch.quantasy.tinkerforge.stack.TinkerforgeStack;
@@ -51,6 +52,7 @@ import com.tinkerforge.BrickletLEDStrip;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.Level;
@@ -88,7 +90,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         super(stack, device, new LedStripIntent());
         this.publisher = new Publisher();
         getIntent().config = new LEDStripDeviceConfig(LEDStripDevice.DEFAULT_CHIP_TYPE, LEDStripDevice.DEFAULT_CLOCK_FREQUENCY_OF_ICS_IN_HZ, LEDStripDevice.DEFAULT_FRAME_DURATION_IN_MILLISECONDS, LEDStripDevice.DEFAULT_NUMBER_OF_LEDS, LEDStripDevice.DEFAULT_CHANNEL_MAPPING);
-        frameDurationInMilliseconds=DEFAULT_FRAME_DURATION_IN_MILLISECONDS;
+        frameDurationInMilliseconds = DEFAULT_FRAME_DURATION_IN_MILLISECONDS;
     }
 
     @Override
@@ -153,6 +155,9 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         }
         if (intent.LEDFrames != null) {
             publisher.add(intent.LEDFrames);
+        }
+        if (intent.LEDs != null) {
+            publisher.add(intent.LEDs);
         }
 
     }
@@ -278,7 +283,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
                     } else if (chunk.leds.length == 4) {
                         synchronized (deviceLock) {
                             getDevice()
-                                    .setRGBWValues(chunk.position, (short) (Math.min(chunk.leds[0].length, localConfig.getNumberOfLEDs() - chunk.position)),
+                                                    .setRGBWValues(chunk.position, (short) (Math.min(chunk.leds[0].length, localConfig.getNumberOfLEDs() - chunk.position)),
                                             chunk.leds[0], chunk.leds[1],
                                             chunk.leds[2], chunk.leds[3]);
                         }
@@ -328,18 +333,28 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
             return publishingQueue.size();
         }
 
+        public void add(Set<LEDValue> LEDValues) {
+            LEDFrame frame = new LEDFrame(currentLEDFrame);
+            for (LEDValue value : LEDValues) {
+                frame.setColor(value.pos, value.color);
+            }
+            add(frame);
+
+        }
+
         public void add(LEDFrame frame) {
             //synchronized (publishingQueue) {
             if (publishingQueue != null) {
                 publishingQueue.clear();
                 try {
                     synchronized (deviceLock) {
-                        //get rid of the displayed frame, hence speedup frameDuration
+                        ////get rid of the displayed frame, hence speedup frameDuration
+                        ////the frameDuration will be re-set when rendering the next frame.
+                        ////int frameDuration=getDevice().getFrameDuration();
                         getDevice().setFrameDuration(1);
+                        ////getDevice().setFrameDuration(frameDuration);
                     }
-                } catch (TimeoutException ex) {
-                    Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NotConnectedException ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 publishingQueue.offer(frame);
@@ -349,7 +364,6 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         }
 
         public void add(LEDFrame[] frames) {
-
             // synchronized (publishingQueue) {
             for (LEDFrame frame : frames) {
                 publishingQueue.offer(frame);
@@ -361,12 +375,7 @@ public class LEDStripDevice extends GenericDevice<BrickletLEDStrip, LEDStripDevi
         public void run() {
             while (true) {
                 try {
-
-                    //LEDFrame frame = publishingQueue.take();
-                    //if (frame != null) {
                     setRGBLEDs(publishingQueue);
-                    //}
-
                 } catch (Exception ex) {
                     Logger.getLogger(LEDStripDevice.class.getName()).log(Level.SEVERE, null, ex);
                 }

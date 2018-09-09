@@ -43,11 +43,6 @@
 package ch.quantasy.gateway.binding.tinkerforge.ledStrip;
 
 import ch.quantasy.gateway.binding.tinkerforge.DeviceServiceContract;
-import ch.quantasy.gateway.binding.tinkerforge.DeviceServiceContract;
-import ch.quantasy.gateway.binding.tinkerforge.ledStrip.LagingEvent;
-import ch.quantasy.gateway.binding.tinkerforge.ledStrip.RenderedEvent;
-import ch.quantasy.gateway.binding.tinkerforge.ledStrip.LedStripIntent;
-import ch.quantasy.gateway.binding.tinkerforge.ledStrip.ConfigStatus;
 import ch.quantasy.mqtt.gateway.client.message.Message;
 import ch.quantasy.tinkerforge.device.TinkerforgeDeviceClass;
 import ch.quantasy.tinkerforge.device.ledStrip.LEDStripDevice;
