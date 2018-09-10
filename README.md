@@ -3413,8 +3413,8 @@ TF/LEDStrip/U/<id>/I
      LEDs: Set <min: 0 max: 360>
      LEDs:
       required: # this tag is not part of the data structure
-        color: Number <from: -2147483648 to: 2147483647>
-        pos: Number <from: 0 to: 1024>
+        color: Number <from: 0 to: 4294967295>
+        pos: Number <from: 0 to: 320>
    
 ```
 ```

@@ -75,12 +75,13 @@ public class LEDValue extends AValidator{
         }
         return true;
     }
-    @Range(from = 0,to=1024)
+    @Range(from = 0,to=320)
     @NonNull
     public int pos;
-    @Range(from = 0, to = Long.MAX_VALUE)
+    @Range(from = 0, to = 0xFFFFFFFFl)
     @NonNull
     public Long color;
+    //will change that to wrgb in future release...
 
     private LEDValue() {
     }
