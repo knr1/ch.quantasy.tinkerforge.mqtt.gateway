@@ -78,14 +78,14 @@ public class LEDValue extends AValidator{
     @Range(from = 0,to=1024)
     @NonNull
     public int pos;
-    @Range(from = Integer.MIN_VALUE, to=Integer.MAX_VALUE)
+    @Range(from = 0, to=Long.MAX_VALUE)
     @NonNull
-    public int color;
+    public long color;
 
     private LEDValue() {
     }
 
-    public LEDValue(int pos, Integer color) {
+    public LEDValue(int pos, long color) {
         this.pos = pos;
         this.color = color;
     }

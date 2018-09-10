@@ -135,7 +135,7 @@ public class LEDFrame extends AValidator {
         channels[channel][position] = color;
     }
 
-    public void setColor(int pos, int color) {
+    public void setColor(int pos, long color) {
         for (int i = 0; i < channels.length; i++) {
             channels[i][pos] = (short) ((color >> (24 - (i * 8))) & 0xFF);
         }
